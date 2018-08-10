@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALPhoneNumberTypeMapper
+	public partial interface IDALPhoneNumberTypeMapper
 	{
 		PhoneNumberType MapBOToEF(
 			BOPhoneNumberType bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7dcb5b7fe98e4ed58f08622aa80345dd</Hash>
+    <Hash>0a94a047e0c34f69f27d4fd713dde2bc</Hash>
 </Codenesium>*/

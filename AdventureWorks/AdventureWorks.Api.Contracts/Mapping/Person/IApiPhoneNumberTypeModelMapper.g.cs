@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiPhoneNumberTypeModelMapper
+	public partial interface IApiPhoneNumberTypeModelMapper
 	{
 		ApiPhoneNumberTypeResponseModel MapRequestToResponse(
 			int phoneNumberTypeID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fab169cedb983559ceed9c0dc0dabf06</Hash>
+    <Hash>f422f876139b7a3a2cd34cdc8e7f2d33</Hash>
 </Codenesium>*/

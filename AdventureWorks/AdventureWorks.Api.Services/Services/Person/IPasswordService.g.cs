@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IPasswordService
+	public partial interface IPasswordService
 	{
 		Task<CreateResponse<ApiPasswordResponseModel>> Create(
 			ApiPasswordRequestModel model);
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>240ddef22731e83ddd3f573807b16376</Hash>
+    <Hash>1ced808e355084b0806a0c4983f9e414</Hash>
 </Codenesium>*/

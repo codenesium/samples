@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Contracts
 {
-	public interface IApiPipelineStepModelMapper
+	public partial interface IApiPipelineStepModelMapper
 	{
 		ApiPipelineStepResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>76345ab0d5dbda3ca7c20ef18cc4b378</Hash>
+    <Hash>39421e16f75bd4be09d9b9b3f3a10512</Hash>
 </Codenesium>*/

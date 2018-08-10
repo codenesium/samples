@@ -14,13 +14,13 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractEventService : AbstractService
 	{
-		private IEventRepository eventRepository;
+		protected IEventRepository EventRepository { get; private set; }
 
-		private IApiEventRequestModelValidator eventModelValidator;
+		protected IApiEventRequestModelValidator EventModelValidator { get; private set; }
 
-		private IBOLEventMapper bolEventMapper;
+		protected IBOLEventMapper BolEventMapper { get; private set; }
 
-		private IDALEventMapper dalEventMapper;
+		protected IDALEventMapper DalEventMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TicketingCRMNS.Api.Services
 			IDALEventMapper dalEventMapper)
 			: base()
 		{
-			this.eventRepository = eventRepository;
-			this.eventModelValidator = eventModelValidator;
-			this.bolEventMapper = bolEventMapper;
-			this.dalEventMapper = dalEventMapper;
+			this.EventRepository = eventRepository;
+			this.EventModelValidator = eventModelValidator;
+			this.BolEventMapper = bolEventMapper;
+			this.DalEventMapper = dalEventMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiEventResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.eventRepository.All(limit, offset);
+			var records = await this.EventRepository.All(limit, offset);
 
-			return this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(records));
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiEventResponseModel> Get(int id)
 		{
-			var record = await this.eventRepository.Get(id);
+			var record = await this.EventRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(record));
+				return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiEventResponseModel>> Create(
 			ApiEventRequestModel model)
 		{
-			CreateResponse<ApiEventResponseModel> response = new CreateResponse<ApiEventResponseModel>(await this.eventModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEventResponseModel> response = new CreateResponse<ApiEventResponseModel>(await this.EventModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolEventMapper.MapModelToBO(default(int), model);
-				var record = await this.eventRepository.Create(this.dalEventMapper.MapBOToEF(bo));
+				var bo = this.BolEventMapper.MapModelToBO(default(int), model);
+				var record = await this.EventRepository.Create(this.DalEventMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TicketingCRMNS.Api.Services
 			int id,
 			ApiEventRequestModel model)
 		{
-			var validationResult = await this.eventModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.EventModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolEventMapper.MapModelToBO(id, model);
-				await this.eventRepository.Update(this.dalEventMapper.MapBOToEF(bo));
+				var bo = this.BolEventMapper.MapModelToBO(id, model);
+				await this.EventRepository.Update(this.DalEventMapper.MapBOToEF(bo));
 
-				var record = await this.eventRepository.Get(id);
+				var record = await this.EventRepository.Get(id);
 
-				return new UpdateResponse<ApiEventResponseModel>(this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiEventResponseModel>(this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TicketingCRMNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.eventModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.EventModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.eventRepository.Delete(id);
+				await this.EventRepository.Delete(id);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace TicketingCRMNS.Api.Services
 
 		public async Task<List<ApiEventResponseModel>> ByCityId(int cityId)
 		{
-			List<Event> records = await this.eventRepository.ByCityId(cityId);
+			List<Event> records = await this.EventRepository.ByCityId(cityId);
 
-			return this.bolEventMapper.MapBOToModel(this.dalEventMapper.MapEFToBO(records));
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e79db5521deb4760bcf1816ebc943f9a</Hash>
+    <Hash>2d0e79840dd41b276bb276a909bcf5b6</Hash>
 </Codenesium>*/

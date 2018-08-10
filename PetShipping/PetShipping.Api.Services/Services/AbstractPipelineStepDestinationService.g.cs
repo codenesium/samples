@@ -14,13 +14,13 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractPipelineStepDestinationService : AbstractService
 	{
-		private IPipelineStepDestinationRepository pipelineStepDestinationRepository;
+		protected IPipelineStepDestinationRepository PipelineStepDestinationRepository { get; private set; }
 
-		private IApiPipelineStepDestinationRequestModelValidator pipelineStepDestinationModelValidator;
+		protected IApiPipelineStepDestinationRequestModelValidator PipelineStepDestinationModelValidator { get; private set; }
 
-		private IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper;
+		protected IBOLPipelineStepDestinationMapper BolPipelineStepDestinationMapper { get; private set; }
 
-		private IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper;
+		protected IDALPipelineStepDestinationMapper DalPipelineStepDestinationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace PetShippingNS.Api.Services
 			IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper)
 			: base()
 		{
-			this.pipelineStepDestinationRepository = pipelineStepDestinationRepository;
-			this.pipelineStepDestinationModelValidator = pipelineStepDestinationModelValidator;
-			this.bolPipelineStepDestinationMapper = bolPipelineStepDestinationMapper;
-			this.dalPipelineStepDestinationMapper = dalPipelineStepDestinationMapper;
+			this.PipelineStepDestinationRepository = pipelineStepDestinationRepository;
+			this.PipelineStepDestinationModelValidator = pipelineStepDestinationModelValidator;
+			this.BolPipelineStepDestinationMapper = bolPipelineStepDestinationMapper;
+			this.DalPipelineStepDestinationMapper = dalPipelineStepDestinationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.pipelineStepDestinationRepository.All(limit, offset);
+			var records = await this.PipelineStepDestinationRepository.All(limit, offset);
 
-			return this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(records));
+			return this.BolPipelineStepDestinationMapper.MapBOToModel(this.DalPipelineStepDestinationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPipelineStepDestinationResponseModel> Get(int id)
 		{
-			var record = await this.pipelineStepDestinationRepository.Get(id);
+			var record = await this.PipelineStepDestinationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(record));
+				return this.BolPipelineStepDestinationMapper.MapBOToModel(this.DalPipelineStepDestinationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepDestinationResponseModel>> Create(
 			ApiPipelineStepDestinationRequestModel model)
 		{
-			CreateResponse<ApiPipelineStepDestinationResponseModel> response = new CreateResponse<ApiPipelineStepDestinationResponseModel>(await this.pipelineStepDestinationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPipelineStepDestinationResponseModel> response = new CreateResponse<ApiPipelineStepDestinationResponseModel>(await this.PipelineStepDestinationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPipelineStepDestinationMapper.MapModelToBO(default(int), model);
-				var record = await this.pipelineStepDestinationRepository.Create(this.dalPipelineStepDestinationMapper.MapBOToEF(bo));
+				var bo = this.BolPipelineStepDestinationMapper.MapModelToBO(default(int), model);
+				var record = await this.PipelineStepDestinationRepository.Create(this.DalPipelineStepDestinationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPipelineStepDestinationMapper.MapBOToModel(this.DalPipelineStepDestinationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace PetShippingNS.Api.Services
 			int id,
 			ApiPipelineStepDestinationRequestModel model)
 		{
-			var validationResult = await this.pipelineStepDestinationModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.PipelineStepDestinationModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPipelineStepDestinationMapper.MapModelToBO(id, model);
-				await this.pipelineStepDestinationRepository.Update(this.dalPipelineStepDestinationMapper.MapBOToEF(bo));
+				var bo = this.BolPipelineStepDestinationMapper.MapModelToBO(id, model);
+				await this.PipelineStepDestinationRepository.Update(this.DalPipelineStepDestinationMapper.MapBOToEF(bo));
 
-				var record = await this.pipelineStepDestinationRepository.Get(id);
+				var record = await this.PipelineStepDestinationRepository.Get(id);
 
-				return new UpdateResponse<ApiPipelineStepDestinationResponseModel>(this.bolPipelineStepDestinationMapper.MapBOToModel(this.dalPipelineStepDestinationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPipelineStepDestinationResponseModel>(this.BolPipelineStepDestinationMapper.MapBOToModel(this.DalPipelineStepDestinationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace PetShippingNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.pipelineStepDestinationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.PipelineStepDestinationModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.pipelineStepDestinationRepository.Delete(id);
+				await this.PipelineStepDestinationRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8747207e3ea470153c65a18c92e23902</Hash>
+    <Hash>e9355a7cbb98c0f511a920c2176cc513</Hash>
 </Codenesium>*/

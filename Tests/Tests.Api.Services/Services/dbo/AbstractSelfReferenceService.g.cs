@@ -14,13 +14,13 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractSelfReferenceService : AbstractService
 	{
-		private ISelfReferenceRepository selfReferenceRepository;
+		protected ISelfReferenceRepository SelfReferenceRepository { get; private set; }
 
-		private IApiSelfReferenceRequestModelValidator selfReferenceModelValidator;
+		protected IApiSelfReferenceRequestModelValidator SelfReferenceModelValidator { get; private set; }
 
-		private IBOLSelfReferenceMapper bolSelfReferenceMapper;
+		protected IBOLSelfReferenceMapper BolSelfReferenceMapper { get; private set; }
 
-		private IDALSelfReferenceMapper dalSelfReferenceMapper;
+		protected IDALSelfReferenceMapper DalSelfReferenceMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TestsNS.Api.Services
 			IDALSelfReferenceMapper dalSelfReferenceMapper)
 			: base()
 		{
-			this.selfReferenceRepository = selfReferenceRepository;
-			this.selfReferenceModelValidator = selfReferenceModelValidator;
-			this.bolSelfReferenceMapper = bolSelfReferenceMapper;
-			this.dalSelfReferenceMapper = dalSelfReferenceMapper;
+			this.SelfReferenceRepository = selfReferenceRepository;
+			this.SelfReferenceModelValidator = selfReferenceModelValidator;
+			this.BolSelfReferenceMapper = bolSelfReferenceMapper;
+			this.DalSelfReferenceMapper = dalSelfReferenceMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSelfReferenceResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.selfReferenceRepository.All(limit, offset);
+			var records = await this.SelfReferenceRepository.All(limit, offset);
 
-			return this.bolSelfReferenceMapper.MapBOToModel(this.dalSelfReferenceMapper.MapEFToBO(records));
+			return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSelfReferenceResponseModel> Get(int id)
 		{
-			var record = await this.selfReferenceRepository.Get(id);
+			var record = await this.SelfReferenceRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolSelfReferenceMapper.MapBOToModel(this.dalSelfReferenceMapper.MapEFToBO(record));
+				return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSelfReferenceResponseModel>> Create(
 			ApiSelfReferenceRequestModel model)
 		{
-			CreateResponse<ApiSelfReferenceResponseModel> response = new CreateResponse<ApiSelfReferenceResponseModel>(await this.selfReferenceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSelfReferenceResponseModel> response = new CreateResponse<ApiSelfReferenceResponseModel>(await this.SelfReferenceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSelfReferenceMapper.MapModelToBO(default(int), model);
-				var record = await this.selfReferenceRepository.Create(this.dalSelfReferenceMapper.MapBOToEF(bo));
+				var bo = this.BolSelfReferenceMapper.MapModelToBO(default(int), model);
+				var record = await this.SelfReferenceRepository.Create(this.DalSelfReferenceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSelfReferenceMapper.MapBOToModel(this.dalSelfReferenceMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TestsNS.Api.Services
 			int id,
 			ApiSelfReferenceRequestModel model)
 		{
-			var validationResult = await this.selfReferenceModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SelfReferenceModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSelfReferenceMapper.MapModelToBO(id, model);
-				await this.selfReferenceRepository.Update(this.dalSelfReferenceMapper.MapBOToEF(bo));
+				var bo = this.BolSelfReferenceMapper.MapModelToBO(id, model);
+				await this.SelfReferenceRepository.Update(this.DalSelfReferenceMapper.MapBOToEF(bo));
 
-				var record = await this.selfReferenceRepository.Get(id);
+				var record = await this.SelfReferenceRepository.Get(id);
 
-				return new UpdateResponse<ApiSelfReferenceResponseModel>(this.bolSelfReferenceMapper.MapBOToModel(this.dalSelfReferenceMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSelfReferenceResponseModel>(this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.selfReferenceModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SelfReferenceModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.selfReferenceRepository.Delete(id);
+				await this.SelfReferenceRepository.Delete(id);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace TestsNS.Api.Services
 
 		public async virtual Task<List<ApiSelfReferenceResponseModel>> SelfReferences(int selfReferenceId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SelfReference> records = await this.selfReferenceRepository.SelfReferences(selfReferenceId, limit, offset);
+			List<SelfReference> records = await this.SelfReferenceRepository.SelfReferences(selfReferenceId, limit, offset);
 
-			return this.bolSelfReferenceMapper.MapBOToModel(this.dalSelfReferenceMapper.MapEFToBO(records));
+			return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3ea120d36aea481da45171f7c0993be</Hash>
+    <Hash>5edd7e98020d1f51c1610fb95f1613b7</Hash>
 </Codenesium>*/

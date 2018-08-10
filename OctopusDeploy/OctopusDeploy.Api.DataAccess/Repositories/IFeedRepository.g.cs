@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IFeedRepository
+	public partial interface IFeedRepository
 	{
 		Task<Feed> Create(Feed item);
 
@@ -22,5 +22,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b92556a64b5e541d309bdadc67f9d9b8</Hash>
+    <Hash>a944e6807c17036e634ae21aef075d7b</Hash>
 </Codenesium>*/

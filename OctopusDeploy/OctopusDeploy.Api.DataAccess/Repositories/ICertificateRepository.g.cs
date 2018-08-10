@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface ICertificateRepository
+	public partial interface ICertificateRepository
 	{
 		Task<Certificate> Create(Certificate item);
 
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>12bde906fe1c8a58533d331ed528c873</Hash>
+    <Hash>926041fa80f65a5c122fd8fae5450c27</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-	public interface IDALPaymentTypeMapper
+	public partial interface IDALPaymentTypeMapper
 	{
 		PaymentType MapBOToEF(
 			BOPaymentType bo);
@@ -20,5 +20,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3b5e31583f4e35da5b2d421c7b00003</Hash>
+    <Hash>487eeaad5eb19e82268d9fe7610e962c</Hash>
 </Codenesium>*/

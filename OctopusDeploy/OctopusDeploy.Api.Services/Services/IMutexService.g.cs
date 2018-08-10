@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IMutexService
+	public partial interface IMutexService
 	{
 		Task<CreateResponse<ApiMutexResponseModel>> Create(
 			ApiMutexRequestModel model);
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1f849110b9d020ffb0afd75eb22ebc2</Hash>
+    <Hash>d451e27a88d4199e6bf438b74ce3c547</Hash>
 </Codenesium>*/

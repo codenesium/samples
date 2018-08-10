@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALDepartmentMapper
+	public partial interface IDALDepartmentMapper
 	{
 		Department MapBOToEF(
 			BODepartment bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f1e6802756daf4da6eaca465e9bc832b</Hash>
+    <Hash>1717e40c1192be25a415e96f9f6db1b0</Hash>
 </Codenesium>*/

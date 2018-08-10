@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDeploymentHistoryService
+	public partial interface IDeploymentHistoryService
 	{
 		Task<CreateResponse<ApiDeploymentHistoryResponseModel>> Create(
 			ApiDeploymentHistoryRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0bbe0888dd1a507379082684da80c65b</Hash>
+    <Hash>77b442cc23e9073fcf448739185d45e6</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ILocationRepository
+	public partial interface ILocationRepository
 	{
 		Task<Location> Create(Location item);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>24da1fa04340a15ea0e13cfcad519a70</Hash>
+    <Hash>75fbe023623002925045e2e4ef4e04df</Hash>
 </Codenesium>*/

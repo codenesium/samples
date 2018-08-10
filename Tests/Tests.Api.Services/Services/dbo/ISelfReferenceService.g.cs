@@ -7,7 +7,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface ISelfReferenceService
+	public partial interface ISelfReferenceService
 	{
 		Task<CreateResponse<ApiSelfReferenceResponseModel>> Create(
 			ApiSelfReferenceRequestModel model);
@@ -26,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>64f905edda676981e0346cdf3db5bf80</Hash>
+    <Hash>ae6d3af16474aa61da6fd7c12b56ec95</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiProductReviewModelMapper
+	public partial interface IApiProductReviewModelMapper
 	{
 		ApiProductReviewResponseModel MapRequestToResponse(
 			int productReviewID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b4f767f9f924f72b23e554fb81ac445a</Hash>
+    <Hash>ff12e99701f8bfb3f8ddd35648bb014c</Hash>
 </Codenesium>*/

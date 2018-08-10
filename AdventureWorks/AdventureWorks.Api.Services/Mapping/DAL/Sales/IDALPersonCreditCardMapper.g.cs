@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALPersonCreditCardMapper
+	public partial interface IDALPersonCreditCardMapper
 	{
 		PersonCreditCard MapBOToEF(
 			BOPersonCreditCard bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c8b9ffdbdeb98c0420666de3106a4b2c</Hash>
+    <Hash>2c8272fa66857835186be3c876b86999</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ICountryRegionCurrencyRepository
+	public partial interface ICountryRegionCurrencyRepository
 	{
 		Task<CountryRegionCurrency> Create(CountryRegionCurrency item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c957272c0aa8f54434a1c876a395fce</Hash>
+    <Hash>1cd0bc96a2e2184b05d0856a24d789b9</Hash>
 </Codenesium>*/

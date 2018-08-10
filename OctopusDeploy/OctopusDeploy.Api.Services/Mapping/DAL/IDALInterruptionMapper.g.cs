@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALInterruptionMapper
+	public partial interface IDALInterruptionMapper
 	{
 		Interruption MapBOToEF(
 			BOInterruption bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0ea44ca2e22af787f50f4c59d089a7e6</Hash>
+    <Hash>77a38ee97db00be40278814017a8f9a3</Hash>
 </Codenesium>*/

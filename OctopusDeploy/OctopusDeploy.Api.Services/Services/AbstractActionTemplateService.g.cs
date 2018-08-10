@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractActionTemplateService : AbstractService
 	{
-		private IActionTemplateRepository actionTemplateRepository;
+		protected IActionTemplateRepository ActionTemplateRepository { get; private set; }
 
-		private IApiActionTemplateRequestModelValidator actionTemplateModelValidator;
+		protected IApiActionTemplateRequestModelValidator ActionTemplateModelValidator { get; private set; }
 
-		private IBOLActionTemplateMapper bolActionTemplateMapper;
+		protected IBOLActionTemplateMapper BolActionTemplateMapper { get; private set; }
 
-		private IDALActionTemplateMapper dalActionTemplateMapper;
+		protected IDALActionTemplateMapper DalActionTemplateMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALActionTemplateMapper dalActionTemplateMapper)
 			: base()
 		{
-			this.actionTemplateRepository = actionTemplateRepository;
-			this.actionTemplateModelValidator = actionTemplateModelValidator;
-			this.bolActionTemplateMapper = bolActionTemplateMapper;
-			this.dalActionTemplateMapper = dalActionTemplateMapper;
+			this.ActionTemplateRepository = actionTemplateRepository;
+			this.ActionTemplateModelValidator = actionTemplateModelValidator;
+			this.BolActionTemplateMapper = bolActionTemplateMapper;
+			this.DalActionTemplateMapper = dalActionTemplateMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiActionTemplateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.actionTemplateRepository.All(limit, offset);
+			var records = await this.ActionTemplateRepository.All(limit, offset);
 
-			return this.bolActionTemplateMapper.MapBOToModel(this.dalActionTemplateMapper.MapEFToBO(records));
+			return this.BolActionTemplateMapper.MapBOToModel(this.DalActionTemplateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiActionTemplateResponseModel> Get(string id)
 		{
-			var record = await this.actionTemplateRepository.Get(id);
+			var record = await this.ActionTemplateRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolActionTemplateMapper.MapBOToModel(this.dalActionTemplateMapper.MapEFToBO(record));
+				return this.BolActionTemplateMapper.MapBOToModel(this.DalActionTemplateMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiActionTemplateResponseModel>> Create(
 			ApiActionTemplateRequestModel model)
 		{
-			CreateResponse<ApiActionTemplateResponseModel> response = new CreateResponse<ApiActionTemplateResponseModel>(await this.actionTemplateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiActionTemplateResponseModel> response = new CreateResponse<ApiActionTemplateResponseModel>(await this.ActionTemplateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolActionTemplateMapper.MapModelToBO(default(string), model);
-				var record = await this.actionTemplateRepository.Create(this.dalActionTemplateMapper.MapBOToEF(bo));
+				var bo = this.BolActionTemplateMapper.MapModelToBO(default(string), model);
+				var record = await this.ActionTemplateRepository.Create(this.DalActionTemplateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolActionTemplateMapper.MapBOToModel(this.dalActionTemplateMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolActionTemplateMapper.MapBOToModel(this.DalActionTemplateMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiActionTemplateRequestModel model)
 		{
-			var validationResult = await this.actionTemplateModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ActionTemplateModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolActionTemplateMapper.MapModelToBO(id, model);
-				await this.actionTemplateRepository.Update(this.dalActionTemplateMapper.MapBOToEF(bo));
+				var bo = this.BolActionTemplateMapper.MapModelToBO(id, model);
+				await this.ActionTemplateRepository.Update(this.DalActionTemplateMapper.MapBOToEF(bo));
 
-				var record = await this.actionTemplateRepository.Get(id);
+				var record = await this.ActionTemplateRepository.Get(id);
 
-				return new UpdateResponse<ApiActionTemplateResponseModel>(this.bolActionTemplateMapper.MapBOToModel(this.dalActionTemplateMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiActionTemplateResponseModel>(this.BolActionTemplateMapper.MapBOToModel(this.DalActionTemplateMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.actionTemplateModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ActionTemplateModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.actionTemplateRepository.Delete(id);
+				await this.ActionTemplateRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiActionTemplateResponseModel> ByName(string name)
 		{
-			ActionTemplate record = await this.actionTemplateRepository.ByName(name);
+			ActionTemplate record = await this.ActionTemplateRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolActionTemplateMapper.MapBOToModel(this.dalActionTemplateMapper.MapEFToBO(record));
+				return this.BolActionTemplateMapper.MapBOToModel(this.DalActionTemplateMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2c0d32526fa236a1a1658976fcabbd30</Hash>
+    <Hash>753cca016bf601382dd31adfe4606f94</Hash>
 </Codenesium>*/

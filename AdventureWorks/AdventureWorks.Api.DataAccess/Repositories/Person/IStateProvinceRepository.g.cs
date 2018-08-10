@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IStateProvinceRepository
+	public partial interface IStateProvinceRepository
 	{
 		Task<StateProvince> Create(StateProvince item);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ffc9874437341dc22747166264f742f2</Hash>
+    <Hash>02476b05f57112d3578ac051988c69a7</Hash>
 </Codenesium>*/

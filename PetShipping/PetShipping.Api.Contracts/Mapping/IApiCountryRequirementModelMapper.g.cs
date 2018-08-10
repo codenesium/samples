@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Contracts
 {
-	public interface IApiCountryRequirementModelMapper
+	public partial interface IApiCountryRequirementModelMapper
 	{
 		ApiCountryRequirementResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2481db8148af131e84a5963e1ed7e9c5</Hash>
+    <Hash>90c380ac4b8ad72d9af8096f6182926e</Hash>
 </Codenesium>*/

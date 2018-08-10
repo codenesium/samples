@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IApiVersionInfoRequestModelValidator
+	public partial interface IApiVersionInfoRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiVersionInfoRequestModel model);
 
@@ -16,5 +16,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d405a03d8a3f9db57d056c9a140d663</Hash>
+    <Hash>80c0c1442a58bf79f81b0287d0ea1ad4</Hash>
 </Codenesium>*/

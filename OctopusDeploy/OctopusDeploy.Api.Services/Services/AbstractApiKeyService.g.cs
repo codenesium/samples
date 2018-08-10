@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractApiKeyService : AbstractService
 	{
-		private IApiKeyRepository apiKeyRepository;
+		protected IApiKeyRepository ApiKeyRepository { get; private set; }
 
-		private IApiApiKeyRequestModelValidator apiKeyModelValidator;
+		protected IApiApiKeyRequestModelValidator ApiKeyModelValidator { get; private set; }
 
-		private IBOLApiKeyMapper bolApiKeyMapper;
+		protected IBOLApiKeyMapper BolApiKeyMapper { get; private set; }
 
-		private IDALApiKeyMapper dalApiKeyMapper;
+		protected IDALApiKeyMapper DalApiKeyMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALApiKeyMapper dalApiKeyMapper)
 			: base()
 		{
-			this.apiKeyRepository = apiKeyRepository;
-			this.apiKeyModelValidator = apiKeyModelValidator;
-			this.bolApiKeyMapper = bolApiKeyMapper;
-			this.dalApiKeyMapper = dalApiKeyMapper;
+			this.ApiKeyRepository = apiKeyRepository;
+			this.ApiKeyModelValidator = apiKeyModelValidator;
+			this.BolApiKeyMapper = bolApiKeyMapper;
+			this.DalApiKeyMapper = dalApiKeyMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiApiKeyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.apiKeyRepository.All(limit, offset);
+			var records = await this.ApiKeyRepository.All(limit, offset);
 
-			return this.bolApiKeyMapper.MapBOToModel(this.dalApiKeyMapper.MapEFToBO(records));
+			return this.BolApiKeyMapper.MapBOToModel(this.DalApiKeyMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiApiKeyResponseModel> Get(string id)
 		{
-			var record = await this.apiKeyRepository.Get(id);
+			var record = await this.ApiKeyRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolApiKeyMapper.MapBOToModel(this.dalApiKeyMapper.MapEFToBO(record));
+				return this.BolApiKeyMapper.MapBOToModel(this.DalApiKeyMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiApiKeyResponseModel>> Create(
 			ApiApiKeyRequestModel model)
 		{
-			CreateResponse<ApiApiKeyResponseModel> response = new CreateResponse<ApiApiKeyResponseModel>(await this.apiKeyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiApiKeyResponseModel> response = new CreateResponse<ApiApiKeyResponseModel>(await this.ApiKeyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolApiKeyMapper.MapModelToBO(default(string), model);
-				var record = await this.apiKeyRepository.Create(this.dalApiKeyMapper.MapBOToEF(bo));
+				var bo = this.BolApiKeyMapper.MapModelToBO(default(string), model);
+				var record = await this.ApiKeyRepository.Create(this.DalApiKeyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolApiKeyMapper.MapBOToModel(this.dalApiKeyMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolApiKeyMapper.MapBOToModel(this.DalApiKeyMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiApiKeyRequestModel model)
 		{
-			var validationResult = await this.apiKeyModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ApiKeyModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolApiKeyMapper.MapModelToBO(id, model);
-				await this.apiKeyRepository.Update(this.dalApiKeyMapper.MapBOToEF(bo));
+				var bo = this.BolApiKeyMapper.MapModelToBO(id, model);
+				await this.ApiKeyRepository.Update(this.DalApiKeyMapper.MapBOToEF(bo));
 
-				var record = await this.apiKeyRepository.Get(id);
+				var record = await this.ApiKeyRepository.Get(id);
 
-				return new UpdateResponse<ApiApiKeyResponseModel>(this.bolApiKeyMapper.MapBOToModel(this.dalApiKeyMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiApiKeyResponseModel>(this.BolApiKeyMapper.MapBOToModel(this.DalApiKeyMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.apiKeyModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ApiKeyModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.apiKeyRepository.Delete(id);
+				await this.ApiKeyRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiApiKeyResponseModel> ByApiKeyHashed(string apiKeyHashed)
 		{
-			ApiKey record = await this.apiKeyRepository.ByApiKeyHashed(apiKeyHashed);
+			ApiKey record = await this.ApiKeyRepository.ByApiKeyHashed(apiKeyHashed);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolApiKeyMapper.MapBOToModel(this.dalApiKeyMapper.MapEFToBO(record));
+				return this.BolApiKeyMapper.MapBOToModel(this.DalApiKeyMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>08c9853500cb61ef54a36c9741e72564</Hash>
+    <Hash>9b9cecfe6e38d2350aa4406d3236a7c1</Hash>
 </Codenesium>*/

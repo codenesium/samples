@@ -5,7 +5,7 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
-	public interface IApiPersonRefRequestModelValidator
+	public partial interface IApiPersonRefRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiPersonRefRequestModel model);
 
@@ -16,5 +16,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>448800f30c0e5d7e55814fca4b0f9766</Hash>
+    <Hash>d43a3f01c92cdd7de9718e567b2a3a78</Hash>
 </Codenesium>*/

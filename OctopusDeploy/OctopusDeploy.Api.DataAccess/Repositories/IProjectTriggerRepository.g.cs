@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IProjectTriggerRepository
+	public partial interface IProjectTriggerRepository
 	{
 		Task<ProjectTrigger> Create(ProjectTrigger item);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a22fae6b09de6db929ff51bdf211b2c9</Hash>
+    <Hash>1f9d0b9c3aef72f8e7c5de9661a5d726</Hash>
 </Codenesium>*/

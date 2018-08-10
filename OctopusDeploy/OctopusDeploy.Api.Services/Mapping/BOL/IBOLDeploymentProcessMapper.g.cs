@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLDeploymentProcessMapper
+	public partial interface IBOLDeploymentProcessMapper
 	{
 		BODeploymentProcess MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e0fa187fccc99cc1295a06dadfdc9b0a</Hash>
+    <Hash>a3c607e8d7c2e7e9260ce6de033cc9d7</Hash>
 </Codenesium>*/

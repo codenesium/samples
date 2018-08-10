@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public interface IPipelineRepository
+	public partial interface IPipelineRepository
 	{
 		Task<Pipeline> Create(Pipeline item);
 
@@ -22,5 +22,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>076122e9cebd9d1adedfc1ba375d8e7c</Hash>
+    <Hash>9652a9248d898294fb31597a4f447e8d</Hash>
 </Codenesium>*/

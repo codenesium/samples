@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiStateProvinceModelMapper
+	public partial interface IApiStateProvinceModelMapper
 	{
 		ApiStateProvinceResponseModel MapRequestToResponse(
 			int stateProvinceID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c07f6f89f91c261bbf90a18b2e62ce51</Hash>
+    <Hash>c74098d04bf110db1526a9ae2b86d5a2</Hash>
 </Codenesium>*/

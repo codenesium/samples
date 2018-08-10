@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IApiUserRoleRequestModelValidator
+	public partial interface IApiUserRoleRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiUserRoleRequestModel model);
 
@@ -16,5 +16,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a178464e9fa7da3784978dc01a8e5d0</Hash>
+    <Hash>82979a3fc2e697528d8b7f006082774c</Hash>
 </Codenesium>*/

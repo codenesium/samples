@@ -5,7 +5,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IBOLCountryMapper
+	public partial interface IBOLCountryMapper
 	{
 		BOCountry MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e00f98327ce8897088deb120ce031f55</Hash>
+    <Hash>1ba9b3a479256191546785370a5bf69c</Hash>
 </Codenesium>*/

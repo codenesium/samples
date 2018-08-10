@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IStudentXFamilyService
+	public partial interface IStudentXFamilyService
 	{
 		Task<CreateResponse<ApiStudentXFamilyResponseModel>> Create(
 			ApiStudentXFamilyRequestModel model);
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a672b6f406a26242f83039455d000b67</Hash>
+    <Hash>323025c7bfd99720590fa276fef86ded</Hash>
 </Codenesium>*/

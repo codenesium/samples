@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface ITagsService
+	public partial interface ITagsService
 	{
 		Task<CreateResponse<ApiTagsResponseModel>> Create(
 			ApiTagsRequestModel model);
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84a96acabd0b663689c59047987ecf51</Hash>
+    <Hash>a7d0eb1d4fca55714931b11389c62fe2</Hash>
 </Codenesium>*/

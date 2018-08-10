@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductModelIllustrationService : AbstractService
 	{
-		private IProductModelIllustrationRepository productModelIllustrationRepository;
+		protected IProductModelIllustrationRepository ProductModelIllustrationRepository { get; private set; }
 
-		private IApiProductModelIllustrationRequestModelValidator productModelIllustrationModelValidator;
+		protected IApiProductModelIllustrationRequestModelValidator ProductModelIllustrationModelValidator { get; private set; }
 
-		private IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper;
+		protected IBOLProductModelIllustrationMapper BolProductModelIllustrationMapper { get; private set; }
 
-		private IDALProductModelIllustrationMapper dalProductModelIllustrationMapper;
+		protected IDALProductModelIllustrationMapper DalProductModelIllustrationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductModelIllustrationMapper dalProductModelIllustrationMapper)
 			: base()
 		{
-			this.productModelIllustrationRepository = productModelIllustrationRepository;
-			this.productModelIllustrationModelValidator = productModelIllustrationModelValidator;
-			this.bolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
-			this.dalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
+			this.ProductModelIllustrationRepository = productModelIllustrationRepository;
+			this.ProductModelIllustrationModelValidator = productModelIllustrationModelValidator;
+			this.BolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
+			this.DalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProductModelIllustrationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.productModelIllustrationRepository.All(limit, offset);
+			var records = await this.ProductModelIllustrationRepository.All(limit, offset);
 
-			return this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(records));
+			return this.BolProductModelIllustrationMapper.MapBOToModel(this.DalProductModelIllustrationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductModelIllustrationResponseModel> Get(int productModelID)
 		{
-			var record = await this.productModelIllustrationRepository.Get(productModelID);
+			var record = await this.ProductModelIllustrationRepository.Get(productModelID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(record));
+				return this.BolProductModelIllustrationMapper.MapBOToModel(this.DalProductModelIllustrationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProductModelIllustrationResponseModel>> Create(
 			ApiProductModelIllustrationRequestModel model)
 		{
-			CreateResponse<ApiProductModelIllustrationResponseModel> response = new CreateResponse<ApiProductModelIllustrationResponseModel>(await this.productModelIllustrationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductModelIllustrationResponseModel> response = new CreateResponse<ApiProductModelIllustrationResponseModel>(await this.ProductModelIllustrationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProductModelIllustrationMapper.MapModelToBO(default(int), model);
-				var record = await this.productModelIllustrationRepository.Create(this.dalProductModelIllustrationMapper.MapBOToEF(bo));
+				var bo = this.BolProductModelIllustrationMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductModelIllustrationRepository.Create(this.DalProductModelIllustrationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProductModelIllustrationMapper.MapBOToModel(this.DalProductModelIllustrationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int productModelID,
 			ApiProductModelIllustrationRequestModel model)
 		{
-			var validationResult = await this.productModelIllustrationModelValidator.ValidateUpdateAsync(productModelID, model);
+			var validationResult = await this.ProductModelIllustrationModelValidator.ValidateUpdateAsync(productModelID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProductModelIllustrationMapper.MapModelToBO(productModelID, model);
-				await this.productModelIllustrationRepository.Update(this.dalProductModelIllustrationMapper.MapBOToEF(bo));
+				var bo = this.BolProductModelIllustrationMapper.MapModelToBO(productModelID, model);
+				await this.ProductModelIllustrationRepository.Update(this.DalProductModelIllustrationMapper.MapBOToEF(bo));
 
-				var record = await this.productModelIllustrationRepository.Get(productModelID);
+				var record = await this.ProductModelIllustrationRepository.Get(productModelID);
 
-				return new UpdateResponse<ApiProductModelIllustrationResponseModel>(this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProductModelIllustrationResponseModel>(this.BolProductModelIllustrationMapper.MapBOToModel(this.DalProductModelIllustrationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int productModelID)
 		{
-			ActionResponse response = new ActionResponse(await this.productModelIllustrationModelValidator.ValidateDeleteAsync(productModelID));
+			ActionResponse response = new ActionResponse(await this.ProductModelIllustrationModelValidator.ValidateDeleteAsync(productModelID));
 			if (response.Success)
 			{
-				await this.productModelIllustrationRepository.Delete(productModelID);
+				await this.ProductModelIllustrationRepository.Delete(productModelID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>53fcdfbfb76a9415089679efe078bfbd</Hash>
+    <Hash>ecdba3cc04401dfd9853edba29cfba48</Hash>
 </Codenesium>*/

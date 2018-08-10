@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IApiKeyRepository
+	public partial interface IApiKeyRepository
 	{
 		Task<ApiKey> Create(ApiKey item);
 
@@ -22,5 +22,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>57a0f9a25264566e783a77d3837b6473</Hash>
+    <Hash>cd8715d57ff69d7c1af482d1a7ef9fd3</Hash>
 </Codenesium>*/

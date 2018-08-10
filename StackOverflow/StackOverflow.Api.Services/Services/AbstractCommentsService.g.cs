@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractCommentsService : AbstractService
 	{
-		private ICommentsRepository commentsRepository;
+		protected ICommentsRepository CommentsRepository { get; private set; }
 
-		private IApiCommentsRequestModelValidator commentsModelValidator;
+		protected IApiCommentsRequestModelValidator CommentsModelValidator { get; private set; }
 
-		private IBOLCommentsMapper bolCommentsMapper;
+		protected IBOLCommentsMapper BolCommentsMapper { get; private set; }
 
-		private IDALCommentsMapper dalCommentsMapper;
+		protected IDALCommentsMapper DalCommentsMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace StackOverflowNS.Api.Services
 			IDALCommentsMapper dalCommentsMapper)
 			: base()
 		{
-			this.commentsRepository = commentsRepository;
-			this.commentsModelValidator = commentsModelValidator;
-			this.bolCommentsMapper = bolCommentsMapper;
-			this.dalCommentsMapper = dalCommentsMapper;
+			this.CommentsRepository = commentsRepository;
+			this.CommentsModelValidator = commentsModelValidator;
+			this.BolCommentsMapper = bolCommentsMapper;
+			this.DalCommentsMapper = dalCommentsMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiCommentsResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.commentsRepository.All(limit, offset);
+			var records = await this.CommentsRepository.All(limit, offset);
 
-			return this.bolCommentsMapper.MapBOToModel(this.dalCommentsMapper.MapEFToBO(records));
+			return this.BolCommentsMapper.MapBOToModel(this.DalCommentsMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCommentsResponseModel> Get(int id)
 		{
-			var record = await this.commentsRepository.Get(id);
+			var record = await this.CommentsRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.bolCommentsMapper.MapBOToModel(this.dalCommentsMapper.MapEFToBO(record));
+				return this.BolCommentsMapper.MapBOToModel(this.DalCommentsMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiCommentsResponseModel>> Create(
 			ApiCommentsRequestModel model)
 		{
-			CreateResponse<ApiCommentsResponseModel> response = new CreateResponse<ApiCommentsResponseModel>(await this.commentsModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCommentsResponseModel> response = new CreateResponse<ApiCommentsResponseModel>(await this.CommentsModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolCommentsMapper.MapModelToBO(default(int), model);
-				var record = await this.commentsRepository.Create(this.dalCommentsMapper.MapBOToEF(bo));
+				var bo = this.BolCommentsMapper.MapModelToBO(default(int), model);
+				var record = await this.CommentsRepository.Create(this.DalCommentsMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolCommentsMapper.MapBOToModel(this.dalCommentsMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolCommentsMapper.MapBOToModel(this.DalCommentsMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace StackOverflowNS.Api.Services
 			int id,
 			ApiCommentsRequestModel model)
 		{
-			var validationResult = await this.commentsModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.CommentsModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolCommentsMapper.MapModelToBO(id, model);
-				await this.commentsRepository.Update(this.dalCommentsMapper.MapBOToEF(bo));
+				var bo = this.BolCommentsMapper.MapModelToBO(id, model);
+				await this.CommentsRepository.Update(this.DalCommentsMapper.MapBOToEF(bo));
 
-				var record = await this.commentsRepository.Get(id);
+				var record = await this.CommentsRepository.Get(id);
 
-				return new UpdateResponse<ApiCommentsResponseModel>(this.bolCommentsMapper.MapBOToModel(this.dalCommentsMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiCommentsResponseModel>(this.BolCommentsMapper.MapBOToModel(this.DalCommentsMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace StackOverflowNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.commentsModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.CommentsModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.commentsRepository.Delete(id);
+				await this.CommentsRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88bdd6dcd47194b1fe0dc70df8c10c1b</Hash>
+    <Hash>05cee114267ec530ea111e8e56817d5e</Hash>
 </Codenesium>*/

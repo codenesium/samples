@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALProductDescriptionMapper
+	public partial interface IDALProductDescriptionMapper
 	{
 		ProductDescription MapBOToEF(
 			BOProductDescription bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a83272845fa6c65cf7cd3e2a2987a4d</Hash>
+    <Hash>70c5c8297de77f615fcd963417ae385d</Hash>
 </Codenesium>*/

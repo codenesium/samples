@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALShoppingCartItemMapper
+	public partial interface IDALShoppingCartItemMapper
 	{
 		ShoppingCartItem MapBOToEF(
 			BOShoppingCartItem bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8e72d899a70b96414cc0a05e88ad7d5b</Hash>
+    <Hash>5c4e0ba28be9f335bf5031d0897e081d</Hash>
 </Codenesium>*/

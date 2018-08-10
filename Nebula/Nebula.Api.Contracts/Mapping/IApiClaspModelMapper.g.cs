@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
-	public interface IApiClaspModelMapper
+	public partial interface IApiClaspModelMapper
 	{
 		ApiClaspResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>07a538900f7350bdfa81798e546a9588</Hash>
+    <Hash>c5d7e20bbd36aa4f4e2faa690672a472</Hash>
 </Codenesium>*/

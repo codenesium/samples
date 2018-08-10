@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLDatabaseLogMapper
+	public partial interface IBOLDatabaseLogMapper
 	{
 		BODatabaseLog MapModelToBO(
 			int databaseLogID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fc4d7bd4e6bf27342c59e4780e57c12b</Hash>
+    <Hash>c4c7df309fa065e702b5ff76ad979e4b</Hash>
 </Codenesium>*/

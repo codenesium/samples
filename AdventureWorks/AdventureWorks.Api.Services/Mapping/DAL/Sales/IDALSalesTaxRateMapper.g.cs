@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALSalesTaxRateMapper
+	public partial interface IDALSalesTaxRateMapper
 	{
 		SalesTaxRate MapBOToEF(
 			BOSalesTaxRate bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>535998ed4241c1580cba0aaea76181f0</Hash>
+    <Hash>bb1efcef3a148a5ece42e766a5392022</Hash>
 </Codenesium>*/

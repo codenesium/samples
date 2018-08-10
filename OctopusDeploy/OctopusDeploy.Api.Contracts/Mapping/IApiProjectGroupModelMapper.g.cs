@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-	public interface IApiProjectGroupModelMapper
+	public partial interface IApiProjectGroupModelMapper
 	{
 		ApiProjectGroupResponseModel MapRequestToResponse(
 			string id,
@@ -19,5 +19,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>76b1d6b3cc344cc5dd32491dd99e09b3</Hash>
+    <Hash>6d505c21dcc46b7dbbbdabc1003c2556</Hash>
 </Codenesium>*/

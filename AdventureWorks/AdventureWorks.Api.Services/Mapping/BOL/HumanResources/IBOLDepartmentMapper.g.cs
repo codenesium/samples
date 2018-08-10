@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLDepartmentMapper
+	public partial interface IBOLDepartmentMapper
 	{
 		BODepartment MapModelToBO(
 			short departmentID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>27b864cf21d49c8bc326b69412ce1a36</Hash>
+    <Hash>6b9f6ef788226509bf81bb9cb61cd101</Hash>
 </Codenesium>*/

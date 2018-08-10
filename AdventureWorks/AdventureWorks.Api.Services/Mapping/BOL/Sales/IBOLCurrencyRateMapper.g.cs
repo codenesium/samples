@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLCurrencyRateMapper
+	public partial interface IBOLCurrencyRateMapper
 	{
 		BOCurrencyRate MapModelToBO(
 			int currencyRateID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>303b533aaef12f1ed1d71fd508ab9a92</Hash>
+    <Hash>36c403d27dc7bc0177b0e669c4ada29f</Hash>
 </Codenesium>*/

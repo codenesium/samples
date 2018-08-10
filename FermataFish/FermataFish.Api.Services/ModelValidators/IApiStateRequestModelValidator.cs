@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IApiStateRequestModelValidator
+	public partial interface IApiStateRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiStateRequestModel model);
 
@@ -16,5 +16,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5d6f3fec1d5d03348d4387a5eb65969f</Hash>
+    <Hash>0a31c2546f04f3aeeff0be4df3b80f71</Hash>
 </Codenesium>*/

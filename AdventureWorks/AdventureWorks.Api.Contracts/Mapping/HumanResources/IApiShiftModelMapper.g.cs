@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiShiftModelMapper
+	public partial interface IApiShiftModelMapper
 	{
 		ApiShiftResponseModel MapRequestToResponse(
 			int shiftID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>538bf296b7e44026db22a878f3c9dae2</Hash>
+    <Hash>af268d8b933633898b7f8989e5e9b5e6</Hash>
 </Codenesium>*/

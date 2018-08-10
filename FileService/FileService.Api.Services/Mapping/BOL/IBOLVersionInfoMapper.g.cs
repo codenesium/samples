@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-	public interface IBOLVersionInfoMapper
+	public partial interface IBOLVersionInfoMapper
 	{
 		BOVersionInfo MapModelToBO(
 			long version,
@@ -20,5 +20,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>817b29611bdea90cb438291c004899fe</Hash>
+    <Hash>2f974486d173810ed6d6c9513838a480</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface IDALCountryRequirementMapper
+	public partial interface IDALCountryRequirementMapper
 	{
 		CountryRequirement MapBOToEF(
 			BOCountryRequirement bo);
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>619e2d9237ecf65518be859e36b7cd71</Hash>
+    <Hash>c9e4e13d9ff2fa4a7a06a7c2d74372b8</Hash>
 </Codenesium>*/

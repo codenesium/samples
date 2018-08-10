@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLLocationMapper
+	public partial interface IBOLLocationMapper
 	{
 		BOLocation MapModelToBO(
 			short locationID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5012fb03e5226039f1a7780f09e09a50</Hash>
+    <Hash>fc26a2bfbdae8f5f3c0ccbabf2feab22</Hash>
 </Codenesium>*/

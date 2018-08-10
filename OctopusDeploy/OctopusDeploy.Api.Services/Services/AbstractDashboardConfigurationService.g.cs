@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractDashboardConfigurationService : AbstractService
 	{
-		private IDashboardConfigurationRepository dashboardConfigurationRepository;
+		protected IDashboardConfigurationRepository DashboardConfigurationRepository { get; private set; }
 
-		private IApiDashboardConfigurationRequestModelValidator dashboardConfigurationModelValidator;
+		protected IApiDashboardConfigurationRequestModelValidator DashboardConfigurationModelValidator { get; private set; }
 
-		private IBOLDashboardConfigurationMapper bolDashboardConfigurationMapper;
+		protected IBOLDashboardConfigurationMapper BolDashboardConfigurationMapper { get; private set; }
 
-		private IDALDashboardConfigurationMapper dalDashboardConfigurationMapper;
+		protected IDALDashboardConfigurationMapper DalDashboardConfigurationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALDashboardConfigurationMapper dalDashboardConfigurationMapper)
 			: base()
 		{
-			this.dashboardConfigurationRepository = dashboardConfigurationRepository;
-			this.dashboardConfigurationModelValidator = dashboardConfigurationModelValidator;
-			this.bolDashboardConfigurationMapper = bolDashboardConfigurationMapper;
-			this.dalDashboardConfigurationMapper = dalDashboardConfigurationMapper;
+			this.DashboardConfigurationRepository = dashboardConfigurationRepository;
+			this.DashboardConfigurationModelValidator = dashboardConfigurationModelValidator;
+			this.BolDashboardConfigurationMapper = bolDashboardConfigurationMapper;
+			this.DalDashboardConfigurationMapper = dalDashboardConfigurationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiDashboardConfigurationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.dashboardConfigurationRepository.All(limit, offset);
+			var records = await this.DashboardConfigurationRepository.All(limit, offset);
 
-			return this.bolDashboardConfigurationMapper.MapBOToModel(this.dalDashboardConfigurationMapper.MapEFToBO(records));
+			return this.BolDashboardConfigurationMapper.MapBOToModel(this.DalDashboardConfigurationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDashboardConfigurationResponseModel> Get(string id)
 		{
-			var record = await this.dashboardConfigurationRepository.Get(id);
+			var record = await this.DashboardConfigurationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolDashboardConfigurationMapper.MapBOToModel(this.dalDashboardConfigurationMapper.MapEFToBO(record));
+				return this.BolDashboardConfigurationMapper.MapBOToModel(this.DalDashboardConfigurationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiDashboardConfigurationResponseModel>> Create(
 			ApiDashboardConfigurationRequestModel model)
 		{
-			CreateResponse<ApiDashboardConfigurationResponseModel> response = new CreateResponse<ApiDashboardConfigurationResponseModel>(await this.dashboardConfigurationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDashboardConfigurationResponseModel> response = new CreateResponse<ApiDashboardConfigurationResponseModel>(await this.DashboardConfigurationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolDashboardConfigurationMapper.MapModelToBO(default(string), model);
-				var record = await this.dashboardConfigurationRepository.Create(this.dalDashboardConfigurationMapper.MapBOToEF(bo));
+				var bo = this.BolDashboardConfigurationMapper.MapModelToBO(default(string), model);
+				var record = await this.DashboardConfigurationRepository.Create(this.DalDashboardConfigurationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolDashboardConfigurationMapper.MapBOToModel(this.dalDashboardConfigurationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolDashboardConfigurationMapper.MapBOToModel(this.DalDashboardConfigurationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiDashboardConfigurationRequestModel model)
 		{
-			var validationResult = await this.dashboardConfigurationModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.DashboardConfigurationModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolDashboardConfigurationMapper.MapModelToBO(id, model);
-				await this.dashboardConfigurationRepository.Update(this.dalDashboardConfigurationMapper.MapBOToEF(bo));
+				var bo = this.BolDashboardConfigurationMapper.MapModelToBO(id, model);
+				await this.DashboardConfigurationRepository.Update(this.DalDashboardConfigurationMapper.MapBOToEF(bo));
 
-				var record = await this.dashboardConfigurationRepository.Get(id);
+				var record = await this.DashboardConfigurationRepository.Get(id);
 
-				return new UpdateResponse<ApiDashboardConfigurationResponseModel>(this.bolDashboardConfigurationMapper.MapBOToModel(this.dalDashboardConfigurationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiDashboardConfigurationResponseModel>(this.BolDashboardConfigurationMapper.MapBOToModel(this.DalDashboardConfigurationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.dashboardConfigurationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.DashboardConfigurationModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.dashboardConfigurationRepository.Delete(id);
+				await this.DashboardConfigurationRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a9c145d92bf5d0bcbc654e1e7747d22b</Hash>
+    <Hash>4c1fe6a3598df3a5dc02da0c17ad2f1d</Hash>
 </Codenesium>*/

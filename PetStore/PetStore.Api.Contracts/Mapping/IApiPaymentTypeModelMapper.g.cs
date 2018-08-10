@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Contracts
 {
-	public interface IApiPaymentTypeModelMapper
+	public partial interface IApiPaymentTypeModelMapper
 	{
 		ApiPaymentTypeResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d2799a9696968bc52fd407a7af815aaf</Hash>
+    <Hash>d473adafe6f4d4fd2c88d808321fea96</Hash>
 </Codenesium>*/

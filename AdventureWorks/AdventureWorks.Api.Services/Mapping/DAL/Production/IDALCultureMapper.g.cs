@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALCultureMapper
+	public partial interface IDALCultureMapper
 	{
 		Culture MapBOToEF(
 			BOCulture bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1b93712eb8a3ea780d9966851122e239</Hash>
+    <Hash>16f054f211acffb6b62f5392de0afe70</Hash>
 </Codenesium>*/

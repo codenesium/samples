@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductInventoryService : AbstractService
 	{
-		private IProductInventoryRepository productInventoryRepository;
+		protected IProductInventoryRepository ProductInventoryRepository { get; private set; }
 
-		private IApiProductInventoryRequestModelValidator productInventoryModelValidator;
+		protected IApiProductInventoryRequestModelValidator ProductInventoryModelValidator { get; private set; }
 
-		private IBOLProductInventoryMapper bolProductInventoryMapper;
+		protected IBOLProductInventoryMapper BolProductInventoryMapper { get; private set; }
 
-		private IDALProductInventoryMapper dalProductInventoryMapper;
+		protected IDALProductInventoryMapper DalProductInventoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductInventoryMapper dalProductInventoryMapper)
 			: base()
 		{
-			this.productInventoryRepository = productInventoryRepository;
-			this.productInventoryModelValidator = productInventoryModelValidator;
-			this.bolProductInventoryMapper = bolProductInventoryMapper;
-			this.dalProductInventoryMapper = dalProductInventoryMapper;
+			this.ProductInventoryRepository = productInventoryRepository;
+			this.ProductInventoryModelValidator = productInventoryModelValidator;
+			this.BolProductInventoryMapper = bolProductInventoryMapper;
+			this.DalProductInventoryMapper = dalProductInventoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProductInventoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.productInventoryRepository.All(limit, offset);
+			var records = await this.ProductInventoryRepository.All(limit, offset);
 
-			return this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(records));
+			return this.BolProductInventoryMapper.MapBOToModel(this.DalProductInventoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductInventoryResponseModel> Get(int productID)
 		{
-			var record = await this.productInventoryRepository.Get(productID);
+			var record = await this.ProductInventoryRepository.Get(productID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(record));
+				return this.BolProductInventoryMapper.MapBOToModel(this.DalProductInventoryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProductInventoryResponseModel>> Create(
 			ApiProductInventoryRequestModel model)
 		{
-			CreateResponse<ApiProductInventoryResponseModel> response = new CreateResponse<ApiProductInventoryResponseModel>(await this.productInventoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductInventoryResponseModel> response = new CreateResponse<ApiProductInventoryResponseModel>(await this.ProductInventoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProductInventoryMapper.MapModelToBO(default(int), model);
-				var record = await this.productInventoryRepository.Create(this.dalProductInventoryMapper.MapBOToEF(bo));
+				var bo = this.BolProductInventoryMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductInventoryRepository.Create(this.DalProductInventoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProductInventoryMapper.MapBOToModel(this.DalProductInventoryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int productID,
 			ApiProductInventoryRequestModel model)
 		{
-			var validationResult = await this.productInventoryModelValidator.ValidateUpdateAsync(productID, model);
+			var validationResult = await this.ProductInventoryModelValidator.ValidateUpdateAsync(productID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProductInventoryMapper.MapModelToBO(productID, model);
-				await this.productInventoryRepository.Update(this.dalProductInventoryMapper.MapBOToEF(bo));
+				var bo = this.BolProductInventoryMapper.MapModelToBO(productID, model);
+				await this.ProductInventoryRepository.Update(this.DalProductInventoryMapper.MapBOToEF(bo));
 
-				var record = await this.productInventoryRepository.Get(productID);
+				var record = await this.ProductInventoryRepository.Get(productID);
 
-				return new UpdateResponse<ApiProductInventoryResponseModel>(this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProductInventoryResponseModel>(this.BolProductInventoryMapper.MapBOToModel(this.DalProductInventoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int productID)
 		{
-			ActionResponse response = new ActionResponse(await this.productInventoryModelValidator.ValidateDeleteAsync(productID));
+			ActionResponse response = new ActionResponse(await this.ProductInventoryModelValidator.ValidateDeleteAsync(productID));
 			if (response.Success)
 			{
-				await this.productInventoryRepository.Delete(productID);
+				await this.ProductInventoryRepository.Delete(productID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a3f7c39c3949b863e8bae17e8d6db81</Hash>
+    <Hash>87058b8b4d6e2dd20ad0520f50bc18b3</Hash>
 </Codenesium>*/

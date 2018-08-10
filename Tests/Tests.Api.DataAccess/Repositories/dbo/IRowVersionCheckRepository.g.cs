@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
-	public interface IRowVersionCheckRepository
+	public partial interface IRowVersionCheckRepository
 	{
 		Task<RowVersionCheck> Create(RowVersionCheck item);
 
@@ -20,5 +20,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b73d16d1f68d692ca4a76962b622ade6</Hash>
+    <Hash>af49cb6e3ca76806c8139982cc02c998</Hash>
 </Codenesium>*/

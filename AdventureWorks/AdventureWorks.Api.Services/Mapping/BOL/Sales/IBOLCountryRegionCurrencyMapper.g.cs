@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLCountryRegionCurrencyMapper
+	public partial interface IBOLCountryRegionCurrencyMapper
 	{
 		BOCountryRegionCurrency MapModelToBO(
 			string countryRegionCode,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1071534a02d87f5469d9e5299505126</Hash>
+    <Hash>f57c7901138e31c0defbb2e4e474ca1a</Hash>
 </Codenesium>*/

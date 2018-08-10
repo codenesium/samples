@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALTagSetMapper
+	public partial interface IDALTagSetMapper
 	{
 		TagSet MapBOToEF(
 			BOTagSet bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c386652123b8f740ed06ae4082f46019</Hash>
+    <Hash>e53f8918959692fd3bd5ae3920b7d220</Hash>
 </Codenesium>*/

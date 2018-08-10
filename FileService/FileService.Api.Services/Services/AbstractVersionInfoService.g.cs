@@ -14,13 +14,13 @@ namespace FileServiceNS.Api.Services
 {
 	public abstract class AbstractVersionInfoService : AbstractService
 	{
-		private IVersionInfoRepository versionInfoRepository;
+		protected IVersionInfoRepository VersionInfoRepository { get; private set; }
 
-		private IApiVersionInfoRequestModelValidator versionInfoModelValidator;
+		protected IApiVersionInfoRequestModelValidator VersionInfoModelValidator { get; private set; }
 
-		private IBOLVersionInfoMapper bolVersionInfoMapper;
+		protected IBOLVersionInfoMapper BolVersionInfoMapper { get; private set; }
 
-		private IDALVersionInfoMapper dalVersionInfoMapper;
+		protected IDALVersionInfoMapper DalVersionInfoMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace FileServiceNS.Api.Services
 			IDALVersionInfoMapper dalVersionInfoMapper)
 			: base()
 		{
-			this.versionInfoRepository = versionInfoRepository;
-			this.versionInfoModelValidator = versionInfoModelValidator;
-			this.bolVersionInfoMapper = bolVersionInfoMapper;
-			this.dalVersionInfoMapper = dalVersionInfoMapper;
+			this.VersionInfoRepository = versionInfoRepository;
+			this.VersionInfoModelValidator = versionInfoModelValidator;
+			this.BolVersionInfoMapper = bolVersionInfoMapper;
+			this.DalVersionInfoMapper = dalVersionInfoMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiVersionInfoResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.versionInfoRepository.All(limit, offset);
+			var records = await this.VersionInfoRepository.All(limit, offset);
 
-			return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(records));
+			return this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiVersionInfoResponseModel> Get(long version)
 		{
-			var record = await this.versionInfoRepository.Get(version);
+			var record = await this.VersionInfoRepository.Get(version);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+				return this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
 			ApiVersionInfoRequestModel model)
 		{
-			CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.versionInfoModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVersionInfoResponseModel> response = new CreateResponse<ApiVersionInfoResponseModel>(await this.VersionInfoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolVersionInfoMapper.MapModelToBO(default(long), model);
-				var record = await this.versionInfoRepository.Create(this.dalVersionInfoMapper.MapBOToEF(bo));
+				var bo = this.BolVersionInfoMapper.MapModelToBO(default(long), model);
+				var record = await this.VersionInfoRepository.Create(this.DalVersionInfoMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace FileServiceNS.Api.Services
 			long version,
 			ApiVersionInfoRequestModel model)
 		{
-			var validationResult = await this.versionInfoModelValidator.ValidateUpdateAsync(version, model);
+			var validationResult = await this.VersionInfoModelValidator.ValidateUpdateAsync(version, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolVersionInfoMapper.MapModelToBO(version, model);
-				await this.versionInfoRepository.Update(this.dalVersionInfoMapper.MapBOToEF(bo));
+				var bo = this.BolVersionInfoMapper.MapModelToBO(version, model);
+				await this.VersionInfoRepository.Update(this.DalVersionInfoMapper.MapBOToEF(bo));
 
-				var record = await this.versionInfoRepository.Get(version);
+				var record = await this.VersionInfoRepository.Get(version);
 
-				return new UpdateResponse<ApiVersionInfoResponseModel>(this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiVersionInfoResponseModel>(this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace FileServiceNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			long version)
 		{
-			ActionResponse response = new ActionResponse(await this.versionInfoModelValidator.ValidateDeleteAsync(version));
+			ActionResponse response = new ActionResponse(await this.VersionInfoModelValidator.ValidateDeleteAsync(version));
 			if (response.Success)
 			{
-				await this.versionInfoRepository.Delete(version);
+				await this.VersionInfoRepository.Delete(version);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace FileServiceNS.Api.Services
 
 		public async Task<ApiVersionInfoResponseModel> ByVersion(long version)
 		{
-			VersionInfo record = await this.versionInfoRepository.ByVersion(version);
+			VersionInfo record = await this.VersionInfoRepository.ByVersion(version);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.bolVersionInfoMapper.MapBOToModel(this.dalVersionInfoMapper.MapEFToBO(record));
+				return this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8de93466d04eed051fc5bd5127408570</Hash>
+    <Hash>3fc53d17abc029734ac95cfc649a1b8d</Hash>
 </Codenesium>*/

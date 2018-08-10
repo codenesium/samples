@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface IDALEmployeeMapper
+	public partial interface IDALEmployeeMapper
 	{
 		Employee MapBOToEF(
 			BOEmployee bo);
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c78d4b9f298f5d4ae1b94361f3203044</Hash>
+    <Hash>464540798c6569263c51b41d668590d8</Hash>
 </Codenesium>*/

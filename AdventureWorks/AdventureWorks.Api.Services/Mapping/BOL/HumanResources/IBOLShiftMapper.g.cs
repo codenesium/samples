@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLShiftMapper
+	public partial interface IBOLShiftMapper
 	{
 		BOShift MapModelToBO(
 			int shiftID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cfd10dfe44ca3a932718d1d145354d02</Hash>
+    <Hash>e757ea6315414b12a9d17857670acf47</Hash>
 </Codenesium>*/

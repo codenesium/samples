@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IChainService
+	public partial interface IChainService
 	{
 		Task<CreateResponse<ApiChainResponseModel>> Create(
 			ApiChainRequestModel model);
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b33f4a9ba9be94a1e08302e1be40cfbb</Hash>
+    <Hash>5d0ee92fb56a61c52c217196d77cc715</Hash>
 </Codenesium>*/

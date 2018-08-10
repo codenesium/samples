@@ -14,38 +14,38 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductService : AbstractService
 	{
-		private IProductRepository productRepository;
+		protected IProductRepository ProductRepository { get; private set; }
 
-		private IApiProductRequestModelValidator productModelValidator;
+		protected IApiProductRequestModelValidator ProductModelValidator { get; private set; }
 
-		private IBOLProductMapper bolProductMapper;
+		protected IBOLProductMapper BolProductMapper { get; private set; }
 
-		private IDALProductMapper dalProductMapper;
+		protected IDALProductMapper DalProductMapper { get; private set; }
 
-		private IBOLBillOfMaterialMapper bolBillOfMaterialMapper;
+		protected IBOLBillOfMaterialMapper BolBillOfMaterialMapper { get; private set; }
 
-		private IDALBillOfMaterialMapper dalBillOfMaterialMapper;
-		private IBOLProductCostHistoryMapper bolProductCostHistoryMapper;
+		protected IDALBillOfMaterialMapper DalBillOfMaterialMapper { get; private set; }
+		protected IBOLProductCostHistoryMapper BolProductCostHistoryMapper { get; private set; }
 
-		private IDALProductCostHistoryMapper dalProductCostHistoryMapper;
-		private IBOLProductInventoryMapper bolProductInventoryMapper;
+		protected IDALProductCostHistoryMapper DalProductCostHistoryMapper { get; private set; }
+		protected IBOLProductInventoryMapper BolProductInventoryMapper { get; private set; }
 
-		private IDALProductInventoryMapper dalProductInventoryMapper;
-		private IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper;
+		protected IDALProductInventoryMapper DalProductInventoryMapper { get; private set; }
+		protected IBOLProductListPriceHistoryMapper BolProductListPriceHistoryMapper { get; private set; }
 
-		private IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper;
-		private IBOLProductProductPhotoMapper bolProductProductPhotoMapper;
+		protected IDALProductListPriceHistoryMapper DalProductListPriceHistoryMapper { get; private set; }
+		protected IBOLProductProductPhotoMapper BolProductProductPhotoMapper { get; private set; }
 
-		private IDALProductProductPhotoMapper dalProductProductPhotoMapper;
-		private IBOLProductReviewMapper bolProductReviewMapper;
+		protected IDALProductProductPhotoMapper DalProductProductPhotoMapper { get; private set; }
+		protected IBOLProductReviewMapper BolProductReviewMapper { get; private set; }
 
-		private IDALProductReviewMapper dalProductReviewMapper;
-		private IBOLTransactionHistoryMapper bolTransactionHistoryMapper;
+		protected IDALProductReviewMapper DalProductReviewMapper { get; private set; }
+		protected IBOLTransactionHistoryMapper BolTransactionHistoryMapper { get; private set; }
 
-		private IDALTransactionHistoryMapper dalTransactionHistoryMapper;
-		private IBOLWorkOrderMapper bolWorkOrderMapper;
+		protected IDALTransactionHistoryMapper DalTransactionHistoryMapper { get; private set; }
+		protected IBOLWorkOrderMapper BolWorkOrderMapper { get; private set; }
 
-		private IDALWorkOrderMapper dalWorkOrderMapper;
+		protected IDALWorkOrderMapper DalWorkOrderMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -73,39 +73,39 @@ namespace AdventureWorksNS.Api.Services
 			IDALWorkOrderMapper dalWorkOrderMapper)
 			: base()
 		{
-			this.productRepository = productRepository;
-			this.productModelValidator = productModelValidator;
-			this.bolProductMapper = bolProductMapper;
-			this.dalProductMapper = dalProductMapper;
-			this.bolBillOfMaterialMapper = bolBillOfMaterialMapper;
-			this.dalBillOfMaterialMapper = dalBillOfMaterialMapper;
-			this.bolProductCostHistoryMapper = bolProductCostHistoryMapper;
-			this.dalProductCostHistoryMapper = dalProductCostHistoryMapper;
-			this.bolProductInventoryMapper = bolProductInventoryMapper;
-			this.dalProductInventoryMapper = dalProductInventoryMapper;
-			this.bolProductListPriceHistoryMapper = bolProductListPriceHistoryMapper;
-			this.dalProductListPriceHistoryMapper = dalProductListPriceHistoryMapper;
-			this.bolProductProductPhotoMapper = bolProductProductPhotoMapper;
-			this.dalProductProductPhotoMapper = dalProductProductPhotoMapper;
-			this.bolProductReviewMapper = bolProductReviewMapper;
-			this.dalProductReviewMapper = dalProductReviewMapper;
-			this.bolTransactionHistoryMapper = bolTransactionHistoryMapper;
-			this.dalTransactionHistoryMapper = dalTransactionHistoryMapper;
-			this.bolWorkOrderMapper = bolWorkOrderMapper;
-			this.dalWorkOrderMapper = dalWorkOrderMapper;
+			this.ProductRepository = productRepository;
+			this.ProductModelValidator = productModelValidator;
+			this.BolProductMapper = bolProductMapper;
+			this.DalProductMapper = dalProductMapper;
+			this.BolBillOfMaterialMapper = bolBillOfMaterialMapper;
+			this.DalBillOfMaterialMapper = dalBillOfMaterialMapper;
+			this.BolProductCostHistoryMapper = bolProductCostHistoryMapper;
+			this.DalProductCostHistoryMapper = dalProductCostHistoryMapper;
+			this.BolProductInventoryMapper = bolProductInventoryMapper;
+			this.DalProductInventoryMapper = dalProductInventoryMapper;
+			this.BolProductListPriceHistoryMapper = bolProductListPriceHistoryMapper;
+			this.DalProductListPriceHistoryMapper = dalProductListPriceHistoryMapper;
+			this.BolProductProductPhotoMapper = bolProductProductPhotoMapper;
+			this.DalProductProductPhotoMapper = dalProductProductPhotoMapper;
+			this.BolProductReviewMapper = bolProductReviewMapper;
+			this.DalProductReviewMapper = dalProductReviewMapper;
+			this.BolTransactionHistoryMapper = bolTransactionHistoryMapper;
+			this.DalTransactionHistoryMapper = dalTransactionHistoryMapper;
+			this.BolWorkOrderMapper = bolWorkOrderMapper;
+			this.DalWorkOrderMapper = dalWorkOrderMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProductResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.productRepository.All(limit, offset);
+			var records = await this.ProductRepository.All(limit, offset);
 
-			return this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(records));
+			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductResponseModel> Get(int productID)
 		{
-			var record = await this.productRepository.Get(productID);
+			var record = await this.ProductRepository.Get(productID);
 
 			if (record == null)
 			{
@@ -113,20 +113,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(record));
+				return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProductResponseModel>> Create(
 			ApiProductRequestModel model)
 		{
-			CreateResponse<ApiProductResponseModel> response = new CreateResponse<ApiProductResponseModel>(await this.productModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductResponseModel> response = new CreateResponse<ApiProductResponseModel>(await this.ProductModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProductMapper.MapModelToBO(default(int), model);
-				var record = await this.productRepository.Create(this.dalProductMapper.MapBOToEF(bo));
+				var bo = this.BolProductMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductRepository.Create(this.DalProductMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -136,16 +136,16 @@ namespace AdventureWorksNS.Api.Services
 			int productID,
 			ApiProductRequestModel model)
 		{
-			var validationResult = await this.productModelValidator.ValidateUpdateAsync(productID, model);
+			var validationResult = await this.ProductModelValidator.ValidateUpdateAsync(productID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProductMapper.MapModelToBO(productID, model);
-				await this.productRepository.Update(this.dalProductMapper.MapBOToEF(bo));
+				var bo = this.BolProductMapper.MapModelToBO(productID, model);
+				await this.ProductRepository.Update(this.DalProductMapper.MapBOToEF(bo));
 
-				var record = await this.productRepository.Get(productID);
+				var record = await this.ProductRepository.Get(productID);
 
-				return new UpdateResponse<ApiProductResponseModel>(this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProductResponseModel>(this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -156,10 +156,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int productID)
 		{
-			ActionResponse response = new ActionResponse(await this.productModelValidator.ValidateDeleteAsync(productID));
+			ActionResponse response = new ActionResponse(await this.ProductModelValidator.ValidateDeleteAsync(productID));
 			if (response.Success)
 			{
-				await this.productRepository.Delete(productID);
+				await this.ProductRepository.Delete(productID);
 			}
 
 			return response;
@@ -167,7 +167,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiProductResponseModel> ByName(string name)
 		{
-			Product record = await this.productRepository.ByName(name);
+			Product record = await this.ProductRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -175,13 +175,13 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(record));
+				return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<ApiProductResponseModel> ByProductNumber(string productNumber)
 		{
-			Product record = await this.productRepository.ByProductNumber(productNumber);
+			Product record = await this.ProductRepository.ByProductNumber(productNumber);
 
 			if (record == null)
 			{
@@ -189,68 +189,68 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductMapper.MapBOToModel(this.dalProductMapper.MapEFToBO(record));
+				return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(record));
 			}
 		}
 
 		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<BillOfMaterial> records = await this.productRepository.BillOfMaterials(componentID, limit, offset);
+			List<BillOfMaterial> records = await this.ProductRepository.BillOfMaterials(componentID, limit, offset);
 
-			return this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(records));
+			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductCostHistory> records = await this.productRepository.ProductCostHistories(productID, limit, offset);
+			List<ProductCostHistory> records = await this.ProductRepository.ProductCostHistories(productID, limit, offset);
 
-			return this.bolProductCostHistoryMapper.MapBOToModel(this.dalProductCostHistoryMapper.MapEFToBO(records));
+			return this.BolProductCostHistoryMapper.MapBOToModel(this.DalProductCostHistoryMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiProductInventoryResponseModel>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductInventory> records = await this.productRepository.ProductInventories(productID, limit, offset);
+			List<ProductInventory> records = await this.ProductRepository.ProductInventories(productID, limit, offset);
 
-			return this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(records));
+			return this.BolProductInventoryMapper.MapBOToModel(this.DalProductInventoryMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductListPriceHistory> records = await this.productRepository.ProductListPriceHistories(productID, limit, offset);
+			List<ProductListPriceHistory> records = await this.ProductRepository.ProductListPriceHistories(productID, limit, offset);
 
-			return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(records));
+			return this.BolProductListPriceHistoryMapper.MapBOToModel(this.DalProductListPriceHistoryMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductProductPhoto> records = await this.productRepository.ProductProductPhotoes(productID, limit, offset);
+			List<ProductProductPhoto> records = await this.ProductRepository.ProductProductPhotoes(productID, limit, offset);
 
-			return this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(records));
+			return this.BolProductProductPhotoMapper.MapBOToModel(this.DalProductProductPhotoMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiProductReviewResponseModel>> ProductReviews(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductReview> records = await this.productRepository.ProductReviews(productID, limit, offset);
+			List<ProductReview> records = await this.ProductRepository.ProductReviews(productID, limit, offset);
 
-			return this.bolProductReviewMapper.MapBOToModel(this.dalProductReviewMapper.MapEFToBO(records));
+			return this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiTransactionHistoryResponseModel>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<TransactionHistory> records = await this.productRepository.TransactionHistories(productID, limit, offset);
+			List<TransactionHistory> records = await this.ProductRepository.TransactionHistories(productID, limit, offset);
 
-			return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(records));
+			return this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiWorkOrderResponseModel>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<WorkOrder> records = await this.productRepository.WorkOrders(productID, limit, offset);
+			List<WorkOrder> records = await this.ProductRepository.WorkOrders(productID, limit, offset);
 
-			return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
+			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0d9122ede58ed922d01655cac69c1d9</Hash>
+    <Hash>252b0e3ce176ac7dcaa92c59acbf170f</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ICommunityActionTemplateService
+	public partial interface ICommunityActionTemplateService
 	{
 		Task<CreateResponse<ApiCommunityActionTemplateResponseModel>> Create(
 			ApiCommunityActionTemplateRequestModel model);
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>92305aeceb5412d1a38febb6f01b7e29</Hash>
+    <Hash>c271fd97f90e358275e3a825f590a06e</Hash>
 </Codenesium>*/

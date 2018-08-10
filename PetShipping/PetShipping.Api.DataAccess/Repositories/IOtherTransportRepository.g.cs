@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public interface IOtherTransportRepository
+	public partial interface IOtherTransportRepository
 	{
 		Task<OtherTransport> Create(OtherTransport item);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6d1cb5f803410fb26ceb8893a35cbf39</Hash>
+    <Hash>fa71bbafaefe7590896044de938fdeee</Hash>
 </Codenesium>*/

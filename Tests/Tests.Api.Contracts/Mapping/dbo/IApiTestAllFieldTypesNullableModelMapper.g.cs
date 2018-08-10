@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-	public interface IApiTestAllFieldTypesNullableModelMapper
+	public partial interface IApiTestAllFieldTypesNullableModelMapper
 	{
 		ApiTestAllFieldTypesNullableResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a169cc4238e09dafa6635ccdbbc9e60b</Hash>
+    <Hash>6975aaae79aeb196d62820debf396174</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public interface ISpaceRepository
+	public partial interface ISpaceRepository
 	{
 		Task<Space> Create(Space item);
 
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4e9517e532c824d15797d14c0759a8c1</Hash>
+    <Hash>438c3725a705a20fde14bb3608d3302d</Hash>
 </Codenesium>*/

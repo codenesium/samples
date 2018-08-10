@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface ICommunityActionTemplateRepository
+	public partial interface ICommunityActionTemplateRepository
 	{
 		Task<CommunityActionTemplate> Create(CommunityActionTemplate item);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e656f64e8723d7f45ee2692243cbaf1</Hash>
+    <Hash>010b742e970e70a937c822572d58ae55</Hash>
 </Codenesium>*/

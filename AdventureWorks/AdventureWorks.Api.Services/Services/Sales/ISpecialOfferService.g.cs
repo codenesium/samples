@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ISpecialOfferService
+	public partial interface ISpecialOfferService
 	{
 		Task<CreateResponse<ApiSpecialOfferResponseModel>> Create(
 			ApiSpecialOfferRequestModel model);
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3a9abf8c7ab4143b171b05138f828a8</Hash>
+    <Hash>3746be21c0f686f3a0fc6e5d46ecaadf</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractOrganizationService : AbstractService
 	{
-		private IOrganizationRepository organizationRepository;
+		protected IOrganizationRepository OrganizationRepository { get; private set; }
 
-		private IApiOrganizationRequestModelValidator organizationModelValidator;
+		protected IApiOrganizationRequestModelValidator OrganizationModelValidator { get; private set; }
 
-		private IBOLOrganizationMapper bolOrganizationMapper;
+		protected IBOLOrganizationMapper BolOrganizationMapper { get; private set; }
 
-		private IDALOrganizationMapper dalOrganizationMapper;
+		protected IDALOrganizationMapper DalOrganizationMapper { get; private set; }
 
-		private IBOLTeamMapper bolTeamMapper;
+		protected IBOLTeamMapper BolTeamMapper { get; private set; }
 
-		private IDALTeamMapper dalTeamMapper;
+		protected IDALTeamMapper DalTeamMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace NebulaNS.Api.Services
 			IDALTeamMapper dalTeamMapper)
 			: base()
 		{
-			this.organizationRepository = organizationRepository;
-			this.organizationModelValidator = organizationModelValidator;
-			this.bolOrganizationMapper = bolOrganizationMapper;
-			this.dalOrganizationMapper = dalOrganizationMapper;
-			this.bolTeamMapper = bolTeamMapper;
-			this.dalTeamMapper = dalTeamMapper;
+			this.OrganizationRepository = organizationRepository;
+			this.OrganizationModelValidator = organizationModelValidator;
+			this.BolOrganizationMapper = bolOrganizationMapper;
+			this.DalOrganizationMapper = dalOrganizationMapper;
+			this.BolTeamMapper = bolTeamMapper;
+			this.DalTeamMapper = dalTeamMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiOrganizationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.organizationRepository.All(limit, offset);
+			var records = await this.OrganizationRepository.All(limit, offset);
 
-			return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(records));
+			return this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiOrganizationResponseModel> Get(int id)
 		{
-			var record = await this.organizationRepository.Get(id);
+			var record = await this.OrganizationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record));
+				return this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiOrganizationResponseModel>> Create(
 			ApiOrganizationRequestModel model)
 		{
-			CreateResponse<ApiOrganizationResponseModel> response = new CreateResponse<ApiOrganizationResponseModel>(await this.organizationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiOrganizationResponseModel> response = new CreateResponse<ApiOrganizationResponseModel>(await this.OrganizationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolOrganizationMapper.MapModelToBO(default(int), model);
-				var record = await this.organizationRepository.Create(this.dalOrganizationMapper.MapBOToEF(bo));
+				var bo = this.BolOrganizationMapper.MapModelToBO(default(int), model);
+				var record = await this.OrganizationRepository.Create(this.DalOrganizationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace NebulaNS.Api.Services
 			int id,
 			ApiOrganizationRequestModel model)
 		{
-			var validationResult = await this.organizationModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.OrganizationModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolOrganizationMapper.MapModelToBO(id, model);
-				await this.organizationRepository.Update(this.dalOrganizationMapper.MapBOToEF(bo));
+				var bo = this.BolOrganizationMapper.MapModelToBO(id, model);
+				await this.OrganizationRepository.Update(this.DalOrganizationMapper.MapBOToEF(bo));
 
-				var record = await this.organizationRepository.Get(id);
+				var record = await this.OrganizationRepository.Get(id);
 
-				return new UpdateResponse<ApiOrganizationResponseModel>(this.bolOrganizationMapper.MapBOToModel(this.dalOrganizationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiOrganizationResponseModel>(this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace NebulaNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.organizationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.OrganizationModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.organizationRepository.Delete(id);
+				await this.OrganizationRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace NebulaNS.Api.Services
 
 		public async virtual Task<List<ApiTeamResponseModel>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Team> records = await this.organizationRepository.Teams(organizationId, limit, offset);
+			List<Team> records = await this.OrganizationRepository.Teams(organizationId, limit, offset);
 
-			return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(records));
+			return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c750793f753954f010191417600541ab</Hash>
+    <Hash>24a59327980972e6d15cdd166f7f1ddf</Hash>
 </Codenesium>*/

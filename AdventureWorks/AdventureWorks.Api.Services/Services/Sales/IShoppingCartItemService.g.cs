@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IShoppingCartItemService
+	public partial interface IShoppingCartItemService
 	{
 		Task<CreateResponse<ApiShoppingCartItemResponseModel>> Create(
 			ApiShoppingCartItemRequestModel model);
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>27a280d3de7607b44fe06eb86b042964</Hash>
+    <Hash>ff10ea467e162d25045ccb8e2e0c67b7</Hash>
 </Codenesium>*/

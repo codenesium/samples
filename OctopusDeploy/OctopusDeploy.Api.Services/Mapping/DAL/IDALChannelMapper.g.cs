@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALChannelMapper
+	public partial interface IDALChannelMapper
 	{
 		Channel MapBOToEF(
 			BOChannel bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e866049f5ba97dfd7defd5f6cb58441d</Hash>
+    <Hash>19971a915f98ce9c2750c491a1d97c5c</Hash>
 </Codenesium>*/

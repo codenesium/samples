@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALMutexMapper
+	public partial interface IDALMutexMapper
 	{
 		Mutex MapBOToEF(
 			BOMutex bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6efaeba546925e1444c193ae76743a7</Hash>
+    <Hash>770c48bac8099dcf9ac230414bbdeef5</Hash>
 </Codenesium>*/

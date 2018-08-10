@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ISalesPersonQuotaHistoryService
+	public partial interface ISalesPersonQuotaHistoryService
 	{
 		Task<CreateResponse<ApiSalesPersonQuotaHistoryResponseModel>> Create(
 			ApiSalesPersonQuotaHistoryRequestModel model);
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a2c41f8538ba291dbb704e27bd4c581</Hash>
+    <Hash>64562d3120f71b4254c200765e876d86</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IApiPostLinksRequestModelValidator
+	public partial interface IApiPostLinksRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiPostLinksRequestModel model);
 
@@ -16,5 +16,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0943dde43c5aaba32bdaab005964d88</Hash>
+    <Hash>96016ab59a83f35d81cb53ad1577b6b2</Hash>
 </Codenesium>*/

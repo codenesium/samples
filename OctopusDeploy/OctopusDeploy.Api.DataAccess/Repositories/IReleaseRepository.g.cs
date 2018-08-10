@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IReleaseRepository
+	public partial interface IReleaseRepository
 	{
 		Task<Release> Create(Release item);
 
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1a858e597a9b4a5db0969780a434256d</Hash>
+    <Hash>59532ef3296a6eabb13992a72ee75a45</Hash>
 </Codenesium>*/

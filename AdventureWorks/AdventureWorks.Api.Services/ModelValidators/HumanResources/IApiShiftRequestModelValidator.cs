@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiShiftRequestModelValidator
+	public partial interface IApiShiftRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiShiftRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3d6bf7b1a16d61c326b286ed74e4871d</Hash>
+    <Hash>f09b27d044283c03b0d30748ef6d5dcc</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-	public interface IUsersRepository
+	public partial interface IUsersRepository
 	{
 		Task<Users> Create(Users item);
 
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>750c0a51e8e47dc491955c23e1c0e4c0</Hash>
+    <Hash>48125a9bd18bfbaf6d4b574d1ad222c9</Hash>
 </Codenesium>*/

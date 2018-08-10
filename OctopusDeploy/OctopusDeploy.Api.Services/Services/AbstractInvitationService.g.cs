@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractInvitationService : AbstractService
 	{
-		private IInvitationRepository invitationRepository;
+		protected IInvitationRepository InvitationRepository { get; private set; }
 
-		private IApiInvitationRequestModelValidator invitationModelValidator;
+		protected IApiInvitationRequestModelValidator InvitationModelValidator { get; private set; }
 
-		private IBOLInvitationMapper bolInvitationMapper;
+		protected IBOLInvitationMapper BolInvitationMapper { get; private set; }
 
-		private IDALInvitationMapper dalInvitationMapper;
+		protected IDALInvitationMapper DalInvitationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALInvitationMapper dalInvitationMapper)
 			: base()
 		{
-			this.invitationRepository = invitationRepository;
-			this.invitationModelValidator = invitationModelValidator;
-			this.bolInvitationMapper = bolInvitationMapper;
-			this.dalInvitationMapper = dalInvitationMapper;
+			this.InvitationRepository = invitationRepository;
+			this.InvitationModelValidator = invitationModelValidator;
+			this.BolInvitationMapper = bolInvitationMapper;
+			this.DalInvitationMapper = dalInvitationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiInvitationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.invitationRepository.All(limit, offset);
+			var records = await this.InvitationRepository.All(limit, offset);
 
-			return this.bolInvitationMapper.MapBOToModel(this.dalInvitationMapper.MapEFToBO(records));
+			return this.BolInvitationMapper.MapBOToModel(this.DalInvitationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiInvitationResponseModel> Get(string id)
 		{
-			var record = await this.invitationRepository.Get(id);
+			var record = await this.InvitationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolInvitationMapper.MapBOToModel(this.dalInvitationMapper.MapEFToBO(record));
+				return this.BolInvitationMapper.MapBOToModel(this.DalInvitationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiInvitationResponseModel>> Create(
 			ApiInvitationRequestModel model)
 		{
-			CreateResponse<ApiInvitationResponseModel> response = new CreateResponse<ApiInvitationResponseModel>(await this.invitationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiInvitationResponseModel> response = new CreateResponse<ApiInvitationResponseModel>(await this.InvitationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolInvitationMapper.MapModelToBO(default(string), model);
-				var record = await this.invitationRepository.Create(this.dalInvitationMapper.MapBOToEF(bo));
+				var bo = this.BolInvitationMapper.MapModelToBO(default(string), model);
+				var record = await this.InvitationRepository.Create(this.DalInvitationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolInvitationMapper.MapBOToModel(this.dalInvitationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolInvitationMapper.MapBOToModel(this.DalInvitationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiInvitationRequestModel model)
 		{
-			var validationResult = await this.invitationModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.InvitationModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolInvitationMapper.MapModelToBO(id, model);
-				await this.invitationRepository.Update(this.dalInvitationMapper.MapBOToEF(bo));
+				var bo = this.BolInvitationMapper.MapModelToBO(id, model);
+				await this.InvitationRepository.Update(this.DalInvitationMapper.MapBOToEF(bo));
 
-				var record = await this.invitationRepository.Get(id);
+				var record = await this.InvitationRepository.Get(id);
 
-				return new UpdateResponse<ApiInvitationResponseModel>(this.bolInvitationMapper.MapBOToModel(this.dalInvitationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiInvitationResponseModel>(this.BolInvitationMapper.MapBOToModel(this.DalInvitationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.invitationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.InvitationModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.invitationRepository.Delete(id);
+				await this.InvitationRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a8e2bb8381a30e942e041be68adb5da3</Hash>
+    <Hash>f15f474050f3db5bdab141e96e4150a3</Hash>
 </Codenesium>*/

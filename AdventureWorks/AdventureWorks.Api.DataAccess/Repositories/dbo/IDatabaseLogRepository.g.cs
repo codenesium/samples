@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IDatabaseLogRepository
+	public partial interface IDatabaseLogRepository
 	{
 		Task<DatabaseLog> Create(DatabaseLog item);
 
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ab972877078468ad65deecc62038e609</Hash>
+    <Hash>f070fc9e224720338400a4321c212706</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IDALSchemaAPersonMapper
+	public partial interface IDALSchemaAPersonMapper
 	{
 		SchemaAPerson MapBOToEF(
 			BOSchemaAPerson bo);
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7778c9593ed8fb61b19686270a145ecc</Hash>
+    <Hash>813b7e4a3f83cdb98bacad1298fd4a59</Hash>
 </Codenesium>*/

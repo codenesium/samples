@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface IVersionInfoRepository
+	public partial interface IVersionInfoRepository
 	{
 		Task<VersionInfo> Create(VersionInfo item);
 
@@ -22,5 +22,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>57508ae26406977bb5c28c3849e22061</Hash>
+    <Hash>87309fd2e596aef550e6dae6ccc12e0e</Hash>
 </Codenesium>*/

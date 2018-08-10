@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractUsersService : AbstractService
 	{
-		private IUsersRepository usersRepository;
+		protected IUsersRepository UsersRepository { get; private set; }
 
-		private IApiUsersRequestModelValidator usersModelValidator;
+		protected IApiUsersRequestModelValidator UsersModelValidator { get; private set; }
 
-		private IBOLUsersMapper bolUsersMapper;
+		protected IBOLUsersMapper BolUsersMapper { get; private set; }
 
-		private IDALUsersMapper dalUsersMapper;
+		protected IDALUsersMapper DalUsersMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace StackOverflowNS.Api.Services
 			IDALUsersMapper dalUsersMapper)
 			: base()
 		{
-			this.usersRepository = usersRepository;
-			this.usersModelValidator = usersModelValidator;
-			this.bolUsersMapper = bolUsersMapper;
-			this.dalUsersMapper = dalUsersMapper;
+			this.UsersRepository = usersRepository;
+			this.UsersModelValidator = usersModelValidator;
+			this.BolUsersMapper = bolUsersMapper;
+			this.DalUsersMapper = dalUsersMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiUsersResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.usersRepository.All(limit, offset);
+			var records = await this.UsersRepository.All(limit, offset);
 
-			return this.bolUsersMapper.MapBOToModel(this.dalUsersMapper.MapEFToBO(records));
+			return this.BolUsersMapper.MapBOToModel(this.DalUsersMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiUsersResponseModel> Get(int id)
 		{
-			var record = await this.usersRepository.Get(id);
+			var record = await this.UsersRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.bolUsersMapper.MapBOToModel(this.dalUsersMapper.MapEFToBO(record));
+				return this.BolUsersMapper.MapBOToModel(this.DalUsersMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiUsersResponseModel>> Create(
 			ApiUsersRequestModel model)
 		{
-			CreateResponse<ApiUsersResponseModel> response = new CreateResponse<ApiUsersResponseModel>(await this.usersModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiUsersResponseModel> response = new CreateResponse<ApiUsersResponseModel>(await this.UsersModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolUsersMapper.MapModelToBO(default(int), model);
-				var record = await this.usersRepository.Create(this.dalUsersMapper.MapBOToEF(bo));
+				var bo = this.BolUsersMapper.MapModelToBO(default(int), model);
+				var record = await this.UsersRepository.Create(this.DalUsersMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolUsersMapper.MapBOToModel(this.dalUsersMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolUsersMapper.MapBOToModel(this.DalUsersMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace StackOverflowNS.Api.Services
 			int id,
 			ApiUsersRequestModel model)
 		{
-			var validationResult = await this.usersModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.UsersModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolUsersMapper.MapModelToBO(id, model);
-				await this.usersRepository.Update(this.dalUsersMapper.MapBOToEF(bo));
+				var bo = this.BolUsersMapper.MapModelToBO(id, model);
+				await this.UsersRepository.Update(this.DalUsersMapper.MapBOToEF(bo));
 
-				var record = await this.usersRepository.Get(id);
+				var record = await this.UsersRepository.Get(id);
 
-				return new UpdateResponse<ApiUsersResponseModel>(this.bolUsersMapper.MapBOToModel(this.dalUsersMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiUsersResponseModel>(this.BolUsersMapper.MapBOToModel(this.DalUsersMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace StackOverflowNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.usersModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.UsersModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.usersRepository.Delete(id);
+				await this.UsersRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db03287703ef207981c6853e744d9bb6</Hash>
+    <Hash>2c2995558c5b46a754f265c325b37d91</Hash>
 </Codenesium>*/

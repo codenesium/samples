@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLEventMapper
+	public partial interface IBOLEventMapper
 	{
 		BOEvent MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a7ae2e920cf747b166e8e8c31d1dc8cf</Hash>
+    <Hash>bc2d189c7b8c0b501d061c64b3ae4c94</Hash>
 </Codenesium>*/

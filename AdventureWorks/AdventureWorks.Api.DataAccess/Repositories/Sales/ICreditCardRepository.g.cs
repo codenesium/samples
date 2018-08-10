@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ICreditCardRepository
+	public partial interface ICreditCardRepository
 	{
 		Task<CreditCard> Create(CreditCard item);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c3b6f003eee59603ddf3dafbd5a8477</Hash>
+    <Hash>b841e65c5fbf3a92c3ae17c6ba26ff0d</Hash>
 </Codenesium>*/

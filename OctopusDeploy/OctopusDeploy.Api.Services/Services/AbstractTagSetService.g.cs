@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractTagSetService : AbstractService
 	{
-		private ITagSetRepository tagSetRepository;
+		protected ITagSetRepository TagSetRepository { get; private set; }
 
-		private IApiTagSetRequestModelValidator tagSetModelValidator;
+		protected IApiTagSetRequestModelValidator TagSetModelValidator { get; private set; }
 
-		private IBOLTagSetMapper bolTagSetMapper;
+		protected IBOLTagSetMapper BolTagSetMapper { get; private set; }
 
-		private IDALTagSetMapper dalTagSetMapper;
+		protected IDALTagSetMapper DalTagSetMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALTagSetMapper dalTagSetMapper)
 			: base()
 		{
-			this.tagSetRepository = tagSetRepository;
-			this.tagSetModelValidator = tagSetModelValidator;
-			this.bolTagSetMapper = bolTagSetMapper;
-			this.dalTagSetMapper = dalTagSetMapper;
+			this.TagSetRepository = tagSetRepository;
+			this.TagSetModelValidator = tagSetModelValidator;
+			this.BolTagSetMapper = bolTagSetMapper;
+			this.DalTagSetMapper = dalTagSetMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTagSetResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.tagSetRepository.All(limit, offset);
+			var records = await this.TagSetRepository.All(limit, offset);
 
-			return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(records));
+			return this.BolTagSetMapper.MapBOToModel(this.DalTagSetMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTagSetResponseModel> Get(string id)
 		{
-			var record = await this.tagSetRepository.Get(id);
+			var record = await this.TagSetRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record));
+				return this.BolTagSetMapper.MapBOToModel(this.DalTagSetMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTagSetResponseModel>> Create(
 			ApiTagSetRequestModel model)
 		{
-			CreateResponse<ApiTagSetResponseModel> response = new CreateResponse<ApiTagSetResponseModel>(await this.tagSetModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTagSetResponseModel> response = new CreateResponse<ApiTagSetResponseModel>(await this.TagSetModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTagSetMapper.MapModelToBO(default(string), model);
-				var record = await this.tagSetRepository.Create(this.dalTagSetMapper.MapBOToEF(bo));
+				var bo = this.BolTagSetMapper.MapModelToBO(default(string), model);
+				var record = await this.TagSetRepository.Create(this.DalTagSetMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTagSetMapper.MapBOToModel(this.DalTagSetMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiTagSetRequestModel model)
 		{
-			var validationResult = await this.tagSetModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TagSetModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTagSetMapper.MapModelToBO(id, model);
-				await this.tagSetRepository.Update(this.dalTagSetMapper.MapBOToEF(bo));
+				var bo = this.BolTagSetMapper.MapModelToBO(id, model);
+				await this.TagSetRepository.Update(this.DalTagSetMapper.MapBOToEF(bo));
 
-				var record = await this.tagSetRepository.Get(id);
+				var record = await this.TagSetRepository.Get(id);
 
-				return new UpdateResponse<ApiTagSetResponseModel>(this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTagSetResponseModel>(this.BolTagSetMapper.MapBOToModel(this.DalTagSetMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.tagSetModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TagSetModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.tagSetRepository.Delete(id);
+				await this.TagSetRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiTagSetResponseModel> ByName(string name)
 		{
-			TagSet record = await this.tagSetRepository.ByName(name);
+			TagSet record = await this.TagSetRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(record));
+				return this.BolTagSetMapper.MapBOToModel(this.DalTagSetMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiTagSetResponseModel>> ByDataVersion(byte[] dataVersion)
 		{
-			List<TagSet> records = await this.tagSetRepository.ByDataVersion(dataVersion);
+			List<TagSet> records = await this.TagSetRepository.ByDataVersion(dataVersion);
 
-			return this.bolTagSetMapper.MapBOToModel(this.dalTagSetMapper.MapEFToBO(records));
+			return this.BolTagSetMapper.MapBOToModel(this.DalTagSetMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67b3c65166a1cd41cb9512201cdb9b64</Hash>
+    <Hash>6623577867c33e9b5e239210ba460f0c</Hash>
 </Codenesium>*/

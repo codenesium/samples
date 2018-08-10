@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IMachineService
+	public partial interface IMachineService
 	{
 		Task<CreateResponse<ApiMachineResponseModel>> Create(
 			ApiMachineRequestModel model);
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3af6259b09e2393ea763d0760f1e2cf5</Hash>
+    <Hash>edc6e083c3dedb483c3b7209dbf779f7</Hash>
 </Codenesium>*/

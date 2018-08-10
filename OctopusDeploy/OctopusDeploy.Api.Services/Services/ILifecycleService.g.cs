@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ILifecycleService
+	public partial interface ILifecycleService
 	{
 		Task<CreateResponse<ApiLifecycleResponseModel>> Create(
 			ApiLifecycleRequestModel model);
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>09ba944d4ecf7692d2d128bba817ed70</Hash>
+    <Hash>ad87166bc86b944b294519f36692e365</Hash>
 </Codenesium>*/

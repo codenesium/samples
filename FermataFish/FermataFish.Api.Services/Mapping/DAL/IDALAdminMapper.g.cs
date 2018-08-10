@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IDALAdminMapper
+	public partial interface IDALAdminMapper
 	{
 		Admin MapBOToEF(
 			BOAdmin bo);
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc2bd9c7c796849b1fd2a2148b13f5d7</Hash>
+    <Hash>d3c541c24aa37da8b988181682546098</Hash>
 </Codenesium>*/

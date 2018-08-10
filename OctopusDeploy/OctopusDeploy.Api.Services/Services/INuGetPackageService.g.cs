@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface INuGetPackageService
+	public partial interface INuGetPackageService
 	{
 		Task<CreateResponse<ApiNuGetPackageResponseModel>> Create(
 			ApiNuGetPackageRequestModel model);
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>084778054c7b6bb9bb09e713fd86dee9</Hash>
+    <Hash>73cf7fd95791829c6f30bc4011c50601</Hash>
 </Codenesium>*/

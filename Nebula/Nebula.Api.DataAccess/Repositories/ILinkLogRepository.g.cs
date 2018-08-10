@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface ILinkLogRepository
+	public partial interface ILinkLogRepository
 	{
 		Task<LinkLog> Create(LinkLog item);
 
@@ -22,5 +22,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d10988c9e4513d39e1f9f1791ab13ddf</Hash>
+    <Hash>b59ebc897aaccf604f26eb36f00a0c57</Hash>
 </Codenesium>*/

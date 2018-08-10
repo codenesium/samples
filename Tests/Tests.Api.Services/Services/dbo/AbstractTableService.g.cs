@@ -14,13 +14,13 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTableService : AbstractService
 	{
-		private ITableRepository tableRepository;
+		protected ITableRepository TableRepository { get; private set; }
 
-		private IApiTableRequestModelValidator tableModelValidator;
+		protected IApiTableRequestModelValidator TableModelValidator { get; private set; }
 
-		private IBOLTableMapper bolTableMapper;
+		protected IBOLTableMapper BolTableMapper { get; private set; }
 
-		private IDALTableMapper dalTableMapper;
+		protected IDALTableMapper DalTableMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TestsNS.Api.Services
 			IDALTableMapper dalTableMapper)
 			: base()
 		{
-			this.tableRepository = tableRepository;
-			this.tableModelValidator = tableModelValidator;
-			this.bolTableMapper = bolTableMapper;
-			this.dalTableMapper = dalTableMapper;
+			this.TableRepository = tableRepository;
+			this.TableModelValidator = tableModelValidator;
+			this.BolTableMapper = bolTableMapper;
+			this.DalTableMapper = dalTableMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTableResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.tableRepository.All(limit, offset);
+			var records = await this.TableRepository.All(limit, offset);
 
-			return this.bolTableMapper.MapBOToModel(this.dalTableMapper.MapEFToBO(records));
+			return this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTableResponseModel> Get(int id)
 		{
-			var record = await this.tableRepository.Get(id);
+			var record = await this.TableRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolTableMapper.MapBOToModel(this.dalTableMapper.MapEFToBO(record));
+				return this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTableResponseModel>> Create(
 			ApiTableRequestModel model)
 		{
-			CreateResponse<ApiTableResponseModel> response = new CreateResponse<ApiTableResponseModel>(await this.tableModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTableResponseModel> response = new CreateResponse<ApiTableResponseModel>(await this.TableModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTableMapper.MapModelToBO(default(int), model);
-				var record = await this.tableRepository.Create(this.dalTableMapper.MapBOToEF(bo));
+				var bo = this.BolTableMapper.MapModelToBO(default(int), model);
+				var record = await this.TableRepository.Create(this.DalTableMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTableMapper.MapBOToModel(this.dalTableMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TestsNS.Api.Services
 			int id,
 			ApiTableRequestModel model)
 		{
-			var validationResult = await this.tableModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TableModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTableMapper.MapModelToBO(id, model);
-				await this.tableRepository.Update(this.dalTableMapper.MapBOToEF(bo));
+				var bo = this.BolTableMapper.MapModelToBO(id, model);
+				await this.TableRepository.Update(this.DalTableMapper.MapBOToEF(bo));
 
-				var record = await this.tableRepository.Get(id);
+				var record = await this.TableRepository.Get(id);
 
-				return new UpdateResponse<ApiTableResponseModel>(this.bolTableMapper.MapBOToModel(this.dalTableMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTableResponseModel>(this.BolTableMapper.MapBOToModel(this.DalTableMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.tableModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TableModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.tableRepository.Delete(id);
+				await this.TableRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>97179fd69cb1029e37819c0d6d5c554b</Hash>
+    <Hash>8cea415f8092570d73728291fa5285a6</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiSalesTaxRateModelMapper
+	public partial interface IApiSalesTaxRateModelMapper
 	{
 		ApiSalesTaxRateResponseModel MapRequestToResponse(
 			int salesTaxRateID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9287415686a1d16995561bec81bbe15e</Hash>
+    <Hash>579326a61b5ec82f426591f7e20635a5</Hash>
 </Codenesium>*/

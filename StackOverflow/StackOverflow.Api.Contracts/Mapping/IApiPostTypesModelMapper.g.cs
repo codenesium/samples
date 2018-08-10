@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
-	public interface IApiPostTypesModelMapper
+	public partial interface IApiPostTypesModelMapper
 	{
 		ApiPostTypesResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8cfaf48a7693911d6f5cb4b5e9358fc4</Hash>
+    <Hash>b65bad43a487d0ed0d2d283412e85bda</Hash>
 </Codenesium>*/

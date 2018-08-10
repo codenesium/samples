@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLTransactionHistoryMapper
+	public partial interface IBOLTransactionHistoryMapper
 	{
 		BOTransactionHistory MapModelToBO(
 			int transactionID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0f953460aa0837aaa0c15b786e68f30d</Hash>
+    <Hash>77638b262ae47a324f132f8818ceb0ca</Hash>
 </Codenesium>*/

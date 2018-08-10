@@ -14,17 +14,17 @@ namespace FileServiceNS.Api.Services
 {
 	public abstract class AbstractFileTypeService : AbstractService
 	{
-		private IFileTypeRepository fileTypeRepository;
+		protected IFileTypeRepository FileTypeRepository { get; private set; }
 
-		private IApiFileTypeRequestModelValidator fileTypeModelValidator;
+		protected IApiFileTypeRequestModelValidator FileTypeModelValidator { get; private set; }
 
-		private IBOLFileTypeMapper bolFileTypeMapper;
+		protected IBOLFileTypeMapper BolFileTypeMapper { get; private set; }
 
-		private IDALFileTypeMapper dalFileTypeMapper;
+		protected IDALFileTypeMapper DalFileTypeMapper { get; private set; }
 
-		private IBOLFileMapper bolFileMapper;
+		protected IBOLFileMapper BolFileMapper { get; private set; }
 
-		private IDALFileMapper dalFileMapper;
+		protected IDALFileMapper DalFileMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace FileServiceNS.Api.Services
 			IDALFileMapper dalFileMapper)
 			: base()
 		{
-			this.fileTypeRepository = fileTypeRepository;
-			this.fileTypeModelValidator = fileTypeModelValidator;
-			this.bolFileTypeMapper = bolFileTypeMapper;
-			this.dalFileTypeMapper = dalFileTypeMapper;
-			this.bolFileMapper = bolFileMapper;
-			this.dalFileMapper = dalFileMapper;
+			this.FileTypeRepository = fileTypeRepository;
+			this.FileTypeModelValidator = fileTypeModelValidator;
+			this.BolFileTypeMapper = bolFileTypeMapper;
+			this.DalFileTypeMapper = dalFileTypeMapper;
+			this.BolFileMapper = bolFileMapper;
+			this.DalFileMapper = dalFileMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiFileTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.fileTypeRepository.All(limit, offset);
+			var records = await this.FileTypeRepository.All(limit, offset);
 
-			return this.bolFileTypeMapper.MapBOToModel(this.dalFileTypeMapper.MapEFToBO(records));
+			return this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiFileTypeResponseModel> Get(int id)
 		{
-			var record = await this.fileTypeRepository.Get(id);
+			var record = await this.FileTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.bolFileTypeMapper.MapBOToModel(this.dalFileTypeMapper.MapEFToBO(record));
+				return this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiFileTypeResponseModel>> Create(
 			ApiFileTypeRequestModel model)
 		{
-			CreateResponse<ApiFileTypeResponseModel> response = new CreateResponse<ApiFileTypeResponseModel>(await this.fileTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFileTypeResponseModel> response = new CreateResponse<ApiFileTypeResponseModel>(await this.FileTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolFileTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.fileTypeRepository.Create(this.dalFileTypeMapper.MapBOToEF(bo));
+				var bo = this.BolFileTypeMapper.MapModelToBO(default(int), model);
+				var record = await this.FileTypeRepository.Create(this.DalFileTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolFileTypeMapper.MapBOToModel(this.dalFileTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace FileServiceNS.Api.Services
 			int id,
 			ApiFileTypeRequestModel model)
 		{
-			var validationResult = await this.fileTypeModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.FileTypeModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolFileTypeMapper.MapModelToBO(id, model);
-				await this.fileTypeRepository.Update(this.dalFileTypeMapper.MapBOToEF(bo));
+				var bo = this.BolFileTypeMapper.MapModelToBO(id, model);
+				await this.FileTypeRepository.Update(this.DalFileTypeMapper.MapBOToEF(bo));
 
-				var record = await this.fileTypeRepository.Get(id);
+				var record = await this.FileTypeRepository.Get(id);
 
-				return new UpdateResponse<ApiFileTypeResponseModel>(this.bolFileTypeMapper.MapBOToModel(this.dalFileTypeMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiFileTypeResponseModel>(this.BolFileTypeMapper.MapBOToModel(this.DalFileTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace FileServiceNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.fileTypeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.FileTypeModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.fileTypeRepository.Delete(id);
+				await this.FileTypeRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace FileServiceNS.Api.Services
 
 		public async virtual Task<List<ApiFileResponseModel>> Files(int fileTypeId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<File> records = await this.fileTypeRepository.Files(fileTypeId, limit, offset);
+			List<File> records = await this.FileTypeRepository.Files(fileTypeId, limit, offset);
 
-			return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(records));
+			return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74ab0bd725f65798fa422907d3c3612f</Hash>
+    <Hash>7c89c8ef391a83a68956966275439dbf</Hash>
 </Codenesium>*/

@@ -14,23 +14,23 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractStudentService : AbstractService
 	{
-		private IStudentRepository studentRepository;
+		protected IStudentRepository StudentRepository { get; private set; }
 
-		private IApiStudentRequestModelValidator studentModelValidator;
+		protected IApiStudentRequestModelValidator StudentModelValidator { get; private set; }
 
-		private IBOLStudentMapper bolStudentMapper;
+		protected IBOLStudentMapper BolStudentMapper { get; private set; }
 
-		private IDALStudentMapper dalStudentMapper;
+		protected IDALStudentMapper DalStudentMapper { get; private set; }
 
-		private IBOLLessonXStudentMapper bolLessonXStudentMapper;
+		protected IBOLLessonXStudentMapper BolLessonXStudentMapper { get; private set; }
 
-		private IDALLessonXStudentMapper dalLessonXStudentMapper;
-		private IBOLLessonXTeacherMapper bolLessonXTeacherMapper;
+		protected IDALLessonXStudentMapper DalLessonXStudentMapper { get; private set; }
+		protected IBOLLessonXTeacherMapper BolLessonXTeacherMapper { get; private set; }
 
-		private IDALLessonXTeacherMapper dalLessonXTeacherMapper;
-		private IBOLStudentXFamilyMapper bolStudentXFamilyMapper;
+		protected IDALLessonXTeacherMapper DalLessonXTeacherMapper { get; private set; }
+		protected IBOLStudentXFamilyMapper BolStudentXFamilyMapper { get; private set; }
 
-		private IDALStudentXFamilyMapper dalStudentXFamilyMapper;
+		protected IDALStudentXFamilyMapper DalStudentXFamilyMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -48,29 +48,29 @@ namespace FermataFishNS.Api.Services
 			IDALStudentXFamilyMapper dalStudentXFamilyMapper)
 			: base()
 		{
-			this.studentRepository = studentRepository;
-			this.studentModelValidator = studentModelValidator;
-			this.bolStudentMapper = bolStudentMapper;
-			this.dalStudentMapper = dalStudentMapper;
-			this.bolLessonXStudentMapper = bolLessonXStudentMapper;
-			this.dalLessonXStudentMapper = dalLessonXStudentMapper;
-			this.bolLessonXTeacherMapper = bolLessonXTeacherMapper;
-			this.dalLessonXTeacherMapper = dalLessonXTeacherMapper;
-			this.bolStudentXFamilyMapper = bolStudentXFamilyMapper;
-			this.dalStudentXFamilyMapper = dalStudentXFamilyMapper;
+			this.StudentRepository = studentRepository;
+			this.StudentModelValidator = studentModelValidator;
+			this.BolStudentMapper = bolStudentMapper;
+			this.DalStudentMapper = dalStudentMapper;
+			this.BolLessonXStudentMapper = bolLessonXStudentMapper;
+			this.DalLessonXStudentMapper = dalLessonXStudentMapper;
+			this.BolLessonXTeacherMapper = bolLessonXTeacherMapper;
+			this.DalLessonXTeacherMapper = dalLessonXTeacherMapper;
+			this.BolStudentXFamilyMapper = bolStudentXFamilyMapper;
+			this.DalStudentXFamilyMapper = dalStudentXFamilyMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiStudentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.studentRepository.All(limit, offset);
+			var records = await this.StudentRepository.All(limit, offset);
 
-			return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
+			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStudentResponseModel> Get(int id)
 		{
-			var record = await this.studentRepository.Get(id);
+			var record = await this.StudentRepository.Get(id);
 
 			if (record == null)
 			{
@@ -78,20 +78,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record));
+				return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiStudentResponseModel>> Create(
 			ApiStudentRequestModel model)
 		{
-			CreateResponse<ApiStudentResponseModel> response = new CreateResponse<ApiStudentResponseModel>(await this.studentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStudentResponseModel> response = new CreateResponse<ApiStudentResponseModel>(await this.StudentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolStudentMapper.MapModelToBO(default(int), model);
-				var record = await this.studentRepository.Create(this.dalStudentMapper.MapBOToEF(bo));
+				var bo = this.BolStudentMapper.MapModelToBO(default(int), model);
+				var record = await this.StudentRepository.Create(this.DalStudentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -101,16 +101,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiStudentRequestModel model)
 		{
-			var validationResult = await this.studentModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.StudentModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolStudentMapper.MapModelToBO(id, model);
-				await this.studentRepository.Update(this.dalStudentMapper.MapBOToEF(bo));
+				var bo = this.BolStudentMapper.MapModelToBO(id, model);
+				await this.StudentRepository.Update(this.DalStudentMapper.MapBOToEF(bo));
 
-				var record = await this.studentRepository.Get(id);
+				var record = await this.StudentRepository.Get(id);
 
-				return new UpdateResponse<ApiStudentResponseModel>(this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiStudentResponseModel>(this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -121,10 +121,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.studentModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.StudentModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.studentRepository.Delete(id);
+				await this.StudentRepository.Delete(id);
 			}
 
 			return response;
@@ -132,27 +132,27 @@ namespace FermataFishNS.Api.Services
 
 		public async virtual Task<List<ApiLessonXStudentResponseModel>> LessonXStudents(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<LessonXStudent> records = await this.studentRepository.LessonXStudents(studentId, limit, offset);
+			List<LessonXStudent> records = await this.StudentRepository.LessonXStudents(studentId, limit, offset);
 
-			return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
+			return this.BolLessonXStudentMapper.MapBOToModel(this.DalLessonXStudentMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiLessonXTeacherResponseModel>> LessonXTeachers(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<LessonXTeacher> records = await this.studentRepository.LessonXTeachers(studentId, limit, offset);
+			List<LessonXTeacher> records = await this.StudentRepository.LessonXTeachers(studentId, limit, offset);
 
-			return this.bolLessonXTeacherMapper.MapBOToModel(this.dalLessonXTeacherMapper.MapEFToBO(records));
+			return this.BolLessonXTeacherMapper.MapBOToModel(this.DalLessonXTeacherMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiStudentXFamilyResponseModel>> StudentXFamilies(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<StudentXFamily> records = await this.studentRepository.StudentXFamilies(studentId, limit, offset);
+			List<StudentXFamily> records = await this.StudentRepository.StudentXFamilies(studentId, limit, offset);
 
-			return this.bolStudentXFamilyMapper.MapBOToModel(this.dalStudentXFamilyMapper.MapEFToBO(records));
+			return this.BolStudentXFamilyMapper.MapBOToModel(this.DalStudentXFamilyMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>55c0c764000f3f4bd93e752a7606f765</Hash>
+    <Hash>d1a96f11ef31e00259492933932c9a8f</Hash>
 </Codenesium>*/

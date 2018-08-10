@@ -5,7 +5,7 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
-	public interface IApiRowVersionCheckRequestModelValidator
+	public partial interface IApiRowVersionCheckRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiRowVersionCheckRequestModel model);
 
@@ -16,5 +16,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3da5f5b2562718ef7671aa72c47cfedb</Hash>
+    <Hash>a227f5122fe56ecaa61e68f1aff96442</Hash>
 </Codenesium>*/

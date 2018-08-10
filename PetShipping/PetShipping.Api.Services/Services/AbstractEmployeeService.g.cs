@@ -14,23 +14,23 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractEmployeeService : AbstractService
 	{
-		private IEmployeeRepository employeeRepository;
+		protected IEmployeeRepository EmployeeRepository { get; private set; }
 
-		private IApiEmployeeRequestModelValidator employeeModelValidator;
+		protected IApiEmployeeRequestModelValidator EmployeeModelValidator { get; private set; }
 
-		private IBOLEmployeeMapper bolEmployeeMapper;
+		protected IBOLEmployeeMapper BolEmployeeMapper { get; private set; }
 
-		private IDALEmployeeMapper dalEmployeeMapper;
+		protected IDALEmployeeMapper DalEmployeeMapper { get; private set; }
 
-		private IBOLClientCommunicationMapper bolClientCommunicationMapper;
+		protected IBOLClientCommunicationMapper BolClientCommunicationMapper { get; private set; }
 
-		private IDALClientCommunicationMapper dalClientCommunicationMapper;
-		private IBOLPipelineStepMapper bolPipelineStepMapper;
+		protected IDALClientCommunicationMapper DalClientCommunicationMapper { get; private set; }
+		protected IBOLPipelineStepMapper BolPipelineStepMapper { get; private set; }
 
-		private IDALPipelineStepMapper dalPipelineStepMapper;
-		private IBOLPipelineStepNoteMapper bolPipelineStepNoteMapper;
+		protected IDALPipelineStepMapper DalPipelineStepMapper { get; private set; }
+		protected IBOLPipelineStepNoteMapper BolPipelineStepNoteMapper { get; private set; }
 
-		private IDALPipelineStepNoteMapper dalPipelineStepNoteMapper;
+		protected IDALPipelineStepNoteMapper DalPipelineStepNoteMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -48,29 +48,29 @@ namespace PetShippingNS.Api.Services
 			IDALPipelineStepNoteMapper dalPipelineStepNoteMapper)
 			: base()
 		{
-			this.employeeRepository = employeeRepository;
-			this.employeeModelValidator = employeeModelValidator;
-			this.bolEmployeeMapper = bolEmployeeMapper;
-			this.dalEmployeeMapper = dalEmployeeMapper;
-			this.bolClientCommunicationMapper = bolClientCommunicationMapper;
-			this.dalClientCommunicationMapper = dalClientCommunicationMapper;
-			this.bolPipelineStepMapper = bolPipelineStepMapper;
-			this.dalPipelineStepMapper = dalPipelineStepMapper;
-			this.bolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
-			this.dalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
+			this.EmployeeRepository = employeeRepository;
+			this.EmployeeModelValidator = employeeModelValidator;
+			this.BolEmployeeMapper = bolEmployeeMapper;
+			this.DalEmployeeMapper = dalEmployeeMapper;
+			this.BolClientCommunicationMapper = bolClientCommunicationMapper;
+			this.DalClientCommunicationMapper = dalClientCommunicationMapper;
+			this.BolPipelineStepMapper = bolPipelineStepMapper;
+			this.DalPipelineStepMapper = dalPipelineStepMapper;
+			this.BolPipelineStepNoteMapper = bolPipelineStepNoteMapper;
+			this.DalPipelineStepNoteMapper = dalPipelineStepNoteMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiEmployeeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.employeeRepository.All(limit, offset);
+			var records = await this.EmployeeRepository.All(limit, offset);
 
-			return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(records));
+			return this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiEmployeeResponseModel> Get(int id)
 		{
-			var record = await this.employeeRepository.Get(id);
+			var record = await this.EmployeeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -78,20 +78,20 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record));
+				return this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> Create(
 			ApiEmployeeRequestModel model)
 		{
-			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.employeeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEmployeeResponseModel> response = new CreateResponse<ApiEmployeeResponseModel>(await this.EmployeeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolEmployeeMapper.MapModelToBO(default(int), model);
-				var record = await this.employeeRepository.Create(this.dalEmployeeMapper.MapBOToEF(bo));
+				var bo = this.BolEmployeeMapper.MapModelToBO(default(int), model);
+				var record = await this.EmployeeRepository.Create(this.DalEmployeeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -101,16 +101,16 @@ namespace PetShippingNS.Api.Services
 			int id,
 			ApiEmployeeRequestModel model)
 		{
-			var validationResult = await this.employeeModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.EmployeeModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolEmployeeMapper.MapModelToBO(id, model);
-				await this.employeeRepository.Update(this.dalEmployeeMapper.MapBOToEF(bo));
+				var bo = this.BolEmployeeMapper.MapModelToBO(id, model);
+				await this.EmployeeRepository.Update(this.DalEmployeeMapper.MapBOToEF(bo));
 
-				var record = await this.employeeRepository.Get(id);
+				var record = await this.EmployeeRepository.Get(id);
 
-				return new UpdateResponse<ApiEmployeeResponseModel>(this.bolEmployeeMapper.MapBOToModel(this.dalEmployeeMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiEmployeeResponseModel>(this.BolEmployeeMapper.MapBOToModel(this.DalEmployeeMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -121,10 +121,10 @@ namespace PetShippingNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.employeeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.EmployeeModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.employeeRepository.Delete(id);
+				await this.EmployeeRepository.Delete(id);
 			}
 
 			return response;
@@ -132,27 +132,27 @@ namespace PetShippingNS.Api.Services
 
 		public async virtual Task<List<ApiClientCommunicationResponseModel>> ClientCommunications(int employeeId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ClientCommunication> records = await this.employeeRepository.ClientCommunications(employeeId, limit, offset);
+			List<ClientCommunication> records = await this.EmployeeRepository.ClientCommunications(employeeId, limit, offset);
 
-			return this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(records));
+			return this.BolClientCommunicationMapper.MapBOToModel(this.DalClientCommunicationMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiPipelineStepResponseModel>> PipelineSteps(int shipperId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PipelineStep> records = await this.employeeRepository.PipelineSteps(shipperId, limit, offset);
+			List<PipelineStep> records = await this.EmployeeRepository.PipelineSteps(shipperId, limit, offset);
 
-			return this.bolPipelineStepMapper.MapBOToModel(this.dalPipelineStepMapper.MapEFToBO(records));
+			return this.BolPipelineStepMapper.MapBOToModel(this.DalPipelineStepMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotes(int employeeId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PipelineStepNote> records = await this.employeeRepository.PipelineStepNotes(employeeId, limit, offset);
+			List<PipelineStepNote> records = await this.EmployeeRepository.PipelineStepNotes(employeeId, limit, offset);
 
-			return this.bolPipelineStepNoteMapper.MapBOToModel(this.dalPipelineStepNoteMapper.MapEFToBO(records));
+			return this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf36ed97740bf10645c1b086dc39d7a6</Hash>
+    <Hash>25d3a87ebb7b7a0c11b7999001f03f82</Hash>
 </Codenesium>*/

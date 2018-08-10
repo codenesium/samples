@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ISubscriptionService
+	public partial interface ISubscriptionService
 	{
 		Task<CreateResponse<ApiSubscriptionResponseModel>> Create(
 			ApiSubscriptionRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ee7a915d738c265eb38e14ae7cee77e5</Hash>
+    <Hash>3003487469b5bdf557e5b3f4d32d92f5</Hash>
 </Codenesium>*/

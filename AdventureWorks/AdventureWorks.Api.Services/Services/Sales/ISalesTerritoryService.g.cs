@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ISalesTerritoryService
+	public partial interface ISalesTerritoryService
 	{
 		Task<CreateResponse<ApiSalesTerritoryResponseModel>> Create(
 			ApiSalesTerritoryRequestModel model);
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82a02203fc71187ccd22ca9630b76463</Hash>
+    <Hash>9bdfcaf36b1f584d4a6b575dc4003bc1</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ICurrencyService
+	public partial interface ICurrencyService
 	{
 		Task<CreateResponse<ApiCurrencyResponseModel>> Create(
 			ApiCurrencyRequestModel model);
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>234e1fff2daa2982503020c91cd2e40e</Hash>
+    <Hash>edda801585c8e467fb19b096610e4003</Hash>
 </Codenesium>*/

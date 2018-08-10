@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALSalesPersonQuotaHistoryMapper
+	public partial interface IDALSalesPersonQuotaHistoryMapper
 	{
 		SalesPersonQuotaHistory MapBOToEF(
 			BOSalesPersonQuotaHistory bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1abcc4e0e6641fb7b48000938d9345a</Hash>
+    <Hash>acecdf0a57963aa154f34dbb62bd51e7</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractDeploymentService : AbstractService
 	{
-		private IDeploymentRepository deploymentRepository;
+		protected IDeploymentRepository DeploymentRepository { get; private set; }
 
-		private IApiDeploymentRequestModelValidator deploymentModelValidator;
+		protected IApiDeploymentRequestModelValidator DeploymentModelValidator { get; private set; }
 
-		private IBOLDeploymentMapper bolDeploymentMapper;
+		protected IBOLDeploymentMapper BolDeploymentMapper { get; private set; }
 
-		private IDALDeploymentMapper dalDeploymentMapper;
+		protected IDALDeploymentMapper DalDeploymentMapper { get; private set; }
 
-		private IBOLDeploymentRelatedMachineMapper bolDeploymentRelatedMachineMapper;
+		protected IBOLDeploymentRelatedMachineMapper BolDeploymentRelatedMachineMapper { get; private set; }
 
-		private IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper;
+		protected IDALDeploymentRelatedMachineMapper DalDeploymentRelatedMachineMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace OctopusDeployNS.Api.Services
 			IDALDeploymentRelatedMachineMapper dalDeploymentRelatedMachineMapper)
 			: base()
 		{
-			this.deploymentRepository = deploymentRepository;
-			this.deploymentModelValidator = deploymentModelValidator;
-			this.bolDeploymentMapper = bolDeploymentMapper;
-			this.dalDeploymentMapper = dalDeploymentMapper;
-			this.bolDeploymentRelatedMachineMapper = bolDeploymentRelatedMachineMapper;
-			this.dalDeploymentRelatedMachineMapper = dalDeploymentRelatedMachineMapper;
+			this.DeploymentRepository = deploymentRepository;
+			this.DeploymentModelValidator = deploymentModelValidator;
+			this.BolDeploymentMapper = bolDeploymentMapper;
+			this.DalDeploymentMapper = dalDeploymentMapper;
+			this.BolDeploymentRelatedMachineMapper = bolDeploymentRelatedMachineMapper;
+			this.DalDeploymentRelatedMachineMapper = dalDeploymentRelatedMachineMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiDeploymentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.deploymentRepository.All(limit, offset);
+			var records = await this.DeploymentRepository.All(limit, offset);
 
-			return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
+			return this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDeploymentResponseModel> Get(string id)
 		{
-			var record = await this.deploymentRepository.Get(id);
+			var record = await this.DeploymentRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(record));
+				return this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiDeploymentResponseModel>> Create(
 			ApiDeploymentRequestModel model)
 		{
-			CreateResponse<ApiDeploymentResponseModel> response = new CreateResponse<ApiDeploymentResponseModel>(await this.deploymentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDeploymentResponseModel> response = new CreateResponse<ApiDeploymentResponseModel>(await this.DeploymentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolDeploymentMapper.MapModelToBO(default(string), model);
-				var record = await this.deploymentRepository.Create(this.dalDeploymentMapper.MapBOToEF(bo));
+				var bo = this.BolDeploymentMapper.MapModelToBO(default(string), model);
+				var record = await this.DeploymentRepository.Create(this.DalDeploymentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiDeploymentRequestModel model)
 		{
-			var validationResult = await this.deploymentModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.DeploymentModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolDeploymentMapper.MapModelToBO(id, model);
-				await this.deploymentRepository.Update(this.dalDeploymentMapper.MapBOToEF(bo));
+				var bo = this.BolDeploymentMapper.MapModelToBO(id, model);
+				await this.DeploymentRepository.Update(this.DalDeploymentMapper.MapBOToEF(bo));
 
-				var record = await this.deploymentRepository.Get(id);
+				var record = await this.DeploymentRepository.Get(id);
 
-				return new UpdateResponse<ApiDeploymentResponseModel>(this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiDeploymentResponseModel>(this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.deploymentModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.DeploymentModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.deploymentRepository.Delete(id);
+				await this.DeploymentRepository.Delete(id);
 			}
 
 			return response;
@@ -118,34 +118,34 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<List<ApiDeploymentResponseModel>> ByChannelId(string channelId)
 		{
-			List<Deployment> records = await this.deploymentRepository.ByChannelId(channelId);
+			List<Deployment> records = await this.DeploymentRepository.ByChannelId(channelId);
 
-			return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
+			return this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiDeploymentResponseModel>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
 		{
-			List<Deployment> records = await this.deploymentRepository.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
+			List<Deployment> records = await this.DeploymentRepository.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
 
-			return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
+			return this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiDeploymentResponseModel>> ByTenantId(string tenantId)
 		{
-			List<Deployment> records = await this.deploymentRepository.ByTenantId(tenantId);
+			List<Deployment> records = await this.DeploymentRepository.ByTenantId(tenantId);
 
-			return this.bolDeploymentMapper.MapBOToModel(this.dalDeploymentMapper.MapEFToBO(records));
+			return this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiDeploymentRelatedMachineResponseModel>> DeploymentRelatedMachines(string deploymentId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<DeploymentRelatedMachine> records = await this.deploymentRepository.DeploymentRelatedMachines(deploymentId, limit, offset);
+			List<DeploymentRelatedMachine> records = await this.DeploymentRepository.DeploymentRelatedMachines(deploymentId, limit, offset);
 
-			return this.bolDeploymentRelatedMachineMapper.MapBOToModel(this.dalDeploymentRelatedMachineMapper.MapEFToBO(records));
+			return this.BolDeploymentRelatedMachineMapper.MapBOToModel(this.DalDeploymentRelatedMachineMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67c5571a01f294346263cf0a50719082</Hash>
+    <Hash>8a67c638a3c38d7d6f78e033cce3c181</Hash>
 </Codenesium>*/

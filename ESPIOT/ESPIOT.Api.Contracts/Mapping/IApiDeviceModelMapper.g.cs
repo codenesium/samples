@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Contracts
 {
-	public interface IApiDeviceModelMapper
+	public partial interface IApiDeviceModelMapper
 	{
 		ApiDeviceResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>49d4746175c60006b3ccdfe54ce4f3af</Hash>
+    <Hash>b86b0e92760687d96b9ba1365c39abbc</Hash>
 </Codenesium>*/

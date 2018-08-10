@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractMutexService : AbstractService
 	{
-		private IMutexRepository mutexRepository;
+		protected IMutexRepository MutexRepository { get; private set; }
 
-		private IApiMutexRequestModelValidator mutexModelValidator;
+		protected IApiMutexRequestModelValidator MutexModelValidator { get; private set; }
 
-		private IBOLMutexMapper bolMutexMapper;
+		protected IBOLMutexMapper BolMutexMapper { get; private set; }
 
-		private IDALMutexMapper dalMutexMapper;
+		protected IDALMutexMapper DalMutexMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALMutexMapper dalMutexMapper)
 			: base()
 		{
-			this.mutexRepository = mutexRepository;
-			this.mutexModelValidator = mutexModelValidator;
-			this.bolMutexMapper = bolMutexMapper;
-			this.dalMutexMapper = dalMutexMapper;
+			this.MutexRepository = mutexRepository;
+			this.MutexModelValidator = mutexModelValidator;
+			this.BolMutexMapper = bolMutexMapper;
+			this.DalMutexMapper = dalMutexMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiMutexResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.mutexRepository.All(limit, offset);
+			var records = await this.MutexRepository.All(limit, offset);
 
-			return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(records));
+			return this.BolMutexMapper.MapBOToModel(this.DalMutexMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiMutexResponseModel> Get(string id)
 		{
-			var record = await this.mutexRepository.Get(id);
+			var record = await this.MutexRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record));
+				return this.BolMutexMapper.MapBOToModel(this.DalMutexMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiMutexResponseModel>> Create(
 			ApiMutexRequestModel model)
 		{
-			CreateResponse<ApiMutexResponseModel> response = new CreateResponse<ApiMutexResponseModel>(await this.mutexModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiMutexResponseModel> response = new CreateResponse<ApiMutexResponseModel>(await this.MutexModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolMutexMapper.MapModelToBO(default(string), model);
-				var record = await this.mutexRepository.Create(this.dalMutexMapper.MapBOToEF(bo));
+				var bo = this.BolMutexMapper.MapModelToBO(default(string), model);
+				var record = await this.MutexRepository.Create(this.DalMutexMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolMutexMapper.MapBOToModel(this.DalMutexMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiMutexRequestModel model)
 		{
-			var validationResult = await this.mutexModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.MutexModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolMutexMapper.MapModelToBO(id, model);
-				await this.mutexRepository.Update(this.dalMutexMapper.MapBOToEF(bo));
+				var bo = this.BolMutexMapper.MapModelToBO(id, model);
+				await this.MutexRepository.Update(this.DalMutexMapper.MapBOToEF(bo));
 
-				var record = await this.mutexRepository.Get(id);
+				var record = await this.MutexRepository.Get(id);
 
-				return new UpdateResponse<ApiMutexResponseModel>(this.bolMutexMapper.MapBOToModel(this.dalMutexMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiMutexResponseModel>(this.BolMutexMapper.MapBOToModel(this.DalMutexMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.mutexModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.MutexModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.mutexRepository.Delete(id);
+				await this.MutexRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d42d1163d873419567f0eb30ae778c5a</Hash>
+    <Hash>cb92912927caeb5ac64c2c778a24848e</Hash>
 </Codenesium>*/

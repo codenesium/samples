@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public interface IAirTransportRepository
+	public partial interface IAirTransportRepository
 	{
 		Task<AirTransport> Create(AirTransport item);
 
@@ -22,5 +22,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d7b1d52de9aba3687b27bc5577196690</Hash>
+    <Hash>df0acc5bb3bcd7607c19819158bb18c0</Hash>
 </Codenesium>*/

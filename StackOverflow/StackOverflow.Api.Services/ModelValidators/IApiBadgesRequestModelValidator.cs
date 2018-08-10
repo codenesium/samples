@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IApiBadgesRequestModelValidator
+	public partial interface IApiBadgesRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiBadgesRequestModel model);
 
@@ -16,5 +16,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45e2ceec65b711f925eba1ca633a3d1a</Hash>
+    <Hash>a5c7f636ff6ce05c3f71bfe17d6d07b5</Hash>
 </Codenesium>*/

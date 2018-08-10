@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-	public interface ITransactionRepository
+	public partial interface ITransactionRepository
 	{
 		Task<Transaction> Create(Transaction item);
 
@@ -26,5 +26,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5aaf66ccf4be14babde39fe65bdffbff</Hash>
+    <Hash>b8301418296db2a595c45cbabb408938</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiDatabaseLogModelMapper
+	public partial interface IApiDatabaseLogModelMapper
 	{
 		ApiDatabaseLogResponseModel MapRequestToResponse(
 			int databaseLogID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b46dfb9612dfb28f146d5009d6cbd6c2</Hash>
+    <Hash>bf6bbab38371eb6634bcc283452d1f94</Hash>
 </Codenesium>*/

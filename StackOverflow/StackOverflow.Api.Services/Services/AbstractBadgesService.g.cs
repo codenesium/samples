@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractBadgesService : AbstractService
 	{
-		private IBadgesRepository badgesRepository;
+		protected IBadgesRepository BadgesRepository { get; private set; }
 
-		private IApiBadgesRequestModelValidator badgesModelValidator;
+		protected IApiBadgesRequestModelValidator BadgesModelValidator { get; private set; }
 
-		private IBOLBadgesMapper bolBadgesMapper;
+		protected IBOLBadgesMapper BolBadgesMapper { get; private set; }
 
-		private IDALBadgesMapper dalBadgesMapper;
+		protected IDALBadgesMapper DalBadgesMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace StackOverflowNS.Api.Services
 			IDALBadgesMapper dalBadgesMapper)
 			: base()
 		{
-			this.badgesRepository = badgesRepository;
-			this.badgesModelValidator = badgesModelValidator;
-			this.bolBadgesMapper = bolBadgesMapper;
-			this.dalBadgesMapper = dalBadgesMapper;
+			this.BadgesRepository = badgesRepository;
+			this.BadgesModelValidator = badgesModelValidator;
+			this.BolBadgesMapper = bolBadgesMapper;
+			this.DalBadgesMapper = dalBadgesMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiBadgesResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.badgesRepository.All(limit, offset);
+			var records = await this.BadgesRepository.All(limit, offset);
 
-			return this.bolBadgesMapper.MapBOToModel(this.dalBadgesMapper.MapEFToBO(records));
+			return this.BolBadgesMapper.MapBOToModel(this.DalBadgesMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBadgesResponseModel> Get(int id)
 		{
-			var record = await this.badgesRepository.Get(id);
+			var record = await this.BadgesRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.bolBadgesMapper.MapBOToModel(this.dalBadgesMapper.MapEFToBO(record));
+				return this.BolBadgesMapper.MapBOToModel(this.DalBadgesMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiBadgesResponseModel>> Create(
 			ApiBadgesRequestModel model)
 		{
-			CreateResponse<ApiBadgesResponseModel> response = new CreateResponse<ApiBadgesResponseModel>(await this.badgesModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBadgesResponseModel> response = new CreateResponse<ApiBadgesResponseModel>(await this.BadgesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolBadgesMapper.MapModelToBO(default(int), model);
-				var record = await this.badgesRepository.Create(this.dalBadgesMapper.MapBOToEF(bo));
+				var bo = this.BolBadgesMapper.MapModelToBO(default(int), model);
+				var record = await this.BadgesRepository.Create(this.DalBadgesMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolBadgesMapper.MapBOToModel(this.dalBadgesMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolBadgesMapper.MapBOToModel(this.DalBadgesMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace StackOverflowNS.Api.Services
 			int id,
 			ApiBadgesRequestModel model)
 		{
-			var validationResult = await this.badgesModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.BadgesModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolBadgesMapper.MapModelToBO(id, model);
-				await this.badgesRepository.Update(this.dalBadgesMapper.MapBOToEF(bo));
+				var bo = this.BolBadgesMapper.MapModelToBO(id, model);
+				await this.BadgesRepository.Update(this.DalBadgesMapper.MapBOToEF(bo));
 
-				var record = await this.badgesRepository.Get(id);
+				var record = await this.BadgesRepository.Get(id);
 
-				return new UpdateResponse<ApiBadgesResponseModel>(this.bolBadgesMapper.MapBOToModel(this.dalBadgesMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiBadgesResponseModel>(this.BolBadgesMapper.MapBOToModel(this.DalBadgesMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace StackOverflowNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.badgesModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.BadgesModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.badgesRepository.Delete(id);
+				await this.BadgesRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>579b120a3480acc6f6b8e19e2764f146</Hash>
+    <Hash>daccbee98c84955e2a284d66c235df55</Hash>
 </Codenesium>*/

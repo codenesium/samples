@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLInterruptionMapper
+	public partial interface IBOLInterruptionMapper
 	{
 		BOInterruption MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f40a7c01143a9349390613238ebe365d</Hash>
+    <Hash>4cc81053d5f73a84debdf8db7cb204da</Hash>
 </Codenesium>*/

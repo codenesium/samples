@@ -14,13 +14,13 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractPersonRefService : AbstractService
 	{
-		private IPersonRefRepository personRefRepository;
+		protected IPersonRefRepository PersonRefRepository { get; private set; }
 
-		private IApiPersonRefRequestModelValidator personRefModelValidator;
+		protected IApiPersonRefRequestModelValidator PersonRefModelValidator { get; private set; }
 
-		private IBOLPersonRefMapper bolPersonRefMapper;
+		protected IBOLPersonRefMapper BolPersonRefMapper { get; private set; }
 
-		private IDALPersonRefMapper dalPersonRefMapper;
+		protected IDALPersonRefMapper DalPersonRefMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TestsNS.Api.Services
 			IDALPersonRefMapper dalPersonRefMapper)
 			: base()
 		{
-			this.personRefRepository = personRefRepository;
-			this.personRefModelValidator = personRefModelValidator;
-			this.bolPersonRefMapper = bolPersonRefMapper;
-			this.dalPersonRefMapper = dalPersonRefMapper;
+			this.PersonRefRepository = personRefRepository;
+			this.PersonRefModelValidator = personRefModelValidator;
+			this.BolPersonRefMapper = bolPersonRefMapper;
+			this.DalPersonRefMapper = dalPersonRefMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPersonRefResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.personRefRepository.All(limit, offset);
+			var records = await this.PersonRefRepository.All(limit, offset);
 
-			return this.bolPersonRefMapper.MapBOToModel(this.dalPersonRefMapper.MapEFToBO(records));
+			return this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPersonRefResponseModel> Get(int id)
 		{
-			var record = await this.personRefRepository.Get(id);
+			var record = await this.PersonRefRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolPersonRefMapper.MapBOToModel(this.dalPersonRefMapper.MapEFToBO(record));
+				return this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPersonRefResponseModel>> Create(
 			ApiPersonRefRequestModel model)
 		{
-			CreateResponse<ApiPersonRefResponseModel> response = new CreateResponse<ApiPersonRefResponseModel>(await this.personRefModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPersonRefResponseModel> response = new CreateResponse<ApiPersonRefResponseModel>(await this.PersonRefModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPersonRefMapper.MapModelToBO(default(int), model);
-				var record = await this.personRefRepository.Create(this.dalPersonRefMapper.MapBOToEF(bo));
+				var bo = this.BolPersonRefMapper.MapModelToBO(default(int), model);
+				var record = await this.PersonRefRepository.Create(this.DalPersonRefMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPersonRefMapper.MapBOToModel(this.dalPersonRefMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TestsNS.Api.Services
 			int id,
 			ApiPersonRefRequestModel model)
 		{
-			var validationResult = await this.personRefModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.PersonRefModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPersonRefMapper.MapModelToBO(id, model);
-				await this.personRefRepository.Update(this.dalPersonRefMapper.MapBOToEF(bo));
+				var bo = this.BolPersonRefMapper.MapModelToBO(id, model);
+				await this.PersonRefRepository.Update(this.DalPersonRefMapper.MapBOToEF(bo));
 
-				var record = await this.personRefRepository.Get(id);
+				var record = await this.PersonRefRepository.Get(id);
 
-				return new UpdateResponse<ApiPersonRefResponseModel>(this.bolPersonRefMapper.MapBOToModel(this.dalPersonRefMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPersonRefResponseModel>(this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.personRefModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.PersonRefModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.personRefRepository.Delete(id);
+				await this.PersonRefRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d9a4b9fb9bab7371af46ed70cc7e833b</Hash>
+    <Hash>7274cc7e0277ff32d4fffb26763d977c</Hash>
 </Codenesium>*/

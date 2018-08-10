@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IBOLOrganizationMapper
+	public partial interface IBOLOrganizationMapper
 	{
 		BOOrganization MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e4231126231641b5050514ddf2ea3eeb</Hash>
+    <Hash>a0e105c4113235baf1071c341464adb3</Hash>
 </Codenesium>*/

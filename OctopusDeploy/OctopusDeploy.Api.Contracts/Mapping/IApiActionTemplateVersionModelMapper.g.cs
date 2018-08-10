@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-	public interface IApiActionTemplateVersionModelMapper
+	public partial interface IApiActionTemplateVersionModelMapper
 	{
 		ApiActionTemplateVersionResponseModel MapRequestToResponse(
 			string id,
@@ -19,5 +19,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4126bae7c8b2e66fea34bbfba9c13081</Hash>
+    <Hash>9d424411d88bfc0a9cadda697535a8c1</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractTagsService : AbstractService
 	{
-		private ITagsRepository tagsRepository;
+		protected ITagsRepository TagsRepository { get; private set; }
 
-		private IApiTagsRequestModelValidator tagsModelValidator;
+		protected IApiTagsRequestModelValidator TagsModelValidator { get; private set; }
 
-		private IBOLTagsMapper bolTagsMapper;
+		protected IBOLTagsMapper BolTagsMapper { get; private set; }
 
-		private IDALTagsMapper dalTagsMapper;
+		protected IDALTagsMapper DalTagsMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace StackOverflowNS.Api.Services
 			IDALTagsMapper dalTagsMapper)
 			: base()
 		{
-			this.tagsRepository = tagsRepository;
-			this.tagsModelValidator = tagsModelValidator;
-			this.bolTagsMapper = bolTagsMapper;
-			this.dalTagsMapper = dalTagsMapper;
+			this.TagsRepository = tagsRepository;
+			this.TagsModelValidator = tagsModelValidator;
+			this.BolTagsMapper = bolTagsMapper;
+			this.DalTagsMapper = dalTagsMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTagsResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.tagsRepository.All(limit, offset);
+			var records = await this.TagsRepository.All(limit, offset);
 
-			return this.bolTagsMapper.MapBOToModel(this.dalTagsMapper.MapEFToBO(records));
+			return this.BolTagsMapper.MapBOToModel(this.DalTagsMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTagsResponseModel> Get(int id)
 		{
-			var record = await this.tagsRepository.Get(id);
+			var record = await this.TagsRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.bolTagsMapper.MapBOToModel(this.dalTagsMapper.MapEFToBO(record));
+				return this.BolTagsMapper.MapBOToModel(this.DalTagsMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTagsResponseModel>> Create(
 			ApiTagsRequestModel model)
 		{
-			CreateResponse<ApiTagsResponseModel> response = new CreateResponse<ApiTagsResponseModel>(await this.tagsModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTagsResponseModel> response = new CreateResponse<ApiTagsResponseModel>(await this.TagsModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTagsMapper.MapModelToBO(default(int), model);
-				var record = await this.tagsRepository.Create(this.dalTagsMapper.MapBOToEF(bo));
+				var bo = this.BolTagsMapper.MapModelToBO(default(int), model);
+				var record = await this.TagsRepository.Create(this.DalTagsMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTagsMapper.MapBOToModel(this.dalTagsMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTagsMapper.MapBOToModel(this.DalTagsMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace StackOverflowNS.Api.Services
 			int id,
 			ApiTagsRequestModel model)
 		{
-			var validationResult = await this.tagsModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TagsModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTagsMapper.MapModelToBO(id, model);
-				await this.tagsRepository.Update(this.dalTagsMapper.MapBOToEF(bo));
+				var bo = this.BolTagsMapper.MapModelToBO(id, model);
+				await this.TagsRepository.Update(this.DalTagsMapper.MapBOToEF(bo));
 
-				var record = await this.tagsRepository.Get(id);
+				var record = await this.TagsRepository.Get(id);
 
-				return new UpdateResponse<ApiTagsResponseModel>(this.bolTagsMapper.MapBOToModel(this.dalTagsMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTagsResponseModel>(this.BolTagsMapper.MapBOToModel(this.DalTagsMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace StackOverflowNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.tagsModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TagsModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.tagsRepository.Delete(id);
+				await this.TagsRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5540617b53599c08a27316a854ebd707</Hash>
+    <Hash>521953b0f95a37dc8385123d54e85d46</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IDALTagsMapper
+	public partial interface IDALTagsMapper
 	{
 		Tags MapBOToEF(
 			BOTags bo);
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1820ab85a13677ab274007274dd03cb2</Hash>
+    <Hash>69ac708326500c20cd17cf293106711c</Hash>
 </Codenesium>*/

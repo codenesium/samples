@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-	public interface IVersionInfoRepository
+	public partial interface IVersionInfoRepository
 	{
 		Task<VersionInfo> Create(VersionInfo item);
 
@@ -22,5 +22,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>053e5fd84fe5ff663757663f4dbeb99e</Hash>
+    <Hash>d39e8c7c1267ed517d113510892b6ef5</Hash>
 </Codenesium>*/

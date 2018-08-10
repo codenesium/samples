@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface IMachineRepository
+	public partial interface IMachineRepository
 	{
 		Task<Machine> Create(Machine item);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ad1c7edccd670d11015f870118c79a32</Hash>
+    <Hash>7b7aa8f4f691ffe567d2151c7e043d81</Hash>
 </Codenesium>*/

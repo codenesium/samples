@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractFeedService : AbstractService
 	{
-		private IFeedRepository feedRepository;
+		protected IFeedRepository FeedRepository { get; private set; }
 
-		private IApiFeedRequestModelValidator feedModelValidator;
+		protected IApiFeedRequestModelValidator FeedModelValidator { get; private set; }
 
-		private IBOLFeedMapper bolFeedMapper;
+		protected IBOLFeedMapper BolFeedMapper { get; private set; }
 
-		private IDALFeedMapper dalFeedMapper;
+		protected IDALFeedMapper DalFeedMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALFeedMapper dalFeedMapper)
 			: base()
 		{
-			this.feedRepository = feedRepository;
-			this.feedModelValidator = feedModelValidator;
-			this.bolFeedMapper = bolFeedMapper;
-			this.dalFeedMapper = dalFeedMapper;
+			this.FeedRepository = feedRepository;
+			this.FeedModelValidator = feedModelValidator;
+			this.BolFeedMapper = bolFeedMapper;
+			this.DalFeedMapper = dalFeedMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiFeedResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.feedRepository.All(limit, offset);
+			var records = await this.FeedRepository.All(limit, offset);
 
-			return this.bolFeedMapper.MapBOToModel(this.dalFeedMapper.MapEFToBO(records));
+			return this.BolFeedMapper.MapBOToModel(this.DalFeedMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiFeedResponseModel> Get(string id)
 		{
-			var record = await this.feedRepository.Get(id);
+			var record = await this.FeedRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolFeedMapper.MapBOToModel(this.dalFeedMapper.MapEFToBO(record));
+				return this.BolFeedMapper.MapBOToModel(this.DalFeedMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiFeedResponseModel>> Create(
 			ApiFeedRequestModel model)
 		{
-			CreateResponse<ApiFeedResponseModel> response = new CreateResponse<ApiFeedResponseModel>(await this.feedModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFeedResponseModel> response = new CreateResponse<ApiFeedResponseModel>(await this.FeedModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolFeedMapper.MapModelToBO(default(string), model);
-				var record = await this.feedRepository.Create(this.dalFeedMapper.MapBOToEF(bo));
+				var bo = this.BolFeedMapper.MapModelToBO(default(string), model);
+				var record = await this.FeedRepository.Create(this.DalFeedMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolFeedMapper.MapBOToModel(this.dalFeedMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolFeedMapper.MapBOToModel(this.DalFeedMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiFeedRequestModel model)
 		{
-			var validationResult = await this.feedModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.FeedModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolFeedMapper.MapModelToBO(id, model);
-				await this.feedRepository.Update(this.dalFeedMapper.MapBOToEF(bo));
+				var bo = this.BolFeedMapper.MapModelToBO(id, model);
+				await this.FeedRepository.Update(this.DalFeedMapper.MapBOToEF(bo));
 
-				var record = await this.feedRepository.Get(id);
+				var record = await this.FeedRepository.Get(id);
 
-				return new UpdateResponse<ApiFeedResponseModel>(this.bolFeedMapper.MapBOToModel(this.dalFeedMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiFeedResponseModel>(this.BolFeedMapper.MapBOToModel(this.DalFeedMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.feedModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.FeedModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.feedRepository.Delete(id);
+				await this.FeedRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiFeedResponseModel> ByName(string name)
 		{
-			Feed record = await this.feedRepository.ByName(name);
+			Feed record = await this.FeedRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolFeedMapper.MapBOToModel(this.dalFeedMapper.MapEFToBO(record));
+				return this.BolFeedMapper.MapBOToModel(this.DalFeedMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91324c896181283b5d70781fa2b0cf0d</Hash>
+    <Hash>08b6e271eec0beef60165f4c77d27604</Hash>
 </Codenesium>*/

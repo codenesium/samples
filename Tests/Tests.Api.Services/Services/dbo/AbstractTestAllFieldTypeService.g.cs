@@ -14,13 +14,13 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTestAllFieldTypeService : AbstractService
 	{
-		private ITestAllFieldTypeRepository testAllFieldTypeRepository;
+		protected ITestAllFieldTypeRepository TestAllFieldTypeRepository { get; private set; }
 
-		private IApiTestAllFieldTypeRequestModelValidator testAllFieldTypeModelValidator;
+		protected IApiTestAllFieldTypeRequestModelValidator TestAllFieldTypeModelValidator { get; private set; }
 
-		private IBOLTestAllFieldTypeMapper bolTestAllFieldTypeMapper;
+		protected IBOLTestAllFieldTypeMapper BolTestAllFieldTypeMapper { get; private set; }
 
-		private IDALTestAllFieldTypeMapper dalTestAllFieldTypeMapper;
+		protected IDALTestAllFieldTypeMapper DalTestAllFieldTypeMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TestsNS.Api.Services
 			IDALTestAllFieldTypeMapper dalTestAllFieldTypeMapper)
 			: base()
 		{
-			this.testAllFieldTypeRepository = testAllFieldTypeRepository;
-			this.testAllFieldTypeModelValidator = testAllFieldTypeModelValidator;
-			this.bolTestAllFieldTypeMapper = bolTestAllFieldTypeMapper;
-			this.dalTestAllFieldTypeMapper = dalTestAllFieldTypeMapper;
+			this.TestAllFieldTypeRepository = testAllFieldTypeRepository;
+			this.TestAllFieldTypeModelValidator = testAllFieldTypeModelValidator;
+			this.BolTestAllFieldTypeMapper = bolTestAllFieldTypeMapper;
+			this.DalTestAllFieldTypeMapper = dalTestAllFieldTypeMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTestAllFieldTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.testAllFieldTypeRepository.All(limit, offset);
+			var records = await this.TestAllFieldTypeRepository.All(limit, offset);
 
-			return this.bolTestAllFieldTypeMapper.MapBOToModel(this.dalTestAllFieldTypeMapper.MapEFToBO(records));
+			return this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTestAllFieldTypeResponseModel> Get(int id)
 		{
-			var record = await this.testAllFieldTypeRepository.Get(id);
+			var record = await this.TestAllFieldTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolTestAllFieldTypeMapper.MapBOToModel(this.dalTestAllFieldTypeMapper.MapEFToBO(record));
+				return this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTestAllFieldTypeResponseModel>> Create(
 			ApiTestAllFieldTypeRequestModel model)
 		{
-			CreateResponse<ApiTestAllFieldTypeResponseModel> response = new CreateResponse<ApiTestAllFieldTypeResponseModel>(await this.testAllFieldTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTestAllFieldTypeResponseModel> response = new CreateResponse<ApiTestAllFieldTypeResponseModel>(await this.TestAllFieldTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTestAllFieldTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.testAllFieldTypeRepository.Create(this.dalTestAllFieldTypeMapper.MapBOToEF(bo));
+				var bo = this.BolTestAllFieldTypeMapper.MapModelToBO(default(int), model);
+				var record = await this.TestAllFieldTypeRepository.Create(this.DalTestAllFieldTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTestAllFieldTypeMapper.MapBOToModel(this.dalTestAllFieldTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TestsNS.Api.Services
 			int id,
 			ApiTestAllFieldTypeRequestModel model)
 		{
-			var validationResult = await this.testAllFieldTypeModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TestAllFieldTypeModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTestAllFieldTypeMapper.MapModelToBO(id, model);
-				await this.testAllFieldTypeRepository.Update(this.dalTestAllFieldTypeMapper.MapBOToEF(bo));
+				var bo = this.BolTestAllFieldTypeMapper.MapModelToBO(id, model);
+				await this.TestAllFieldTypeRepository.Update(this.DalTestAllFieldTypeMapper.MapBOToEF(bo));
 
-				var record = await this.testAllFieldTypeRepository.Get(id);
+				var record = await this.TestAllFieldTypeRepository.Get(id);
 
-				return new UpdateResponse<ApiTestAllFieldTypeResponseModel>(this.bolTestAllFieldTypeMapper.MapBOToModel(this.dalTestAllFieldTypeMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTestAllFieldTypeResponseModel>(this.BolTestAllFieldTypeMapper.MapBOToModel(this.DalTestAllFieldTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.testAllFieldTypeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TestAllFieldTypeModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.testAllFieldTypeRepository.Delete(id);
+				await this.TestAllFieldTypeRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4bff381d8b0d61506d515acb3b44e3c7</Hash>
+    <Hash>13147328bcee17c4b0953e8b024cb214</Hash>
 </Codenesium>*/

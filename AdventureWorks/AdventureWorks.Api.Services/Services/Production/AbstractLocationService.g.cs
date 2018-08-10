@@ -14,20 +14,20 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractLocationService : AbstractService
 	{
-		private ILocationRepository locationRepository;
+		protected ILocationRepository LocationRepository { get; private set; }
 
-		private IApiLocationRequestModelValidator locationModelValidator;
+		protected IApiLocationRequestModelValidator LocationModelValidator { get; private set; }
 
-		private IBOLLocationMapper bolLocationMapper;
+		protected IBOLLocationMapper BolLocationMapper { get; private set; }
 
-		private IDALLocationMapper dalLocationMapper;
+		protected IDALLocationMapper DalLocationMapper { get; private set; }
 
-		private IBOLProductInventoryMapper bolProductInventoryMapper;
+		protected IBOLProductInventoryMapper BolProductInventoryMapper { get; private set; }
 
-		private IDALProductInventoryMapper dalProductInventoryMapper;
-		private IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper;
+		protected IDALProductInventoryMapper DalProductInventoryMapper { get; private set; }
+		protected IBOLWorkOrderRoutingMapper BolWorkOrderRoutingMapper { get; private set; }
 
-		private IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper;
+		protected IDALWorkOrderRoutingMapper DalWorkOrderRoutingMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -43,27 +43,27 @@ namespace AdventureWorksNS.Api.Services
 			IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper)
 			: base()
 		{
-			this.locationRepository = locationRepository;
-			this.locationModelValidator = locationModelValidator;
-			this.bolLocationMapper = bolLocationMapper;
-			this.dalLocationMapper = dalLocationMapper;
-			this.bolProductInventoryMapper = bolProductInventoryMapper;
-			this.dalProductInventoryMapper = dalProductInventoryMapper;
-			this.bolWorkOrderRoutingMapper = bolWorkOrderRoutingMapper;
-			this.dalWorkOrderRoutingMapper = dalWorkOrderRoutingMapper;
+			this.LocationRepository = locationRepository;
+			this.LocationModelValidator = locationModelValidator;
+			this.BolLocationMapper = bolLocationMapper;
+			this.DalLocationMapper = dalLocationMapper;
+			this.BolProductInventoryMapper = bolProductInventoryMapper;
+			this.DalProductInventoryMapper = dalProductInventoryMapper;
+			this.BolWorkOrderRoutingMapper = bolWorkOrderRoutingMapper;
+			this.DalWorkOrderRoutingMapper = dalWorkOrderRoutingMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiLocationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.locationRepository.All(limit, offset);
+			var records = await this.LocationRepository.All(limit, offset);
 
-			return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(records));
+			return this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLocationResponseModel> Get(short locationID)
 		{
-			var record = await this.locationRepository.Get(locationID);
+			var record = await this.LocationRepository.Get(locationID);
 
 			if (record == null)
 			{
@@ -71,20 +71,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
+				return this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiLocationResponseModel>> Create(
 			ApiLocationRequestModel model)
 		{
-			CreateResponse<ApiLocationResponseModel> response = new CreateResponse<ApiLocationResponseModel>(await this.locationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLocationResponseModel> response = new CreateResponse<ApiLocationResponseModel>(await this.LocationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolLocationMapper.MapModelToBO(default(short), model);
-				var record = await this.locationRepository.Create(this.dalLocationMapper.MapBOToEF(bo));
+				var bo = this.BolLocationMapper.MapModelToBO(default(short), model);
+				var record = await this.LocationRepository.Create(this.DalLocationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -94,16 +94,16 @@ namespace AdventureWorksNS.Api.Services
 			short locationID,
 			ApiLocationRequestModel model)
 		{
-			var validationResult = await this.locationModelValidator.ValidateUpdateAsync(locationID, model);
+			var validationResult = await this.LocationModelValidator.ValidateUpdateAsync(locationID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolLocationMapper.MapModelToBO(locationID, model);
-				await this.locationRepository.Update(this.dalLocationMapper.MapBOToEF(bo));
+				var bo = this.BolLocationMapper.MapModelToBO(locationID, model);
+				await this.LocationRepository.Update(this.DalLocationMapper.MapBOToEF(bo));
 
-				var record = await this.locationRepository.Get(locationID);
+				var record = await this.LocationRepository.Get(locationID);
 
-				return new UpdateResponse<ApiLocationResponseModel>(this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiLocationResponseModel>(this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -114,10 +114,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			short locationID)
 		{
-			ActionResponse response = new ActionResponse(await this.locationModelValidator.ValidateDeleteAsync(locationID));
+			ActionResponse response = new ActionResponse(await this.LocationModelValidator.ValidateDeleteAsync(locationID));
 			if (response.Success)
 			{
-				await this.locationRepository.Delete(locationID);
+				await this.LocationRepository.Delete(locationID);
 			}
 
 			return response;
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiLocationResponseModel> ByName(string name)
 		{
-			Location record = await this.locationRepository.ByName(name);
+			Location record = await this.LocationRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -133,26 +133,26 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolLocationMapper.MapBOToModel(this.dalLocationMapper.MapEFToBO(record));
+				return this.BolLocationMapper.MapBOToModel(this.DalLocationMapper.MapEFToBO(record));
 			}
 		}
 
 		public async virtual Task<List<ApiProductInventoryResponseModel>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductInventory> records = await this.locationRepository.ProductInventories(locationID, limit, offset);
+			List<ProductInventory> records = await this.LocationRepository.ProductInventories(locationID, limit, offset);
 
-			return this.bolProductInventoryMapper.MapBOToModel(this.dalProductInventoryMapper.MapEFToBO(records));
+			return this.BolProductInventoryMapper.MapBOToModel(this.DalProductInventoryMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<WorkOrderRouting> records = await this.locationRepository.WorkOrderRoutings(locationID, limit, offset);
+			List<WorkOrderRouting> records = await this.LocationRepository.WorkOrderRoutings(locationID, limit, offset);
 
-			return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(records));
+			return this.BolWorkOrderRoutingMapper.MapBOToModel(this.DalWorkOrderRoutingMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14aa76a096bda69a3f36550022ee270c</Hash>
+    <Hash>61f45701114e43221699233d94d7e651</Hash>
 </Codenesium>*/

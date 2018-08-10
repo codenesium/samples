@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiTransactionHistoryModelMapper
+	public partial interface IApiTransactionHistoryModelMapper
 	{
 		ApiTransactionHistoryResponseModel MapRequestToResponse(
 			int transactionID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b684840f0eb44fe6dc225529aacb2d8c</Hash>
+    <Hash>58947936a54dd5d36101f349c72ecae4</Hash>
 </Codenesium>*/

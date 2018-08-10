@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALSubscriptionMapper
+	public partial interface IDALSubscriptionMapper
 	{
 		Subscription MapBOToEF(
 			BOSubscription bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>520094c59ace5d9771480147949e546e</Hash>
+    <Hash>2ff8570d65c9d9e99a683846cb23dd71</Hash>
 </Codenesium>*/

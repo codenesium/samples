@@ -14,13 +14,13 @@ namespace PetStoreNS.Api.Services
 {
 	public abstract class AbstractSaleService : AbstractService
 	{
-		private ISaleRepository saleRepository;
+		protected ISaleRepository SaleRepository { get; private set; }
 
-		private IApiSaleRequestModelValidator saleModelValidator;
+		protected IApiSaleRequestModelValidator SaleModelValidator { get; private set; }
 
-		private IBOLSaleMapper bolSaleMapper;
+		protected IBOLSaleMapper BolSaleMapper { get; private set; }
 
-		private IDALSaleMapper dalSaleMapper;
+		protected IDALSaleMapper DalSaleMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace PetStoreNS.Api.Services
 			IDALSaleMapper dalSaleMapper)
 			: base()
 		{
-			this.saleRepository = saleRepository;
-			this.saleModelValidator = saleModelValidator;
-			this.bolSaleMapper = bolSaleMapper;
-			this.dalSaleMapper = dalSaleMapper;
+			this.SaleRepository = saleRepository;
+			this.SaleModelValidator = saleModelValidator;
+			this.BolSaleMapper = bolSaleMapper;
+			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSaleResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.saleRepository.All(limit, offset);
+			var records = await this.SaleRepository.All(limit, offset);
 
-			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
+			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSaleResponseModel> Get(int id)
 		{
-			var record = await this.saleRepository.Get(id);
+			var record = await this.SaleRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace PetStoreNS.Api.Services
 			}
 			else
 			{
-				return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record));
+				return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSaleResponseModel>> Create(
 			ApiSaleRequestModel model)
 		{
-			CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.saleModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.SaleModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSaleMapper.MapModelToBO(default(int), model);
-				var record = await this.saleRepository.Create(this.dalSaleMapper.MapBOToEF(bo));
+				var bo = this.BolSaleMapper.MapModelToBO(default(int), model);
+				var record = await this.SaleRepository.Create(this.DalSaleMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace PetStoreNS.Api.Services
 			int id,
 			ApiSaleRequestModel model)
 		{
-			var validationResult = await this.saleModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SaleModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSaleMapper.MapModelToBO(id, model);
-				await this.saleRepository.Update(this.dalSaleMapper.MapBOToEF(bo));
+				var bo = this.BolSaleMapper.MapModelToBO(id, model);
+				await this.SaleRepository.Update(this.DalSaleMapper.MapBOToEF(bo));
 
-				var record = await this.saleRepository.Get(id);
+				var record = await this.SaleRepository.Get(id);
 
-				return new UpdateResponse<ApiSaleResponseModel>(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSaleResponseModel>(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace PetStoreNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SaleModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.saleRepository.Delete(id);
+				await this.SaleRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>39064743743caf4307db7745690aa4fb</Hash>
+    <Hash>909e3c9e1d8c0e1549a85ea799577133</Hash>
 </Codenesium>*/

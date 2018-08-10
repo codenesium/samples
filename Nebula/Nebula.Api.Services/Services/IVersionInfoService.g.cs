@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IVersionInfoService
+	public partial interface IVersionInfoService
 	{
 		Task<CreateResponse<ApiVersionInfoResponseModel>> Create(
 			ApiVersionInfoRequestModel model);
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f0541fdc19845ef48308b4998f2ab95b</Hash>
+    <Hash>8ce5cc02497a4dd6348c9c65d66a8487</Hash>
 </Codenesium>*/

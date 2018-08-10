@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IConfigurationRepository
+	public partial interface IConfigurationRepository
 	{
 		Task<Configuration> Create(Configuration item);
 
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>609f6011e29ca5f5a5b6ea136114f339</Hash>
+    <Hash>bdc4df9eea206c2d787ca85ff0dc7ff2</Hash>
 </Codenesium>*/

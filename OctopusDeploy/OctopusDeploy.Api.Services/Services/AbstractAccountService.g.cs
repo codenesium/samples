@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractAccountService : AbstractService
 	{
-		private IAccountRepository accountRepository;
+		protected IAccountRepository AccountRepository { get; private set; }
 
-		private IApiAccountRequestModelValidator accountModelValidator;
+		protected IApiAccountRequestModelValidator AccountModelValidator { get; private set; }
 
-		private IBOLAccountMapper bolAccountMapper;
+		protected IBOLAccountMapper BolAccountMapper { get; private set; }
 
-		private IDALAccountMapper dalAccountMapper;
+		protected IDALAccountMapper DalAccountMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALAccountMapper dalAccountMapper)
 			: base()
 		{
-			this.accountRepository = accountRepository;
-			this.accountModelValidator = accountModelValidator;
-			this.bolAccountMapper = bolAccountMapper;
-			this.dalAccountMapper = dalAccountMapper;
+			this.AccountRepository = accountRepository;
+			this.AccountModelValidator = accountModelValidator;
+			this.BolAccountMapper = bolAccountMapper;
+			this.DalAccountMapper = dalAccountMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiAccountResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.accountRepository.All(limit, offset);
+			var records = await this.AccountRepository.All(limit, offset);
 
-			return this.bolAccountMapper.MapBOToModel(this.dalAccountMapper.MapEFToBO(records));
+			return this.BolAccountMapper.MapBOToModel(this.DalAccountMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiAccountResponseModel> Get(string id)
 		{
-			var record = await this.accountRepository.Get(id);
+			var record = await this.AccountRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolAccountMapper.MapBOToModel(this.dalAccountMapper.MapEFToBO(record));
+				return this.BolAccountMapper.MapBOToModel(this.DalAccountMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiAccountResponseModel>> Create(
 			ApiAccountRequestModel model)
 		{
-			CreateResponse<ApiAccountResponseModel> response = new CreateResponse<ApiAccountResponseModel>(await this.accountModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAccountResponseModel> response = new CreateResponse<ApiAccountResponseModel>(await this.AccountModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolAccountMapper.MapModelToBO(default(string), model);
-				var record = await this.accountRepository.Create(this.dalAccountMapper.MapBOToEF(bo));
+				var bo = this.BolAccountMapper.MapModelToBO(default(string), model);
+				var record = await this.AccountRepository.Create(this.DalAccountMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolAccountMapper.MapBOToModel(this.dalAccountMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolAccountMapper.MapBOToModel(this.DalAccountMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiAccountRequestModel model)
 		{
-			var validationResult = await this.accountModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.AccountModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolAccountMapper.MapModelToBO(id, model);
-				await this.accountRepository.Update(this.dalAccountMapper.MapBOToEF(bo));
+				var bo = this.BolAccountMapper.MapModelToBO(id, model);
+				await this.AccountRepository.Update(this.DalAccountMapper.MapBOToEF(bo));
 
-				var record = await this.accountRepository.Get(id);
+				var record = await this.AccountRepository.Get(id);
 
-				return new UpdateResponse<ApiAccountResponseModel>(this.bolAccountMapper.MapBOToModel(this.dalAccountMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiAccountResponseModel>(this.BolAccountMapper.MapBOToModel(this.DalAccountMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.accountModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.AccountModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.accountRepository.Delete(id);
+				await this.AccountRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiAccountResponseModel> ByName(string name)
 		{
-			Account record = await this.accountRepository.ByName(name);
+			Account record = await this.AccountRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolAccountMapper.MapBOToModel(this.dalAccountMapper.MapEFToBO(record));
+				return this.BolAccountMapper.MapBOToModel(this.DalAccountMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c35d043f500a88c660ff140089db3e12</Hash>
+    <Hash>fb205b79bd7431b12662574cb6e778f9</Hash>
 </Codenesium>*/

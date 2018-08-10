@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IDocumentRepository
+	public partial interface IDocumentRepository
 	{
 		Task<Document> Create(Document item);
 
@@ -22,5 +22,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>74a84fa7cc1b5bf16a353b56a0ce5f8c</Hash>
+    <Hash>ceacb7a2773dd4e5593843595d74f882</Hash>
 </Codenesium>*/

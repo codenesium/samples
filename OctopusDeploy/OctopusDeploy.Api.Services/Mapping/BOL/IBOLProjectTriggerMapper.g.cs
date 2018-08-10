@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLProjectTriggerMapper
+	public partial interface IBOLProjectTriggerMapper
 	{
 		BOProjectTrigger MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe24ddca34764ac3e470a0a62e18925d</Hash>
+    <Hash>5171abbaf47e305d0dd32f056d5a02ee</Hash>
 </Codenesium>*/

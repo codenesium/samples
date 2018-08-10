@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiCountryRegionModelMapper
+	public partial interface IApiCountryRegionModelMapper
 	{
 		ApiCountryRegionResponseModel MapRequestToResponse(
 			string countryRegionCode,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>de52a4fb7d9c3e18d13fd316430ccc6d</Hash>
+    <Hash>ac07de063950f4f747b233996872bfbb</Hash>
 </Codenesium>*/

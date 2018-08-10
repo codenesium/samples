@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IBOLVersionInfoMapper
+	public partial interface IBOLVersionInfoMapper
 	{
 		BOVersionInfo MapModelToBO(
 			long version,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>635f005aa2572ffa6f135ea647583849</Hash>
+    <Hash>9a6ccd62a44515770d665a7f905bc071</Hash>
 </Codenesium>*/

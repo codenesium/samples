@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALKeyAllocationMapper
+	public partial interface IDALKeyAllocationMapper
 	{
 		KeyAllocation MapBOToEF(
 			BOKeyAllocation bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c3ac693a960461b317a999b02e55ca05</Hash>
+    <Hash>cb7696d60b111ed5172aa72992a4af16</Hash>
 </Codenesium>*/

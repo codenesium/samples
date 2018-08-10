@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface IBOLHandlerPipelineStepMapper
+	public partial interface IBOLHandlerPipelineStepMapper
 	{
 		BOHandlerPipelineStep MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b46a6c8e807f0c47806d8d703af12b35</Hash>
+    <Hash>6be7983c51bc33e70ba0e2ee52bfa4ca</Hash>
 </Codenesium>*/

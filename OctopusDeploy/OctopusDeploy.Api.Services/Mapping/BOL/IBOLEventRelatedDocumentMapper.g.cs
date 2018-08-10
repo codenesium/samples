@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLEventRelatedDocumentMapper
+	public partial interface IBOLEventRelatedDocumentMapper
 	{
 		BOEventRelatedDocument MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52760ad76c09e8df949ce49d59337f0b</Hash>
+    <Hash>b5cbe0e69fcdfa4f140a51b5e76e707e</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IDashboardConfigurationRepository
+	public partial interface IDashboardConfigurationRepository
 	{
 		Task<DashboardConfiguration> Create(DashboardConfiguration item);
 
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>716bd92c91c7f0ffec450f5a40ce88bb</Hash>
+    <Hash>2406bbf48cc35362e1ad375fa8f086f7</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IDALTestAllFieldTypesNullableMapper
+	public partial interface IDALTestAllFieldTypesNullableMapper
 	{
 		TestAllFieldTypesNullable MapBOToEF(
 			BOTestAllFieldTypesNullable bo);
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1082b403f5d19201990fe19e2e85cc3d</Hash>
+    <Hash>92b0c43468fa214bf5cb27047c217792</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractSpeciesService : AbstractService
 	{
-		private ISpeciesRepository speciesRepository;
+		protected ISpeciesRepository SpeciesRepository { get; private set; }
 
-		private IApiSpeciesRequestModelValidator speciesModelValidator;
+		protected IApiSpeciesRequestModelValidator SpeciesModelValidator { get; private set; }
 
-		private IBOLSpeciesMapper bolSpeciesMapper;
+		protected IBOLSpeciesMapper BolSpeciesMapper { get; private set; }
 
-		private IDALSpeciesMapper dalSpeciesMapper;
+		protected IDALSpeciesMapper DalSpeciesMapper { get; private set; }
 
-		private IBOLBreedMapper bolBreedMapper;
+		protected IBOLBreedMapper BolBreedMapper { get; private set; }
 
-		private IDALBreedMapper dalBreedMapper;
+		protected IDALBreedMapper DalBreedMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace PetShippingNS.Api.Services
 			IDALBreedMapper dalBreedMapper)
 			: base()
 		{
-			this.speciesRepository = speciesRepository;
-			this.speciesModelValidator = speciesModelValidator;
-			this.bolSpeciesMapper = bolSpeciesMapper;
-			this.dalSpeciesMapper = dalSpeciesMapper;
-			this.bolBreedMapper = bolBreedMapper;
-			this.dalBreedMapper = dalBreedMapper;
+			this.SpeciesRepository = speciesRepository;
+			this.SpeciesModelValidator = speciesModelValidator;
+			this.BolSpeciesMapper = bolSpeciesMapper;
+			this.DalSpeciesMapper = dalSpeciesMapper;
+			this.BolBreedMapper = bolBreedMapper;
+			this.DalBreedMapper = dalBreedMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSpeciesResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.speciesRepository.All(limit, offset);
+			var records = await this.SpeciesRepository.All(limit, offset);
 
-			return this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(records));
+			return this.BolSpeciesMapper.MapBOToModel(this.DalSpeciesMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSpeciesResponseModel> Get(int id)
 		{
-			var record = await this.speciesRepository.Get(id);
+			var record = await this.SpeciesRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(record));
+				return this.BolSpeciesMapper.MapBOToModel(this.DalSpeciesMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSpeciesResponseModel>> Create(
 			ApiSpeciesRequestModel model)
 		{
-			CreateResponse<ApiSpeciesResponseModel> response = new CreateResponse<ApiSpeciesResponseModel>(await this.speciesModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSpeciesResponseModel> response = new CreateResponse<ApiSpeciesResponseModel>(await this.SpeciesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSpeciesMapper.MapModelToBO(default(int), model);
-				var record = await this.speciesRepository.Create(this.dalSpeciesMapper.MapBOToEF(bo));
+				var bo = this.BolSpeciesMapper.MapModelToBO(default(int), model);
+				var record = await this.SpeciesRepository.Create(this.DalSpeciesMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSpeciesMapper.MapBOToModel(this.DalSpeciesMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace PetShippingNS.Api.Services
 			int id,
 			ApiSpeciesRequestModel model)
 		{
-			var validationResult = await this.speciesModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SpeciesModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSpeciesMapper.MapModelToBO(id, model);
-				await this.speciesRepository.Update(this.dalSpeciesMapper.MapBOToEF(bo));
+				var bo = this.BolSpeciesMapper.MapModelToBO(id, model);
+				await this.SpeciesRepository.Update(this.DalSpeciesMapper.MapBOToEF(bo));
 
-				var record = await this.speciesRepository.Get(id);
+				var record = await this.SpeciesRepository.Get(id);
 
-				return new UpdateResponse<ApiSpeciesResponseModel>(this.bolSpeciesMapper.MapBOToModel(this.dalSpeciesMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSpeciesResponseModel>(this.BolSpeciesMapper.MapBOToModel(this.DalSpeciesMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace PetShippingNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.speciesModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SpeciesModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.speciesRepository.Delete(id);
+				await this.SpeciesRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace PetShippingNS.Api.Services
 
 		public async virtual Task<List<ApiBreedResponseModel>> Breeds(int speciesId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Breed> records = await this.speciesRepository.Breeds(speciesId, limit, offset);
+			List<Breed> records = await this.SpeciesRepository.Breeds(speciesId, limit, offset);
 
-			return this.bolBreedMapper.MapBOToModel(this.dalBreedMapper.MapEFToBO(records));
+			return this.BolBreedMapper.MapBOToModel(this.DalBreedMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e83d9fecfd3ccbf0be049d26e783cca</Hash>
+    <Hash>af46197c7b33ef32e97a46cfb101453a</Hash>
 </Codenesium>*/

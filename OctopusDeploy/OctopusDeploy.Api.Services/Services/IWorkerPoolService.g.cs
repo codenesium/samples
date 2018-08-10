@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IWorkerPoolService
+	public partial interface IWorkerPoolService
 	{
 		Task<CreateResponse<ApiWorkerPoolResponseModel>> Create(
 			ApiWorkerPoolRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a8f2607c79937d53ed92273d67867c72</Hash>
+    <Hash>cc0e4ccf1a1ef3fdec897dbf779280f2</Hash>
 </Codenesium>*/

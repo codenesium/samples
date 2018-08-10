@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IEventRelatedDocumentRepository
+	public partial interface IEventRelatedDocumentRepository
 	{
 		Task<EventRelatedDocument> Create(EventRelatedDocument item);
 
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be2ee58ec2b9eaf5383889b00accfbf7</Hash>
+    <Hash>53ee937aaa0782d1062d4ed943af6e14</Hash>
 </Codenesium>*/

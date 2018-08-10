@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractKeyAllocationService : AbstractService
 	{
-		private IKeyAllocationRepository keyAllocationRepository;
+		protected IKeyAllocationRepository KeyAllocationRepository { get; private set; }
 
-		private IApiKeyAllocationRequestModelValidator keyAllocationModelValidator;
+		protected IApiKeyAllocationRequestModelValidator KeyAllocationModelValidator { get; private set; }
 
-		private IBOLKeyAllocationMapper bolKeyAllocationMapper;
+		protected IBOLKeyAllocationMapper BolKeyAllocationMapper { get; private set; }
 
-		private IDALKeyAllocationMapper dalKeyAllocationMapper;
+		protected IDALKeyAllocationMapper DalKeyAllocationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALKeyAllocationMapper dalKeyAllocationMapper)
 			: base()
 		{
-			this.keyAllocationRepository = keyAllocationRepository;
-			this.keyAllocationModelValidator = keyAllocationModelValidator;
-			this.bolKeyAllocationMapper = bolKeyAllocationMapper;
-			this.dalKeyAllocationMapper = dalKeyAllocationMapper;
+			this.KeyAllocationRepository = keyAllocationRepository;
+			this.KeyAllocationModelValidator = keyAllocationModelValidator;
+			this.BolKeyAllocationMapper = bolKeyAllocationMapper;
+			this.DalKeyAllocationMapper = dalKeyAllocationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiKeyAllocationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.keyAllocationRepository.All(limit, offset);
+			var records = await this.KeyAllocationRepository.All(limit, offset);
 
-			return this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(records));
+			return this.BolKeyAllocationMapper.MapBOToModel(this.DalKeyAllocationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiKeyAllocationResponseModel> Get(string collectionName)
 		{
-			var record = await this.keyAllocationRepository.Get(collectionName);
+			var record = await this.KeyAllocationRepository.Get(collectionName);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record));
+				return this.BolKeyAllocationMapper.MapBOToModel(this.DalKeyAllocationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiKeyAllocationResponseModel>> Create(
 			ApiKeyAllocationRequestModel model)
 		{
-			CreateResponse<ApiKeyAllocationResponseModel> response = new CreateResponse<ApiKeyAllocationResponseModel>(await this.keyAllocationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiKeyAllocationResponseModel> response = new CreateResponse<ApiKeyAllocationResponseModel>(await this.KeyAllocationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolKeyAllocationMapper.MapModelToBO(default(string), model);
-				var record = await this.keyAllocationRepository.Create(this.dalKeyAllocationMapper.MapBOToEF(bo));
+				var bo = this.BolKeyAllocationMapper.MapModelToBO(default(string), model);
+				var record = await this.KeyAllocationRepository.Create(this.DalKeyAllocationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolKeyAllocationMapper.MapBOToModel(this.DalKeyAllocationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string collectionName,
 			ApiKeyAllocationRequestModel model)
 		{
-			var validationResult = await this.keyAllocationModelValidator.ValidateUpdateAsync(collectionName, model);
+			var validationResult = await this.KeyAllocationModelValidator.ValidateUpdateAsync(collectionName, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolKeyAllocationMapper.MapModelToBO(collectionName, model);
-				await this.keyAllocationRepository.Update(this.dalKeyAllocationMapper.MapBOToEF(bo));
+				var bo = this.BolKeyAllocationMapper.MapModelToBO(collectionName, model);
+				await this.KeyAllocationRepository.Update(this.DalKeyAllocationMapper.MapBOToEF(bo));
 
-				var record = await this.keyAllocationRepository.Get(collectionName);
+				var record = await this.KeyAllocationRepository.Get(collectionName);
 
-				return new UpdateResponse<ApiKeyAllocationResponseModel>(this.bolKeyAllocationMapper.MapBOToModel(this.dalKeyAllocationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiKeyAllocationResponseModel>(this.BolKeyAllocationMapper.MapBOToModel(this.DalKeyAllocationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string collectionName)
 		{
-			ActionResponse response = new ActionResponse(await this.keyAllocationModelValidator.ValidateDeleteAsync(collectionName));
+			ActionResponse response = new ActionResponse(await this.KeyAllocationModelValidator.ValidateDeleteAsync(collectionName));
 			if (response.Success)
 			{
-				await this.keyAllocationRepository.Delete(collectionName);
+				await this.KeyAllocationRepository.Delete(collectionName);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>94146be2cbbcecf75882dda2a7c9ac1b</Hash>
+    <Hash>8fae91691d0c931214b986eeba697c6d</Hash>
 </Codenesium>*/

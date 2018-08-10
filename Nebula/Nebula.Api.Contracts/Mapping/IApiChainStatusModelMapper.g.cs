@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
-	public interface IApiChainStatusModelMapper
+	public partial interface IApiChainStatusModelMapper
 	{
 		ApiChainStatusResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>28019021e294816152bca9e0b6387c03</Hash>
+    <Hash>0383ec1a5b0f22df8005329155d69975</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-	public interface IApiSelfReferenceModelMapper
+	public partial interface IApiSelfReferenceModelMapper
 	{
 		ApiSelfReferenceResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>88cac2e701ee88b2f1cc117b5a96486b</Hash>
+    <Hash>59150ac102f23565472838a9baf6cdd2</Hash>
 </Codenesium>*/

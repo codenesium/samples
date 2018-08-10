@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IInvitationService
+	public partial interface IInvitationService
 	{
 		Task<CreateResponse<ApiInvitationResponseModel>> Create(
 			ApiInvitationRequestModel model);
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e51db9eb7735db38c4d74f48434fea33</Hash>
+    <Hash>c6aee37730be00bd8e539a6acd713df0</Hash>
 </Codenesium>*/

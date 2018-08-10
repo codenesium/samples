@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IChannelRepository
+	public partial interface IChannelRepository
 	{
 		Task<Channel> Create(Channel item);
 
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>54eb6b395e5c34f3e68e3752bbefce4f</Hash>
+    <Hash>b5ab60c211961be4ccbdd430e60505ee</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IPasswordRepository
+	public partial interface IPasswordRepository
 	{
 		Task<Password> Create(Password item);
 
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>00d22f78a6b8cd5614e0b241fa7d3f7a</Hash>
+    <Hash>a3e1b0fa938140e5a1c916d17ec8a6e8</Hash>
 </Codenesium>*/

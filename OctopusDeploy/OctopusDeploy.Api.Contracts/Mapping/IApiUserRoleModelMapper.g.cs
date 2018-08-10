@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-	public interface IApiUserRoleModelMapper
+	public partial interface IApiUserRoleModelMapper
 	{
 		ApiUserRoleResponseModel MapRequestToResponse(
 			string id,
@@ -19,5 +19,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>879ba33819054d0795d82df6b19a35cb</Hash>
+    <Hash>8c96cea927934abf5e2a2a82e4807e08</Hash>
 </Codenesium>*/

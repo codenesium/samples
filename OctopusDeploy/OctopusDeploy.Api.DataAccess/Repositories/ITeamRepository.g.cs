@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface ITeamRepository
+	public partial interface ITeamRepository
 	{
 		Task<Team> Create(Team item);
 
@@ -22,5 +22,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>eda2d3682cc832f9c2ce1a75ffcff101</Hash>
+    <Hash>8a729bb35bb3ef43ccfc68f23a55c17c</Hash>
 </Codenesium>*/

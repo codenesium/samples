@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IMutexRepository
+	public partial interface IMutexRepository
 	{
 		Task<Mutex> Create(Mutex item);
 
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a4e8704d55b5f3694841e6c5ebbb0776</Hash>
+    <Hash>0543f175b8584d1768f8058933c545c2</Hash>
 </Codenesium>*/

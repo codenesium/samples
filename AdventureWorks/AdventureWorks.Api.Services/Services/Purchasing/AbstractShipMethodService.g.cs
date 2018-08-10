@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractShipMethodService : AbstractService
 	{
-		private IShipMethodRepository shipMethodRepository;
+		protected IShipMethodRepository ShipMethodRepository { get; private set; }
 
-		private IApiShipMethodRequestModelValidator shipMethodModelValidator;
+		protected IApiShipMethodRequestModelValidator ShipMethodModelValidator { get; private set; }
 
-		private IBOLShipMethodMapper bolShipMethodMapper;
+		protected IBOLShipMethodMapper BolShipMethodMapper { get; private set; }
 
-		private IDALShipMethodMapper dalShipMethodMapper;
+		protected IDALShipMethodMapper DalShipMethodMapper { get; private set; }
 
-		private IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper;
+		protected IBOLPurchaseOrderHeaderMapper BolPurchaseOrderHeaderMapper { get; private set; }
 
-		private IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper;
+		protected IDALPurchaseOrderHeaderMapper DalPurchaseOrderHeaderMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base()
 		{
-			this.shipMethodRepository = shipMethodRepository;
-			this.shipMethodModelValidator = shipMethodModelValidator;
-			this.bolShipMethodMapper = bolShipMethodMapper;
-			this.dalShipMethodMapper = dalShipMethodMapper;
-			this.bolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
-			this.dalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
+			this.ShipMethodRepository = shipMethodRepository;
+			this.ShipMethodModelValidator = shipMethodModelValidator;
+			this.BolShipMethodMapper = bolShipMethodMapper;
+			this.DalShipMethodMapper = dalShipMethodMapper;
+			this.BolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
+			this.DalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiShipMethodResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.shipMethodRepository.All(limit, offset);
+			var records = await this.ShipMethodRepository.All(limit, offset);
 
-			return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(records));
+			return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiShipMethodResponseModel> Get(int shipMethodID)
 		{
-			var record = await this.shipMethodRepository.Get(shipMethodID);
+			var record = await this.ShipMethodRepository.Get(shipMethodID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
+				return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiShipMethodResponseModel>> Create(
 			ApiShipMethodRequestModel model)
 		{
-			CreateResponse<ApiShipMethodResponseModel> response = new CreateResponse<ApiShipMethodResponseModel>(await this.shipMethodModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiShipMethodResponseModel> response = new CreateResponse<ApiShipMethodResponseModel>(await this.ShipMethodModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolShipMethodMapper.MapModelToBO(default(int), model);
-				var record = await this.shipMethodRepository.Create(this.dalShipMethodMapper.MapBOToEF(bo));
+				var bo = this.BolShipMethodMapper.MapModelToBO(default(int), model);
+				var record = await this.ShipMethodRepository.Create(this.DalShipMethodMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			int shipMethodID,
 			ApiShipMethodRequestModel model)
 		{
-			var validationResult = await this.shipMethodModelValidator.ValidateUpdateAsync(shipMethodID, model);
+			var validationResult = await this.ShipMethodModelValidator.ValidateUpdateAsync(shipMethodID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolShipMethodMapper.MapModelToBO(shipMethodID, model);
-				await this.shipMethodRepository.Update(this.dalShipMethodMapper.MapBOToEF(bo));
+				var bo = this.BolShipMethodMapper.MapModelToBO(shipMethodID, model);
+				await this.ShipMethodRepository.Update(this.DalShipMethodMapper.MapBOToEF(bo));
 
-				var record = await this.shipMethodRepository.Get(shipMethodID);
+				var record = await this.ShipMethodRepository.Get(shipMethodID);
 
-				return new UpdateResponse<ApiShipMethodResponseModel>(this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiShipMethodResponseModel>(this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int shipMethodID)
 		{
-			ActionResponse response = new ActionResponse(await this.shipMethodModelValidator.ValidateDeleteAsync(shipMethodID));
+			ActionResponse response = new ActionResponse(await this.ShipMethodModelValidator.ValidateDeleteAsync(shipMethodID));
 			if (response.Success)
 			{
-				await this.shipMethodRepository.Delete(shipMethodID);
+				await this.ShipMethodRepository.Delete(shipMethodID);
 			}
 
 			return response;
@@ -118,7 +118,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiShipMethodResponseModel> ByName(string name)
 		{
-			ShipMethod record = await this.shipMethodRepository.ByName(name);
+			ShipMethod record = await this.ShipMethodRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -126,19 +126,19 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolShipMethodMapper.MapBOToModel(this.dalShipMethodMapper.MapEFToBO(record));
+				return this.BolShipMethodMapper.MapBOToModel(this.DalShipMethodMapper.MapEFToBO(record));
 			}
 		}
 
 		public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PurchaseOrderHeader> records = await this.shipMethodRepository.PurchaseOrderHeaders(shipMethodID, limit, offset);
+			List<PurchaseOrderHeader> records = await this.ShipMethodRepository.PurchaseOrderHeaders(shipMethodID, limit, offset);
 
-			return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
+			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>078cce11c71262b6abf65c922c6afa89</Hash>
+    <Hash>2d9421b28b6f2968d1055e5df25a2572</Hash>
 </Codenesium>*/

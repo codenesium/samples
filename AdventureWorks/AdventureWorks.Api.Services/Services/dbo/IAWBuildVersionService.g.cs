@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IAWBuildVersionService
+	public partial interface IAWBuildVersionService
 	{
 		Task<CreateResponse<ApiAWBuildVersionResponseModel>> Create(
 			ApiAWBuildVersionRequestModel model);
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8f812e6f2e3154971de7e3340c1c89db</Hash>
+    <Hash>b424c05a8d8edf5b6168b31b88eed2b4</Hash>
 </Codenesium>*/

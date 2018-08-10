@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IUnitMeasureRepository
+	public partial interface IUnitMeasureRepository
 	{
 		Task<UnitMeasure> Create(UnitMeasure item);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ff52f4eb9bd6032a827c49e69c51fb67</Hash>
+    <Hash>e20757978d257750af6fb82fc148adf7</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IStoreRepository
+	public partial interface IStoreRepository
 	{
 		Task<Store> Create(Store item);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4dae3172f8eec40306b4d9b2ab3b9f2b</Hash>
+    <Hash>c4a611be25cfc126ea11c11456ef0fcb</Hash>
 </Codenesium>*/

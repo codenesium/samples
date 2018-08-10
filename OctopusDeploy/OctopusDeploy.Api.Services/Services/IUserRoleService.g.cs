@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IUserRoleService
+	public partial interface IUserRoleService
 	{
 		Task<CreateResponse<ApiUserRoleResponseModel>> Create(
 			ApiUserRoleRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45d3d1dc8a2e6357750ec737d5893641</Hash>
+    <Hash>9bec0afaeb391e48f6009521314e0f34</Hash>
 </Codenesium>*/

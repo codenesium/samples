@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IShipMethodRepository
+	public partial interface IShipMethodRepository
 	{
 		Task<ShipMethod> Create(ShipMethod item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>40521a94ea029a21ac9ec2f67ffbe1db</Hash>
+    <Hash>94c851ab5f0da460de88467ac183f004</Hash>
 </Codenesium>*/

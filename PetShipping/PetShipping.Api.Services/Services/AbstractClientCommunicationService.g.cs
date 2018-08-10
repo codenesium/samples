@@ -14,13 +14,13 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractClientCommunicationService : AbstractService
 	{
-		private IClientCommunicationRepository clientCommunicationRepository;
+		protected IClientCommunicationRepository ClientCommunicationRepository { get; private set; }
 
-		private IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator;
+		protected IApiClientCommunicationRequestModelValidator ClientCommunicationModelValidator { get; private set; }
 
-		private IBOLClientCommunicationMapper bolClientCommunicationMapper;
+		protected IBOLClientCommunicationMapper BolClientCommunicationMapper { get; private set; }
 
-		private IDALClientCommunicationMapper dalClientCommunicationMapper;
+		protected IDALClientCommunicationMapper DalClientCommunicationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace PetShippingNS.Api.Services
 			IDALClientCommunicationMapper dalClientCommunicationMapper)
 			: base()
 		{
-			this.clientCommunicationRepository = clientCommunicationRepository;
-			this.clientCommunicationModelValidator = clientCommunicationModelValidator;
-			this.bolClientCommunicationMapper = bolClientCommunicationMapper;
-			this.dalClientCommunicationMapper = dalClientCommunicationMapper;
+			this.ClientCommunicationRepository = clientCommunicationRepository;
+			this.ClientCommunicationModelValidator = clientCommunicationModelValidator;
+			this.BolClientCommunicationMapper = bolClientCommunicationMapper;
+			this.DalClientCommunicationMapper = dalClientCommunicationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiClientCommunicationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.clientCommunicationRepository.All(limit, offset);
+			var records = await this.ClientCommunicationRepository.All(limit, offset);
 
-			return this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(records));
+			return this.BolClientCommunicationMapper.MapBOToModel(this.DalClientCommunicationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiClientCommunicationResponseModel> Get(int id)
 		{
-			var record = await this.clientCommunicationRepository.Get(id);
+			var record = await this.ClientCommunicationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(record));
+				return this.BolClientCommunicationMapper.MapBOToModel(this.DalClientCommunicationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiClientCommunicationResponseModel>> Create(
 			ApiClientCommunicationRequestModel model)
 		{
-			CreateResponse<ApiClientCommunicationResponseModel> response = new CreateResponse<ApiClientCommunicationResponseModel>(await this.clientCommunicationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiClientCommunicationResponseModel> response = new CreateResponse<ApiClientCommunicationResponseModel>(await this.ClientCommunicationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolClientCommunicationMapper.MapModelToBO(default(int), model);
-				var record = await this.clientCommunicationRepository.Create(this.dalClientCommunicationMapper.MapBOToEF(bo));
+				var bo = this.BolClientCommunicationMapper.MapModelToBO(default(int), model);
+				var record = await this.ClientCommunicationRepository.Create(this.DalClientCommunicationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolClientCommunicationMapper.MapBOToModel(this.DalClientCommunicationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace PetShippingNS.Api.Services
 			int id,
 			ApiClientCommunicationRequestModel model)
 		{
-			var validationResult = await this.clientCommunicationModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ClientCommunicationModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolClientCommunicationMapper.MapModelToBO(id, model);
-				await this.clientCommunicationRepository.Update(this.dalClientCommunicationMapper.MapBOToEF(bo));
+				var bo = this.BolClientCommunicationMapper.MapModelToBO(id, model);
+				await this.ClientCommunicationRepository.Update(this.DalClientCommunicationMapper.MapBOToEF(bo));
 
-				var record = await this.clientCommunicationRepository.Get(id);
+				var record = await this.ClientCommunicationRepository.Get(id);
 
-				return new UpdateResponse<ApiClientCommunicationResponseModel>(this.bolClientCommunicationMapper.MapBOToModel(this.dalClientCommunicationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiClientCommunicationResponseModel>(this.BolClientCommunicationMapper.MapBOToModel(this.DalClientCommunicationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace PetShippingNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.clientCommunicationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ClientCommunicationModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.clientCommunicationRepository.Delete(id);
+				await this.ClientCommunicationRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ae89101186535a27748ef532bee089cb</Hash>
+    <Hash>34800fc0dcd85b8e21e882ea50278e73</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ITagSetService
+	public partial interface ITagSetService
 	{
 		Task<CreateResponse<ApiTagSetResponseModel>> Create(
 			ApiTagSetRequestModel model);
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e76598fff24a47eaf04c19ab3f1f0343</Hash>
+    <Hash>df7ccb3a71b1f5af4bad786def25a67e</Hash>
 </Codenesium>*/

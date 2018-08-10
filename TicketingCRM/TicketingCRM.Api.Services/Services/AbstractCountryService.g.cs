@@ -14,17 +14,17 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractCountryService : AbstractService
 	{
-		private ICountryRepository countryRepository;
+		protected ICountryRepository CountryRepository { get; private set; }
 
-		private IApiCountryRequestModelValidator countryModelValidator;
+		protected IApiCountryRequestModelValidator CountryModelValidator { get; private set; }
 
-		private IBOLCountryMapper bolCountryMapper;
+		protected IBOLCountryMapper BolCountryMapper { get; private set; }
 
-		private IDALCountryMapper dalCountryMapper;
+		protected IDALCountryMapper DalCountryMapper { get; private set; }
 
-		private IBOLProvinceMapper bolProvinceMapper;
+		protected IBOLProvinceMapper BolProvinceMapper { get; private set; }
 
-		private IDALProvinceMapper dalProvinceMapper;
+		protected IDALProvinceMapper DalProvinceMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace TicketingCRMNS.Api.Services
 			IDALProvinceMapper dalProvinceMapper)
 			: base()
 		{
-			this.countryRepository = countryRepository;
-			this.countryModelValidator = countryModelValidator;
-			this.bolCountryMapper = bolCountryMapper;
-			this.dalCountryMapper = dalCountryMapper;
-			this.bolProvinceMapper = bolProvinceMapper;
-			this.dalProvinceMapper = dalProvinceMapper;
+			this.CountryRepository = countryRepository;
+			this.CountryModelValidator = countryModelValidator;
+			this.BolCountryMapper = bolCountryMapper;
+			this.DalCountryMapper = dalCountryMapper;
+			this.BolProvinceMapper = bolProvinceMapper;
+			this.DalProvinceMapper = dalProvinceMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiCountryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.countryRepository.All(limit, offset);
+			var records = await this.CountryRepository.All(limit, offset);
 
-			return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(records));
+			return this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCountryResponseModel> Get(int id)
 		{
-			var record = await this.countryRepository.Get(id);
+			var record = await this.CountryRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record));
+				return this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryResponseModel>> Create(
 			ApiCountryRequestModel model)
 		{
-			CreateResponse<ApiCountryResponseModel> response = new CreateResponse<ApiCountryResponseModel>(await this.countryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCountryResponseModel> response = new CreateResponse<ApiCountryResponseModel>(await this.CountryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolCountryMapper.MapModelToBO(default(int), model);
-				var record = await this.countryRepository.Create(this.dalCountryMapper.MapBOToEF(bo));
+				var bo = this.BolCountryMapper.MapModelToBO(default(int), model);
+				var record = await this.CountryRepository.Create(this.DalCountryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace TicketingCRMNS.Api.Services
 			int id,
 			ApiCountryRequestModel model)
 		{
-			var validationResult = await this.countryModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.CountryModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolCountryMapper.MapModelToBO(id, model);
-				await this.countryRepository.Update(this.dalCountryMapper.MapBOToEF(bo));
+				var bo = this.BolCountryMapper.MapModelToBO(id, model);
+				await this.CountryRepository.Update(this.DalCountryMapper.MapBOToEF(bo));
 
-				var record = await this.countryRepository.Get(id);
+				var record = await this.CountryRepository.Get(id);
 
-				return new UpdateResponse<ApiCountryResponseModel>(this.bolCountryMapper.MapBOToModel(this.dalCountryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiCountryResponseModel>(this.BolCountryMapper.MapBOToModel(this.DalCountryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace TicketingCRMNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.countryModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.CountryModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.countryRepository.Delete(id);
+				await this.CountryRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace TicketingCRMNS.Api.Services
 
 		public async virtual Task<List<ApiProvinceResponseModel>> Provinces(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Province> records = await this.countryRepository.Provinces(countryId, limit, offset);
+			List<Province> records = await this.CountryRepository.Provinces(countryId, limit, offset);
 
-			return this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(records));
+			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e53f6bab6ec8f5cfeb116997202b31e5</Hash>
+    <Hash>3058e5ad727a8d5b4c794d011f7d76c9</Hash>
 </Codenesium>*/

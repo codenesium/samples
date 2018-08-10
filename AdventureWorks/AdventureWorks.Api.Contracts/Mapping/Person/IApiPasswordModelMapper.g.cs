@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiPasswordModelMapper
+	public partial interface IApiPasswordModelMapper
 	{
 		ApiPasswordResponseModel MapRequestToResponse(
 			int businessEntityID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ef2be1c285d1fa8c5ffcb5bfe2db4189</Hash>
+    <Hash>da1e7f805fee587b811d41d8ea537507</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ICountryRegionRepository
+	public partial interface ICountryRegionRepository
 	{
 		Task<CountryRegion> Create(CountryRegion item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>11ce2a45962515055a2ce7abe5332333</Hash>
+    <Hash>feb44663b6b85078c97c41e304c081c5</Hash>
 </Codenesium>*/

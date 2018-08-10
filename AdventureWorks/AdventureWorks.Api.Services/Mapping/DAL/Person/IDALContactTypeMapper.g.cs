@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALContactTypeMapper
+	public partial interface IDALContactTypeMapper
 	{
 		ContactType MapBOToEF(
 			BOContactType bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>90c7ab3069c22e8f728fc0dbccdbce5e</Hash>
+    <Hash>19f7084cc100b10b3fd5b1c680b2da81</Hash>
 </Codenesium>*/

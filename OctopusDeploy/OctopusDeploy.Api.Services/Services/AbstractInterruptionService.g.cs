@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractInterruptionService : AbstractService
 	{
-		private IInterruptionRepository interruptionRepository;
+		protected IInterruptionRepository InterruptionRepository { get; private set; }
 
-		private IApiInterruptionRequestModelValidator interruptionModelValidator;
+		protected IApiInterruptionRequestModelValidator InterruptionModelValidator { get; private set; }
 
-		private IBOLInterruptionMapper bolInterruptionMapper;
+		protected IBOLInterruptionMapper BolInterruptionMapper { get; private set; }
 
-		private IDALInterruptionMapper dalInterruptionMapper;
+		protected IDALInterruptionMapper DalInterruptionMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALInterruptionMapper dalInterruptionMapper)
 			: base()
 		{
-			this.interruptionRepository = interruptionRepository;
-			this.interruptionModelValidator = interruptionModelValidator;
-			this.bolInterruptionMapper = bolInterruptionMapper;
-			this.dalInterruptionMapper = dalInterruptionMapper;
+			this.InterruptionRepository = interruptionRepository;
+			this.InterruptionModelValidator = interruptionModelValidator;
+			this.BolInterruptionMapper = bolInterruptionMapper;
+			this.DalInterruptionMapper = dalInterruptionMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiInterruptionResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.interruptionRepository.All(limit, offset);
+			var records = await this.InterruptionRepository.All(limit, offset);
 
-			return this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(records));
+			return this.BolInterruptionMapper.MapBOToModel(this.DalInterruptionMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiInterruptionResponseModel> Get(string id)
 		{
-			var record = await this.interruptionRepository.Get(id);
+			var record = await this.InterruptionRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(record));
+				return this.BolInterruptionMapper.MapBOToModel(this.DalInterruptionMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiInterruptionResponseModel>> Create(
 			ApiInterruptionRequestModel model)
 		{
-			CreateResponse<ApiInterruptionResponseModel> response = new CreateResponse<ApiInterruptionResponseModel>(await this.interruptionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiInterruptionResponseModel> response = new CreateResponse<ApiInterruptionResponseModel>(await this.InterruptionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolInterruptionMapper.MapModelToBO(default(string), model);
-				var record = await this.interruptionRepository.Create(this.dalInterruptionMapper.MapBOToEF(bo));
+				var bo = this.BolInterruptionMapper.MapModelToBO(default(string), model);
+				var record = await this.InterruptionRepository.Create(this.DalInterruptionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolInterruptionMapper.MapBOToModel(this.DalInterruptionMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiInterruptionRequestModel model)
 		{
-			var validationResult = await this.interruptionModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.InterruptionModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolInterruptionMapper.MapModelToBO(id, model);
-				await this.interruptionRepository.Update(this.dalInterruptionMapper.MapBOToEF(bo));
+				var bo = this.BolInterruptionMapper.MapModelToBO(id, model);
+				await this.InterruptionRepository.Update(this.DalInterruptionMapper.MapBOToEF(bo));
 
-				var record = await this.interruptionRepository.Get(id);
+				var record = await this.InterruptionRepository.Get(id);
 
-				return new UpdateResponse<ApiInterruptionResponseModel>(this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiInterruptionResponseModel>(this.BolInterruptionMapper.MapBOToModel(this.DalInterruptionMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.interruptionModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.InterruptionModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.interruptionRepository.Delete(id);
+				await this.InterruptionRepository.Delete(id);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<List<ApiInterruptionResponseModel>> ByTenantId(string tenantId)
 		{
-			List<Interruption> records = await this.interruptionRepository.ByTenantId(tenantId);
+			List<Interruption> records = await this.InterruptionRepository.ByTenantId(tenantId);
 
-			return this.bolInterruptionMapper.MapBOToModel(this.dalInterruptionMapper.MapEFToBO(records));
+			return this.BolInterruptionMapper.MapBOToModel(this.DalInterruptionMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5a7919103d03ece32accdecb38be890</Hash>
+    <Hash>31a5e331dea48f47e52d1d3c1d5f53c5</Hash>
 </Codenesium>*/

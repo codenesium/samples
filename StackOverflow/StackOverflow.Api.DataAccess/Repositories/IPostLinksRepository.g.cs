@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-	public interface IPostLinksRepository
+	public partial interface IPostLinksRepository
 	{
 		Task<PostLinks> Create(PostLinks item);
 
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>91b2e12e7c987b356b937eff42595cf1</Hash>
+    <Hash>d5a3d43eef319c23f47029e6011737d8</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IJobCandidateRepository
+	public partial interface IJobCandidateRepository
 	{
 		Task<JobCandidate> Create(JobCandidate item);
 
@@ -22,5 +22,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d3f50ce2d5c3e6589ccb7e064c0ca011</Hash>
+    <Hash>5314e3fec9f0122dcfa660bba1001546</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLKeyAllocationMapper
+	public partial interface IBOLKeyAllocationMapper
 	{
 		BOKeyAllocation MapModelToBO(
 			string collectionName,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>33184c98c7753821c5f9b8dab26eb358</Hash>
+    <Hash>93e125ace849dee3ee9fd0875e023f70</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
-	public interface IBOLDeviceMapper
+	public partial interface IBOLDeviceMapper
 	{
 		BODevice MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7f180a2bac9df763393a8c5e98a2436</Hash>
+    <Hash>aefa3e7984d72662150fb94df1fc3d71</Hash>
 </Codenesium>*/

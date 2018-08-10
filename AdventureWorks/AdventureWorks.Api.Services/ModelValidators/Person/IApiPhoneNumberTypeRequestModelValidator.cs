@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiPhoneNumberTypeRequestModelValidator
+	public partial interface IApiPhoneNumberTypeRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiPhoneNumberTypeRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c6facf6ac7998e6e5b90a9f5fb82049a</Hash>
+    <Hash>6ead6f25393c679d414d251b74419373</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IScrapReasonRepository
+	public partial interface IScrapReasonRepository
 	{
 		Task<ScrapReason> Create(ScrapReason item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>30bf2daadf90da018820cb86f065ad1c</Hash>
+    <Hash>2f42372bc906b0095c094b838b5f2503</Hash>
 </Codenesium>*/

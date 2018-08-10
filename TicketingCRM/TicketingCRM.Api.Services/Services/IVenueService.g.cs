@@ -7,7 +7,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IVenueService
+	public partial interface IVenueService
 	{
 		Task<CreateResponse<ApiVenueResponseModel>> Create(
 			ApiVenueRequestModel model);
@@ -28,5 +28,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05d335077f533c3fe187db0f62e88875</Hash>
+    <Hash>10ff500ef9863d7bb8fe9039b9080193</Hash>
 </Codenesium>*/

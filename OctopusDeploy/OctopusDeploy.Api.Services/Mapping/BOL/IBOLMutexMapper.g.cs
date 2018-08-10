@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLMutexMapper
+	public partial interface IBOLMutexMapper
 	{
 		BOMutex MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bfc5ed8eee6a13a8fbc35867d06b5490</Hash>
+    <Hash>de3574f3fcce36f404c6a11033e188cf</Hash>
 </Codenesium>*/

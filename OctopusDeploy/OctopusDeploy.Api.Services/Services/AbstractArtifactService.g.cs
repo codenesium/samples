@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractArtifactService : AbstractService
 	{
-		private IArtifactRepository artifactRepository;
+		protected IArtifactRepository ArtifactRepository { get; private set; }
 
-		private IApiArtifactRequestModelValidator artifactModelValidator;
+		protected IApiArtifactRequestModelValidator ArtifactModelValidator { get; private set; }
 
-		private IBOLArtifactMapper bolArtifactMapper;
+		protected IBOLArtifactMapper BolArtifactMapper { get; private set; }
 
-		private IDALArtifactMapper dalArtifactMapper;
+		protected IDALArtifactMapper DalArtifactMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALArtifactMapper dalArtifactMapper)
 			: base()
 		{
-			this.artifactRepository = artifactRepository;
-			this.artifactModelValidator = artifactModelValidator;
-			this.bolArtifactMapper = bolArtifactMapper;
-			this.dalArtifactMapper = dalArtifactMapper;
+			this.ArtifactRepository = artifactRepository;
+			this.ArtifactModelValidator = artifactModelValidator;
+			this.BolArtifactMapper = bolArtifactMapper;
+			this.DalArtifactMapper = dalArtifactMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiArtifactResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.artifactRepository.All(limit, offset);
+			var records = await this.ArtifactRepository.All(limit, offset);
 
-			return this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(records));
+			return this.BolArtifactMapper.MapBOToModel(this.DalArtifactMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiArtifactResponseModel> Get(string id)
 		{
-			var record = await this.artifactRepository.Get(id);
+			var record = await this.ArtifactRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(record));
+				return this.BolArtifactMapper.MapBOToModel(this.DalArtifactMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiArtifactResponseModel>> Create(
 			ApiArtifactRequestModel model)
 		{
-			CreateResponse<ApiArtifactResponseModel> response = new CreateResponse<ApiArtifactResponseModel>(await this.artifactModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiArtifactResponseModel> response = new CreateResponse<ApiArtifactResponseModel>(await this.ArtifactModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolArtifactMapper.MapModelToBO(default(string), model);
-				var record = await this.artifactRepository.Create(this.dalArtifactMapper.MapBOToEF(bo));
+				var bo = this.BolArtifactMapper.MapModelToBO(default(string), model);
+				var record = await this.ArtifactRepository.Create(this.DalArtifactMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolArtifactMapper.MapBOToModel(this.DalArtifactMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiArtifactRequestModel model)
 		{
-			var validationResult = await this.artifactModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ArtifactModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolArtifactMapper.MapModelToBO(id, model);
-				await this.artifactRepository.Update(this.dalArtifactMapper.MapBOToEF(bo));
+				var bo = this.BolArtifactMapper.MapModelToBO(id, model);
+				await this.ArtifactRepository.Update(this.DalArtifactMapper.MapBOToEF(bo));
 
-				var record = await this.artifactRepository.Get(id);
+				var record = await this.ArtifactRepository.Get(id);
 
-				return new UpdateResponse<ApiArtifactResponseModel>(this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiArtifactResponseModel>(this.BolArtifactMapper.MapBOToModel(this.DalArtifactMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.artifactModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ArtifactModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.artifactRepository.Delete(id);
+				await this.ArtifactRepository.Delete(id);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<List<ApiArtifactResponseModel>> ByTenantId(string tenantId)
 		{
-			List<Artifact> records = await this.artifactRepository.ByTenantId(tenantId);
+			List<Artifact> records = await this.ArtifactRepository.ByTenantId(tenantId);
 
-			return this.bolArtifactMapper.MapBOToModel(this.dalArtifactMapper.MapEFToBO(records));
+			return this.BolArtifactMapper.MapBOToModel(this.DalArtifactMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e2fb8f91a76ed3557e5c2f07ea5a5fe1</Hash>
+    <Hash>55735926e6b88d21ba488e7fe604f920</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IApiFeedRequestModelValidator
+	public partial interface IApiFeedRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiFeedRequestModel model);
 
@@ -16,5 +16,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>531706b7916ba1dcc306afac0eb64abb</Hash>
+    <Hash>53d86db3e36a2121c11d8c25fdab5625</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractWorkOrderService : AbstractService
 	{
-		private IWorkOrderRepository workOrderRepository;
+		protected IWorkOrderRepository WorkOrderRepository { get; private set; }
 
-		private IApiWorkOrderRequestModelValidator workOrderModelValidator;
+		protected IApiWorkOrderRequestModelValidator WorkOrderModelValidator { get; private set; }
 
-		private IBOLWorkOrderMapper bolWorkOrderMapper;
+		protected IBOLWorkOrderMapper BolWorkOrderMapper { get; private set; }
 
-		private IDALWorkOrderMapper dalWorkOrderMapper;
+		protected IDALWorkOrderMapper DalWorkOrderMapper { get; private set; }
 
-		private IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper;
+		protected IBOLWorkOrderRoutingMapper BolWorkOrderRoutingMapper { get; private set; }
 
-		private IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper;
+		protected IDALWorkOrderRoutingMapper DalWorkOrderRoutingMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper)
 			: base()
 		{
-			this.workOrderRepository = workOrderRepository;
-			this.workOrderModelValidator = workOrderModelValidator;
-			this.bolWorkOrderMapper = bolWorkOrderMapper;
-			this.dalWorkOrderMapper = dalWorkOrderMapper;
-			this.bolWorkOrderRoutingMapper = bolWorkOrderRoutingMapper;
-			this.dalWorkOrderRoutingMapper = dalWorkOrderRoutingMapper;
+			this.WorkOrderRepository = workOrderRepository;
+			this.WorkOrderModelValidator = workOrderModelValidator;
+			this.BolWorkOrderMapper = bolWorkOrderMapper;
+			this.DalWorkOrderMapper = dalWorkOrderMapper;
+			this.BolWorkOrderRoutingMapper = bolWorkOrderRoutingMapper;
+			this.DalWorkOrderRoutingMapper = dalWorkOrderRoutingMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiWorkOrderResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.workOrderRepository.All(limit, offset);
+			var records = await this.WorkOrderRepository.All(limit, offset);
 
-			return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
+			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiWorkOrderResponseModel> Get(int workOrderID)
 		{
-			var record = await this.workOrderRepository.Get(workOrderID);
+			var record = await this.WorkOrderRepository.Get(workOrderID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(record));
+				return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiWorkOrderResponseModel>> Create(
 			ApiWorkOrderRequestModel model)
 		{
-			CreateResponse<ApiWorkOrderResponseModel> response = new CreateResponse<ApiWorkOrderResponseModel>(await this.workOrderModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiWorkOrderResponseModel> response = new CreateResponse<ApiWorkOrderResponseModel>(await this.WorkOrderModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolWorkOrderMapper.MapModelToBO(default(int), model);
-				var record = await this.workOrderRepository.Create(this.dalWorkOrderMapper.MapBOToEF(bo));
+				var bo = this.BolWorkOrderMapper.MapModelToBO(default(int), model);
+				var record = await this.WorkOrderRepository.Create(this.DalWorkOrderMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			int workOrderID,
 			ApiWorkOrderRequestModel model)
 		{
-			var validationResult = await this.workOrderModelValidator.ValidateUpdateAsync(workOrderID, model);
+			var validationResult = await this.WorkOrderModelValidator.ValidateUpdateAsync(workOrderID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolWorkOrderMapper.MapModelToBO(workOrderID, model);
-				await this.workOrderRepository.Update(this.dalWorkOrderMapper.MapBOToEF(bo));
+				var bo = this.BolWorkOrderMapper.MapModelToBO(workOrderID, model);
+				await this.WorkOrderRepository.Update(this.DalWorkOrderMapper.MapBOToEF(bo));
 
-				var record = await this.workOrderRepository.Get(workOrderID);
+				var record = await this.WorkOrderRepository.Get(workOrderID);
 
-				return new UpdateResponse<ApiWorkOrderResponseModel>(this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiWorkOrderResponseModel>(this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int workOrderID)
 		{
-			ActionResponse response = new ActionResponse(await this.workOrderModelValidator.ValidateDeleteAsync(workOrderID));
+			ActionResponse response = new ActionResponse(await this.WorkOrderModelValidator.ValidateDeleteAsync(workOrderID));
 			if (response.Success)
 			{
-				await this.workOrderRepository.Delete(workOrderID);
+				await this.WorkOrderRepository.Delete(workOrderID);
 			}
 
 			return response;
@@ -118,27 +118,27 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiWorkOrderResponseModel>> ByProductID(int productID)
 		{
-			List<WorkOrder> records = await this.workOrderRepository.ByProductID(productID);
+			List<WorkOrder> records = await this.WorkOrderRepository.ByProductID(productID);
 
-			return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
+			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiWorkOrderResponseModel>> ByScrapReasonID(short? scrapReasonID)
 		{
-			List<WorkOrder> records = await this.workOrderRepository.ByScrapReasonID(scrapReasonID);
+			List<WorkOrder> records = await this.WorkOrderRepository.ByScrapReasonID(scrapReasonID);
 
-			return this.bolWorkOrderMapper.MapBOToModel(this.dalWorkOrderMapper.MapEFToBO(records));
+			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<WorkOrderRouting> records = await this.workOrderRepository.WorkOrderRoutings(workOrderID, limit, offset);
+			List<WorkOrderRouting> records = await this.WorkOrderRepository.WorkOrderRoutings(workOrderID, limit, offset);
 
-			return this.bolWorkOrderRoutingMapper.MapBOToModel(this.dalWorkOrderRoutingMapper.MapEFToBO(records));
+			return this.BolWorkOrderRoutingMapper.MapBOToModel(this.DalWorkOrderRoutingMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>09df13204adc4382a8a4d23f915d8b4c</Hash>
+    <Hash>7cf38e8a27a1f2d234885815dbe0ee5c</Hash>
 </Codenesium>*/

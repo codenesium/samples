@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IWorkOrderRoutingService
+	public partial interface IWorkOrderRoutingService
 	{
 		Task<CreateResponse<ApiWorkOrderRoutingResponseModel>> Create(
 			ApiWorkOrderRoutingRequestModel model);
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>013ffffa2220deb9f7d4637280f758ae</Hash>
+    <Hash>3a97eeb38e0602e7d84dd8f47452c970</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALAWBuildVersionMapper
+	public partial interface IDALAWBuildVersionMapper
 	{
 		AWBuildVersion MapBOToEF(
 			BOAWBuildVersion bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4af9c27dc6c0f38c878c12cf6431b71</Hash>
+    <Hash>a211d315e1473816d12c4807b7be9a42</Hash>
 </Codenesium>*/

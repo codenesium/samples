@@ -14,13 +14,13 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractCustomerService : AbstractService
 	{
-		private ICustomerRepository customerRepository;
+		protected ICustomerRepository CustomerRepository { get; private set; }
 
-		private IApiCustomerRequestModelValidator customerModelValidator;
+		protected IApiCustomerRequestModelValidator CustomerModelValidator { get; private set; }
 
-		private IBOLCustomerMapper bolCustomerMapper;
+		protected IBOLCustomerMapper BolCustomerMapper { get; private set; }
 
-		private IDALCustomerMapper dalCustomerMapper;
+		protected IDALCustomerMapper DalCustomerMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TicketingCRMNS.Api.Services
 			IDALCustomerMapper dalCustomerMapper)
 			: base()
 		{
-			this.customerRepository = customerRepository;
-			this.customerModelValidator = customerModelValidator;
-			this.bolCustomerMapper = bolCustomerMapper;
-			this.dalCustomerMapper = dalCustomerMapper;
+			this.CustomerRepository = customerRepository;
+			this.CustomerModelValidator = customerModelValidator;
+			this.BolCustomerMapper = bolCustomerMapper;
+			this.DalCustomerMapper = dalCustomerMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiCustomerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.customerRepository.All(limit, offset);
+			var records = await this.CustomerRepository.All(limit, offset);
 
-			return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(records));
+			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCustomerResponseModel> Get(int id)
 		{
-			var record = await this.customerRepository.Get(id);
+			var record = await this.CustomerRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record));
+				return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiCustomerResponseModel>> Create(
 			ApiCustomerRequestModel model)
 		{
-			CreateResponse<ApiCustomerResponseModel> response = new CreateResponse<ApiCustomerResponseModel>(await this.customerModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCustomerResponseModel> response = new CreateResponse<ApiCustomerResponseModel>(await this.CustomerModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolCustomerMapper.MapModelToBO(default(int), model);
-				var record = await this.customerRepository.Create(this.dalCustomerMapper.MapBOToEF(bo));
+				var bo = this.BolCustomerMapper.MapModelToBO(default(int), model);
+				var record = await this.CustomerRepository.Create(this.DalCustomerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TicketingCRMNS.Api.Services
 			int id,
 			ApiCustomerRequestModel model)
 		{
-			var validationResult = await this.customerModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.CustomerModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolCustomerMapper.MapModelToBO(id, model);
-				await this.customerRepository.Update(this.dalCustomerMapper.MapBOToEF(bo));
+				var bo = this.BolCustomerMapper.MapModelToBO(id, model);
+				await this.CustomerRepository.Update(this.DalCustomerMapper.MapBOToEF(bo));
 
-				var record = await this.customerRepository.Get(id);
+				var record = await this.CustomerRepository.Get(id);
 
-				return new UpdateResponse<ApiCustomerResponseModel>(this.bolCustomerMapper.MapBOToModel(this.dalCustomerMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiCustomerResponseModel>(this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TicketingCRMNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.customerModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.CustomerModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.customerRepository.Delete(id);
+				await this.CustomerRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35b5eb080bb8543489c543282a6a0bcb</Hash>
+    <Hash>d5e2181a79d2c4d1716cad406311bc42</Hash>
 </Codenesium>*/

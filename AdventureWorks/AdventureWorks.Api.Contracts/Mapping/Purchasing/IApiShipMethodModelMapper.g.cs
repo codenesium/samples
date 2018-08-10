@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiShipMethodModelMapper
+	public partial interface IApiShipMethodModelMapper
 	{
 		ApiShipMethodResponseModel MapRequestToResponse(
 			int shipMethodID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1be280ee942039ca21c9cdddd35f8817</Hash>
+    <Hash>a31fa4145b2fe036ea629cfa5eac3447</Hash>
 </Codenesium>*/

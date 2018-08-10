@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractVariableSetService : AbstractService
 	{
-		private IVariableSetRepository variableSetRepository;
+		protected IVariableSetRepository VariableSetRepository { get; private set; }
 
-		private IApiVariableSetRequestModelValidator variableSetModelValidator;
+		protected IApiVariableSetRequestModelValidator VariableSetModelValidator { get; private set; }
 
-		private IBOLVariableSetMapper bolVariableSetMapper;
+		protected IBOLVariableSetMapper BolVariableSetMapper { get; private set; }
 
-		private IDALVariableSetMapper dalVariableSetMapper;
+		protected IDALVariableSetMapper DalVariableSetMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALVariableSetMapper dalVariableSetMapper)
 			: base()
 		{
-			this.variableSetRepository = variableSetRepository;
-			this.variableSetModelValidator = variableSetModelValidator;
-			this.bolVariableSetMapper = bolVariableSetMapper;
-			this.dalVariableSetMapper = dalVariableSetMapper;
+			this.VariableSetRepository = variableSetRepository;
+			this.VariableSetModelValidator = variableSetModelValidator;
+			this.BolVariableSetMapper = bolVariableSetMapper;
+			this.DalVariableSetMapper = dalVariableSetMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiVariableSetResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.variableSetRepository.All(limit, offset);
+			var records = await this.VariableSetRepository.All(limit, offset);
 
-			return this.bolVariableSetMapper.MapBOToModel(this.dalVariableSetMapper.MapEFToBO(records));
+			return this.BolVariableSetMapper.MapBOToModel(this.DalVariableSetMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiVariableSetResponseModel> Get(string id)
 		{
-			var record = await this.variableSetRepository.Get(id);
+			var record = await this.VariableSetRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolVariableSetMapper.MapBOToModel(this.dalVariableSetMapper.MapEFToBO(record));
+				return this.BolVariableSetMapper.MapBOToModel(this.DalVariableSetMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiVariableSetResponseModel>> Create(
 			ApiVariableSetRequestModel model)
 		{
-			CreateResponse<ApiVariableSetResponseModel> response = new CreateResponse<ApiVariableSetResponseModel>(await this.variableSetModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVariableSetResponseModel> response = new CreateResponse<ApiVariableSetResponseModel>(await this.VariableSetModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolVariableSetMapper.MapModelToBO(default(string), model);
-				var record = await this.variableSetRepository.Create(this.dalVariableSetMapper.MapBOToEF(bo));
+				var bo = this.BolVariableSetMapper.MapModelToBO(default(string), model);
+				var record = await this.VariableSetRepository.Create(this.DalVariableSetMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolVariableSetMapper.MapBOToModel(this.dalVariableSetMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolVariableSetMapper.MapBOToModel(this.DalVariableSetMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiVariableSetRequestModel model)
 		{
-			var validationResult = await this.variableSetModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.VariableSetModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolVariableSetMapper.MapModelToBO(id, model);
-				await this.variableSetRepository.Update(this.dalVariableSetMapper.MapBOToEF(bo));
+				var bo = this.BolVariableSetMapper.MapModelToBO(id, model);
+				await this.VariableSetRepository.Update(this.DalVariableSetMapper.MapBOToEF(bo));
 
-				var record = await this.variableSetRepository.Get(id);
+				var record = await this.VariableSetRepository.Get(id);
 
-				return new UpdateResponse<ApiVariableSetResponseModel>(this.bolVariableSetMapper.MapBOToModel(this.dalVariableSetMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiVariableSetResponseModel>(this.BolVariableSetMapper.MapBOToModel(this.DalVariableSetMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.variableSetModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.VariableSetModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.variableSetRepository.Delete(id);
+				await this.VariableSetRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>086fa9193b1a79fced018eb4cf8ecd88</Hash>
+    <Hash>98baab5b42eba1b6d4af00e5962dbec8</Hash>
 </Codenesium>*/

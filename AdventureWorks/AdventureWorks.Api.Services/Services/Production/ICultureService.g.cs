@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ICultureService
+	public partial interface ICultureService
 	{
 		Task<CreateResponse<ApiCultureResponseModel>> Create(
 			ApiCultureRequestModel model);
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4ddd1718f190859f3d967bc544914740</Hash>
+    <Hash>770c6bc77733eeb9c9401c3b048519ac</Hash>
 </Codenesium>*/

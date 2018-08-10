@@ -19,12 +19,17 @@ namespace ESPIOTNS.Api.Web
                 this.Configuration = builder.Build();
 		}
 
-        public override ApplicationDbContext SetupDatabase(IServiceCollection services)
+        public override ApplicationDbContext SetupDatabase(IServiceCollection services, bool enableSensitiveDataLogging)
         {
             SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
             string connectionString = connectionStringBuilder.ToString();
             SqliteConnection connection = new SqliteConnection(connectionString);
             DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			if (enableSensitiveDataLogging)
+			{
+				options.EnableSensitiveDataLogging();
+			}
+
 		    options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlite(connection);
             ApplicationDbContext context = new ApplicationDbContext(options.Options);

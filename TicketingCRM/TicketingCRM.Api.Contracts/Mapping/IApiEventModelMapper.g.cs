@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.Contracts
 {
-	public interface IApiEventModelMapper
+	public partial interface IApiEventModelMapper
 	{
 		ApiEventResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6a10265a793a119cd389d33ce17cf9ea</Hash>
+    <Hash>8756fa05eb05a40ee254c11d7052661b</Hash>
 </Codenesium>*/

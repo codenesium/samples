@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IBOLVotesMapper
+	public partial interface IBOLVotesMapper
 	{
 		BOVotes MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c46311ae22cc983452274cdab2cee798</Hash>
+    <Hash>4ee1e54a94e578002e8f970fe2abcac1</Hash>
 </Codenesium>*/

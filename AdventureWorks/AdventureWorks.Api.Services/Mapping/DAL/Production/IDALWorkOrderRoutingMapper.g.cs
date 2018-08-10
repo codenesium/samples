@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALWorkOrderRoutingMapper
+	public partial interface IDALWorkOrderRoutingMapper
 	{
 		WorkOrderRouting MapBOToEF(
 			BOWorkOrderRouting bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>06f885cdc172f20b6ea7fc92f527a370</Hash>
+    <Hash>a41b6e52d7e30e23f9b70be79745dcf2</Hash>
 </Codenesium>*/

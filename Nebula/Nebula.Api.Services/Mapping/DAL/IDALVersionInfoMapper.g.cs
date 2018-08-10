@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IDALVersionInfoMapper
+	public partial interface IDALVersionInfoMapper
 	{
 		VersionInfo MapBOToEF(
 			BOVersionInfo bo);
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d9734abc893fe6d88dbfaa5dc3710a8c</Hash>
+    <Hash>e42aa2ec1e87fda2abb10ff6743f8d9f</Hash>
 </Codenesium>*/

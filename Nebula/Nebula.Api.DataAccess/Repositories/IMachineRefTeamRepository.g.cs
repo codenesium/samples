@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface IMachineRefTeamRepository
+	public partial interface IMachineRefTeamRepository
 	{
 		Task<MachineRefTeam> Create(MachineRefTeam item);
 
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f4f2b3c305e95069fa21049e192620ee</Hash>
+    <Hash>f0f91422d6c202b211a27484e189880b</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-	public interface ISaleRepository
+	public partial interface ISaleRepository
 	{
 		Task<Sale> Create(Sale item);
 
@@ -24,5 +24,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8a1610361e2e523dbc89c6216253a63c</Hash>
+    <Hash>fa503e0d80ffe1635e107bfab9610e46</Hash>
 </Codenesium>*/

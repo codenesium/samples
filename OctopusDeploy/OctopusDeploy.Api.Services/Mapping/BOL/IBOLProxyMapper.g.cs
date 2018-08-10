@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLProxyMapper
+	public partial interface IBOLProxyMapper
 	{
 		BOProxy MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>742752cd94552ebd7a55669b33e4d0b7</Hash>
+    <Hash>141178b36fd74b56a3c58b37939d0d7f</Hash>
 </Codenesium>*/

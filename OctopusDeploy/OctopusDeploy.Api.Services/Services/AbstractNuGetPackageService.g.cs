@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractNuGetPackageService : AbstractService
 	{
-		private INuGetPackageRepository nuGetPackageRepository;
+		protected INuGetPackageRepository NuGetPackageRepository { get; private set; }
 
-		private IApiNuGetPackageRequestModelValidator nuGetPackageModelValidator;
+		protected IApiNuGetPackageRequestModelValidator NuGetPackageModelValidator { get; private set; }
 
-		private IBOLNuGetPackageMapper bolNuGetPackageMapper;
+		protected IBOLNuGetPackageMapper BolNuGetPackageMapper { get; private set; }
 
-		private IDALNuGetPackageMapper dalNuGetPackageMapper;
+		protected IDALNuGetPackageMapper DalNuGetPackageMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALNuGetPackageMapper dalNuGetPackageMapper)
 			: base()
 		{
-			this.nuGetPackageRepository = nuGetPackageRepository;
-			this.nuGetPackageModelValidator = nuGetPackageModelValidator;
-			this.bolNuGetPackageMapper = bolNuGetPackageMapper;
-			this.dalNuGetPackageMapper = dalNuGetPackageMapper;
+			this.NuGetPackageRepository = nuGetPackageRepository;
+			this.NuGetPackageModelValidator = nuGetPackageModelValidator;
+			this.BolNuGetPackageMapper = bolNuGetPackageMapper;
+			this.DalNuGetPackageMapper = dalNuGetPackageMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiNuGetPackageResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.nuGetPackageRepository.All(limit, offset);
+			var records = await this.NuGetPackageRepository.All(limit, offset);
 
-			return this.bolNuGetPackageMapper.MapBOToModel(this.dalNuGetPackageMapper.MapEFToBO(records));
+			return this.BolNuGetPackageMapper.MapBOToModel(this.DalNuGetPackageMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiNuGetPackageResponseModel> Get(string id)
 		{
-			var record = await this.nuGetPackageRepository.Get(id);
+			var record = await this.NuGetPackageRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolNuGetPackageMapper.MapBOToModel(this.dalNuGetPackageMapper.MapEFToBO(record));
+				return this.BolNuGetPackageMapper.MapBOToModel(this.DalNuGetPackageMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiNuGetPackageResponseModel>> Create(
 			ApiNuGetPackageRequestModel model)
 		{
-			CreateResponse<ApiNuGetPackageResponseModel> response = new CreateResponse<ApiNuGetPackageResponseModel>(await this.nuGetPackageModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiNuGetPackageResponseModel> response = new CreateResponse<ApiNuGetPackageResponseModel>(await this.NuGetPackageModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolNuGetPackageMapper.MapModelToBO(default(string), model);
-				var record = await this.nuGetPackageRepository.Create(this.dalNuGetPackageMapper.MapBOToEF(bo));
+				var bo = this.BolNuGetPackageMapper.MapModelToBO(default(string), model);
+				var record = await this.NuGetPackageRepository.Create(this.DalNuGetPackageMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolNuGetPackageMapper.MapBOToModel(this.dalNuGetPackageMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolNuGetPackageMapper.MapBOToModel(this.DalNuGetPackageMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiNuGetPackageRequestModel model)
 		{
-			var validationResult = await this.nuGetPackageModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.NuGetPackageModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolNuGetPackageMapper.MapModelToBO(id, model);
-				await this.nuGetPackageRepository.Update(this.dalNuGetPackageMapper.MapBOToEF(bo));
+				var bo = this.BolNuGetPackageMapper.MapModelToBO(id, model);
+				await this.NuGetPackageRepository.Update(this.DalNuGetPackageMapper.MapBOToEF(bo));
 
-				var record = await this.nuGetPackageRepository.Get(id);
+				var record = await this.NuGetPackageRepository.Get(id);
 
-				return new UpdateResponse<ApiNuGetPackageResponseModel>(this.bolNuGetPackageMapper.MapBOToModel(this.dalNuGetPackageMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiNuGetPackageResponseModel>(this.BolNuGetPackageMapper.MapBOToModel(this.DalNuGetPackageMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.nuGetPackageModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.NuGetPackageModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.nuGetPackageRepository.Delete(id);
+				await this.NuGetPackageRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f3ff36393f87849caa633e3e26cf22ad</Hash>
+    <Hash>80b2e3803a38957313ea8c958f59fd9b</Hash>
 </Codenesium>*/

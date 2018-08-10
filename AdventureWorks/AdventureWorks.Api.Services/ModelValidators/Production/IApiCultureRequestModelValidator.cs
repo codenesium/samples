@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiCultureRequestModelValidator
+	public partial interface IApiCultureRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiCultureRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9fc3cf98d321c1f0541d5df89e4e96b6</Hash>
+    <Hash>00e2551bef9794a38bb05ae3bef285db</Hash>
 </Codenesium>*/

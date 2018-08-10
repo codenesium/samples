@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IPhoneNumberTypeService
+	public partial interface IPhoneNumberTypeService
 	{
 		Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
 			ApiPhoneNumberTypeRequestModel model);
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da55585df56bc29f9f91a7186965f7ba</Hash>
+    <Hash>bc3752177e32f70633d892463bfa31e4</Hash>
 </Codenesium>*/

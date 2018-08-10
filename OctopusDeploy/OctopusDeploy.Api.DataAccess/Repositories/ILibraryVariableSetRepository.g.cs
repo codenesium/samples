@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface ILibraryVariableSetRepository
+	public partial interface ILibraryVariableSetRepository
 	{
 		Task<LibraryVariableSet> Create(LibraryVariableSet item);
 
@@ -22,5 +22,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1fb7507d7f6c069f58f87b0cc75f16ad</Hash>
+    <Hash>3faf3a872cc28b6c7a2e8a656b409c8d</Hash>
 </Codenesium>*/

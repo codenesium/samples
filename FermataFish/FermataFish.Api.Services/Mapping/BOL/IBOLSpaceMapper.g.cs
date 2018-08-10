@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IBOLSpaceMapper
+	public partial interface IBOLSpaceMapper
 	{
 		BOSpace MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31c1bdc10e731a0a1984f28c1252afb7</Hash>
+    <Hash>e3e34b696ce861af40ef1d14208d9379</Hash>
 </Codenesium>*/

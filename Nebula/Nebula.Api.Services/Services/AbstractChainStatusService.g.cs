@@ -14,17 +14,17 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractChainStatusService : AbstractService
 	{
-		private IChainStatusRepository chainStatusRepository;
+		protected IChainStatusRepository ChainStatusRepository { get; private set; }
 
-		private IApiChainStatusRequestModelValidator chainStatusModelValidator;
+		protected IApiChainStatusRequestModelValidator ChainStatusModelValidator { get; private set; }
 
-		private IBOLChainStatusMapper bolChainStatusMapper;
+		protected IBOLChainStatusMapper BolChainStatusMapper { get; private set; }
 
-		private IDALChainStatusMapper dalChainStatusMapper;
+		protected IDALChainStatusMapper DalChainStatusMapper { get; private set; }
 
-		private IBOLChainMapper bolChainMapper;
+		protected IBOLChainMapper BolChainMapper { get; private set; }
 
-		private IDALChainMapper dalChainMapper;
+		protected IDALChainMapper DalChainMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace NebulaNS.Api.Services
 			IDALChainMapper dalChainMapper)
 			: base()
 		{
-			this.chainStatusRepository = chainStatusRepository;
-			this.chainStatusModelValidator = chainStatusModelValidator;
-			this.bolChainStatusMapper = bolChainStatusMapper;
-			this.dalChainStatusMapper = dalChainStatusMapper;
-			this.bolChainMapper = bolChainMapper;
-			this.dalChainMapper = dalChainMapper;
+			this.ChainStatusRepository = chainStatusRepository;
+			this.ChainStatusModelValidator = chainStatusModelValidator;
+			this.BolChainStatusMapper = bolChainStatusMapper;
+			this.DalChainStatusMapper = dalChainStatusMapper;
+			this.BolChainMapper = bolChainMapper;
+			this.DalChainMapper = dalChainMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiChainStatusResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.chainStatusRepository.All(limit, offset);
+			var records = await this.ChainStatusRepository.All(limit, offset);
 
-			return this.bolChainStatusMapper.MapBOToModel(this.dalChainStatusMapper.MapEFToBO(records));
+			return this.BolChainStatusMapper.MapBOToModel(this.DalChainStatusMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiChainStatusResponseModel> Get(int id)
 		{
-			var record = await this.chainStatusRepository.Get(id);
+			var record = await this.ChainStatusRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.bolChainStatusMapper.MapBOToModel(this.dalChainStatusMapper.MapEFToBO(record));
+				return this.BolChainStatusMapper.MapBOToModel(this.DalChainStatusMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiChainStatusResponseModel>> Create(
 			ApiChainStatusRequestModel model)
 		{
-			CreateResponse<ApiChainStatusResponseModel> response = new CreateResponse<ApiChainStatusResponseModel>(await this.chainStatusModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiChainStatusResponseModel> response = new CreateResponse<ApiChainStatusResponseModel>(await this.ChainStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolChainStatusMapper.MapModelToBO(default(int), model);
-				var record = await this.chainStatusRepository.Create(this.dalChainStatusMapper.MapBOToEF(bo));
+				var bo = this.BolChainStatusMapper.MapModelToBO(default(int), model);
+				var record = await this.ChainStatusRepository.Create(this.DalChainStatusMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolChainStatusMapper.MapBOToModel(this.dalChainStatusMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolChainStatusMapper.MapBOToModel(this.DalChainStatusMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace NebulaNS.Api.Services
 			int id,
 			ApiChainStatusRequestModel model)
 		{
-			var validationResult = await this.chainStatusModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ChainStatusModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolChainStatusMapper.MapModelToBO(id, model);
-				await this.chainStatusRepository.Update(this.dalChainStatusMapper.MapBOToEF(bo));
+				var bo = this.BolChainStatusMapper.MapModelToBO(id, model);
+				await this.ChainStatusRepository.Update(this.DalChainStatusMapper.MapBOToEF(bo));
 
-				var record = await this.chainStatusRepository.Get(id);
+				var record = await this.ChainStatusRepository.Get(id);
 
-				return new UpdateResponse<ApiChainStatusResponseModel>(this.bolChainStatusMapper.MapBOToModel(this.dalChainStatusMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiChainStatusResponseModel>(this.BolChainStatusMapper.MapBOToModel(this.DalChainStatusMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace NebulaNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.chainStatusModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ChainStatusModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.chainStatusRepository.Delete(id);
+				await this.ChainStatusRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace NebulaNS.Api.Services
 
 		public async virtual Task<List<ApiChainResponseModel>> Chains(int chainStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Chain> records = await this.chainStatusRepository.Chains(chainStatusId, limit, offset);
+			List<Chain> records = await this.ChainStatusRepository.Chains(chainStatusId, limit, offset);
 
-			return this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(records));
+			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7368bfb5d8167dcf2c6132f9a3eab091</Hash>
+    <Hash>ad152fe5182d09445f550d1a2910a1c2</Hash>
 </Codenesium>*/

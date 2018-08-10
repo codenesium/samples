@@ -7,7 +7,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface ITableService
+	public partial interface ITableService
 	{
 		Task<CreateResponse<ApiTableResponseModel>> Create(
 			ApiTableRequestModel model);
@@ -24,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a09e5bf285b574b40c137d565f3ae369</Hash>
+    <Hash>6fa7bc84d436a994ffee542a3bda2cc8</Hash>
 </Codenesium>*/

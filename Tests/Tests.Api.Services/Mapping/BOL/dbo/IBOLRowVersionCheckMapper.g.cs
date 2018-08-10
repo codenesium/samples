@@ -5,7 +5,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IBOLRowVersionCheckMapper
+	public partial interface IBOLRowVersionCheckMapper
 	{
 		BORowVersionCheck MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7e85d2e881a7e088e058b4eb087d6b6</Hash>
+    <Hash>9b1f87c64a3280b3c498f531723656ed</Hash>
 </Codenesium>*/

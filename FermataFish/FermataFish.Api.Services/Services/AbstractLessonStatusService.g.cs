@@ -14,17 +14,17 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractLessonStatusService : AbstractService
 	{
-		private ILessonStatusRepository lessonStatusRepository;
+		protected ILessonStatusRepository LessonStatusRepository { get; private set; }
 
-		private IApiLessonStatusRequestModelValidator lessonStatusModelValidator;
+		protected IApiLessonStatusRequestModelValidator LessonStatusModelValidator { get; private set; }
 
-		private IBOLLessonStatusMapper bolLessonStatusMapper;
+		protected IBOLLessonStatusMapper BolLessonStatusMapper { get; private set; }
 
-		private IDALLessonStatusMapper dalLessonStatusMapper;
+		protected IDALLessonStatusMapper DalLessonStatusMapper { get; private set; }
 
-		private IBOLLessonMapper bolLessonMapper;
+		protected IBOLLessonMapper BolLessonMapper { get; private set; }
 
-		private IDALLessonMapper dalLessonMapper;
+		protected IDALLessonMapper DalLessonMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace FermataFishNS.Api.Services
 			IDALLessonMapper dalLessonMapper)
 			: base()
 		{
-			this.lessonStatusRepository = lessonStatusRepository;
-			this.lessonStatusModelValidator = lessonStatusModelValidator;
-			this.bolLessonStatusMapper = bolLessonStatusMapper;
-			this.dalLessonStatusMapper = dalLessonStatusMapper;
-			this.bolLessonMapper = bolLessonMapper;
-			this.dalLessonMapper = dalLessonMapper;
+			this.LessonStatusRepository = lessonStatusRepository;
+			this.LessonStatusModelValidator = lessonStatusModelValidator;
+			this.BolLessonStatusMapper = bolLessonStatusMapper;
+			this.DalLessonStatusMapper = dalLessonStatusMapper;
+			this.BolLessonMapper = bolLessonMapper;
+			this.DalLessonMapper = dalLessonMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiLessonStatusResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.lessonStatusRepository.All(limit, offset);
+			var records = await this.LessonStatusRepository.All(limit, offset);
 
-			return this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(records));
+			return this.BolLessonStatusMapper.MapBOToModel(this.DalLessonStatusMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLessonStatusResponseModel> Get(int id)
 		{
-			var record = await this.lessonStatusRepository.Get(id);
+			var record = await this.LessonStatusRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(record));
+				return this.BolLessonStatusMapper.MapBOToModel(this.DalLessonStatusMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiLessonStatusResponseModel>> Create(
 			ApiLessonStatusRequestModel model)
 		{
-			CreateResponse<ApiLessonStatusResponseModel> response = new CreateResponse<ApiLessonStatusResponseModel>(await this.lessonStatusModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLessonStatusResponseModel> response = new CreateResponse<ApiLessonStatusResponseModel>(await this.LessonStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolLessonStatusMapper.MapModelToBO(default(int), model);
-				var record = await this.lessonStatusRepository.Create(this.dalLessonStatusMapper.MapBOToEF(bo));
+				var bo = this.BolLessonStatusMapper.MapModelToBO(default(int), model);
+				var record = await this.LessonStatusRepository.Create(this.DalLessonStatusMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolLessonStatusMapper.MapBOToModel(this.DalLessonStatusMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiLessonStatusRequestModel model)
 		{
-			var validationResult = await this.lessonStatusModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.LessonStatusModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolLessonStatusMapper.MapModelToBO(id, model);
-				await this.lessonStatusRepository.Update(this.dalLessonStatusMapper.MapBOToEF(bo));
+				var bo = this.BolLessonStatusMapper.MapModelToBO(id, model);
+				await this.LessonStatusRepository.Update(this.DalLessonStatusMapper.MapBOToEF(bo));
 
-				var record = await this.lessonStatusRepository.Get(id);
+				var record = await this.LessonStatusRepository.Get(id);
 
-				return new UpdateResponse<ApiLessonStatusResponseModel>(this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiLessonStatusResponseModel>(this.BolLessonStatusMapper.MapBOToModel(this.DalLessonStatusMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.lessonStatusModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.LessonStatusModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.lessonStatusRepository.Delete(id);
+				await this.LessonStatusRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace FermataFishNS.Api.Services
 
 		public async virtual Task<List<ApiLessonResponseModel>> Lessons(int lessonStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Lesson> records = await this.lessonStatusRepository.Lessons(lessonStatusId, limit, offset);
+			List<Lesson> records = await this.LessonStatusRepository.Lessons(lessonStatusId, limit, offset);
 
-			return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(records));
+			return this.BolLessonMapper.MapBOToModel(this.DalLessonMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8bd013e22d05ea4ecd608c4402dacf9a</Hash>
+    <Hash>dbf05aefa695b8c427b2a60546fff4e2</Hash>
 </Codenesium>*/

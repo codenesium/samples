@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLScrapReasonMapper
+	public partial interface IBOLScrapReasonMapper
 	{
 		BOScrapReason MapModelToBO(
 			short scrapReasonID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>edf65f87de4582ef3893d0e8ac1d43c4</Hash>
+    <Hash>08c6dec3fa0a118b9188b3d7d41ee443</Hash>
 </Codenesium>*/

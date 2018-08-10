@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractMachinePolicyService : AbstractService
 	{
-		private IMachinePolicyRepository machinePolicyRepository;
+		protected IMachinePolicyRepository MachinePolicyRepository { get; private set; }
 
-		private IApiMachinePolicyRequestModelValidator machinePolicyModelValidator;
+		protected IApiMachinePolicyRequestModelValidator MachinePolicyModelValidator { get; private set; }
 
-		private IBOLMachinePolicyMapper bolMachinePolicyMapper;
+		protected IBOLMachinePolicyMapper BolMachinePolicyMapper { get; private set; }
 
-		private IDALMachinePolicyMapper dalMachinePolicyMapper;
+		protected IDALMachinePolicyMapper DalMachinePolicyMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALMachinePolicyMapper dalMachinePolicyMapper)
 			: base()
 		{
-			this.machinePolicyRepository = machinePolicyRepository;
-			this.machinePolicyModelValidator = machinePolicyModelValidator;
-			this.bolMachinePolicyMapper = bolMachinePolicyMapper;
-			this.dalMachinePolicyMapper = dalMachinePolicyMapper;
+			this.MachinePolicyRepository = machinePolicyRepository;
+			this.MachinePolicyModelValidator = machinePolicyModelValidator;
+			this.BolMachinePolicyMapper = bolMachinePolicyMapper;
+			this.DalMachinePolicyMapper = dalMachinePolicyMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiMachinePolicyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.machinePolicyRepository.All(limit, offset);
+			var records = await this.MachinePolicyRepository.All(limit, offset);
 
-			return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(records));
+			return this.BolMachinePolicyMapper.MapBOToModel(this.DalMachinePolicyMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiMachinePolicyResponseModel> Get(string id)
 		{
-			var record = await this.machinePolicyRepository.Get(id);
+			var record = await this.MachinePolicyRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
+				return this.BolMachinePolicyMapper.MapBOToModel(this.DalMachinePolicyMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiMachinePolicyResponseModel>> Create(
 			ApiMachinePolicyRequestModel model)
 		{
-			CreateResponse<ApiMachinePolicyResponseModel> response = new CreateResponse<ApiMachinePolicyResponseModel>(await this.machinePolicyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiMachinePolicyResponseModel> response = new CreateResponse<ApiMachinePolicyResponseModel>(await this.MachinePolicyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolMachinePolicyMapper.MapModelToBO(default(string), model);
-				var record = await this.machinePolicyRepository.Create(this.dalMachinePolicyMapper.MapBOToEF(bo));
+				var bo = this.BolMachinePolicyMapper.MapModelToBO(default(string), model);
+				var record = await this.MachinePolicyRepository.Create(this.DalMachinePolicyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolMachinePolicyMapper.MapBOToModel(this.DalMachinePolicyMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiMachinePolicyRequestModel model)
 		{
-			var validationResult = await this.machinePolicyModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.MachinePolicyModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolMachinePolicyMapper.MapModelToBO(id, model);
-				await this.machinePolicyRepository.Update(this.dalMachinePolicyMapper.MapBOToEF(bo));
+				var bo = this.BolMachinePolicyMapper.MapModelToBO(id, model);
+				await this.MachinePolicyRepository.Update(this.DalMachinePolicyMapper.MapBOToEF(bo));
 
-				var record = await this.machinePolicyRepository.Get(id);
+				var record = await this.MachinePolicyRepository.Get(id);
 
-				return new UpdateResponse<ApiMachinePolicyResponseModel>(this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiMachinePolicyResponseModel>(this.BolMachinePolicyMapper.MapBOToModel(this.DalMachinePolicyMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.machinePolicyModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.MachinePolicyModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.machinePolicyRepository.Delete(id);
+				await this.MachinePolicyRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiMachinePolicyResponseModel> ByName(string name)
 		{
-			MachinePolicy record = await this.machinePolicyRepository.ByName(name);
+			MachinePolicy record = await this.MachinePolicyRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolMachinePolicyMapper.MapBOToModel(this.dalMachinePolicyMapper.MapEFToBO(record));
+				return this.BolMachinePolicyMapper.MapBOToModel(this.DalMachinePolicyMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3072e250d0be0ca65823991cc0aac9a6</Hash>
+    <Hash>4c6d93f44e09451c1015a7a3fd329809</Hash>
 </Codenesium>*/

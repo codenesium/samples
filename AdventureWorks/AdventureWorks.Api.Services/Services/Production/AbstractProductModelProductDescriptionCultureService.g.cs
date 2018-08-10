@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductModelProductDescriptionCultureService : AbstractService
 	{
-		private IProductModelProductDescriptionCultureRepository productModelProductDescriptionCultureRepository;
+		protected IProductModelProductDescriptionCultureRepository ProductModelProductDescriptionCultureRepository { get; private set; }
 
-		private IApiProductModelProductDescriptionCultureRequestModelValidator productModelProductDescriptionCultureModelValidator;
+		protected IApiProductModelProductDescriptionCultureRequestModelValidator ProductModelProductDescriptionCultureModelValidator { get; private set; }
 
-		private IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper;
+		protected IBOLProductModelProductDescriptionCultureMapper BolProductModelProductDescriptionCultureMapper { get; private set; }
 
-		private IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper;
+		protected IDALProductModelProductDescriptionCultureMapper DalProductModelProductDescriptionCultureMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
 			: base()
 		{
-			this.productModelProductDescriptionCultureRepository = productModelProductDescriptionCultureRepository;
-			this.productModelProductDescriptionCultureModelValidator = productModelProductDescriptionCultureModelValidator;
-			this.bolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
-			this.dalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
+			this.ProductModelProductDescriptionCultureRepository = productModelProductDescriptionCultureRepository;
+			this.ProductModelProductDescriptionCultureModelValidator = productModelProductDescriptionCultureModelValidator;
+			this.BolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
+			this.DalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProductModelProductDescriptionCultureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.productModelProductDescriptionCultureRepository.All(limit, offset);
+			var records = await this.ProductModelProductDescriptionCultureRepository.All(limit, offset);
 
-			return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
+			return this.BolProductModelProductDescriptionCultureMapper.MapBOToModel(this.DalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductModelProductDescriptionCultureResponseModel> Get(int productModelID)
 		{
-			var record = await this.productModelProductDescriptionCultureRepository.Get(productModelID);
+			var record = await this.ProductModelProductDescriptionCultureRepository.Get(productModelID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(record));
+				return this.BolProductModelProductDescriptionCultureMapper.MapBOToModel(this.DalProductModelProductDescriptionCultureMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>> Create(
 			ApiProductModelProductDescriptionCultureRequestModel model)
 		{
-			CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> response = new CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>(await this.productModelProductDescriptionCultureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> response = new CreateResponse<ApiProductModelProductDescriptionCultureResponseModel>(await this.ProductModelProductDescriptionCultureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProductModelProductDescriptionCultureMapper.MapModelToBO(default(int), model);
-				var record = await this.productModelProductDescriptionCultureRepository.Create(this.dalProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
+				var bo = this.BolProductModelProductDescriptionCultureMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductModelProductDescriptionCultureRepository.Create(this.DalProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProductModelProductDescriptionCultureMapper.MapBOToModel(this.DalProductModelProductDescriptionCultureMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int productModelID,
 			ApiProductModelProductDescriptionCultureRequestModel model)
 		{
-			var validationResult = await this.productModelProductDescriptionCultureModelValidator.ValidateUpdateAsync(productModelID, model);
+			var validationResult = await this.ProductModelProductDescriptionCultureModelValidator.ValidateUpdateAsync(productModelID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProductModelProductDescriptionCultureMapper.MapModelToBO(productModelID, model);
-				await this.productModelProductDescriptionCultureRepository.Update(this.dalProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
+				var bo = this.BolProductModelProductDescriptionCultureMapper.MapModelToBO(productModelID, model);
+				await this.ProductModelProductDescriptionCultureRepository.Update(this.DalProductModelProductDescriptionCultureMapper.MapBOToEF(bo));
 
-				var record = await this.productModelProductDescriptionCultureRepository.Get(productModelID);
+				var record = await this.ProductModelProductDescriptionCultureRepository.Get(productModelID);
 
-				return new UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel>(this.bolProductModelProductDescriptionCultureMapper.MapBOToModel(this.dalProductModelProductDescriptionCultureMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel>(this.BolProductModelProductDescriptionCultureMapper.MapBOToModel(this.DalProductModelProductDescriptionCultureMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int productModelID)
 		{
-			ActionResponse response = new ActionResponse(await this.productModelProductDescriptionCultureModelValidator.ValidateDeleteAsync(productModelID));
+			ActionResponse response = new ActionResponse(await this.ProductModelProductDescriptionCultureModelValidator.ValidateDeleteAsync(productModelID));
 			if (response.Success)
 			{
-				await this.productModelProductDescriptionCultureRepository.Delete(productModelID);
+				await this.ProductModelProductDescriptionCultureRepository.Delete(productModelID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a932da1d8ad012e18c17d3c2f4fcee52</Hash>
+    <Hash>823d6661a5f7fd76a5c27b7e5a1563c2</Hash>
 </Codenesium>*/

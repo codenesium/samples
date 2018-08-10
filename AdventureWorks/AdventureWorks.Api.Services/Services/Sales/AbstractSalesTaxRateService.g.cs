@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesTaxRateService : AbstractService
 	{
-		private ISalesTaxRateRepository salesTaxRateRepository;
+		protected ISalesTaxRateRepository SalesTaxRateRepository { get; private set; }
 
-		private IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator;
+		protected IApiSalesTaxRateRequestModelValidator SalesTaxRateModelValidator { get; private set; }
 
-		private IBOLSalesTaxRateMapper bolSalesTaxRateMapper;
+		protected IBOLSalesTaxRateMapper BolSalesTaxRateMapper { get; private set; }
 
-		private IDALSalesTaxRateMapper dalSalesTaxRateMapper;
+		protected IDALSalesTaxRateMapper DalSalesTaxRateMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALSalesTaxRateMapper dalSalesTaxRateMapper)
 			: base()
 		{
-			this.salesTaxRateRepository = salesTaxRateRepository;
-			this.salesTaxRateModelValidator = salesTaxRateModelValidator;
-			this.bolSalesTaxRateMapper = bolSalesTaxRateMapper;
-			this.dalSalesTaxRateMapper = dalSalesTaxRateMapper;
+			this.SalesTaxRateRepository = salesTaxRateRepository;
+			this.SalesTaxRateModelValidator = salesTaxRateModelValidator;
+			this.BolSalesTaxRateMapper = bolSalesTaxRateMapper;
+			this.DalSalesTaxRateMapper = dalSalesTaxRateMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSalesTaxRateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.salesTaxRateRepository.All(limit, offset);
+			var records = await this.SalesTaxRateRepository.All(limit, offset);
 
-			return this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(records));
+			return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesTaxRateResponseModel> Get(int salesTaxRateID)
 		{
-			var record = await this.salesTaxRateRepository.Get(salesTaxRateID);
+			var record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(record));
+				return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesTaxRateResponseModel>> Create(
 			ApiSalesTaxRateRequestModel model)
 		{
-			CreateResponse<ApiSalesTaxRateResponseModel> response = new CreateResponse<ApiSalesTaxRateResponseModel>(await this.salesTaxRateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesTaxRateResponseModel> response = new CreateResponse<ApiSalesTaxRateResponseModel>(await this.SalesTaxRateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSalesTaxRateMapper.MapModelToBO(default(int), model);
-				var record = await this.salesTaxRateRepository.Create(this.dalSalesTaxRateMapper.MapBOToEF(bo));
+				var bo = this.BolSalesTaxRateMapper.MapModelToBO(default(int), model);
+				var record = await this.SalesTaxRateRepository.Create(this.DalSalesTaxRateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int salesTaxRateID,
 			ApiSalesTaxRateRequestModel model)
 		{
-			var validationResult = await this.salesTaxRateModelValidator.ValidateUpdateAsync(salesTaxRateID, model);
+			var validationResult = await this.SalesTaxRateModelValidator.ValidateUpdateAsync(salesTaxRateID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSalesTaxRateMapper.MapModelToBO(salesTaxRateID, model);
-				await this.salesTaxRateRepository.Update(this.dalSalesTaxRateMapper.MapBOToEF(bo));
+				var bo = this.BolSalesTaxRateMapper.MapModelToBO(salesTaxRateID, model);
+				await this.SalesTaxRateRepository.Update(this.DalSalesTaxRateMapper.MapBOToEF(bo));
 
-				var record = await this.salesTaxRateRepository.Get(salesTaxRateID);
+				var record = await this.SalesTaxRateRepository.Get(salesTaxRateID);
 
-				return new UpdateResponse<ApiSalesTaxRateResponseModel>(this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSalesTaxRateResponseModel>(this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int salesTaxRateID)
 		{
-			ActionResponse response = new ActionResponse(await this.salesTaxRateModelValidator.ValidateDeleteAsync(salesTaxRateID));
+			ActionResponse response = new ActionResponse(await this.SalesTaxRateModelValidator.ValidateDeleteAsync(salesTaxRateID));
 			if (response.Success)
 			{
-				await this.salesTaxRateRepository.Delete(salesTaxRateID);
+				await this.SalesTaxRateRepository.Delete(salesTaxRateID);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiSalesTaxRateResponseModel> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
 		{
-			SalesTaxRate record = await this.salesTaxRateRepository.ByStateProvinceIDTaxType(stateProvinceID, taxType);
+			SalesTaxRate record = await this.SalesTaxRateRepository.ByStateProvinceIDTaxType(stateProvinceID, taxType);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolSalesTaxRateMapper.MapBOToModel(this.dalSalesTaxRateMapper.MapEFToBO(record));
+				return this.BolSalesTaxRateMapper.MapBOToModel(this.DalSalesTaxRateMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e0db3f40cf60aca62ea6451dddce27f</Hash>
+    <Hash>8a733e06baf3a090a6deb653fb7727b3</Hash>
 </Codenesium>*/

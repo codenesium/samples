@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-	public interface IDALPenMapper
+	public partial interface IDALPenMapper
 	{
 		Pen MapBOToEF(
 			BOPen bo);
@@ -20,5 +20,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5366070006483abdd982334d376dbd7</Hash>
+    <Hash>44bf3e1e1d7d80a39c0a347bd10bab87</Hash>
 </Codenesium>*/

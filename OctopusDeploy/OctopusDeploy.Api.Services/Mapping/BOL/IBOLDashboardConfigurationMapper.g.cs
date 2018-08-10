@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLDashboardConfigurationMapper
+	public partial interface IBOLDashboardConfigurationMapper
 	{
 		BODashboardConfiguration MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9e0f2025c7019aa8324edf47c127417a</Hash>
+    <Hash>550c7f58b8d78561e5a6d6ea6772e9ac</Hash>
 </Codenesium>*/

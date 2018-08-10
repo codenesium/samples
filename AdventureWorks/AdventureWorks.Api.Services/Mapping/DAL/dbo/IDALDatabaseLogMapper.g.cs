@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALDatabaseLogMapper
+	public partial interface IDALDatabaseLogMapper
 	{
 		DatabaseLog MapBOToEF(
 			BODatabaseLog bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a0480bad32797c05bfe3d50444d153d</Hash>
+    <Hash>714b208110b4c17a4cc41e8ab6e365dd</Hash>
 </Codenesium>*/

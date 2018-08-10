@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractBusinessEntityAddressService : AbstractService
 	{
-		private IBusinessEntityAddressRepository businessEntityAddressRepository;
+		protected IBusinessEntityAddressRepository BusinessEntityAddressRepository { get; private set; }
 
-		private IApiBusinessEntityAddressRequestModelValidator businessEntityAddressModelValidator;
+		protected IApiBusinessEntityAddressRequestModelValidator BusinessEntityAddressModelValidator { get; private set; }
 
-		private IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper;
+		protected IBOLBusinessEntityAddressMapper BolBusinessEntityAddressMapper { get; private set; }
 
-		private IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper;
+		protected IDALBusinessEntityAddressMapper DalBusinessEntityAddressMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper)
 			: base()
 		{
-			this.businessEntityAddressRepository = businessEntityAddressRepository;
-			this.businessEntityAddressModelValidator = businessEntityAddressModelValidator;
-			this.bolBusinessEntityAddressMapper = bolBusinessEntityAddressMapper;
-			this.dalBusinessEntityAddressMapper = dalBusinessEntityAddressMapper;
+			this.BusinessEntityAddressRepository = businessEntityAddressRepository;
+			this.BusinessEntityAddressModelValidator = businessEntityAddressModelValidator;
+			this.BolBusinessEntityAddressMapper = bolBusinessEntityAddressMapper;
+			this.DalBusinessEntityAddressMapper = dalBusinessEntityAddressMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiBusinessEntityAddressResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.businessEntityAddressRepository.All(limit, offset);
+			var records = await this.BusinessEntityAddressRepository.All(limit, offset);
 
-			return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
+			return this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBusinessEntityAddressResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.businessEntityAddressRepository.Get(businessEntityID);
+			var record = await this.BusinessEntityAddressRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(record));
+				return this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiBusinessEntityAddressResponseModel>> Create(
 			ApiBusinessEntityAddressRequestModel model)
 		{
-			CreateResponse<ApiBusinessEntityAddressResponseModel> response = new CreateResponse<ApiBusinessEntityAddressResponseModel>(await this.businessEntityAddressModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBusinessEntityAddressResponseModel> response = new CreateResponse<ApiBusinessEntityAddressResponseModel>(await this.BusinessEntityAddressModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolBusinessEntityAddressMapper.MapModelToBO(default(int), model);
-				var record = await this.businessEntityAddressRepository.Create(this.dalBusinessEntityAddressMapper.MapBOToEF(bo));
+				var bo = this.BolBusinessEntityAddressMapper.MapModelToBO(default(int), model);
+				var record = await this.BusinessEntityAddressRepository.Create(this.DalBusinessEntityAddressMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int businessEntityID,
 			ApiBusinessEntityAddressRequestModel model)
 		{
-			var validationResult = await this.businessEntityAddressModelValidator.ValidateUpdateAsync(businessEntityID, model);
+			var validationResult = await this.BusinessEntityAddressModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolBusinessEntityAddressMapper.MapModelToBO(businessEntityID, model);
-				await this.businessEntityAddressRepository.Update(this.dalBusinessEntityAddressMapper.MapBOToEF(bo));
+				var bo = this.BolBusinessEntityAddressMapper.MapModelToBO(businessEntityID, model);
+				await this.BusinessEntityAddressRepository.Update(this.DalBusinessEntityAddressMapper.MapBOToEF(bo));
 
-				var record = await this.businessEntityAddressRepository.Get(businessEntityID);
+				var record = await this.BusinessEntityAddressRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiBusinessEntityAddressResponseModel>(this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiBusinessEntityAddressResponseModel>(this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.businessEntityAddressModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = new ActionResponse(await this.BusinessEntityAddressModelValidator.ValidateDeleteAsync(businessEntityID));
 			if (response.Success)
 			{
-				await this.businessEntityAddressRepository.Delete(businessEntityID);
+				await this.BusinessEntityAddressRepository.Delete(businessEntityID);
 			}
 
 			return response;
@@ -110,20 +110,20 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiBusinessEntityAddressResponseModel>> ByAddressID(int addressID)
 		{
-			List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.ByAddressID(addressID);
+			List<BusinessEntityAddress> records = await this.BusinessEntityAddressRepository.ByAddressID(addressID);
 
-			return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
+			return this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiBusinessEntityAddressResponseModel>> ByAddressTypeID(int addressTypeID)
 		{
-			List<BusinessEntityAddress> records = await this.businessEntityAddressRepository.ByAddressTypeID(addressTypeID);
+			List<BusinessEntityAddress> records = await this.BusinessEntityAddressRepository.ByAddressTypeID(addressTypeID);
 
-			return this.bolBusinessEntityAddressMapper.MapBOToModel(this.dalBusinessEntityAddressMapper.MapEFToBO(records));
+			return this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>74f15984ada5cedd722f673bcd4f987a</Hash>
+    <Hash>9744da6d598585a0328b073841a84e0d</Hash>
 </Codenesium>*/

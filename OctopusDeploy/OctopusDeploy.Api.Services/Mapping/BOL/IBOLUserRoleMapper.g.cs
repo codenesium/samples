@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLUserRoleMapper
+	public partial interface IBOLUserRoleMapper
 	{
 		BOUserRole MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>810b5a0bef67296f5795d5d4f50105bf</Hash>
+    <Hash>ee9ce6a64f761c1b0dc47c2f3f5040d2</Hash>
 </Codenesium>*/

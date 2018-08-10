@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALDocumentMapper
+	public partial interface IDALDocumentMapper
 	{
 		Document MapBOToEF(
 			BODocument bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c88f94bd1d96d18652074c2bbf778fa7</Hash>
+    <Hash>66e8779513858b6bc1332d9e9b8a534f</Hash>
 </Codenesium>*/

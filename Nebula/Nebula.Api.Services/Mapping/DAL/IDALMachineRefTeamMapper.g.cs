@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IDALMachineRefTeamMapper
+	public partial interface IDALMachineRefTeamMapper
 	{
 		MachineRefTeam MapBOToEF(
 			BOMachineRefTeam bo);
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f255d9079bf8aadcccf0bf0c089330f5</Hash>
+    <Hash>f709b5a04a0896d64680909f77fbe3eb</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALAccountMapper
+	public partial interface IDALAccountMapper
 	{
 		Account MapBOToEF(
 			BOAccount bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5bddb0794d7c5158b9094a461e424d7a</Hash>
+    <Hash>19357683247d96598921ce71a3328882</Hash>
 </Codenesium>*/

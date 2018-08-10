@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-	public interface IApiReleaseModelMapper
+	public partial interface IApiReleaseModelMapper
 	{
 		ApiReleaseResponseModel MapRequestToResponse(
 			string id,
@@ -19,5 +19,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9e4757485d494793b7228f7efb626e8f</Hash>
+    <Hash>5d5e8766275c7bf71b013506fe63babf</Hash>
 </Codenesium>*/

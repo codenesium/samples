@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ICertificateService
+	public partial interface ICertificateService
 	{
 		Task<CreateResponse<ApiCertificateResponseModel>> Create(
 			ApiCertificateRequestModel model);
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f11aa09c1b55f8dcd03cf231347a9059</Hash>
+    <Hash>853be2b467c8afd149c3c497ec320fcf</Hash>
 </Codenesium>*/

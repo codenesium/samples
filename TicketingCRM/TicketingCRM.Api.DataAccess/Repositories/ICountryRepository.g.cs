@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-	public interface ICountryRepository
+	public partial interface ICountryRepository
 	{
 		Task<Country> Create(Country item);
 
@@ -22,5 +22,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5e5e9e5f080c6e161b2812200cf1e57c</Hash>
+    <Hash>9975c14d4295a3a7cce81b62ab334ec0</Hash>
 </Codenesium>*/

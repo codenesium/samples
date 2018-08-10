@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesOrderDetailService : AbstractService
 	{
-		private ISalesOrderDetailRepository salesOrderDetailRepository;
+		protected ISalesOrderDetailRepository SalesOrderDetailRepository { get; private set; }
 
-		private IApiSalesOrderDetailRequestModelValidator salesOrderDetailModelValidator;
+		protected IApiSalesOrderDetailRequestModelValidator SalesOrderDetailModelValidator { get; private set; }
 
-		private IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper;
+		protected IBOLSalesOrderDetailMapper BolSalesOrderDetailMapper { get; private set; }
 
-		private IDALSalesOrderDetailMapper dalSalesOrderDetailMapper;
+		protected IDALSalesOrderDetailMapper DalSalesOrderDetailMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper)
 			: base()
 		{
-			this.salesOrderDetailRepository = salesOrderDetailRepository;
-			this.salesOrderDetailModelValidator = salesOrderDetailModelValidator;
-			this.bolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
-			this.dalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
+			this.SalesOrderDetailRepository = salesOrderDetailRepository;
+			this.SalesOrderDetailModelValidator = salesOrderDetailModelValidator;
+			this.BolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
+			this.DalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSalesOrderDetailResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.salesOrderDetailRepository.All(limit, offset);
+			var records = await this.SalesOrderDetailRepository.All(limit, offset);
 
-			return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
+			return this.BolSalesOrderDetailMapper.MapBOToModel(this.DalSalesOrderDetailMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesOrderDetailResponseModel> Get(int salesOrderID)
 		{
-			var record = await this.salesOrderDetailRepository.Get(salesOrderID);
+			var record = await this.SalesOrderDetailRepository.Get(salesOrderID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(record));
+				return this.BolSalesOrderDetailMapper.MapBOToModel(this.DalSalesOrderDetailMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesOrderDetailResponseModel>> Create(
 			ApiSalesOrderDetailRequestModel model)
 		{
-			CreateResponse<ApiSalesOrderDetailResponseModel> response = new CreateResponse<ApiSalesOrderDetailResponseModel>(await this.salesOrderDetailModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesOrderDetailResponseModel> response = new CreateResponse<ApiSalesOrderDetailResponseModel>(await this.SalesOrderDetailModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSalesOrderDetailMapper.MapModelToBO(default(int), model);
-				var record = await this.salesOrderDetailRepository.Create(this.dalSalesOrderDetailMapper.MapBOToEF(bo));
+				var bo = this.BolSalesOrderDetailMapper.MapModelToBO(default(int), model);
+				var record = await this.SalesOrderDetailRepository.Create(this.DalSalesOrderDetailMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSalesOrderDetailMapper.MapBOToModel(this.DalSalesOrderDetailMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int salesOrderID,
 			ApiSalesOrderDetailRequestModel model)
 		{
-			var validationResult = await this.salesOrderDetailModelValidator.ValidateUpdateAsync(salesOrderID, model);
+			var validationResult = await this.SalesOrderDetailModelValidator.ValidateUpdateAsync(salesOrderID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSalesOrderDetailMapper.MapModelToBO(salesOrderID, model);
-				await this.salesOrderDetailRepository.Update(this.dalSalesOrderDetailMapper.MapBOToEF(bo));
+				var bo = this.BolSalesOrderDetailMapper.MapModelToBO(salesOrderID, model);
+				await this.SalesOrderDetailRepository.Update(this.DalSalesOrderDetailMapper.MapBOToEF(bo));
 
-				var record = await this.salesOrderDetailRepository.Get(salesOrderID);
+				var record = await this.SalesOrderDetailRepository.Get(salesOrderID);
 
-				return new UpdateResponse<ApiSalesOrderDetailResponseModel>(this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSalesOrderDetailResponseModel>(this.BolSalesOrderDetailMapper.MapBOToModel(this.DalSalesOrderDetailMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int salesOrderID)
 		{
-			ActionResponse response = new ActionResponse(await this.salesOrderDetailModelValidator.ValidateDeleteAsync(salesOrderID));
+			ActionResponse response = new ActionResponse(await this.SalesOrderDetailModelValidator.ValidateDeleteAsync(salesOrderID));
 			if (response.Success)
 			{
-				await this.salesOrderDetailRepository.Delete(salesOrderID);
+				await this.SalesOrderDetailRepository.Delete(salesOrderID);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiSalesOrderDetailResponseModel>> ByProductID(int productID)
 		{
-			List<SalesOrderDetail> records = await this.salesOrderDetailRepository.ByProductID(productID);
+			List<SalesOrderDetail> records = await this.SalesOrderDetailRepository.ByProductID(productID);
 
-			return this.bolSalesOrderDetailMapper.MapBOToModel(this.dalSalesOrderDetailMapper.MapEFToBO(records));
+			return this.BolSalesOrderDetailMapper.MapBOToModel(this.DalSalesOrderDetailMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7254dacd86fbf28e052debf771d863fe</Hash>
+    <Hash>b6741bc8f7ce7572e128c9654d823f39</Hash>
 </Codenesium>*/

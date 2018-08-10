@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiLocationModelMapper
+	public partial interface IApiLocationModelMapper
 	{
 		ApiLocationResponseModel MapRequestToResponse(
 			short locationID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c48567caf2c77a0f28a2305b2d57018f</Hash>
+    <Hash>b6ef4a4fd4fd48a85954968227fe6cda</Hash>
 </Codenesium>*/

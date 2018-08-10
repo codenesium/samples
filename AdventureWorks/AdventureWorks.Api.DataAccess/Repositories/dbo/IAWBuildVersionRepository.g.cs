@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IAWBuildVersionRepository
+	public partial interface IAWBuildVersionRepository
 	{
 		Task<AWBuildVersion> Create(AWBuildVersion item);
 
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3c4c96c60ad3679890e164be1a93519</Hash>
+    <Hash>28e7d2eee36191e28c7f3d8c057478a4</Hash>
 </Codenesium>*/

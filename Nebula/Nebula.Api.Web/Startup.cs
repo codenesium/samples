@@ -69,9 +69,14 @@ namespace NebulaNS.Api.Web
                    && level == LogLevel.Information)
             });
 
-	    public virtual ApplicationDbContext SetupDatabase(IServiceCollection services)
+	    public virtual ApplicationDbContext SetupDatabase(IServiceCollection services, bool enableSensitiveDataLogging)
         {
             DbContextOptionsBuilder options = new DbContextOptionsBuilder();
+			if (enableSensitiveDataLogging)
+			{
+				options.EnableSensitiveDataLogging();
+			}
+
             options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
             ApplicationDbContext context = new ApplicationDbContext(options.Options);
@@ -231,7 +236,7 @@ namespace NebulaNS.Api.Web
 
             builder.Register(ctx => ctx.Resolve<IOptions<ApiSettings>>().Value);
 
-            ApplicationDbContext context = this.SetupDatabase(services);
+            ApplicationDbContext context = this.SetupDatabase(services, true);
 
 			builder.RegisterInstance(context).As<ApplicationDbContext>();
 

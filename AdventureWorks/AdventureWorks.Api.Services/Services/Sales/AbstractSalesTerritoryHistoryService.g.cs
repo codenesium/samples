@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesTerritoryHistoryService : AbstractService
 	{
-		private ISalesTerritoryHistoryRepository salesTerritoryHistoryRepository;
+		protected ISalesTerritoryHistoryRepository SalesTerritoryHistoryRepository { get; private set; }
 
-		private IApiSalesTerritoryHistoryRequestModelValidator salesTerritoryHistoryModelValidator;
+		protected IApiSalesTerritoryHistoryRequestModelValidator SalesTerritoryHistoryModelValidator { get; private set; }
 
-		private IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper;
+		protected IBOLSalesTerritoryHistoryMapper BolSalesTerritoryHistoryMapper { get; private set; }
 
-		private IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper;
+		protected IDALSalesTerritoryHistoryMapper DalSalesTerritoryHistoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper)
 			: base()
 		{
-			this.salesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
-			this.salesTerritoryHistoryModelValidator = salesTerritoryHistoryModelValidator;
-			this.bolSalesTerritoryHistoryMapper = bolSalesTerritoryHistoryMapper;
-			this.dalSalesTerritoryHistoryMapper = dalSalesTerritoryHistoryMapper;
+			this.SalesTerritoryHistoryRepository = salesTerritoryHistoryRepository;
+			this.SalesTerritoryHistoryModelValidator = salesTerritoryHistoryModelValidator;
+			this.BolSalesTerritoryHistoryMapper = bolSalesTerritoryHistoryMapper;
+			this.DalSalesTerritoryHistoryMapper = dalSalesTerritoryHistoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSalesTerritoryHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.salesTerritoryHistoryRepository.All(limit, offset);
+			var records = await this.SalesTerritoryHistoryRepository.All(limit, offset);
 
-			return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(records));
+			return this.BolSalesTerritoryHistoryMapper.MapBOToModel(this.DalSalesTerritoryHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesTerritoryHistoryResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.salesTerritoryHistoryRepository.Get(businessEntityID);
+			var record = await this.SalesTerritoryHistoryRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record));
+				return this.BolSalesTerritoryHistoryMapper.MapBOToModel(this.DalSalesTerritoryHistoryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesTerritoryHistoryResponseModel>> Create(
 			ApiSalesTerritoryHistoryRequestModel model)
 		{
-			CreateResponse<ApiSalesTerritoryHistoryResponseModel> response = new CreateResponse<ApiSalesTerritoryHistoryResponseModel>(await this.salesTerritoryHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesTerritoryHistoryResponseModel> response = new CreateResponse<ApiSalesTerritoryHistoryResponseModel>(await this.SalesTerritoryHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSalesTerritoryHistoryMapper.MapModelToBO(default(int), model);
-				var record = await this.salesTerritoryHistoryRepository.Create(this.dalSalesTerritoryHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolSalesTerritoryHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.SalesTerritoryHistoryRepository.Create(this.DalSalesTerritoryHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSalesTerritoryHistoryMapper.MapBOToModel(this.DalSalesTerritoryHistoryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int businessEntityID,
 			ApiSalesTerritoryHistoryRequestModel model)
 		{
-			var validationResult = await this.salesTerritoryHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
+			var validationResult = await this.SalesTerritoryHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSalesTerritoryHistoryMapper.MapModelToBO(businessEntityID, model);
-				await this.salesTerritoryHistoryRepository.Update(this.dalSalesTerritoryHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolSalesTerritoryHistoryMapper.MapModelToBO(businessEntityID, model);
+				await this.SalesTerritoryHistoryRepository.Update(this.DalSalesTerritoryHistoryMapper.MapBOToEF(bo));
 
-				var record = await this.salesTerritoryHistoryRepository.Get(businessEntityID);
+				var record = await this.SalesTerritoryHistoryRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiSalesTerritoryHistoryResponseModel>(this.bolSalesTerritoryHistoryMapper.MapBOToModel(this.dalSalesTerritoryHistoryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSalesTerritoryHistoryResponseModel>(this.BolSalesTerritoryHistoryMapper.MapBOToModel(this.DalSalesTerritoryHistoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.salesTerritoryHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = new ActionResponse(await this.SalesTerritoryHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
 			if (response.Success)
 			{
-				await this.salesTerritoryHistoryRepository.Delete(businessEntityID);
+				await this.SalesTerritoryHistoryRepository.Delete(businessEntityID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1ca70f011affe6a15756474bedcdfe2b</Hash>
+    <Hash>7e5f16a2244d7a2ce01009da0911c23d</Hash>
 </Codenesium>*/

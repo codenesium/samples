@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IBOLLinkTypesMapper
+	public partial interface IBOLLinkTypesMapper
 	{
 		BOLinkTypes MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd357e26c2dfa7cbfbdbab7a1e8c07d6</Hash>
+    <Hash>fb7174a2a6d76dd36bf54e85f62e750c</Hash>
 </Codenesium>*/

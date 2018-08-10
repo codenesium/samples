@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-	public interface IApiTimestampCheckModelMapper
+	public partial interface IApiTimestampCheckModelMapper
 	{
 		ApiTimestampCheckResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f5b45f1bd12661b094b795e2ec107b87</Hash>
+    <Hash>aa04e7cb9ecc663f5f1e5f0097a90a45</Hash>
 </Codenesium>*/

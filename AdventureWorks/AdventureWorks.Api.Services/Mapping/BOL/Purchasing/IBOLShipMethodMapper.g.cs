@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLShipMethodMapper
+	public partial interface IBOLShipMethodMapper
 	{
 		BOShipMethod MapModelToBO(
 			int shipMethodID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3355806ef007bd983d298b7ce863a90d</Hash>
+    <Hash>a022cca0def2b1279fb4db72a43d790d</Hash>
 </Codenesium>*/

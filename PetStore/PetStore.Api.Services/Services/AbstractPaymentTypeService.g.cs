@@ -14,17 +14,17 @@ namespace PetStoreNS.Api.Services
 {
 	public abstract class AbstractPaymentTypeService : AbstractService
 	{
-		private IPaymentTypeRepository paymentTypeRepository;
+		protected IPaymentTypeRepository PaymentTypeRepository { get; private set; }
 
-		private IApiPaymentTypeRequestModelValidator paymentTypeModelValidator;
+		protected IApiPaymentTypeRequestModelValidator PaymentTypeModelValidator { get; private set; }
 
-		private IBOLPaymentTypeMapper bolPaymentTypeMapper;
+		protected IBOLPaymentTypeMapper BolPaymentTypeMapper { get; private set; }
 
-		private IDALPaymentTypeMapper dalPaymentTypeMapper;
+		protected IDALPaymentTypeMapper DalPaymentTypeMapper { get; private set; }
 
-		private IBOLSaleMapper bolSaleMapper;
+		protected IBOLSaleMapper BolSaleMapper { get; private set; }
 
-		private IDALSaleMapper dalSaleMapper;
+		protected IDALSaleMapper DalSaleMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace PetStoreNS.Api.Services
 			IDALSaleMapper dalSaleMapper)
 			: base()
 		{
-			this.paymentTypeRepository = paymentTypeRepository;
-			this.paymentTypeModelValidator = paymentTypeModelValidator;
-			this.bolPaymentTypeMapper = bolPaymentTypeMapper;
-			this.dalPaymentTypeMapper = dalPaymentTypeMapper;
-			this.bolSaleMapper = bolSaleMapper;
-			this.dalSaleMapper = dalSaleMapper;
+			this.PaymentTypeRepository = paymentTypeRepository;
+			this.PaymentTypeModelValidator = paymentTypeModelValidator;
+			this.BolPaymentTypeMapper = bolPaymentTypeMapper;
+			this.DalPaymentTypeMapper = dalPaymentTypeMapper;
+			this.BolSaleMapper = bolSaleMapper;
+			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPaymentTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.paymentTypeRepository.All(limit, offset);
+			var records = await this.PaymentTypeRepository.All(limit, offset);
 
-			return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(records));
+			return this.BolPaymentTypeMapper.MapBOToModel(this.DalPaymentTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPaymentTypeResponseModel> Get(int id)
 		{
-			var record = await this.paymentTypeRepository.Get(id);
+			var record = await this.PaymentTypeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace PetStoreNS.Api.Services
 			}
 			else
 			{
-				return this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record));
+				return this.BolPaymentTypeMapper.MapBOToModel(this.DalPaymentTypeMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
 			ApiPaymentTypeRequestModel model)
 		{
-			CreateResponse<ApiPaymentTypeResponseModel> response = new CreateResponse<ApiPaymentTypeResponseModel>(await this.paymentTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPaymentTypeResponseModel> response = new CreateResponse<ApiPaymentTypeResponseModel>(await this.PaymentTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPaymentTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.paymentTypeRepository.Create(this.dalPaymentTypeMapper.MapBOToEF(bo));
+				var bo = this.BolPaymentTypeMapper.MapModelToBO(default(int), model);
+				var record = await this.PaymentTypeRepository.Create(this.DalPaymentTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPaymentTypeMapper.MapBOToModel(this.DalPaymentTypeMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace PetStoreNS.Api.Services
 			int id,
 			ApiPaymentTypeRequestModel model)
 		{
-			var validationResult = await this.paymentTypeModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.PaymentTypeModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPaymentTypeMapper.MapModelToBO(id, model);
-				await this.paymentTypeRepository.Update(this.dalPaymentTypeMapper.MapBOToEF(bo));
+				var bo = this.BolPaymentTypeMapper.MapModelToBO(id, model);
+				await this.PaymentTypeRepository.Update(this.DalPaymentTypeMapper.MapBOToEF(bo));
 
-				var record = await this.paymentTypeRepository.Get(id);
+				var record = await this.PaymentTypeRepository.Get(id);
 
-				return new UpdateResponse<ApiPaymentTypeResponseModel>(this.bolPaymentTypeMapper.MapBOToModel(this.dalPaymentTypeMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPaymentTypeResponseModel>(this.BolPaymentTypeMapper.MapBOToModel(this.DalPaymentTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace PetStoreNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.paymentTypeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.PaymentTypeModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.paymentTypeRepository.Delete(id);
+				await this.PaymentTypeRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace PetStoreNS.Api.Services
 
 		public async virtual Task<List<ApiSaleResponseModel>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Sale> records = await this.paymentTypeRepository.Sales(paymentTypeId, limit, offset);
+			List<Sale> records = await this.PaymentTypeRepository.Sales(paymentTypeId, limit, offset);
 
-			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
+			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>97d6cdfecbc64c870b1d6d7373cc571f</Hash>
+    <Hash>2b32ac6925769f590ee87a7a8c48f127</Hash>
 </Codenesium>*/

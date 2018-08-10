@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IBOLLinkStatusMapper
+	public partial interface IBOLLinkStatusMapper
 	{
 		BOLinkStatus MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>76addfc253ce8b350d3e00d992790495</Hash>
+    <Hash>4e80507331151d2ca1672c8879c61e27</Hash>
 </Codenesium>*/

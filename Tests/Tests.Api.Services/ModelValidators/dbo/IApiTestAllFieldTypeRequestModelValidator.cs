@@ -5,7 +5,7 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
-	public interface IApiTestAllFieldTypeRequestModelValidator
+	public partial interface IApiTestAllFieldTypeRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiTestAllFieldTypeRequestModel model);
 
@@ -16,5 +16,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ddb3ead3121b4b86e8db410a97500135</Hash>
+    <Hash>ca76de6f8b05d41e9a8d7cc0dde2cbaa</Hash>
 </Codenesium>*/

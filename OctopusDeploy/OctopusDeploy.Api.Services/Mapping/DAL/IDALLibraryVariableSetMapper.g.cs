@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALLibraryVariableSetMapper
+	public partial interface IDALLibraryVariableSetMapper
 	{
 		LibraryVariableSet MapBOToEF(
 			BOLibraryVariableSet bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>884f9a90e0b68675d8742009cba7a77c</Hash>
+    <Hash>d725f857aaad4322da14815455a93740</Hash>
 </Codenesium>*/

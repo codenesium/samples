@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IDALLessonXTeacherMapper
+	public partial interface IDALLessonXTeacherMapper
 	{
 		LessonXTeacher MapBOToEF(
 			BOLessonXTeacher bo);
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a67f30b2b3ed6ac2f48e7a5b9bc84d9f</Hash>
+    <Hash>a6025ba10123c1b6ee0ab95df8376822</Hash>
 </Codenesium>*/

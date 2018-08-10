@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractEventRelatedDocumentService : AbstractService
 	{
-		private IEventRelatedDocumentRepository eventRelatedDocumentRepository;
+		protected IEventRelatedDocumentRepository EventRelatedDocumentRepository { get; private set; }
 
-		private IApiEventRelatedDocumentRequestModelValidator eventRelatedDocumentModelValidator;
+		protected IApiEventRelatedDocumentRequestModelValidator EventRelatedDocumentModelValidator { get; private set; }
 
-		private IBOLEventRelatedDocumentMapper bolEventRelatedDocumentMapper;
+		protected IBOLEventRelatedDocumentMapper BolEventRelatedDocumentMapper { get; private set; }
 
-		private IDALEventRelatedDocumentMapper dalEventRelatedDocumentMapper;
+		protected IDALEventRelatedDocumentMapper DalEventRelatedDocumentMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALEventRelatedDocumentMapper dalEventRelatedDocumentMapper)
 			: base()
 		{
-			this.eventRelatedDocumentRepository = eventRelatedDocumentRepository;
-			this.eventRelatedDocumentModelValidator = eventRelatedDocumentModelValidator;
-			this.bolEventRelatedDocumentMapper = bolEventRelatedDocumentMapper;
-			this.dalEventRelatedDocumentMapper = dalEventRelatedDocumentMapper;
+			this.EventRelatedDocumentRepository = eventRelatedDocumentRepository;
+			this.EventRelatedDocumentModelValidator = eventRelatedDocumentModelValidator;
+			this.BolEventRelatedDocumentMapper = bolEventRelatedDocumentMapper;
+			this.DalEventRelatedDocumentMapper = dalEventRelatedDocumentMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiEventRelatedDocumentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.eventRelatedDocumentRepository.All(limit, offset);
+			var records = await this.EventRelatedDocumentRepository.All(limit, offset);
 
-			return this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(records));
+			return this.BolEventRelatedDocumentMapper.MapBOToModel(this.DalEventRelatedDocumentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiEventRelatedDocumentResponseModel> Get(int id)
 		{
-			var record = await this.eventRelatedDocumentRepository.Get(id);
+			var record = await this.EventRelatedDocumentRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(record));
+				return this.BolEventRelatedDocumentMapper.MapBOToModel(this.DalEventRelatedDocumentMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiEventRelatedDocumentResponseModel>> Create(
 			ApiEventRelatedDocumentRequestModel model)
 		{
-			CreateResponse<ApiEventRelatedDocumentResponseModel> response = new CreateResponse<ApiEventRelatedDocumentResponseModel>(await this.eventRelatedDocumentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEventRelatedDocumentResponseModel> response = new CreateResponse<ApiEventRelatedDocumentResponseModel>(await this.EventRelatedDocumentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolEventRelatedDocumentMapper.MapModelToBO(default(int), model);
-				var record = await this.eventRelatedDocumentRepository.Create(this.dalEventRelatedDocumentMapper.MapBOToEF(bo));
+				var bo = this.BolEventRelatedDocumentMapper.MapModelToBO(default(int), model);
+				var record = await this.EventRelatedDocumentRepository.Create(this.DalEventRelatedDocumentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolEventRelatedDocumentMapper.MapBOToModel(this.DalEventRelatedDocumentMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			int id,
 			ApiEventRelatedDocumentRequestModel model)
 		{
-			var validationResult = await this.eventRelatedDocumentModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.EventRelatedDocumentModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolEventRelatedDocumentMapper.MapModelToBO(id, model);
-				await this.eventRelatedDocumentRepository.Update(this.dalEventRelatedDocumentMapper.MapBOToEF(bo));
+				var bo = this.BolEventRelatedDocumentMapper.MapModelToBO(id, model);
+				await this.EventRelatedDocumentRepository.Update(this.DalEventRelatedDocumentMapper.MapBOToEF(bo));
 
-				var record = await this.eventRelatedDocumentRepository.Get(id);
+				var record = await this.EventRelatedDocumentRepository.Get(id);
 
-				return new UpdateResponse<ApiEventRelatedDocumentResponseModel>(this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiEventRelatedDocumentResponseModel>(this.BolEventRelatedDocumentMapper.MapBOToModel(this.DalEventRelatedDocumentMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.eventRelatedDocumentModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.EventRelatedDocumentModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.eventRelatedDocumentRepository.Delete(id);
+				await this.EventRelatedDocumentRepository.Delete(id);
 			}
 
 			return response;
@@ -110,20 +110,20 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<List<ApiEventRelatedDocumentResponseModel>> ByEventId(string eventId)
 		{
-			List<EventRelatedDocument> records = await this.eventRelatedDocumentRepository.ByEventId(eventId);
+			List<EventRelatedDocument> records = await this.EventRelatedDocumentRepository.ByEventId(eventId);
 
-			return this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(records));
+			return this.BolEventRelatedDocumentMapper.MapBOToModel(this.DalEventRelatedDocumentMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiEventRelatedDocumentResponseModel>> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
 		{
-			List<EventRelatedDocument> records = await this.eventRelatedDocumentRepository.ByEventIdRelatedDocumentId(eventId, relatedDocumentId);
+			List<EventRelatedDocument> records = await this.EventRelatedDocumentRepository.ByEventIdRelatedDocumentId(eventId, relatedDocumentId);
 
-			return this.bolEventRelatedDocumentMapper.MapBOToModel(this.dalEventRelatedDocumentMapper.MapEFToBO(records));
+			return this.BolEventRelatedDocumentMapper.MapBOToModel(this.DalEventRelatedDocumentMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e5384a671301c63fc489aeea5059e9f7</Hash>
+    <Hash>491008cc7f590d79fe4b1ade4c0351a6</Hash>
 </Codenesium>*/

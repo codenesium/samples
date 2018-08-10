@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALJobCandidateMapper
+	public partial interface IDALJobCandidateMapper
 	{
 		JobCandidate MapBOToEF(
 			BOJobCandidate bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d7024e3a17f60f6a8b1017bdd56dfc08</Hash>
+    <Hash>e61fcde0bbfce870add69c33c79f1546</Hash>
 </Codenesium>*/

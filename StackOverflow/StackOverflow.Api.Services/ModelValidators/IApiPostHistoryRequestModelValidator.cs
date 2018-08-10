@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IApiPostHistoryRequestModelValidator
+	public partial interface IApiPostHistoryRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiPostHistoryRequestModel model);
 
@@ -16,5 +16,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>73961725eab59b70d630437299b0e5f0</Hash>
+    <Hash>046fc48a26e6ebc0b50b318eb342a0ee</Hash>
 </Codenesium>*/

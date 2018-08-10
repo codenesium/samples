@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IInvitationRepository
+	public partial interface IInvitationRepository
 	{
 		Task<Invitation> Create(Invitation item);
 
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e1f10b1110108e537c4ccdb04ed4be0b</Hash>
+    <Hash>4dd62f250f6ff2314a7574802e09ad5d</Hash>
 </Codenesium>*/

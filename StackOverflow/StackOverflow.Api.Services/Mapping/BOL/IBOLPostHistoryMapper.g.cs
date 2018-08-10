@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IBOLPostHistoryMapper
+	public partial interface IBOLPostHistoryMapper
 	{
 		BOPostHistory MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec006c0ac33b293bb599ea3f1a7ab4fe</Hash>
+    <Hash>32f21083b37071b677b72765f2611305</Hash>
 </Codenesium>*/

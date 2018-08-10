@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
-	public interface IApiBadgesModelMapper
+	public partial interface IApiBadgesModelMapper
 	{
 		ApiBadgesResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>396a2a714e17a6dfb752d9e71f860995</Hash>
+    <Hash>eb727abb4008664e5c33e84cb79a8d01</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IBadgesService
+	public partial interface IBadgesService
 	{
 		Task<CreateResponse<ApiBadgesResponseModel>> Create(
 			ApiBadgesRequestModel model);
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4487dd02ab28f28200b25bbbf8d3bb54</Hash>
+    <Hash>dfa0aa781d4f831c5754a93d387ec851</Hash>
 </Codenesium>*/

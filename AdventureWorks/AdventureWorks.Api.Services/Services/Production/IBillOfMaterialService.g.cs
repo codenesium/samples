@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBillOfMaterialService
+	public partial interface IBillOfMaterialService
 	{
 		Task<CreateResponse<ApiBillOfMaterialResponseModel>> Create(
 			ApiBillOfMaterialRequestModel model);
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>57d4a23fa41b9056834b56657d9a5101</Hash>
+    <Hash>25071b97d3ed94fe1edc14bc510c4453</Hash>
 </Codenesium>*/

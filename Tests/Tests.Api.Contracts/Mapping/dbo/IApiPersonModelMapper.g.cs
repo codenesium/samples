@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-	public interface IApiPersonModelMapper
+	public partial interface IApiPersonModelMapper
 	{
 		ApiPersonResponseModel MapRequestToResponse(
 			int personId,
@@ -19,5 +19,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e401b20ab0243e9cb195080afa9186e7</Hash>
+    <Hash>f046f583a57ce847ff018b7023b22175</Hash>
 </Codenesium>*/

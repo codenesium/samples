@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ITransactionHistoryRepository
+	public partial interface ITransactionHistoryRepository
 	{
 		Task<TransactionHistory> Create(TransactionHistory item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d530615aed22318c11e592bb01457ca4</Hash>
+    <Hash>19000823866cb502fcf7c54dab343a9d</Hash>
 </Codenesium>*/

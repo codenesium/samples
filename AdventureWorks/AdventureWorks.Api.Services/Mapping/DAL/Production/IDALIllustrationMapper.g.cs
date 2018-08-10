@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALIllustrationMapper
+	public partial interface IDALIllustrationMapper
 	{
 		Illustration MapBOToEF(
 			BOIllustration bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>330615e06575c249a617176b75869188</Hash>
+    <Hash>549a99772d0dd234a22cf8f3679ddf84</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IApiSpaceRequestModelValidator
+	public partial interface IApiSpaceRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiSpaceRequestModel model);
 
@@ -16,5 +16,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c3360cf2ed62b5db17b4ad5469f10c47</Hash>
+    <Hash>f9e1ac65f573395010681fc3a8c6e388</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractJobCandidateService : AbstractService
 	{
-		private IJobCandidateRepository jobCandidateRepository;
+		protected IJobCandidateRepository JobCandidateRepository { get; private set; }
 
-		private IApiJobCandidateRequestModelValidator jobCandidateModelValidator;
+		protected IApiJobCandidateRequestModelValidator JobCandidateModelValidator { get; private set; }
 
-		private IBOLJobCandidateMapper bolJobCandidateMapper;
+		protected IBOLJobCandidateMapper BolJobCandidateMapper { get; private set; }
 
-		private IDALJobCandidateMapper dalJobCandidateMapper;
+		protected IDALJobCandidateMapper DalJobCandidateMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALJobCandidateMapper dalJobCandidateMapper)
 			: base()
 		{
-			this.jobCandidateRepository = jobCandidateRepository;
-			this.jobCandidateModelValidator = jobCandidateModelValidator;
-			this.bolJobCandidateMapper = bolJobCandidateMapper;
-			this.dalJobCandidateMapper = dalJobCandidateMapper;
+			this.JobCandidateRepository = jobCandidateRepository;
+			this.JobCandidateModelValidator = jobCandidateModelValidator;
+			this.BolJobCandidateMapper = bolJobCandidateMapper;
+			this.DalJobCandidateMapper = dalJobCandidateMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiJobCandidateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.jobCandidateRepository.All(limit, offset);
+			var records = await this.JobCandidateRepository.All(limit, offset);
 
-			return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
+			return this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiJobCandidateResponseModel> Get(int jobCandidateID)
 		{
-			var record = await this.jobCandidateRepository.Get(jobCandidateID);
+			var record = await this.JobCandidateRepository.Get(jobCandidateID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record));
+				return this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiJobCandidateResponseModel>> Create(
 			ApiJobCandidateRequestModel model)
 		{
-			CreateResponse<ApiJobCandidateResponseModel> response = new CreateResponse<ApiJobCandidateResponseModel>(await this.jobCandidateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiJobCandidateResponseModel> response = new CreateResponse<ApiJobCandidateResponseModel>(await this.JobCandidateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolJobCandidateMapper.MapModelToBO(default(int), model);
-				var record = await this.jobCandidateRepository.Create(this.dalJobCandidateMapper.MapBOToEF(bo));
+				var bo = this.BolJobCandidateMapper.MapModelToBO(default(int), model);
+				var record = await this.JobCandidateRepository.Create(this.DalJobCandidateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int jobCandidateID,
 			ApiJobCandidateRequestModel model)
 		{
-			var validationResult = await this.jobCandidateModelValidator.ValidateUpdateAsync(jobCandidateID, model);
+			var validationResult = await this.JobCandidateModelValidator.ValidateUpdateAsync(jobCandidateID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolJobCandidateMapper.MapModelToBO(jobCandidateID, model);
-				await this.jobCandidateRepository.Update(this.dalJobCandidateMapper.MapBOToEF(bo));
+				var bo = this.BolJobCandidateMapper.MapModelToBO(jobCandidateID, model);
+				await this.JobCandidateRepository.Update(this.DalJobCandidateMapper.MapBOToEF(bo));
 
-				var record = await this.jobCandidateRepository.Get(jobCandidateID);
+				var record = await this.JobCandidateRepository.Get(jobCandidateID);
 
-				return new UpdateResponse<ApiJobCandidateResponseModel>(this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiJobCandidateResponseModel>(this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int jobCandidateID)
 		{
-			ActionResponse response = new ActionResponse(await this.jobCandidateModelValidator.ValidateDeleteAsync(jobCandidateID));
+			ActionResponse response = new ActionResponse(await this.JobCandidateModelValidator.ValidateDeleteAsync(jobCandidateID));
 			if (response.Success)
 			{
-				await this.jobCandidateRepository.Delete(jobCandidateID);
+				await this.JobCandidateRepository.Delete(jobCandidateID);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(int? businessEntityID)
 		{
-			List<JobCandidate> records = await this.jobCandidateRepository.ByBusinessEntityID(businessEntityID);
+			List<JobCandidate> records = await this.JobCandidateRepository.ByBusinessEntityID(businessEntityID);
 
-			return this.bolJobCandidateMapper.MapBOToModel(this.dalJobCandidateMapper.MapEFToBO(records));
+			return this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4b05d857fc91a074782fe6d7743ec05</Hash>
+    <Hash>7c838e8a33d1eb9e9978441af8962a38</Hash>
 </Codenesium>*/

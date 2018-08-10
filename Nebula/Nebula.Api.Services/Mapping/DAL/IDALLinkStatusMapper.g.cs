@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IDALLinkStatusMapper
+	public partial interface IDALLinkStatusMapper
 	{
 		LinkStatus MapBOToEF(
 			BOLinkStatus bo);
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9380742f77294063fd0de7bfcc30a7c0</Hash>
+    <Hash>d8b6e510d77cce6808d37dcccd7c2f93</Hash>
 </Codenesium>*/

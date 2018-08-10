@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiScrapReasonModelMapper
+	public partial interface IApiScrapReasonModelMapper
 	{
 		ApiScrapReasonResponseModel MapRequestToResponse(
 			short scrapReasonID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a244f33387e1e2e78ab93f6162150e06</Hash>
+    <Hash>7395c886963356b6ef4a4cdf6adb396c</Hash>
 </Codenesium>*/

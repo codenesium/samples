@@ -14,20 +14,20 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractTeamService : AbstractService
 	{
-		private ITeamRepository teamRepository;
+		protected ITeamRepository TeamRepository { get; private set; }
 
-		private IApiTeamRequestModelValidator teamModelValidator;
+		protected IApiTeamRequestModelValidator TeamModelValidator { get; private set; }
 
-		private IBOLTeamMapper bolTeamMapper;
+		protected IBOLTeamMapper BolTeamMapper { get; private set; }
 
-		private IDALTeamMapper dalTeamMapper;
+		protected IDALTeamMapper DalTeamMapper { get; private set; }
 
-		private IBOLChainMapper bolChainMapper;
+		protected IBOLChainMapper BolChainMapper { get; private set; }
 
-		private IDALChainMapper dalChainMapper;
-		private IBOLMachineRefTeamMapper bolMachineRefTeamMapper;
+		protected IDALChainMapper DalChainMapper { get; private set; }
+		protected IBOLMachineRefTeamMapper BolMachineRefTeamMapper { get; private set; }
 
-		private IDALMachineRefTeamMapper dalMachineRefTeamMapper;
+		protected IDALMachineRefTeamMapper DalMachineRefTeamMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -43,27 +43,27 @@ namespace NebulaNS.Api.Services
 			IDALMachineRefTeamMapper dalMachineRefTeamMapper)
 			: base()
 		{
-			this.teamRepository = teamRepository;
-			this.teamModelValidator = teamModelValidator;
-			this.bolTeamMapper = bolTeamMapper;
-			this.dalTeamMapper = dalTeamMapper;
-			this.bolChainMapper = bolChainMapper;
-			this.dalChainMapper = dalChainMapper;
-			this.bolMachineRefTeamMapper = bolMachineRefTeamMapper;
-			this.dalMachineRefTeamMapper = dalMachineRefTeamMapper;
+			this.TeamRepository = teamRepository;
+			this.TeamModelValidator = teamModelValidator;
+			this.BolTeamMapper = bolTeamMapper;
+			this.DalTeamMapper = dalTeamMapper;
+			this.BolChainMapper = bolChainMapper;
+			this.DalChainMapper = dalChainMapper;
+			this.BolMachineRefTeamMapper = bolMachineRefTeamMapper;
+			this.DalMachineRefTeamMapper = dalMachineRefTeamMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTeamResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.teamRepository.All(limit, offset);
+			var records = await this.TeamRepository.All(limit, offset);
 
-			return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(records));
+			return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTeamResponseModel> Get(int id)
 		{
-			var record = await this.teamRepository.Get(id);
+			var record = await this.TeamRepository.Get(id);
 
 			if (record == null)
 			{
@@ -71,20 +71,20 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record));
+				return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTeamResponseModel>> Create(
 			ApiTeamRequestModel model)
 		{
-			CreateResponse<ApiTeamResponseModel> response = new CreateResponse<ApiTeamResponseModel>(await this.teamModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTeamResponseModel> response = new CreateResponse<ApiTeamResponseModel>(await this.TeamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTeamMapper.MapModelToBO(default(int), model);
-				var record = await this.teamRepository.Create(this.dalTeamMapper.MapBOToEF(bo));
+				var bo = this.BolTeamMapper.MapModelToBO(default(int), model);
+				var record = await this.TeamRepository.Create(this.DalTeamMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -94,16 +94,16 @@ namespace NebulaNS.Api.Services
 			int id,
 			ApiTeamRequestModel model)
 		{
-			var validationResult = await this.teamModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TeamModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTeamMapper.MapModelToBO(id, model);
-				await this.teamRepository.Update(this.dalTeamMapper.MapBOToEF(bo));
+				var bo = this.BolTeamMapper.MapModelToBO(id, model);
+				await this.TeamRepository.Update(this.DalTeamMapper.MapBOToEF(bo));
 
-				var record = await this.teamRepository.Get(id);
+				var record = await this.TeamRepository.Get(id);
 
-				return new UpdateResponse<ApiTeamResponseModel>(this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTeamResponseModel>(this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -114,10 +114,10 @@ namespace NebulaNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.teamModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TeamModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.teamRepository.Delete(id);
+				await this.TeamRepository.Delete(id);
 			}
 
 			return response;
@@ -125,20 +125,20 @@ namespace NebulaNS.Api.Services
 
 		public async virtual Task<List<ApiChainResponseModel>> Chains(int teamId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Chain> records = await this.teamRepository.Chains(teamId, limit, offset);
+			List<Chain> records = await this.TeamRepository.Chains(teamId, limit, offset);
 
-			return this.bolChainMapper.MapBOToModel(this.dalChainMapper.MapEFToBO(records));
+			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<MachineRefTeam> records = await this.teamRepository.MachineRefTeams(teamId, limit, offset);
+			List<MachineRefTeam> records = await this.TeamRepository.MachineRefTeams(teamId, limit, offset);
 
-			return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(records));
+			return this.BolMachineRefTeamMapper.MapBOToModel(this.DalMachineRefTeamMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>36bce1684932cc3946d2ff8b9fd77f46</Hash>
+    <Hash>999943568ae70ba4a7f3a19f157e9248</Hash>
 </Codenesium>*/

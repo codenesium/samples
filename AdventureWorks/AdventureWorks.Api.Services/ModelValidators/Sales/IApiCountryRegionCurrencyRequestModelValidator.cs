@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiCountryRegionCurrencyRequestModelValidator
+	public partial interface IApiCountryRegionCurrencyRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiCountryRegionCurrencyRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ffd14b84745d096b6ae7d6f79c462953</Hash>
+    <Hash>192bdbb07c08f3f7905fb539ece73541</Hash>
 </Codenesium>*/

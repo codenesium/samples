@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface IApiPetRequestModelValidator
+	public partial interface IApiPetRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiPetRequestModel model);
 
@@ -16,5 +16,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>41bf9665d4f17e9115059001d1136248</Hash>
+    <Hash>eb2f6e9cbb12d2091aef6c2e6c67508d</Hash>
 </Codenesium>*/

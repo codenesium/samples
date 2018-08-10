@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ISalesTaxRateRepository
+	public partial interface ISalesTaxRateRepository
 	{
 		Task<SalesTaxRate> Create(SalesTaxRate item);
 
@@ -22,5 +22,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9884c4c5ea1f9219c60d6c016359df17</Hash>
+    <Hash>8270224016bba15e7f52c6fca422867f</Hash>
 </Codenesium>*/

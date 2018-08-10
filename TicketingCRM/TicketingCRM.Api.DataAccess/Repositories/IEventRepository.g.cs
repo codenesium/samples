@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-	public interface IEventRepository
+	public partial interface IEventRepository
 	{
 		Task<Event> Create(Event item);
 
@@ -24,5 +24,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>95005b8362f7d9b5a8e08467a80ae2b1</Hash>
+    <Hash>6b74b199a5c5576b096f5a12e863cb62</Hash>
 </Codenesium>*/

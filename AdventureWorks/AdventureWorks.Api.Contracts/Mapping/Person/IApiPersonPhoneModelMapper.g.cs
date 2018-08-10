@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiPersonPhoneModelMapper
+	public partial interface IApiPersonPhoneModelMapper
 	{
 		ApiPersonPhoneResponseModel MapRequestToResponse(
 			int businessEntityID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a30f117a2a5ca05758eea0ffa93e06f0</Hash>
+    <Hash>4d42c9cd7939001c81637bdd51cd5338</Hash>
 </Codenesium>*/

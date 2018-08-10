@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-	public interface IApiRowVersionCheckModelMapper
+	public partial interface IApiRowVersionCheckModelMapper
 	{
 		ApiRowVersionCheckResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>301efc6df220a14b3d099100148347df</Hash>
+    <Hash>05d0c921b7e231cfabdb6f0472ab3b83</Hash>
 </Codenesium>*/

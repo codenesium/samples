@@ -5,7 +5,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IBOLTableMapper
+	public partial interface IBOLTableMapper
 	{
 		BOTable MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e3efbe7cb9ed72317f432211fe754fc</Hash>
+    <Hash>64ebaaab57b9a49219e3bdd687da36b5</Hash>
 </Codenesium>*/

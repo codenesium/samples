@@ -14,17 +14,17 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractSaleService : AbstractService
 	{
-		private ISaleRepository saleRepository;
+		protected ISaleRepository SaleRepository { get; private set; }
 
-		private IApiSaleRequestModelValidator saleModelValidator;
+		protected IApiSaleRequestModelValidator SaleModelValidator { get; private set; }
 
-		private IBOLSaleMapper bolSaleMapper;
+		protected IBOLSaleMapper BolSaleMapper { get; private set; }
 
-		private IDALSaleMapper dalSaleMapper;
+		protected IDALSaleMapper DalSaleMapper { get; private set; }
 
-		private IBOLSaleTicketsMapper bolSaleTicketsMapper;
+		protected IBOLSaleTicketsMapper BolSaleTicketsMapper { get; private set; }
 
-		private IDALSaleTicketsMapper dalSaleTicketsMapper;
+		protected IDALSaleTicketsMapper DalSaleTicketsMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace TicketingCRMNS.Api.Services
 			IDALSaleTicketsMapper dalSaleTicketsMapper)
 			: base()
 		{
-			this.saleRepository = saleRepository;
-			this.saleModelValidator = saleModelValidator;
-			this.bolSaleMapper = bolSaleMapper;
-			this.dalSaleMapper = dalSaleMapper;
-			this.bolSaleTicketsMapper = bolSaleTicketsMapper;
-			this.dalSaleTicketsMapper = dalSaleTicketsMapper;
+			this.SaleRepository = saleRepository;
+			this.SaleModelValidator = saleModelValidator;
+			this.BolSaleMapper = bolSaleMapper;
+			this.DalSaleMapper = dalSaleMapper;
+			this.BolSaleTicketsMapper = bolSaleTicketsMapper;
+			this.DalSaleTicketsMapper = dalSaleTicketsMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSaleResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.saleRepository.All(limit, offset);
+			var records = await this.SaleRepository.All(limit, offset);
 
-			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
+			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSaleResponseModel> Get(int id)
 		{
-			var record = await this.saleRepository.Get(id);
+			var record = await this.SaleRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record));
+				return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSaleResponseModel>> Create(
 			ApiSaleRequestModel model)
 		{
-			CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.saleModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSaleResponseModel> response = new CreateResponse<ApiSaleResponseModel>(await this.SaleModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSaleMapper.MapModelToBO(default(int), model);
-				var record = await this.saleRepository.Create(this.dalSaleMapper.MapBOToEF(bo));
+				var bo = this.BolSaleMapper.MapModelToBO(default(int), model);
+				var record = await this.SaleRepository.Create(this.DalSaleMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace TicketingCRMNS.Api.Services
 			int id,
 			ApiSaleRequestModel model)
 		{
-			var validationResult = await this.saleModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SaleModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSaleMapper.MapModelToBO(id, model);
-				await this.saleRepository.Update(this.dalSaleMapper.MapBOToEF(bo));
+				var bo = this.BolSaleMapper.MapModelToBO(id, model);
+				await this.SaleRepository.Update(this.DalSaleMapper.MapBOToEF(bo));
 
-				var record = await this.saleRepository.Get(id);
+				var record = await this.SaleRepository.Get(id);
 
-				return new UpdateResponse<ApiSaleResponseModel>(this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSaleResponseModel>(this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace TicketingCRMNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.saleModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SaleModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.saleRepository.Delete(id);
+				await this.SaleRepository.Delete(id);
 			}
 
 			return response;
@@ -118,20 +118,20 @@ namespace TicketingCRMNS.Api.Services
 
 		public async Task<List<ApiSaleResponseModel>> ByTransactionId(int transactionId)
 		{
-			List<Sale> records = await this.saleRepository.ByTransactionId(transactionId);
+			List<Sale> records = await this.SaleRepository.ByTransactionId(transactionId);
 
-			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
+			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiSaleTicketsResponseModel>> SaleTickets(int saleId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SaleTickets> records = await this.saleRepository.SaleTickets(saleId, limit, offset);
+			List<SaleTickets> records = await this.SaleRepository.SaleTickets(saleId, limit, offset);
 
-			return this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(records));
+			return this.BolSaleTicketsMapper.MapBOToModel(this.DalSaleTicketsMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>986a2cf76b02d266da8fcd61389a3973</Hash>
+    <Hash>fd38f0e9a2716f6fa7d0dea4368f4cdc</Hash>
 </Codenesium>*/

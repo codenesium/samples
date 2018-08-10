@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ITenantVariableService
+	public partial interface ITenantVariableService
 	{
 		Task<CreateResponse<ApiTenantVariableResponseModel>> Create(
 			ApiTenantVariableRequestModel model);
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce7ed10cf96cf68e73fe5e3233ef79f5</Hash>
+    <Hash>90e94e60552a5c36578818ec2740dbd2</Hash>
 </Codenesium>*/

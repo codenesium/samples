@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.Contracts
 {
-	public interface IApiTestAllFieldTypeModelMapper
+	public partial interface IApiTestAllFieldTypeModelMapper
 	{
 		ApiTestAllFieldTypeResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d8caef4fb8fcf22140eb4b4a3723aabf</Hash>
+    <Hash>653e1f3f58b11186270b5cf204ceff37</Hash>
 </Codenesium>*/

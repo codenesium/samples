@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IPostHistoryTypesService
+	public partial interface IPostHistoryTypesService
 	{
 		Task<CreateResponse<ApiPostHistoryTypesResponseModel>> Create(
 			ApiPostHistoryTypesRequestModel model);
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b04ee5286b76443873118b8b86e88a9</Hash>
+    <Hash>f33d59ff082b6e371c6a4a6ed5749f38</Hash>
 </Codenesium>*/

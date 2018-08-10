@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPhoneNumberTypeService : AbstractService
 	{
-		private IPhoneNumberTypeRepository phoneNumberTypeRepository;
+		protected IPhoneNumberTypeRepository PhoneNumberTypeRepository { get; private set; }
 
-		private IApiPhoneNumberTypeRequestModelValidator phoneNumberTypeModelValidator;
+		protected IApiPhoneNumberTypeRequestModelValidator PhoneNumberTypeModelValidator { get; private set; }
 
-		private IBOLPhoneNumberTypeMapper bolPhoneNumberTypeMapper;
+		protected IBOLPhoneNumberTypeMapper BolPhoneNumberTypeMapper { get; private set; }
 
-		private IDALPhoneNumberTypeMapper dalPhoneNumberTypeMapper;
+		protected IDALPhoneNumberTypeMapper DalPhoneNumberTypeMapper { get; private set; }
 
-		private IBOLPersonPhoneMapper bolPersonPhoneMapper;
+		protected IBOLPersonPhoneMapper BolPersonPhoneMapper { get; private set; }
 
-		private IDALPersonPhoneMapper dalPersonPhoneMapper;
+		protected IDALPersonPhoneMapper DalPersonPhoneMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALPersonPhoneMapper dalPersonPhoneMapper)
 			: base()
 		{
-			this.phoneNumberTypeRepository = phoneNumberTypeRepository;
-			this.phoneNumberTypeModelValidator = phoneNumberTypeModelValidator;
-			this.bolPhoneNumberTypeMapper = bolPhoneNumberTypeMapper;
-			this.dalPhoneNumberTypeMapper = dalPhoneNumberTypeMapper;
-			this.bolPersonPhoneMapper = bolPersonPhoneMapper;
-			this.dalPersonPhoneMapper = dalPersonPhoneMapper;
+			this.PhoneNumberTypeRepository = phoneNumberTypeRepository;
+			this.PhoneNumberTypeModelValidator = phoneNumberTypeModelValidator;
+			this.BolPhoneNumberTypeMapper = bolPhoneNumberTypeMapper;
+			this.DalPhoneNumberTypeMapper = dalPhoneNumberTypeMapper;
+			this.BolPersonPhoneMapper = bolPersonPhoneMapper;
+			this.DalPersonPhoneMapper = dalPersonPhoneMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPhoneNumberTypeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.phoneNumberTypeRepository.All(limit, offset);
+			var records = await this.PhoneNumberTypeRepository.All(limit, offset);
 
-			return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(records));
+			return this.BolPhoneNumberTypeMapper.MapBOToModel(this.DalPhoneNumberTypeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPhoneNumberTypeResponseModel> Get(int phoneNumberTypeID)
 		{
-			var record = await this.phoneNumberTypeRepository.Get(phoneNumberTypeID);
+			var record = await this.PhoneNumberTypeRepository.Get(phoneNumberTypeID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record));
+				return this.BolPhoneNumberTypeMapper.MapBOToModel(this.DalPhoneNumberTypeMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPhoneNumberTypeResponseModel>> Create(
 			ApiPhoneNumberTypeRequestModel model)
 		{
-			CreateResponse<ApiPhoneNumberTypeResponseModel> response = new CreateResponse<ApiPhoneNumberTypeResponseModel>(await this.phoneNumberTypeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPhoneNumberTypeResponseModel> response = new CreateResponse<ApiPhoneNumberTypeResponseModel>(await this.PhoneNumberTypeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(default(int), model);
-				var record = await this.phoneNumberTypeRepository.Create(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
+				var bo = this.BolPhoneNumberTypeMapper.MapModelToBO(default(int), model);
+				var record = await this.PhoneNumberTypeRepository.Create(this.DalPhoneNumberTypeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPhoneNumberTypeMapper.MapBOToModel(this.DalPhoneNumberTypeMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			int phoneNumberTypeID,
 			ApiPhoneNumberTypeRequestModel model)
 		{
-			var validationResult = await this.phoneNumberTypeModelValidator.ValidateUpdateAsync(phoneNumberTypeID, model);
+			var validationResult = await this.PhoneNumberTypeModelValidator.ValidateUpdateAsync(phoneNumberTypeID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPhoneNumberTypeMapper.MapModelToBO(phoneNumberTypeID, model);
-				await this.phoneNumberTypeRepository.Update(this.dalPhoneNumberTypeMapper.MapBOToEF(bo));
+				var bo = this.BolPhoneNumberTypeMapper.MapModelToBO(phoneNumberTypeID, model);
+				await this.PhoneNumberTypeRepository.Update(this.DalPhoneNumberTypeMapper.MapBOToEF(bo));
 
-				var record = await this.phoneNumberTypeRepository.Get(phoneNumberTypeID);
+				var record = await this.PhoneNumberTypeRepository.Get(phoneNumberTypeID);
 
-				return new UpdateResponse<ApiPhoneNumberTypeResponseModel>(this.bolPhoneNumberTypeMapper.MapBOToModel(this.dalPhoneNumberTypeMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPhoneNumberTypeResponseModel>(this.BolPhoneNumberTypeMapper.MapBOToModel(this.DalPhoneNumberTypeMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int phoneNumberTypeID)
 		{
-			ActionResponse response = new ActionResponse(await this.phoneNumberTypeModelValidator.ValidateDeleteAsync(phoneNumberTypeID));
+			ActionResponse response = new ActionResponse(await this.PhoneNumberTypeModelValidator.ValidateDeleteAsync(phoneNumberTypeID));
 			if (response.Success)
 			{
-				await this.phoneNumberTypeRepository.Delete(phoneNumberTypeID);
+				await this.PhoneNumberTypeRepository.Delete(phoneNumberTypeID);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public async virtual Task<List<ApiPersonPhoneResponseModel>> PersonPhones(int phoneNumberTypeID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PersonPhone> records = await this.phoneNumberTypeRepository.PersonPhones(phoneNumberTypeID, limit, offset);
+			List<PersonPhone> records = await this.PhoneNumberTypeRepository.PersonPhones(phoneNumberTypeID, limit, offset);
 
-			return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
+			return this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b62ba82313c0732445b3c56fa668fd41</Hash>
+    <Hash>0fe1ceb2de6dadfd7b15d19dbb539820</Hash>
 </Codenesium>*/

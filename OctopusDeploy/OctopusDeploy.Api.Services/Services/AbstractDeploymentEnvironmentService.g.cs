@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractDeploymentEnvironmentService : AbstractService
 	{
-		private IDeploymentEnvironmentRepository deploymentEnvironmentRepository;
+		protected IDeploymentEnvironmentRepository DeploymentEnvironmentRepository { get; private set; }
 
-		private IApiDeploymentEnvironmentRequestModelValidator deploymentEnvironmentModelValidator;
+		protected IApiDeploymentEnvironmentRequestModelValidator DeploymentEnvironmentModelValidator { get; private set; }
 
-		private IBOLDeploymentEnvironmentMapper bolDeploymentEnvironmentMapper;
+		protected IBOLDeploymentEnvironmentMapper BolDeploymentEnvironmentMapper { get; private set; }
 
-		private IDALDeploymentEnvironmentMapper dalDeploymentEnvironmentMapper;
+		protected IDALDeploymentEnvironmentMapper DalDeploymentEnvironmentMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALDeploymentEnvironmentMapper dalDeploymentEnvironmentMapper)
 			: base()
 		{
-			this.deploymentEnvironmentRepository = deploymentEnvironmentRepository;
-			this.deploymentEnvironmentModelValidator = deploymentEnvironmentModelValidator;
-			this.bolDeploymentEnvironmentMapper = bolDeploymentEnvironmentMapper;
-			this.dalDeploymentEnvironmentMapper = dalDeploymentEnvironmentMapper;
+			this.DeploymentEnvironmentRepository = deploymentEnvironmentRepository;
+			this.DeploymentEnvironmentModelValidator = deploymentEnvironmentModelValidator;
+			this.BolDeploymentEnvironmentMapper = bolDeploymentEnvironmentMapper;
+			this.DalDeploymentEnvironmentMapper = dalDeploymentEnvironmentMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiDeploymentEnvironmentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.deploymentEnvironmentRepository.All(limit, offset);
+			var records = await this.DeploymentEnvironmentRepository.All(limit, offset);
 
-			return this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(records));
+			return this.BolDeploymentEnvironmentMapper.MapBOToModel(this.DalDeploymentEnvironmentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDeploymentEnvironmentResponseModel> Get(string id)
 		{
-			var record = await this.deploymentEnvironmentRepository.Get(id);
+			var record = await this.DeploymentEnvironmentRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(record));
+				return this.BolDeploymentEnvironmentMapper.MapBOToModel(this.DalDeploymentEnvironmentMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiDeploymentEnvironmentResponseModel>> Create(
 			ApiDeploymentEnvironmentRequestModel model)
 		{
-			CreateResponse<ApiDeploymentEnvironmentResponseModel> response = new CreateResponse<ApiDeploymentEnvironmentResponseModel>(await this.deploymentEnvironmentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDeploymentEnvironmentResponseModel> response = new CreateResponse<ApiDeploymentEnvironmentResponseModel>(await this.DeploymentEnvironmentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolDeploymentEnvironmentMapper.MapModelToBO(default(string), model);
-				var record = await this.deploymentEnvironmentRepository.Create(this.dalDeploymentEnvironmentMapper.MapBOToEF(bo));
+				var bo = this.BolDeploymentEnvironmentMapper.MapModelToBO(default(string), model);
+				var record = await this.DeploymentEnvironmentRepository.Create(this.DalDeploymentEnvironmentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolDeploymentEnvironmentMapper.MapBOToModel(this.DalDeploymentEnvironmentMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiDeploymentEnvironmentRequestModel model)
 		{
-			var validationResult = await this.deploymentEnvironmentModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.DeploymentEnvironmentModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolDeploymentEnvironmentMapper.MapModelToBO(id, model);
-				await this.deploymentEnvironmentRepository.Update(this.dalDeploymentEnvironmentMapper.MapBOToEF(bo));
+				var bo = this.BolDeploymentEnvironmentMapper.MapModelToBO(id, model);
+				await this.DeploymentEnvironmentRepository.Update(this.DalDeploymentEnvironmentMapper.MapBOToEF(bo));
 
-				var record = await this.deploymentEnvironmentRepository.Get(id);
+				var record = await this.DeploymentEnvironmentRepository.Get(id);
 
-				return new UpdateResponse<ApiDeploymentEnvironmentResponseModel>(this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiDeploymentEnvironmentResponseModel>(this.BolDeploymentEnvironmentMapper.MapBOToModel(this.DalDeploymentEnvironmentMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.deploymentEnvironmentModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.DeploymentEnvironmentModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.deploymentEnvironmentRepository.Delete(id);
+				await this.DeploymentEnvironmentRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiDeploymentEnvironmentResponseModel> ByName(string name)
 		{
-			DeploymentEnvironment record = await this.deploymentEnvironmentRepository.ByName(name);
+			DeploymentEnvironment record = await this.DeploymentEnvironmentRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(record));
+				return this.BolDeploymentEnvironmentMapper.MapBOToModel(this.DalDeploymentEnvironmentMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiDeploymentEnvironmentResponseModel>> ByDataVersion(byte[] dataVersion)
 		{
-			List<DeploymentEnvironment> records = await this.deploymentEnvironmentRepository.ByDataVersion(dataVersion);
+			List<DeploymentEnvironment> records = await this.DeploymentEnvironmentRepository.ByDataVersion(dataVersion);
 
-			return this.bolDeploymentEnvironmentMapper.MapBOToModel(this.dalDeploymentEnvironmentMapper.MapEFToBO(records));
+			return this.BolDeploymentEnvironmentMapper.MapBOToModel(this.DalDeploymentEnvironmentMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ff3413160a48ea7b7641074c3b9e97e</Hash>
+    <Hash>def816598ee69ce71d58631dc53b028a</Hash>
 </Codenesium>*/

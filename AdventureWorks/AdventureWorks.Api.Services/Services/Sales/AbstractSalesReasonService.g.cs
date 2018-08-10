@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesReasonService : AbstractService
 	{
-		private ISalesReasonRepository salesReasonRepository;
+		protected ISalesReasonRepository SalesReasonRepository { get; private set; }
 
-		private IApiSalesReasonRequestModelValidator salesReasonModelValidator;
+		protected IApiSalesReasonRequestModelValidator SalesReasonModelValidator { get; private set; }
 
-		private IBOLSalesReasonMapper bolSalesReasonMapper;
+		protected IBOLSalesReasonMapper BolSalesReasonMapper { get; private set; }
 
-		private IDALSalesReasonMapper dalSalesReasonMapper;
+		protected IDALSalesReasonMapper DalSalesReasonMapper { get; private set; }
 
-		private IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper;
+		protected IBOLSalesOrderHeaderSalesReasonMapper BolSalesOrderHeaderSalesReasonMapper { get; private set; }
 
-		private IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper;
+		protected IDALSalesOrderHeaderSalesReasonMapper DalSalesOrderHeaderSalesReasonMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper)
 			: base()
 		{
-			this.salesReasonRepository = salesReasonRepository;
-			this.salesReasonModelValidator = salesReasonModelValidator;
-			this.bolSalesReasonMapper = bolSalesReasonMapper;
-			this.dalSalesReasonMapper = dalSalesReasonMapper;
-			this.bolSalesOrderHeaderSalesReasonMapper = bolSalesOrderHeaderSalesReasonMapper;
-			this.dalSalesOrderHeaderSalesReasonMapper = dalSalesOrderHeaderSalesReasonMapper;
+			this.SalesReasonRepository = salesReasonRepository;
+			this.SalesReasonModelValidator = salesReasonModelValidator;
+			this.BolSalesReasonMapper = bolSalesReasonMapper;
+			this.DalSalesReasonMapper = dalSalesReasonMapper;
+			this.BolSalesOrderHeaderSalesReasonMapper = bolSalesOrderHeaderSalesReasonMapper;
+			this.DalSalesOrderHeaderSalesReasonMapper = dalSalesOrderHeaderSalesReasonMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSalesReasonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.salesReasonRepository.All(limit, offset);
+			var records = await this.SalesReasonRepository.All(limit, offset);
 
-			return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(records));
+			return this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesReasonResponseModel> Get(int salesReasonID)
 		{
-			var record = await this.salesReasonRepository.Get(salesReasonID);
+			var record = await this.SalesReasonRepository.Get(salesReasonID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record));
+				return this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesReasonResponseModel>> Create(
 			ApiSalesReasonRequestModel model)
 		{
-			CreateResponse<ApiSalesReasonResponseModel> response = new CreateResponse<ApiSalesReasonResponseModel>(await this.salesReasonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesReasonResponseModel> response = new CreateResponse<ApiSalesReasonResponseModel>(await this.SalesReasonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSalesReasonMapper.MapModelToBO(default(int), model);
-				var record = await this.salesReasonRepository.Create(this.dalSalesReasonMapper.MapBOToEF(bo));
+				var bo = this.BolSalesReasonMapper.MapModelToBO(default(int), model);
+				var record = await this.SalesReasonRepository.Create(this.DalSalesReasonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			int salesReasonID,
 			ApiSalesReasonRequestModel model)
 		{
-			var validationResult = await this.salesReasonModelValidator.ValidateUpdateAsync(salesReasonID, model);
+			var validationResult = await this.SalesReasonModelValidator.ValidateUpdateAsync(salesReasonID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSalesReasonMapper.MapModelToBO(salesReasonID, model);
-				await this.salesReasonRepository.Update(this.dalSalesReasonMapper.MapBOToEF(bo));
+				var bo = this.BolSalesReasonMapper.MapModelToBO(salesReasonID, model);
+				await this.SalesReasonRepository.Update(this.DalSalesReasonMapper.MapBOToEF(bo));
 
-				var record = await this.salesReasonRepository.Get(salesReasonID);
+				var record = await this.SalesReasonRepository.Get(salesReasonID);
 
-				return new UpdateResponse<ApiSalesReasonResponseModel>(this.bolSalesReasonMapper.MapBOToModel(this.dalSalesReasonMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSalesReasonResponseModel>(this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int salesReasonID)
 		{
-			ActionResponse response = new ActionResponse(await this.salesReasonModelValidator.ValidateDeleteAsync(salesReasonID));
+			ActionResponse response = new ActionResponse(await this.SalesReasonModelValidator.ValidateDeleteAsync(salesReasonID));
 			if (response.Success)
 			{
-				await this.salesReasonRepository.Delete(salesReasonID);
+				await this.SalesReasonRepository.Delete(salesReasonID);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public async virtual Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> SalesOrderHeaderSalesReasons(int salesReasonID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesOrderHeaderSalesReason> records = await this.salesReasonRepository.SalesOrderHeaderSalesReasons(salesReasonID, limit, offset);
+			List<SalesOrderHeaderSalesReason> records = await this.SalesReasonRepository.SalesOrderHeaderSalesReasons(salesReasonID, limit, offset);
 
-			return this.bolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.dalSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
+			return this.BolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.DalSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2167f65ba441cb05dbd1e4614fc9b772</Hash>
+    <Hash>6f812dfdc09f36378b6dac633bcf2ba9</Hash>
 </Codenesium>*/

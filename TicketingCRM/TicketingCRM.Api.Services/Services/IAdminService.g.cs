@@ -7,7 +7,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IAdminService
+	public partial interface IAdminService
 	{
 		Task<CreateResponse<ApiAdminResponseModel>> Create(
 			ApiAdminRequestModel model);
@@ -26,5 +26,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9293c3fd15f12bb850a523e7647e03a</Hash>
+    <Hash>925f994480aa35c84486a7d6e9d7c4f7</Hash>
 </Codenesium>*/

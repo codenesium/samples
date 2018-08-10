@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractWorkerTaskLeaseService : AbstractService
 	{
-		private IWorkerTaskLeaseRepository workerTaskLeaseRepository;
+		protected IWorkerTaskLeaseRepository WorkerTaskLeaseRepository { get; private set; }
 
-		private IApiWorkerTaskLeaseRequestModelValidator workerTaskLeaseModelValidator;
+		protected IApiWorkerTaskLeaseRequestModelValidator WorkerTaskLeaseModelValidator { get; private set; }
 
-		private IBOLWorkerTaskLeaseMapper bolWorkerTaskLeaseMapper;
+		protected IBOLWorkerTaskLeaseMapper BolWorkerTaskLeaseMapper { get; private set; }
 
-		private IDALWorkerTaskLeaseMapper dalWorkerTaskLeaseMapper;
+		protected IDALWorkerTaskLeaseMapper DalWorkerTaskLeaseMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALWorkerTaskLeaseMapper dalWorkerTaskLeaseMapper)
 			: base()
 		{
-			this.workerTaskLeaseRepository = workerTaskLeaseRepository;
-			this.workerTaskLeaseModelValidator = workerTaskLeaseModelValidator;
-			this.bolWorkerTaskLeaseMapper = bolWorkerTaskLeaseMapper;
-			this.dalWorkerTaskLeaseMapper = dalWorkerTaskLeaseMapper;
+			this.WorkerTaskLeaseRepository = workerTaskLeaseRepository;
+			this.WorkerTaskLeaseModelValidator = workerTaskLeaseModelValidator;
+			this.BolWorkerTaskLeaseMapper = bolWorkerTaskLeaseMapper;
+			this.DalWorkerTaskLeaseMapper = dalWorkerTaskLeaseMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiWorkerTaskLeaseResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.workerTaskLeaseRepository.All(limit, offset);
+			var records = await this.WorkerTaskLeaseRepository.All(limit, offset);
 
-			return this.bolWorkerTaskLeaseMapper.MapBOToModel(this.dalWorkerTaskLeaseMapper.MapEFToBO(records));
+			return this.BolWorkerTaskLeaseMapper.MapBOToModel(this.DalWorkerTaskLeaseMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiWorkerTaskLeaseResponseModel> Get(string id)
 		{
-			var record = await this.workerTaskLeaseRepository.Get(id);
+			var record = await this.WorkerTaskLeaseRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolWorkerTaskLeaseMapper.MapBOToModel(this.dalWorkerTaskLeaseMapper.MapEFToBO(record));
+				return this.BolWorkerTaskLeaseMapper.MapBOToModel(this.DalWorkerTaskLeaseMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiWorkerTaskLeaseResponseModel>> Create(
 			ApiWorkerTaskLeaseRequestModel model)
 		{
-			CreateResponse<ApiWorkerTaskLeaseResponseModel> response = new CreateResponse<ApiWorkerTaskLeaseResponseModel>(await this.workerTaskLeaseModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiWorkerTaskLeaseResponseModel> response = new CreateResponse<ApiWorkerTaskLeaseResponseModel>(await this.WorkerTaskLeaseModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolWorkerTaskLeaseMapper.MapModelToBO(default(string), model);
-				var record = await this.workerTaskLeaseRepository.Create(this.dalWorkerTaskLeaseMapper.MapBOToEF(bo));
+				var bo = this.BolWorkerTaskLeaseMapper.MapModelToBO(default(string), model);
+				var record = await this.WorkerTaskLeaseRepository.Create(this.DalWorkerTaskLeaseMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolWorkerTaskLeaseMapper.MapBOToModel(this.dalWorkerTaskLeaseMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolWorkerTaskLeaseMapper.MapBOToModel(this.DalWorkerTaskLeaseMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiWorkerTaskLeaseRequestModel model)
 		{
-			var validationResult = await this.workerTaskLeaseModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.WorkerTaskLeaseModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolWorkerTaskLeaseMapper.MapModelToBO(id, model);
-				await this.workerTaskLeaseRepository.Update(this.dalWorkerTaskLeaseMapper.MapBOToEF(bo));
+				var bo = this.BolWorkerTaskLeaseMapper.MapModelToBO(id, model);
+				await this.WorkerTaskLeaseRepository.Update(this.DalWorkerTaskLeaseMapper.MapBOToEF(bo));
 
-				var record = await this.workerTaskLeaseRepository.Get(id);
+				var record = await this.WorkerTaskLeaseRepository.Get(id);
 
-				return new UpdateResponse<ApiWorkerTaskLeaseResponseModel>(this.bolWorkerTaskLeaseMapper.MapBOToModel(this.dalWorkerTaskLeaseMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiWorkerTaskLeaseResponseModel>(this.BolWorkerTaskLeaseMapper.MapBOToModel(this.DalWorkerTaskLeaseMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.workerTaskLeaseModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.WorkerTaskLeaseModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.workerTaskLeaseRepository.Delete(id);
+				await this.WorkerTaskLeaseRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62ac9ffb6563bfa33be0a16f479a2d6a</Hash>
+    <Hash>23b2311408405d8427fcdf4b507fb2f6</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiTransactionHistoryRequestModelValidator
+	public partial interface IApiTransactionHistoryRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiTransactionHistoryRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b071d35f9922cbb29a671f4722130988</Hash>
+    <Hash>9c3af3db22b976eef2a51d20d723f857</Hash>
 </Codenesium>*/

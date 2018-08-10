@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IAdminService
+	public partial interface IAdminService
 	{
 		Task<CreateResponse<ApiAdminResponseModel>> Create(
 			ApiAdminRequestModel model);
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>83319a7345d6d0bcd293405293e0cabb</Hash>
+    <Hash>07ea377c9e3c04e526081d383569fd52</Hash>
 </Codenesium>*/

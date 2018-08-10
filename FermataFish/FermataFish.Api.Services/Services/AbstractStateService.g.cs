@@ -14,17 +14,17 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractStateService : AbstractService
 	{
-		private IStateRepository stateRepository;
+		protected IStateRepository StateRepository { get; private set; }
 
-		private IApiStateRequestModelValidator stateModelValidator;
+		protected IApiStateRequestModelValidator StateModelValidator { get; private set; }
 
-		private IBOLStateMapper bolStateMapper;
+		protected IBOLStateMapper BolStateMapper { get; private set; }
 
-		private IDALStateMapper dalStateMapper;
+		protected IDALStateMapper DalStateMapper { get; private set; }
 
-		private IBOLStudioMapper bolStudioMapper;
+		protected IBOLStudioMapper BolStudioMapper { get; private set; }
 
-		private IDALStudioMapper dalStudioMapper;
+		protected IDALStudioMapper DalStudioMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace FermataFishNS.Api.Services
 			IDALStudioMapper dalStudioMapper)
 			: base()
 		{
-			this.stateRepository = stateRepository;
-			this.stateModelValidator = stateModelValidator;
-			this.bolStateMapper = bolStateMapper;
-			this.dalStateMapper = dalStateMapper;
-			this.bolStudioMapper = bolStudioMapper;
-			this.dalStudioMapper = dalStudioMapper;
+			this.StateRepository = stateRepository;
+			this.StateModelValidator = stateModelValidator;
+			this.BolStateMapper = bolStateMapper;
+			this.DalStateMapper = dalStateMapper;
+			this.BolStudioMapper = bolStudioMapper;
+			this.DalStudioMapper = dalStudioMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiStateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.stateRepository.All(limit, offset);
+			var records = await this.StateRepository.All(limit, offset);
 
-			return this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(records));
+			return this.BolStateMapper.MapBOToModel(this.DalStateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStateResponseModel> Get(int id)
 		{
-			var record = await this.stateRepository.Get(id);
+			var record = await this.StateRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(record));
+				return this.BolStateMapper.MapBOToModel(this.DalStateMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiStateResponseModel>> Create(
 			ApiStateRequestModel model)
 		{
-			CreateResponse<ApiStateResponseModel> response = new CreateResponse<ApiStateResponseModel>(await this.stateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStateResponseModel> response = new CreateResponse<ApiStateResponseModel>(await this.StateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolStateMapper.MapModelToBO(default(int), model);
-				var record = await this.stateRepository.Create(this.dalStateMapper.MapBOToEF(bo));
+				var bo = this.BolStateMapper.MapModelToBO(default(int), model);
+				var record = await this.StateRepository.Create(this.DalStateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolStateMapper.MapBOToModel(this.DalStateMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiStateRequestModel model)
 		{
-			var validationResult = await this.stateModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.StateModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolStateMapper.MapModelToBO(id, model);
-				await this.stateRepository.Update(this.dalStateMapper.MapBOToEF(bo));
+				var bo = this.BolStateMapper.MapModelToBO(id, model);
+				await this.StateRepository.Update(this.DalStateMapper.MapBOToEF(bo));
 
-				var record = await this.stateRepository.Get(id);
+				var record = await this.StateRepository.Get(id);
 
-				return new UpdateResponse<ApiStateResponseModel>(this.bolStateMapper.MapBOToModel(this.dalStateMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiStateResponseModel>(this.BolStateMapper.MapBOToModel(this.DalStateMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.stateModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.StateModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.stateRepository.Delete(id);
+				await this.StateRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace FermataFishNS.Api.Services
 
 		public async virtual Task<List<ApiStudioResponseModel>> Studios(int stateId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Studio> records = await this.stateRepository.Studios(stateId, limit, offset);
+			List<Studio> records = await this.StateRepository.Studios(stateId, limit, offset);
 
-			return this.bolStudioMapper.MapBOToModel(this.dalStudioMapper.MapEFToBO(records));
+			return this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9b4d05c544762360af8d664f5204cb46</Hash>
+    <Hash>b12c3921ecc7e5b17a9319567a42c22e</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IDALPostsMapper
+	public partial interface IDALPostsMapper
 	{
 		Posts MapBOToEF(
 			BOPosts bo);
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9fc52b8b689a8c4054ad3c5a32947750</Hash>
+    <Hash>23fbc62cd821e680e7ed1255cfb563ac</Hash>
 </Codenesium>*/

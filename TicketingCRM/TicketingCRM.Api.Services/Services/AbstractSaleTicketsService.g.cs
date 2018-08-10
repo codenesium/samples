@@ -14,13 +14,13 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractSaleTicketsService : AbstractService
 	{
-		private ISaleTicketsRepository saleTicketsRepository;
+		protected ISaleTicketsRepository SaleTicketsRepository { get; private set; }
 
-		private IApiSaleTicketsRequestModelValidator saleTicketsModelValidator;
+		protected IApiSaleTicketsRequestModelValidator SaleTicketsModelValidator { get; private set; }
 
-		private IBOLSaleTicketsMapper bolSaleTicketsMapper;
+		protected IBOLSaleTicketsMapper BolSaleTicketsMapper { get; private set; }
 
-		private IDALSaleTicketsMapper dalSaleTicketsMapper;
+		protected IDALSaleTicketsMapper DalSaleTicketsMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TicketingCRMNS.Api.Services
 			IDALSaleTicketsMapper dalSaleTicketsMapper)
 			: base()
 		{
-			this.saleTicketsRepository = saleTicketsRepository;
-			this.saleTicketsModelValidator = saleTicketsModelValidator;
-			this.bolSaleTicketsMapper = bolSaleTicketsMapper;
-			this.dalSaleTicketsMapper = dalSaleTicketsMapper;
+			this.SaleTicketsRepository = saleTicketsRepository;
+			this.SaleTicketsModelValidator = saleTicketsModelValidator;
+			this.BolSaleTicketsMapper = bolSaleTicketsMapper;
+			this.DalSaleTicketsMapper = dalSaleTicketsMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSaleTicketsResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.saleTicketsRepository.All(limit, offset);
+			var records = await this.SaleTicketsRepository.All(limit, offset);
 
-			return this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(records));
+			return this.BolSaleTicketsMapper.MapBOToModel(this.DalSaleTicketsMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSaleTicketsResponseModel> Get(int id)
 		{
-			var record = await this.saleTicketsRepository.Get(id);
+			var record = await this.SaleTicketsRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(record));
+				return this.BolSaleTicketsMapper.MapBOToModel(this.DalSaleTicketsMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSaleTicketsResponseModel>> Create(
 			ApiSaleTicketsRequestModel model)
 		{
-			CreateResponse<ApiSaleTicketsResponseModel> response = new CreateResponse<ApiSaleTicketsResponseModel>(await this.saleTicketsModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSaleTicketsResponseModel> response = new CreateResponse<ApiSaleTicketsResponseModel>(await this.SaleTicketsModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSaleTicketsMapper.MapModelToBO(default(int), model);
-				var record = await this.saleTicketsRepository.Create(this.dalSaleTicketsMapper.MapBOToEF(bo));
+				var bo = this.BolSaleTicketsMapper.MapModelToBO(default(int), model);
+				var record = await this.SaleTicketsRepository.Create(this.DalSaleTicketsMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSaleTicketsMapper.MapBOToModel(this.DalSaleTicketsMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TicketingCRMNS.Api.Services
 			int id,
 			ApiSaleTicketsRequestModel model)
 		{
-			var validationResult = await this.saleTicketsModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SaleTicketsModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSaleTicketsMapper.MapModelToBO(id, model);
-				await this.saleTicketsRepository.Update(this.dalSaleTicketsMapper.MapBOToEF(bo));
+				var bo = this.BolSaleTicketsMapper.MapModelToBO(id, model);
+				await this.SaleTicketsRepository.Update(this.DalSaleTicketsMapper.MapBOToEF(bo));
 
-				var record = await this.saleTicketsRepository.Get(id);
+				var record = await this.SaleTicketsRepository.Get(id);
 
-				return new UpdateResponse<ApiSaleTicketsResponseModel>(this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSaleTicketsResponseModel>(this.BolSaleTicketsMapper.MapBOToModel(this.DalSaleTicketsMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TicketingCRMNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.saleTicketsModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SaleTicketsModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.saleTicketsRepository.Delete(id);
+				await this.SaleTicketsRepository.Delete(id);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace TicketingCRMNS.Api.Services
 
 		public async Task<List<ApiSaleTicketsResponseModel>> ByTicketId(int ticketId)
 		{
-			List<SaleTickets> records = await this.saleTicketsRepository.ByTicketId(ticketId);
+			List<SaleTickets> records = await this.SaleTicketsRepository.ByTicketId(ticketId);
 
-			return this.bolSaleTicketsMapper.MapBOToModel(this.dalSaleTicketsMapper.MapEFToBO(records));
+			return this.BolSaleTicketsMapper.MapBOToModel(this.DalSaleTicketsMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8bada0e3ded0b2feb6487daf1a17f4bb</Hash>
+    <Hash>832978acc1b02db387a02b41e25e6c76</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IDALBadgesMapper
+	public partial interface IDALBadgesMapper
 	{
 		Badges MapBOToEF(
 			BOBadges bo);
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>82749a696e5dec5e280dd756466bc654</Hash>
+    <Hash>6fcd7b7319a7f14015f0f732abfd5713</Hash>
 </Codenesium>*/

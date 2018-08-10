@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IKeyAllocationRepository
+	public partial interface IKeyAllocationRepository
 	{
 		Task<KeyAllocation> Create(KeyAllocation item);
 
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f26dae7ad839d8cd2a9e6ea5a85ea476</Hash>
+    <Hash>a6a35b997c4d4b66297513eef001c5fb</Hash>
 </Codenesium>*/

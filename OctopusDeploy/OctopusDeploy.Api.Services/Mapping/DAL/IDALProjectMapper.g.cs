@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALProjectMapper
+	public partial interface IDALProjectMapper
 	{
 		Project MapBOToEF(
 			BOProject bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2589a9be9107d45b2cbb08e3bb31a74</Hash>
+    <Hash>8f2ea0ce7e6cede9de681ca60039cb18</Hash>
 </Codenesium>*/

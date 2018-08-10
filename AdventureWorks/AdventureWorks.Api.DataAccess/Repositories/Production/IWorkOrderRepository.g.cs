@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IWorkOrderRepository
+	public partial interface IWorkOrderRepository
 	{
 		Task<WorkOrder> Create(WorkOrder item);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fe58c4b18adb11fa16b09009fc581d24</Hash>
+    <Hash>00cc60cc9a3487f08e5cc36d47269c67</Hash>
 </Codenesium>*/

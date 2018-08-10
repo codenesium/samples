@@ -6,7 +6,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IDALAdminMapper
+	public partial interface IDALAdminMapper
 	{
 		Admin MapBOToEF(
 			BOAdmin bo);
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cd2f47960601f55a7c9f6e0446617ed4</Hash>
+    <Hash>64d3c133388b7c75b00183997f1d3a27</Hash>
 </Codenesium>*/

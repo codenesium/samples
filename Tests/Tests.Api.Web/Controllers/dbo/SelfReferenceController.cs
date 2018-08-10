@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TestsNS.Api.Contracts;
 using TestsNS.Api.Services;
 
@@ -38,5 +39,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8f0ea282afd851b3b191b4a70fcc5cb7</Hash>
+    <Hash>61b1b4590217253c5d14074380096660</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ICultureRepository
+	public partial interface ICultureRepository
 	{
 		Task<Culture> Create(Culture item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bb782b08775d606deffba21bd6f4a6ee</Hash>
+    <Hash>ecd6031ab4a21658d6986b1d38426817</Hash>
 </Codenesium>*/

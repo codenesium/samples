@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
-	public interface IApiFileRequestModelValidator
+	public partial interface IApiFileRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiFileRequestModel model);
 
@@ -16,5 +16,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>653bf50594941a5e502078f64b469d6a</Hash>
+    <Hash>dc83d85e4ccb697cacf0e7d3b6d5f31a</Hash>
 </Codenesium>*/

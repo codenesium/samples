@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDatabaseLogService
+	public partial interface IDatabaseLogService
 	{
 		Task<CreateResponse<ApiDatabaseLogResponseModel>> Create(
 			ApiDatabaseLogRequestModel model);
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ddc4409c27a064d13247b75df4434fa3</Hash>
+    <Hash>17fd99ecc01ca7925a6a625b602442e0</Hash>
 </Codenesium>*/

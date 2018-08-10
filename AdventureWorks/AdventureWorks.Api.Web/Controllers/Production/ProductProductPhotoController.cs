@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Web
 {
@@ -38,5 +39,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ae6d6148c6d1979b7c6d73f353b1bfa1</Hash>
+    <Hash>184617f3c4fc152130ba1e0bffd6db6f</Hash>
 </Codenesium>*/

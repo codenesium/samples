@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractWorkerService : AbstractService
 	{
-		private IWorkerRepository workerRepository;
+		protected IWorkerRepository WorkerRepository { get; private set; }
 
-		private IApiWorkerRequestModelValidator workerModelValidator;
+		protected IApiWorkerRequestModelValidator WorkerModelValidator { get; private set; }
 
-		private IBOLWorkerMapper bolWorkerMapper;
+		protected IBOLWorkerMapper BolWorkerMapper { get; private set; }
 
-		private IDALWorkerMapper dalWorkerMapper;
+		protected IDALWorkerMapper DalWorkerMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALWorkerMapper dalWorkerMapper)
 			: base()
 		{
-			this.workerRepository = workerRepository;
-			this.workerModelValidator = workerModelValidator;
-			this.bolWorkerMapper = bolWorkerMapper;
-			this.dalWorkerMapper = dalWorkerMapper;
+			this.WorkerRepository = workerRepository;
+			this.WorkerModelValidator = workerModelValidator;
+			this.BolWorkerMapper = bolWorkerMapper;
+			this.DalWorkerMapper = dalWorkerMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiWorkerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.workerRepository.All(limit, offset);
+			var records = await this.WorkerRepository.All(limit, offset);
 
-			return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(records));
+			return this.BolWorkerMapper.MapBOToModel(this.DalWorkerMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiWorkerResponseModel> Get(string id)
 		{
-			var record = await this.workerRepository.Get(id);
+			var record = await this.WorkerRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record));
+				return this.BolWorkerMapper.MapBOToModel(this.DalWorkerMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiWorkerResponseModel>> Create(
 			ApiWorkerRequestModel model)
 		{
-			CreateResponse<ApiWorkerResponseModel> response = new CreateResponse<ApiWorkerResponseModel>(await this.workerModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiWorkerResponseModel> response = new CreateResponse<ApiWorkerResponseModel>(await this.WorkerModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolWorkerMapper.MapModelToBO(default(string), model);
-				var record = await this.workerRepository.Create(this.dalWorkerMapper.MapBOToEF(bo));
+				var bo = this.BolWorkerMapper.MapModelToBO(default(string), model);
+				var record = await this.WorkerRepository.Create(this.DalWorkerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolWorkerMapper.MapBOToModel(this.DalWorkerMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiWorkerRequestModel model)
 		{
-			var validationResult = await this.workerModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.WorkerModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolWorkerMapper.MapModelToBO(id, model);
-				await this.workerRepository.Update(this.dalWorkerMapper.MapBOToEF(bo));
+				var bo = this.BolWorkerMapper.MapModelToBO(id, model);
+				await this.WorkerRepository.Update(this.DalWorkerMapper.MapBOToEF(bo));
 
-				var record = await this.workerRepository.Get(id);
+				var record = await this.WorkerRepository.Get(id);
 
-				return new UpdateResponse<ApiWorkerResponseModel>(this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiWorkerResponseModel>(this.BolWorkerMapper.MapBOToModel(this.DalWorkerMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.workerModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.WorkerModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.workerRepository.Delete(id);
+				await this.WorkerRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiWorkerResponseModel> ByName(string name)
 		{
-			Worker record = await this.workerRepository.ByName(name);
+			Worker record = await this.WorkerRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(record));
+				return this.BolWorkerMapper.MapBOToModel(this.DalWorkerMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiWorkerResponseModel>> ByMachinePolicyId(string machinePolicyId)
 		{
-			List<Worker> records = await this.workerRepository.ByMachinePolicyId(machinePolicyId);
+			List<Worker> records = await this.WorkerRepository.ByMachinePolicyId(machinePolicyId);
 
-			return this.bolWorkerMapper.MapBOToModel(this.dalWorkerMapper.MapEFToBO(records));
+			return this.BolWorkerMapper.MapBOToModel(this.DalWorkerMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67f64ef4236122a9b75d5b028257cd77</Hash>
+    <Hash>d89bfd12a50f4fd089e372be840d442e</Hash>
 </Codenesium>*/

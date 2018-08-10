@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiJobCandidateModelMapper
+	public partial interface IApiJobCandidateModelMapper
 	{
 		ApiJobCandidateResponseModel MapRequestToResponse(
 			int jobCandidateID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9b6f04610b27cf78e3b118e4389000ad</Hash>
+    <Hash>ff3b05935f9de123b77302a183076fb8</Hash>
 </Codenesium>*/

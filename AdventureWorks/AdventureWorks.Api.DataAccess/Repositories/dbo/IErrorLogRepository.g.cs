@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IErrorLogRepository
+	public partial interface IErrorLogRepository
 	{
 		Task<ErrorLog> Create(ErrorLog item);
 
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>17d7de1ae6c1d742d532d8a76e4cc1df</Hash>
+    <Hash>b9a2e2e10ab2be6ab9f0cd18d891b37c</Hash>
 </Codenesium>*/

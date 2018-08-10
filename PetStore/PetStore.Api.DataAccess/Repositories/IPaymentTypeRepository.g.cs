@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-	public interface IPaymentTypeRepository
+	public partial interface IPaymentTypeRepository
 	{
 		Task<PaymentType> Create(PaymentType item);
 
@@ -22,5 +22,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>935cb51e914fe9339e2123d5e59ea369</Hash>
+    <Hash>b04de9df8d0eedc161ed1d8a99632be6</Hash>
 </Codenesium>*/

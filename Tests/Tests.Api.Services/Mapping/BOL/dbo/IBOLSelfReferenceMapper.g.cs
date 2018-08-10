@@ -5,7 +5,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IBOLSelfReferenceMapper
+	public partial interface IBOLSelfReferenceMapper
 	{
 		BOSelfReference MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22f1b04e8dcd16cac2a1fe264d106b79</Hash>
+    <Hash>1475ec67d40222d57a243234477f315c</Hash>
 </Codenesium>*/

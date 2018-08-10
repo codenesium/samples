@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALPurchaseOrderHeaderMapper
+	public partial interface IDALPurchaseOrderHeaderMapper
 	{
 		PurchaseOrderHeader MapBOToEF(
 			BOPurchaseOrderHeader bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35d1ef6f11eabb8d639a9dd749dd883e</Hash>
+    <Hash>58f6d3fb096bfe32e9f4ac08e89c8152</Hash>
 </Codenesium>*/

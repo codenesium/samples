@@ -6,7 +6,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IDALCountryMapper
+	public partial interface IDALCountryMapper
 	{
 		Country MapBOToEF(
 			BOCountry bo);
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>777b5b1e14c33f33eee97b886bb855a7</Hash>
+    <Hash>d391738889c367f413c587fc20756bf2</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IWorkerTaskLeaseService
+	public partial interface IWorkerTaskLeaseService
 	{
 		Task<CreateResponse<ApiWorkerTaskLeaseResponseModel>> Create(
 			ApiWorkerTaskLeaseRequestModel model);
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84cdc0d70339170e9b858c0178d41dda</Hash>
+    <Hash>4a644972a3c7bdeae1b73cbd57133047</Hash>
 </Codenesium>*/

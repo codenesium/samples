@@ -6,7 +6,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IDALTableMapper
+	public partial interface IDALTableMapper
 	{
 		Table MapBOToEF(
 			BOTable bo);
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22afb8f6712333a57c064548f2a7d359</Hash>
+    <Hash>65ec7ee22a9885147341f6cea1c57430</Hash>
 </Codenesium>*/

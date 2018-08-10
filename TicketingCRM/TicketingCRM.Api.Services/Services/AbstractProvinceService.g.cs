@@ -14,20 +14,20 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractProvinceService : AbstractService
 	{
-		private IProvinceRepository provinceRepository;
+		protected IProvinceRepository ProvinceRepository { get; private set; }
 
-		private IApiProvinceRequestModelValidator provinceModelValidator;
+		protected IApiProvinceRequestModelValidator ProvinceModelValidator { get; private set; }
 
-		private IBOLProvinceMapper bolProvinceMapper;
+		protected IBOLProvinceMapper BolProvinceMapper { get; private set; }
 
-		private IDALProvinceMapper dalProvinceMapper;
+		protected IDALProvinceMapper DalProvinceMapper { get; private set; }
 
-		private IBOLCityMapper bolCityMapper;
+		protected IBOLCityMapper BolCityMapper { get; private set; }
 
-		private IDALCityMapper dalCityMapper;
-		private IBOLVenueMapper bolVenueMapper;
+		protected IDALCityMapper DalCityMapper { get; private set; }
+		protected IBOLVenueMapper BolVenueMapper { get; private set; }
 
-		private IDALVenueMapper dalVenueMapper;
+		protected IDALVenueMapper DalVenueMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -43,27 +43,27 @@ namespace TicketingCRMNS.Api.Services
 			IDALVenueMapper dalVenueMapper)
 			: base()
 		{
-			this.provinceRepository = provinceRepository;
-			this.provinceModelValidator = provinceModelValidator;
-			this.bolProvinceMapper = bolProvinceMapper;
-			this.dalProvinceMapper = dalProvinceMapper;
-			this.bolCityMapper = bolCityMapper;
-			this.dalCityMapper = dalCityMapper;
-			this.bolVenueMapper = bolVenueMapper;
-			this.dalVenueMapper = dalVenueMapper;
+			this.ProvinceRepository = provinceRepository;
+			this.ProvinceModelValidator = provinceModelValidator;
+			this.BolProvinceMapper = bolProvinceMapper;
+			this.DalProvinceMapper = dalProvinceMapper;
+			this.BolCityMapper = bolCityMapper;
+			this.DalCityMapper = dalCityMapper;
+			this.BolVenueMapper = bolVenueMapper;
+			this.DalVenueMapper = dalVenueMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProvinceResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.provinceRepository.All(limit, offset);
+			var records = await this.ProvinceRepository.All(limit, offset);
 
-			return this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(records));
+			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProvinceResponseModel> Get(int id)
 		{
-			var record = await this.provinceRepository.Get(id);
+			var record = await this.ProvinceRepository.Get(id);
 
 			if (record == null)
 			{
@@ -71,20 +71,20 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(record));
+				return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProvinceResponseModel>> Create(
 			ApiProvinceRequestModel model)
 		{
-			CreateResponse<ApiProvinceResponseModel> response = new CreateResponse<ApiProvinceResponseModel>(await this.provinceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProvinceResponseModel> response = new CreateResponse<ApiProvinceResponseModel>(await this.ProvinceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProvinceMapper.MapModelToBO(default(int), model);
-				var record = await this.provinceRepository.Create(this.dalProvinceMapper.MapBOToEF(bo));
+				var bo = this.BolProvinceMapper.MapModelToBO(default(int), model);
+				var record = await this.ProvinceRepository.Create(this.DalProvinceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -94,16 +94,16 @@ namespace TicketingCRMNS.Api.Services
 			int id,
 			ApiProvinceRequestModel model)
 		{
-			var validationResult = await this.provinceModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ProvinceModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProvinceMapper.MapModelToBO(id, model);
-				await this.provinceRepository.Update(this.dalProvinceMapper.MapBOToEF(bo));
+				var bo = this.BolProvinceMapper.MapModelToBO(id, model);
+				await this.ProvinceRepository.Update(this.DalProvinceMapper.MapBOToEF(bo));
 
-				var record = await this.provinceRepository.Get(id);
+				var record = await this.ProvinceRepository.Get(id);
 
-				return new UpdateResponse<ApiProvinceResponseModel>(this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProvinceResponseModel>(this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -114,10 +114,10 @@ namespace TicketingCRMNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.provinceModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ProvinceModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.provinceRepository.Delete(id);
+				await this.ProvinceRepository.Delete(id);
 			}
 
 			return response;
@@ -125,27 +125,27 @@ namespace TicketingCRMNS.Api.Services
 
 		public async Task<List<ApiProvinceResponseModel>> ByCountryId(int countryId)
 		{
-			List<Province> records = await this.provinceRepository.ByCountryId(countryId);
+			List<Province> records = await this.ProvinceRepository.ByCountryId(countryId);
 
-			return this.bolProvinceMapper.MapBOToModel(this.dalProvinceMapper.MapEFToBO(records));
+			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiCityResponseModel>> Cities(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<City> records = await this.provinceRepository.Cities(provinceId, limit, offset);
+			List<City> records = await this.ProvinceRepository.Cities(provinceId, limit, offset);
 
-			return this.bolCityMapper.MapBOToModel(this.dalCityMapper.MapEFToBO(records));
+			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiVenueResponseModel>> Venues(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Venue> records = await this.provinceRepository.Venues(provinceId, limit, offset);
+			List<Venue> records = await this.ProvinceRepository.Venues(provinceId, limit, offset);
 
-			return this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(records));
+			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>78a67fcb80ad3cd433c2ba454890566f</Hash>
+    <Hash>b1e82c9c0f301939190155eea2160488</Hash>
 </Codenesium>*/

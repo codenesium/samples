@@ -7,7 +7,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface ITestAllFieldTypesNullableService
+	public partial interface ITestAllFieldTypesNullableService
 	{
 		Task<CreateResponse<ApiTestAllFieldTypesNullableResponseModel>> Create(
 			ApiTestAllFieldTypesNullableRequestModel model);
@@ -24,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>41553aeece3387e2701f1078ac3844f6</Hash>
+    <Hash>ace1af1338094d8d61b49595e086d70d</Hash>
 </Codenesium>*/

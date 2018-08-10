@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractOctopusServerNodeService : AbstractService
 	{
-		private IOctopusServerNodeRepository octopusServerNodeRepository;
+		protected IOctopusServerNodeRepository OctopusServerNodeRepository { get; private set; }
 
-		private IApiOctopusServerNodeRequestModelValidator octopusServerNodeModelValidator;
+		protected IApiOctopusServerNodeRequestModelValidator OctopusServerNodeModelValidator { get; private set; }
 
-		private IBOLOctopusServerNodeMapper bolOctopusServerNodeMapper;
+		protected IBOLOctopusServerNodeMapper BolOctopusServerNodeMapper { get; private set; }
 
-		private IDALOctopusServerNodeMapper dalOctopusServerNodeMapper;
+		protected IDALOctopusServerNodeMapper DalOctopusServerNodeMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALOctopusServerNodeMapper dalOctopusServerNodeMapper)
 			: base()
 		{
-			this.octopusServerNodeRepository = octopusServerNodeRepository;
-			this.octopusServerNodeModelValidator = octopusServerNodeModelValidator;
-			this.bolOctopusServerNodeMapper = bolOctopusServerNodeMapper;
-			this.dalOctopusServerNodeMapper = dalOctopusServerNodeMapper;
+			this.OctopusServerNodeRepository = octopusServerNodeRepository;
+			this.OctopusServerNodeModelValidator = octopusServerNodeModelValidator;
+			this.BolOctopusServerNodeMapper = bolOctopusServerNodeMapper;
+			this.DalOctopusServerNodeMapper = dalOctopusServerNodeMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiOctopusServerNodeResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.octopusServerNodeRepository.All(limit, offset);
+			var records = await this.OctopusServerNodeRepository.All(limit, offset);
 
-			return this.bolOctopusServerNodeMapper.MapBOToModel(this.dalOctopusServerNodeMapper.MapEFToBO(records));
+			return this.BolOctopusServerNodeMapper.MapBOToModel(this.DalOctopusServerNodeMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiOctopusServerNodeResponseModel> Get(string id)
 		{
-			var record = await this.octopusServerNodeRepository.Get(id);
+			var record = await this.OctopusServerNodeRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolOctopusServerNodeMapper.MapBOToModel(this.dalOctopusServerNodeMapper.MapEFToBO(record));
+				return this.BolOctopusServerNodeMapper.MapBOToModel(this.DalOctopusServerNodeMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiOctopusServerNodeResponseModel>> Create(
 			ApiOctopusServerNodeRequestModel model)
 		{
-			CreateResponse<ApiOctopusServerNodeResponseModel> response = new CreateResponse<ApiOctopusServerNodeResponseModel>(await this.octopusServerNodeModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiOctopusServerNodeResponseModel> response = new CreateResponse<ApiOctopusServerNodeResponseModel>(await this.OctopusServerNodeModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolOctopusServerNodeMapper.MapModelToBO(default(string), model);
-				var record = await this.octopusServerNodeRepository.Create(this.dalOctopusServerNodeMapper.MapBOToEF(bo));
+				var bo = this.BolOctopusServerNodeMapper.MapModelToBO(default(string), model);
+				var record = await this.OctopusServerNodeRepository.Create(this.DalOctopusServerNodeMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolOctopusServerNodeMapper.MapBOToModel(this.dalOctopusServerNodeMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolOctopusServerNodeMapper.MapBOToModel(this.DalOctopusServerNodeMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiOctopusServerNodeRequestModel model)
 		{
-			var validationResult = await this.octopusServerNodeModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.OctopusServerNodeModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolOctopusServerNodeMapper.MapModelToBO(id, model);
-				await this.octopusServerNodeRepository.Update(this.dalOctopusServerNodeMapper.MapBOToEF(bo));
+				var bo = this.BolOctopusServerNodeMapper.MapModelToBO(id, model);
+				await this.OctopusServerNodeRepository.Update(this.DalOctopusServerNodeMapper.MapBOToEF(bo));
 
-				var record = await this.octopusServerNodeRepository.Get(id);
+				var record = await this.OctopusServerNodeRepository.Get(id);
 
-				return new UpdateResponse<ApiOctopusServerNodeResponseModel>(this.bolOctopusServerNodeMapper.MapBOToModel(this.dalOctopusServerNodeMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiOctopusServerNodeResponseModel>(this.BolOctopusServerNodeMapper.MapBOToModel(this.DalOctopusServerNodeMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.octopusServerNodeModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.OctopusServerNodeModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.octopusServerNodeRepository.Delete(id);
+				await this.OctopusServerNodeRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d879dee8dc189cfbb9028ab7eeeee44</Hash>
+    <Hash>e1d07df1bd524a5907c099f80b99fa7e</Hash>
 </Codenesium>*/

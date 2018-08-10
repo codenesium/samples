@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IApiLinkStatusRequestModelValidator
+	public partial interface IApiLinkStatusRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiLinkStatusRequestModel model);
 
@@ -16,5 +16,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22f290a16a91f641cc2120894f587340</Hash>
+    <Hash>d7ff94dc545a1f68b7e1edb7ce660f22</Hash>
 </Codenesium>*/

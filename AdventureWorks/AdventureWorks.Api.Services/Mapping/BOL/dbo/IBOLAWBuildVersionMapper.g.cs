@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLAWBuildVersionMapper
+	public partial interface IBOLAWBuildVersionMapper
 	{
 		BOAWBuildVersion MapModelToBO(
 			int systemInformationID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6966eb0e9861d2305026fb69ef33f75b</Hash>
+    <Hash>02444adb0093ccb5e35fc55bf403f45e</Hash>
 </Codenesium>*/

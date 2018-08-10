@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLCreditCardMapper
+	public partial interface IBOLCreditCardMapper
 	{
 		BOCreditCard MapModelToBO(
 			int creditCardID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6de23c65151e19405f7a849a1d2fc1e2</Hash>
+    <Hash>e43b7dd13985c9bb35e34cf6912d889f</Hash>
 </Codenesium>*/

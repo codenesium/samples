@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractPostLinksService : AbstractService
 	{
-		private IPostLinksRepository postLinksRepository;
+		protected IPostLinksRepository PostLinksRepository { get; private set; }
 
-		private IApiPostLinksRequestModelValidator postLinksModelValidator;
+		protected IApiPostLinksRequestModelValidator PostLinksModelValidator { get; private set; }
 
-		private IBOLPostLinksMapper bolPostLinksMapper;
+		protected IBOLPostLinksMapper BolPostLinksMapper { get; private set; }
 
-		private IDALPostLinksMapper dalPostLinksMapper;
+		protected IDALPostLinksMapper DalPostLinksMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace StackOverflowNS.Api.Services
 			IDALPostLinksMapper dalPostLinksMapper)
 			: base()
 		{
-			this.postLinksRepository = postLinksRepository;
-			this.postLinksModelValidator = postLinksModelValidator;
-			this.bolPostLinksMapper = bolPostLinksMapper;
-			this.dalPostLinksMapper = dalPostLinksMapper;
+			this.PostLinksRepository = postLinksRepository;
+			this.PostLinksModelValidator = postLinksModelValidator;
+			this.BolPostLinksMapper = bolPostLinksMapper;
+			this.DalPostLinksMapper = dalPostLinksMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPostLinksResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.postLinksRepository.All(limit, offset);
+			var records = await this.PostLinksRepository.All(limit, offset);
 
-			return this.bolPostLinksMapper.MapBOToModel(this.dalPostLinksMapper.MapEFToBO(records));
+			return this.BolPostLinksMapper.MapBOToModel(this.DalPostLinksMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPostLinksResponseModel> Get(int id)
 		{
-			var record = await this.postLinksRepository.Get(id);
+			var record = await this.PostLinksRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.bolPostLinksMapper.MapBOToModel(this.dalPostLinksMapper.MapEFToBO(record));
+				return this.BolPostLinksMapper.MapBOToModel(this.DalPostLinksMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPostLinksResponseModel>> Create(
 			ApiPostLinksRequestModel model)
 		{
-			CreateResponse<ApiPostLinksResponseModel> response = new CreateResponse<ApiPostLinksResponseModel>(await this.postLinksModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPostLinksResponseModel> response = new CreateResponse<ApiPostLinksResponseModel>(await this.PostLinksModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPostLinksMapper.MapModelToBO(default(int), model);
-				var record = await this.postLinksRepository.Create(this.dalPostLinksMapper.MapBOToEF(bo));
+				var bo = this.BolPostLinksMapper.MapModelToBO(default(int), model);
+				var record = await this.PostLinksRepository.Create(this.DalPostLinksMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPostLinksMapper.MapBOToModel(this.dalPostLinksMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPostLinksMapper.MapBOToModel(this.DalPostLinksMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace StackOverflowNS.Api.Services
 			int id,
 			ApiPostLinksRequestModel model)
 		{
-			var validationResult = await this.postLinksModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.PostLinksModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPostLinksMapper.MapModelToBO(id, model);
-				await this.postLinksRepository.Update(this.dalPostLinksMapper.MapBOToEF(bo));
+				var bo = this.BolPostLinksMapper.MapModelToBO(id, model);
+				await this.PostLinksRepository.Update(this.DalPostLinksMapper.MapBOToEF(bo));
 
-				var record = await this.postLinksRepository.Get(id);
+				var record = await this.PostLinksRepository.Get(id);
 
-				return new UpdateResponse<ApiPostLinksResponseModel>(this.bolPostLinksMapper.MapBOToModel(this.dalPostLinksMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPostLinksResponseModel>(this.BolPostLinksMapper.MapBOToModel(this.DalPostLinksMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace StackOverflowNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.postLinksModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.PostLinksModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.postLinksRepository.Delete(id);
+				await this.PostLinksRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>187f2f8cd668a84a485c31419347fd2a</Hash>
+    <Hash>a396e143eb5a5694be21ee91214d4925</Hash>
 </Codenesium>*/

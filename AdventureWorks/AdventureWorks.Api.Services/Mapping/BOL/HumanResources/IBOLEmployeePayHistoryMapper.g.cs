@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLEmployeePayHistoryMapper
+	public partial interface IBOLEmployeePayHistoryMapper
 	{
 		BOEmployeePayHistory MapModelToBO(
 			int businessEntityID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5821b96d9b7861a29669d7e4c673919e</Hash>
+    <Hash>874e0f01ef806cfc75a8cf50d7eeae92</Hash>
 </Codenesium>*/

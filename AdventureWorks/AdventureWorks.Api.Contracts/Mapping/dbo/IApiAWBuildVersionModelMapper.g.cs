@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiAWBuildVersionModelMapper
+	public partial interface IApiAWBuildVersionModelMapper
 	{
 		ApiAWBuildVersionResponseModel MapRequestToResponse(
 			int systemInformationID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b0247d9966bbccbffcfe4a93630f2316</Hash>
+    <Hash>64f8b2e60958ed067d7eeadadf039576</Hash>
 </Codenesium>*/

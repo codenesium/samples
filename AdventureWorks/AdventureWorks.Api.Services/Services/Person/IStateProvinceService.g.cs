@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IStateProvinceService
+	public partial interface IStateProvinceService
 	{
 		Task<CreateResponse<ApiStateProvinceResponseModel>> Create(
 			ApiStateProvinceRequestModel model);
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a89ede32f94af25c85b5cd9e383c0c67</Hash>
+    <Hash>f3977f0d451b72d5c38e71b849dbd154</Hash>
 </Codenesium>*/

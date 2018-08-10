@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IOrganizationService
+	public partial interface IOrganizationService
 	{
 		Task<CreateResponse<ApiOrganizationResponseModel>> Create(
 			ApiOrganizationRequestModel model);
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55df9a991261da55b84195f9f9373127</Hash>
+    <Hash>5ec139c0f5e7d1ca8be3458161975395</Hash>
 </Codenesium>*/

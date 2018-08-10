@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
-	public interface IPenRepository
+	public partial interface IPenRepository
 	{
 		Task<Pen> Create(Pen item);
 
@@ -22,5 +22,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a09e31f021d7227dfc5f96a697ca9e40</Hash>
+    <Hash>b7f49f56dae2e4e306c43ef6b4b17711</Hash>
 </Codenesium>*/

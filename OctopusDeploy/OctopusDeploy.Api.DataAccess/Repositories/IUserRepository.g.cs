@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IUserRepository
+	public partial interface IUserRepository
 	{
 		Task<User> Create(User item);
 
@@ -28,5 +28,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0b1c3badf95cd45c75472bd2289919c8</Hash>
+    <Hash>e327cab683b3b12f81c3bd8939f76f52</Hash>
 </Codenesium>*/

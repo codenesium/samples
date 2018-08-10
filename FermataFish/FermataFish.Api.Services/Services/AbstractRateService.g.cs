@@ -14,13 +14,13 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractRateService : AbstractService
 	{
-		private IRateRepository rateRepository;
+		protected IRateRepository RateRepository { get; private set; }
 
-		private IApiRateRequestModelValidator rateModelValidator;
+		protected IApiRateRequestModelValidator RateModelValidator { get; private set; }
 
-		private IBOLRateMapper bolRateMapper;
+		protected IBOLRateMapper BolRateMapper { get; private set; }
 
-		private IDALRateMapper dalRateMapper;
+		protected IDALRateMapper DalRateMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace FermataFishNS.Api.Services
 			IDALRateMapper dalRateMapper)
 			: base()
 		{
-			this.rateRepository = rateRepository;
-			this.rateModelValidator = rateModelValidator;
-			this.bolRateMapper = bolRateMapper;
-			this.dalRateMapper = dalRateMapper;
+			this.RateRepository = rateRepository;
+			this.RateModelValidator = rateModelValidator;
+			this.BolRateMapper = bolRateMapper;
+			this.DalRateMapper = dalRateMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiRateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.rateRepository.All(limit, offset);
+			var records = await this.RateRepository.All(limit, offset);
 
-			return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
+			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiRateResponseModel> Get(int id)
 		{
-			var record = await this.rateRepository.Get(id);
+			var record = await this.RateRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record));
+				return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiRateResponseModel>> Create(
 			ApiRateRequestModel model)
 		{
-			CreateResponse<ApiRateResponseModel> response = new CreateResponse<ApiRateResponseModel>(await this.rateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiRateResponseModel> response = new CreateResponse<ApiRateResponseModel>(await this.RateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolRateMapper.MapModelToBO(default(int), model);
-				var record = await this.rateRepository.Create(this.dalRateMapper.MapBOToEF(bo));
+				var bo = this.BolRateMapper.MapModelToBO(default(int), model);
+				var record = await this.RateRepository.Create(this.DalRateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiRateRequestModel model)
 		{
-			var validationResult = await this.rateModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.RateModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolRateMapper.MapModelToBO(id, model);
-				await this.rateRepository.Update(this.dalRateMapper.MapBOToEF(bo));
+				var bo = this.BolRateMapper.MapModelToBO(id, model);
+				await this.RateRepository.Update(this.DalRateMapper.MapBOToEF(bo));
 
-				var record = await this.rateRepository.Get(id);
+				var record = await this.RateRepository.Get(id);
 
-				return new UpdateResponse<ApiRateResponseModel>(this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiRateResponseModel>(this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.rateModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.RateModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.rateRepository.Delete(id);
+				await this.RateRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f2ffdc935783303b50bbb8583127c90c</Hash>
+    <Hash>60b5433dbfd09fdc65fc36e59e7bd757</Hash>
 </Codenesium>*/

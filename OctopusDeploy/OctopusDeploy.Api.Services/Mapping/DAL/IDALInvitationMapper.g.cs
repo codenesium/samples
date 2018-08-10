@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALInvitationMapper
+	public partial interface IDALInvitationMapper
 	{
 		Invitation MapBOToEF(
 			BOInvitation bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4006ce6b3d858dfe03ccc4302f680ef4</Hash>
+    <Hash>e3f7ee9cc55fba137ad0e0691668410f</Hash>
 </Codenesium>*/

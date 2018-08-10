@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiWorkOrderRoutingModelMapper
+	public partial interface IApiWorkOrderRoutingModelMapper
 	{
 		ApiWorkOrderRoutingResponseModel MapRequestToResponse(
 			int workOrderID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ccf586cf7f853fa156f32c4d79657d13</Hash>
+    <Hash>26d815dc9444b8175159696971c406a1</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALProductCostHistoryMapper
+	public partial interface IDALProductCostHistoryMapper
 	{
 		ProductCostHistory MapBOToEF(
 			BOProductCostHistory bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4a85d602f878503cbdb8784d6b442446</Hash>
+    <Hash>a2f2a49f933e45d2ff8cc71b33457fd9</Hash>
 </Codenesium>*/

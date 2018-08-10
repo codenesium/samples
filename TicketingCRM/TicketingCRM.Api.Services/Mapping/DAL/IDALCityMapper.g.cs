@@ -6,7 +6,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IDALCityMapper
+	public partial interface IDALCityMapper
 	{
 		City MapBOToEF(
 			BOCity bo);
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6d10606705afacb9c87a0dcd03503a50</Hash>
+    <Hash>0941a01806455f8001f4defc2e582c24</Hash>
 </Codenesium>*/

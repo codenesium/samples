@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IEmailAddressRepository
+	public partial interface IEmailAddressRepository
 	{
 		Task<EmailAddress> Create(EmailAddress item);
 
@@ -22,5 +22,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9b4bff2095bdb140795ce3f3b4c5b68b</Hash>
+    <Hash>3b554624f614cea06fd45a36d6e394f4</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface ILinkLogService
+	public partial interface ILinkLogService
 	{
 		Task<CreateResponse<ApiLinkLogResponseModel>> Create(
 			ApiLinkLogRequestModel model);
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>970278d339f2ad83bdc6c22e8c4939fa</Hash>
+    <Hash>54e9f171d9707ee5e6c1b5e86a5c90c2</Hash>
 </Codenesium>*/

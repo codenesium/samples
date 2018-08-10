@@ -14,17 +14,17 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractPipelineStatusService : AbstractService
 	{
-		private IPipelineStatusRepository pipelineStatusRepository;
+		protected IPipelineStatusRepository PipelineStatusRepository { get; private set; }
 
-		private IApiPipelineStatusRequestModelValidator pipelineStatusModelValidator;
+		protected IApiPipelineStatusRequestModelValidator PipelineStatusModelValidator { get; private set; }
 
-		private IBOLPipelineStatusMapper bolPipelineStatusMapper;
+		protected IBOLPipelineStatusMapper BolPipelineStatusMapper { get; private set; }
 
-		private IDALPipelineStatusMapper dalPipelineStatusMapper;
+		protected IDALPipelineStatusMapper DalPipelineStatusMapper { get; private set; }
 
-		private IBOLPipelineMapper bolPipelineMapper;
+		protected IBOLPipelineMapper BolPipelineMapper { get; private set; }
 
-		private IDALPipelineMapper dalPipelineMapper;
+		protected IDALPipelineMapper DalPipelineMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace PetShippingNS.Api.Services
 			IDALPipelineMapper dalPipelineMapper)
 			: base()
 		{
-			this.pipelineStatusRepository = pipelineStatusRepository;
-			this.pipelineStatusModelValidator = pipelineStatusModelValidator;
-			this.bolPipelineStatusMapper = bolPipelineStatusMapper;
-			this.dalPipelineStatusMapper = dalPipelineStatusMapper;
-			this.bolPipelineMapper = bolPipelineMapper;
-			this.dalPipelineMapper = dalPipelineMapper;
+			this.PipelineStatusRepository = pipelineStatusRepository;
+			this.PipelineStatusModelValidator = pipelineStatusModelValidator;
+			this.BolPipelineStatusMapper = bolPipelineStatusMapper;
+			this.DalPipelineStatusMapper = dalPipelineStatusMapper;
+			this.BolPipelineMapper = bolPipelineMapper;
+			this.DalPipelineMapper = dalPipelineMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPipelineStatusResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.pipelineStatusRepository.All(limit, offset);
+			var records = await this.PipelineStatusRepository.All(limit, offset);
 
-			return this.bolPipelineStatusMapper.MapBOToModel(this.dalPipelineStatusMapper.MapEFToBO(records));
+			return this.BolPipelineStatusMapper.MapBOToModel(this.DalPipelineStatusMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPipelineStatusResponseModel> Get(int id)
 		{
-			var record = await this.pipelineStatusRepository.Get(id);
+			var record = await this.PipelineStatusRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.bolPipelineStatusMapper.MapBOToModel(this.dalPipelineStatusMapper.MapEFToBO(record));
+				return this.BolPipelineStatusMapper.MapBOToModel(this.DalPipelineStatusMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStatusResponseModel>> Create(
 			ApiPipelineStatusRequestModel model)
 		{
-			CreateResponse<ApiPipelineStatusResponseModel> response = new CreateResponse<ApiPipelineStatusResponseModel>(await this.pipelineStatusModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPipelineStatusResponseModel> response = new CreateResponse<ApiPipelineStatusResponseModel>(await this.PipelineStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPipelineStatusMapper.MapModelToBO(default(int), model);
-				var record = await this.pipelineStatusRepository.Create(this.dalPipelineStatusMapper.MapBOToEF(bo));
+				var bo = this.BolPipelineStatusMapper.MapModelToBO(default(int), model);
+				var record = await this.PipelineStatusRepository.Create(this.DalPipelineStatusMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPipelineStatusMapper.MapBOToModel(this.dalPipelineStatusMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPipelineStatusMapper.MapBOToModel(this.DalPipelineStatusMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace PetShippingNS.Api.Services
 			int id,
 			ApiPipelineStatusRequestModel model)
 		{
-			var validationResult = await this.pipelineStatusModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.PipelineStatusModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPipelineStatusMapper.MapModelToBO(id, model);
-				await this.pipelineStatusRepository.Update(this.dalPipelineStatusMapper.MapBOToEF(bo));
+				var bo = this.BolPipelineStatusMapper.MapModelToBO(id, model);
+				await this.PipelineStatusRepository.Update(this.DalPipelineStatusMapper.MapBOToEF(bo));
 
-				var record = await this.pipelineStatusRepository.Get(id);
+				var record = await this.PipelineStatusRepository.Get(id);
 
-				return new UpdateResponse<ApiPipelineStatusResponseModel>(this.bolPipelineStatusMapper.MapBOToModel(this.dalPipelineStatusMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPipelineStatusResponseModel>(this.BolPipelineStatusMapper.MapBOToModel(this.DalPipelineStatusMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace PetShippingNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.pipelineStatusModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.PipelineStatusModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.pipelineStatusRepository.Delete(id);
+				await this.PipelineStatusRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace PetShippingNS.Api.Services
 
 		public async virtual Task<List<ApiPipelineResponseModel>> Pipelines(int pipelineStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Pipeline> records = await this.pipelineStatusRepository.Pipelines(pipelineStatusId, limit, offset);
+			List<Pipeline> records = await this.PipelineStatusRepository.Pipelines(pipelineStatusId, limit, offset);
 
-			return this.bolPipelineMapper.MapBOToModel(this.dalPipelineMapper.MapEFToBO(records));
+			return this.BolPipelineMapper.MapBOToModel(this.DalPipelineMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0171b57e3f49d8d5cd1e3205b4ca91d2</Hash>
+    <Hash>6bcc5b531cc25295b60e021fc9371ccf</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IMachinePolicyService
+	public partial interface IMachinePolicyService
 	{
 		Task<CreateResponse<ApiMachinePolicyResponseModel>> Create(
 			ApiMachinePolicyRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>293ecb2ff556c9e4c2f8bc1e62b10684</Hash>
+    <Hash>45981b72141251f6c833b5bac228d3b6</Hash>
 </Codenesium>*/

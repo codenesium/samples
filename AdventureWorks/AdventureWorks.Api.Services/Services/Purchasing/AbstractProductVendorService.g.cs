@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductVendorService : AbstractService
 	{
-		private IProductVendorRepository productVendorRepository;
+		protected IProductVendorRepository ProductVendorRepository { get; private set; }
 
-		private IApiProductVendorRequestModelValidator productVendorModelValidator;
+		protected IApiProductVendorRequestModelValidator ProductVendorModelValidator { get; private set; }
 
-		private IBOLProductVendorMapper bolProductVendorMapper;
+		protected IBOLProductVendorMapper BolProductVendorMapper { get; private set; }
 
-		private IDALProductVendorMapper dalProductVendorMapper;
+		protected IDALProductVendorMapper DalProductVendorMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductVendorMapper dalProductVendorMapper)
 			: base()
 		{
-			this.productVendorRepository = productVendorRepository;
-			this.productVendorModelValidator = productVendorModelValidator;
-			this.bolProductVendorMapper = bolProductVendorMapper;
-			this.dalProductVendorMapper = dalProductVendorMapper;
+			this.ProductVendorRepository = productVendorRepository;
+			this.ProductVendorModelValidator = productVendorModelValidator;
+			this.BolProductVendorMapper = bolProductVendorMapper;
+			this.DalProductVendorMapper = dalProductVendorMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProductVendorResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.productVendorRepository.All(limit, offset);
+			var records = await this.ProductVendorRepository.All(limit, offset);
 
-			return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
+			return this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductVendorResponseModel> Get(int productID)
 		{
-			var record = await this.productVendorRepository.Get(productID);
+			var record = await this.ProductVendorRepository.Get(productID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(record));
+				return this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProductVendorResponseModel>> Create(
 			ApiProductVendorRequestModel model)
 		{
-			CreateResponse<ApiProductVendorResponseModel> response = new CreateResponse<ApiProductVendorResponseModel>(await this.productVendorModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductVendorResponseModel> response = new CreateResponse<ApiProductVendorResponseModel>(await this.ProductVendorModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProductVendorMapper.MapModelToBO(default(int), model);
-				var record = await this.productVendorRepository.Create(this.dalProductVendorMapper.MapBOToEF(bo));
+				var bo = this.BolProductVendorMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductVendorRepository.Create(this.DalProductVendorMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int productID,
 			ApiProductVendorRequestModel model)
 		{
-			var validationResult = await this.productVendorModelValidator.ValidateUpdateAsync(productID, model);
+			var validationResult = await this.ProductVendorModelValidator.ValidateUpdateAsync(productID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProductVendorMapper.MapModelToBO(productID, model);
-				await this.productVendorRepository.Update(this.dalProductVendorMapper.MapBOToEF(bo));
+				var bo = this.BolProductVendorMapper.MapModelToBO(productID, model);
+				await this.ProductVendorRepository.Update(this.DalProductVendorMapper.MapBOToEF(bo));
 
-				var record = await this.productVendorRepository.Get(productID);
+				var record = await this.ProductVendorRepository.Get(productID);
 
-				return new UpdateResponse<ApiProductVendorResponseModel>(this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProductVendorResponseModel>(this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int productID)
 		{
-			ActionResponse response = new ActionResponse(await this.productVendorModelValidator.ValidateDeleteAsync(productID));
+			ActionResponse response = new ActionResponse(await this.ProductVendorModelValidator.ValidateDeleteAsync(productID));
 			if (response.Success)
 			{
-				await this.productVendorRepository.Delete(productID);
+				await this.ProductVendorRepository.Delete(productID);
 			}
 
 			return response;
@@ -110,20 +110,20 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiProductVendorResponseModel>> ByBusinessEntityID(int businessEntityID)
 		{
-			List<ProductVendor> records = await this.productVendorRepository.ByBusinessEntityID(businessEntityID);
+			List<ProductVendor> records = await this.ProductVendorRepository.ByBusinessEntityID(businessEntityID);
 
-			return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
+			return this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiProductVendorResponseModel>> ByUnitMeasureCode(string unitMeasureCode)
 		{
-			List<ProductVendor> records = await this.productVendorRepository.ByUnitMeasureCode(unitMeasureCode);
+			List<ProductVendor> records = await this.ProductVendorRepository.ByUnitMeasureCode(unitMeasureCode);
 
-			return this.bolProductVendorMapper.MapBOToModel(this.dalProductVendorMapper.MapEFToBO(records));
+			return this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>04cc5dd538d1cd869a331226b02033dd</Hash>
+    <Hash>3b471543fb750764142a5355106e6950</Hash>
 </Codenesium>*/

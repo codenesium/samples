@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface ISubscriptionRepository
+	public partial interface ISubscriptionRepository
 	{
 		Task<Subscription> Create(Subscription item);
 
@@ -22,5 +22,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>320c996c2f7e065648e7bee6834bee34</Hash>
+    <Hash>759ce16c92bfffac24b225487251763a</Hash>
 </Codenesium>*/

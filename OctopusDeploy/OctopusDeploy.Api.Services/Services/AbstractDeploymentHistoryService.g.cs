@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractDeploymentHistoryService : AbstractService
 	{
-		private IDeploymentHistoryRepository deploymentHistoryRepository;
+		protected IDeploymentHistoryRepository DeploymentHistoryRepository { get; private set; }
 
-		private IApiDeploymentHistoryRequestModelValidator deploymentHistoryModelValidator;
+		protected IApiDeploymentHistoryRequestModelValidator DeploymentHistoryModelValidator { get; private set; }
 
-		private IBOLDeploymentHistoryMapper bolDeploymentHistoryMapper;
+		protected IBOLDeploymentHistoryMapper BolDeploymentHistoryMapper { get; private set; }
 
-		private IDALDeploymentHistoryMapper dalDeploymentHistoryMapper;
+		protected IDALDeploymentHistoryMapper DalDeploymentHistoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALDeploymentHistoryMapper dalDeploymentHistoryMapper)
 			: base()
 		{
-			this.deploymentHistoryRepository = deploymentHistoryRepository;
-			this.deploymentHistoryModelValidator = deploymentHistoryModelValidator;
-			this.bolDeploymentHistoryMapper = bolDeploymentHistoryMapper;
-			this.dalDeploymentHistoryMapper = dalDeploymentHistoryMapper;
+			this.DeploymentHistoryRepository = deploymentHistoryRepository;
+			this.DeploymentHistoryModelValidator = deploymentHistoryModelValidator;
+			this.BolDeploymentHistoryMapper = bolDeploymentHistoryMapper;
+			this.DalDeploymentHistoryMapper = dalDeploymentHistoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiDeploymentHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.deploymentHistoryRepository.All(limit, offset);
+			var records = await this.DeploymentHistoryRepository.All(limit, offset);
 
-			return this.bolDeploymentHistoryMapper.MapBOToModel(this.dalDeploymentHistoryMapper.MapEFToBO(records));
+			return this.BolDeploymentHistoryMapper.MapBOToModel(this.DalDeploymentHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDeploymentHistoryResponseModel> Get(string deploymentId)
 		{
-			var record = await this.deploymentHistoryRepository.Get(deploymentId);
+			var record = await this.DeploymentHistoryRepository.Get(deploymentId);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolDeploymentHistoryMapper.MapBOToModel(this.dalDeploymentHistoryMapper.MapEFToBO(record));
+				return this.BolDeploymentHistoryMapper.MapBOToModel(this.DalDeploymentHistoryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiDeploymentHistoryResponseModel>> Create(
 			ApiDeploymentHistoryRequestModel model)
 		{
-			CreateResponse<ApiDeploymentHistoryResponseModel> response = new CreateResponse<ApiDeploymentHistoryResponseModel>(await this.deploymentHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDeploymentHistoryResponseModel> response = new CreateResponse<ApiDeploymentHistoryResponseModel>(await this.DeploymentHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolDeploymentHistoryMapper.MapModelToBO(default(string), model);
-				var record = await this.deploymentHistoryRepository.Create(this.dalDeploymentHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolDeploymentHistoryMapper.MapModelToBO(default(string), model);
+				var record = await this.DeploymentHistoryRepository.Create(this.DalDeploymentHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolDeploymentHistoryMapper.MapBOToModel(this.dalDeploymentHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolDeploymentHistoryMapper.MapBOToModel(this.DalDeploymentHistoryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string deploymentId,
 			ApiDeploymentHistoryRequestModel model)
 		{
-			var validationResult = await this.deploymentHistoryModelValidator.ValidateUpdateAsync(deploymentId, model);
+			var validationResult = await this.DeploymentHistoryModelValidator.ValidateUpdateAsync(deploymentId, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolDeploymentHistoryMapper.MapModelToBO(deploymentId, model);
-				await this.deploymentHistoryRepository.Update(this.dalDeploymentHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolDeploymentHistoryMapper.MapModelToBO(deploymentId, model);
+				await this.DeploymentHistoryRepository.Update(this.DalDeploymentHistoryMapper.MapBOToEF(bo));
 
-				var record = await this.deploymentHistoryRepository.Get(deploymentId);
+				var record = await this.DeploymentHistoryRepository.Get(deploymentId);
 
-				return new UpdateResponse<ApiDeploymentHistoryResponseModel>(this.bolDeploymentHistoryMapper.MapBOToModel(this.dalDeploymentHistoryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiDeploymentHistoryResponseModel>(this.BolDeploymentHistoryMapper.MapBOToModel(this.DalDeploymentHistoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string deploymentId)
 		{
-			ActionResponse response = new ActionResponse(await this.deploymentHistoryModelValidator.ValidateDeleteAsync(deploymentId));
+			ActionResponse response = new ActionResponse(await this.DeploymentHistoryModelValidator.ValidateDeleteAsync(deploymentId));
 			if (response.Success)
 			{
-				await this.deploymentHistoryRepository.Delete(deploymentId);
+				await this.DeploymentHistoryRepository.Delete(deploymentId);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<List<ApiDeploymentHistoryResponseModel>> ByCreated(DateTimeOffset created)
 		{
-			List<DeploymentHistory> records = await this.deploymentHistoryRepository.ByCreated(created);
+			List<DeploymentHistory> records = await this.DeploymentHistoryRepository.ByCreated(created);
 
-			return this.bolDeploymentHistoryMapper.MapBOToModel(this.dalDeploymentHistoryMapper.MapEFToBO(records));
+			return this.BolDeploymentHistoryMapper.MapBOToModel(this.DalDeploymentHistoryMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab7debc390281af439d3bcc4e2c5e06b</Hash>
+    <Hash>16cab4773fd89a073c838f0d7f0faf4d</Hash>
 </Codenesium>*/

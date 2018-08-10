@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractChannelService : AbstractService
 	{
-		private IChannelRepository channelRepository;
+		protected IChannelRepository ChannelRepository { get; private set; }
 
-		private IApiChannelRequestModelValidator channelModelValidator;
+		protected IApiChannelRequestModelValidator ChannelModelValidator { get; private set; }
 
-		private IBOLChannelMapper bolChannelMapper;
+		protected IBOLChannelMapper BolChannelMapper { get; private set; }
 
-		private IDALChannelMapper dalChannelMapper;
+		protected IDALChannelMapper DalChannelMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALChannelMapper dalChannelMapper)
 			: base()
 		{
-			this.channelRepository = channelRepository;
-			this.channelModelValidator = channelModelValidator;
-			this.bolChannelMapper = bolChannelMapper;
-			this.dalChannelMapper = dalChannelMapper;
+			this.ChannelRepository = channelRepository;
+			this.ChannelModelValidator = channelModelValidator;
+			this.BolChannelMapper = bolChannelMapper;
+			this.DalChannelMapper = dalChannelMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiChannelResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.channelRepository.All(limit, offset);
+			var records = await this.ChannelRepository.All(limit, offset);
 
-			return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(records));
+			return this.BolChannelMapper.MapBOToModel(this.DalChannelMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiChannelResponseModel> Get(string id)
 		{
-			var record = await this.channelRepository.Get(id);
+			var record = await this.ChannelRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record));
+				return this.BolChannelMapper.MapBOToModel(this.DalChannelMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiChannelResponseModel>> Create(
 			ApiChannelRequestModel model)
 		{
-			CreateResponse<ApiChannelResponseModel> response = new CreateResponse<ApiChannelResponseModel>(await this.channelModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiChannelResponseModel> response = new CreateResponse<ApiChannelResponseModel>(await this.ChannelModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolChannelMapper.MapModelToBO(default(string), model);
-				var record = await this.channelRepository.Create(this.dalChannelMapper.MapBOToEF(bo));
+				var bo = this.BolChannelMapper.MapModelToBO(default(string), model);
+				var record = await this.ChannelRepository.Create(this.DalChannelMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolChannelMapper.MapBOToModel(this.DalChannelMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiChannelRequestModel model)
 		{
-			var validationResult = await this.channelModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ChannelModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolChannelMapper.MapModelToBO(id, model);
-				await this.channelRepository.Update(this.dalChannelMapper.MapBOToEF(bo));
+				var bo = this.BolChannelMapper.MapModelToBO(id, model);
+				await this.ChannelRepository.Update(this.DalChannelMapper.MapBOToEF(bo));
 
-				var record = await this.channelRepository.Get(id);
+				var record = await this.ChannelRepository.Get(id);
 
-				return new UpdateResponse<ApiChannelResponseModel>(this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiChannelResponseModel>(this.BolChannelMapper.MapBOToModel(this.DalChannelMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.channelModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ChannelModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.channelRepository.Delete(id);
+				await this.ChannelRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiChannelResponseModel> ByNameProjectId(string name, string projectId)
 		{
-			Channel record = await this.channelRepository.ByNameProjectId(name, projectId);
+			Channel record = await this.ChannelRepository.ByNameProjectId(name, projectId);
 
 			if (record == null)
 			{
@@ -118,26 +118,26 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(record));
+				return this.BolChannelMapper.MapBOToModel(this.DalChannelMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiChannelResponseModel>> ByDataVersion(byte[] dataVersion)
 		{
-			List<Channel> records = await this.channelRepository.ByDataVersion(dataVersion);
+			List<Channel> records = await this.ChannelRepository.ByDataVersion(dataVersion);
 
-			return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(records));
+			return this.BolChannelMapper.MapBOToModel(this.DalChannelMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiChannelResponseModel>> ByProjectId(string projectId)
 		{
-			List<Channel> records = await this.channelRepository.ByProjectId(projectId);
+			List<Channel> records = await this.ChannelRepository.ByProjectId(projectId);
 
-			return this.bolChannelMapper.MapBOToModel(this.dalChannelMapper.MapEFToBO(records));
+			return this.BolChannelMapper.MapBOToModel(this.DalChannelMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eefac09b191ad25c956b0b6852ef157d</Hash>
+    <Hash>e7acef68654e574fba7922786260ad23</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractPersonService : AbstractService
 	{
-		private IPersonRepository personRepository;
+		protected IPersonRepository PersonRepository { get; private set; }
 
-		private IApiPersonRequestModelValidator personModelValidator;
+		protected IApiPersonRequestModelValidator PersonModelValidator { get; private set; }
 
-		private IBOLPersonMapper bolPersonMapper;
+		protected IBOLPersonMapper BolPersonMapper { get; private set; }
 
-		private IDALPersonMapper dalPersonMapper;
+		protected IDALPersonMapper DalPersonMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TestsNS.Api.Services
 			IDALPersonMapper dalPersonMapper)
 			: base()
 		{
-			this.personRepository = personRepository;
-			this.personModelValidator = personModelValidator;
-			this.bolPersonMapper = bolPersonMapper;
-			this.dalPersonMapper = dalPersonMapper;
+			this.PersonRepository = personRepository;
+			this.PersonModelValidator = personModelValidator;
+			this.BolPersonMapper = bolPersonMapper;
+			this.DalPersonMapper = dalPersonMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.personRepository.All(limit, offset);
+			var records = await this.PersonRepository.All(limit, offset);
 
-			return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(records));
+			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPersonResponseModel> Get(int personId)
 		{
-			var record = await this.personRepository.Get(personId);
+			var record = await this.PersonRepository.Get(personId);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record));
+				return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPersonResponseModel>> Create(
 			ApiPersonRequestModel model)
 		{
-			CreateResponse<ApiPersonResponseModel> response = new CreateResponse<ApiPersonResponseModel>(await this.personModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPersonResponseModel> response = new CreateResponse<ApiPersonResponseModel>(await this.PersonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPersonMapper.MapModelToBO(default(int), model);
-				var record = await this.personRepository.Create(this.dalPersonMapper.MapBOToEF(bo));
+				var bo = this.BolPersonMapper.MapModelToBO(default(int), model);
+				var record = await this.PersonRepository.Create(this.DalPersonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TestsNS.Api.Services
 			int personId,
 			ApiPersonRequestModel model)
 		{
-			var validationResult = await this.personModelValidator.ValidateUpdateAsync(personId, model);
+			var validationResult = await this.PersonModelValidator.ValidateUpdateAsync(personId, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPersonMapper.MapModelToBO(personId, model);
-				await this.personRepository.Update(this.dalPersonMapper.MapBOToEF(bo));
+				var bo = this.BolPersonMapper.MapModelToBO(personId, model);
+				await this.PersonRepository.Update(this.DalPersonMapper.MapBOToEF(bo));
 
-				var record = await this.personRepository.Get(personId);
+				var record = await this.PersonRepository.Get(personId);
 
-				return new UpdateResponse<ApiPersonResponseModel>(this.bolPersonMapper.MapBOToModel(this.dalPersonMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPersonResponseModel>(this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int personId)
 		{
-			ActionResponse response = new ActionResponse(await this.personModelValidator.ValidateDeleteAsync(personId));
+			ActionResponse response = new ActionResponse(await this.PersonModelValidator.ValidateDeleteAsync(personId));
 			if (response.Success)
 			{
-				await this.personRepository.Delete(personId);
+				await this.PersonRepository.Delete(personId);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5b29cf87502797047a40274861c1d174</Hash>
+    <Hash>bc76c46f2c562552e9c9fdb497a4c525</Hash>
 </Codenesium>*/

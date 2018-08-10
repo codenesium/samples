@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLAddressTypeMapper
+	public partial interface IBOLAddressTypeMapper
 	{
 		BOAddressType MapModelToBO(
 			int addressTypeID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>89684257930389a4b0d1afc6093f4b77</Hash>
+    <Hash>6d6d5bc79c0eb43b5d8c5c9c55bad185</Hash>
 </Codenesium>*/

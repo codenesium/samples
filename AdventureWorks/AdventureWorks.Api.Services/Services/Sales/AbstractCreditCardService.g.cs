@@ -14,20 +14,20 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCreditCardService : AbstractService
 	{
-		private ICreditCardRepository creditCardRepository;
+		protected ICreditCardRepository CreditCardRepository { get; private set; }
 
-		private IApiCreditCardRequestModelValidator creditCardModelValidator;
+		protected IApiCreditCardRequestModelValidator CreditCardModelValidator { get; private set; }
 
-		private IBOLCreditCardMapper bolCreditCardMapper;
+		protected IBOLCreditCardMapper BolCreditCardMapper { get; private set; }
 
-		private IDALCreditCardMapper dalCreditCardMapper;
+		protected IDALCreditCardMapper DalCreditCardMapper { get; private set; }
 
-		private IBOLPersonCreditCardMapper bolPersonCreditCardMapper;
+		protected IBOLPersonCreditCardMapper BolPersonCreditCardMapper { get; private set; }
 
-		private IDALPersonCreditCardMapper dalPersonCreditCardMapper;
-		private IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper;
+		protected IDALPersonCreditCardMapper DalPersonCreditCardMapper { get; private set; }
+		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
-		private IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper;
+		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -43,27 +43,27 @@ namespace AdventureWorksNS.Api.Services
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base()
 		{
-			this.creditCardRepository = creditCardRepository;
-			this.creditCardModelValidator = creditCardModelValidator;
-			this.bolCreditCardMapper = bolCreditCardMapper;
-			this.dalCreditCardMapper = dalCreditCardMapper;
-			this.bolPersonCreditCardMapper = bolPersonCreditCardMapper;
-			this.dalPersonCreditCardMapper = dalPersonCreditCardMapper;
-			this.bolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
-			this.dalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
+			this.CreditCardRepository = creditCardRepository;
+			this.CreditCardModelValidator = creditCardModelValidator;
+			this.BolCreditCardMapper = bolCreditCardMapper;
+			this.DalCreditCardMapper = dalCreditCardMapper;
+			this.BolPersonCreditCardMapper = bolPersonCreditCardMapper;
+			this.DalPersonCreditCardMapper = dalPersonCreditCardMapper;
+			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
+			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiCreditCardResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.creditCardRepository.All(limit, offset);
+			var records = await this.CreditCardRepository.All(limit, offset);
 
-			return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(records));
+			return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCreditCardResponseModel> Get(int creditCardID)
 		{
-			var record = await this.creditCardRepository.Get(creditCardID);
+			var record = await this.CreditCardRepository.Get(creditCardID);
 
 			if (record == null)
 			{
@@ -71,20 +71,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
+				return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiCreditCardResponseModel>> Create(
 			ApiCreditCardRequestModel model)
 		{
-			CreateResponse<ApiCreditCardResponseModel> response = new CreateResponse<ApiCreditCardResponseModel>(await this.creditCardModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCreditCardResponseModel> response = new CreateResponse<ApiCreditCardResponseModel>(await this.CreditCardModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolCreditCardMapper.MapModelToBO(default(int), model);
-				var record = await this.creditCardRepository.Create(this.dalCreditCardMapper.MapBOToEF(bo));
+				var bo = this.BolCreditCardMapper.MapModelToBO(default(int), model);
+				var record = await this.CreditCardRepository.Create(this.DalCreditCardMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -94,16 +94,16 @@ namespace AdventureWorksNS.Api.Services
 			int creditCardID,
 			ApiCreditCardRequestModel model)
 		{
-			var validationResult = await this.creditCardModelValidator.ValidateUpdateAsync(creditCardID, model);
+			var validationResult = await this.CreditCardModelValidator.ValidateUpdateAsync(creditCardID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolCreditCardMapper.MapModelToBO(creditCardID, model);
-				await this.creditCardRepository.Update(this.dalCreditCardMapper.MapBOToEF(bo));
+				var bo = this.BolCreditCardMapper.MapModelToBO(creditCardID, model);
+				await this.CreditCardRepository.Update(this.DalCreditCardMapper.MapBOToEF(bo));
 
-				var record = await this.creditCardRepository.Get(creditCardID);
+				var record = await this.CreditCardRepository.Get(creditCardID);
 
-				return new UpdateResponse<ApiCreditCardResponseModel>(this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiCreditCardResponseModel>(this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -114,10 +114,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int creditCardID)
 		{
-			ActionResponse response = new ActionResponse(await this.creditCardModelValidator.ValidateDeleteAsync(creditCardID));
+			ActionResponse response = new ActionResponse(await this.CreditCardModelValidator.ValidateDeleteAsync(creditCardID));
 			if (response.Success)
 			{
-				await this.creditCardRepository.Delete(creditCardID);
+				await this.CreditCardRepository.Delete(creditCardID);
 			}
 
 			return response;
@@ -125,7 +125,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiCreditCardResponseModel> ByCardNumber(string cardNumber)
 		{
-			CreditCard record = await this.creditCardRepository.ByCardNumber(cardNumber);
+			CreditCard record = await this.CreditCardRepository.ByCardNumber(cardNumber);
 
 			if (record == null)
 			{
@@ -133,26 +133,26 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolCreditCardMapper.MapBOToModel(this.dalCreditCardMapper.MapEFToBO(record));
+				return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(record));
 			}
 		}
 
 		public async virtual Task<List<ApiPersonCreditCardResponseModel>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PersonCreditCard> records = await this.creditCardRepository.PersonCreditCards(creditCardID, limit, offset);
+			List<PersonCreditCard> records = await this.CreditCardRepository.PersonCreditCards(creditCardID, limit, offset);
 
-			return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(records));
+			return this.BolPersonCreditCardMapper.MapBOToModel(this.DalPersonCreditCardMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesOrderHeader> records = await this.creditCardRepository.SalesOrderHeaders(creditCardID, limit, offset);
+			List<SalesOrderHeader> records = await this.CreditCardRepository.SalesOrderHeaders(creditCardID, limit, offset);
 
-			return this.bolSalesOrderHeaderMapper.MapBOToModel(this.dalSalesOrderHeaderMapper.MapEFToBO(records));
+			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b32f12d0a708354d1e893004a6cc683f</Hash>
+    <Hash>1bf49201a3bdd907b4ebd63ceb7dbe1c</Hash>
 </Codenesium>*/

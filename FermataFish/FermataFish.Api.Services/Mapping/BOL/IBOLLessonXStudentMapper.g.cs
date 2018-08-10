@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IBOLLessonXStudentMapper
+	public partial interface IBOLLessonXStudentMapper
 	{
 		BOLessonXStudent MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93f11b1760dc5001a4964fe1bffadd4f</Hash>
+    <Hash>61a00e79d475c98b7cf7a098a92338d3</Hash>
 </Codenesium>*/

@@ -14,41 +14,41 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractStudioService : AbstractService
 	{
-		private IStudioRepository studioRepository;
+		protected IStudioRepository StudioRepository { get; private set; }
 
-		private IApiStudioRequestModelValidator studioModelValidator;
+		protected IApiStudioRequestModelValidator StudioModelValidator { get; private set; }
 
-		private IBOLStudioMapper bolStudioMapper;
+		protected IBOLStudioMapper BolStudioMapper { get; private set; }
 
-		private IDALStudioMapper dalStudioMapper;
+		protected IDALStudioMapper DalStudioMapper { get; private set; }
 
-		private IBOLAdminMapper bolAdminMapper;
+		protected IBOLAdminMapper BolAdminMapper { get; private set; }
 
-		private IDALAdminMapper dalAdminMapper;
-		private IBOLFamilyMapper bolFamilyMapper;
+		protected IDALAdminMapper DalAdminMapper { get; private set; }
+		protected IBOLFamilyMapper BolFamilyMapper { get; private set; }
 
-		private IDALFamilyMapper dalFamilyMapper;
-		private IBOLLessonMapper bolLessonMapper;
+		protected IDALFamilyMapper DalFamilyMapper { get; private set; }
+		protected IBOLLessonMapper BolLessonMapper { get; private set; }
 
-		private IDALLessonMapper dalLessonMapper;
-		private IBOLLessonStatusMapper bolLessonStatusMapper;
+		protected IDALLessonMapper DalLessonMapper { get; private set; }
+		protected IBOLLessonStatusMapper BolLessonStatusMapper { get; private set; }
 
-		private IDALLessonStatusMapper dalLessonStatusMapper;
-		private IBOLSpaceMapper bolSpaceMapper;
+		protected IDALLessonStatusMapper DalLessonStatusMapper { get; private set; }
+		protected IBOLSpaceMapper BolSpaceMapper { get; private set; }
 
-		private IDALSpaceMapper dalSpaceMapper;
-		private IBOLSpaceFeatureMapper bolSpaceFeatureMapper;
+		protected IDALSpaceMapper DalSpaceMapper { get; private set; }
+		protected IBOLSpaceFeatureMapper BolSpaceFeatureMapper { get; private set; }
 
-		private IDALSpaceFeatureMapper dalSpaceFeatureMapper;
-		private IBOLStudentMapper bolStudentMapper;
+		protected IDALSpaceFeatureMapper DalSpaceFeatureMapper { get; private set; }
+		protected IBOLStudentMapper BolStudentMapper { get; private set; }
 
-		private IDALStudentMapper dalStudentMapper;
-		private IBOLTeacherMapper bolTeacherMapper;
+		protected IDALStudentMapper DalStudentMapper { get; private set; }
+		protected IBOLTeacherMapper BolTeacherMapper { get; private set; }
 
-		private IDALTeacherMapper dalTeacherMapper;
-		private IBOLTeacherSkillMapper bolTeacherSkillMapper;
+		protected IDALTeacherMapper DalTeacherMapper { get; private set; }
+		protected IBOLTeacherSkillMapper BolTeacherSkillMapper { get; private set; }
 
-		private IDALTeacherSkillMapper dalTeacherSkillMapper;
+		protected IDALTeacherSkillMapper DalTeacherSkillMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -78,41 +78,41 @@ namespace FermataFishNS.Api.Services
 			IDALTeacherSkillMapper dalTeacherSkillMapper)
 			: base()
 		{
-			this.studioRepository = studioRepository;
-			this.studioModelValidator = studioModelValidator;
-			this.bolStudioMapper = bolStudioMapper;
-			this.dalStudioMapper = dalStudioMapper;
-			this.bolAdminMapper = bolAdminMapper;
-			this.dalAdminMapper = dalAdminMapper;
-			this.bolFamilyMapper = bolFamilyMapper;
-			this.dalFamilyMapper = dalFamilyMapper;
-			this.bolLessonMapper = bolLessonMapper;
-			this.dalLessonMapper = dalLessonMapper;
-			this.bolLessonStatusMapper = bolLessonStatusMapper;
-			this.dalLessonStatusMapper = dalLessonStatusMapper;
-			this.bolSpaceMapper = bolSpaceMapper;
-			this.dalSpaceMapper = dalSpaceMapper;
-			this.bolSpaceFeatureMapper = bolSpaceFeatureMapper;
-			this.dalSpaceFeatureMapper = dalSpaceFeatureMapper;
-			this.bolStudentMapper = bolStudentMapper;
-			this.dalStudentMapper = dalStudentMapper;
-			this.bolTeacherMapper = bolTeacherMapper;
-			this.dalTeacherMapper = dalTeacherMapper;
-			this.bolTeacherSkillMapper = bolTeacherSkillMapper;
-			this.dalTeacherSkillMapper = dalTeacherSkillMapper;
+			this.StudioRepository = studioRepository;
+			this.StudioModelValidator = studioModelValidator;
+			this.BolStudioMapper = bolStudioMapper;
+			this.DalStudioMapper = dalStudioMapper;
+			this.BolAdminMapper = bolAdminMapper;
+			this.DalAdminMapper = dalAdminMapper;
+			this.BolFamilyMapper = bolFamilyMapper;
+			this.DalFamilyMapper = dalFamilyMapper;
+			this.BolLessonMapper = bolLessonMapper;
+			this.DalLessonMapper = dalLessonMapper;
+			this.BolLessonStatusMapper = bolLessonStatusMapper;
+			this.DalLessonStatusMapper = dalLessonStatusMapper;
+			this.BolSpaceMapper = bolSpaceMapper;
+			this.DalSpaceMapper = dalSpaceMapper;
+			this.BolSpaceFeatureMapper = bolSpaceFeatureMapper;
+			this.DalSpaceFeatureMapper = dalSpaceFeatureMapper;
+			this.BolStudentMapper = bolStudentMapper;
+			this.DalStudentMapper = dalStudentMapper;
+			this.BolTeacherMapper = bolTeacherMapper;
+			this.DalTeacherMapper = dalTeacherMapper;
+			this.BolTeacherSkillMapper = bolTeacherSkillMapper;
+			this.DalTeacherSkillMapper = dalTeacherSkillMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiStudioResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.studioRepository.All(limit, offset);
+			var records = await this.StudioRepository.All(limit, offset);
 
-			return this.bolStudioMapper.MapBOToModel(this.dalStudioMapper.MapEFToBO(records));
+			return this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStudioResponseModel> Get(int id)
 		{
-			var record = await this.studioRepository.Get(id);
+			var record = await this.StudioRepository.Get(id);
 
 			if (record == null)
 			{
@@ -120,20 +120,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolStudioMapper.MapBOToModel(this.dalStudioMapper.MapEFToBO(record));
+				return this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiStudioResponseModel>> Create(
 			ApiStudioRequestModel model)
 		{
-			CreateResponse<ApiStudioResponseModel> response = new CreateResponse<ApiStudioResponseModel>(await this.studioModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStudioResponseModel> response = new CreateResponse<ApiStudioResponseModel>(await this.StudioModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolStudioMapper.MapModelToBO(default(int), model);
-				var record = await this.studioRepository.Create(this.dalStudioMapper.MapBOToEF(bo));
+				var bo = this.BolStudioMapper.MapModelToBO(default(int), model);
+				var record = await this.StudioRepository.Create(this.DalStudioMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolStudioMapper.MapBOToModel(this.dalStudioMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -143,16 +143,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiStudioRequestModel model)
 		{
-			var validationResult = await this.studioModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.StudioModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolStudioMapper.MapModelToBO(id, model);
-				await this.studioRepository.Update(this.dalStudioMapper.MapBOToEF(bo));
+				var bo = this.BolStudioMapper.MapModelToBO(id, model);
+				await this.StudioRepository.Update(this.DalStudioMapper.MapBOToEF(bo));
 
-				var record = await this.studioRepository.Get(id);
+				var record = await this.StudioRepository.Get(id);
 
-				return new UpdateResponse<ApiStudioResponseModel>(this.bolStudioMapper.MapBOToModel(this.dalStudioMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiStudioResponseModel>(this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -163,10 +163,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.studioModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.StudioModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.studioRepository.Delete(id);
+				await this.StudioRepository.Delete(id);
 			}
 
 			return response;
@@ -174,69 +174,69 @@ namespace FermataFishNS.Api.Services
 
 		public async virtual Task<List<ApiAdminResponseModel>> Admins(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Admin> records = await this.studioRepository.Admins(studioId, limit, offset);
+			List<Admin> records = await this.StudioRepository.Admins(studioId, limit, offset);
 
-			return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
+			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiFamilyResponseModel>> Families(int id, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Family> records = await this.studioRepository.Families(id, limit, offset);
+			List<Family> records = await this.StudioRepository.Families(id, limit, offset);
 
-			return this.bolFamilyMapper.MapBOToModel(this.dalFamilyMapper.MapEFToBO(records));
+			return this.BolFamilyMapper.MapBOToModel(this.DalFamilyMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiLessonResponseModel>> Lessons(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Lesson> records = await this.studioRepository.Lessons(studioId, limit, offset);
+			List<Lesson> records = await this.StudioRepository.Lessons(studioId, limit, offset);
 
-			return this.bolLessonMapper.MapBOToModel(this.dalLessonMapper.MapEFToBO(records));
+			return this.BolLessonMapper.MapBOToModel(this.DalLessonMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiLessonStatusResponseModel>> LessonStatus(int id, int limit = int.MaxValue, int offset = 0)
 		{
-			List<LessonStatus> records = await this.studioRepository.LessonStatus(id, limit, offset);
+			List<LessonStatus> records = await this.StudioRepository.LessonStatus(id, limit, offset);
 
-			return this.bolLessonStatusMapper.MapBOToModel(this.dalLessonStatusMapper.MapEFToBO(records));
+			return this.BolLessonStatusMapper.MapBOToModel(this.DalLessonStatusMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiSpaceResponseModel>> Spaces(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Space> records = await this.studioRepository.Spaces(studioId, limit, offset);
+			List<Space> records = await this.StudioRepository.Spaces(studioId, limit, offset);
 
-			return this.bolSpaceMapper.MapBOToModel(this.dalSpaceMapper.MapEFToBO(records));
+			return this.BolSpaceMapper.MapBOToModel(this.DalSpaceMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiSpaceFeatureResponseModel>> SpaceFeatures(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SpaceFeature> records = await this.studioRepository.SpaceFeatures(studioId, limit, offset);
+			List<SpaceFeature> records = await this.StudioRepository.SpaceFeatures(studioId, limit, offset);
 
-			return this.bolSpaceFeatureMapper.MapBOToModel(this.dalSpaceFeatureMapper.MapEFToBO(records));
+			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiStudentResponseModel>> Students(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Student> records = await this.studioRepository.Students(studioId, limit, offset);
+			List<Student> records = await this.StudioRepository.Students(studioId, limit, offset);
 
-			return this.bolStudentMapper.MapBOToModel(this.dalStudentMapper.MapEFToBO(records));
+			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiTeacherResponseModel>> Teachers(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Teacher> records = await this.studioRepository.Teachers(studioId, limit, offset);
+			List<Teacher> records = await this.StudioRepository.Teachers(studioId, limit, offset);
 
-			return this.bolTeacherMapper.MapBOToModel(this.dalTeacherMapper.MapEFToBO(records));
+			return this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiTeacherSkillResponseModel>> TeacherSkills(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<TeacherSkill> records = await this.studioRepository.TeacherSkills(studioId, limit, offset);
+			List<TeacherSkill> records = await this.StudioRepository.TeacherSkills(studioId, limit, offset);
 
-			return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(records));
+			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>22c3944b1978d1a7aa6658924cad0f0d</Hash>
+    <Hash>ad8d338a6d4dd8c8aa2b824e8e9f02d7</Hash>
 </Codenesium>*/

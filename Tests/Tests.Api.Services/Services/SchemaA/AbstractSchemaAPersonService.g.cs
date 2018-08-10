@@ -14,13 +14,13 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractSchemaAPersonService : AbstractService
 	{
-		private ISchemaAPersonRepository schemaAPersonRepository;
+		protected ISchemaAPersonRepository SchemaAPersonRepository { get; private set; }
 
-		private IApiSchemaAPersonRequestModelValidator schemaAPersonModelValidator;
+		protected IApiSchemaAPersonRequestModelValidator SchemaAPersonModelValidator { get; private set; }
 
-		private IBOLSchemaAPersonMapper bolSchemaAPersonMapper;
+		protected IBOLSchemaAPersonMapper BolSchemaAPersonMapper { get; private set; }
 
-		private IDALSchemaAPersonMapper dalSchemaAPersonMapper;
+		protected IDALSchemaAPersonMapper DalSchemaAPersonMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TestsNS.Api.Services
 			IDALSchemaAPersonMapper dalSchemaAPersonMapper)
 			: base()
 		{
-			this.schemaAPersonRepository = schemaAPersonRepository;
-			this.schemaAPersonModelValidator = schemaAPersonModelValidator;
-			this.bolSchemaAPersonMapper = bolSchemaAPersonMapper;
-			this.dalSchemaAPersonMapper = dalSchemaAPersonMapper;
+			this.SchemaAPersonRepository = schemaAPersonRepository;
+			this.SchemaAPersonModelValidator = schemaAPersonModelValidator;
+			this.BolSchemaAPersonMapper = bolSchemaAPersonMapper;
+			this.DalSchemaAPersonMapper = dalSchemaAPersonMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSchemaAPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.schemaAPersonRepository.All(limit, offset);
+			var records = await this.SchemaAPersonRepository.All(limit, offset);
 
-			return this.bolSchemaAPersonMapper.MapBOToModel(this.dalSchemaAPersonMapper.MapEFToBO(records));
+			return this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSchemaAPersonResponseModel> Get(int id)
 		{
-			var record = await this.schemaAPersonRepository.Get(id);
+			var record = await this.SchemaAPersonRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolSchemaAPersonMapper.MapBOToModel(this.dalSchemaAPersonMapper.MapEFToBO(record));
+				return this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSchemaAPersonResponseModel>> Create(
 			ApiSchemaAPersonRequestModel model)
 		{
-			CreateResponse<ApiSchemaAPersonResponseModel> response = new CreateResponse<ApiSchemaAPersonResponseModel>(await this.schemaAPersonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSchemaAPersonResponseModel> response = new CreateResponse<ApiSchemaAPersonResponseModel>(await this.SchemaAPersonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSchemaAPersonMapper.MapModelToBO(default(int), model);
-				var record = await this.schemaAPersonRepository.Create(this.dalSchemaAPersonMapper.MapBOToEF(bo));
+				var bo = this.BolSchemaAPersonMapper.MapModelToBO(default(int), model);
+				var record = await this.SchemaAPersonRepository.Create(this.DalSchemaAPersonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSchemaAPersonMapper.MapBOToModel(this.dalSchemaAPersonMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TestsNS.Api.Services
 			int id,
 			ApiSchemaAPersonRequestModel model)
 		{
-			var validationResult = await this.schemaAPersonModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SchemaAPersonModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSchemaAPersonMapper.MapModelToBO(id, model);
-				await this.schemaAPersonRepository.Update(this.dalSchemaAPersonMapper.MapBOToEF(bo));
+				var bo = this.BolSchemaAPersonMapper.MapModelToBO(id, model);
+				await this.SchemaAPersonRepository.Update(this.DalSchemaAPersonMapper.MapBOToEF(bo));
 
-				var record = await this.schemaAPersonRepository.Get(id);
+				var record = await this.SchemaAPersonRepository.Get(id);
 
-				return new UpdateResponse<ApiSchemaAPersonResponseModel>(this.bolSchemaAPersonMapper.MapBOToModel(this.dalSchemaAPersonMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSchemaAPersonResponseModel>(this.BolSchemaAPersonMapper.MapBOToModel(this.DalSchemaAPersonMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.schemaAPersonModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SchemaAPersonModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.schemaAPersonRepository.Delete(id);
+				await this.SchemaAPersonRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af59fc26a0bfe8b0a78269eb48909400</Hash>
+    <Hash>e6766db72ce13a189ef21b0f77282800</Hash>
 </Codenesium>*/

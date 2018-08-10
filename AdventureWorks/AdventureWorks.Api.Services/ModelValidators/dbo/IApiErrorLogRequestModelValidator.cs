@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiErrorLogRequestModelValidator
+	public partial interface IApiErrorLogRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiErrorLogRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>57b9078b83e41d4bee32a16f38f554c3</Hash>
+    <Hash>a3b89ee512cc18cf4231872da888a954</Hash>
 </Codenesium>*/

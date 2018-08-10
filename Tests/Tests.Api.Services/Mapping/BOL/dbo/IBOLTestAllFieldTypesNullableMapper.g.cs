@@ -5,7 +5,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IBOLTestAllFieldTypesNullableMapper
+	public partial interface IBOLTestAllFieldTypesNullableMapper
 	{
 		BOTestAllFieldTypesNullable MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>504e80cd34978b3139ebc0587fc993ed</Hash>
+    <Hash>95578f12e9de3590882470bcca46aa98</Hash>
 </Codenesium>*/

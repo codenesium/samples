@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALCountryRegionMapper
+	public partial interface IDALCountryRegionMapper
 	{
 		CountryRegion MapBOToEF(
 			BOCountryRegion bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac36e3e9a822ee294776131daa9a1072</Hash>
+    <Hash>0f2f7a3bac020b79328ac0de98b1fc52</Hash>
 </Codenesium>*/

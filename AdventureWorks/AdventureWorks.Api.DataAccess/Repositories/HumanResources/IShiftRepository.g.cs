@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IShiftRepository
+	public partial interface IShiftRepository
 	{
 		Task<Shift> Create(Shift item);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e37b9b6a2e1faccf9ee99d6eff5ed561</Hash>
+    <Hash>93eceef573fd5de5e21e0d1a6f05e956</Hash>
 </Codenesium>*/

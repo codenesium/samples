@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractUserRoleService : AbstractService
 	{
-		private IUserRoleRepository userRoleRepository;
+		protected IUserRoleRepository UserRoleRepository { get; private set; }
 
-		private IApiUserRoleRequestModelValidator userRoleModelValidator;
+		protected IApiUserRoleRequestModelValidator UserRoleModelValidator { get; private set; }
 
-		private IBOLUserRoleMapper bolUserRoleMapper;
+		protected IBOLUserRoleMapper BolUserRoleMapper { get; private set; }
 
-		private IDALUserRoleMapper dalUserRoleMapper;
+		protected IDALUserRoleMapper DalUserRoleMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALUserRoleMapper dalUserRoleMapper)
 			: base()
 		{
-			this.userRoleRepository = userRoleRepository;
-			this.userRoleModelValidator = userRoleModelValidator;
-			this.bolUserRoleMapper = bolUserRoleMapper;
-			this.dalUserRoleMapper = dalUserRoleMapper;
+			this.UserRoleRepository = userRoleRepository;
+			this.UserRoleModelValidator = userRoleModelValidator;
+			this.BolUserRoleMapper = bolUserRoleMapper;
+			this.DalUserRoleMapper = dalUserRoleMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiUserRoleResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.userRoleRepository.All(limit, offset);
+			var records = await this.UserRoleRepository.All(limit, offset);
 
-			return this.bolUserRoleMapper.MapBOToModel(this.dalUserRoleMapper.MapEFToBO(records));
+			return this.BolUserRoleMapper.MapBOToModel(this.DalUserRoleMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiUserRoleResponseModel> Get(string id)
 		{
-			var record = await this.userRoleRepository.Get(id);
+			var record = await this.UserRoleRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolUserRoleMapper.MapBOToModel(this.dalUserRoleMapper.MapEFToBO(record));
+				return this.BolUserRoleMapper.MapBOToModel(this.DalUserRoleMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiUserRoleResponseModel>> Create(
 			ApiUserRoleRequestModel model)
 		{
-			CreateResponse<ApiUserRoleResponseModel> response = new CreateResponse<ApiUserRoleResponseModel>(await this.userRoleModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiUserRoleResponseModel> response = new CreateResponse<ApiUserRoleResponseModel>(await this.UserRoleModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolUserRoleMapper.MapModelToBO(default(string), model);
-				var record = await this.userRoleRepository.Create(this.dalUserRoleMapper.MapBOToEF(bo));
+				var bo = this.BolUserRoleMapper.MapModelToBO(default(string), model);
+				var record = await this.UserRoleRepository.Create(this.DalUserRoleMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolUserRoleMapper.MapBOToModel(this.dalUserRoleMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolUserRoleMapper.MapBOToModel(this.DalUserRoleMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiUserRoleRequestModel model)
 		{
-			var validationResult = await this.userRoleModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.UserRoleModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolUserRoleMapper.MapModelToBO(id, model);
-				await this.userRoleRepository.Update(this.dalUserRoleMapper.MapBOToEF(bo));
+				var bo = this.BolUserRoleMapper.MapModelToBO(id, model);
+				await this.UserRoleRepository.Update(this.DalUserRoleMapper.MapBOToEF(bo));
 
-				var record = await this.userRoleRepository.Get(id);
+				var record = await this.UserRoleRepository.Get(id);
 
-				return new UpdateResponse<ApiUserRoleResponseModel>(this.bolUserRoleMapper.MapBOToModel(this.dalUserRoleMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiUserRoleResponseModel>(this.BolUserRoleMapper.MapBOToModel(this.DalUserRoleMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.userRoleModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.UserRoleModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.userRoleRepository.Delete(id);
+				await this.UserRoleRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiUserRoleResponseModel> ByName(string name)
 		{
-			UserRole record = await this.userRoleRepository.ByName(name);
+			UserRole record = await this.UserRoleRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolUserRoleMapper.MapBOToModel(this.dalUserRoleMapper.MapEFToBO(record));
+				return this.BolUserRoleMapper.MapBOToModel(this.DalUserRoleMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>55168289dee7aebaae9bdea35855ebe1</Hash>
+    <Hash>72d35029fccb87a994c78b9b02d4a29a</Hash>
 </Codenesium>*/

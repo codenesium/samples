@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractEmployeeDepartmentHistoryService : AbstractService
 	{
-		private IEmployeeDepartmentHistoryRepository employeeDepartmentHistoryRepository;
+		protected IEmployeeDepartmentHistoryRepository EmployeeDepartmentHistoryRepository { get; private set; }
 
-		private IApiEmployeeDepartmentHistoryRequestModelValidator employeeDepartmentHistoryModelValidator;
+		protected IApiEmployeeDepartmentHistoryRequestModelValidator EmployeeDepartmentHistoryModelValidator { get; private set; }
 
-		private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
+		protected IBOLEmployeeDepartmentHistoryMapper BolEmployeeDepartmentHistoryMapper { get; private set; }
 
-		private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
+		protected IDALEmployeeDepartmentHistoryMapper DalEmployeeDepartmentHistoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
 			: base()
 		{
-			this.employeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
-			this.employeeDepartmentHistoryModelValidator = employeeDepartmentHistoryModelValidator;
-			this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
-			this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
+			this.EmployeeDepartmentHistoryRepository = employeeDepartmentHistoryRepository;
+			this.EmployeeDepartmentHistoryModelValidator = employeeDepartmentHistoryModelValidator;
+			this.BolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
+			this.DalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.employeeDepartmentHistoryRepository.All(limit, offset);
+			var records = await this.EmployeeDepartmentHistoryRepository.All(limit, offset);
 
-			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiEmployeeDepartmentHistoryResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.employeeDepartmentHistoryRepository.Get(businessEntityID);
+			var record = await this.EmployeeDepartmentHistoryRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(record));
+				return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>> Create(
 			ApiEmployeeDepartmentHistoryRequestModel model)
 		{
-			CreateResponse<ApiEmployeeDepartmentHistoryResponseModel> response = new CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>(await this.employeeDepartmentHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiEmployeeDepartmentHistoryResponseModel> response = new CreateResponse<ApiEmployeeDepartmentHistoryResponseModel>(await this.EmployeeDepartmentHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolEmployeeDepartmentHistoryMapper.MapModelToBO(default(int), model);
-				var record = await this.employeeDepartmentHistoryRepository.Create(this.dalEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolEmployeeDepartmentHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.EmployeeDepartmentHistoryRepository.Create(this.DalEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int businessEntityID,
 			ApiEmployeeDepartmentHistoryRequestModel model)
 		{
-			var validationResult = await this.employeeDepartmentHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
+			var validationResult = await this.EmployeeDepartmentHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolEmployeeDepartmentHistoryMapper.MapModelToBO(businessEntityID, model);
-				await this.employeeDepartmentHistoryRepository.Update(this.dalEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolEmployeeDepartmentHistoryMapper.MapModelToBO(businessEntityID, model);
+				await this.EmployeeDepartmentHistoryRepository.Update(this.DalEmployeeDepartmentHistoryMapper.MapBOToEF(bo));
 
-				var record = await this.employeeDepartmentHistoryRepository.Get(businessEntityID);
+				var record = await this.EmployeeDepartmentHistoryRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>(this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiEmployeeDepartmentHistoryResponseModel>(this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.employeeDepartmentHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = new ActionResponse(await this.EmployeeDepartmentHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
 			if (response.Success)
 			{
-				await this.employeeDepartmentHistoryRepository.Delete(businessEntityID);
+				await this.EmployeeDepartmentHistoryRepository.Delete(businessEntityID);
 			}
 
 			return response;
@@ -110,20 +110,20 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByDepartmentID(short departmentID)
 		{
-			List<EmployeeDepartmentHistory> records = await this.employeeDepartmentHistoryRepository.ByDepartmentID(departmentID);
+			List<EmployeeDepartmentHistory> records = await this.EmployeeDepartmentHistoryRepository.ByDepartmentID(departmentID);
 
-			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByShiftID(int shiftID)
 		{
-			List<EmployeeDepartmentHistory> records = await this.employeeDepartmentHistoryRepository.ByShiftID(shiftID);
+			List<EmployeeDepartmentHistory> records = await this.EmployeeDepartmentHistoryRepository.ByShiftID(shiftID);
 
-			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b5deb7edde6e3b84f16bc82e17e5fcb9</Hash>
+    <Hash>be6fb5e82922e4177972d117d239718d</Hash>
 </Codenesium>*/

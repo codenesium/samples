@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IEmployeePayHistoryService
+	public partial interface IEmployeePayHistoryService
 	{
 		Task<CreateResponse<ApiEmployeePayHistoryResponseModel>> Create(
 			ApiEmployeePayHistoryRequestModel model);
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bc5d98dc6bbd4de8925ceb69df491624</Hash>
+    <Hash>c57f7eaa3ca5bb2e08a258212379311f</Hash>
 </Codenesium>*/

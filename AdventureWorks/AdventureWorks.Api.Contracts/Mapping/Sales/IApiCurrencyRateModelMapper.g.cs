@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiCurrencyRateModelMapper
+	public partial interface IApiCurrencyRateModelMapper
 	{
 		ApiCurrencyRateResponseModel MapRequestToResponse(
 			int currencyRateID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>34eeff4e23351f1585cf2a75440c1d0b</Hash>
+    <Hash>9b4abe18964678f5684a57386ad30c7c</Hash>
 </Codenesium>*/

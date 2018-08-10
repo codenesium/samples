@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IDALVoteTypesMapper
+	public partial interface IDALVoteTypesMapper
 	{
 		VoteTypes MapBOToEF(
 			BOVoteTypes bo);
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c57876b84dfea37a94fc3de8863a992</Hash>
+    <Hash>6b825c14edc8feff48e1750cc94d3313</Hash>
 </Codenesium>*/

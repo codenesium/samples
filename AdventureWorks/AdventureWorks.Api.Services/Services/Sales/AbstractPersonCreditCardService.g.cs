@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPersonCreditCardService : AbstractService
 	{
-		private IPersonCreditCardRepository personCreditCardRepository;
+		protected IPersonCreditCardRepository PersonCreditCardRepository { get; private set; }
 
-		private IApiPersonCreditCardRequestModelValidator personCreditCardModelValidator;
+		protected IApiPersonCreditCardRequestModelValidator PersonCreditCardModelValidator { get; private set; }
 
-		private IBOLPersonCreditCardMapper bolPersonCreditCardMapper;
+		protected IBOLPersonCreditCardMapper BolPersonCreditCardMapper { get; private set; }
 
-		private IDALPersonCreditCardMapper dalPersonCreditCardMapper;
+		protected IDALPersonCreditCardMapper DalPersonCreditCardMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALPersonCreditCardMapper dalPersonCreditCardMapper)
 			: base()
 		{
-			this.personCreditCardRepository = personCreditCardRepository;
-			this.personCreditCardModelValidator = personCreditCardModelValidator;
-			this.bolPersonCreditCardMapper = bolPersonCreditCardMapper;
-			this.dalPersonCreditCardMapper = dalPersonCreditCardMapper;
+			this.PersonCreditCardRepository = personCreditCardRepository;
+			this.PersonCreditCardModelValidator = personCreditCardModelValidator;
+			this.BolPersonCreditCardMapper = bolPersonCreditCardMapper;
+			this.DalPersonCreditCardMapper = dalPersonCreditCardMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPersonCreditCardResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.personCreditCardRepository.All(limit, offset);
+			var records = await this.PersonCreditCardRepository.All(limit, offset);
 
-			return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(records));
+			return this.BolPersonCreditCardMapper.MapBOToModel(this.DalPersonCreditCardMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPersonCreditCardResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.personCreditCardRepository.Get(businessEntityID);
+			var record = await this.PersonCreditCardRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record));
+				return this.BolPersonCreditCardMapper.MapBOToModel(this.DalPersonCreditCardMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPersonCreditCardResponseModel>> Create(
 			ApiPersonCreditCardRequestModel model)
 		{
-			CreateResponse<ApiPersonCreditCardResponseModel> response = new CreateResponse<ApiPersonCreditCardResponseModel>(await this.personCreditCardModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPersonCreditCardResponseModel> response = new CreateResponse<ApiPersonCreditCardResponseModel>(await this.PersonCreditCardModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPersonCreditCardMapper.MapModelToBO(default(int), model);
-				var record = await this.personCreditCardRepository.Create(this.dalPersonCreditCardMapper.MapBOToEF(bo));
+				var bo = this.BolPersonCreditCardMapper.MapModelToBO(default(int), model);
+				var record = await this.PersonCreditCardRepository.Create(this.DalPersonCreditCardMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPersonCreditCardMapper.MapBOToModel(this.DalPersonCreditCardMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int businessEntityID,
 			ApiPersonCreditCardRequestModel model)
 		{
-			var validationResult = await this.personCreditCardModelValidator.ValidateUpdateAsync(businessEntityID, model);
+			var validationResult = await this.PersonCreditCardModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPersonCreditCardMapper.MapModelToBO(businessEntityID, model);
-				await this.personCreditCardRepository.Update(this.dalPersonCreditCardMapper.MapBOToEF(bo));
+				var bo = this.BolPersonCreditCardMapper.MapModelToBO(businessEntityID, model);
+				await this.PersonCreditCardRepository.Update(this.DalPersonCreditCardMapper.MapBOToEF(bo));
 
-				var record = await this.personCreditCardRepository.Get(businessEntityID);
+				var record = await this.PersonCreditCardRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiPersonCreditCardResponseModel>(this.bolPersonCreditCardMapper.MapBOToModel(this.dalPersonCreditCardMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPersonCreditCardResponseModel>(this.BolPersonCreditCardMapper.MapBOToModel(this.DalPersonCreditCardMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.personCreditCardModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = new ActionResponse(await this.PersonCreditCardModelValidator.ValidateDeleteAsync(businessEntityID));
 			if (response.Success)
 			{
-				await this.personCreditCardRepository.Delete(businessEntityID);
+				await this.PersonCreditCardRepository.Delete(businessEntityID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5348cb48766f7e97b8201af862628a50</Hash>
+    <Hash>5ea1070019a24fdb1994921763b45ff1</Hash>
 </Codenesium>*/

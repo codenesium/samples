@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IApiMutexRequestModelValidator
+	public partial interface IApiMutexRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiMutexRequestModel model);
 
@@ -16,5 +16,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e73e932a3122a60c8a08e15612d5aeed</Hash>
+    <Hash>dfde17de7f3123a2078619c0f4fd5490</Hash>
 </Codenesium>*/

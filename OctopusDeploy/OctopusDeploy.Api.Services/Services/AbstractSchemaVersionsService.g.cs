@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractSchemaVersionsService : AbstractService
 	{
-		private ISchemaVersionsRepository schemaVersionsRepository;
+		protected ISchemaVersionsRepository SchemaVersionsRepository { get; private set; }
 
-		private IApiSchemaVersionsRequestModelValidator schemaVersionsModelValidator;
+		protected IApiSchemaVersionsRequestModelValidator SchemaVersionsModelValidator { get; private set; }
 
-		private IBOLSchemaVersionsMapper bolSchemaVersionsMapper;
+		protected IBOLSchemaVersionsMapper BolSchemaVersionsMapper { get; private set; }
 
-		private IDALSchemaVersionsMapper dalSchemaVersionsMapper;
+		protected IDALSchemaVersionsMapper DalSchemaVersionsMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALSchemaVersionsMapper dalSchemaVersionsMapper)
 			: base()
 		{
-			this.schemaVersionsRepository = schemaVersionsRepository;
-			this.schemaVersionsModelValidator = schemaVersionsModelValidator;
-			this.bolSchemaVersionsMapper = bolSchemaVersionsMapper;
-			this.dalSchemaVersionsMapper = dalSchemaVersionsMapper;
+			this.SchemaVersionsRepository = schemaVersionsRepository;
+			this.SchemaVersionsModelValidator = schemaVersionsModelValidator;
+			this.BolSchemaVersionsMapper = bolSchemaVersionsMapper;
+			this.DalSchemaVersionsMapper = dalSchemaVersionsMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSchemaVersionsResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.schemaVersionsRepository.All(limit, offset);
+			var records = await this.SchemaVersionsRepository.All(limit, offset);
 
-			return this.bolSchemaVersionsMapper.MapBOToModel(this.dalSchemaVersionsMapper.MapEFToBO(records));
+			return this.BolSchemaVersionsMapper.MapBOToModel(this.DalSchemaVersionsMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSchemaVersionsResponseModel> Get(int id)
 		{
-			var record = await this.schemaVersionsRepository.Get(id);
+			var record = await this.SchemaVersionsRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolSchemaVersionsMapper.MapBOToModel(this.dalSchemaVersionsMapper.MapEFToBO(record));
+				return this.BolSchemaVersionsMapper.MapBOToModel(this.DalSchemaVersionsMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSchemaVersionsResponseModel>> Create(
 			ApiSchemaVersionsRequestModel model)
 		{
-			CreateResponse<ApiSchemaVersionsResponseModel> response = new CreateResponse<ApiSchemaVersionsResponseModel>(await this.schemaVersionsModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSchemaVersionsResponseModel> response = new CreateResponse<ApiSchemaVersionsResponseModel>(await this.SchemaVersionsModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSchemaVersionsMapper.MapModelToBO(default(int), model);
-				var record = await this.schemaVersionsRepository.Create(this.dalSchemaVersionsMapper.MapBOToEF(bo));
+				var bo = this.BolSchemaVersionsMapper.MapModelToBO(default(int), model);
+				var record = await this.SchemaVersionsRepository.Create(this.DalSchemaVersionsMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSchemaVersionsMapper.MapBOToModel(this.dalSchemaVersionsMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSchemaVersionsMapper.MapBOToModel(this.DalSchemaVersionsMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			int id,
 			ApiSchemaVersionsRequestModel model)
 		{
-			var validationResult = await this.schemaVersionsModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SchemaVersionsModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSchemaVersionsMapper.MapModelToBO(id, model);
-				await this.schemaVersionsRepository.Update(this.dalSchemaVersionsMapper.MapBOToEF(bo));
+				var bo = this.BolSchemaVersionsMapper.MapModelToBO(id, model);
+				await this.SchemaVersionsRepository.Update(this.DalSchemaVersionsMapper.MapBOToEF(bo));
 
-				var record = await this.schemaVersionsRepository.Get(id);
+				var record = await this.SchemaVersionsRepository.Get(id);
 
-				return new UpdateResponse<ApiSchemaVersionsResponseModel>(this.bolSchemaVersionsMapper.MapBOToModel(this.dalSchemaVersionsMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSchemaVersionsResponseModel>(this.BolSchemaVersionsMapper.MapBOToModel(this.DalSchemaVersionsMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.schemaVersionsModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SchemaVersionsModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.schemaVersionsRepository.Delete(id);
+				await this.SchemaVersionsRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f569b324c60f209bccfa4bb5d95bf83</Hash>
+    <Hash>db7ebe81c3c371683dc0fb83f2a531a2</Hash>
 </Codenesium>*/

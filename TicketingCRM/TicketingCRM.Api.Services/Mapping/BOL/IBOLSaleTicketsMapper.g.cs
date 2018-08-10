@@ -5,7 +5,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IBOLSaleTicketsMapper
+	public partial interface IBOLSaleTicketsMapper
 	{
 		BOSaleTickets MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>53bd220804113b39aedef0c6d2ae0df2</Hash>
+    <Hash>42f7e9715c2a82a9f0f28f80dd8dc454</Hash>
 </Codenesium>*/

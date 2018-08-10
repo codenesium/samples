@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IPersonRepository
+	public partial interface IPersonRepository
 	{
 		Task<Person> Create(Person item);
 
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>188cca65d5727862e43a6bb5a526e9bf</Hash>
+    <Hash>32de6a163e0211980abfbe2c59c65bed</Hash>
 </Codenesium>*/

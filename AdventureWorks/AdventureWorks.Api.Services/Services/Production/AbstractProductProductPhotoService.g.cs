@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductProductPhotoService : AbstractService
 	{
-		private IProductProductPhotoRepository productProductPhotoRepository;
+		protected IProductProductPhotoRepository ProductProductPhotoRepository { get; private set; }
 
-		private IApiProductProductPhotoRequestModelValidator productProductPhotoModelValidator;
+		protected IApiProductProductPhotoRequestModelValidator ProductProductPhotoModelValidator { get; private set; }
 
-		private IBOLProductProductPhotoMapper bolProductProductPhotoMapper;
+		protected IBOLProductProductPhotoMapper BolProductProductPhotoMapper { get; private set; }
 
-		private IDALProductProductPhotoMapper dalProductProductPhotoMapper;
+		protected IDALProductProductPhotoMapper DalProductProductPhotoMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductProductPhotoMapper dalProductProductPhotoMapper)
 			: base()
 		{
-			this.productProductPhotoRepository = productProductPhotoRepository;
-			this.productProductPhotoModelValidator = productProductPhotoModelValidator;
-			this.bolProductProductPhotoMapper = bolProductProductPhotoMapper;
-			this.dalProductProductPhotoMapper = dalProductProductPhotoMapper;
+			this.ProductProductPhotoRepository = productProductPhotoRepository;
+			this.ProductProductPhotoModelValidator = productProductPhotoModelValidator;
+			this.BolProductProductPhotoMapper = bolProductProductPhotoMapper;
+			this.DalProductProductPhotoMapper = dalProductProductPhotoMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProductProductPhotoResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.productProductPhotoRepository.All(limit, offset);
+			var records = await this.ProductProductPhotoRepository.All(limit, offset);
 
-			return this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(records));
+			return this.BolProductProductPhotoMapper.MapBOToModel(this.DalProductProductPhotoMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductProductPhotoResponseModel> Get(int productID)
 		{
-			var record = await this.productProductPhotoRepository.Get(productID);
+			var record = await this.ProductProductPhotoRepository.Get(productID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(record));
+				return this.BolProductProductPhotoMapper.MapBOToModel(this.DalProductProductPhotoMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProductProductPhotoResponseModel>> Create(
 			ApiProductProductPhotoRequestModel model)
 		{
-			CreateResponse<ApiProductProductPhotoResponseModel> response = new CreateResponse<ApiProductProductPhotoResponseModel>(await this.productProductPhotoModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductProductPhotoResponseModel> response = new CreateResponse<ApiProductProductPhotoResponseModel>(await this.ProductProductPhotoModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProductProductPhotoMapper.MapModelToBO(default(int), model);
-				var record = await this.productProductPhotoRepository.Create(this.dalProductProductPhotoMapper.MapBOToEF(bo));
+				var bo = this.BolProductProductPhotoMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductProductPhotoRepository.Create(this.DalProductProductPhotoMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProductProductPhotoMapper.MapBOToModel(this.DalProductProductPhotoMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int productID,
 			ApiProductProductPhotoRequestModel model)
 		{
-			var validationResult = await this.productProductPhotoModelValidator.ValidateUpdateAsync(productID, model);
+			var validationResult = await this.ProductProductPhotoModelValidator.ValidateUpdateAsync(productID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProductProductPhotoMapper.MapModelToBO(productID, model);
-				await this.productProductPhotoRepository.Update(this.dalProductProductPhotoMapper.MapBOToEF(bo));
+				var bo = this.BolProductProductPhotoMapper.MapModelToBO(productID, model);
+				await this.ProductProductPhotoRepository.Update(this.DalProductProductPhotoMapper.MapBOToEF(bo));
 
-				var record = await this.productProductPhotoRepository.Get(productID);
+				var record = await this.ProductProductPhotoRepository.Get(productID);
 
-				return new UpdateResponse<ApiProductProductPhotoResponseModel>(this.bolProductProductPhotoMapper.MapBOToModel(this.dalProductProductPhotoMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProductProductPhotoResponseModel>(this.BolProductProductPhotoMapper.MapBOToModel(this.DalProductProductPhotoMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int productID)
 		{
-			ActionResponse response = new ActionResponse(await this.productProductPhotoModelValidator.ValidateDeleteAsync(productID));
+			ActionResponse response = new ActionResponse(await this.ProductProductPhotoModelValidator.ValidateDeleteAsync(productID));
 			if (response.Success)
 			{
-				await this.productProductPhotoRepository.Delete(productID);
+				await this.ProductProductPhotoRepository.Delete(productID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1671d40c0cf0e362c6aaf17c1e3b8c59</Hash>
+    <Hash>4c4843c349e6234fa6bb957ed82504e6</Hash>
 </Codenesium>*/

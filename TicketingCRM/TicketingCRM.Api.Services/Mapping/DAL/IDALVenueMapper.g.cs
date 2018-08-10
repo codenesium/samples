@@ -6,7 +6,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IDALVenueMapper
+	public partial interface IDALVenueMapper
 	{
 		Venue MapBOToEF(
 			BOVenue bo);
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c65c7335dff7a20eab08410fa058f054</Hash>
+    <Hash>e0f7a54aea23c454bb2fda2604fdf1a3</Hash>
 </Codenesium>*/

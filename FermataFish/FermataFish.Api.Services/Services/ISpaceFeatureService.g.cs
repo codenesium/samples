@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface ISpaceFeatureService
+	public partial interface ISpaceFeatureService
 	{
 		Task<CreateResponse<ApiSpaceFeatureResponseModel>> Create(
 			ApiSpaceFeatureRequestModel model);
@@ -26,5 +26,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3487942391100a7659d0703f03981408</Hash>
+    <Hash>f7cc83a12254bb4c2469202b24d94d73</Hash>
 </Codenesium>*/

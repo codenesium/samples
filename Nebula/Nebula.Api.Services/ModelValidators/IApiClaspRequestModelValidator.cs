@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IApiClaspRequestModelValidator
+	public partial interface IApiClaspRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiClaspRequestModel model);
 
@@ -16,5 +16,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>da98f08d186cfc8310fecd7ea5f3da96</Hash>
+    <Hash>1d7bdcd7f6ede7f70754c07745e40303</Hash>
 </Codenesium>*/

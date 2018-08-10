@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface ITeamService
+	public partial interface ITeamService
 	{
 		Task<CreateResponse<ApiTeamResponseModel>> Create(
 			ApiTeamRequestModel model);
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>01cfe82fa73e37b1bc28a82a04b69976</Hash>
+    <Hash>e10819526d8738679d12c8427bd3b137</Hash>
 </Codenesium>*/

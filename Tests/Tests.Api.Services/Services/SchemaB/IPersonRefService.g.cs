@@ -7,7 +7,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IPersonRefService
+	public partial interface IPersonRefService
 	{
 		Task<CreateResponse<ApiPersonRefResponseModel>> Create(
 			ApiPersonRefRequestModel model);
@@ -24,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5339fbe6e290d29fb080ceb446b3755d</Hash>
+    <Hash>418188fbed63d7c775824b0861261850</Hash>
 </Codenesium>*/

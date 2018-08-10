@@ -14,20 +14,20 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractTeacherSkillService : AbstractService
 	{
-		private ITeacherSkillRepository teacherSkillRepository;
+		protected ITeacherSkillRepository TeacherSkillRepository { get; private set; }
 
-		private IApiTeacherSkillRequestModelValidator teacherSkillModelValidator;
+		protected IApiTeacherSkillRequestModelValidator TeacherSkillModelValidator { get; private set; }
 
-		private IBOLTeacherSkillMapper bolTeacherSkillMapper;
+		protected IBOLTeacherSkillMapper BolTeacherSkillMapper { get; private set; }
 
-		private IDALTeacherSkillMapper dalTeacherSkillMapper;
+		protected IDALTeacherSkillMapper DalTeacherSkillMapper { get; private set; }
 
-		private IBOLRateMapper bolRateMapper;
+		protected IBOLRateMapper BolRateMapper { get; private set; }
 
-		private IDALRateMapper dalRateMapper;
-		private IBOLTeacherXTeacherSkillMapper bolTeacherXTeacherSkillMapper;
+		protected IDALRateMapper DalRateMapper { get; private set; }
+		protected IBOLTeacherXTeacherSkillMapper BolTeacherXTeacherSkillMapper { get; private set; }
 
-		private IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper;
+		protected IDALTeacherXTeacherSkillMapper DalTeacherXTeacherSkillMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -43,27 +43,27 @@ namespace FermataFishNS.Api.Services
 			IDALTeacherXTeacherSkillMapper dalTeacherXTeacherSkillMapper)
 			: base()
 		{
-			this.teacherSkillRepository = teacherSkillRepository;
-			this.teacherSkillModelValidator = teacherSkillModelValidator;
-			this.bolTeacherSkillMapper = bolTeacherSkillMapper;
-			this.dalTeacherSkillMapper = dalTeacherSkillMapper;
-			this.bolRateMapper = bolRateMapper;
-			this.dalRateMapper = dalRateMapper;
-			this.bolTeacherXTeacherSkillMapper = bolTeacherXTeacherSkillMapper;
-			this.dalTeacherXTeacherSkillMapper = dalTeacherXTeacherSkillMapper;
+			this.TeacherSkillRepository = teacherSkillRepository;
+			this.TeacherSkillModelValidator = teacherSkillModelValidator;
+			this.BolTeacherSkillMapper = bolTeacherSkillMapper;
+			this.DalTeacherSkillMapper = dalTeacherSkillMapper;
+			this.BolRateMapper = bolRateMapper;
+			this.DalRateMapper = dalRateMapper;
+			this.BolTeacherXTeacherSkillMapper = bolTeacherXTeacherSkillMapper;
+			this.DalTeacherXTeacherSkillMapper = dalTeacherXTeacherSkillMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTeacherSkillResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.teacherSkillRepository.All(limit, offset);
+			var records = await this.TeacherSkillRepository.All(limit, offset);
 
-			return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(records));
+			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTeacherSkillResponseModel> Get(int id)
 		{
-			var record = await this.teacherSkillRepository.Get(id);
+			var record = await this.TeacherSkillRepository.Get(id);
 
 			if (record == null)
 			{
@@ -71,20 +71,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(record));
+				return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTeacherSkillResponseModel>> Create(
 			ApiTeacherSkillRequestModel model)
 		{
-			CreateResponse<ApiTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherSkillResponseModel>(await this.teacherSkillModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTeacherSkillResponseModel> response = new CreateResponse<ApiTeacherSkillResponseModel>(await this.TeacherSkillModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTeacherSkillMapper.MapModelToBO(default(int), model);
-				var record = await this.teacherSkillRepository.Create(this.dalTeacherSkillMapper.MapBOToEF(bo));
+				var bo = this.BolTeacherSkillMapper.MapModelToBO(default(int), model);
+				var record = await this.TeacherSkillRepository.Create(this.DalTeacherSkillMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -94,16 +94,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiTeacherSkillRequestModel model)
 		{
-			var validationResult = await this.teacherSkillModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TeacherSkillModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTeacherSkillMapper.MapModelToBO(id, model);
-				await this.teacherSkillRepository.Update(this.dalTeacherSkillMapper.MapBOToEF(bo));
+				var bo = this.BolTeacherSkillMapper.MapModelToBO(id, model);
+				await this.TeacherSkillRepository.Update(this.DalTeacherSkillMapper.MapBOToEF(bo));
 
-				var record = await this.teacherSkillRepository.Get(id);
+				var record = await this.TeacherSkillRepository.Get(id);
 
-				return new UpdateResponse<ApiTeacherSkillResponseModel>(this.bolTeacherSkillMapper.MapBOToModel(this.dalTeacherSkillMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTeacherSkillResponseModel>(this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -114,10 +114,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.teacherSkillModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TeacherSkillModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.teacherSkillRepository.Delete(id);
+				await this.TeacherSkillRepository.Delete(id);
 			}
 
 			return response;
@@ -125,20 +125,20 @@ namespace FermataFishNS.Api.Services
 
 		public async virtual Task<List<ApiRateResponseModel>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Rate> records = await this.teacherSkillRepository.Rates(teacherSkillId, limit, offset);
+			List<Rate> records = await this.TeacherSkillRepository.Rates(teacherSkillId, limit, offset);
 
-			return this.bolRateMapper.MapBOToModel(this.dalRateMapper.MapEFToBO(records));
+			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiTeacherXTeacherSkillResponseModel>> TeacherXTeacherSkills(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<TeacherXTeacherSkill> records = await this.teacherSkillRepository.TeacherXTeacherSkills(teacherSkillId, limit, offset);
+			List<TeacherXTeacherSkill> records = await this.TeacherSkillRepository.TeacherXTeacherSkills(teacherSkillId, limit, offset);
 
-			return this.bolTeacherXTeacherSkillMapper.MapBOToModel(this.dalTeacherXTeacherSkillMapper.MapEFToBO(records));
+			return this.BolTeacherXTeacherSkillMapper.MapBOToModel(this.DalTeacherXTeacherSkillMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91c101a42deed4b52d9fe23aef539328</Hash>
+    <Hash>72374c9e237948cae0775c070adf454e</Hash>
 </Codenesium>*/

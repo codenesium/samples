@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractPostHistoryService : AbstractService
 	{
-		private IPostHistoryRepository postHistoryRepository;
+		protected IPostHistoryRepository PostHistoryRepository { get; private set; }
 
-		private IApiPostHistoryRequestModelValidator postHistoryModelValidator;
+		protected IApiPostHistoryRequestModelValidator PostHistoryModelValidator { get; private set; }
 
-		private IBOLPostHistoryMapper bolPostHistoryMapper;
+		protected IBOLPostHistoryMapper BolPostHistoryMapper { get; private set; }
 
-		private IDALPostHistoryMapper dalPostHistoryMapper;
+		protected IDALPostHistoryMapper DalPostHistoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace StackOverflowNS.Api.Services
 			IDALPostHistoryMapper dalPostHistoryMapper)
 			: base()
 		{
-			this.postHistoryRepository = postHistoryRepository;
-			this.postHistoryModelValidator = postHistoryModelValidator;
-			this.bolPostHistoryMapper = bolPostHistoryMapper;
-			this.dalPostHistoryMapper = dalPostHistoryMapper;
+			this.PostHistoryRepository = postHistoryRepository;
+			this.PostHistoryModelValidator = postHistoryModelValidator;
+			this.BolPostHistoryMapper = bolPostHistoryMapper;
+			this.DalPostHistoryMapper = dalPostHistoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPostHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.postHistoryRepository.All(limit, offset);
+			var records = await this.PostHistoryRepository.All(limit, offset);
 
-			return this.bolPostHistoryMapper.MapBOToModel(this.dalPostHistoryMapper.MapEFToBO(records));
+			return this.BolPostHistoryMapper.MapBOToModel(this.DalPostHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPostHistoryResponseModel> Get(int id)
 		{
-			var record = await this.postHistoryRepository.Get(id);
+			var record = await this.PostHistoryRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.bolPostHistoryMapper.MapBOToModel(this.dalPostHistoryMapper.MapEFToBO(record));
+				return this.BolPostHistoryMapper.MapBOToModel(this.DalPostHistoryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPostHistoryResponseModel>> Create(
 			ApiPostHistoryRequestModel model)
 		{
-			CreateResponse<ApiPostHistoryResponseModel> response = new CreateResponse<ApiPostHistoryResponseModel>(await this.postHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPostHistoryResponseModel> response = new CreateResponse<ApiPostHistoryResponseModel>(await this.PostHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPostHistoryMapper.MapModelToBO(default(int), model);
-				var record = await this.postHistoryRepository.Create(this.dalPostHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolPostHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.PostHistoryRepository.Create(this.DalPostHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPostHistoryMapper.MapBOToModel(this.dalPostHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPostHistoryMapper.MapBOToModel(this.DalPostHistoryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace StackOverflowNS.Api.Services
 			int id,
 			ApiPostHistoryRequestModel model)
 		{
-			var validationResult = await this.postHistoryModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.PostHistoryModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPostHistoryMapper.MapModelToBO(id, model);
-				await this.postHistoryRepository.Update(this.dalPostHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolPostHistoryMapper.MapModelToBO(id, model);
+				await this.PostHistoryRepository.Update(this.DalPostHistoryMapper.MapBOToEF(bo));
 
-				var record = await this.postHistoryRepository.Get(id);
+				var record = await this.PostHistoryRepository.Get(id);
 
-				return new UpdateResponse<ApiPostHistoryResponseModel>(this.bolPostHistoryMapper.MapBOToModel(this.dalPostHistoryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPostHistoryResponseModel>(this.BolPostHistoryMapper.MapBOToModel(this.DalPostHistoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace StackOverflowNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.postHistoryModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.PostHistoryModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.postHistoryRepository.Delete(id);
+				await this.PostHistoryRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec6c4fdd6fe9769370a35f17db2518af</Hash>
+    <Hash>538190c3cd77c6bf57075ee3dfdde9cc</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ILocationService
+	public partial interface ILocationService
 	{
 		Task<CreateResponse<ApiLocationResponseModel>> Create(
 			ApiLocationRequestModel model);
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce11cd6a54b78ab3c4b23c48bd44f5df</Hash>
+    <Hash>a196e46718d1a15a6d5d7ec1822e102c</Hash>
 </Codenesium>*/

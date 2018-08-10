@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-	public interface IAdminRepository
+	public partial interface IAdminRepository
 	{
 		Task<Admin> Create(Admin item);
 
@@ -22,5 +22,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6833fe19b74ea0b63eb8932bf6afee23</Hash>
+    <Hash>0e4cbfc090e6d27c4317f940403cb871</Hash>
 </Codenesium>*/

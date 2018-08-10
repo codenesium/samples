@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface ITagSetRepository
+	public partial interface ITagSetRepository
 	{
 		Task<TagSet> Create(TagSet item);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9f3b08b2d82e712934095e8024c1fa7d</Hash>
+    <Hash>b595190df1cd6cfbe43a6fc27beed07d</Hash>
 </Codenesium>*/

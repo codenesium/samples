@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IErrorLogService
+	public partial interface IErrorLogService
 	{
 		Task<CreateResponse<ApiErrorLogResponseModel>> Create(
 			ApiErrorLogRequestModel model);
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e95fd7947858d00e5a302ad6e49a989b</Hash>
+    <Hash>99b9870927724dc4b5231ec8213dc1c2</Hash>
 </Codenesium>*/

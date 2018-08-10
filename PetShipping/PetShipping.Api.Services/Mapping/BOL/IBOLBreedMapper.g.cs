@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface IBOLBreedMapper
+	public partial interface IBOLBreedMapper
 	{
 		BOBreed MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa75e8175c3d8193360c635e9d8e0c5f</Hash>
+    <Hash>99e3504c3df8acbca76a3f5936c32b2f</Hash>
 </Codenesium>*/

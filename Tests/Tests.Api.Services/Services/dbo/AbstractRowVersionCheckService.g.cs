@@ -14,13 +14,13 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractRowVersionCheckService : AbstractService
 	{
-		private IRowVersionCheckRepository rowVersionCheckRepository;
+		protected IRowVersionCheckRepository RowVersionCheckRepository { get; private set; }
 
-		private IApiRowVersionCheckRequestModelValidator rowVersionCheckModelValidator;
+		protected IApiRowVersionCheckRequestModelValidator RowVersionCheckModelValidator { get; private set; }
 
-		private IBOLRowVersionCheckMapper bolRowVersionCheckMapper;
+		protected IBOLRowVersionCheckMapper BolRowVersionCheckMapper { get; private set; }
 
-		private IDALRowVersionCheckMapper dalRowVersionCheckMapper;
+		protected IDALRowVersionCheckMapper DalRowVersionCheckMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TestsNS.Api.Services
 			IDALRowVersionCheckMapper dalRowVersionCheckMapper)
 			: base()
 		{
-			this.rowVersionCheckRepository = rowVersionCheckRepository;
-			this.rowVersionCheckModelValidator = rowVersionCheckModelValidator;
-			this.bolRowVersionCheckMapper = bolRowVersionCheckMapper;
-			this.dalRowVersionCheckMapper = dalRowVersionCheckMapper;
+			this.RowVersionCheckRepository = rowVersionCheckRepository;
+			this.RowVersionCheckModelValidator = rowVersionCheckModelValidator;
+			this.BolRowVersionCheckMapper = bolRowVersionCheckMapper;
+			this.DalRowVersionCheckMapper = dalRowVersionCheckMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiRowVersionCheckResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.rowVersionCheckRepository.All(limit, offset);
+			var records = await this.RowVersionCheckRepository.All(limit, offset);
 
-			return this.bolRowVersionCheckMapper.MapBOToModel(this.dalRowVersionCheckMapper.MapEFToBO(records));
+			return this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiRowVersionCheckResponseModel> Get(int id)
 		{
-			var record = await this.rowVersionCheckRepository.Get(id);
+			var record = await this.RowVersionCheckRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolRowVersionCheckMapper.MapBOToModel(this.dalRowVersionCheckMapper.MapEFToBO(record));
+				return this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiRowVersionCheckResponseModel>> Create(
 			ApiRowVersionCheckRequestModel model)
 		{
-			CreateResponse<ApiRowVersionCheckResponseModel> response = new CreateResponse<ApiRowVersionCheckResponseModel>(await this.rowVersionCheckModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiRowVersionCheckResponseModel> response = new CreateResponse<ApiRowVersionCheckResponseModel>(await this.RowVersionCheckModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolRowVersionCheckMapper.MapModelToBO(default(int), model);
-				var record = await this.rowVersionCheckRepository.Create(this.dalRowVersionCheckMapper.MapBOToEF(bo));
+				var bo = this.BolRowVersionCheckMapper.MapModelToBO(default(int), model);
+				var record = await this.RowVersionCheckRepository.Create(this.DalRowVersionCheckMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolRowVersionCheckMapper.MapBOToModel(this.dalRowVersionCheckMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TestsNS.Api.Services
 			int id,
 			ApiRowVersionCheckRequestModel model)
 		{
-			var validationResult = await this.rowVersionCheckModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.RowVersionCheckModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolRowVersionCheckMapper.MapModelToBO(id, model);
-				await this.rowVersionCheckRepository.Update(this.dalRowVersionCheckMapper.MapBOToEF(bo));
+				var bo = this.BolRowVersionCheckMapper.MapModelToBO(id, model);
+				await this.RowVersionCheckRepository.Update(this.DalRowVersionCheckMapper.MapBOToEF(bo));
 
-				var record = await this.rowVersionCheckRepository.Get(id);
+				var record = await this.RowVersionCheckRepository.Get(id);
 
-				return new UpdateResponse<ApiRowVersionCheckResponseModel>(this.bolRowVersionCheckMapper.MapBOToModel(this.dalRowVersionCheckMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiRowVersionCheckResponseModel>(this.BolRowVersionCheckMapper.MapBOToModel(this.DalRowVersionCheckMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.rowVersionCheckModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.RowVersionCheckModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.rowVersionCheckRepository.Delete(id);
+				await this.RowVersionCheckRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1f9abb9679f954b81f567c259af21a55</Hash>
+    <Hash>ea81b6ffd61ba44e900a9a67d5d5d3af</Hash>
 </Codenesium>*/

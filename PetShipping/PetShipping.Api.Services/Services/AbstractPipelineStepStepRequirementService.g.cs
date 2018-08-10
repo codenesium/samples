@@ -14,13 +14,13 @@ namespace PetShippingNS.Api.Services
 {
 	public abstract class AbstractPipelineStepStepRequirementService : AbstractService
 	{
-		private IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository;
+		protected IPipelineStepStepRequirementRepository PipelineStepStepRequirementRepository { get; private set; }
 
-		private IApiPipelineStepStepRequirementRequestModelValidator pipelineStepStepRequirementModelValidator;
+		protected IApiPipelineStepStepRequirementRequestModelValidator PipelineStepStepRequirementModelValidator { get; private set; }
 
-		private IBOLPipelineStepStepRequirementMapper bolPipelineStepStepRequirementMapper;
+		protected IBOLPipelineStepStepRequirementMapper BolPipelineStepStepRequirementMapper { get; private set; }
 
-		private IDALPipelineStepStepRequirementMapper dalPipelineStepStepRequirementMapper;
+		protected IDALPipelineStepStepRequirementMapper DalPipelineStepStepRequirementMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace PetShippingNS.Api.Services
 			IDALPipelineStepStepRequirementMapper dalPipelineStepStepRequirementMapper)
 			: base()
 		{
-			this.pipelineStepStepRequirementRepository = pipelineStepStepRequirementRepository;
-			this.pipelineStepStepRequirementModelValidator = pipelineStepStepRequirementModelValidator;
-			this.bolPipelineStepStepRequirementMapper = bolPipelineStepStepRequirementMapper;
-			this.dalPipelineStepStepRequirementMapper = dalPipelineStepStepRequirementMapper;
+			this.PipelineStepStepRequirementRepository = pipelineStepStepRequirementRepository;
+			this.PipelineStepStepRequirementModelValidator = pipelineStepStepRequirementModelValidator;
+			this.BolPipelineStepStepRequirementMapper = bolPipelineStepStepRequirementMapper;
+			this.DalPipelineStepStepRequirementMapper = dalPipelineStepStepRequirementMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPipelineStepStepRequirementResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.pipelineStepStepRequirementRepository.All(limit, offset);
+			var records = await this.PipelineStepStepRequirementRepository.All(limit, offset);
 
-			return this.bolPipelineStepStepRequirementMapper.MapBOToModel(this.dalPipelineStepStepRequirementMapper.MapEFToBO(records));
+			return this.BolPipelineStepStepRequirementMapper.MapBOToModel(this.DalPipelineStepStepRequirementMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPipelineStepStepRequirementResponseModel> Get(int id)
 		{
-			var record = await this.pipelineStepStepRequirementRepository.Get(id);
+			var record = await this.PipelineStepStepRequirementRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace PetShippingNS.Api.Services
 			}
 			else
 			{
-				return this.bolPipelineStepStepRequirementMapper.MapBOToModel(this.dalPipelineStepStepRequirementMapper.MapEFToBO(record));
+				return this.BolPipelineStepStepRequirementMapper.MapBOToModel(this.DalPipelineStepStepRequirementMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepStepRequirementResponseModel>> Create(
 			ApiPipelineStepStepRequirementRequestModel model)
 		{
-			CreateResponse<ApiPipelineStepStepRequirementResponseModel> response = new CreateResponse<ApiPipelineStepStepRequirementResponseModel>(await this.pipelineStepStepRequirementModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPipelineStepStepRequirementResponseModel> response = new CreateResponse<ApiPipelineStepStepRequirementResponseModel>(await this.PipelineStepStepRequirementModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPipelineStepStepRequirementMapper.MapModelToBO(default(int), model);
-				var record = await this.pipelineStepStepRequirementRepository.Create(this.dalPipelineStepStepRequirementMapper.MapBOToEF(bo));
+				var bo = this.BolPipelineStepStepRequirementMapper.MapModelToBO(default(int), model);
+				var record = await this.PipelineStepStepRequirementRepository.Create(this.DalPipelineStepStepRequirementMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPipelineStepStepRequirementMapper.MapBOToModel(this.dalPipelineStepStepRequirementMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPipelineStepStepRequirementMapper.MapBOToModel(this.DalPipelineStepStepRequirementMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace PetShippingNS.Api.Services
 			int id,
 			ApiPipelineStepStepRequirementRequestModel model)
 		{
-			var validationResult = await this.pipelineStepStepRequirementModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.PipelineStepStepRequirementModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPipelineStepStepRequirementMapper.MapModelToBO(id, model);
-				await this.pipelineStepStepRequirementRepository.Update(this.dalPipelineStepStepRequirementMapper.MapBOToEF(bo));
+				var bo = this.BolPipelineStepStepRequirementMapper.MapModelToBO(id, model);
+				await this.PipelineStepStepRequirementRepository.Update(this.DalPipelineStepStepRequirementMapper.MapBOToEF(bo));
 
-				var record = await this.pipelineStepStepRequirementRepository.Get(id);
+				var record = await this.PipelineStepStepRequirementRepository.Get(id);
 
-				return new UpdateResponse<ApiPipelineStepStepRequirementResponseModel>(this.bolPipelineStepStepRequirementMapper.MapBOToModel(this.dalPipelineStepStepRequirementMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPipelineStepStepRequirementResponseModel>(this.BolPipelineStepStepRequirementMapper.MapBOToModel(this.DalPipelineStepStepRequirementMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace PetShippingNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.pipelineStepStepRequirementModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.PipelineStepStepRequirementModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.pipelineStepStepRequirementRepository.Delete(id);
+				await this.PipelineStepStepRequirementRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5f69dec34fe14875d5bb1f15cf88dcc</Hash>
+    <Hash>817f76167883ce94c978e9ef5395fab4</Hash>
 </Codenesium>*/

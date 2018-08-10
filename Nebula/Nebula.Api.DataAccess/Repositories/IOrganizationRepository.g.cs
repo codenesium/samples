@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface IOrganizationRepository
+	public partial interface IOrganizationRepository
 	{
 		Task<Organization> Create(Organization item);
 
@@ -22,5 +22,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>402e491a5a75a06fc580006fb30259e2</Hash>
+    <Hash>a090fce2f18fbe3f9270f8d70934b81f</Hash>
 </Codenesium>*/

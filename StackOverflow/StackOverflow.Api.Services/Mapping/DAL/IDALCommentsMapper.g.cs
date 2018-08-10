@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IDALCommentsMapper
+	public partial interface IDALCommentsMapper
 	{
 		Comments MapBOToEF(
 			BOComments bo);
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4b368c77e213cabb46ba7a215b9a4c1</Hash>
+    <Hash>0b96a660be3a151004f67097543705b1</Hash>
 </Codenesium>*/

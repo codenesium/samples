@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractUserService : AbstractService
 	{
-		private IUserRepository userRepository;
+		protected IUserRepository UserRepository { get; private set; }
 
-		private IApiUserRequestModelValidator userModelValidator;
+		protected IApiUserRequestModelValidator UserModelValidator { get; private set; }
 
-		private IBOLUserMapper bolUserMapper;
+		protected IBOLUserMapper BolUserMapper { get; private set; }
 
-		private IDALUserMapper dalUserMapper;
+		protected IDALUserMapper DalUserMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALUserMapper dalUserMapper)
 			: base()
 		{
-			this.userRepository = userRepository;
-			this.userModelValidator = userModelValidator;
-			this.bolUserMapper = bolUserMapper;
-			this.dalUserMapper = dalUserMapper;
+			this.UserRepository = userRepository;
+			this.UserModelValidator = userModelValidator;
+			this.BolUserMapper = bolUserMapper;
+			this.DalUserMapper = dalUserMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiUserResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.userRepository.All(limit, offset);
+			var records = await this.UserRepository.All(limit, offset);
 
-			return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
+			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiUserResponseModel> Get(string id)
 		{
-			var record = await this.userRepository.Get(id);
+			var record = await this.UserRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record));
+				return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiUserResponseModel>> Create(
 			ApiUserRequestModel model)
 		{
-			CreateResponse<ApiUserResponseModel> response = new CreateResponse<ApiUserResponseModel>(await this.userModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiUserResponseModel> response = new CreateResponse<ApiUserResponseModel>(await this.UserModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolUserMapper.MapModelToBO(default(string), model);
-				var record = await this.userRepository.Create(this.dalUserMapper.MapBOToEF(bo));
+				var bo = this.BolUserMapper.MapModelToBO(default(string), model);
+				var record = await this.UserRepository.Create(this.DalUserMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiUserRequestModel model)
 		{
-			var validationResult = await this.userModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.UserModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolUserMapper.MapModelToBO(id, model);
-				await this.userRepository.Update(this.dalUserMapper.MapBOToEF(bo));
+				var bo = this.BolUserMapper.MapModelToBO(id, model);
+				await this.UserRepository.Update(this.DalUserMapper.MapBOToEF(bo));
 
-				var record = await this.userRepository.Get(id);
+				var record = await this.UserRepository.Get(id);
 
-				return new UpdateResponse<ApiUserResponseModel>(this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiUserResponseModel>(this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.userModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.UserModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.userRepository.Delete(id);
+				await this.UserRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiUserResponseModel> ByUsername(string username)
 		{
-			User record = await this.userRepository.ByUsername(username);
+			User record = await this.UserRepository.ByUsername(username);
 
 			if (record == null)
 			{
@@ -118,33 +118,33 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(record));
+				return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiUserResponseModel>> ByDisplayName(string displayName)
 		{
-			List<User> records = await this.userRepository.ByDisplayName(displayName);
+			List<User> records = await this.UserRepository.ByDisplayName(displayName);
 
-			return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
+			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiUserResponseModel>> ByEmailAddress(string emailAddress)
 		{
-			List<User> records = await this.userRepository.ByEmailAddress(emailAddress);
+			List<User> records = await this.UserRepository.ByEmailAddress(emailAddress);
 
-			return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
+			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiUserResponseModel>> ByExternalId(string externalId)
 		{
-			List<User> records = await this.userRepository.ByExternalId(externalId);
+			List<User> records = await this.UserRepository.ByExternalId(externalId);
 
-			return this.bolUserMapper.MapBOToModel(this.dalUserMapper.MapEFToBO(records));
+			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f00c15342cc7ad33a31879797b988d57</Hash>
+    <Hash>e715b75026b1170d552364a7ab3f3de6</Hash>
 </Codenesium>*/

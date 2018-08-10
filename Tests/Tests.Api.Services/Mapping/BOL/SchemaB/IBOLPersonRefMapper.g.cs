@@ -5,7 +5,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IBOLPersonRefMapper
+	public partial interface IBOLPersonRefMapper
 	{
 		BOPersonRef MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f974269994e7378a0c400f2d7b9fd2b</Hash>
+    <Hash>7d4d3f7c1563b5eeeea9f2ff81773131</Hash>
 </Codenesium>*/

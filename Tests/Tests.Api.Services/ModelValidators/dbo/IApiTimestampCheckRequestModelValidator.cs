@@ -5,7 +5,7 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
-	public interface IApiTimestampCheckRequestModelValidator
+	public partial interface IApiTimestampCheckRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiTimestampCheckRequestModel model);
 
@@ -16,5 +16,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fb7672e54f4c3fe7debb8ffd03b05d46</Hash>
+    <Hash>89e95782c22db58ee20b776d089a0dbf</Hash>
 </Codenesium>*/

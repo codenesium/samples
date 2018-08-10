@@ -6,7 +6,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IDALEventMapper
+	public partial interface IDALEventMapper
 	{
 		Event MapBOToEF(
 			BOEvent bo);
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bdaba860c6f417271c0658722df1f75a</Hash>
+    <Hash>b97bb22de7f630b4bb92a5190bef233e</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ISalesPersonQuotaHistoryRepository
+	public partial interface ISalesPersonQuotaHistoryRepository
 	{
 		Task<SalesPersonQuotaHistory> Create(SalesPersonQuotaHistory item);
 
@@ -22,5 +22,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>17d5cd24c0cb5a3acbba3e3b25cfc9f1</Hash>
+    <Hash>dc61d32b842f78cc61785141c8afe581</Hash>
 </Codenesium>*/

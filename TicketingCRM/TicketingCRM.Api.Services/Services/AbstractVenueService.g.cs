@@ -14,13 +14,13 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractVenueService : AbstractService
 	{
-		private IVenueRepository venueRepository;
+		protected IVenueRepository VenueRepository { get; private set; }
 
-		private IApiVenueRequestModelValidator venueModelValidator;
+		protected IApiVenueRequestModelValidator VenueModelValidator { get; private set; }
 
-		private IBOLVenueMapper bolVenueMapper;
+		protected IBOLVenueMapper BolVenueMapper { get; private set; }
 
-		private IDALVenueMapper dalVenueMapper;
+		protected IDALVenueMapper DalVenueMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TicketingCRMNS.Api.Services
 			IDALVenueMapper dalVenueMapper)
 			: base()
 		{
-			this.venueRepository = venueRepository;
-			this.venueModelValidator = venueModelValidator;
-			this.bolVenueMapper = bolVenueMapper;
-			this.dalVenueMapper = dalVenueMapper;
+			this.VenueRepository = venueRepository;
+			this.VenueModelValidator = venueModelValidator;
+			this.BolVenueMapper = bolVenueMapper;
+			this.DalVenueMapper = dalVenueMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiVenueResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.venueRepository.All(limit, offset);
+			var records = await this.VenueRepository.All(limit, offset);
 
-			return this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(records));
+			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiVenueResponseModel> Get(int id)
 		{
-			var record = await this.venueRepository.Get(id);
+			var record = await this.VenueRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(record));
+				return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiVenueResponseModel>> Create(
 			ApiVenueRequestModel model)
 		{
-			CreateResponse<ApiVenueResponseModel> response = new CreateResponse<ApiVenueResponseModel>(await this.venueModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVenueResponseModel> response = new CreateResponse<ApiVenueResponseModel>(await this.VenueModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolVenueMapper.MapModelToBO(default(int), model);
-				var record = await this.venueRepository.Create(this.dalVenueMapper.MapBOToEF(bo));
+				var bo = this.BolVenueMapper.MapModelToBO(default(int), model);
+				var record = await this.VenueRepository.Create(this.DalVenueMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TicketingCRMNS.Api.Services
 			int id,
 			ApiVenueRequestModel model)
 		{
-			var validationResult = await this.venueModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.VenueModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolVenueMapper.MapModelToBO(id, model);
-				await this.venueRepository.Update(this.dalVenueMapper.MapBOToEF(bo));
+				var bo = this.BolVenueMapper.MapModelToBO(id, model);
+				await this.VenueRepository.Update(this.DalVenueMapper.MapBOToEF(bo));
 
-				var record = await this.venueRepository.Get(id);
+				var record = await this.VenueRepository.Get(id);
 
-				return new UpdateResponse<ApiVenueResponseModel>(this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiVenueResponseModel>(this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TicketingCRMNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.venueModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.VenueModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.venueRepository.Delete(id);
+				await this.VenueRepository.Delete(id);
 			}
 
 			return response;
@@ -110,20 +110,20 @@ namespace TicketingCRMNS.Api.Services
 
 		public async Task<List<ApiVenueResponseModel>> ByAdminId(int adminId)
 		{
-			List<Venue> records = await this.venueRepository.ByAdminId(adminId);
+			List<Venue> records = await this.VenueRepository.ByAdminId(adminId);
 
-			return this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(records));
+			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiVenueResponseModel>> ByProvinceId(int provinceId)
 		{
-			List<Venue> records = await this.venueRepository.ByProvinceId(provinceId);
+			List<Venue> records = await this.VenueRepository.ByProvinceId(provinceId);
 
-			return this.bolVenueMapper.MapBOToModel(this.dalVenueMapper.MapEFToBO(records));
+			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>50b8de88c18989847ca55126f553758b</Hash>
+    <Hash>fa5acb5e82370dc75d452263c9d5517d</Hash>
 </Codenesium>*/

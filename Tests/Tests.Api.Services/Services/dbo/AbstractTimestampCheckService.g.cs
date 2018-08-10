@@ -14,13 +14,13 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractTimestampCheckService : AbstractService
 	{
-		private ITimestampCheckRepository timestampCheckRepository;
+		protected ITimestampCheckRepository TimestampCheckRepository { get; private set; }
 
-		private IApiTimestampCheckRequestModelValidator timestampCheckModelValidator;
+		protected IApiTimestampCheckRequestModelValidator TimestampCheckModelValidator { get; private set; }
 
-		private IBOLTimestampCheckMapper bolTimestampCheckMapper;
+		protected IBOLTimestampCheckMapper BolTimestampCheckMapper { get; private set; }
 
-		private IDALTimestampCheckMapper dalTimestampCheckMapper;
+		protected IDALTimestampCheckMapper DalTimestampCheckMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace TestsNS.Api.Services
 			IDALTimestampCheckMapper dalTimestampCheckMapper)
 			: base()
 		{
-			this.timestampCheckRepository = timestampCheckRepository;
-			this.timestampCheckModelValidator = timestampCheckModelValidator;
-			this.bolTimestampCheckMapper = bolTimestampCheckMapper;
-			this.dalTimestampCheckMapper = dalTimestampCheckMapper;
+			this.TimestampCheckRepository = timestampCheckRepository;
+			this.TimestampCheckModelValidator = timestampCheckModelValidator;
+			this.BolTimestampCheckMapper = bolTimestampCheckMapper;
+			this.DalTimestampCheckMapper = dalTimestampCheckMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTimestampCheckResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.timestampCheckRepository.All(limit, offset);
+			var records = await this.TimestampCheckRepository.All(limit, offset);
 
-			return this.bolTimestampCheckMapper.MapBOToModel(this.dalTimestampCheckMapper.MapEFToBO(records));
+			return this.BolTimestampCheckMapper.MapBOToModel(this.DalTimestampCheckMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTimestampCheckResponseModel> Get(int id)
 		{
-			var record = await this.timestampCheckRepository.Get(id);
+			var record = await this.TimestampCheckRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolTimestampCheckMapper.MapBOToModel(this.dalTimestampCheckMapper.MapEFToBO(record));
+				return this.BolTimestampCheckMapper.MapBOToModel(this.DalTimestampCheckMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTimestampCheckResponseModel>> Create(
 			ApiTimestampCheckRequestModel model)
 		{
-			CreateResponse<ApiTimestampCheckResponseModel> response = new CreateResponse<ApiTimestampCheckResponseModel>(await this.timestampCheckModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTimestampCheckResponseModel> response = new CreateResponse<ApiTimestampCheckResponseModel>(await this.TimestampCheckModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTimestampCheckMapper.MapModelToBO(default(int), model);
-				var record = await this.timestampCheckRepository.Create(this.dalTimestampCheckMapper.MapBOToEF(bo));
+				var bo = this.BolTimestampCheckMapper.MapModelToBO(default(int), model);
+				var record = await this.TimestampCheckRepository.Create(this.DalTimestampCheckMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTimestampCheckMapper.MapBOToModel(this.dalTimestampCheckMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTimestampCheckMapper.MapBOToModel(this.DalTimestampCheckMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace TestsNS.Api.Services
 			int id,
 			ApiTimestampCheckRequestModel model)
 		{
-			var validationResult = await this.timestampCheckModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TimestampCheckModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTimestampCheckMapper.MapModelToBO(id, model);
-				await this.timestampCheckRepository.Update(this.dalTimestampCheckMapper.MapBOToEF(bo));
+				var bo = this.BolTimestampCheckMapper.MapModelToBO(id, model);
+				await this.TimestampCheckRepository.Update(this.DalTimestampCheckMapper.MapBOToEF(bo));
 
-				var record = await this.timestampCheckRepository.Get(id);
+				var record = await this.TimestampCheckRepository.Get(id);
 
-				return new UpdateResponse<ApiTimestampCheckResponseModel>(this.bolTimestampCheckMapper.MapBOToModel(this.dalTimestampCheckMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTimestampCheckResponseModel>(this.BolTimestampCheckMapper.MapBOToModel(this.DalTimestampCheckMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.timestampCheckModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TimestampCheckModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.timestampCheckRepository.Delete(id);
+				await this.TimestampCheckRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>578b92babaaf3c3615fa4b87325b21ef</Hash>
+    <Hash>69c9261b4ed1a31553abbd2f78419650</Hash>
 </Codenesium>*/

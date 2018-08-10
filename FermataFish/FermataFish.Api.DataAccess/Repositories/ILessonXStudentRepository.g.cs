@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public interface ILessonXStudentRepository
+	public partial interface ILessonXStudentRepository
 	{
 		Task<LessonXStudent> Create(LessonXStudent item);
 
@@ -24,5 +24,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d787bb378dbcea76f379dac4099afd03</Hash>
+    <Hash>77c74794a47aea89c7104551018907b6</Hash>
 </Codenesium>*/

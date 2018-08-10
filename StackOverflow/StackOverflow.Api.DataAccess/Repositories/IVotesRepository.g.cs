@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-	public interface IVotesRepository
+	public partial interface IVotesRepository
 	{
 		Task<Votes> Create(Votes item);
 
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b456ee36d92e0f1c85626cc4203f6e3</Hash>
+    <Hash>beb4208a513b51e47f1a4a8564a687d6</Hash>
 </Codenesium>*/

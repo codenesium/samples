@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractShoppingCartItemService : AbstractService
 	{
-		private IShoppingCartItemRepository shoppingCartItemRepository;
+		protected IShoppingCartItemRepository ShoppingCartItemRepository { get; private set; }
 
-		private IApiShoppingCartItemRequestModelValidator shoppingCartItemModelValidator;
+		protected IApiShoppingCartItemRequestModelValidator ShoppingCartItemModelValidator { get; private set; }
 
-		private IBOLShoppingCartItemMapper bolShoppingCartItemMapper;
+		protected IBOLShoppingCartItemMapper BolShoppingCartItemMapper { get; private set; }
 
-		private IDALShoppingCartItemMapper dalShoppingCartItemMapper;
+		protected IDALShoppingCartItemMapper DalShoppingCartItemMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALShoppingCartItemMapper dalShoppingCartItemMapper)
 			: base()
 		{
-			this.shoppingCartItemRepository = shoppingCartItemRepository;
-			this.shoppingCartItemModelValidator = shoppingCartItemModelValidator;
-			this.bolShoppingCartItemMapper = bolShoppingCartItemMapper;
-			this.dalShoppingCartItemMapper = dalShoppingCartItemMapper;
+			this.ShoppingCartItemRepository = shoppingCartItemRepository;
+			this.ShoppingCartItemModelValidator = shoppingCartItemModelValidator;
+			this.BolShoppingCartItemMapper = bolShoppingCartItemMapper;
+			this.DalShoppingCartItemMapper = dalShoppingCartItemMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiShoppingCartItemResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.shoppingCartItemRepository.All(limit, offset);
+			var records = await this.ShoppingCartItemRepository.All(limit, offset);
 
-			return this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(records));
+			return this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiShoppingCartItemResponseModel> Get(int shoppingCartItemID)
 		{
-			var record = await this.shoppingCartItemRepository.Get(shoppingCartItemID);
+			var record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(record));
+				return this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiShoppingCartItemResponseModel>> Create(
 			ApiShoppingCartItemRequestModel model)
 		{
-			CreateResponse<ApiShoppingCartItemResponseModel> response = new CreateResponse<ApiShoppingCartItemResponseModel>(await this.shoppingCartItemModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiShoppingCartItemResponseModel> response = new CreateResponse<ApiShoppingCartItemResponseModel>(await this.ShoppingCartItemModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolShoppingCartItemMapper.MapModelToBO(default(int), model);
-				var record = await this.shoppingCartItemRepository.Create(this.dalShoppingCartItemMapper.MapBOToEF(bo));
+				var bo = this.BolShoppingCartItemMapper.MapModelToBO(default(int), model);
+				var record = await this.ShoppingCartItemRepository.Create(this.DalShoppingCartItemMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int shoppingCartItemID,
 			ApiShoppingCartItemRequestModel model)
 		{
-			var validationResult = await this.shoppingCartItemModelValidator.ValidateUpdateAsync(shoppingCartItemID, model);
+			var validationResult = await this.ShoppingCartItemModelValidator.ValidateUpdateAsync(shoppingCartItemID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolShoppingCartItemMapper.MapModelToBO(shoppingCartItemID, model);
-				await this.shoppingCartItemRepository.Update(this.dalShoppingCartItemMapper.MapBOToEF(bo));
+				var bo = this.BolShoppingCartItemMapper.MapModelToBO(shoppingCartItemID, model);
+				await this.ShoppingCartItemRepository.Update(this.DalShoppingCartItemMapper.MapBOToEF(bo));
 
-				var record = await this.shoppingCartItemRepository.Get(shoppingCartItemID);
+				var record = await this.ShoppingCartItemRepository.Get(shoppingCartItemID);
 
-				return new UpdateResponse<ApiShoppingCartItemResponseModel>(this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiShoppingCartItemResponseModel>(this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int shoppingCartItemID)
 		{
-			ActionResponse response = new ActionResponse(await this.shoppingCartItemModelValidator.ValidateDeleteAsync(shoppingCartItemID));
+			ActionResponse response = new ActionResponse(await this.ShoppingCartItemModelValidator.ValidateDeleteAsync(shoppingCartItemID));
 			if (response.Success)
 			{
-				await this.shoppingCartItemRepository.Delete(shoppingCartItemID);
+				await this.ShoppingCartItemRepository.Delete(shoppingCartItemID);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiShoppingCartItemResponseModel>> ByShoppingCartIDProductID(string shoppingCartID, int productID)
 		{
-			List<ShoppingCartItem> records = await this.shoppingCartItemRepository.ByShoppingCartIDProductID(shoppingCartID, productID);
+			List<ShoppingCartItem> records = await this.ShoppingCartItemRepository.ByShoppingCartIDProductID(shoppingCartID, productID);
 
-			return this.bolShoppingCartItemMapper.MapBOToModel(this.dalShoppingCartItemMapper.MapEFToBO(records));
+			return this.BolShoppingCartItemMapper.MapBOToModel(this.DalShoppingCartItemMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9de4f6f3779e74f7d21a29324af300b8</Hash>
+    <Hash>a075e3eb196b8c74a7fc95dc94b00504</Hash>
 </Codenesium>*/

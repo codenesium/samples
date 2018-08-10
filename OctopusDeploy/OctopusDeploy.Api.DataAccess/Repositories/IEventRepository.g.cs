@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IEventRepository
+	public partial interface IEventRepository
 	{
 		Task<Event> Create(Event item);
 
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0857bafc0d28e259b509118c404ea9a4</Hash>
+    <Hash>9ea2e55d1650ac966d713eb1d1d5408c</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiSpecialOfferProductRequestModelValidator
+	public partial interface IApiSpecialOfferProductRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiSpecialOfferProductRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>81bfba01cbc7fa4f07bf611eff801129</Hash>
+    <Hash>57c769bcbffc16c745b558cee78f4ece</Hash>
 </Codenesium>*/

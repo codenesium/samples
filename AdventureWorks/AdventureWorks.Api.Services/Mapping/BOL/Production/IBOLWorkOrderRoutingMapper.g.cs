@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLWorkOrderRoutingMapper
+	public partial interface IBOLWorkOrderRoutingMapper
 	{
 		BOWorkOrderRouting MapModelToBO(
 			int workOrderID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8fc40abfbcb6fa0aba381215f45a5929</Hash>
+    <Hash>3367f0424b2e164838f7fa3b48509eb0</Hash>
 </Codenesium>*/

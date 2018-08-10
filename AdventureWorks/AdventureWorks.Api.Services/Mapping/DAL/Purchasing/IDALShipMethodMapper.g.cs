@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALShipMethodMapper
+	public partial interface IDALShipMethodMapper
 	{
 		ShipMethod MapBOToEF(
 			BOShipMethod bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7cfc6434f0247f5a2535bb4140958761</Hash>
+    <Hash>cd9e7176e47f808f4c6ecc03d3658122</Hash>
 </Codenesium>*/

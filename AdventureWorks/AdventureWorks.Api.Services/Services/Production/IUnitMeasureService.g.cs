@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IUnitMeasureService
+	public partial interface IUnitMeasureService
 	{
 		Task<CreateResponse<ApiUnitMeasureResponseModel>> Create(
 			ApiUnitMeasureRequestModel model);
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a51bbfc0b9c4888d850a8065db383af</Hash>
+    <Hash>5ce7e00ba762547e21ab52cd7a7c9f8b</Hash>
 </Codenesium>*/

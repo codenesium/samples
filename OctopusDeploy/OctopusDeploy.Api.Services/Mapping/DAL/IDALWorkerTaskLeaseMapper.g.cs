@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALWorkerTaskLeaseMapper
+	public partial interface IDALWorkerTaskLeaseMapper
 	{
 		WorkerTaskLease MapBOToEF(
 			BOWorkerTaskLease bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7daf0c5c8477e53101c180bf2e56df1</Hash>
+    <Hash>841b65edbf277b1baf1e5a79f467eb4e</Hash>
 </Codenesium>*/

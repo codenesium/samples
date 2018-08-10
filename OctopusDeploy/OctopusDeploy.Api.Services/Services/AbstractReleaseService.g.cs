@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractReleaseService : AbstractService
 	{
-		private IReleaseRepository releaseRepository;
+		protected IReleaseRepository ReleaseRepository { get; private set; }
 
-		private IApiReleaseRequestModelValidator releaseModelValidator;
+		protected IApiReleaseRequestModelValidator ReleaseModelValidator { get; private set; }
 
-		private IBOLReleaseMapper bolReleaseMapper;
+		protected IBOLReleaseMapper BolReleaseMapper { get; private set; }
 
-		private IDALReleaseMapper dalReleaseMapper;
+		protected IDALReleaseMapper DalReleaseMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALReleaseMapper dalReleaseMapper)
 			: base()
 		{
-			this.releaseRepository = releaseRepository;
-			this.releaseModelValidator = releaseModelValidator;
-			this.bolReleaseMapper = bolReleaseMapper;
-			this.dalReleaseMapper = dalReleaseMapper;
+			this.ReleaseRepository = releaseRepository;
+			this.ReleaseModelValidator = releaseModelValidator;
+			this.BolReleaseMapper = bolReleaseMapper;
+			this.DalReleaseMapper = dalReleaseMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiReleaseResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.releaseRepository.All(limit, offset);
+			var records = await this.ReleaseRepository.All(limit, offset);
 
-			return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
+			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiReleaseResponseModel> Get(string id)
 		{
-			var record = await this.releaseRepository.Get(id);
+			var record = await this.ReleaseRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record));
+				return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiReleaseResponseModel>> Create(
 			ApiReleaseRequestModel model)
 		{
-			CreateResponse<ApiReleaseResponseModel> response = new CreateResponse<ApiReleaseResponseModel>(await this.releaseModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiReleaseResponseModel> response = new CreateResponse<ApiReleaseResponseModel>(await this.ReleaseModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolReleaseMapper.MapModelToBO(default(string), model);
-				var record = await this.releaseRepository.Create(this.dalReleaseMapper.MapBOToEF(bo));
+				var bo = this.BolReleaseMapper.MapModelToBO(default(string), model);
+				var record = await this.ReleaseRepository.Create(this.DalReleaseMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiReleaseRequestModel model)
 		{
-			var validationResult = await this.releaseModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ReleaseModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolReleaseMapper.MapModelToBO(id, model);
-				await this.releaseRepository.Update(this.dalReleaseMapper.MapBOToEF(bo));
+				var bo = this.BolReleaseMapper.MapModelToBO(id, model);
+				await this.ReleaseRepository.Update(this.DalReleaseMapper.MapBOToEF(bo));
 
-				var record = await this.releaseRepository.Get(id);
+				var record = await this.ReleaseRepository.Get(id);
 
-				return new UpdateResponse<ApiReleaseResponseModel>(this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiReleaseResponseModel>(this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.releaseModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ReleaseModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.releaseRepository.Delete(id);
+				await this.ReleaseRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiReleaseResponseModel> ByVersionProjectId(string version, string projectId)
 		{
-			Release record = await this.releaseRepository.ByVersionProjectId(version, projectId);
+			Release record = await this.ReleaseRepository.ByVersionProjectId(version, projectId);
 
 			if (record == null)
 			{
@@ -118,40 +118,40 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(record));
+				return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiReleaseResponseModel>> ByIdAssembled(string id, DateTimeOffset assembled)
 		{
-			List<Release> records = await this.releaseRepository.ByIdAssembled(id, assembled);
+			List<Release> records = await this.ReleaseRepository.ByIdAssembled(id, assembled);
 
-			return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
+			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiReleaseResponseModel>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
 		{
-			List<Release> records = await this.releaseRepository.ByProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId);
+			List<Release> records = await this.ReleaseRepository.ByProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId);
 
-			return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
+			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiReleaseResponseModel>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
 		{
-			List<Release> records = await this.releaseRepository.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
+			List<Release> records = await this.ReleaseRepository.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
 
-			return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
+			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiReleaseResponseModel>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
 		{
-			List<Release> records = await this.releaseRepository.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
+			List<Release> records = await this.ReleaseRepository.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
 
-			return this.bolReleaseMapper.MapBOToModel(this.dalReleaseMapper.MapEFToBO(records));
+			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f519e1731bcf4411bfbb46df67f0262c</Hash>
+    <Hash>c677532cead618757cce0d39a9681109</Hash>
 </Codenesium>*/

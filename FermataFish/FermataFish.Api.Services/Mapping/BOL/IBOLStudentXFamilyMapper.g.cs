@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IBOLStudentXFamilyMapper
+	public partial interface IBOLStudentXFamilyMapper
 	{
 		BOStudentXFamily MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd7a329de8e3f7a824db5e4ab3d9bc53</Hash>
+    <Hash>8fb9e99333be133c1ca4e48774ec8820</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface ISchemaVersionsRepository
+	public partial interface ISchemaVersionsRepository
 	{
 		Task<SchemaVersions> Create(SchemaVersions item);
 
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dde9984b48438b41ebe07f1bcd81c214</Hash>
+    <Hash>ff6143aa2a04d048ef61b7ff3d900112</Hash>
 </Codenesium>*/

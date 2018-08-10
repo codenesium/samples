@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ITeamService
+	public partial interface ITeamService
 	{
 		Task<CreateResponse<ApiTeamResponseModel>> Create(
 			ApiTeamRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>310235aa47cfac25bde6f1aec64d4755</Hash>
+    <Hash>2ed1fccebb462269260a2acc513f8e01</Hash>
 </Codenesium>*/

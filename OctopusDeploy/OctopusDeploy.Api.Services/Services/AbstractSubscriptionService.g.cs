@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractSubscriptionService : AbstractService
 	{
-		private ISubscriptionRepository subscriptionRepository;
+		protected ISubscriptionRepository SubscriptionRepository { get; private set; }
 
-		private IApiSubscriptionRequestModelValidator subscriptionModelValidator;
+		protected IApiSubscriptionRequestModelValidator SubscriptionModelValidator { get; private set; }
 
-		private IBOLSubscriptionMapper bolSubscriptionMapper;
+		protected IBOLSubscriptionMapper BolSubscriptionMapper { get; private set; }
 
-		private IDALSubscriptionMapper dalSubscriptionMapper;
+		protected IDALSubscriptionMapper DalSubscriptionMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALSubscriptionMapper dalSubscriptionMapper)
 			: base()
 		{
-			this.subscriptionRepository = subscriptionRepository;
-			this.subscriptionModelValidator = subscriptionModelValidator;
-			this.bolSubscriptionMapper = bolSubscriptionMapper;
-			this.dalSubscriptionMapper = dalSubscriptionMapper;
+			this.SubscriptionRepository = subscriptionRepository;
+			this.SubscriptionModelValidator = subscriptionModelValidator;
+			this.BolSubscriptionMapper = bolSubscriptionMapper;
+			this.DalSubscriptionMapper = dalSubscriptionMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSubscriptionResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.subscriptionRepository.All(limit, offset);
+			var records = await this.SubscriptionRepository.All(limit, offset);
 
-			return this.bolSubscriptionMapper.MapBOToModel(this.dalSubscriptionMapper.MapEFToBO(records));
+			return this.BolSubscriptionMapper.MapBOToModel(this.DalSubscriptionMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSubscriptionResponseModel> Get(string id)
 		{
-			var record = await this.subscriptionRepository.Get(id);
+			var record = await this.SubscriptionRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolSubscriptionMapper.MapBOToModel(this.dalSubscriptionMapper.MapEFToBO(record));
+				return this.BolSubscriptionMapper.MapBOToModel(this.DalSubscriptionMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSubscriptionResponseModel>> Create(
 			ApiSubscriptionRequestModel model)
 		{
-			CreateResponse<ApiSubscriptionResponseModel> response = new CreateResponse<ApiSubscriptionResponseModel>(await this.subscriptionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSubscriptionResponseModel> response = new CreateResponse<ApiSubscriptionResponseModel>(await this.SubscriptionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSubscriptionMapper.MapModelToBO(default(string), model);
-				var record = await this.subscriptionRepository.Create(this.dalSubscriptionMapper.MapBOToEF(bo));
+				var bo = this.BolSubscriptionMapper.MapModelToBO(default(string), model);
+				var record = await this.SubscriptionRepository.Create(this.DalSubscriptionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSubscriptionMapper.MapBOToModel(this.dalSubscriptionMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSubscriptionMapper.MapBOToModel(this.DalSubscriptionMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiSubscriptionRequestModel model)
 		{
-			var validationResult = await this.subscriptionModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SubscriptionModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSubscriptionMapper.MapModelToBO(id, model);
-				await this.subscriptionRepository.Update(this.dalSubscriptionMapper.MapBOToEF(bo));
+				var bo = this.BolSubscriptionMapper.MapModelToBO(id, model);
+				await this.SubscriptionRepository.Update(this.DalSubscriptionMapper.MapBOToEF(bo));
 
-				var record = await this.subscriptionRepository.Get(id);
+				var record = await this.SubscriptionRepository.Get(id);
 
-				return new UpdateResponse<ApiSubscriptionResponseModel>(this.bolSubscriptionMapper.MapBOToModel(this.dalSubscriptionMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSubscriptionResponseModel>(this.BolSubscriptionMapper.MapBOToModel(this.DalSubscriptionMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.subscriptionModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SubscriptionModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.subscriptionRepository.Delete(id);
+				await this.SubscriptionRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiSubscriptionResponseModel> ByName(string name)
 		{
-			Subscription record = await this.subscriptionRepository.ByName(name);
+			Subscription record = await this.SubscriptionRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolSubscriptionMapper.MapBOToModel(this.dalSubscriptionMapper.MapEFToBO(record));
+				return this.BolSubscriptionMapper.MapBOToModel(this.DalSubscriptionMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a53dffc6c86e56e1908e2fd8b51d178</Hash>
+    <Hash>db424bd4980664be96208192de543d25</Hash>
 </Codenesium>*/

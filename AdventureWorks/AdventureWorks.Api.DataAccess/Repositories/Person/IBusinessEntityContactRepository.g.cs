@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IBusinessEntityContactRepository
+	public partial interface IBusinessEntityContactRepository
 	{
 		Task<BusinessEntityContact> Create(BusinessEntityContact item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>49bd45acc48b9dcec8bf838d16864955</Hash>
+    <Hash>7dfd4664822efec2c6305aa6f2347cf4</Hash>
 </Codenesium>*/

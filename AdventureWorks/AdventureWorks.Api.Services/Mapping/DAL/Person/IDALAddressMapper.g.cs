@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALAddressMapper
+	public partial interface IDALAddressMapper
 	{
 		Address MapBOToEF(
 			BOAddress bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2f7f1fbf39e16a992e9c4e7b7a803b6e</Hash>
+    <Hash>f7db98178a38c7d439ac9f066a9a57e5</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiScrapReasonRequestModelValidator
+	public partial interface IApiScrapReasonRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiScrapReasonRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22369d5d0e904e4f0b6f75fc71240685</Hash>
+    <Hash>9fd029561b8ded82162ae61ddcf4312f</Hash>
 </Codenesium>*/

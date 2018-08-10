@@ -7,7 +7,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface ICityService
+	public partial interface ICityService
 	{
 		Task<CreateResponse<ApiCityResponseModel>> Create(
 			ApiCityRequestModel model);
@@ -28,5 +28,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff5dcf0b7314c4db59305d47db89ec7b</Hash>
+    <Hash>af9970641e73fa0d80a92d5304b5f256</Hash>
 </Codenesium>*/

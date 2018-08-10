@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractTeamService : AbstractService
 	{
-		private ITeamRepository teamRepository;
+		protected ITeamRepository TeamRepository { get; private set; }
 
-		private IApiTeamRequestModelValidator teamModelValidator;
+		protected IApiTeamRequestModelValidator TeamModelValidator { get; private set; }
 
-		private IBOLTeamMapper bolTeamMapper;
+		protected IBOLTeamMapper BolTeamMapper { get; private set; }
 
-		private IDALTeamMapper dalTeamMapper;
+		protected IDALTeamMapper DalTeamMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALTeamMapper dalTeamMapper)
 			: base()
 		{
-			this.teamRepository = teamRepository;
-			this.teamModelValidator = teamModelValidator;
-			this.bolTeamMapper = bolTeamMapper;
-			this.dalTeamMapper = dalTeamMapper;
+			this.TeamRepository = teamRepository;
+			this.TeamModelValidator = teamModelValidator;
+			this.BolTeamMapper = bolTeamMapper;
+			this.DalTeamMapper = dalTeamMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTeamResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.teamRepository.All(limit, offset);
+			var records = await this.TeamRepository.All(limit, offset);
 
-			return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(records));
+			return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTeamResponseModel> Get(string id)
 		{
-			var record = await this.teamRepository.Get(id);
+			var record = await this.TeamRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record));
+				return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTeamResponseModel>> Create(
 			ApiTeamRequestModel model)
 		{
-			CreateResponse<ApiTeamResponseModel> response = new CreateResponse<ApiTeamResponseModel>(await this.teamModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTeamResponseModel> response = new CreateResponse<ApiTeamResponseModel>(await this.TeamModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTeamMapper.MapModelToBO(default(string), model);
-				var record = await this.teamRepository.Create(this.dalTeamMapper.MapBOToEF(bo));
+				var bo = this.BolTeamMapper.MapModelToBO(default(string), model);
+				var record = await this.TeamRepository.Create(this.DalTeamMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiTeamRequestModel model)
 		{
-			var validationResult = await this.teamModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TeamModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTeamMapper.MapModelToBO(id, model);
-				await this.teamRepository.Update(this.dalTeamMapper.MapBOToEF(bo));
+				var bo = this.BolTeamMapper.MapModelToBO(id, model);
+				await this.TeamRepository.Update(this.DalTeamMapper.MapBOToEF(bo));
 
-				var record = await this.teamRepository.Get(id);
+				var record = await this.TeamRepository.Get(id);
 
-				return new UpdateResponse<ApiTeamResponseModel>(this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTeamResponseModel>(this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.teamModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TeamModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.teamRepository.Delete(id);
+				await this.TeamRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiTeamResponseModel> ByName(string name)
 		{
-			Team record = await this.teamRepository.ByName(name);
+			Team record = await this.TeamRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolTeamMapper.MapBOToModel(this.dalTeamMapper.MapEFToBO(record));
+				return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>df5824e480d41173cb7903bdbd4d0dee</Hash>
+    <Hash>1fa8fc48b5eabeb3651cc5124195e6fc</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IShiftService
+	public partial interface IShiftService
 	{
 		Task<CreateResponse<ApiShiftResponseModel>> Create(
 			ApiShiftRequestModel model);
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>569d0d02aba18d1b876faed9466fea51</Hash>
+    <Hash>b66901f8fc33ec5b7a2a18ec457fe7ce</Hash>
 </Codenesium>*/

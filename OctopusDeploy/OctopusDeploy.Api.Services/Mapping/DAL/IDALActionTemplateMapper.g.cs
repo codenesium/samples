@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALActionTemplateMapper
+	public partial interface IDALActionTemplateMapper
 	{
 		ActionTemplate MapBOToEF(
 			BOActionTemplate bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4bf450e180d66794163208b622cd605b</Hash>
+    <Hash>691e7d92ec65151237791ce4cf62e3b9</Hash>
 </Codenesium>*/

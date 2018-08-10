@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALCountryRegionCurrencyMapper
+	public partial interface IDALCountryRegionCurrencyMapper
 	{
 		CountryRegionCurrency MapBOToEF(
 			BOCountryRegionCurrency bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>531b62a91696858a8ebacbc33d6fa6f4</Hash>
+    <Hash>a89bff6caeae159c76f7f3489fda31db</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IDALTimestampCheckMapper
+	public partial interface IDALTimestampCheckMapper
 	{
 		TimestampCheck MapBOToEF(
 			BOTimestampCheck bo);
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>06fb9e482e2d2eebea2dd91a69d00f60</Hash>
+    <Hash>ff0f269e37e086a6cde6ca398f94bdbc</Hash>
 </Codenesium>*/

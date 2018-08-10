@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface ILinkStatusRepository
+	public partial interface ILinkStatusRepository
 	{
 		Task<LinkStatus> Create(LinkStatus item);
 
@@ -22,5 +22,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fe424d06c8582b8051f6f4fb8b62f3ac</Hash>
+    <Hash>88f1dd33ff435ffc4863a2770b0e5dbf</Hash>
 </Codenesium>*/

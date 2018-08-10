@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiDatabaseLogRequestModelValidator
+	public partial interface IApiDatabaseLogRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiDatabaseLogRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2ae257ec0db2ab557dcaca4d7476ff45</Hash>
+    <Hash>6175697bf7b817ab762d652fae0b7a14</Hash>
 </Codenesium>*/

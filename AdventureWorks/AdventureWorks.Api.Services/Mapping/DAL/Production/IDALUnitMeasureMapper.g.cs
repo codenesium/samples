@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALUnitMeasureMapper
+	public partial interface IDALUnitMeasureMapper
 	{
 		UnitMeasure MapBOToEF(
 			BOUnitMeasure bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a83bf393a8763a03e7a244ae63501db7</Hash>
+    <Hash>2b9a038f5908f76eddcca4b8b4b8e4e2</Hash>
 </Codenesium>*/

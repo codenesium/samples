@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLPhoneNumberTypeMapper
+	public partial interface IBOLPhoneNumberTypeMapper
 	{
 		BOPhoneNumberType MapModelToBO(
 			int phoneNumberTypeID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b479cab197375f4cbda87e196cf7b618</Hash>
+    <Hash>8974fdef53b76f2478ac0748f2e4a1c1</Hash>
 </Codenesium>*/

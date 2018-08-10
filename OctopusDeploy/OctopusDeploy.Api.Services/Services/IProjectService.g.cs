@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IProjectService
+	public partial interface IProjectService
 	{
 		Task<CreateResponse<ApiProjectResponseModel>> Create(
 			ApiProjectRequestModel model);
@@ -32,5 +32,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>25d59d3c947813fa1697e8156e6c407b</Hash>
+    <Hash>8ca09410c4cc3535d1ddc199bc64e4aa</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiProductInventoryModelMapper
+	public partial interface IApiProductInventoryModelMapper
 	{
 		ApiProductInventoryResponseModel MapRequestToResponse(
 			int productID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ab2fa0022fda36d92fb38962be9fdd6d</Hash>
+    <Hash>698e735b844ac0ecd76fb5974605caf8</Hash>
 </Codenesium>*/

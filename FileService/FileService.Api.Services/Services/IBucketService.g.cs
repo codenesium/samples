@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
-	public interface IBucketService
+	public partial interface IBucketService
 	{
 		Task<CreateResponse<ApiBucketResponseModel>> Create(
 			ApiBucketRequestModel model);
@@ -30,5 +30,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c472ebb26b50dcd3154b7e9c7d10706c</Hash>
+    <Hash>ae8c20ca6359d9596d053dbeadb38328</Hash>
 </Codenesium>*/

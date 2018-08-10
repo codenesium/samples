@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IInterruptionRepository
+	public partial interface IInterruptionRepository
 	{
 		Task<Interruption> Create(Interruption item);
 
@@ -22,5 +22,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2eba2f8e00dfea2f4ad6513d9633d87d</Hash>
+    <Hash>7c441bb6623360e02bdb96737fd53c43</Hash>
 </Codenesium>*/

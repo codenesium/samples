@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-	public interface IApiFeedModelMapper
+	public partial interface IApiFeedModelMapper
 	{
 		ApiFeedResponseModel MapRequestToResponse(
 			string id,
@@ -19,5 +19,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a88fcf12509b6ec23efa6d7982882694</Hash>
+    <Hash>055cc58b4a3195848b1bab12de7d9806</Hash>
 </Codenesium>*/

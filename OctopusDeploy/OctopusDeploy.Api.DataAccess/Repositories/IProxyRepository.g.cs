@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface IProxyRepository
+	public partial interface IProxyRepository
 	{
 		Task<Proxy> Create(Proxy item);
 
@@ -22,5 +22,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>90444762849662f0b449d8f744eda1cb</Hash>
+    <Hash>c2056c8514dcd818bb76a4e86a33b332</Hash>
 </Codenesium>*/

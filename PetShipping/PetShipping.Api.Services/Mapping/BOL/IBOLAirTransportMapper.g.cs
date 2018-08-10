@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface IBOLAirTransportMapper
+	public partial interface IBOLAirTransportMapper
 	{
 		BOAirTransport MapModelToBO(
 			int airlineId,
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f31e734dc8741b724cf621709a88047c</Hash>
+    <Hash>5cad57b2860d47a9a117a42f1d382f24</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLPasswordMapper
+	public partial interface IBOLPasswordMapper
 	{
 		BOPassword MapModelToBO(
 			int businessEntityID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3121a0ca4ab0a1ac1cd9861b3ed10b3d</Hash>
+    <Hash>95caf1e5500478dbb7b5df7f3793a967</Hash>
 </Codenesium>*/

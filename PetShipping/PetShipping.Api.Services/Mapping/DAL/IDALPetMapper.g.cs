@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface IDALPetMapper
+	public partial interface IDALPetMapper
 	{
 		Pet MapBOToEF(
 			BOPet bo);
@@ -20,5 +20,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be5904c8da9c7ddafac2315970da1665</Hash>
+    <Hash>2a5c13e531e4f61565196018bcef9b12</Hash>
 </Codenesium>*/

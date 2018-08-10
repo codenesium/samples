@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IReleaseService
+	public partial interface IReleaseService
 	{
 		Task<CreateResponse<ApiReleaseResponseModel>> Create(
 			ApiReleaseRequestModel model);
@@ -34,5 +34,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b17a199307a4a0c3b3c3df8a9c9c4f1a</Hash>
+    <Hash>7e3d7f0dc41cc37e14ea721ca6591b8c</Hash>
 </Codenesium>*/

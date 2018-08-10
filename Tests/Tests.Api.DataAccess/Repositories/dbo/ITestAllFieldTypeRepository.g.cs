@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
-	public interface ITestAllFieldTypeRepository
+	public partial interface ITestAllFieldTypeRepository
 	{
 		Task<TestAllFieldType> Create(TestAllFieldType item);
 
@@ -20,5 +20,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>00405703c55c646d7d39c3621e3ff6a8</Hash>
+    <Hash>682e3455ca901346877456560849148c</Hash>
 </Codenesium>*/

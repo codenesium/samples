@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace ESPIOTNS.Api.Services
 {
-	public interface IDALDeviceActionMapper
+	public partial interface IDALDeviceActionMapper
 	{
 		DeviceAction MapBOToEF(
 			BODeviceAction bo);
@@ -20,5 +20,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3169450225109542b6daa0255ebfc3c</Hash>
+    <Hash>ab051c6a01cea25124972d3b7785e44f</Hash>
 </Codenesium>*/

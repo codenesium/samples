@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-	public interface ICommentsRepository
+	public partial interface ICommentsRepository
 	{
 		Task<Comments> Create(Comments item);
 
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>26f9b6c09eea92602fd5fb3a8c30a7d1</Hash>
+    <Hash>2a9b63a7fd6fc4f54873e765684c692c</Hash>
 </Codenesium>*/

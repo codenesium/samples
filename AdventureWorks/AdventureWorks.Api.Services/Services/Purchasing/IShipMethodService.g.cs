@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IShipMethodService
+	public partial interface IShipMethodService
 	{
 		Task<CreateResponse<ApiShipMethodResponseModel>> Create(
 			ApiShipMethodRequestModel model);
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9e60dcd425497290ce836423bf732afe</Hash>
+    <Hash>8912a192ec5081c046d6080bd57c2c8d</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractAdminService : AbstractService
 	{
-		private IAdminRepository adminRepository;
+		protected IAdminRepository AdminRepository { get; private set; }
 
-		private IApiAdminRequestModelValidator adminModelValidator;
+		protected IApiAdminRequestModelValidator AdminModelValidator { get; private set; }
 
-		private IBOLAdminMapper bolAdminMapper;
+		protected IBOLAdminMapper BolAdminMapper { get; private set; }
 
-		private IDALAdminMapper dalAdminMapper;
+		protected IDALAdminMapper DalAdminMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace FermataFishNS.Api.Services
 			IDALAdminMapper dalAdminMapper)
 			: base()
 		{
-			this.adminRepository = adminRepository;
-			this.adminModelValidator = adminModelValidator;
-			this.bolAdminMapper = bolAdminMapper;
-			this.dalAdminMapper = dalAdminMapper;
+			this.AdminRepository = adminRepository;
+			this.AdminModelValidator = adminModelValidator;
+			this.BolAdminMapper = bolAdminMapper;
+			this.DalAdminMapper = dalAdminMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiAdminResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.adminRepository.All(limit, offset);
+			var records = await this.AdminRepository.All(limit, offset);
 
-			return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(records));
+			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiAdminResponseModel> Get(int id)
 		{
-			var record = await this.adminRepository.Get(id);
+			var record = await this.AdminRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record));
+				return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiAdminResponseModel>> Create(
 			ApiAdminRequestModel model)
 		{
-			CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.adminModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiAdminResponseModel> response = new CreateResponse<ApiAdminResponseModel>(await this.AdminModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolAdminMapper.MapModelToBO(default(int), model);
-				var record = await this.adminRepository.Create(this.dalAdminMapper.MapBOToEF(bo));
+				var bo = this.BolAdminMapper.MapModelToBO(default(int), model);
+				var record = await this.AdminRepository.Create(this.DalAdminMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiAdminRequestModel model)
 		{
-			var validationResult = await this.adminModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.AdminModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolAdminMapper.MapModelToBO(id, model);
-				await this.adminRepository.Update(this.dalAdminMapper.MapBOToEF(bo));
+				var bo = this.BolAdminMapper.MapModelToBO(id, model);
+				await this.AdminRepository.Update(this.DalAdminMapper.MapBOToEF(bo));
 
-				var record = await this.adminRepository.Get(id);
+				var record = await this.AdminRepository.Get(id);
 
-				return new UpdateResponse<ApiAdminResponseModel>(this.bolAdminMapper.MapBOToModel(this.dalAdminMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiAdminResponseModel>(this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.adminModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.AdminModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.adminRepository.Delete(id);
+				await this.AdminRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>acd8b4655fc2b3ca6336a709213355cf</Hash>
+    <Hash>14034984ce10cd1c54a61da0b098c79f</Hash>
 </Codenesium>*/

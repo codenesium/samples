@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiContactTypeRequestModelValidator
+	public partial interface IApiContactTypeRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiContactTypeRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9b3a4346f6461bbe79c22ac4281bd7d</Hash>
+    <Hash>440594d81ca17fbf0803827011422ed1</Hash>
 </Codenesium>*/

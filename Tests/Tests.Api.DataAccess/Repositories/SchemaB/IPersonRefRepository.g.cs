@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
-	public interface IPersonRefRepository
+	public partial interface IPersonRefRepository
 	{
 		Task<PersonRef> Create(PersonRef item);
 
@@ -22,5 +22,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>22d3762a603ecf07b227f9b4e9460062</Hash>
+    <Hash>cf4bed669aa33c0170bdc98dd4685728</Hash>
 </Codenesium>*/

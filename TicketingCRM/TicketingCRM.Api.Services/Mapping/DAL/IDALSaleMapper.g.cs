@@ -6,7 +6,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IDALSaleMapper
+	public partial interface IDALSaleMapper
 	{
 		Sale MapBOToEF(
 			BOSale bo);
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c7236a69ffb118d5c17fad456873bbb0</Hash>
+    <Hash>f7e0cd862f9c068cc59f8d56387aac38</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PetStoreNS.Api.Services
 {
-	public interface IBOLPaymentTypeMapper
+	public partial interface IBOLPaymentTypeMapper
 	{
 		BOPaymentType MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>27eeceb2836d05f1aad7bdcdd8bbcfea</Hash>
+    <Hash>61845cdd5ee09125df42a0761ee6c78a</Hash>
 </Codenesium>*/

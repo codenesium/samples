@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IProductProductPhotoRepository
+	public partial interface IProductProductPhotoRepository
 	{
 		Task<ProductProductPhoto> Create(ProductProductPhoto item);
 
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9301453c69a50f14a642a652c671ccc8</Hash>
+    <Hash>56e5254295e12e4e68172b27900d11b6</Hash>
 </Codenesium>*/

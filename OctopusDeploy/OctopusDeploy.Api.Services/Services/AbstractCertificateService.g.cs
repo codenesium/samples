@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractCertificateService : AbstractService
 	{
-		private ICertificateRepository certificateRepository;
+		protected ICertificateRepository CertificateRepository { get; private set; }
 
-		private IApiCertificateRequestModelValidator certificateModelValidator;
+		protected IApiCertificateRequestModelValidator CertificateModelValidator { get; private set; }
 
-		private IBOLCertificateMapper bolCertificateMapper;
+		protected IBOLCertificateMapper BolCertificateMapper { get; private set; }
 
-		private IDALCertificateMapper dalCertificateMapper;
+		protected IDALCertificateMapper DalCertificateMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALCertificateMapper dalCertificateMapper)
 			: base()
 		{
-			this.certificateRepository = certificateRepository;
-			this.certificateModelValidator = certificateModelValidator;
-			this.bolCertificateMapper = bolCertificateMapper;
-			this.dalCertificateMapper = dalCertificateMapper;
+			this.CertificateRepository = certificateRepository;
+			this.CertificateModelValidator = certificateModelValidator;
+			this.BolCertificateMapper = bolCertificateMapper;
+			this.DalCertificateMapper = dalCertificateMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiCertificateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.certificateRepository.All(limit, offset);
+			var records = await this.CertificateRepository.All(limit, offset);
 
-			return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
+			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCertificateResponseModel> Get(string id)
 		{
-			var record = await this.certificateRepository.Get(id);
+			var record = await this.CertificateRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(record));
+				return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiCertificateResponseModel>> Create(
 			ApiCertificateRequestModel model)
 		{
-			CreateResponse<ApiCertificateResponseModel> response = new CreateResponse<ApiCertificateResponseModel>(await this.certificateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCertificateResponseModel> response = new CreateResponse<ApiCertificateResponseModel>(await this.CertificateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolCertificateMapper.MapModelToBO(default(string), model);
-				var record = await this.certificateRepository.Create(this.dalCertificateMapper.MapBOToEF(bo));
+				var bo = this.BolCertificateMapper.MapModelToBO(default(string), model);
+				var record = await this.CertificateRepository.Create(this.DalCertificateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiCertificateRequestModel model)
 		{
-			var validationResult = await this.certificateModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.CertificateModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolCertificateMapper.MapModelToBO(id, model);
-				await this.certificateRepository.Update(this.dalCertificateMapper.MapBOToEF(bo));
+				var bo = this.BolCertificateMapper.MapModelToBO(id, model);
+				await this.CertificateRepository.Update(this.DalCertificateMapper.MapBOToEF(bo));
 
-				var record = await this.certificateRepository.Get(id);
+				var record = await this.CertificateRepository.Get(id);
 
-				return new UpdateResponse<ApiCertificateResponseModel>(this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiCertificateResponseModel>(this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.certificateModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.CertificateModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.certificateRepository.Delete(id);
+				await this.CertificateRepository.Delete(id);
 			}
 
 			return response;
@@ -110,34 +110,34 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<List<ApiCertificateResponseModel>> ByCreated(DateTimeOffset created)
 		{
-			List<Certificate> records = await this.certificateRepository.ByCreated(created);
+			List<Certificate> records = await this.CertificateRepository.ByCreated(created);
 
-			return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
+			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiCertificateResponseModel>> ByDataVersion(byte[] dataVersion)
 		{
-			List<Certificate> records = await this.certificateRepository.ByDataVersion(dataVersion);
+			List<Certificate> records = await this.CertificateRepository.ByDataVersion(dataVersion);
 
-			return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
+			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiCertificateResponseModel>> ByNotAfter(DateTimeOffset notAfter)
 		{
-			List<Certificate> records = await this.certificateRepository.ByNotAfter(notAfter);
+			List<Certificate> records = await this.CertificateRepository.ByNotAfter(notAfter);
 
-			return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
+			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiCertificateResponseModel>> ByThumbprint(string thumbprint)
 		{
-			List<Certificate> records = await this.certificateRepository.ByThumbprint(thumbprint);
+			List<Certificate> records = await this.CertificateRepository.ByThumbprint(thumbprint);
 
-			return this.bolCertificateMapper.MapBOToModel(this.dalCertificateMapper.MapEFToBO(records));
+			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff0e6b1a8417021b2dded0f744ece692</Hash>
+    <Hash>08c64db81c8caa708d359d1357fdf933</Hash>
 </Codenesium>*/

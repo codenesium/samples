@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IStudioService
+	public partial interface IStudioService
 	{
 		Task<CreateResponse<ApiStudioResponseModel>> Create(
 			ApiStudioRequestModel model);
@@ -42,5 +42,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5fc6f6f7639d45049ea21ebebaa4070f</Hash>
+    <Hash>ab50dd3907f8d2be54fc666df2fec004</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractSpaceXSpaceFeatureService : AbstractService
 	{
-		private ISpaceXSpaceFeatureRepository spaceXSpaceFeatureRepository;
+		protected ISpaceXSpaceFeatureRepository SpaceXSpaceFeatureRepository { get; private set; }
 
-		private IApiSpaceXSpaceFeatureRequestModelValidator spaceXSpaceFeatureModelValidator;
+		protected IApiSpaceXSpaceFeatureRequestModelValidator SpaceXSpaceFeatureModelValidator { get; private set; }
 
-		private IBOLSpaceXSpaceFeatureMapper bolSpaceXSpaceFeatureMapper;
+		protected IBOLSpaceXSpaceFeatureMapper BolSpaceXSpaceFeatureMapper { get; private set; }
 
-		private IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper;
+		protected IDALSpaceXSpaceFeatureMapper DalSpaceXSpaceFeatureMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace FermataFishNS.Api.Services
 			IDALSpaceXSpaceFeatureMapper dalSpaceXSpaceFeatureMapper)
 			: base()
 		{
-			this.spaceXSpaceFeatureRepository = spaceXSpaceFeatureRepository;
-			this.spaceXSpaceFeatureModelValidator = spaceXSpaceFeatureModelValidator;
-			this.bolSpaceXSpaceFeatureMapper = bolSpaceXSpaceFeatureMapper;
-			this.dalSpaceXSpaceFeatureMapper = dalSpaceXSpaceFeatureMapper;
+			this.SpaceXSpaceFeatureRepository = spaceXSpaceFeatureRepository;
+			this.SpaceXSpaceFeatureModelValidator = spaceXSpaceFeatureModelValidator;
+			this.BolSpaceXSpaceFeatureMapper = bolSpaceXSpaceFeatureMapper;
+			this.DalSpaceXSpaceFeatureMapper = dalSpaceXSpaceFeatureMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSpaceXSpaceFeatureResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.spaceXSpaceFeatureRepository.All(limit, offset);
+			var records = await this.SpaceXSpaceFeatureRepository.All(limit, offset);
 
-			return this.bolSpaceXSpaceFeatureMapper.MapBOToModel(this.dalSpaceXSpaceFeatureMapper.MapEFToBO(records));
+			return this.BolSpaceXSpaceFeatureMapper.MapBOToModel(this.DalSpaceXSpaceFeatureMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSpaceXSpaceFeatureResponseModel> Get(int id)
 		{
-			var record = await this.spaceXSpaceFeatureRepository.Get(id);
+			var record = await this.SpaceXSpaceFeatureRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolSpaceXSpaceFeatureMapper.MapBOToModel(this.dalSpaceXSpaceFeatureMapper.MapEFToBO(record));
+				return this.BolSpaceXSpaceFeatureMapper.MapBOToModel(this.DalSpaceXSpaceFeatureMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSpaceXSpaceFeatureResponseModel>> Create(
 			ApiSpaceXSpaceFeatureRequestModel model)
 		{
-			CreateResponse<ApiSpaceXSpaceFeatureResponseModel> response = new CreateResponse<ApiSpaceXSpaceFeatureResponseModel>(await this.spaceXSpaceFeatureModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSpaceXSpaceFeatureResponseModel> response = new CreateResponse<ApiSpaceXSpaceFeatureResponseModel>(await this.SpaceXSpaceFeatureModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSpaceXSpaceFeatureMapper.MapModelToBO(default(int), model);
-				var record = await this.spaceXSpaceFeatureRepository.Create(this.dalSpaceXSpaceFeatureMapper.MapBOToEF(bo));
+				var bo = this.BolSpaceXSpaceFeatureMapper.MapModelToBO(default(int), model);
+				var record = await this.SpaceXSpaceFeatureRepository.Create(this.DalSpaceXSpaceFeatureMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSpaceXSpaceFeatureMapper.MapBOToModel(this.dalSpaceXSpaceFeatureMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSpaceXSpaceFeatureMapper.MapBOToModel(this.DalSpaceXSpaceFeatureMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiSpaceXSpaceFeatureRequestModel model)
 		{
-			var validationResult = await this.spaceXSpaceFeatureModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SpaceXSpaceFeatureModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSpaceXSpaceFeatureMapper.MapModelToBO(id, model);
-				await this.spaceXSpaceFeatureRepository.Update(this.dalSpaceXSpaceFeatureMapper.MapBOToEF(bo));
+				var bo = this.BolSpaceXSpaceFeatureMapper.MapModelToBO(id, model);
+				await this.SpaceXSpaceFeatureRepository.Update(this.DalSpaceXSpaceFeatureMapper.MapBOToEF(bo));
 
-				var record = await this.spaceXSpaceFeatureRepository.Get(id);
+				var record = await this.SpaceXSpaceFeatureRepository.Get(id);
 
-				return new UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>(this.bolSpaceXSpaceFeatureMapper.MapBOToModel(this.dalSpaceXSpaceFeatureMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSpaceXSpaceFeatureResponseModel>(this.BolSpaceXSpaceFeatureMapper.MapBOToModel(this.DalSpaceXSpaceFeatureMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.spaceXSpaceFeatureModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SpaceXSpaceFeatureModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.spaceXSpaceFeatureRepository.Delete(id);
+				await this.SpaceXSpaceFeatureRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20efe35d323b16156e2527ec39a49a32</Hash>
+    <Hash>4d5cba58836c62fc93c46da1d7598350</Hash>
 </Codenesium>*/

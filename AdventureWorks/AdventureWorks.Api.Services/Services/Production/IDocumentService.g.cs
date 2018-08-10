@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDocumentService
+	public partial interface IDocumentService
 	{
 		Task<CreateResponse<ApiDocumentResponseModel>> Create(
 			ApiDocumentRequestModel model);
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0e51ca2ab862c26b78e5eef4ca35889d</Hash>
+    <Hash>f7cff7f6b1a98f0c6e119acbb0836748</Hash>
 </Codenesium>*/

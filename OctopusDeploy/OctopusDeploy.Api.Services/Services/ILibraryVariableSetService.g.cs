@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ILibraryVariableSetService
+	public partial interface ILibraryVariableSetService
 	{
 		Task<CreateResponse<ApiLibraryVariableSetResponseModel>> Create(
 			ApiLibraryVariableSetRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34e85815e2d2f096caaec7168a8a4c53</Hash>
+    <Hash>79af7c750f3ea55684582dc6e764ac11</Hash>
 </Codenesium>*/

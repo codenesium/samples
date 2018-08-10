@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IBOLTagsMapper
+	public partial interface IBOLTagsMapper
 	{
 		BOTags MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2bef6ae08136d61efbe5f3a22c9342a3</Hash>
+    <Hash>dfe34dd16db29f0f5900c802616dba27</Hash>
 </Codenesium>*/

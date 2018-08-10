@@ -6,7 +6,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IDALTicketStatusMapper
+	public partial interface IDALTicketStatusMapper
 	{
 		TicketStatus MapBOToEF(
 			BOTicketStatus bo);
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b62ccbb25722221e98c9648954f15690</Hash>
+    <Hash>1def86d5ce83737592c48e07cfb20a4b</Hash>
 </Codenesium>*/

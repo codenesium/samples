@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLSalesOrderDetailMapper
+	public partial interface IBOLSalesOrderDetailMapper
 	{
 		BOSalesOrderDetail MapModelToBO(
 			int salesOrderID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1a2b6f8705ffaca047eff70e5275a8d4</Hash>
+    <Hash>96cca8a949a084f7f66a195395aeb941</Hash>
 </Codenesium>*/

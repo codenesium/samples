@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLCountryRegionMapper
+	public partial interface IBOLCountryRegionMapper
 	{
 		BOCountryRegion MapModelToBO(
 			string countryRegionCode,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b5dec1896e078c2e7809974c54d2c6be</Hash>
+    <Hash>71320adbe8895918f980905e8677598a</Hash>
 </Codenesium>*/

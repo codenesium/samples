@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IBOLTeacherSkillMapper
+	public partial interface IBOLTeacherSkillMapper
 	{
 		BOTeacherSkill MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4d7f673e902f119cbf32b4b8d121f31</Hash>
+    <Hash>5da5979c2c73058975d6af92358d4f26</Hash>
 </Codenesium>*/

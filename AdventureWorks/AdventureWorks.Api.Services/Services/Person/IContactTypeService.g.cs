@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IContactTypeService
+	public partial interface IContactTypeService
 	{
 		Task<CreateResponse<ApiContactTypeResponseModel>> Create(
 			ApiContactTypeRequestModel model);
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a0f780d2aa756045a7f6ab4d76af2b32</Hash>
+    <Hash>724bf82ebbd1a47553659d5a22d70b9d</Hash>
 </Codenesium>*/

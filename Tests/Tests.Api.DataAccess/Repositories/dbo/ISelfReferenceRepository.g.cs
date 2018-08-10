@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
-	public interface ISelfReferenceRepository
+	public partial interface ISelfReferenceRepository
 	{
 		Task<SelfReference> Create(SelfReference item);
 
@@ -22,5 +22,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bcdd50f25a15c10c020e0fe4963b5425</Hash>
+    <Hash>ac4ee455c46c5724f3339c3096add8b7</Hash>
 </Codenesium>*/

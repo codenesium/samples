@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractProductListPriceHistoryService : AbstractService
 	{
-		private IProductListPriceHistoryRepository productListPriceHistoryRepository;
+		protected IProductListPriceHistoryRepository ProductListPriceHistoryRepository { get; private set; }
 
-		private IApiProductListPriceHistoryRequestModelValidator productListPriceHistoryModelValidator;
+		protected IApiProductListPriceHistoryRequestModelValidator ProductListPriceHistoryModelValidator { get; private set; }
 
-		private IBOLProductListPriceHistoryMapper bolProductListPriceHistoryMapper;
+		protected IBOLProductListPriceHistoryMapper BolProductListPriceHistoryMapper { get; private set; }
 
-		private IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper;
+		protected IDALProductListPriceHistoryMapper DalProductListPriceHistoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductListPriceHistoryMapper dalProductListPriceHistoryMapper)
 			: base()
 		{
-			this.productListPriceHistoryRepository = productListPriceHistoryRepository;
-			this.productListPriceHistoryModelValidator = productListPriceHistoryModelValidator;
-			this.bolProductListPriceHistoryMapper = bolProductListPriceHistoryMapper;
-			this.dalProductListPriceHistoryMapper = dalProductListPriceHistoryMapper;
+			this.ProductListPriceHistoryRepository = productListPriceHistoryRepository;
+			this.ProductListPriceHistoryModelValidator = productListPriceHistoryModelValidator;
+			this.BolProductListPriceHistoryMapper = bolProductListPriceHistoryMapper;
+			this.DalProductListPriceHistoryMapper = dalProductListPriceHistoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProductListPriceHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.productListPriceHistoryRepository.All(limit, offset);
+			var records = await this.ProductListPriceHistoryRepository.All(limit, offset);
 
-			return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(records));
+			return this.BolProductListPriceHistoryMapper.MapBOToModel(this.DalProductListPriceHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProductListPriceHistoryResponseModel> Get(int productID)
 		{
-			var record = await this.productListPriceHistoryRepository.Get(productID);
+			var record = await this.ProductListPriceHistoryRepository.Get(productID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record));
+				return this.BolProductListPriceHistoryMapper.MapBOToModel(this.DalProductListPriceHistoryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProductListPriceHistoryResponseModel>> Create(
 			ApiProductListPriceHistoryRequestModel model)
 		{
-			CreateResponse<ApiProductListPriceHistoryResponseModel> response = new CreateResponse<ApiProductListPriceHistoryResponseModel>(await this.productListPriceHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProductListPriceHistoryResponseModel> response = new CreateResponse<ApiProductListPriceHistoryResponseModel>(await this.ProductListPriceHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(default(int), model);
-				var record = await this.productListPriceHistoryRepository.Create(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolProductListPriceHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.ProductListPriceHistoryRepository.Create(this.DalProductListPriceHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProductListPriceHistoryMapper.MapBOToModel(this.DalProductListPriceHistoryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int productID,
 			ApiProductListPriceHistoryRequestModel model)
 		{
-			var validationResult = await this.productListPriceHistoryModelValidator.ValidateUpdateAsync(productID, model);
+			var validationResult = await this.ProductListPriceHistoryModelValidator.ValidateUpdateAsync(productID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProductListPriceHistoryMapper.MapModelToBO(productID, model);
-				await this.productListPriceHistoryRepository.Update(this.dalProductListPriceHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolProductListPriceHistoryMapper.MapModelToBO(productID, model);
+				await this.ProductListPriceHistoryRepository.Update(this.DalProductListPriceHistoryMapper.MapBOToEF(bo));
 
-				var record = await this.productListPriceHistoryRepository.Get(productID);
+				var record = await this.ProductListPriceHistoryRepository.Get(productID);
 
-				return new UpdateResponse<ApiProductListPriceHistoryResponseModel>(this.bolProductListPriceHistoryMapper.MapBOToModel(this.dalProductListPriceHistoryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProductListPriceHistoryResponseModel>(this.BolProductListPriceHistoryMapper.MapBOToModel(this.DalProductListPriceHistoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int productID)
 		{
-			ActionResponse response = new ActionResponse(await this.productListPriceHistoryModelValidator.ValidateDeleteAsync(productID));
+			ActionResponse response = new ActionResponse(await this.ProductListPriceHistoryModelValidator.ValidateDeleteAsync(productID));
 			if (response.Success)
 			{
-				await this.productListPriceHistoryRepository.Delete(productID);
+				await this.ProductListPriceHistoryRepository.Delete(productID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5980501b8f4566e95fad18d8bb8d6e7b</Hash>
+    <Hash>2a5483ba6ad90e29d12d679cb6981e90</Hash>
 </Codenesium>*/

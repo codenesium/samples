@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSpecialOfferService : AbstractService
 	{
-		private ISpecialOfferRepository specialOfferRepository;
+		protected ISpecialOfferRepository SpecialOfferRepository { get; private set; }
 
-		private IApiSpecialOfferRequestModelValidator specialOfferModelValidator;
+		protected IApiSpecialOfferRequestModelValidator SpecialOfferModelValidator { get; private set; }
 
-		private IBOLSpecialOfferMapper bolSpecialOfferMapper;
+		protected IBOLSpecialOfferMapper BolSpecialOfferMapper { get; private set; }
 
-		private IDALSpecialOfferMapper dalSpecialOfferMapper;
+		protected IDALSpecialOfferMapper DalSpecialOfferMapper { get; private set; }
 
-		private IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper;
+		protected IBOLSpecialOfferProductMapper BolSpecialOfferProductMapper { get; private set; }
 
-		private IDALSpecialOfferProductMapper dalSpecialOfferProductMapper;
+		protected IDALSpecialOfferProductMapper DalSpecialOfferProductMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALSpecialOfferProductMapper dalSpecialOfferProductMapper)
 			: base()
 		{
-			this.specialOfferRepository = specialOfferRepository;
-			this.specialOfferModelValidator = specialOfferModelValidator;
-			this.bolSpecialOfferMapper = bolSpecialOfferMapper;
-			this.dalSpecialOfferMapper = dalSpecialOfferMapper;
-			this.bolSpecialOfferProductMapper = bolSpecialOfferProductMapper;
-			this.dalSpecialOfferProductMapper = dalSpecialOfferProductMapper;
+			this.SpecialOfferRepository = specialOfferRepository;
+			this.SpecialOfferModelValidator = specialOfferModelValidator;
+			this.BolSpecialOfferMapper = bolSpecialOfferMapper;
+			this.DalSpecialOfferMapper = dalSpecialOfferMapper;
+			this.BolSpecialOfferProductMapper = bolSpecialOfferProductMapper;
+			this.DalSpecialOfferProductMapper = dalSpecialOfferProductMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSpecialOfferResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.specialOfferRepository.All(limit, offset);
+			var records = await this.SpecialOfferRepository.All(limit, offset);
 
-			return this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(records));
+			return this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSpecialOfferResponseModel> Get(int specialOfferID)
 		{
-			var record = await this.specialOfferRepository.Get(specialOfferID);
+			var record = await this.SpecialOfferRepository.Get(specialOfferID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(record));
+				return this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSpecialOfferResponseModel>> Create(
 			ApiSpecialOfferRequestModel model)
 		{
-			CreateResponse<ApiSpecialOfferResponseModel> response = new CreateResponse<ApiSpecialOfferResponseModel>(await this.specialOfferModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSpecialOfferResponseModel> response = new CreateResponse<ApiSpecialOfferResponseModel>(await this.SpecialOfferModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSpecialOfferMapper.MapModelToBO(default(int), model);
-				var record = await this.specialOfferRepository.Create(this.dalSpecialOfferMapper.MapBOToEF(bo));
+				var bo = this.BolSpecialOfferMapper.MapModelToBO(default(int), model);
+				var record = await this.SpecialOfferRepository.Create(this.DalSpecialOfferMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			int specialOfferID,
 			ApiSpecialOfferRequestModel model)
 		{
-			var validationResult = await this.specialOfferModelValidator.ValidateUpdateAsync(specialOfferID, model);
+			var validationResult = await this.SpecialOfferModelValidator.ValidateUpdateAsync(specialOfferID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSpecialOfferMapper.MapModelToBO(specialOfferID, model);
-				await this.specialOfferRepository.Update(this.dalSpecialOfferMapper.MapBOToEF(bo));
+				var bo = this.BolSpecialOfferMapper.MapModelToBO(specialOfferID, model);
+				await this.SpecialOfferRepository.Update(this.DalSpecialOfferMapper.MapBOToEF(bo));
 
-				var record = await this.specialOfferRepository.Get(specialOfferID);
+				var record = await this.SpecialOfferRepository.Get(specialOfferID);
 
-				return new UpdateResponse<ApiSpecialOfferResponseModel>(this.bolSpecialOfferMapper.MapBOToModel(this.dalSpecialOfferMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSpecialOfferResponseModel>(this.BolSpecialOfferMapper.MapBOToModel(this.DalSpecialOfferMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int specialOfferID)
 		{
-			ActionResponse response = new ActionResponse(await this.specialOfferModelValidator.ValidateDeleteAsync(specialOfferID));
+			ActionResponse response = new ActionResponse(await this.SpecialOfferModelValidator.ValidateDeleteAsync(specialOfferID));
 			if (response.Success)
 			{
-				await this.specialOfferRepository.Delete(specialOfferID);
+				await this.SpecialOfferRepository.Delete(specialOfferID);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public async virtual Task<List<ApiSpecialOfferProductResponseModel>> SpecialOfferProducts(int specialOfferID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SpecialOfferProduct> records = await this.specialOfferRepository.SpecialOfferProducts(specialOfferID, limit, offset);
+			List<SpecialOfferProduct> records = await this.SpecialOfferRepository.SpecialOfferProducts(specialOfferID, limit, offset);
 
-			return this.bolSpecialOfferProductMapper.MapBOToModel(this.dalSpecialOfferProductMapper.MapEFToBO(records));
+			return this.BolSpecialOfferProductMapper.MapBOToModel(this.DalSpecialOfferProductMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e0234d2c4836e521909987ee02d62a3a</Hash>
+    <Hash>d94c547fe44d121f2d1ea47a96cc424d</Hash>
 </Codenesium>*/

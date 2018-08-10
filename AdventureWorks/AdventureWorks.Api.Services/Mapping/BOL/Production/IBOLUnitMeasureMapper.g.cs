@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLUnitMeasureMapper
+	public partial interface IBOLUnitMeasureMapper
 	{
 		BOUnitMeasure MapModelToBO(
 			string unitMeasureCode,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d8333e0711259e73804c1a786a72d8fb</Hash>
+    <Hash>1b85d5b18fa22330c33d994c3e50c5aa</Hash>
 </Codenesium>*/

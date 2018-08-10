@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-	public interface ITagsRepository
+	public partial interface ITagsRepository
 	{
 		Task<Tags> Create(Tags item);
 
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7d24567721e48050da2c494ec605face</Hash>
+    <Hash>ba72ca0b3bfa61b1f5fdbab9a4d4be93</Hash>
 </Codenesium>*/

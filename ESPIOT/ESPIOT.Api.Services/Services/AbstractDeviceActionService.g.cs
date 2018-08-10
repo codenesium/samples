@@ -14,13 +14,13 @@ namespace ESPIOTNS.Api.Services
 {
 	public abstract class AbstractDeviceActionService : AbstractService
 	{
-		private IDeviceActionRepository deviceActionRepository;
+		protected IDeviceActionRepository DeviceActionRepository { get; private set; }
 
-		private IApiDeviceActionRequestModelValidator deviceActionModelValidator;
+		protected IApiDeviceActionRequestModelValidator DeviceActionModelValidator { get; private set; }
 
-		private IBOLDeviceActionMapper bolDeviceActionMapper;
+		protected IBOLDeviceActionMapper BolDeviceActionMapper { get; private set; }
 
-		private IDALDeviceActionMapper dalDeviceActionMapper;
+		protected IDALDeviceActionMapper DalDeviceActionMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace ESPIOTNS.Api.Services
 			IDALDeviceActionMapper dalDeviceActionMapper)
 			: base()
 		{
-			this.deviceActionRepository = deviceActionRepository;
-			this.deviceActionModelValidator = deviceActionModelValidator;
-			this.bolDeviceActionMapper = bolDeviceActionMapper;
-			this.dalDeviceActionMapper = dalDeviceActionMapper;
+			this.DeviceActionRepository = deviceActionRepository;
+			this.DeviceActionModelValidator = deviceActionModelValidator;
+			this.BolDeviceActionMapper = bolDeviceActionMapper;
+			this.DalDeviceActionMapper = dalDeviceActionMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiDeviceActionResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.deviceActionRepository.All(limit, offset);
+			var records = await this.DeviceActionRepository.All(limit, offset);
 
-			return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(records));
+			return this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDeviceActionResponseModel> Get(int id)
 		{
-			var record = await this.deviceActionRepository.Get(id);
+			var record = await this.DeviceActionRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace ESPIOTNS.Api.Services
 			}
 			else
 			{
-				return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(record));
+				return this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiDeviceActionResponseModel>> Create(
 			ApiDeviceActionRequestModel model)
 		{
-			CreateResponse<ApiDeviceActionResponseModel> response = new CreateResponse<ApiDeviceActionResponseModel>(await this.deviceActionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDeviceActionResponseModel> response = new CreateResponse<ApiDeviceActionResponseModel>(await this.DeviceActionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolDeviceActionMapper.MapModelToBO(default(int), model);
-				var record = await this.deviceActionRepository.Create(this.dalDeviceActionMapper.MapBOToEF(bo));
+				var bo = this.BolDeviceActionMapper.MapModelToBO(default(int), model);
+				var record = await this.DeviceActionRepository.Create(this.DalDeviceActionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace ESPIOTNS.Api.Services
 			int id,
 			ApiDeviceActionRequestModel model)
 		{
-			var validationResult = await this.deviceActionModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.DeviceActionModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolDeviceActionMapper.MapModelToBO(id, model);
-				await this.deviceActionRepository.Update(this.dalDeviceActionMapper.MapBOToEF(bo));
+				var bo = this.BolDeviceActionMapper.MapModelToBO(id, model);
+				await this.DeviceActionRepository.Update(this.DalDeviceActionMapper.MapBOToEF(bo));
 
-				var record = await this.deviceActionRepository.Get(id);
+				var record = await this.DeviceActionRepository.Get(id);
 
-				return new UpdateResponse<ApiDeviceActionResponseModel>(this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiDeviceActionResponseModel>(this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace ESPIOTNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.deviceActionModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.DeviceActionModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.deviceActionRepository.Delete(id);
+				await this.DeviceActionRepository.Delete(id);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace ESPIOTNS.Api.Services
 
 		public async Task<List<ApiDeviceActionResponseModel>> ByDeviceId(int deviceId)
 		{
-			List<DeviceAction> records = await this.deviceActionRepository.ByDeviceId(deviceId);
+			List<DeviceAction> records = await this.DeviceActionRepository.ByDeviceId(deviceId);
 
-			return this.bolDeviceActionMapper.MapBOToModel(this.dalDeviceActionMapper.MapEFToBO(records));
+			return this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b85263c7a9da8c52b7c091bfd80511d</Hash>
+    <Hash>830c97a20e719bd7f8c0a304b4396d7b</Hash>
 </Codenesium>*/

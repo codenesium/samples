@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractTenantVariableService : AbstractService
 	{
-		private ITenantVariableRepository tenantVariableRepository;
+		protected ITenantVariableRepository TenantVariableRepository { get; private set; }
 
-		private IApiTenantVariableRequestModelValidator tenantVariableModelValidator;
+		protected IApiTenantVariableRequestModelValidator TenantVariableModelValidator { get; private set; }
 
-		private IBOLTenantVariableMapper bolTenantVariableMapper;
+		protected IBOLTenantVariableMapper BolTenantVariableMapper { get; private set; }
 
-		private IDALTenantVariableMapper dalTenantVariableMapper;
+		protected IDALTenantVariableMapper DalTenantVariableMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALTenantVariableMapper dalTenantVariableMapper)
 			: base()
 		{
-			this.tenantVariableRepository = tenantVariableRepository;
-			this.tenantVariableModelValidator = tenantVariableModelValidator;
-			this.bolTenantVariableMapper = bolTenantVariableMapper;
-			this.dalTenantVariableMapper = dalTenantVariableMapper;
+			this.TenantVariableRepository = tenantVariableRepository;
+			this.TenantVariableModelValidator = tenantVariableModelValidator;
+			this.BolTenantVariableMapper = bolTenantVariableMapper;
+			this.DalTenantVariableMapper = dalTenantVariableMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTenantVariableResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.tenantVariableRepository.All(limit, offset);
+			var records = await this.TenantVariableRepository.All(limit, offset);
 
-			return this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(records));
+			return this.BolTenantVariableMapper.MapBOToModel(this.DalTenantVariableMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTenantVariableResponseModel> Get(string id)
 		{
-			var record = await this.tenantVariableRepository.Get(id);
+			var record = await this.TenantVariableRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(record));
+				return this.BolTenantVariableMapper.MapBOToModel(this.DalTenantVariableMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTenantVariableResponseModel>> Create(
 			ApiTenantVariableRequestModel model)
 		{
-			CreateResponse<ApiTenantVariableResponseModel> response = new CreateResponse<ApiTenantVariableResponseModel>(await this.tenantVariableModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTenantVariableResponseModel> response = new CreateResponse<ApiTenantVariableResponseModel>(await this.TenantVariableModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTenantVariableMapper.MapModelToBO(default(string), model);
-				var record = await this.tenantVariableRepository.Create(this.dalTenantVariableMapper.MapBOToEF(bo));
+				var bo = this.BolTenantVariableMapper.MapModelToBO(default(string), model);
+				var record = await this.TenantVariableRepository.Create(this.DalTenantVariableMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTenantVariableMapper.MapBOToModel(this.DalTenantVariableMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiTenantVariableRequestModel model)
 		{
-			var validationResult = await this.tenantVariableModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TenantVariableModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTenantVariableMapper.MapModelToBO(id, model);
-				await this.tenantVariableRepository.Update(this.dalTenantVariableMapper.MapBOToEF(bo));
+				var bo = this.BolTenantVariableMapper.MapModelToBO(id, model);
+				await this.TenantVariableRepository.Update(this.DalTenantVariableMapper.MapBOToEF(bo));
 
-				var record = await this.tenantVariableRepository.Get(id);
+				var record = await this.TenantVariableRepository.Get(id);
 
-				return new UpdateResponse<ApiTenantVariableResponseModel>(this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTenantVariableResponseModel>(this.BolTenantVariableMapper.MapBOToModel(this.DalTenantVariableMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.tenantVariableModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TenantVariableModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.tenantVariableRepository.Delete(id);
+				await this.TenantVariableRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiTenantVariableResponseModel> ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId)
 		{
-			TenantVariable record = await this.tenantVariableRepository.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(tenantId, ownerId, environmentId, variableTemplateId);
+			TenantVariable record = await this.TenantVariableRepository.ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(tenantId, ownerId, environmentId, variableTemplateId);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(record));
+				return this.BolTenantVariableMapper.MapBOToModel(this.DalTenantVariableMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiTenantVariableResponseModel>> ByTenantId(string tenantId)
 		{
-			List<TenantVariable> records = await this.tenantVariableRepository.ByTenantId(tenantId);
+			List<TenantVariable> records = await this.TenantVariableRepository.ByTenantId(tenantId);
 
-			return this.bolTenantVariableMapper.MapBOToModel(this.dalTenantVariableMapper.MapEFToBO(records));
+			return this.BolTenantVariableMapper.MapBOToModel(this.DalTenantVariableMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6b565fae03f402ddb4e7a49ee48eb3b0</Hash>
+    <Hash>af002a78e0a8bd0a2ee02d2ed8173429</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Contracts
 {
-	public interface IApiLibraryVariableSetModelMapper
+	public partial interface IApiLibraryVariableSetModelMapper
 	{
 		ApiLibraryVariableSetResponseModel MapRequestToResponse(
 			string id,
@@ -19,5 +19,5 @@ namespace OctopusDeployNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6031a4572faebf4dc94dd55cc87da8a5</Hash>
+    <Hash>343cba204a33680cc1da5f136ee08459</Hash>
 </Codenesium>*/

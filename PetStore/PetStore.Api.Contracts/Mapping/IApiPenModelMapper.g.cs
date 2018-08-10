@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Contracts
 {
-	public interface IApiPenModelMapper
+	public partial interface IApiPenModelMapper
 	{
 		ApiPenResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2c9123d4cde3ad5dfffa68541740c889</Hash>
+    <Hash>c3f95d11dcf24236366af36debd58300</Hash>
 </Codenesium>*/

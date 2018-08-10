@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IFeedService
+	public partial interface IFeedService
 	{
 		Task<CreateResponse<ApiFeedResponseModel>> Create(
 			ApiFeedRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>829835abcfb5f9e17cb53e176999eb0f</Hash>
+    <Hash>157f46b971ecd446be5136061fafbc4e</Hash>
 </Codenesium>*/

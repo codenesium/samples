@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ISalesTerritoryHistoryRepository
+	public partial interface ISalesTerritoryHistoryRepository
 	{
 		Task<SalesTerritoryHistory> Create(SalesTerritoryHistory item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d49aba0899078dcb0a9136919fb0887f</Hash>
+    <Hash>b51cb4cb09d49067f32149748a041e7a</Hash>
 </Codenesium>*/

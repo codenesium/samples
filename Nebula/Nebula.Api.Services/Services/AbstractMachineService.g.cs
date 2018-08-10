@@ -14,20 +14,20 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractMachineService : AbstractService
 	{
-		private IMachineRepository machineRepository;
+		protected IMachineRepository MachineRepository { get; private set; }
 
-		private IApiMachineRequestModelValidator machineModelValidator;
+		protected IApiMachineRequestModelValidator MachineModelValidator { get; private set; }
 
-		private IBOLMachineMapper bolMachineMapper;
+		protected IBOLMachineMapper BolMachineMapper { get; private set; }
 
-		private IDALMachineMapper dalMachineMapper;
+		protected IDALMachineMapper DalMachineMapper { get; private set; }
 
-		private IBOLLinkMapper bolLinkMapper;
+		protected IBOLLinkMapper BolLinkMapper { get; private set; }
 
-		private IDALLinkMapper dalLinkMapper;
-		private IBOLMachineRefTeamMapper bolMachineRefTeamMapper;
+		protected IDALLinkMapper DalLinkMapper { get; private set; }
+		protected IBOLMachineRefTeamMapper BolMachineRefTeamMapper { get; private set; }
 
-		private IDALMachineRefTeamMapper dalMachineRefTeamMapper;
+		protected IDALMachineRefTeamMapper DalMachineRefTeamMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -43,27 +43,27 @@ namespace NebulaNS.Api.Services
 			IDALMachineRefTeamMapper dalMachineRefTeamMapper)
 			: base()
 		{
-			this.machineRepository = machineRepository;
-			this.machineModelValidator = machineModelValidator;
-			this.bolMachineMapper = bolMachineMapper;
-			this.dalMachineMapper = dalMachineMapper;
-			this.bolLinkMapper = bolLinkMapper;
-			this.dalLinkMapper = dalLinkMapper;
-			this.bolMachineRefTeamMapper = bolMachineRefTeamMapper;
-			this.dalMachineRefTeamMapper = dalMachineRefTeamMapper;
+			this.MachineRepository = machineRepository;
+			this.MachineModelValidator = machineModelValidator;
+			this.BolMachineMapper = bolMachineMapper;
+			this.DalMachineMapper = dalMachineMapper;
+			this.BolLinkMapper = bolLinkMapper;
+			this.DalLinkMapper = dalLinkMapper;
+			this.BolMachineRefTeamMapper = bolMachineRefTeamMapper;
+			this.DalMachineRefTeamMapper = dalMachineRefTeamMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.machineRepository.All(limit, offset);
+			var records = await this.MachineRepository.All(limit, offset);
 
-			return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
+			return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiMachineResponseModel> Get(int id)
 		{
-			var record = await this.machineRepository.Get(id);
+			var record = await this.MachineRepository.Get(id);
 
 			if (record == null)
 			{
@@ -71,20 +71,20 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+				return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiMachineResponseModel>> Create(
 			ApiMachineRequestModel model)
 		{
-			CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.machineModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.MachineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolMachineMapper.MapModelToBO(default(int), model);
-				var record = await this.machineRepository.Create(this.dalMachineMapper.MapBOToEF(bo));
+				var bo = this.BolMachineMapper.MapModelToBO(default(int), model);
+				var record = await this.MachineRepository.Create(this.DalMachineMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -94,16 +94,16 @@ namespace NebulaNS.Api.Services
 			int id,
 			ApiMachineRequestModel model)
 		{
-			var validationResult = await this.machineModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.MachineModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolMachineMapper.MapModelToBO(id, model);
-				await this.machineRepository.Update(this.dalMachineMapper.MapBOToEF(bo));
+				var bo = this.BolMachineMapper.MapModelToBO(id, model);
+				await this.MachineRepository.Update(this.DalMachineMapper.MapBOToEF(bo));
 
-				var record = await this.machineRepository.Get(id);
+				var record = await this.MachineRepository.Get(id);
 
-				return new UpdateResponse<ApiMachineResponseModel>(this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiMachineResponseModel>(this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -114,10 +114,10 @@ namespace NebulaNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.MachineModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.machineRepository.Delete(id);
+				await this.MachineRepository.Delete(id);
 			}
 
 			return response;
@@ -125,20 +125,20 @@ namespace NebulaNS.Api.Services
 
 		public async virtual Task<List<ApiLinkResponseModel>> Links(int assignedMachineId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Link> records = await this.machineRepository.Links(assignedMachineId, limit, offset);
+			List<Link> records = await this.MachineRepository.Links(assignedMachineId, limit, offset);
 
-			return this.bolLinkMapper.MapBOToModel(this.dalLinkMapper.MapEFToBO(records));
+			return this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int machineId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<MachineRefTeam> records = await this.machineRepository.MachineRefTeams(machineId, limit, offset);
+			List<MachineRefTeam> records = await this.MachineRepository.MachineRefTeams(machineId, limit, offset);
 
-			return this.bolMachineRefTeamMapper.MapBOToModel(this.dalMachineRefTeamMapper.MapEFToBO(records));
+			return this.BolMachineRefTeamMapper.MapBOToModel(this.DalMachineRefTeamMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bcb3abe9cf6c104150d352e6fe0ceb26</Hash>
+    <Hash>487ff05d4445e0fe99e03e288419fdc7</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractCountryRegionService : AbstractService
 	{
-		private ICountryRegionRepository countryRegionRepository;
+		protected ICountryRegionRepository CountryRegionRepository { get; private set; }
 
-		private IApiCountryRegionRequestModelValidator countryRegionModelValidator;
+		protected IApiCountryRegionRequestModelValidator CountryRegionModelValidator { get; private set; }
 
-		private IBOLCountryRegionMapper bolCountryRegionMapper;
+		protected IBOLCountryRegionMapper BolCountryRegionMapper { get; private set; }
 
-		private IDALCountryRegionMapper dalCountryRegionMapper;
+		protected IDALCountryRegionMapper DalCountryRegionMapper { get; private set; }
 
-		private IBOLStateProvinceMapper bolStateProvinceMapper;
+		protected IBOLStateProvinceMapper BolStateProvinceMapper { get; private set; }
 
-		private IDALStateProvinceMapper dalStateProvinceMapper;
+		protected IDALStateProvinceMapper DalStateProvinceMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALStateProvinceMapper dalStateProvinceMapper)
 			: base()
 		{
-			this.countryRegionRepository = countryRegionRepository;
-			this.countryRegionModelValidator = countryRegionModelValidator;
-			this.bolCountryRegionMapper = bolCountryRegionMapper;
-			this.dalCountryRegionMapper = dalCountryRegionMapper;
-			this.bolStateProvinceMapper = bolStateProvinceMapper;
-			this.dalStateProvinceMapper = dalStateProvinceMapper;
+			this.CountryRegionRepository = countryRegionRepository;
+			this.CountryRegionModelValidator = countryRegionModelValidator;
+			this.BolCountryRegionMapper = bolCountryRegionMapper;
+			this.DalCountryRegionMapper = dalCountryRegionMapper;
+			this.BolStateProvinceMapper = bolStateProvinceMapper;
+			this.DalStateProvinceMapper = dalStateProvinceMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiCountryRegionResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.countryRegionRepository.All(limit, offset);
+			var records = await this.CountryRegionRepository.All(limit, offset);
 
-			return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(records));
+			return this.BolCountryRegionMapper.MapBOToModel(this.DalCountryRegionMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCountryRegionResponseModel> Get(string countryRegionCode)
 		{
-			var record = await this.countryRegionRepository.Get(countryRegionCode);
+			var record = await this.CountryRegionRepository.Get(countryRegionCode);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record));
+				return this.BolCountryRegionMapper.MapBOToModel(this.DalCountryRegionMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryRegionResponseModel>> Create(
 			ApiCountryRegionRequestModel model)
 		{
-			CreateResponse<ApiCountryRegionResponseModel> response = new CreateResponse<ApiCountryRegionResponseModel>(await this.countryRegionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCountryRegionResponseModel> response = new CreateResponse<ApiCountryRegionResponseModel>(await this.CountryRegionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolCountryRegionMapper.MapModelToBO(default(string), model);
-				var record = await this.countryRegionRepository.Create(this.dalCountryRegionMapper.MapBOToEF(bo));
+				var bo = this.BolCountryRegionMapper.MapModelToBO(default(string), model);
+				var record = await this.CountryRegionRepository.Create(this.DalCountryRegionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolCountryRegionMapper.MapBOToModel(this.DalCountryRegionMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			string countryRegionCode,
 			ApiCountryRegionRequestModel model)
 		{
-			var validationResult = await this.countryRegionModelValidator.ValidateUpdateAsync(countryRegionCode, model);
+			var validationResult = await this.CountryRegionModelValidator.ValidateUpdateAsync(countryRegionCode, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolCountryRegionMapper.MapModelToBO(countryRegionCode, model);
-				await this.countryRegionRepository.Update(this.dalCountryRegionMapper.MapBOToEF(bo));
+				var bo = this.BolCountryRegionMapper.MapModelToBO(countryRegionCode, model);
+				await this.CountryRegionRepository.Update(this.DalCountryRegionMapper.MapBOToEF(bo));
 
-				var record = await this.countryRegionRepository.Get(countryRegionCode);
+				var record = await this.CountryRegionRepository.Get(countryRegionCode);
 
-				return new UpdateResponse<ApiCountryRegionResponseModel>(this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiCountryRegionResponseModel>(this.BolCountryRegionMapper.MapBOToModel(this.DalCountryRegionMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string countryRegionCode)
 		{
-			ActionResponse response = new ActionResponse(await this.countryRegionModelValidator.ValidateDeleteAsync(countryRegionCode));
+			ActionResponse response = new ActionResponse(await this.CountryRegionModelValidator.ValidateDeleteAsync(countryRegionCode));
 			if (response.Success)
 			{
-				await this.countryRegionRepository.Delete(countryRegionCode);
+				await this.CountryRegionRepository.Delete(countryRegionCode);
 			}
 
 			return response;
@@ -118,7 +118,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiCountryRegionResponseModel> ByName(string name)
 		{
-			CountryRegion record = await this.countryRegionRepository.ByName(name);
+			CountryRegion record = await this.CountryRegionRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -126,19 +126,19 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolCountryRegionMapper.MapBOToModel(this.dalCountryRegionMapper.MapEFToBO(record));
+				return this.BolCountryRegionMapper.MapBOToModel(this.DalCountryRegionMapper.MapEFToBO(record));
 			}
 		}
 
 		public async virtual Task<List<ApiStateProvinceResponseModel>> StateProvinces(string countryRegionCode, int limit = int.MaxValue, int offset = 0)
 		{
-			List<StateProvince> records = await this.countryRegionRepository.StateProvinces(countryRegionCode, limit, offset);
+			List<StateProvince> records = await this.CountryRegionRepository.StateProvinces(countryRegionCode, limit, offset);
 
-			return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(records));
+			return this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ae47c177f508380aa2393e05f959d414</Hash>
+    <Hash>7b0de05fc7aad1d3888985b751d5d857</Hash>
 </Codenesium>*/

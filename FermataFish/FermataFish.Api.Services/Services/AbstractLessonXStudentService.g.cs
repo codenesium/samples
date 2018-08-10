@@ -14,13 +14,13 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractLessonXStudentService : AbstractService
 	{
-		private ILessonXStudentRepository lessonXStudentRepository;
+		protected ILessonXStudentRepository LessonXStudentRepository { get; private set; }
 
-		private IApiLessonXStudentRequestModelValidator lessonXStudentModelValidator;
+		protected IApiLessonXStudentRequestModelValidator LessonXStudentModelValidator { get; private set; }
 
-		private IBOLLessonXStudentMapper bolLessonXStudentMapper;
+		protected IBOLLessonXStudentMapper BolLessonXStudentMapper { get; private set; }
 
-		private IDALLessonXStudentMapper dalLessonXStudentMapper;
+		protected IDALLessonXStudentMapper DalLessonXStudentMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace FermataFishNS.Api.Services
 			IDALLessonXStudentMapper dalLessonXStudentMapper)
 			: base()
 		{
-			this.lessonXStudentRepository = lessonXStudentRepository;
-			this.lessonXStudentModelValidator = lessonXStudentModelValidator;
-			this.bolLessonXStudentMapper = bolLessonXStudentMapper;
-			this.dalLessonXStudentMapper = dalLessonXStudentMapper;
+			this.LessonXStudentRepository = lessonXStudentRepository;
+			this.LessonXStudentModelValidator = lessonXStudentModelValidator;
+			this.BolLessonXStudentMapper = bolLessonXStudentMapper;
+			this.DalLessonXStudentMapper = dalLessonXStudentMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiLessonXStudentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.lessonXStudentRepository.All(limit, offset);
+			var records = await this.LessonXStudentRepository.All(limit, offset);
 
-			return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(records));
+			return this.BolLessonXStudentMapper.MapBOToModel(this.DalLessonXStudentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLessonXStudentResponseModel> Get(int id)
 		{
-			var record = await this.lessonXStudentRepository.Get(id);
+			var record = await this.LessonXStudentRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record));
+				return this.BolLessonXStudentMapper.MapBOToModel(this.DalLessonXStudentMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiLessonXStudentResponseModel>> Create(
 			ApiLessonXStudentRequestModel model)
 		{
-			CreateResponse<ApiLessonXStudentResponseModel> response = new CreateResponse<ApiLessonXStudentResponseModel>(await this.lessonXStudentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLessonXStudentResponseModel> response = new CreateResponse<ApiLessonXStudentResponseModel>(await this.LessonXStudentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolLessonXStudentMapper.MapModelToBO(default(int), model);
-				var record = await this.lessonXStudentRepository.Create(this.dalLessonXStudentMapper.MapBOToEF(bo));
+				var bo = this.BolLessonXStudentMapper.MapModelToBO(default(int), model);
+				var record = await this.LessonXStudentRepository.Create(this.DalLessonXStudentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolLessonXStudentMapper.MapBOToModel(this.DalLessonXStudentMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiLessonXStudentRequestModel model)
 		{
-			var validationResult = await this.lessonXStudentModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.LessonXStudentModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolLessonXStudentMapper.MapModelToBO(id, model);
-				await this.lessonXStudentRepository.Update(this.dalLessonXStudentMapper.MapBOToEF(bo));
+				var bo = this.BolLessonXStudentMapper.MapModelToBO(id, model);
+				await this.LessonXStudentRepository.Update(this.DalLessonXStudentMapper.MapBOToEF(bo));
 
-				var record = await this.lessonXStudentRepository.Get(id);
+				var record = await this.LessonXStudentRepository.Get(id);
 
-				return new UpdateResponse<ApiLessonXStudentResponseModel>(this.bolLessonXStudentMapper.MapBOToModel(this.dalLessonXStudentMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiLessonXStudentResponseModel>(this.BolLessonXStudentMapper.MapBOToModel(this.DalLessonXStudentMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.lessonXStudentModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.LessonXStudentModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.lessonXStudentRepository.Delete(id);
+				await this.LessonXStudentRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0d9582d0183e63a5991030f8c2351039</Hash>
+    <Hash>c246db41b4cabbf4db85faf8cac688c0</Hash>
 </Codenesium>*/

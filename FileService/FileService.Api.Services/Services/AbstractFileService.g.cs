@@ -14,13 +14,13 @@ namespace FileServiceNS.Api.Services
 {
 	public abstract class AbstractFileService : AbstractService
 	{
-		private IFileRepository fileRepository;
+		protected IFileRepository FileRepository { get; private set; }
 
-		private IApiFileRequestModelValidator fileModelValidator;
+		protected IApiFileRequestModelValidator FileModelValidator { get; private set; }
 
-		private IBOLFileMapper bolFileMapper;
+		protected IBOLFileMapper BolFileMapper { get; private set; }
 
-		private IDALFileMapper dalFileMapper;
+		protected IDALFileMapper DalFileMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace FileServiceNS.Api.Services
 			IDALFileMapper dalFileMapper)
 			: base()
 		{
-			this.fileRepository = fileRepository;
-			this.fileModelValidator = fileModelValidator;
-			this.bolFileMapper = bolFileMapper;
-			this.dalFileMapper = dalFileMapper;
+			this.FileRepository = fileRepository;
+			this.FileModelValidator = fileModelValidator;
+			this.BolFileMapper = bolFileMapper;
+			this.DalFileMapper = dalFileMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiFileResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.fileRepository.All(limit, offset);
+			var records = await this.FileRepository.All(limit, offset);
 
-			return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(records));
+			return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiFileResponseModel> Get(int id)
 		{
-			var record = await this.fileRepository.Get(id);
+			var record = await this.FileRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace FileServiceNS.Api.Services
 			}
 			else
 			{
-				return this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record));
+				return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiFileResponseModel>> Create(
 			ApiFileRequestModel model)
 		{
-			CreateResponse<ApiFileResponseModel> response = new CreateResponse<ApiFileResponseModel>(await this.fileModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiFileResponseModel> response = new CreateResponse<ApiFileResponseModel>(await this.FileModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolFileMapper.MapModelToBO(default(int), model);
-				var record = await this.fileRepository.Create(this.dalFileMapper.MapBOToEF(bo));
+				var bo = this.BolFileMapper.MapModelToBO(default(int), model);
+				var record = await this.FileRepository.Create(this.DalFileMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace FileServiceNS.Api.Services
 			int id,
 			ApiFileRequestModel model)
 		{
-			var validationResult = await this.fileModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.FileModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolFileMapper.MapModelToBO(id, model);
-				await this.fileRepository.Update(this.dalFileMapper.MapBOToEF(bo));
+				var bo = this.BolFileMapper.MapModelToBO(id, model);
+				await this.FileRepository.Update(this.DalFileMapper.MapBOToEF(bo));
 
-				var record = await this.fileRepository.Get(id);
+				var record = await this.FileRepository.Get(id);
 
-				return new UpdateResponse<ApiFileResponseModel>(this.bolFileMapper.MapBOToModel(this.dalFileMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiFileResponseModel>(this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace FileServiceNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.fileModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.FileModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.fileRepository.Delete(id);
+				await this.FileRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f30e50a70d6b0daa56933787bc1be43a</Hash>
+    <Hash>f4c1233a5683193bd97ec26e9366c538</Hash>
 </Codenesium>*/

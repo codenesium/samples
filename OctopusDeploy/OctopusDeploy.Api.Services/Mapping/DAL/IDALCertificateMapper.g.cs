@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALCertificateMapper
+	public partial interface IDALCertificateMapper
 	{
 		Certificate MapBOToEF(
 			BOCertificate bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0fa784d01db6148db6b72354e2a3e0dd</Hash>
+    <Hash>cd141f05c45301493ccf16592c076b90</Hash>
 </Codenesium>*/

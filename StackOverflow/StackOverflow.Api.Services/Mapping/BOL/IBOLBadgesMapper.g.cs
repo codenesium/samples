@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IBOLBadgesMapper
+	public partial interface IBOLBadgesMapper
 	{
 		BOBadges MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bb0f6712a714b3388b320ce2cf306c88</Hash>
+    <Hash>884be1db64e0823584be55a235c3c20d</Hash>
 </Codenesium>*/

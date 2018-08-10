@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLProductSubcategoryMapper
+	public partial interface IBOLProductSubcategoryMapper
 	{
 		BOProductSubcategory MapModelToBO(
 			int productSubcategoryID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e8a29846ca9cb7425add5663da1921c</Hash>
+    <Hash>d8dc39bd70cac36ec5042a28a57376c1</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
-	public interface IProvinceRepository
+	public partial interface IProvinceRepository
 	{
 		Task<Province> Create(Province item);
 
@@ -28,5 +28,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>14a4468de433b7473027051b1847db28</Hash>
+    <Hash>b4f3381225cfc488f68786b794735280</Hash>
 </Codenesium>*/

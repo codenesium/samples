@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IBOLChainStatusMapper
+	public partial interface IBOLChainStatusMapper
 	{
 		BOChainStatus MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>057e99387ac80ee2c352d889f96747cc</Hash>
+    <Hash>54aa3e094cd81a51a4747661e0dd374a</Hash>
 </Codenesium>*/

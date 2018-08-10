@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiContactTypeModelMapper
+	public partial interface IApiContactTypeModelMapper
 	{
 		ApiContactTypeResponseModel MapRequestToResponse(
 			int contactTypeID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d3195a57411076457187cdae9bbb0e8b</Hash>
+    <Hash>159b8e0ac799ec4bc865831c820e0f18</Hash>
 </Codenesium>*/

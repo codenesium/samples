@@ -14,17 +14,17 @@ namespace TestsNS.Api.Services
 {
 	public abstract class AbstractSchemaBPersonService : AbstractService
 	{
-		private ISchemaBPersonRepository schemaBPersonRepository;
+		protected ISchemaBPersonRepository SchemaBPersonRepository { get; private set; }
 
-		private IApiSchemaBPersonRequestModelValidator schemaBPersonModelValidator;
+		protected IApiSchemaBPersonRequestModelValidator SchemaBPersonModelValidator { get; private set; }
 
-		private IBOLSchemaBPersonMapper bolSchemaBPersonMapper;
+		protected IBOLSchemaBPersonMapper BolSchemaBPersonMapper { get; private set; }
 
-		private IDALSchemaBPersonMapper dalSchemaBPersonMapper;
+		protected IDALSchemaBPersonMapper DalSchemaBPersonMapper { get; private set; }
 
-		private IBOLPersonRefMapper bolPersonRefMapper;
+		protected IBOLPersonRefMapper BolPersonRefMapper { get; private set; }
 
-		private IDALPersonRefMapper dalPersonRefMapper;
+		protected IDALPersonRefMapper DalPersonRefMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace TestsNS.Api.Services
 			IDALPersonRefMapper dalPersonRefMapper)
 			: base()
 		{
-			this.schemaBPersonRepository = schemaBPersonRepository;
-			this.schemaBPersonModelValidator = schemaBPersonModelValidator;
-			this.bolSchemaBPersonMapper = bolSchemaBPersonMapper;
-			this.dalSchemaBPersonMapper = dalSchemaBPersonMapper;
-			this.bolPersonRefMapper = bolPersonRefMapper;
-			this.dalPersonRefMapper = dalPersonRefMapper;
+			this.SchemaBPersonRepository = schemaBPersonRepository;
+			this.SchemaBPersonModelValidator = schemaBPersonModelValidator;
+			this.BolSchemaBPersonMapper = bolSchemaBPersonMapper;
+			this.DalSchemaBPersonMapper = dalSchemaBPersonMapper;
+			this.BolPersonRefMapper = bolPersonRefMapper;
+			this.DalPersonRefMapper = dalPersonRefMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSchemaBPersonResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.schemaBPersonRepository.All(limit, offset);
+			var records = await this.SchemaBPersonRepository.All(limit, offset);
 
-			return this.bolSchemaBPersonMapper.MapBOToModel(this.dalSchemaBPersonMapper.MapEFToBO(records));
+			return this.BolSchemaBPersonMapper.MapBOToModel(this.DalSchemaBPersonMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSchemaBPersonResponseModel> Get(int id)
 		{
-			var record = await this.schemaBPersonRepository.Get(id);
+			var record = await this.SchemaBPersonRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace TestsNS.Api.Services
 			}
 			else
 			{
-				return this.bolSchemaBPersonMapper.MapBOToModel(this.dalSchemaBPersonMapper.MapEFToBO(record));
+				return this.BolSchemaBPersonMapper.MapBOToModel(this.DalSchemaBPersonMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSchemaBPersonResponseModel>> Create(
 			ApiSchemaBPersonRequestModel model)
 		{
-			CreateResponse<ApiSchemaBPersonResponseModel> response = new CreateResponse<ApiSchemaBPersonResponseModel>(await this.schemaBPersonModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSchemaBPersonResponseModel> response = new CreateResponse<ApiSchemaBPersonResponseModel>(await this.SchemaBPersonModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSchemaBPersonMapper.MapModelToBO(default(int), model);
-				var record = await this.schemaBPersonRepository.Create(this.dalSchemaBPersonMapper.MapBOToEF(bo));
+				var bo = this.BolSchemaBPersonMapper.MapModelToBO(default(int), model);
+				var record = await this.SchemaBPersonRepository.Create(this.DalSchemaBPersonMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSchemaBPersonMapper.MapBOToModel(this.dalSchemaBPersonMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSchemaBPersonMapper.MapBOToModel(this.DalSchemaBPersonMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace TestsNS.Api.Services
 			int id,
 			ApiSchemaBPersonRequestModel model)
 		{
-			var validationResult = await this.schemaBPersonModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.SchemaBPersonModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSchemaBPersonMapper.MapModelToBO(id, model);
-				await this.schemaBPersonRepository.Update(this.dalSchemaBPersonMapper.MapBOToEF(bo));
+				var bo = this.BolSchemaBPersonMapper.MapModelToBO(id, model);
+				await this.SchemaBPersonRepository.Update(this.DalSchemaBPersonMapper.MapBOToEF(bo));
 
-				var record = await this.schemaBPersonRepository.Get(id);
+				var record = await this.SchemaBPersonRepository.Get(id);
 
-				return new UpdateResponse<ApiSchemaBPersonResponseModel>(this.bolSchemaBPersonMapper.MapBOToModel(this.dalSchemaBPersonMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSchemaBPersonResponseModel>(this.BolSchemaBPersonMapper.MapBOToModel(this.DalSchemaBPersonMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace TestsNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.schemaBPersonModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.SchemaBPersonModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.schemaBPersonRepository.Delete(id);
+				await this.SchemaBPersonRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace TestsNS.Api.Services
 
 		public async virtual Task<List<ApiPersonRefResponseModel>> PersonRefs(int personBId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PersonRef> records = await this.schemaBPersonRepository.PersonRefs(personBId, limit, offset);
+			List<PersonRef> records = await this.SchemaBPersonRepository.PersonRefs(personBId, limit, offset);
 
-			return this.bolPersonRefMapper.MapBOToModel(this.dalPersonRefMapper.MapEFToBO(records));
+			return this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>321d584d889fde5b873eb0d9d4eccc7d</Hash>
+    <Hash>0dc5d0a6b8cc1bb984822bc9efc36dc1</Hash>
 </Codenesium>*/

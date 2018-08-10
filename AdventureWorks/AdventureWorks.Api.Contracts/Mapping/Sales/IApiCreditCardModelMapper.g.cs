@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiCreditCardModelMapper
+	public partial interface IApiCreditCardModelMapper
 	{
 		ApiCreditCardResponseModel MapRequestToResponse(
 			int creditCardID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d3592c7878727df36aff9b47cb7ed2d4</Hash>
+    <Hash>e7fd5cacfbf684fb464090b369d1b6ea</Hash>
 </Codenesium>*/

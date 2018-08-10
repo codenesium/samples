@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLApiKeyMapper
+	public partial interface IBOLApiKeyMapper
 	{
 		BOApiKey MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a65c5dd3df40505f06fbec12c1209e08</Hash>
+    <Hash>954ea458674dc743e4b5997c352c7506</Hash>
 </Codenesium>*/

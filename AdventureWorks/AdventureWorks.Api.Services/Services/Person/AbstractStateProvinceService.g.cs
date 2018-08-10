@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractStateProvinceService : AbstractService
 	{
-		private IStateProvinceRepository stateProvinceRepository;
+		protected IStateProvinceRepository StateProvinceRepository { get; private set; }
 
-		private IApiStateProvinceRequestModelValidator stateProvinceModelValidator;
+		protected IApiStateProvinceRequestModelValidator StateProvinceModelValidator { get; private set; }
 
-		private IBOLStateProvinceMapper bolStateProvinceMapper;
+		protected IBOLStateProvinceMapper BolStateProvinceMapper { get; private set; }
 
-		private IDALStateProvinceMapper dalStateProvinceMapper;
+		protected IDALStateProvinceMapper DalStateProvinceMapper { get; private set; }
 
-		private IBOLAddressMapper bolAddressMapper;
+		protected IBOLAddressMapper BolAddressMapper { get; private set; }
 
-		private IDALAddressMapper dalAddressMapper;
+		protected IDALAddressMapper DalAddressMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALAddressMapper dalAddressMapper)
 			: base()
 		{
-			this.stateProvinceRepository = stateProvinceRepository;
-			this.stateProvinceModelValidator = stateProvinceModelValidator;
-			this.bolStateProvinceMapper = bolStateProvinceMapper;
-			this.dalStateProvinceMapper = dalStateProvinceMapper;
-			this.bolAddressMapper = bolAddressMapper;
-			this.dalAddressMapper = dalAddressMapper;
+			this.StateProvinceRepository = stateProvinceRepository;
+			this.StateProvinceModelValidator = stateProvinceModelValidator;
+			this.BolStateProvinceMapper = bolStateProvinceMapper;
+			this.DalStateProvinceMapper = dalStateProvinceMapper;
+			this.BolAddressMapper = bolAddressMapper;
+			this.DalAddressMapper = dalAddressMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiStateProvinceResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.stateProvinceRepository.All(limit, offset);
+			var records = await this.StateProvinceRepository.All(limit, offset);
 
-			return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(records));
+			return this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStateProvinceResponseModel> Get(int stateProvinceID)
 		{
-			var record = await this.stateProvinceRepository.Get(stateProvinceID);
+			var record = await this.StateProvinceRepository.Get(stateProvinceID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record));
+				return this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiStateProvinceResponseModel>> Create(
 			ApiStateProvinceRequestModel model)
 		{
-			CreateResponse<ApiStateProvinceResponseModel> response = new CreateResponse<ApiStateProvinceResponseModel>(await this.stateProvinceModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStateProvinceResponseModel> response = new CreateResponse<ApiStateProvinceResponseModel>(await this.StateProvinceModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolStateProvinceMapper.MapModelToBO(default(int), model);
-				var record = await this.stateProvinceRepository.Create(this.dalStateProvinceMapper.MapBOToEF(bo));
+				var bo = this.BolStateProvinceMapper.MapModelToBO(default(int), model);
+				var record = await this.StateProvinceRepository.Create(this.DalStateProvinceMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			int stateProvinceID,
 			ApiStateProvinceRequestModel model)
 		{
-			var validationResult = await this.stateProvinceModelValidator.ValidateUpdateAsync(stateProvinceID, model);
+			var validationResult = await this.StateProvinceModelValidator.ValidateUpdateAsync(stateProvinceID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolStateProvinceMapper.MapModelToBO(stateProvinceID, model);
-				await this.stateProvinceRepository.Update(this.dalStateProvinceMapper.MapBOToEF(bo));
+				var bo = this.BolStateProvinceMapper.MapModelToBO(stateProvinceID, model);
+				await this.StateProvinceRepository.Update(this.DalStateProvinceMapper.MapBOToEF(bo));
 
-				var record = await this.stateProvinceRepository.Get(stateProvinceID);
+				var record = await this.StateProvinceRepository.Get(stateProvinceID);
 
-				return new UpdateResponse<ApiStateProvinceResponseModel>(this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiStateProvinceResponseModel>(this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int stateProvinceID)
 		{
-			ActionResponse response = new ActionResponse(await this.stateProvinceModelValidator.ValidateDeleteAsync(stateProvinceID));
+			ActionResponse response = new ActionResponse(await this.StateProvinceModelValidator.ValidateDeleteAsync(stateProvinceID));
 			if (response.Success)
 			{
-				await this.stateProvinceRepository.Delete(stateProvinceID);
+				await this.StateProvinceRepository.Delete(stateProvinceID);
 			}
 
 			return response;
@@ -118,7 +118,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiStateProvinceResponseModel> ByName(string name)
 		{
-			StateProvince record = await this.stateProvinceRepository.ByName(name);
+			StateProvince record = await this.StateProvinceRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -126,13 +126,13 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record));
+				return this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<ApiStateProvinceResponseModel> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
 		{
-			StateProvince record = await this.stateProvinceRepository.ByStateProvinceCodeCountryRegionCode(stateProvinceCode, countryRegionCode);
+			StateProvince record = await this.StateProvinceRepository.ByStateProvinceCodeCountryRegionCode(stateProvinceCode, countryRegionCode);
 
 			if (record == null)
 			{
@@ -140,19 +140,19 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolStateProvinceMapper.MapBOToModel(this.dalStateProvinceMapper.MapEFToBO(record));
+				return this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(record));
 			}
 		}
 
 		public async virtual Task<List<ApiAddressResponseModel>> Addresses(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Address> records = await this.stateProvinceRepository.Addresses(stateProvinceID, limit, offset);
+			List<Address> records = await this.StateProvinceRepository.Addresses(stateProvinceID, limit, offset);
 
-			return this.bolAddressMapper.MapBOToModel(this.dalAddressMapper.MapEFToBO(records));
+			return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0964d87291713a05499bee3297a77f05</Hash>
+    <Hash>b508a5750775137eeab7b6caba76c4a0</Hash>
 </Codenesium>*/

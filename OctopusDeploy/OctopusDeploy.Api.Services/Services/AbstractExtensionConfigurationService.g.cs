@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractExtensionConfigurationService : AbstractService
 	{
-		private IExtensionConfigurationRepository extensionConfigurationRepository;
+		protected IExtensionConfigurationRepository ExtensionConfigurationRepository { get; private set; }
 
-		private IApiExtensionConfigurationRequestModelValidator extensionConfigurationModelValidator;
+		protected IApiExtensionConfigurationRequestModelValidator ExtensionConfigurationModelValidator { get; private set; }
 
-		private IBOLExtensionConfigurationMapper bolExtensionConfigurationMapper;
+		protected IBOLExtensionConfigurationMapper BolExtensionConfigurationMapper { get; private set; }
 
-		private IDALExtensionConfigurationMapper dalExtensionConfigurationMapper;
+		protected IDALExtensionConfigurationMapper DalExtensionConfigurationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALExtensionConfigurationMapper dalExtensionConfigurationMapper)
 			: base()
 		{
-			this.extensionConfigurationRepository = extensionConfigurationRepository;
-			this.extensionConfigurationModelValidator = extensionConfigurationModelValidator;
-			this.bolExtensionConfigurationMapper = bolExtensionConfigurationMapper;
-			this.dalExtensionConfigurationMapper = dalExtensionConfigurationMapper;
+			this.ExtensionConfigurationRepository = extensionConfigurationRepository;
+			this.ExtensionConfigurationModelValidator = extensionConfigurationModelValidator;
+			this.BolExtensionConfigurationMapper = bolExtensionConfigurationMapper;
+			this.DalExtensionConfigurationMapper = dalExtensionConfigurationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiExtensionConfigurationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.extensionConfigurationRepository.All(limit, offset);
+			var records = await this.ExtensionConfigurationRepository.All(limit, offset);
 
-			return this.bolExtensionConfigurationMapper.MapBOToModel(this.dalExtensionConfigurationMapper.MapEFToBO(records));
+			return this.BolExtensionConfigurationMapper.MapBOToModel(this.DalExtensionConfigurationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiExtensionConfigurationResponseModel> Get(string id)
 		{
-			var record = await this.extensionConfigurationRepository.Get(id);
+			var record = await this.ExtensionConfigurationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolExtensionConfigurationMapper.MapBOToModel(this.dalExtensionConfigurationMapper.MapEFToBO(record));
+				return this.BolExtensionConfigurationMapper.MapBOToModel(this.DalExtensionConfigurationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiExtensionConfigurationResponseModel>> Create(
 			ApiExtensionConfigurationRequestModel model)
 		{
-			CreateResponse<ApiExtensionConfigurationResponseModel> response = new CreateResponse<ApiExtensionConfigurationResponseModel>(await this.extensionConfigurationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiExtensionConfigurationResponseModel> response = new CreateResponse<ApiExtensionConfigurationResponseModel>(await this.ExtensionConfigurationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolExtensionConfigurationMapper.MapModelToBO(default(string), model);
-				var record = await this.extensionConfigurationRepository.Create(this.dalExtensionConfigurationMapper.MapBOToEF(bo));
+				var bo = this.BolExtensionConfigurationMapper.MapModelToBO(default(string), model);
+				var record = await this.ExtensionConfigurationRepository.Create(this.DalExtensionConfigurationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolExtensionConfigurationMapper.MapBOToModel(this.dalExtensionConfigurationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolExtensionConfigurationMapper.MapBOToModel(this.DalExtensionConfigurationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiExtensionConfigurationRequestModel model)
 		{
-			var validationResult = await this.extensionConfigurationModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ExtensionConfigurationModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolExtensionConfigurationMapper.MapModelToBO(id, model);
-				await this.extensionConfigurationRepository.Update(this.dalExtensionConfigurationMapper.MapBOToEF(bo));
+				var bo = this.BolExtensionConfigurationMapper.MapModelToBO(id, model);
+				await this.ExtensionConfigurationRepository.Update(this.DalExtensionConfigurationMapper.MapBOToEF(bo));
 
-				var record = await this.extensionConfigurationRepository.Get(id);
+				var record = await this.ExtensionConfigurationRepository.Get(id);
 
-				return new UpdateResponse<ApiExtensionConfigurationResponseModel>(this.bolExtensionConfigurationMapper.MapBOToModel(this.dalExtensionConfigurationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiExtensionConfigurationResponseModel>(this.BolExtensionConfigurationMapper.MapBOToModel(this.DalExtensionConfigurationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.extensionConfigurationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ExtensionConfigurationModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.extensionConfigurationRepository.Delete(id);
+				await this.ExtensionConfigurationRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d4f88e41b08d0c6ef0a082a00e90bbd</Hash>
+    <Hash>836391e83100502db8fb4eb0e34c41d5</Hash>
 </Codenesium>*/

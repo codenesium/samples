@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALFeedMapper
+	public partial interface IDALFeedMapper
 	{
 		Feed MapBOToEF(
 			BOFeed bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a0d7a92bff4ec65d869cb29cb3a31b5b</Hash>
+    <Hash>965166e7ba93024ad68986409de84f9f</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ICreditCardService
+	public partial interface ICreditCardService
 	{
 		Task<CreateResponse<ApiCreditCardResponseModel>> Create(
 			ApiCreditCardRequestModel model);
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4773c41439385473e0b5d07c9f7a77bd</Hash>
+    <Hash>77a7b33b7bf77b17d8f92bb915f6029e</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IDALUsersMapper
+	public partial interface IDALUsersMapper
 	{
 		Users MapBOToEF(
 			BOUsers bo);
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d759054b67458afff75360886d313efd</Hash>
+    <Hash>f63a8ab52687d1a59fa80636559af47e</Hash>
 </Codenesium>*/

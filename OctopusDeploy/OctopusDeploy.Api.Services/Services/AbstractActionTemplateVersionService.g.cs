@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractActionTemplateVersionService : AbstractService
 	{
-		private IActionTemplateVersionRepository actionTemplateVersionRepository;
+		protected IActionTemplateVersionRepository ActionTemplateVersionRepository { get; private set; }
 
-		private IApiActionTemplateVersionRequestModelValidator actionTemplateVersionModelValidator;
+		protected IApiActionTemplateVersionRequestModelValidator ActionTemplateVersionModelValidator { get; private set; }
 
-		private IBOLActionTemplateVersionMapper bolActionTemplateVersionMapper;
+		protected IBOLActionTemplateVersionMapper BolActionTemplateVersionMapper { get; private set; }
 
-		private IDALActionTemplateVersionMapper dalActionTemplateVersionMapper;
+		protected IDALActionTemplateVersionMapper DalActionTemplateVersionMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALActionTemplateVersionMapper dalActionTemplateVersionMapper)
 			: base()
 		{
-			this.actionTemplateVersionRepository = actionTemplateVersionRepository;
-			this.actionTemplateVersionModelValidator = actionTemplateVersionModelValidator;
-			this.bolActionTemplateVersionMapper = bolActionTemplateVersionMapper;
-			this.dalActionTemplateVersionMapper = dalActionTemplateVersionMapper;
+			this.ActionTemplateVersionRepository = actionTemplateVersionRepository;
+			this.ActionTemplateVersionModelValidator = actionTemplateVersionModelValidator;
+			this.BolActionTemplateVersionMapper = bolActionTemplateVersionMapper;
+			this.DalActionTemplateVersionMapper = dalActionTemplateVersionMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiActionTemplateVersionResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.actionTemplateVersionRepository.All(limit, offset);
+			var records = await this.ActionTemplateVersionRepository.All(limit, offset);
 
-			return this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(records));
+			return this.BolActionTemplateVersionMapper.MapBOToModel(this.DalActionTemplateVersionMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiActionTemplateVersionResponseModel> Get(string id)
 		{
-			var record = await this.actionTemplateVersionRepository.Get(id);
+			var record = await this.ActionTemplateVersionRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(record));
+				return this.BolActionTemplateVersionMapper.MapBOToModel(this.DalActionTemplateVersionMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiActionTemplateVersionResponseModel>> Create(
 			ApiActionTemplateVersionRequestModel model)
 		{
-			CreateResponse<ApiActionTemplateVersionResponseModel> response = new CreateResponse<ApiActionTemplateVersionResponseModel>(await this.actionTemplateVersionModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiActionTemplateVersionResponseModel> response = new CreateResponse<ApiActionTemplateVersionResponseModel>(await this.ActionTemplateVersionModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolActionTemplateVersionMapper.MapModelToBO(default(string), model);
-				var record = await this.actionTemplateVersionRepository.Create(this.dalActionTemplateVersionMapper.MapBOToEF(bo));
+				var bo = this.BolActionTemplateVersionMapper.MapModelToBO(default(string), model);
+				var record = await this.ActionTemplateVersionRepository.Create(this.DalActionTemplateVersionMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolActionTemplateVersionMapper.MapBOToModel(this.DalActionTemplateVersionMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiActionTemplateVersionRequestModel model)
 		{
-			var validationResult = await this.actionTemplateVersionModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ActionTemplateVersionModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolActionTemplateVersionMapper.MapModelToBO(id, model);
-				await this.actionTemplateVersionRepository.Update(this.dalActionTemplateVersionMapper.MapBOToEF(bo));
+				var bo = this.BolActionTemplateVersionMapper.MapModelToBO(id, model);
+				await this.ActionTemplateVersionRepository.Update(this.DalActionTemplateVersionMapper.MapBOToEF(bo));
 
-				var record = await this.actionTemplateVersionRepository.Get(id);
+				var record = await this.ActionTemplateVersionRepository.Get(id);
 
-				return new UpdateResponse<ApiActionTemplateVersionResponseModel>(this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiActionTemplateVersionResponseModel>(this.BolActionTemplateVersionMapper.MapBOToModel(this.DalActionTemplateVersionMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.actionTemplateVersionModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ActionTemplateVersionModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.actionTemplateVersionRepository.Delete(id);
+				await this.ActionTemplateVersionRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiActionTemplateVersionResponseModel> ByNameVersion(string name, int version)
 		{
-			ActionTemplateVersion record = await this.actionTemplateVersionRepository.ByNameVersion(name, version);
+			ActionTemplateVersion record = await this.ActionTemplateVersionRepository.ByNameVersion(name, version);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(record));
+				return this.BolActionTemplateVersionMapper.MapBOToModel(this.DalActionTemplateVersionMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiActionTemplateVersionResponseModel>> ByLatestActionTemplateId(string latestActionTemplateId)
 		{
-			List<ActionTemplateVersion> records = await this.actionTemplateVersionRepository.ByLatestActionTemplateId(latestActionTemplateId);
+			List<ActionTemplateVersion> records = await this.ActionTemplateVersionRepository.ByLatestActionTemplateId(latestActionTemplateId);
 
-			return this.bolActionTemplateVersionMapper.MapBOToModel(this.dalActionTemplateVersionMapper.MapEFToBO(records));
+			return this.BolActionTemplateVersionMapper.MapBOToModel(this.DalActionTemplateVersionMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f39c7b80b6a4835217537bd44418a03a</Hash>
+    <Hash>b880dbf108bcd2f01b245ae7ad31c6d3</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiUnitMeasureModelMapper
+	public partial interface IApiUnitMeasureModelMapper
 	{
 		ApiUnitMeasureResponseModel MapRequestToResponse(
 			string unitMeasureCode,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5cc7c1de78deb7f56f112d4cde2429a2</Hash>
+    <Hash>28ba83d3dfa0ac63460ccf0e5debf519</Hash>
 </Codenesium>*/

@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractDepartmentService : AbstractService
 	{
-		private IDepartmentRepository departmentRepository;
+		protected IDepartmentRepository DepartmentRepository { get; private set; }
 
-		private IApiDepartmentRequestModelValidator departmentModelValidator;
+		protected IApiDepartmentRequestModelValidator DepartmentModelValidator { get; private set; }
 
-		private IBOLDepartmentMapper bolDepartmentMapper;
+		protected IBOLDepartmentMapper BolDepartmentMapper { get; private set; }
 
-		private IDALDepartmentMapper dalDepartmentMapper;
+		protected IDALDepartmentMapper DalDepartmentMapper { get; private set; }
 
-		private IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper;
+		protected IBOLEmployeeDepartmentHistoryMapper BolEmployeeDepartmentHistoryMapper { get; private set; }
 
-		private IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper;
+		protected IDALEmployeeDepartmentHistoryMapper DalEmployeeDepartmentHistoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
 			: base()
 		{
-			this.departmentRepository = departmentRepository;
-			this.departmentModelValidator = departmentModelValidator;
-			this.bolDepartmentMapper = bolDepartmentMapper;
-			this.dalDepartmentMapper = dalDepartmentMapper;
-			this.bolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
-			this.dalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
+			this.DepartmentRepository = departmentRepository;
+			this.DepartmentModelValidator = departmentModelValidator;
+			this.BolDepartmentMapper = bolDepartmentMapper;
+			this.DalDepartmentMapper = dalDepartmentMapper;
+			this.BolEmployeeDepartmentHistoryMapper = bolEmployeeDepartmentHistoryMapper;
+			this.DalEmployeeDepartmentHistoryMapper = dalEmployeeDepartmentHistoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiDepartmentResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.departmentRepository.All(limit, offset);
+			var records = await this.DepartmentRepository.All(limit, offset);
 
-			return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(records));
+			return this.BolDepartmentMapper.MapBOToModel(this.DalDepartmentMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDepartmentResponseModel> Get(short departmentID)
 		{
-			var record = await this.departmentRepository.Get(departmentID);
+			var record = await this.DepartmentRepository.Get(departmentID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record));
+				return this.BolDepartmentMapper.MapBOToModel(this.DalDepartmentMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiDepartmentResponseModel>> Create(
 			ApiDepartmentRequestModel model)
 		{
-			CreateResponse<ApiDepartmentResponseModel> response = new CreateResponse<ApiDepartmentResponseModel>(await this.departmentModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDepartmentResponseModel> response = new CreateResponse<ApiDepartmentResponseModel>(await this.DepartmentModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolDepartmentMapper.MapModelToBO(default(short), model);
-				var record = await this.departmentRepository.Create(this.dalDepartmentMapper.MapBOToEF(bo));
+				var bo = this.BolDepartmentMapper.MapModelToBO(default(short), model);
+				var record = await this.DepartmentRepository.Create(this.DalDepartmentMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolDepartmentMapper.MapBOToModel(this.DalDepartmentMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			short departmentID,
 			ApiDepartmentRequestModel model)
 		{
-			var validationResult = await this.departmentModelValidator.ValidateUpdateAsync(departmentID, model);
+			var validationResult = await this.DepartmentModelValidator.ValidateUpdateAsync(departmentID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolDepartmentMapper.MapModelToBO(departmentID, model);
-				await this.departmentRepository.Update(this.dalDepartmentMapper.MapBOToEF(bo));
+				var bo = this.BolDepartmentMapper.MapModelToBO(departmentID, model);
+				await this.DepartmentRepository.Update(this.DalDepartmentMapper.MapBOToEF(bo));
 
-				var record = await this.departmentRepository.Get(departmentID);
+				var record = await this.DepartmentRepository.Get(departmentID);
 
-				return new UpdateResponse<ApiDepartmentResponseModel>(this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiDepartmentResponseModel>(this.BolDepartmentMapper.MapBOToModel(this.DalDepartmentMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			short departmentID)
 		{
-			ActionResponse response = new ActionResponse(await this.departmentModelValidator.ValidateDeleteAsync(departmentID));
+			ActionResponse response = new ActionResponse(await this.DepartmentModelValidator.ValidateDeleteAsync(departmentID));
 			if (response.Success)
 			{
-				await this.departmentRepository.Delete(departmentID);
+				await this.DepartmentRepository.Delete(departmentID);
 			}
 
 			return response;
@@ -118,7 +118,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiDepartmentResponseModel> ByName(string name)
 		{
-			Department record = await this.departmentRepository.ByName(name);
+			Department record = await this.DepartmentRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -126,19 +126,19 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolDepartmentMapper.MapBOToModel(this.dalDepartmentMapper.MapEFToBO(record));
+				return this.BolDepartmentMapper.MapBOToModel(this.DalDepartmentMapper.MapEFToBO(record));
 			}
 		}
 
 		public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EmployeeDepartmentHistory> records = await this.departmentRepository.EmployeeDepartmentHistories(departmentID, limit, offset);
+			List<EmployeeDepartmentHistory> records = await this.DepartmentRepository.EmployeeDepartmentHistories(departmentID, limit, offset);
 
-			return this.bolEmployeeDepartmentHistoryMapper.MapBOToModel(this.dalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
+			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8081aafb4ac8b1d5c41782eb381949cc</Hash>
+    <Hash>0c2960c72897c52ca0600a8889d13fc9</Hash>
 </Codenesium>*/

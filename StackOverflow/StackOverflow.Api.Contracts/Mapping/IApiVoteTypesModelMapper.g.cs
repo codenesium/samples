@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
-	public interface IApiVoteTypesModelMapper
+	public partial interface IApiVoteTypesModelMapper
 	{
 		ApiVoteTypesResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7c6c1c67e4b705c527c19866c7198a92</Hash>
+    <Hash>767f495c52f2830050fcea6a5f36ade2</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-	public interface ILinkTypesRepository
+	public partial interface ILinkTypesRepository
 	{
 		Task<LinkTypes> Create(LinkTypes item);
 
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd4d31394f3799257d01fde0d2d5c65a</Hash>
+    <Hash>9e33c99dce026644b723da985ae2222b</Hash>
 </Codenesium>*/

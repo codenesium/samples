@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Contracts
 {
-	public interface IApiFileTypeModelMapper
+	public partial interface IApiFileTypeModelMapper
 	{
 		ApiFileTypeResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f589a74005ee8c29349a373d2866c7b8</Hash>
+    <Hash>fe549ccc9d9468a2ffc16200f206134f</Hash>
 </Codenesium>*/

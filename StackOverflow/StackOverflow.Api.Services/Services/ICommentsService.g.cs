@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface ICommentsService
+	public partial interface ICommentsService
 	{
 		Task<CreateResponse<ApiCommentsResponseModel>> Create(
 			ApiCommentsRequestModel model);
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>694a2f3f091c93ece88fe2511564fa61</Hash>
+    <Hash>45806071ade3971bdd1d834925328017</Hash>
 </Codenesium>*/

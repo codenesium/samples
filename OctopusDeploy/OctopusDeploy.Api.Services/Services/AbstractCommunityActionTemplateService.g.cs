@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractCommunityActionTemplateService : AbstractService
 	{
-		private ICommunityActionTemplateRepository communityActionTemplateRepository;
+		protected ICommunityActionTemplateRepository CommunityActionTemplateRepository { get; private set; }
 
-		private IApiCommunityActionTemplateRequestModelValidator communityActionTemplateModelValidator;
+		protected IApiCommunityActionTemplateRequestModelValidator CommunityActionTemplateModelValidator { get; private set; }
 
-		private IBOLCommunityActionTemplateMapper bolCommunityActionTemplateMapper;
+		protected IBOLCommunityActionTemplateMapper BolCommunityActionTemplateMapper { get; private set; }
 
-		private IDALCommunityActionTemplateMapper dalCommunityActionTemplateMapper;
+		protected IDALCommunityActionTemplateMapper DalCommunityActionTemplateMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALCommunityActionTemplateMapper dalCommunityActionTemplateMapper)
 			: base()
 		{
-			this.communityActionTemplateRepository = communityActionTemplateRepository;
-			this.communityActionTemplateModelValidator = communityActionTemplateModelValidator;
-			this.bolCommunityActionTemplateMapper = bolCommunityActionTemplateMapper;
-			this.dalCommunityActionTemplateMapper = dalCommunityActionTemplateMapper;
+			this.CommunityActionTemplateRepository = communityActionTemplateRepository;
+			this.CommunityActionTemplateModelValidator = communityActionTemplateModelValidator;
+			this.BolCommunityActionTemplateMapper = bolCommunityActionTemplateMapper;
+			this.DalCommunityActionTemplateMapper = dalCommunityActionTemplateMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiCommunityActionTemplateResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.communityActionTemplateRepository.All(limit, offset);
+			var records = await this.CommunityActionTemplateRepository.All(limit, offset);
 
-			return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(records));
+			return this.BolCommunityActionTemplateMapper.MapBOToModel(this.DalCommunityActionTemplateMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiCommunityActionTemplateResponseModel> Get(string id)
 		{
-			var record = await this.communityActionTemplateRepository.Get(id);
+			var record = await this.CommunityActionTemplateRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+				return this.BolCommunityActionTemplateMapper.MapBOToModel(this.DalCommunityActionTemplateMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiCommunityActionTemplateResponseModel>> Create(
 			ApiCommunityActionTemplateRequestModel model)
 		{
-			CreateResponse<ApiCommunityActionTemplateResponseModel> response = new CreateResponse<ApiCommunityActionTemplateResponseModel>(await this.communityActionTemplateModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiCommunityActionTemplateResponseModel> response = new CreateResponse<ApiCommunityActionTemplateResponseModel>(await this.CommunityActionTemplateModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolCommunityActionTemplateMapper.MapModelToBO(default(string), model);
-				var record = await this.communityActionTemplateRepository.Create(this.dalCommunityActionTemplateMapper.MapBOToEF(bo));
+				var bo = this.BolCommunityActionTemplateMapper.MapModelToBO(default(string), model);
+				var record = await this.CommunityActionTemplateRepository.Create(this.DalCommunityActionTemplateMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolCommunityActionTemplateMapper.MapBOToModel(this.DalCommunityActionTemplateMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiCommunityActionTemplateRequestModel model)
 		{
-			var validationResult = await this.communityActionTemplateModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.CommunityActionTemplateModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolCommunityActionTemplateMapper.MapModelToBO(id, model);
-				await this.communityActionTemplateRepository.Update(this.dalCommunityActionTemplateMapper.MapBOToEF(bo));
+				var bo = this.BolCommunityActionTemplateMapper.MapModelToBO(id, model);
+				await this.CommunityActionTemplateRepository.Update(this.DalCommunityActionTemplateMapper.MapBOToEF(bo));
 
-				var record = await this.communityActionTemplateRepository.Get(id);
+				var record = await this.CommunityActionTemplateRepository.Get(id);
 
-				return new UpdateResponse<ApiCommunityActionTemplateResponseModel>(this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiCommunityActionTemplateResponseModel>(this.BolCommunityActionTemplateMapper.MapBOToModel(this.DalCommunityActionTemplateMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.communityActionTemplateModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.CommunityActionTemplateModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.communityActionTemplateRepository.Delete(id);
+				await this.CommunityActionTemplateRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiCommunityActionTemplateResponseModel> ByExternalId(Guid externalId)
 		{
-			CommunityActionTemplate record = await this.communityActionTemplateRepository.ByExternalId(externalId);
+			CommunityActionTemplate record = await this.CommunityActionTemplateRepository.ByExternalId(externalId);
 
 			if (record == null)
 			{
@@ -118,13 +118,13 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+				return this.BolCommunityActionTemplateMapper.MapBOToModel(this.DalCommunityActionTemplateMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<ApiCommunityActionTemplateResponseModel> ByName(string name)
 		{
-			CommunityActionTemplate record = await this.communityActionTemplateRepository.ByName(name);
+			CommunityActionTemplate record = await this.CommunityActionTemplateRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -132,12 +132,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolCommunityActionTemplateMapper.MapBOToModel(this.dalCommunityActionTemplateMapper.MapEFToBO(record));
+				return this.BolCommunityActionTemplateMapper.MapBOToModel(this.DalCommunityActionTemplateMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>631abb7c268799318719cad91592bfd1</Hash>
+    <Hash>a6df1b8646ff6b3204932c4eb7e7013f</Hash>
 </Codenesium>*/

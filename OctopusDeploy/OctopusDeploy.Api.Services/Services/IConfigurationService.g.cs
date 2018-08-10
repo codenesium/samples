@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IConfigurationService
+	public partial interface IConfigurationService
 	{
 		Task<CreateResponse<ApiConfigurationResponseModel>> Create(
 			ApiConfigurationRequestModel model);
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c2af82997ee63dc132f0767c7e02b1f0</Hash>
+    <Hash>88255e3edfc3b928195a130aa20cb7e6</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiBillOfMaterialModelMapper
+	public partial interface IApiBillOfMaterialModelMapper
 	{
 		ApiBillOfMaterialResponseModel MapRequestToResponse(
 			int billOfMaterialsID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d1563265bfccd35855c8eded17f0edbb</Hash>
+    <Hash>bcd21e0e0241357fa7c956d54d9ca029</Hash>
 </Codenesium>*/

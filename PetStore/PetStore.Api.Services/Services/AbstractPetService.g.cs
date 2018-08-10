@@ -14,17 +14,17 @@ namespace PetStoreNS.Api.Services
 {
 	public abstract class AbstractPetService : AbstractService
 	{
-		private IPetRepository petRepository;
+		protected IPetRepository PetRepository { get; private set; }
 
-		private IApiPetRequestModelValidator petModelValidator;
+		protected IApiPetRequestModelValidator PetModelValidator { get; private set; }
 
-		private IBOLPetMapper bolPetMapper;
+		protected IBOLPetMapper BolPetMapper { get; private set; }
 
-		private IDALPetMapper dalPetMapper;
+		protected IDALPetMapper DalPetMapper { get; private set; }
 
-		private IBOLSaleMapper bolSaleMapper;
+		protected IBOLSaleMapper BolSaleMapper { get; private set; }
 
-		private IDALSaleMapper dalSaleMapper;
+		protected IDALSaleMapper DalSaleMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace PetStoreNS.Api.Services
 			IDALSaleMapper dalSaleMapper)
 			: base()
 		{
-			this.petRepository = petRepository;
-			this.petModelValidator = petModelValidator;
-			this.bolPetMapper = bolPetMapper;
-			this.dalPetMapper = dalPetMapper;
-			this.bolSaleMapper = bolSaleMapper;
-			this.dalSaleMapper = dalSaleMapper;
+			this.PetRepository = petRepository;
+			this.PetModelValidator = petModelValidator;
+			this.BolPetMapper = bolPetMapper;
+			this.DalPetMapper = dalPetMapper;
+			this.BolSaleMapper = bolSaleMapper;
+			this.DalSaleMapper = dalSaleMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPetResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.petRepository.All(limit, offset);
+			var records = await this.PetRepository.All(limit, offset);
 
-			return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(records));
+			return this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPetResponseModel> Get(int id)
 		{
-			var record = await this.petRepository.Get(id);
+			var record = await this.PetRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace PetStoreNS.Api.Services
 			}
 			else
 			{
-				return this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(record));
+				return this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPetResponseModel>> Create(
 			ApiPetRequestModel model)
 		{
-			CreateResponse<ApiPetResponseModel> response = new CreateResponse<ApiPetResponseModel>(await this.petModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPetResponseModel> response = new CreateResponse<ApiPetResponseModel>(await this.PetModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPetMapper.MapModelToBO(default(int), model);
-				var record = await this.petRepository.Create(this.dalPetMapper.MapBOToEF(bo));
+				var bo = this.BolPetMapper.MapModelToBO(default(int), model);
+				var record = await this.PetRepository.Create(this.DalPetMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace PetStoreNS.Api.Services
 			int id,
 			ApiPetRequestModel model)
 		{
-			var validationResult = await this.petModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.PetModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPetMapper.MapModelToBO(id, model);
-				await this.petRepository.Update(this.dalPetMapper.MapBOToEF(bo));
+				var bo = this.BolPetMapper.MapModelToBO(id, model);
+				await this.PetRepository.Update(this.DalPetMapper.MapBOToEF(bo));
 
-				var record = await this.petRepository.Get(id);
+				var record = await this.PetRepository.Get(id);
 
-				return new UpdateResponse<ApiPetResponseModel>(this.bolPetMapper.MapBOToModel(this.dalPetMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPetResponseModel>(this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace PetStoreNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.petModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.PetModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.petRepository.Delete(id);
+				await this.PetRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace PetStoreNS.Api.Services
 
 		public async virtual Task<List<ApiSaleResponseModel>> Sales(int petId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Sale> records = await this.petRepository.Sales(petId, limit, offset);
+			List<Sale> records = await this.PetRepository.Sales(petId, limit, offset);
 
-			return this.bolSaleMapper.MapBOToModel(this.dalSaleMapper.MapEFToBO(records));
+			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>70ecd4186c33456e6ad61645210c48de</Hash>
+    <Hash>d66e8dd9953425446e4b3c73746773d4</Hash>
 </Codenesium>*/

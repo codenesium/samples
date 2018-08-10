@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IProxyService
+	public partial interface IProxyService
 	{
 		Task<CreateResponse<ApiProxyResponseModel>> Create(
 			ApiProxyRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cc3cd0ac990d59a5be5eebf5bd17d72e</Hash>
+    <Hash>584b97e2ddb9eeb13cca9989ea4cfa67</Hash>
 </Codenesium>*/

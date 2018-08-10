@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface IClaspRepository
+	public partial interface IClaspRepository
 	{
 		Task<Clasp> Create(Clasp item);
 
@@ -22,5 +22,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>53942c5ca6253dc864842a6f8573c834</Hash>
+    <Hash>edefdcca9f871e6f5e11a5688fa6e20e</Hash>
 </Codenesium>*/

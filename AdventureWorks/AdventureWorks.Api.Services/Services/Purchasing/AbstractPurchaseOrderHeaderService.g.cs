@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPurchaseOrderHeaderService : AbstractService
 	{
-		private IPurchaseOrderHeaderRepository purchaseOrderHeaderRepository;
+		protected IPurchaseOrderHeaderRepository PurchaseOrderHeaderRepository { get; private set; }
 
-		private IApiPurchaseOrderHeaderRequestModelValidator purchaseOrderHeaderModelValidator;
+		protected IApiPurchaseOrderHeaderRequestModelValidator PurchaseOrderHeaderModelValidator { get; private set; }
 
-		private IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper;
+		protected IBOLPurchaseOrderHeaderMapper BolPurchaseOrderHeaderMapper { get; private set; }
 
-		private IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper;
+		protected IDALPurchaseOrderHeaderMapper DalPurchaseOrderHeaderMapper { get; private set; }
 
-		private IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper;
+		protected IBOLPurchaseOrderDetailMapper BolPurchaseOrderDetailMapper { get; private set; }
 
-		private IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper;
+		protected IDALPurchaseOrderDetailMapper DalPurchaseOrderDetailMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper)
 			: base()
 		{
-			this.purchaseOrderHeaderRepository = purchaseOrderHeaderRepository;
-			this.purchaseOrderHeaderModelValidator = purchaseOrderHeaderModelValidator;
-			this.bolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
-			this.dalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
-			this.bolPurchaseOrderDetailMapper = bolPurchaseOrderDetailMapper;
-			this.dalPurchaseOrderDetailMapper = dalPurchaseOrderDetailMapper;
+			this.PurchaseOrderHeaderRepository = purchaseOrderHeaderRepository;
+			this.PurchaseOrderHeaderModelValidator = purchaseOrderHeaderModelValidator;
+			this.BolPurchaseOrderHeaderMapper = bolPurchaseOrderHeaderMapper;
+			this.DalPurchaseOrderHeaderMapper = dalPurchaseOrderHeaderMapper;
+			this.BolPurchaseOrderDetailMapper = bolPurchaseOrderDetailMapper;
+			this.DalPurchaseOrderDetailMapper = dalPurchaseOrderDetailMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPurchaseOrderHeaderResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.purchaseOrderHeaderRepository.All(limit, offset);
+			var records = await this.PurchaseOrderHeaderRepository.All(limit, offset);
 
-			return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
+			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPurchaseOrderHeaderResponseModel> Get(int purchaseOrderID)
 		{
-			var record = await this.purchaseOrderHeaderRepository.Get(purchaseOrderID);
+			var record = await this.PurchaseOrderHeaderRepository.Get(purchaseOrderID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(record));
+				return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPurchaseOrderHeaderResponseModel>> Create(
 			ApiPurchaseOrderHeaderRequestModel model)
 		{
-			CreateResponse<ApiPurchaseOrderHeaderResponseModel> response = new CreateResponse<ApiPurchaseOrderHeaderResponseModel>(await this.purchaseOrderHeaderModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPurchaseOrderHeaderResponseModel> response = new CreateResponse<ApiPurchaseOrderHeaderResponseModel>(await this.PurchaseOrderHeaderModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPurchaseOrderHeaderMapper.MapModelToBO(default(int), model);
-				var record = await this.purchaseOrderHeaderRepository.Create(this.dalPurchaseOrderHeaderMapper.MapBOToEF(bo));
+				var bo = this.BolPurchaseOrderHeaderMapper.MapModelToBO(default(int), model);
+				var record = await this.PurchaseOrderHeaderRepository.Create(this.DalPurchaseOrderHeaderMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			int purchaseOrderID,
 			ApiPurchaseOrderHeaderRequestModel model)
 		{
-			var validationResult = await this.purchaseOrderHeaderModelValidator.ValidateUpdateAsync(purchaseOrderID, model);
+			var validationResult = await this.PurchaseOrderHeaderModelValidator.ValidateUpdateAsync(purchaseOrderID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPurchaseOrderHeaderMapper.MapModelToBO(purchaseOrderID, model);
-				await this.purchaseOrderHeaderRepository.Update(this.dalPurchaseOrderHeaderMapper.MapBOToEF(bo));
+				var bo = this.BolPurchaseOrderHeaderMapper.MapModelToBO(purchaseOrderID, model);
+				await this.PurchaseOrderHeaderRepository.Update(this.DalPurchaseOrderHeaderMapper.MapBOToEF(bo));
 
-				var record = await this.purchaseOrderHeaderRepository.Get(purchaseOrderID);
+				var record = await this.PurchaseOrderHeaderRepository.Get(purchaseOrderID);
 
-				return new UpdateResponse<ApiPurchaseOrderHeaderResponseModel>(this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPurchaseOrderHeaderResponseModel>(this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int purchaseOrderID)
 		{
-			ActionResponse response = new ActionResponse(await this.purchaseOrderHeaderModelValidator.ValidateDeleteAsync(purchaseOrderID));
+			ActionResponse response = new ActionResponse(await this.PurchaseOrderHeaderModelValidator.ValidateDeleteAsync(purchaseOrderID));
 			if (response.Success)
 			{
-				await this.purchaseOrderHeaderRepository.Delete(purchaseOrderID);
+				await this.PurchaseOrderHeaderRepository.Delete(purchaseOrderID);
 			}
 
 			return response;
@@ -118,27 +118,27 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByEmployeeID(int employeeID)
 		{
-			List<PurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.ByEmployeeID(employeeID);
+			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.ByEmployeeID(employeeID);
 
-			return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
+			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByVendorID(int vendorID)
 		{
-			List<PurchaseOrderHeader> records = await this.purchaseOrderHeaderRepository.ByVendorID(vendorID);
+			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.ByVendorID(vendorID);
 
-			return this.bolPurchaseOrderHeaderMapper.MapBOToModel(this.dalPurchaseOrderHeaderMapper.MapEFToBO(records));
+			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiPurchaseOrderDetailResponseModel>> PurchaseOrderDetails(int purchaseOrderID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PurchaseOrderDetail> records = await this.purchaseOrderHeaderRepository.PurchaseOrderDetails(purchaseOrderID, limit, offset);
+			List<PurchaseOrderDetail> records = await this.PurchaseOrderHeaderRepository.PurchaseOrderDetails(purchaseOrderID, limit, offset);
 
-			return this.bolPurchaseOrderDetailMapper.MapBOToModel(this.dalPurchaseOrderDetailMapper.MapEFToBO(records));
+			return this.BolPurchaseOrderDetailMapper.MapBOToModel(this.DalPurchaseOrderDetailMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>20de0b246c68a9283ec005fa32e5e9d2</Hash>
+    <Hash>9a009b75280d9edd1d18a1a71d8cb9f1</Hash>
 </Codenesium>*/

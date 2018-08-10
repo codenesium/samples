@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface IChainRepository
+	public partial interface IChainRepository
 	{
 		Task<Chain> Create(Chain item);
 
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ea5035911c8c3038e733d24934638857</Hash>
+    <Hash>6bf7d313c30556e021e2c0645d76b6f0</Hash>
 </Codenesium>*/

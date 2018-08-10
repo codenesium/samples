@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiDocumentModelMapper
+	public partial interface IApiDocumentModelMapper
 	{
 		ApiDocumentResponseModel MapRequestToResponse(
 			Guid rowguid,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>bfa4b80d37618720c83cbefb0ef099cd</Hash>
+    <Hash>f387dcac748c0b9eb6051f295aefa28e</Hash>
 </Codenesium>*/

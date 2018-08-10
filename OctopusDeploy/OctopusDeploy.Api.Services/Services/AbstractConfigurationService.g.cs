@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractConfigurationService : AbstractService
 	{
-		private IConfigurationRepository configurationRepository;
+		protected IConfigurationRepository ConfigurationRepository { get; private set; }
 
-		private IApiConfigurationRequestModelValidator configurationModelValidator;
+		protected IApiConfigurationRequestModelValidator ConfigurationModelValidator { get; private set; }
 
-		private IBOLConfigurationMapper bolConfigurationMapper;
+		protected IBOLConfigurationMapper BolConfigurationMapper { get; private set; }
 
-		private IDALConfigurationMapper dalConfigurationMapper;
+		protected IDALConfigurationMapper DalConfigurationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALConfigurationMapper dalConfigurationMapper)
 			: base()
 		{
-			this.configurationRepository = configurationRepository;
-			this.configurationModelValidator = configurationModelValidator;
-			this.bolConfigurationMapper = bolConfigurationMapper;
-			this.dalConfigurationMapper = dalConfigurationMapper;
+			this.ConfigurationRepository = configurationRepository;
+			this.ConfigurationModelValidator = configurationModelValidator;
+			this.BolConfigurationMapper = bolConfigurationMapper;
+			this.DalConfigurationMapper = dalConfigurationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiConfigurationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.configurationRepository.All(limit, offset);
+			var records = await this.ConfigurationRepository.All(limit, offset);
 
-			return this.bolConfigurationMapper.MapBOToModel(this.dalConfigurationMapper.MapEFToBO(records));
+			return this.BolConfigurationMapper.MapBOToModel(this.DalConfigurationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiConfigurationResponseModel> Get(string id)
 		{
-			var record = await this.configurationRepository.Get(id);
+			var record = await this.ConfigurationRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolConfigurationMapper.MapBOToModel(this.dalConfigurationMapper.MapEFToBO(record));
+				return this.BolConfigurationMapper.MapBOToModel(this.DalConfigurationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiConfigurationResponseModel>> Create(
 			ApiConfigurationRequestModel model)
 		{
-			CreateResponse<ApiConfigurationResponseModel> response = new CreateResponse<ApiConfigurationResponseModel>(await this.configurationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiConfigurationResponseModel> response = new CreateResponse<ApiConfigurationResponseModel>(await this.ConfigurationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolConfigurationMapper.MapModelToBO(default(string), model);
-				var record = await this.configurationRepository.Create(this.dalConfigurationMapper.MapBOToEF(bo));
+				var bo = this.BolConfigurationMapper.MapModelToBO(default(string), model);
+				var record = await this.ConfigurationRepository.Create(this.DalConfigurationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolConfigurationMapper.MapBOToModel(this.dalConfigurationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolConfigurationMapper.MapBOToModel(this.DalConfigurationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiConfigurationRequestModel model)
 		{
-			var validationResult = await this.configurationModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ConfigurationModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolConfigurationMapper.MapModelToBO(id, model);
-				await this.configurationRepository.Update(this.dalConfigurationMapper.MapBOToEF(bo));
+				var bo = this.BolConfigurationMapper.MapModelToBO(id, model);
+				await this.ConfigurationRepository.Update(this.DalConfigurationMapper.MapBOToEF(bo));
 
-				var record = await this.configurationRepository.Get(id);
+				var record = await this.ConfigurationRepository.Get(id);
 
-				return new UpdateResponse<ApiConfigurationResponseModel>(this.bolConfigurationMapper.MapBOToModel(this.dalConfigurationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiConfigurationResponseModel>(this.BolConfigurationMapper.MapBOToModel(this.DalConfigurationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.configurationModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ConfigurationModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.configurationRepository.Delete(id);
+				await this.ConfigurationRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1ed0b0ef247a2049520f77297c94bea4</Hash>
+    <Hash>b9ea984c1c90cefa59858d760ab85108</Hash>
 </Codenesium>*/

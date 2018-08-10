@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALBillOfMaterialMapper
+	public partial interface IDALBillOfMaterialMapper
 	{
 		BillOfMaterial MapBOToEF(
 			BOBillOfMaterial bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8c842b7eb42e38b43e4900ecea9d6533</Hash>
+    <Hash>a93d09e0c6c5b45db865f06c9ae87653</Hash>
 </Codenesium>*/

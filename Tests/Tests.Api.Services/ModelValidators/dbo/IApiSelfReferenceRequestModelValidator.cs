@@ -5,7 +5,7 @@ using TestsNS.Api.Contracts;
 
 namespace TestsNS.Api.Services
 {
-	public interface IApiSelfReferenceRequestModelValidator
+	public partial interface IApiSelfReferenceRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiSelfReferenceRequestModel model);
 
@@ -16,5 +16,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dbb43950431f6ac3de0ca29c3cbc0531</Hash>
+    <Hash>5c36d8674fb46985ae068e3d62d9f5cd</Hash>
 </Codenesium>*/

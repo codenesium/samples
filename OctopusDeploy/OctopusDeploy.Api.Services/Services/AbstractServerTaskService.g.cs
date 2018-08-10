@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractServerTaskService : AbstractService
 	{
-		private IServerTaskRepository serverTaskRepository;
+		protected IServerTaskRepository ServerTaskRepository { get; private set; }
 
-		private IApiServerTaskRequestModelValidator serverTaskModelValidator;
+		protected IApiServerTaskRequestModelValidator ServerTaskModelValidator { get; private set; }
 
-		private IBOLServerTaskMapper bolServerTaskMapper;
+		protected IBOLServerTaskMapper BolServerTaskMapper { get; private set; }
 
-		private IDALServerTaskMapper dalServerTaskMapper;
+		protected IDALServerTaskMapper DalServerTaskMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALServerTaskMapper dalServerTaskMapper)
 			: base()
 		{
-			this.serverTaskRepository = serverTaskRepository;
-			this.serverTaskModelValidator = serverTaskModelValidator;
-			this.bolServerTaskMapper = bolServerTaskMapper;
-			this.dalServerTaskMapper = dalServerTaskMapper;
+			this.ServerTaskRepository = serverTaskRepository;
+			this.ServerTaskModelValidator = serverTaskModelValidator;
+			this.BolServerTaskMapper = bolServerTaskMapper;
+			this.DalServerTaskMapper = dalServerTaskMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiServerTaskResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.serverTaskRepository.All(limit, offset);
+			var records = await this.ServerTaskRepository.All(limit, offset);
 
-			return this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(records));
+			return this.BolServerTaskMapper.MapBOToModel(this.DalServerTaskMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiServerTaskResponseModel> Get(string id)
 		{
-			var record = await this.serverTaskRepository.Get(id);
+			var record = await this.ServerTaskRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(record));
+				return this.BolServerTaskMapper.MapBOToModel(this.DalServerTaskMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiServerTaskResponseModel>> Create(
 			ApiServerTaskRequestModel model)
 		{
-			CreateResponse<ApiServerTaskResponseModel> response = new CreateResponse<ApiServerTaskResponseModel>(await this.serverTaskModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiServerTaskResponseModel> response = new CreateResponse<ApiServerTaskResponseModel>(await this.ServerTaskModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolServerTaskMapper.MapModelToBO(default(string), model);
-				var record = await this.serverTaskRepository.Create(this.dalServerTaskMapper.MapBOToEF(bo));
+				var bo = this.BolServerTaskMapper.MapModelToBO(default(string), model);
+				var record = await this.ServerTaskRepository.Create(this.DalServerTaskMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolServerTaskMapper.MapBOToModel(this.DalServerTaskMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiServerTaskRequestModel model)
 		{
-			var validationResult = await this.serverTaskModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ServerTaskModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolServerTaskMapper.MapModelToBO(id, model);
-				await this.serverTaskRepository.Update(this.dalServerTaskMapper.MapBOToEF(bo));
+				var bo = this.BolServerTaskMapper.MapModelToBO(id, model);
+				await this.ServerTaskRepository.Update(this.DalServerTaskMapper.MapBOToEF(bo));
 
-				var record = await this.serverTaskRepository.Get(id);
+				var record = await this.ServerTaskRepository.Get(id);
 
-				return new UpdateResponse<ApiServerTaskResponseModel>(this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiServerTaskResponseModel>(this.BolServerTaskMapper.MapBOToModel(this.DalServerTaskMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.serverTaskModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ServerTaskModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.serverTaskRepository.Delete(id);
+				await this.ServerTaskRepository.Delete(id);
 			}
 
 			return response;
@@ -110,27 +110,27 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<List<ApiServerTaskResponseModel>> ByDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, DateTimeOffset? startTime, DateTimeOffset? completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
 		{
-			List<ServerTask> records = await this.serverTaskRepository.ByDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(description, queueTime, startTime, completedTime, errorMessage, concurrencyTag, hasPendingInterruptions, hasWarningsOrErrors, durationSeconds, jSON, state, name, projectId, environmentId, tenantId, serverNodeId);
+			List<ServerTask> records = await this.ServerTaskRepository.ByDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(description, queueTime, startTime, completedTime, errorMessage, concurrencyTag, hasPendingInterruptions, hasWarningsOrErrors, durationSeconds, jSON, state, name, projectId, environmentId, tenantId, serverNodeId);
 
-			return this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(records));
+			return this.BolServerTaskMapper.MapBOToModel(this.DalServerTaskMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiServerTaskResponseModel>> ByStateConcurrencyTag(string state, string concurrencyTag)
 		{
-			List<ServerTask> records = await this.serverTaskRepository.ByStateConcurrencyTag(state, concurrencyTag);
+			List<ServerTask> records = await this.ServerTaskRepository.ByStateConcurrencyTag(state, concurrencyTag);
 
-			return this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(records));
+			return this.BolServerTaskMapper.MapBOToModel(this.DalServerTaskMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiServerTaskResponseModel>> ByNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, DateTimeOffset? startTime, DateTimeOffset? completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
 		{
-			List<ServerTask> records = await this.serverTaskRepository.ByNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(name, description, startTime, completedTime, errorMessage, hasWarningsOrErrors, projectId, environmentId, tenantId, durationSeconds, jSON, queueTime, state, concurrencyTag, hasPendingInterruptions, serverNodeId);
+			List<ServerTask> records = await this.ServerTaskRepository.ByNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(name, description, startTime, completedTime, errorMessage, hasWarningsOrErrors, projectId, environmentId, tenantId, durationSeconds, jSON, queueTime, state, concurrencyTag, hasPendingInterruptions, serverNodeId);
 
-			return this.bolServerTaskMapper.MapBOToModel(this.dalServerTaskMapper.MapEFToBO(records));
+			return this.BolServerTaskMapper.MapBOToModel(this.DalServerTaskMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc62b173f9d97ba7366491fe326bb776</Hash>
+    <Hash>26d5117dfa2fd678c2fbf84fe4fd1a04</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IApiTagsRequestModelValidator
+	public partial interface IApiTagsRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiTagsRequestModel model);
 
@@ -16,5 +16,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>436fd8c6f6009cfc0feb703f7a1f13c4</Hash>
+    <Hash>98e29bc3b250aeae8102487501e3ff7d</Hash>
 </Codenesium>*/

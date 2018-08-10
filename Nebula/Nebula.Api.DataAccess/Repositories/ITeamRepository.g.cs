@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
-	public interface ITeamRepository
+	public partial interface ITeamRepository
 	{
 		Task<Team> Create(Team item);
 
@@ -26,5 +26,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>72aa7cde207df9c5c8f3cb3ebaa83fc1</Hash>
+    <Hash>04fff6e787004757d9e3bb163ba081a3</Hash>
 </Codenesium>*/

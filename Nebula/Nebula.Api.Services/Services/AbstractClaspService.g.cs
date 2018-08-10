@@ -14,13 +14,13 @@ namespace NebulaNS.Api.Services
 {
 	public abstract class AbstractClaspService : AbstractService
 	{
-		private IClaspRepository claspRepository;
+		protected IClaspRepository ClaspRepository { get; private set; }
 
-		private IApiClaspRequestModelValidator claspModelValidator;
+		protected IApiClaspRequestModelValidator ClaspModelValidator { get; private set; }
 
-		private IBOLClaspMapper bolClaspMapper;
+		protected IBOLClaspMapper BolClaspMapper { get; private set; }
 
-		private IDALClaspMapper dalClaspMapper;
+		protected IDALClaspMapper DalClaspMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace NebulaNS.Api.Services
 			IDALClaspMapper dalClaspMapper)
 			: base()
 		{
-			this.claspRepository = claspRepository;
-			this.claspModelValidator = claspModelValidator;
-			this.bolClaspMapper = bolClaspMapper;
-			this.dalClaspMapper = dalClaspMapper;
+			this.ClaspRepository = claspRepository;
+			this.ClaspModelValidator = claspModelValidator;
+			this.BolClaspMapper = bolClaspMapper;
+			this.DalClaspMapper = dalClaspMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiClaspResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.claspRepository.All(limit, offset);
+			var records = await this.ClaspRepository.All(limit, offset);
 
-			return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(records));
+			return this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiClaspResponseModel> Get(int id)
 		{
-			var record = await this.claspRepository.Get(id);
+			var record = await this.ClaspRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace NebulaNS.Api.Services
 			}
 			else
 			{
-				return this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record));
+				return this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiClaspResponseModel>> Create(
 			ApiClaspRequestModel model)
 		{
-			CreateResponse<ApiClaspResponseModel> response = new CreateResponse<ApiClaspResponseModel>(await this.claspModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiClaspResponseModel> response = new CreateResponse<ApiClaspResponseModel>(await this.ClaspModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolClaspMapper.MapModelToBO(default(int), model);
-				var record = await this.claspRepository.Create(this.dalClaspMapper.MapBOToEF(bo));
+				var bo = this.BolClaspMapper.MapModelToBO(default(int), model);
+				var record = await this.ClaspRepository.Create(this.DalClaspMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace NebulaNS.Api.Services
 			int id,
 			ApiClaspRequestModel model)
 		{
-			var validationResult = await this.claspModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ClaspModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolClaspMapper.MapModelToBO(id, model);
-				await this.claspRepository.Update(this.dalClaspMapper.MapBOToEF(bo));
+				var bo = this.BolClaspMapper.MapModelToBO(id, model);
+				await this.ClaspRepository.Update(this.DalClaspMapper.MapBOToEF(bo));
 
-				var record = await this.claspRepository.Get(id);
+				var record = await this.ClaspRepository.Get(id);
 
-				return new UpdateResponse<ApiClaspResponseModel>(this.bolClaspMapper.MapBOToModel(this.dalClaspMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiClaspResponseModel>(this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace NebulaNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.claspModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ClaspModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.claspRepository.Delete(id);
+				await this.ClaspRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bc8499d311220e26fbc24be056353461</Hash>
+    <Hash>9c16b78def1d19dd9014c7d1f52e1c08</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface ISchemaBPersonService
+	public partial interface ISchemaBPersonService
 	{
 		Task<CreateResponse<ApiSchemaBPersonResponseModel>> Create(
 			ApiSchemaBPersonRequestModel model);
@@ -26,5 +26,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>791831dfa895cd24ecbc5685da48900b</Hash>
+    <Hash>552f8d294b05a9509c23de911d8c23b9</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IApiWorkerRequestModelValidator
+	public partial interface IApiWorkerRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiWorkerRequestModel model);
 
@@ -16,5 +16,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f03254023017199b500b34c3d1ad8ff</Hash>
+    <Hash>c62b70cf86cb1a2a2e9b0239468fabf9</Hash>
 </Codenesium>*/

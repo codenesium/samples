@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
-	public interface IFileTypeService
+	public partial interface IFileTypeService
 	{
 		Task<CreateResponse<ApiFileTypeResponseModel>> Create(
 			ApiFileTypeRequestModel model);
@@ -26,5 +26,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2abf58d92f35065c1c596da1291c04d8</Hash>
+    <Hash>e03c5a7cefe3c45ed00e30b03ea59746</Hash>
 </Codenesium>*/

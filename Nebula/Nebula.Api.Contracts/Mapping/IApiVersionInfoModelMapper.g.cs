@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
-	public interface IApiVersionInfoModelMapper
+	public partial interface IApiVersionInfoModelMapper
 	{
 		ApiVersionInfoResponseModel MapRequestToResponse(
 			long version,
@@ -19,5 +19,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4834a5c30a4b1b4ca10f32da6011f443</Hash>
+    <Hash>13aba42308bfc76ea236ae27a0a7f56e</Hash>
 </Codenesium>*/

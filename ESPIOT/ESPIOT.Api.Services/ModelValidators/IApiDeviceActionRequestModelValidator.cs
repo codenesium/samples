@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
 {
-	public interface IApiDeviceActionRequestModelValidator
+	public partial interface IApiDeviceActionRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiDeviceActionRequestModel model);
 
@@ -16,5 +16,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>254afa71590c0966e76f992d63fb5f4f</Hash>
+    <Hash>4afc5b900fd124e25abc61ec35c8867b</Hash>
 </Codenesium>*/

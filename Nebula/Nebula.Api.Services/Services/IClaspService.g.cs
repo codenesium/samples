@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IClaspService
+	public partial interface IClaspService
 	{
 		Task<CreateResponse<ApiClaspResponseModel>> Create(
 			ApiClaspRequestModel model);
@@ -24,5 +24,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>43a8e1e3d3eda49f8e68291f51057a8a</Hash>
+    <Hash>024667f50ef551cc93a8f97f01c79aac</Hash>
 </Codenesium>*/

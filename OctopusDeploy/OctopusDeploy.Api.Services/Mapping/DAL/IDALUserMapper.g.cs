@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALUserMapper
+	public partial interface IDALUserMapper
 	{
 		User MapBOToEF(
 			BOUser bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea16a687217f8d5a94282e5a4c55f6aa</Hash>
+    <Hash>e23d0854a1744c9ccea00d042bcdec3b</Hash>
 </Codenesium>*/

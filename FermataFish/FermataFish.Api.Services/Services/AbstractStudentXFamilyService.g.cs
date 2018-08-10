@@ -14,13 +14,13 @@ namespace FermataFishNS.Api.Services
 {
 	public abstract class AbstractStudentXFamilyService : AbstractService
 	{
-		private IStudentXFamilyRepository studentXFamilyRepository;
+		protected IStudentXFamilyRepository StudentXFamilyRepository { get; private set; }
 
-		private IApiStudentXFamilyRequestModelValidator studentXFamilyModelValidator;
+		protected IApiStudentXFamilyRequestModelValidator StudentXFamilyModelValidator { get; private set; }
 
-		private IBOLStudentXFamilyMapper bolStudentXFamilyMapper;
+		protected IBOLStudentXFamilyMapper BolStudentXFamilyMapper { get; private set; }
 
-		private IDALStudentXFamilyMapper dalStudentXFamilyMapper;
+		protected IDALStudentXFamilyMapper DalStudentXFamilyMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace FermataFishNS.Api.Services
 			IDALStudentXFamilyMapper dalStudentXFamilyMapper)
 			: base()
 		{
-			this.studentXFamilyRepository = studentXFamilyRepository;
-			this.studentXFamilyModelValidator = studentXFamilyModelValidator;
-			this.bolStudentXFamilyMapper = bolStudentXFamilyMapper;
-			this.dalStudentXFamilyMapper = dalStudentXFamilyMapper;
+			this.StudentXFamilyRepository = studentXFamilyRepository;
+			this.StudentXFamilyModelValidator = studentXFamilyModelValidator;
+			this.BolStudentXFamilyMapper = bolStudentXFamilyMapper;
+			this.DalStudentXFamilyMapper = dalStudentXFamilyMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiStudentXFamilyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.studentXFamilyRepository.All(limit, offset);
+			var records = await this.StudentXFamilyRepository.All(limit, offset);
 
-			return this.bolStudentXFamilyMapper.MapBOToModel(this.dalStudentXFamilyMapper.MapEFToBO(records));
+			return this.BolStudentXFamilyMapper.MapBOToModel(this.DalStudentXFamilyMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiStudentXFamilyResponseModel> Get(int id)
 		{
-			var record = await this.studentXFamilyRepository.Get(id);
+			var record = await this.StudentXFamilyRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace FermataFishNS.Api.Services
 			}
 			else
 			{
-				return this.bolStudentXFamilyMapper.MapBOToModel(this.dalStudentXFamilyMapper.MapEFToBO(record));
+				return this.BolStudentXFamilyMapper.MapBOToModel(this.DalStudentXFamilyMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiStudentXFamilyResponseModel>> Create(
 			ApiStudentXFamilyRequestModel model)
 		{
-			CreateResponse<ApiStudentXFamilyResponseModel> response = new CreateResponse<ApiStudentXFamilyResponseModel>(await this.studentXFamilyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiStudentXFamilyResponseModel> response = new CreateResponse<ApiStudentXFamilyResponseModel>(await this.StudentXFamilyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolStudentXFamilyMapper.MapModelToBO(default(int), model);
-				var record = await this.studentXFamilyRepository.Create(this.dalStudentXFamilyMapper.MapBOToEF(bo));
+				var bo = this.BolStudentXFamilyMapper.MapModelToBO(default(int), model);
+				var record = await this.StudentXFamilyRepository.Create(this.DalStudentXFamilyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolStudentXFamilyMapper.MapBOToModel(this.dalStudentXFamilyMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolStudentXFamilyMapper.MapBOToModel(this.DalStudentXFamilyMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace FermataFishNS.Api.Services
 			int id,
 			ApiStudentXFamilyRequestModel model)
 		{
-			var validationResult = await this.studentXFamilyModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.StudentXFamilyModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolStudentXFamilyMapper.MapModelToBO(id, model);
-				await this.studentXFamilyRepository.Update(this.dalStudentXFamilyMapper.MapBOToEF(bo));
+				var bo = this.BolStudentXFamilyMapper.MapModelToBO(id, model);
+				await this.StudentXFamilyRepository.Update(this.DalStudentXFamilyMapper.MapBOToEF(bo));
 
-				var record = await this.studentXFamilyRepository.Get(id);
+				var record = await this.StudentXFamilyRepository.Get(id);
 
-				return new UpdateResponse<ApiStudentXFamilyResponseModel>(this.bolStudentXFamilyMapper.MapBOToModel(this.dalStudentXFamilyMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiStudentXFamilyResponseModel>(this.BolStudentXFamilyMapper.MapBOToModel(this.DalStudentXFamilyMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace FermataFishNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.studentXFamilyModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.StudentXFamilyModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.studentXFamilyRepository.Delete(id);
+				await this.StudentXFamilyRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4b4dae2fbe99ca0d85cd65a0bf7953cb</Hash>
+    <Hash>6537cba5f35cef922754720aa9f847be</Hash>
 </Codenesium>*/

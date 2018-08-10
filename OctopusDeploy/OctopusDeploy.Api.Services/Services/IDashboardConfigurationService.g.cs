@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDashboardConfigurationService
+	public partial interface IDashboardConfigurationService
 	{
 		Task<CreateResponse<ApiDashboardConfigurationResponseModel>> Create(
 			ApiDashboardConfigurationRequestModel model);
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2224460af4d8ad0c0e0619f9e63f6769</Hash>
+    <Hash>b6cb8af7644623e1b6945181e807e608</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FileServiceNS.Api.Services
 {
-	public interface IBOLBucketMapper
+	public partial interface IBOLBucketMapper
 	{
 		BOBucket MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f9c9f4a3c4f3d641b379699f79bc0f50</Hash>
+    <Hash>b5405e5bafad80bc9c0562966097db69</Hash>
 </Codenesium>*/

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IDALLinkTypesMapper
+	public partial interface IDALLinkTypesMapper
 	{
 		LinkTypes MapBOToEF(
 			BOLinkTypes bo);
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>df8239b1b0ff2ad2916e1cd465b9beb9</Hash>
+    <Hash>0675a88ce0097607777fc073c6cf5763</Hash>
 </Codenesium>*/

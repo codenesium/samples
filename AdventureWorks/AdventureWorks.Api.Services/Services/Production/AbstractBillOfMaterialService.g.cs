@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractBillOfMaterialService : AbstractService
 	{
-		private IBillOfMaterialRepository billOfMaterialRepository;
+		protected IBillOfMaterialRepository BillOfMaterialRepository { get; private set; }
 
-		private IApiBillOfMaterialRequestModelValidator billOfMaterialModelValidator;
+		protected IApiBillOfMaterialRequestModelValidator BillOfMaterialModelValidator { get; private set; }
 
-		private IBOLBillOfMaterialMapper bolBillOfMaterialMapper;
+		protected IBOLBillOfMaterialMapper BolBillOfMaterialMapper { get; private set; }
 
-		private IDALBillOfMaterialMapper dalBillOfMaterialMapper;
+		protected IDALBillOfMaterialMapper DalBillOfMaterialMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper)
 			: base()
 		{
-			this.billOfMaterialRepository = billOfMaterialRepository;
-			this.billOfMaterialModelValidator = billOfMaterialModelValidator;
-			this.bolBillOfMaterialMapper = bolBillOfMaterialMapper;
-			this.dalBillOfMaterialMapper = dalBillOfMaterialMapper;
+			this.BillOfMaterialRepository = billOfMaterialRepository;
+			this.BillOfMaterialModelValidator = billOfMaterialModelValidator;
+			this.BolBillOfMaterialMapper = bolBillOfMaterialMapper;
+			this.DalBillOfMaterialMapper = dalBillOfMaterialMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiBillOfMaterialResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.billOfMaterialRepository.All(limit, offset);
+			var records = await this.BillOfMaterialRepository.All(limit, offset);
 
-			return this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(records));
+			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiBillOfMaterialResponseModel> Get(int billOfMaterialsID)
 		{
-			var record = await this.billOfMaterialRepository.Get(billOfMaterialsID);
+			var record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(record));
+				return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiBillOfMaterialResponseModel>> Create(
 			ApiBillOfMaterialRequestModel model)
 		{
-			CreateResponse<ApiBillOfMaterialResponseModel> response = new CreateResponse<ApiBillOfMaterialResponseModel>(await this.billOfMaterialModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiBillOfMaterialResponseModel> response = new CreateResponse<ApiBillOfMaterialResponseModel>(await this.BillOfMaterialModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolBillOfMaterialMapper.MapModelToBO(default(int), model);
-				var record = await this.billOfMaterialRepository.Create(this.dalBillOfMaterialMapper.MapBOToEF(bo));
+				var bo = this.BolBillOfMaterialMapper.MapModelToBO(default(int), model);
+				var record = await this.BillOfMaterialRepository.Create(this.DalBillOfMaterialMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int billOfMaterialsID,
 			ApiBillOfMaterialRequestModel model)
 		{
-			var validationResult = await this.billOfMaterialModelValidator.ValidateUpdateAsync(billOfMaterialsID, model);
+			var validationResult = await this.BillOfMaterialModelValidator.ValidateUpdateAsync(billOfMaterialsID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolBillOfMaterialMapper.MapModelToBO(billOfMaterialsID, model);
-				await this.billOfMaterialRepository.Update(this.dalBillOfMaterialMapper.MapBOToEF(bo));
+				var bo = this.BolBillOfMaterialMapper.MapModelToBO(billOfMaterialsID, model);
+				await this.BillOfMaterialRepository.Update(this.DalBillOfMaterialMapper.MapBOToEF(bo));
 
-				var record = await this.billOfMaterialRepository.Get(billOfMaterialsID);
+				var record = await this.BillOfMaterialRepository.Get(billOfMaterialsID);
 
-				return new UpdateResponse<ApiBillOfMaterialResponseModel>(this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiBillOfMaterialResponseModel>(this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int billOfMaterialsID)
 		{
-			ActionResponse response = new ActionResponse(await this.billOfMaterialModelValidator.ValidateDeleteAsync(billOfMaterialsID));
+			ActionResponse response = new ActionResponse(await this.BillOfMaterialModelValidator.ValidateDeleteAsync(billOfMaterialsID));
 			if (response.Success)
 			{
-				await this.billOfMaterialRepository.Delete(billOfMaterialsID);
+				await this.BillOfMaterialRepository.Delete(billOfMaterialsID);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<ApiBillOfMaterialResponseModel> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate)
 		{
-			BillOfMaterial record = await this.billOfMaterialRepository.ByProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
+			BillOfMaterial record = await this.BillOfMaterialRepository.ByProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(record));
+				return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiBillOfMaterialResponseModel>> ByUnitMeasureCode(string unitMeasureCode)
 		{
-			List<BillOfMaterial> records = await this.billOfMaterialRepository.ByUnitMeasureCode(unitMeasureCode);
+			List<BillOfMaterial> records = await this.BillOfMaterialRepository.ByUnitMeasureCode(unitMeasureCode);
 
-			return this.bolBillOfMaterialMapper.MapBOToModel(this.dalBillOfMaterialMapper.MapEFToBO(records));
+			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>406fc0fbab9b1cd9c435f401df1ba6fd</Hash>
+    <Hash>148ed5d3d5bd019784e0aaa839a1bf74</Hash>
 </Codenesium>*/

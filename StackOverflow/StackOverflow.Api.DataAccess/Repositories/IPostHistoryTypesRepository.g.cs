@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-	public interface IPostHistoryTypesRepository
+	public partial interface IPostHistoryTypesRepository
 	{
 		Task<PostHistoryTypes> Create(PostHistoryTypes item);
 
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6f31603601346105050b59f5f2e3f2ae</Hash>
+    <Hash>f545700da94d98af01c7688f276efa84</Hash>
 </Codenesium>*/

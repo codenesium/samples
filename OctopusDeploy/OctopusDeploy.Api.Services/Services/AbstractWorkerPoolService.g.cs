@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractWorkerPoolService : AbstractService
 	{
-		private IWorkerPoolRepository workerPoolRepository;
+		protected IWorkerPoolRepository WorkerPoolRepository { get; private set; }
 
-		private IApiWorkerPoolRequestModelValidator workerPoolModelValidator;
+		protected IApiWorkerPoolRequestModelValidator WorkerPoolModelValidator { get; private set; }
 
-		private IBOLWorkerPoolMapper bolWorkerPoolMapper;
+		protected IBOLWorkerPoolMapper BolWorkerPoolMapper { get; private set; }
 
-		private IDALWorkerPoolMapper dalWorkerPoolMapper;
+		protected IDALWorkerPoolMapper DalWorkerPoolMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALWorkerPoolMapper dalWorkerPoolMapper)
 			: base()
 		{
-			this.workerPoolRepository = workerPoolRepository;
-			this.workerPoolModelValidator = workerPoolModelValidator;
-			this.bolWorkerPoolMapper = bolWorkerPoolMapper;
-			this.dalWorkerPoolMapper = dalWorkerPoolMapper;
+			this.WorkerPoolRepository = workerPoolRepository;
+			this.WorkerPoolModelValidator = workerPoolModelValidator;
+			this.BolWorkerPoolMapper = bolWorkerPoolMapper;
+			this.DalWorkerPoolMapper = dalWorkerPoolMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiWorkerPoolResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.workerPoolRepository.All(limit, offset);
+			var records = await this.WorkerPoolRepository.All(limit, offset);
 
-			return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(records));
+			return this.BolWorkerPoolMapper.MapBOToModel(this.DalWorkerPoolMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiWorkerPoolResponseModel> Get(string id)
 		{
-			var record = await this.workerPoolRepository.Get(id);
+			var record = await this.WorkerPoolRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record));
+				return this.BolWorkerPoolMapper.MapBOToModel(this.DalWorkerPoolMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiWorkerPoolResponseModel>> Create(
 			ApiWorkerPoolRequestModel model)
 		{
-			CreateResponse<ApiWorkerPoolResponseModel> response = new CreateResponse<ApiWorkerPoolResponseModel>(await this.workerPoolModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiWorkerPoolResponseModel> response = new CreateResponse<ApiWorkerPoolResponseModel>(await this.WorkerPoolModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolWorkerPoolMapper.MapModelToBO(default(string), model);
-				var record = await this.workerPoolRepository.Create(this.dalWorkerPoolMapper.MapBOToEF(bo));
+				var bo = this.BolWorkerPoolMapper.MapModelToBO(default(string), model);
+				var record = await this.WorkerPoolRepository.Create(this.DalWorkerPoolMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolWorkerPoolMapper.MapBOToModel(this.DalWorkerPoolMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiWorkerPoolRequestModel model)
 		{
-			var validationResult = await this.workerPoolModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.WorkerPoolModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolWorkerPoolMapper.MapModelToBO(id, model);
-				await this.workerPoolRepository.Update(this.dalWorkerPoolMapper.MapBOToEF(bo));
+				var bo = this.BolWorkerPoolMapper.MapModelToBO(id, model);
+				await this.WorkerPoolRepository.Update(this.DalWorkerPoolMapper.MapBOToEF(bo));
 
-				var record = await this.workerPoolRepository.Get(id);
+				var record = await this.WorkerPoolRepository.Get(id);
 
-				return new UpdateResponse<ApiWorkerPoolResponseModel>(this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiWorkerPoolResponseModel>(this.BolWorkerPoolMapper.MapBOToModel(this.DalWorkerPoolMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.workerPoolModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.WorkerPoolModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.workerPoolRepository.Delete(id);
+				await this.WorkerPoolRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiWorkerPoolResponseModel> ByName(string name)
 		{
-			WorkerPool record = await this.workerPoolRepository.ByName(name);
+			WorkerPool record = await this.WorkerPoolRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolWorkerPoolMapper.MapBOToModel(this.dalWorkerPoolMapper.MapEFToBO(record));
+				return this.BolWorkerPoolMapper.MapBOToModel(this.DalWorkerPoolMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fff4133f26887c7f1a03e29b7ccbce39</Hash>
+    <Hash>ff6ded3a61d5dd788ffa4efe3c1cabd1</Hash>
 </Codenesium>*/

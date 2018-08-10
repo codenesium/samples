@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
-	public interface IBadgesRepository
+	public partial interface IBadgesRepository
 	{
 		Task<Badges> Create(Badges item);
 
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7e89cbb930c0274a83429611b4e9bdf3</Hash>
+    <Hash>b320836c050dee9f7dc99a20a859628c</Hash>
 </Codenesium>*/

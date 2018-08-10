@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface ILinkTypesService
+	public partial interface ILinkTypesService
 	{
 		Task<CreateResponse<ApiLinkTypesResponseModel>> Create(
 			ApiLinkTypesRequestModel model);
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e26ef6c4053828e10434ead1e58af663</Hash>
+    <Hash>6a8280efd7948013e971e51330bf73fe</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ISpecialOfferRepository
+	public partial interface ISpecialOfferRepository
 	{
 		Task<SpecialOffer> Create(SpecialOffer item);
 
@@ -22,5 +22,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>01e2d05cf2919aebeded027e3db9c258</Hash>
+    <Hash>e136b6badc1f06838c5dcf9803d6cc0d</Hash>
 </Codenesium>*/

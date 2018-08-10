@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IChannelService
+	public partial interface IChannelService
 	{
 		Task<CreateResponse<ApiChannelResponseModel>> Create(
 			ApiChannelRequestModel model);
@@ -30,5 +30,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>75814d5f70df5482ec2796df8c32f19a</Hash>
+    <Hash>e1adc18fc911eec8a350c6a1823ed486</Hash>
 </Codenesium>*/

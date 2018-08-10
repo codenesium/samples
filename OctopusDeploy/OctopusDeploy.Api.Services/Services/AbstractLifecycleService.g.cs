@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractLifecycleService : AbstractService
 	{
-		private ILifecycleRepository lifecycleRepository;
+		protected ILifecycleRepository LifecycleRepository { get; private set; }
 
-		private IApiLifecycleRequestModelValidator lifecycleModelValidator;
+		protected IApiLifecycleRequestModelValidator LifecycleModelValidator { get; private set; }
 
-		private IBOLLifecycleMapper bolLifecycleMapper;
+		protected IBOLLifecycleMapper BolLifecycleMapper { get; private set; }
 
-		private IDALLifecycleMapper dalLifecycleMapper;
+		protected IDALLifecycleMapper DalLifecycleMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALLifecycleMapper dalLifecycleMapper)
 			: base()
 		{
-			this.lifecycleRepository = lifecycleRepository;
-			this.lifecycleModelValidator = lifecycleModelValidator;
-			this.bolLifecycleMapper = bolLifecycleMapper;
-			this.dalLifecycleMapper = dalLifecycleMapper;
+			this.LifecycleRepository = lifecycleRepository;
+			this.LifecycleModelValidator = lifecycleModelValidator;
+			this.BolLifecycleMapper = bolLifecycleMapper;
+			this.DalLifecycleMapper = dalLifecycleMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiLifecycleResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.lifecycleRepository.All(limit, offset);
+			var records = await this.LifecycleRepository.All(limit, offset);
 
-			return this.bolLifecycleMapper.MapBOToModel(this.dalLifecycleMapper.MapEFToBO(records));
+			return this.BolLifecycleMapper.MapBOToModel(this.DalLifecycleMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLifecycleResponseModel> Get(string id)
 		{
-			var record = await this.lifecycleRepository.Get(id);
+			var record = await this.LifecycleRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolLifecycleMapper.MapBOToModel(this.dalLifecycleMapper.MapEFToBO(record));
+				return this.BolLifecycleMapper.MapBOToModel(this.DalLifecycleMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiLifecycleResponseModel>> Create(
 			ApiLifecycleRequestModel model)
 		{
-			CreateResponse<ApiLifecycleResponseModel> response = new CreateResponse<ApiLifecycleResponseModel>(await this.lifecycleModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLifecycleResponseModel> response = new CreateResponse<ApiLifecycleResponseModel>(await this.LifecycleModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolLifecycleMapper.MapModelToBO(default(string), model);
-				var record = await this.lifecycleRepository.Create(this.dalLifecycleMapper.MapBOToEF(bo));
+				var bo = this.BolLifecycleMapper.MapModelToBO(default(string), model);
+				var record = await this.LifecycleRepository.Create(this.DalLifecycleMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolLifecycleMapper.MapBOToModel(this.dalLifecycleMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolLifecycleMapper.MapBOToModel(this.DalLifecycleMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiLifecycleRequestModel model)
 		{
-			var validationResult = await this.lifecycleModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.LifecycleModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolLifecycleMapper.MapModelToBO(id, model);
-				await this.lifecycleRepository.Update(this.dalLifecycleMapper.MapBOToEF(bo));
+				var bo = this.BolLifecycleMapper.MapModelToBO(id, model);
+				await this.LifecycleRepository.Update(this.DalLifecycleMapper.MapBOToEF(bo));
 
-				var record = await this.lifecycleRepository.Get(id);
+				var record = await this.LifecycleRepository.Get(id);
 
-				return new UpdateResponse<ApiLifecycleResponseModel>(this.bolLifecycleMapper.MapBOToModel(this.dalLifecycleMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiLifecycleResponseModel>(this.BolLifecycleMapper.MapBOToModel(this.DalLifecycleMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.lifecycleModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.LifecycleModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.lifecycleRepository.Delete(id);
+				await this.LifecycleRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiLifecycleResponseModel> ByName(string name)
 		{
-			Lifecycle record = await this.lifecycleRepository.ByName(name);
+			Lifecycle record = await this.LifecycleRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolLifecycleMapper.MapBOToModel(this.dalLifecycleMapper.MapEFToBO(record));
+				return this.BolLifecycleMapper.MapBOToModel(this.DalLifecycleMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiLifecycleResponseModel>> ByDataVersion(byte[] dataVersion)
 		{
-			List<Lifecycle> records = await this.lifecycleRepository.ByDataVersion(dataVersion);
+			List<Lifecycle> records = await this.LifecycleRepository.ByDataVersion(dataVersion);
 
-			return this.bolLifecycleMapper.MapBOToModel(this.dalLifecycleMapper.MapEFToBO(records));
+			return this.BolLifecycleMapper.MapBOToModel(this.DalLifecycleMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9fd2f4a864f50ff05590a7a2e1a7ea9</Hash>
+    <Hash>c2d9ec02aa8b016583b9f9026e5f6f1b</Hash>
 </Codenesium>*/

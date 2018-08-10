@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALArtifactMapper
+	public partial interface IDALArtifactMapper
 	{
 		Artifact MapBOToEF(
 			BOArtifact bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3361ce88f70880e39e03b607bf0a916f</Hash>
+    <Hash>730f73a713301e8ca0e307452705bef6</Hash>
 </Codenesium>*/

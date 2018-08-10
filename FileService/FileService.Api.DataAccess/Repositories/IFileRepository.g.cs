@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-	public interface IFileRepository
+	public partial interface IFileRepository
 	{
 		Task<File> Create(File item);
 
@@ -24,5 +24,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ee727c958dc0c7933c48f7baf2640478</Hash>
+    <Hash>ed2004b1bad68e4e794163b1bd4448e0</Hash>
 </Codenesium>*/

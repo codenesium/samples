@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IApiKeyService
+	public partial interface IApiKeyService
 	{
 		Task<CreateResponse<ApiApiKeyResponseModel>> Create(
 			ApiApiKeyRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>594693f2388e5c2c50c1687eb5ce9bcf</Hash>
+    <Hash>f0d6c4c12adc52d127478c80962b8381</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.DataAccess
 {
-	public interface IDeviceRepository
+	public partial interface IDeviceRepository
 	{
 		Task<Device> Create(Device item);
 
@@ -24,5 +24,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b7bd6d65edccf53449a62c67a06c0e63</Hash>
+    <Hash>dec28c62df07ee0941a0f0e27c594c62</Hash>
 </Codenesium>*/

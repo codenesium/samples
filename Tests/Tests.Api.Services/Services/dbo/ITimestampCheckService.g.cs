@@ -7,7 +7,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface ITimestampCheckService
+	public partial interface ITimestampCheckService
 	{
 		Task<CreateResponse<ApiTimestampCheckResponseModel>> Create(
 			ApiTimestampCheckRequestModel model);
@@ -24,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5861b6590139101c8fa1271ade792b59</Hash>
+    <Hash>4f461a7b12943dbac45ec9e91c5dd772</Hash>
 </Codenesium>*/

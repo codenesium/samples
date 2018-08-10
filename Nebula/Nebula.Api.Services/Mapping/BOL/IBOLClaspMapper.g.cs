@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IBOLClaspMapper
+	public partial interface IBOLClaspMapper
 	{
 		BOClasp MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7dfa0fbedafe1afd21fcb93dd28a031</Hash>
+    <Hash>d78ae0ff5853faf92d441689464ae866</Hash>
 </Codenesium>*/

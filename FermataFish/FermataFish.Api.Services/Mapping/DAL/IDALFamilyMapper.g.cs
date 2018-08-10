@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace FermataFishNS.Api.Services
 {
-	public interface IDALFamilyMapper
+	public partial interface IDALFamilyMapper
 	{
 		Family MapBOToEF(
 			BOFamily bo);
@@ -20,5 +20,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1c43b1c14e1e3cafa82bf8093576c3d4</Hash>
+    <Hash>285ce9f86108d4ebc93f6210688ba7fd</Hash>
 </Codenesium>*/

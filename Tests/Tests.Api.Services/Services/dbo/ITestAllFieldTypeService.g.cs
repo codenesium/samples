@@ -7,7 +7,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface ITestAllFieldTypeService
+	public partial interface ITestAllFieldTypeService
 	{
 		Task<CreateResponse<ApiTestAllFieldTypeResponseModel>> Create(
 			ApiTestAllFieldTypeRequestModel model);
@@ -24,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>749ae1df243316bcb02c0a2165d7b1a1</Hash>
+    <Hash>ac580fa2f39b39d73a2a9410064e1881</Hash>
 </Codenesium>*/

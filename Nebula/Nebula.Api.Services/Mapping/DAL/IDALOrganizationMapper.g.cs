@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace NebulaNS.Api.Services
 {
-	public interface IDALOrganizationMapper
+	public partial interface IDALOrganizationMapper
 	{
 		Organization MapBOToEF(
 			BOOrganization bo);
@@ -20,5 +20,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3b8547d6f4a66b261ae7f071cf0f5498</Hash>
+    <Hash>1db095a835c0282450a44ac47cc555b3</Hash>
 </Codenesium>*/

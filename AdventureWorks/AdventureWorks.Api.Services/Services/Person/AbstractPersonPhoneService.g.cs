@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractPersonPhoneService : AbstractService
 	{
-		private IPersonPhoneRepository personPhoneRepository;
+		protected IPersonPhoneRepository PersonPhoneRepository { get; private set; }
 
-		private IApiPersonPhoneRequestModelValidator personPhoneModelValidator;
+		protected IApiPersonPhoneRequestModelValidator PersonPhoneModelValidator { get; private set; }
 
-		private IBOLPersonPhoneMapper bolPersonPhoneMapper;
+		protected IBOLPersonPhoneMapper BolPersonPhoneMapper { get; private set; }
 
-		private IDALPersonPhoneMapper dalPersonPhoneMapper;
+		protected IDALPersonPhoneMapper DalPersonPhoneMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALPersonPhoneMapper dalPersonPhoneMapper)
 			: base()
 		{
-			this.personPhoneRepository = personPhoneRepository;
-			this.personPhoneModelValidator = personPhoneModelValidator;
-			this.bolPersonPhoneMapper = bolPersonPhoneMapper;
-			this.dalPersonPhoneMapper = dalPersonPhoneMapper;
+			this.PersonPhoneRepository = personPhoneRepository;
+			this.PersonPhoneModelValidator = personPhoneModelValidator;
+			this.BolPersonPhoneMapper = bolPersonPhoneMapper;
+			this.DalPersonPhoneMapper = dalPersonPhoneMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiPersonPhoneResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.personPhoneRepository.All(limit, offset);
+			var records = await this.PersonPhoneRepository.All(limit, offset);
 
-			return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
+			return this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiPersonPhoneResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.personPhoneRepository.Get(businessEntityID);
+			var record = await this.PersonPhoneRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record));
+				return this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiPersonPhoneResponseModel>> Create(
 			ApiPersonPhoneRequestModel model)
 		{
-			CreateResponse<ApiPersonPhoneResponseModel> response = new CreateResponse<ApiPersonPhoneResponseModel>(await this.personPhoneModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiPersonPhoneResponseModel> response = new CreateResponse<ApiPersonPhoneResponseModel>(await this.PersonPhoneModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolPersonPhoneMapper.MapModelToBO(default(int), model);
-				var record = await this.personPhoneRepository.Create(this.dalPersonPhoneMapper.MapBOToEF(bo));
+				var bo = this.BolPersonPhoneMapper.MapModelToBO(default(int), model);
+				var record = await this.PersonPhoneRepository.Create(this.DalPersonPhoneMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int businessEntityID,
 			ApiPersonPhoneRequestModel model)
 		{
-			var validationResult = await this.personPhoneModelValidator.ValidateUpdateAsync(businessEntityID, model);
+			var validationResult = await this.PersonPhoneModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolPersonPhoneMapper.MapModelToBO(businessEntityID, model);
-				await this.personPhoneRepository.Update(this.dalPersonPhoneMapper.MapBOToEF(bo));
+				var bo = this.BolPersonPhoneMapper.MapModelToBO(businessEntityID, model);
+				await this.PersonPhoneRepository.Update(this.DalPersonPhoneMapper.MapBOToEF(bo));
 
-				var record = await this.personPhoneRepository.Get(businessEntityID);
+				var record = await this.PersonPhoneRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiPersonPhoneResponseModel>(this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiPersonPhoneResponseModel>(this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.personPhoneModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = new ActionResponse(await this.PersonPhoneModelValidator.ValidateDeleteAsync(businessEntityID));
 			if (response.Success)
 			{
-				await this.personPhoneRepository.Delete(businessEntityID);
+				await this.PersonPhoneRepository.Delete(businessEntityID);
 			}
 
 			return response;
@@ -110,13 +110,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiPersonPhoneResponseModel>> ByPhoneNumber(string phoneNumber)
 		{
-			List<PersonPhone> records = await this.personPhoneRepository.ByPhoneNumber(phoneNumber);
+			List<PersonPhone> records = await this.PersonPhoneRepository.ByPhoneNumber(phoneNumber);
 
-			return this.bolPersonPhoneMapper.MapBOToModel(this.dalPersonPhoneMapper.MapEFToBO(records));
+			return this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9dfcd0cdfd435bf4bd3fdfff6fffa67</Hash>
+    <Hash>17645ca1f8fa118e9b71b0cc70c25ee7</Hash>
 </Codenesium>*/

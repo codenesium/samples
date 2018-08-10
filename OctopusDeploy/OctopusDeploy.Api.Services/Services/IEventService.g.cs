@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IEventService
+	public partial interface IEventService
 	{
 		Task<CreateResponse<ApiEventResponseModel>> Create(
 			ApiEventRequestModel model);
@@ -34,5 +34,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c88af3cc6d5aa25e63e4750424a5a618</Hash>
+    <Hash>bea22e00c0f7a95bb60322e635614a16</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLBusinessEntityContactMapper
+	public partial interface IBOLBusinessEntityContactMapper
 	{
 		BOBusinessEntityContact MapModelToBO(
 			int businessEntityID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7acff0717c35fa89712536663c0be82c</Hash>
+    <Hash>7e078cf383fb68933d428db4744aa01e</Hash>
 </Codenesium>*/

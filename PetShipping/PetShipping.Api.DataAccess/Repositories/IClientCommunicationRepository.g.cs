@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public interface IClientCommunicationRepository
+	public partial interface IClientCommunicationRepository
 	{
 		Task<ClientCommunication> Create(ClientCommunication item);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>091b1933119fd0110bce75d03d26c73b</Hash>
+    <Hash>7f9b81be276f07709722e4ba9dcefa63</Hash>
 </Codenesium>*/

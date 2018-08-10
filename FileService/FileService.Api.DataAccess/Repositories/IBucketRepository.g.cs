@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
-	public interface IBucketRepository
+	public partial interface IBucketRepository
 	{
 		Task<Bucket> Create(Bucket item);
 
@@ -26,5 +26,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a03279657ee9574377d7406b7da8b130</Hash>
+    <Hash>1675cb6bc053623b8e30c91b50292d63</Hash>
 </Codenesium>*/

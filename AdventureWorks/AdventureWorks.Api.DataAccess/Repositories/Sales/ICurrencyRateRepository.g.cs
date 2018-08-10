@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface ICurrencyRateRepository
+	public partial interface ICurrencyRateRepository
 	{
 		Task<CurrencyRate> Create(CurrencyRate item);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1254f3c743c79ea10bed2d15960ca2de</Hash>
+    <Hash>fcd4aa9fcaf1bf68c671291adad789ae</Hash>
 </Codenesium>*/

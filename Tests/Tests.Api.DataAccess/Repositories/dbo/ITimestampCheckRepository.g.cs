@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
-	public interface ITimestampCheckRepository
+	public partial interface ITimestampCheckRepository
 	{
 		Task<TimestampCheck> Create(TimestampCheck item);
 
@@ -20,5 +20,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>142c39a129e9662a976c50aaebe86b19</Hash>
+    <Hash>f833d6525fc33f9b67c4c78f297bd829</Hash>
 </Codenesium>*/

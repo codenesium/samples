@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IVoteTypesService
+	public partial interface IVoteTypesService
 	{
 		Task<CreateResponse<ApiVoteTypesResponseModel>> Create(
 			ApiVoteTypesRequestModel model);
@@ -24,5 +24,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f7e87baa3830330c39849c639939e83</Hash>
+    <Hash>4c916b67a82ad655c81060132d7c82cc</Hash>
 </Codenesium>*/

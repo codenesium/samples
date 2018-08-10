@@ -5,7 +5,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IBOLTestAllFieldTypeMapper
+	public partial interface IBOLTestAllFieldTypeMapper
 	{
 		BOTestAllFieldType MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3fb4c803333f85dd0d987e5b74c6b86c</Hash>
+    <Hash>3658fb243d2a1436876ce382a525eda2</Hash>
 </Codenesium>*/

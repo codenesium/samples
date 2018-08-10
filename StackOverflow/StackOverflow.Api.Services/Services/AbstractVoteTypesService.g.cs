@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractVoteTypesService : AbstractService
 	{
-		private IVoteTypesRepository voteTypesRepository;
+		protected IVoteTypesRepository VoteTypesRepository { get; private set; }
 
-		private IApiVoteTypesRequestModelValidator voteTypesModelValidator;
+		protected IApiVoteTypesRequestModelValidator VoteTypesModelValidator { get; private set; }
 
-		private IBOLVoteTypesMapper bolVoteTypesMapper;
+		protected IBOLVoteTypesMapper BolVoteTypesMapper { get; private set; }
 
-		private IDALVoteTypesMapper dalVoteTypesMapper;
+		protected IDALVoteTypesMapper DalVoteTypesMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace StackOverflowNS.Api.Services
 			IDALVoteTypesMapper dalVoteTypesMapper)
 			: base()
 		{
-			this.voteTypesRepository = voteTypesRepository;
-			this.voteTypesModelValidator = voteTypesModelValidator;
-			this.bolVoteTypesMapper = bolVoteTypesMapper;
-			this.dalVoteTypesMapper = dalVoteTypesMapper;
+			this.VoteTypesRepository = voteTypesRepository;
+			this.VoteTypesModelValidator = voteTypesModelValidator;
+			this.BolVoteTypesMapper = bolVoteTypesMapper;
+			this.DalVoteTypesMapper = dalVoteTypesMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiVoteTypesResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.voteTypesRepository.All(limit, offset);
+			var records = await this.VoteTypesRepository.All(limit, offset);
 
-			return this.bolVoteTypesMapper.MapBOToModel(this.dalVoteTypesMapper.MapEFToBO(records));
+			return this.BolVoteTypesMapper.MapBOToModel(this.DalVoteTypesMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiVoteTypesResponseModel> Get(int id)
 		{
-			var record = await this.voteTypesRepository.Get(id);
+			var record = await this.VoteTypesRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.bolVoteTypesMapper.MapBOToModel(this.dalVoteTypesMapper.MapEFToBO(record));
+				return this.BolVoteTypesMapper.MapBOToModel(this.DalVoteTypesMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiVoteTypesResponseModel>> Create(
 			ApiVoteTypesRequestModel model)
 		{
-			CreateResponse<ApiVoteTypesResponseModel> response = new CreateResponse<ApiVoteTypesResponseModel>(await this.voteTypesModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiVoteTypesResponseModel> response = new CreateResponse<ApiVoteTypesResponseModel>(await this.VoteTypesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolVoteTypesMapper.MapModelToBO(default(int), model);
-				var record = await this.voteTypesRepository.Create(this.dalVoteTypesMapper.MapBOToEF(bo));
+				var bo = this.BolVoteTypesMapper.MapModelToBO(default(int), model);
+				var record = await this.VoteTypesRepository.Create(this.DalVoteTypesMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolVoteTypesMapper.MapBOToModel(this.dalVoteTypesMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolVoteTypesMapper.MapBOToModel(this.DalVoteTypesMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace StackOverflowNS.Api.Services
 			int id,
 			ApiVoteTypesRequestModel model)
 		{
-			var validationResult = await this.voteTypesModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.VoteTypesModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolVoteTypesMapper.MapModelToBO(id, model);
-				await this.voteTypesRepository.Update(this.dalVoteTypesMapper.MapBOToEF(bo));
+				var bo = this.BolVoteTypesMapper.MapModelToBO(id, model);
+				await this.VoteTypesRepository.Update(this.DalVoteTypesMapper.MapBOToEF(bo));
 
-				var record = await this.voteTypesRepository.Get(id);
+				var record = await this.VoteTypesRepository.Get(id);
 
-				return new UpdateResponse<ApiVoteTypesResponseModel>(this.bolVoteTypesMapper.MapBOToModel(this.dalVoteTypesMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiVoteTypesResponseModel>(this.BolVoteTypesMapper.MapBOToModel(this.DalVoteTypesMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace StackOverflowNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.voteTypesModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.VoteTypesModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.voteTypesRepository.Delete(id);
+				await this.VoteTypesRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35cbcb2cd17be5c664777d105c3d22a4</Hash>
+    <Hash>b7bff991d1f4c2da0ec95d7291a1b3ac</Hash>
 </Codenesium>*/

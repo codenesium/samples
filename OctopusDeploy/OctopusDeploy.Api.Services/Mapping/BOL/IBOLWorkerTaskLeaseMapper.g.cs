@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLWorkerTaskLeaseMapper
+	public partial interface IBOLWorkerTaskLeaseMapper
 	{
 		BOWorkerTaskLease MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5c65cf44cfdd1b3adef3616ed6c175aa</Hash>
+    <Hash>38932f67daffaea5a5e16953d63871a3</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ESPIOTNS.Api.Services
 {
-	public interface IDeviceActionService
+	public partial interface IDeviceActionService
 	{
 		Task<CreateResponse<ApiDeviceActionResponseModel>> Create(
 			ApiDeviceActionRequestModel model);
@@ -26,5 +26,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8bd9e3b09e57e0ce0fbad7255b184b62</Hash>
+    <Hash>ed4fcef9c260dc8243e57db9da87cbcb</Hash>
 </Codenesium>*/

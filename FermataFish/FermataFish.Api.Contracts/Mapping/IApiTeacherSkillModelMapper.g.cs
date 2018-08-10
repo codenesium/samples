@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Contracts
 {
-	public interface IApiTeacherSkillModelMapper
+	public partial interface IApiTeacherSkillModelMapper
 	{
 		ApiTeacherSkillResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0b0d3c1d3d93d10d4e1b01f6de96f026</Hash>
+    <Hash>9fb743bd5f57ce721da65b28a106e55a</Hash>
 </Codenesium>*/

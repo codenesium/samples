@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IBOLChannelMapper
+	public partial interface IBOLChannelMapper
 	{
 		BOChannel MapModelToBO(
 			string id,
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>397b31ee58518ff18ea96ce84d353a0a</Hash>
+    <Hash>7cdc9717e6214edfa73e1baaa0b517cd</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
-	public interface ITableRepository
+	public partial interface ITableRepository
 	{
 		Task<Table> Create(Table item);
 
@@ -20,5 +20,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1949594c4577fe0fba1510b69fcf0467</Hash>
+    <Hash>e6b90f91b8abb06956570f430c369252</Hash>
 </Codenesium>*/

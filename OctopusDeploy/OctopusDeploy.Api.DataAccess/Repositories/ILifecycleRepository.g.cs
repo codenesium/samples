@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public interface ILifecycleRepository
+	public partial interface ILifecycleRepository
 	{
 		Task<Lifecycle> Create(Lifecycle item);
 
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d45a6e6b7bc9c65c8d2f031c36c3d234</Hash>
+    <Hash>6219f35cfcad551cbc32a5f151ec0b9e</Hash>
 </Codenesium>*/

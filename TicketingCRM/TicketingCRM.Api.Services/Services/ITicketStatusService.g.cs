@@ -7,7 +7,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface ITicketStatusService
+	public partial interface ITicketStatusService
 	{
 		Task<CreateResponse<ApiTicketStatusResponseModel>> Create(
 			ApiTicketStatusRequestModel model);
@@ -26,5 +26,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b0ac5d9076cf8cf34359425a78fbccf0</Hash>
+    <Hash>e01248312c924280e1b9efc0be7017da</Hash>
 </Codenesium>*/

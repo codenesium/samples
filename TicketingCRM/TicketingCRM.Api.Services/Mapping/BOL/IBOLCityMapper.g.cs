@@ -5,7 +5,7 @@ using TicketingCRMNS.Api.DataAccess;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IBOLCityMapper
+	public partial interface IBOLCityMapper
 	{
 		BOCity MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7007975e235af70c90ba197e1e2bbfa8</Hash>
+    <Hash>dae318e37d2f165674678bb33861d85f</Hash>
 </Codenesium>*/

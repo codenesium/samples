@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiErrorLogModelMapper
+	public partial interface IApiErrorLogModelMapper
 	{
 		ApiErrorLogResponseModel MapRequestToResponse(
 			int errorLogID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0c975ec1a580545824674c02adf6e013</Hash>
+    <Hash>a8072ee136fbe4b94746b0e82360b754</Hash>
 </Codenesium>*/

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IAddressRepository
+	public partial interface IAddressRepository
 	{
 		Task<Address> Create(Address item);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>91584d8d53735c06c887425b375f127c</Hash>
+    <Hash>546764c9709c068b4bf4c261bcd78932</Hash>
 </Codenesium>*/

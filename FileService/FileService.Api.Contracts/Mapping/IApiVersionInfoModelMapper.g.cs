@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Contracts
 {
-	public interface IApiVersionInfoModelMapper
+	public partial interface IApiVersionInfoModelMapper
 	{
 		ApiVersionInfoResponseModel MapRequestToResponse(
 			long version,
@@ -19,5 +19,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>86c9cc8be05d6dbbfedd5cb2e027075f</Hash>
+    <Hash>23697bf208c5efc3f175bec5057b5775</Hash>
 </Codenesium>*/

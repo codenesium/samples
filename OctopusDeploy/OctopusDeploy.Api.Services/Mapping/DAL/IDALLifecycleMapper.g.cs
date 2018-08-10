@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALLifecycleMapper
+	public partial interface IDALLifecycleMapper
 	{
 		Lifecycle MapBOToEF(
 			BOLifecycle bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3915cde9543c747190efe1ab7649e096</Hash>
+    <Hash>e7953a588d94dae6f5b6cedae7faad14</Hash>
 </Codenesium>*/

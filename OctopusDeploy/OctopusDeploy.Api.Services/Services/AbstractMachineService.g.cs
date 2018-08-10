@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractMachineService : AbstractService
 	{
-		private IMachineRepository machineRepository;
+		protected IMachineRepository MachineRepository { get; private set; }
 
-		private IApiMachineRequestModelValidator machineModelValidator;
+		protected IApiMachineRequestModelValidator MachineModelValidator { get; private set; }
 
-		private IBOLMachineMapper bolMachineMapper;
+		protected IBOLMachineMapper BolMachineMapper { get; private set; }
 
-		private IDALMachineMapper dalMachineMapper;
+		protected IDALMachineMapper DalMachineMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALMachineMapper dalMachineMapper)
 			: base()
 		{
-			this.machineRepository = machineRepository;
-			this.machineModelValidator = machineModelValidator;
-			this.bolMachineMapper = bolMachineMapper;
-			this.dalMachineMapper = dalMachineMapper;
+			this.MachineRepository = machineRepository;
+			this.MachineModelValidator = machineModelValidator;
+			this.BolMachineMapper = bolMachineMapper;
+			this.DalMachineMapper = dalMachineMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiMachineResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.machineRepository.All(limit, offset);
+			var records = await this.MachineRepository.All(limit, offset);
 
-			return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
+			return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiMachineResponseModel> Get(string id)
 		{
-			var record = await this.machineRepository.Get(id);
+			var record = await this.MachineRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+				return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiMachineResponseModel>> Create(
 			ApiMachineRequestModel model)
 		{
-			CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.machineModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiMachineResponseModel> response = new CreateResponse<ApiMachineResponseModel>(await this.MachineModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolMachineMapper.MapModelToBO(default(string), model);
-				var record = await this.machineRepository.Create(this.dalMachineMapper.MapBOToEF(bo));
+				var bo = this.BolMachineMapper.MapModelToBO(default(string), model);
+				var record = await this.MachineRepository.Create(this.DalMachineMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiMachineRequestModel model)
 		{
-			var validationResult = await this.machineModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.MachineModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolMachineMapper.MapModelToBO(id, model);
-				await this.machineRepository.Update(this.dalMachineMapper.MapBOToEF(bo));
+				var bo = this.BolMachineMapper.MapModelToBO(id, model);
+				await this.MachineRepository.Update(this.DalMachineMapper.MapBOToEF(bo));
 
-				var record = await this.machineRepository.Get(id);
+				var record = await this.MachineRepository.Get(id);
 
-				return new UpdateResponse<ApiMachineResponseModel>(this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiMachineResponseModel>(this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.machineModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.MachineModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.machineRepository.Delete(id);
+				await this.MachineRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiMachineResponseModel> ByName(string name)
 		{
-			Machine record = await this.machineRepository.ByName(name);
+			Machine record = await this.MachineRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(record));
+				return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiMachineResponseModel>> ByMachinePolicyId(string machinePolicyId)
 		{
-			List<Machine> records = await this.machineRepository.ByMachinePolicyId(machinePolicyId);
+			List<Machine> records = await this.MachineRepository.ByMachinePolicyId(machinePolicyId);
 
-			return this.bolMachineMapper.MapBOToModel(this.dalMachineMapper.MapEFToBO(records));
+			return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3d83664fc10e70964b85ead4b49213d</Hash>
+    <Hash>99ac7c8bf3f195f2905d9f527eb81f55</Hash>
 </Codenesium>*/

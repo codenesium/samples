@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALPersonMapper
+	public partial interface IDALPersonMapper
 	{
 		Person MapBOToEF(
 			BOPerson bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a8cacc90d7a7621f1d75d46fd26f800a</Hash>
+    <Hash>d749136f9d39b1707500926e0bf65b03</Hash>
 </Codenesium>*/

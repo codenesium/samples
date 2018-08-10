@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Contracts
 {
-	public interface IApiCommentsModelMapper
+	public partial interface IApiCommentsModelMapper
 	{
 		ApiCommentsResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0a8e116a8bdb38ae465c50697183892e</Hash>
+    <Hash>176d628fd597522b3a9b4d500cc42be0</Hash>
 </Codenesium>*/

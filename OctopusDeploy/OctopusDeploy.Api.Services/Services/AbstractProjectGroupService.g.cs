@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractProjectGroupService : AbstractService
 	{
-		private IProjectGroupRepository projectGroupRepository;
+		protected IProjectGroupRepository ProjectGroupRepository { get; private set; }
 
-		private IApiProjectGroupRequestModelValidator projectGroupModelValidator;
+		protected IApiProjectGroupRequestModelValidator ProjectGroupModelValidator { get; private set; }
 
-		private IBOLProjectGroupMapper bolProjectGroupMapper;
+		protected IBOLProjectGroupMapper BolProjectGroupMapper { get; private set; }
 
-		private IDALProjectGroupMapper dalProjectGroupMapper;
+		protected IDALProjectGroupMapper DalProjectGroupMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALProjectGroupMapper dalProjectGroupMapper)
 			: base()
 		{
-			this.projectGroupRepository = projectGroupRepository;
-			this.projectGroupModelValidator = projectGroupModelValidator;
-			this.bolProjectGroupMapper = bolProjectGroupMapper;
-			this.dalProjectGroupMapper = dalProjectGroupMapper;
+			this.ProjectGroupRepository = projectGroupRepository;
+			this.ProjectGroupModelValidator = projectGroupModelValidator;
+			this.BolProjectGroupMapper = bolProjectGroupMapper;
+			this.DalProjectGroupMapper = dalProjectGroupMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProjectGroupResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.projectGroupRepository.All(limit, offset);
+			var records = await this.ProjectGroupRepository.All(limit, offset);
 
-			return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(records));
+			return this.BolProjectGroupMapper.MapBOToModel(this.DalProjectGroupMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProjectGroupResponseModel> Get(string id)
 		{
-			var record = await this.projectGroupRepository.Get(id);
+			var record = await this.ProjectGroupRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record));
+				return this.BolProjectGroupMapper.MapBOToModel(this.DalProjectGroupMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProjectGroupResponseModel>> Create(
 			ApiProjectGroupRequestModel model)
 		{
-			CreateResponse<ApiProjectGroupResponseModel> response = new CreateResponse<ApiProjectGroupResponseModel>(await this.projectGroupModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProjectGroupResponseModel> response = new CreateResponse<ApiProjectGroupResponseModel>(await this.ProjectGroupModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProjectGroupMapper.MapModelToBO(default(string), model);
-				var record = await this.projectGroupRepository.Create(this.dalProjectGroupMapper.MapBOToEF(bo));
+				var bo = this.BolProjectGroupMapper.MapModelToBO(default(string), model);
+				var record = await this.ProjectGroupRepository.Create(this.DalProjectGroupMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProjectGroupMapper.MapBOToModel(this.DalProjectGroupMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiProjectGroupRequestModel model)
 		{
-			var validationResult = await this.projectGroupModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ProjectGroupModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProjectGroupMapper.MapModelToBO(id, model);
-				await this.projectGroupRepository.Update(this.dalProjectGroupMapper.MapBOToEF(bo));
+				var bo = this.BolProjectGroupMapper.MapModelToBO(id, model);
+				await this.ProjectGroupRepository.Update(this.DalProjectGroupMapper.MapBOToEF(bo));
 
-				var record = await this.projectGroupRepository.Get(id);
+				var record = await this.ProjectGroupRepository.Get(id);
 
-				return new UpdateResponse<ApiProjectGroupResponseModel>(this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProjectGroupResponseModel>(this.BolProjectGroupMapper.MapBOToModel(this.DalProjectGroupMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.projectGroupModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ProjectGroupModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.projectGroupRepository.Delete(id);
+				await this.ProjectGroupRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiProjectGroupResponseModel> ByName(string name)
 		{
-			ProjectGroup record = await this.projectGroupRepository.ByName(name);
+			ProjectGroup record = await this.ProjectGroupRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(record));
+				return this.BolProjectGroupMapper.MapBOToModel(this.DalProjectGroupMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiProjectGroupResponseModel>> ByDataVersion(byte[] dataVersion)
 		{
-			List<ProjectGroup> records = await this.projectGroupRepository.ByDataVersion(dataVersion);
+			List<ProjectGroup> records = await this.ProjectGroupRepository.ByDataVersion(dataVersion);
 
-			return this.bolProjectGroupMapper.MapBOToModel(this.dalProjectGroupMapper.MapEFToBO(records));
+			return this.BolProjectGroupMapper.MapBOToModel(this.DalProjectGroupMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff0d5ea3e66ff6d888778b561d8da509</Hash>
+    <Hash>0876e6030909fecd59ce5d3776c6dc45</Hash>
 </Codenesium>*/

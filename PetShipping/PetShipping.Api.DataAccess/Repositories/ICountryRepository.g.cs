@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
-	public interface ICountryRepository
+	public partial interface ICountryRepository
 	{
 		Task<Country> Create(Country item);
 
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>26c8eba44e9a1966395103d9e60d99e5</Hash>
+    <Hash>8f3385dff10dca50195c26f365b25f83</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface ISchemaVersionsService
+	public partial interface ISchemaVersionsService
 	{
 		Task<CreateResponse<ApiSchemaVersionsResponseModel>> Create(
 			ApiSchemaVersionsRequestModel model);
@@ -24,5 +24,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47f997775ebce3ee2787abb2e1981c4c</Hash>
+    <Hash>44d829bccd484d147649b1ed98ca94db</Hash>
 </Codenesium>*/

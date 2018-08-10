@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALBusinessEntityMapper
+	public partial interface IDALBusinessEntityMapper
 	{
 		BusinessEntity MapBOToEF(
 			BOBusinessEntity bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a29fb1b6b31272c4dd30c22acfd8cbb</Hash>
+    <Hash>58534a7bc3e5ee0af2c10973a6c1f5a2</Hash>
 </Codenesium>*/

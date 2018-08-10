@@ -14,13 +14,13 @@ namespace StackOverflowNS.Api.Services
 {
 	public abstract class AbstractLinkTypesService : AbstractService
 	{
-		private ILinkTypesRepository linkTypesRepository;
+		protected ILinkTypesRepository LinkTypesRepository { get; private set; }
 
-		private IApiLinkTypesRequestModelValidator linkTypesModelValidator;
+		protected IApiLinkTypesRequestModelValidator LinkTypesModelValidator { get; private set; }
 
-		private IBOLLinkTypesMapper bolLinkTypesMapper;
+		protected IBOLLinkTypesMapper BolLinkTypesMapper { get; private set; }
 
-		private IDALLinkTypesMapper dalLinkTypesMapper;
+		protected IDALLinkTypesMapper DalLinkTypesMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace StackOverflowNS.Api.Services
 			IDALLinkTypesMapper dalLinkTypesMapper)
 			: base()
 		{
-			this.linkTypesRepository = linkTypesRepository;
-			this.linkTypesModelValidator = linkTypesModelValidator;
-			this.bolLinkTypesMapper = bolLinkTypesMapper;
-			this.dalLinkTypesMapper = dalLinkTypesMapper;
+			this.LinkTypesRepository = linkTypesRepository;
+			this.LinkTypesModelValidator = linkTypesModelValidator;
+			this.BolLinkTypesMapper = bolLinkTypesMapper;
+			this.DalLinkTypesMapper = dalLinkTypesMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiLinkTypesResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.linkTypesRepository.All(limit, offset);
+			var records = await this.LinkTypesRepository.All(limit, offset);
 
-			return this.bolLinkTypesMapper.MapBOToModel(this.dalLinkTypesMapper.MapEFToBO(records));
+			return this.BolLinkTypesMapper.MapBOToModel(this.DalLinkTypesMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiLinkTypesResponseModel> Get(int id)
 		{
-			var record = await this.linkTypesRepository.Get(id);
+			var record = await this.LinkTypesRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace StackOverflowNS.Api.Services
 			}
 			else
 			{
-				return this.bolLinkTypesMapper.MapBOToModel(this.dalLinkTypesMapper.MapEFToBO(record));
+				return this.BolLinkTypesMapper.MapBOToModel(this.DalLinkTypesMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiLinkTypesResponseModel>> Create(
 			ApiLinkTypesRequestModel model)
 		{
-			CreateResponse<ApiLinkTypesResponseModel> response = new CreateResponse<ApiLinkTypesResponseModel>(await this.linkTypesModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiLinkTypesResponseModel> response = new CreateResponse<ApiLinkTypesResponseModel>(await this.LinkTypesModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolLinkTypesMapper.MapModelToBO(default(int), model);
-				var record = await this.linkTypesRepository.Create(this.dalLinkTypesMapper.MapBOToEF(bo));
+				var bo = this.BolLinkTypesMapper.MapModelToBO(default(int), model);
+				var record = await this.LinkTypesRepository.Create(this.DalLinkTypesMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolLinkTypesMapper.MapBOToModel(this.dalLinkTypesMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolLinkTypesMapper.MapBOToModel(this.DalLinkTypesMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace StackOverflowNS.Api.Services
 			int id,
 			ApiLinkTypesRequestModel model)
 		{
-			var validationResult = await this.linkTypesModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.LinkTypesModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolLinkTypesMapper.MapModelToBO(id, model);
-				await this.linkTypesRepository.Update(this.dalLinkTypesMapper.MapBOToEF(bo));
+				var bo = this.BolLinkTypesMapper.MapModelToBO(id, model);
+				await this.LinkTypesRepository.Update(this.DalLinkTypesMapper.MapBOToEF(bo));
 
-				var record = await this.linkTypesRepository.Get(id);
+				var record = await this.LinkTypesRepository.Get(id);
 
-				return new UpdateResponse<ApiLinkTypesResponseModel>(this.bolLinkTypesMapper.MapBOToModel(this.dalLinkTypesMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiLinkTypesResponseModel>(this.BolLinkTypesMapper.MapBOToModel(this.DalLinkTypesMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace StackOverflowNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.linkTypesModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.LinkTypesModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.linkTypesRepository.Delete(id);
+				await this.LinkTypesRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cbec99166c559a08daffd27f216cf73a</Hash>
+    <Hash>4464f95804260c27698ad9a2c764f20f</Hash>
 </Codenesium>*/

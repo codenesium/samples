@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IInterruptionService
+	public partial interface IInterruptionService
 	{
 		Task<CreateResponse<ApiInterruptionResponseModel>> Create(
 			ApiInterruptionRequestModel model);
@@ -26,5 +26,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8383cc631eb0bebef0a1531bec9487be</Hash>
+    <Hash>a4d8f9034191d6135eb988825cb64f20</Hash>
 </Codenesium>*/

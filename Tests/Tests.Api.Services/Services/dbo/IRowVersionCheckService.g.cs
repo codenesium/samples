@@ -7,7 +7,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IRowVersionCheckService
+	public partial interface IRowVersionCheckService
 	{
 		Task<CreateResponse<ApiRowVersionCheckResponseModel>> Create(
 			ApiRowVersionCheckRequestModel model);
@@ -24,5 +24,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef949bd2a3407d3d30161d4ca00c564a</Hash>
+    <Hash>f27007d33dc7b4eb5e1ca59b8d0d1064</Hash>
 </Codenesium>*/

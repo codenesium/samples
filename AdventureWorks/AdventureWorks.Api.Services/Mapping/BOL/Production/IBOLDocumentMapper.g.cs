@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLDocumentMapper
+	public partial interface IBOLDocumentMapper
 	{
 		BODocument MapModelToBO(
 			Guid rowguid,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d01a25883546896fbcd0278d80b47cde</Hash>
+    <Hash>f0e697196ce51371780e322e61e6f829</Hash>
 </Codenesium>*/

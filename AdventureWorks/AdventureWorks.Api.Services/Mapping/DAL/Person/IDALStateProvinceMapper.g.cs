@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALStateProvinceMapper
+	public partial interface IDALStateProvinceMapper
 	{
 		StateProvince MapBOToEF(
 			BOStateProvince bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0c5d3d67c9116bef88d529afc02b1f93</Hash>
+    <Hash>2ff4fb968dc3f24af27d44c2725bb9a9</Hash>
 </Codenesium>*/

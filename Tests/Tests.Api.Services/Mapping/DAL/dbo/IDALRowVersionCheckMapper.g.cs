@@ -6,7 +6,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IDALRowVersionCheckMapper
+	public partial interface IDALRowVersionCheckMapper
 	{
 		RowVersionCheck MapBOToEF(
 			BORowVersionCheck bo);
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7cef1397304e1db72a6443a33abfd5b</Hash>
+    <Hash>ebc1164014eb793c593279dcb0603f4f</Hash>
 </Codenesium>*/

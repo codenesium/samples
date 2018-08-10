@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractIllustrationService : AbstractService
 	{
-		private IIllustrationRepository illustrationRepository;
+		protected IIllustrationRepository IllustrationRepository { get; private set; }
 
-		private IApiIllustrationRequestModelValidator illustrationModelValidator;
+		protected IApiIllustrationRequestModelValidator IllustrationModelValidator { get; private set; }
 
-		private IBOLIllustrationMapper bolIllustrationMapper;
+		protected IBOLIllustrationMapper BolIllustrationMapper { get; private set; }
 
-		private IDALIllustrationMapper dalIllustrationMapper;
+		protected IDALIllustrationMapper DalIllustrationMapper { get; private set; }
 
-		private IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper;
+		protected IBOLProductModelIllustrationMapper BolProductModelIllustrationMapper { get; private set; }
 
-		private IDALProductModelIllustrationMapper dalProductModelIllustrationMapper;
+		protected IDALProductModelIllustrationMapper DalProductModelIllustrationMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductModelIllustrationMapper dalProductModelIllustrationMapper)
 			: base()
 		{
-			this.illustrationRepository = illustrationRepository;
-			this.illustrationModelValidator = illustrationModelValidator;
-			this.bolIllustrationMapper = bolIllustrationMapper;
-			this.dalIllustrationMapper = dalIllustrationMapper;
-			this.bolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
-			this.dalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
+			this.IllustrationRepository = illustrationRepository;
+			this.IllustrationModelValidator = illustrationModelValidator;
+			this.BolIllustrationMapper = bolIllustrationMapper;
+			this.DalIllustrationMapper = dalIllustrationMapper;
+			this.BolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
+			this.DalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiIllustrationResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.illustrationRepository.All(limit, offset);
+			var records = await this.IllustrationRepository.All(limit, offset);
 
-			return this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(records));
+			return this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiIllustrationResponseModel> Get(int illustrationID)
 		{
-			var record = await this.illustrationRepository.Get(illustrationID);
+			var record = await this.IllustrationRepository.Get(illustrationID);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(record));
+				return this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiIllustrationResponseModel>> Create(
 			ApiIllustrationRequestModel model)
 		{
-			CreateResponse<ApiIllustrationResponseModel> response = new CreateResponse<ApiIllustrationResponseModel>(await this.illustrationModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiIllustrationResponseModel> response = new CreateResponse<ApiIllustrationResponseModel>(await this.IllustrationModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolIllustrationMapper.MapModelToBO(default(int), model);
-				var record = await this.illustrationRepository.Create(this.dalIllustrationMapper.MapBOToEF(bo));
+				var bo = this.BolIllustrationMapper.MapModelToBO(default(int), model);
+				var record = await this.IllustrationRepository.Create(this.DalIllustrationMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace AdventureWorksNS.Api.Services
 			int illustrationID,
 			ApiIllustrationRequestModel model)
 		{
-			var validationResult = await this.illustrationModelValidator.ValidateUpdateAsync(illustrationID, model);
+			var validationResult = await this.IllustrationModelValidator.ValidateUpdateAsync(illustrationID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolIllustrationMapper.MapModelToBO(illustrationID, model);
-				await this.illustrationRepository.Update(this.dalIllustrationMapper.MapBOToEF(bo));
+				var bo = this.BolIllustrationMapper.MapModelToBO(illustrationID, model);
+				await this.IllustrationRepository.Update(this.DalIllustrationMapper.MapBOToEF(bo));
 
-				var record = await this.illustrationRepository.Get(illustrationID);
+				var record = await this.IllustrationRepository.Get(illustrationID);
 
-				return new UpdateResponse<ApiIllustrationResponseModel>(this.bolIllustrationMapper.MapBOToModel(this.dalIllustrationMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiIllustrationResponseModel>(this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int illustrationID)
 		{
-			ActionResponse response = new ActionResponse(await this.illustrationModelValidator.ValidateDeleteAsync(illustrationID));
+			ActionResponse response = new ActionResponse(await this.IllustrationModelValidator.ValidateDeleteAsync(illustrationID));
 			if (response.Success)
 			{
-				await this.illustrationRepository.Delete(illustrationID);
+				await this.IllustrationRepository.Delete(illustrationID);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace AdventureWorksNS.Api.Services
 
 		public async virtual Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductModelIllustration> records = await this.illustrationRepository.ProductModelIllustrations(illustrationID, limit, offset);
+			List<ProductModelIllustration> records = await this.IllustrationRepository.ProductModelIllustrations(illustrationID, limit, offset);
 
-			return this.bolProductModelIllustrationMapper.MapBOToModel(this.dalProductModelIllustrationMapper.MapEFToBO(records));
+			return this.BolProductModelIllustrationMapper.MapBOToModel(this.DalProductModelIllustrationMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bcc31925f2329f9bb469f89071acc7c0</Hash>
+    <Hash>08aef2953faedfadbef29f30bd4d6308</Hash>
 </Codenesium>*/

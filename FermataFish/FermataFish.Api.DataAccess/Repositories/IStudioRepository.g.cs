@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
-	public interface IStudioRepository
+	public partial interface IStudioRepository
 	{
 		Task<Studio> Create(Studio item);
 
@@ -40,5 +40,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>12ac940113b0bfcea3c8e32a51d7903b</Hash>
+    <Hash>cd3dba958eb634afb8422758e02a9235</Hash>
 </Codenesium>*/

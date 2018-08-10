@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALLocationMapper
+	public partial interface IDALLocationMapper
 	{
 		Location MapBOToEF(
 			BOLocation bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c8d7b1048f52e21d81514d2632e60b31</Hash>
+    <Hash>3b535b7dad857543e5300ea8b965c0c5</Hash>
 </Codenesium>*/

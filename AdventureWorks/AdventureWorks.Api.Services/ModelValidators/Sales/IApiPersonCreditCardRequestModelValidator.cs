@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IApiPersonCreditCardRequestModelValidator
+	public partial interface IApiPersonCreditCardRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiPersonCreditCardRequestModel model);
 
@@ -16,5 +16,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8b7173eb82d855fa9c5735dc13317c33</Hash>
+    <Hash>67250f2913bf878684b2b57085e0ced7</Hash>
 </Codenesium>*/

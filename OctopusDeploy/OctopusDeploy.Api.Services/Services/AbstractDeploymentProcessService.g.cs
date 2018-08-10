@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractDeploymentProcessService : AbstractService
 	{
-		private IDeploymentProcessRepository deploymentProcessRepository;
+		protected IDeploymentProcessRepository DeploymentProcessRepository { get; private set; }
 
-		private IApiDeploymentProcessRequestModelValidator deploymentProcessModelValidator;
+		protected IApiDeploymentProcessRequestModelValidator DeploymentProcessModelValidator { get; private set; }
 
-		private IBOLDeploymentProcessMapper bolDeploymentProcessMapper;
+		protected IBOLDeploymentProcessMapper BolDeploymentProcessMapper { get; private set; }
 
-		private IDALDeploymentProcessMapper dalDeploymentProcessMapper;
+		protected IDALDeploymentProcessMapper DalDeploymentProcessMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALDeploymentProcessMapper dalDeploymentProcessMapper)
 			: base()
 		{
-			this.deploymentProcessRepository = deploymentProcessRepository;
-			this.deploymentProcessModelValidator = deploymentProcessModelValidator;
-			this.bolDeploymentProcessMapper = bolDeploymentProcessMapper;
-			this.dalDeploymentProcessMapper = dalDeploymentProcessMapper;
+			this.DeploymentProcessRepository = deploymentProcessRepository;
+			this.DeploymentProcessModelValidator = deploymentProcessModelValidator;
+			this.BolDeploymentProcessMapper = bolDeploymentProcessMapper;
+			this.DalDeploymentProcessMapper = dalDeploymentProcessMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiDeploymentProcessResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.deploymentProcessRepository.All(limit, offset);
+			var records = await this.DeploymentProcessRepository.All(limit, offset);
 
-			return this.bolDeploymentProcessMapper.MapBOToModel(this.dalDeploymentProcessMapper.MapEFToBO(records));
+			return this.BolDeploymentProcessMapper.MapBOToModel(this.DalDeploymentProcessMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiDeploymentProcessResponseModel> Get(string id)
 		{
-			var record = await this.deploymentProcessRepository.Get(id);
+			var record = await this.DeploymentProcessRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolDeploymentProcessMapper.MapBOToModel(this.dalDeploymentProcessMapper.MapEFToBO(record));
+				return this.BolDeploymentProcessMapper.MapBOToModel(this.DalDeploymentProcessMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiDeploymentProcessResponseModel>> Create(
 			ApiDeploymentProcessRequestModel model)
 		{
-			CreateResponse<ApiDeploymentProcessResponseModel> response = new CreateResponse<ApiDeploymentProcessResponseModel>(await this.deploymentProcessModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiDeploymentProcessResponseModel> response = new CreateResponse<ApiDeploymentProcessResponseModel>(await this.DeploymentProcessModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolDeploymentProcessMapper.MapModelToBO(default(string), model);
-				var record = await this.deploymentProcessRepository.Create(this.dalDeploymentProcessMapper.MapBOToEF(bo));
+				var bo = this.BolDeploymentProcessMapper.MapModelToBO(default(string), model);
+				var record = await this.DeploymentProcessRepository.Create(this.DalDeploymentProcessMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolDeploymentProcessMapper.MapBOToModel(this.dalDeploymentProcessMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolDeploymentProcessMapper.MapBOToModel(this.DalDeploymentProcessMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiDeploymentProcessRequestModel model)
 		{
-			var validationResult = await this.deploymentProcessModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.DeploymentProcessModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolDeploymentProcessMapper.MapModelToBO(id, model);
-				await this.deploymentProcessRepository.Update(this.dalDeploymentProcessMapper.MapBOToEF(bo));
+				var bo = this.BolDeploymentProcessMapper.MapModelToBO(id, model);
+				await this.DeploymentProcessRepository.Update(this.DalDeploymentProcessMapper.MapBOToEF(bo));
 
-				var record = await this.deploymentProcessRepository.Get(id);
+				var record = await this.DeploymentProcessRepository.Get(id);
 
-				return new UpdateResponse<ApiDeploymentProcessResponseModel>(this.bolDeploymentProcessMapper.MapBOToModel(this.dalDeploymentProcessMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiDeploymentProcessResponseModel>(this.BolDeploymentProcessMapper.MapBOToModel(this.DalDeploymentProcessMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.deploymentProcessModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.DeploymentProcessModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.deploymentProcessRepository.Delete(id);
+				await this.DeploymentProcessRepository.Delete(id);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47007521570ee674fa0a42507deb2ffd</Hash>
+    <Hash>b783d95946a08fcb8477a59f779848a5</Hash>
 </Codenesium>*/

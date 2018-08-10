@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiAddressModelMapper
+	public partial interface IApiAddressModelMapper
 	{
 		ApiAddressResponseModel MapRequestToResponse(
 			int addressID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8f7de215e388ea5a22525436c50094ac</Hash>
+    <Hash>5f08da907a723ee800deed5bcb2e148e</Hash>
 </Codenesium>*/

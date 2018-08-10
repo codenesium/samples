@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.Services
 {
-	public interface IApiVersionInfoRequestModelValidator
+	public partial interface IApiVersionInfoRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiVersionInfoRequestModel model);
 
@@ -16,5 +16,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>33a092a8b6a4562064df0f75535a0cf9</Hash>
+    <Hash>f90879d7a5c5188965f58fdf385f0591</Hash>
 </Codenesium>*/

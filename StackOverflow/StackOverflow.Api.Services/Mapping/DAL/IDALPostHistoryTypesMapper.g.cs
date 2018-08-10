@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IDALPostHistoryTypesMapper
+	public partial interface IDALPostHistoryTypesMapper
 	{
 		PostHistoryTypes MapBOToEF(
 			BOPostHistoryTypes bo);
@@ -20,5 +20,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30c4276446b6510e55423148467e4cd9</Hash>
+    <Hash>ac9313b8d3d5ae00e2b77704c5cfc1a2</Hash>
 </Codenesium>*/

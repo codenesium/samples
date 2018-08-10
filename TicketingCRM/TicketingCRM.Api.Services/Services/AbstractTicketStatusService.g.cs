@@ -14,17 +14,17 @@ namespace TicketingCRMNS.Api.Services
 {
 	public abstract class AbstractTicketStatusService : AbstractService
 	{
-		private ITicketStatusRepository ticketStatusRepository;
+		protected ITicketStatusRepository TicketStatusRepository { get; private set; }
 
-		private IApiTicketStatusRequestModelValidator ticketStatusModelValidator;
+		protected IApiTicketStatusRequestModelValidator TicketStatusModelValidator { get; private set; }
 
-		private IBOLTicketStatusMapper bolTicketStatusMapper;
+		protected IBOLTicketStatusMapper BolTicketStatusMapper { get; private set; }
 
-		private IDALTicketStatusMapper dalTicketStatusMapper;
+		protected IDALTicketStatusMapper DalTicketStatusMapper { get; private set; }
 
-		private IBOLTicketMapper bolTicketMapper;
+		protected IBOLTicketMapper BolTicketMapper { get; private set; }
 
-		private IDALTicketMapper dalTicketMapper;
+		protected IDALTicketMapper DalTicketMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -38,25 +38,25 @@ namespace TicketingCRMNS.Api.Services
 			IDALTicketMapper dalTicketMapper)
 			: base()
 		{
-			this.ticketStatusRepository = ticketStatusRepository;
-			this.ticketStatusModelValidator = ticketStatusModelValidator;
-			this.bolTicketStatusMapper = bolTicketStatusMapper;
-			this.dalTicketStatusMapper = dalTicketStatusMapper;
-			this.bolTicketMapper = bolTicketMapper;
-			this.dalTicketMapper = dalTicketMapper;
+			this.TicketStatusRepository = ticketStatusRepository;
+			this.TicketStatusModelValidator = ticketStatusModelValidator;
+			this.BolTicketStatusMapper = bolTicketStatusMapper;
+			this.DalTicketStatusMapper = dalTicketStatusMapper;
+			this.BolTicketMapper = bolTicketMapper;
+			this.DalTicketMapper = dalTicketMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTicketStatusResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.ticketStatusRepository.All(limit, offset);
+			var records = await this.TicketStatusRepository.All(limit, offset);
 
-			return this.bolTicketStatusMapper.MapBOToModel(this.dalTicketStatusMapper.MapEFToBO(records));
+			return this.BolTicketStatusMapper.MapBOToModel(this.DalTicketStatusMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTicketStatusResponseModel> Get(int id)
 		{
-			var record = await this.ticketStatusRepository.Get(id);
+			var record = await this.TicketStatusRepository.Get(id);
 
 			if (record == null)
 			{
@@ -64,20 +64,20 @@ namespace TicketingCRMNS.Api.Services
 			}
 			else
 			{
-				return this.bolTicketStatusMapper.MapBOToModel(this.dalTicketStatusMapper.MapEFToBO(record));
+				return this.BolTicketStatusMapper.MapBOToModel(this.DalTicketStatusMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTicketStatusResponseModel>> Create(
 			ApiTicketStatusRequestModel model)
 		{
-			CreateResponse<ApiTicketStatusResponseModel> response = new CreateResponse<ApiTicketStatusResponseModel>(await this.ticketStatusModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTicketStatusResponseModel> response = new CreateResponse<ApiTicketStatusResponseModel>(await this.TicketStatusModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTicketStatusMapper.MapModelToBO(default(int), model);
-				var record = await this.ticketStatusRepository.Create(this.dalTicketStatusMapper.MapBOToEF(bo));
+				var bo = this.BolTicketStatusMapper.MapModelToBO(default(int), model);
+				var record = await this.TicketStatusRepository.Create(this.DalTicketStatusMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTicketStatusMapper.MapBOToModel(this.dalTicketStatusMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTicketStatusMapper.MapBOToModel(this.DalTicketStatusMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -87,16 +87,16 @@ namespace TicketingCRMNS.Api.Services
 			int id,
 			ApiTicketStatusRequestModel model)
 		{
-			var validationResult = await this.ticketStatusModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TicketStatusModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTicketStatusMapper.MapModelToBO(id, model);
-				await this.ticketStatusRepository.Update(this.dalTicketStatusMapper.MapBOToEF(bo));
+				var bo = this.BolTicketStatusMapper.MapModelToBO(id, model);
+				await this.TicketStatusRepository.Update(this.DalTicketStatusMapper.MapBOToEF(bo));
 
-				var record = await this.ticketStatusRepository.Get(id);
+				var record = await this.TicketStatusRepository.Get(id);
 
-				return new UpdateResponse<ApiTicketStatusResponseModel>(this.bolTicketStatusMapper.MapBOToModel(this.dalTicketStatusMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTicketStatusResponseModel>(this.BolTicketStatusMapper.MapBOToModel(this.DalTicketStatusMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -107,10 +107,10 @@ namespace TicketingCRMNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int id)
 		{
-			ActionResponse response = new ActionResponse(await this.ticketStatusModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TicketStatusModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.ticketStatusRepository.Delete(id);
+				await this.TicketStatusRepository.Delete(id);
 			}
 
 			return response;
@@ -118,13 +118,13 @@ namespace TicketingCRMNS.Api.Services
 
 		public async virtual Task<List<ApiTicketResponseModel>> Tickets(int ticketStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Ticket> records = await this.ticketStatusRepository.Tickets(ticketStatusId, limit, offset);
+			List<Ticket> records = await this.TicketStatusRepository.Tickets(ticketStatusId, limit, offset);
 
-			return this.bolTicketMapper.MapBOToModel(this.dalTicketMapper.MapEFToBO(records));
+			return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>acb5fbd20c118cd647c741268d2d5463</Hash>
+    <Hash>2d72eb30675a9f5bc8ff135d8010e0ac</Hash>
 </Codenesium>*/

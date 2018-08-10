@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALErrorLogMapper
+	public partial interface IDALErrorLogMapper
 	{
 		ErrorLog MapBOToEF(
 			BOErrorLog bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>782b0ed60adc36a0d96ffc319a8353b0</Hash>
+    <Hash>3241de7b508c9d028e5177c4136b1bc3</Hash>
 </Codenesium>*/

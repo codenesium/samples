@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IDALShiftMapper
+	public partial interface IDALShiftMapper
 	{
 		Shift MapBOToEF(
 			BOShift bo);
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c760dca17d9f894fc643a3139eccde76</Hash>
+    <Hash>fb55dbc6dccafd0812ef17e6136bba3f</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractErrorLogService : AbstractService
 	{
-		private IErrorLogRepository errorLogRepository;
+		protected IErrorLogRepository ErrorLogRepository { get; private set; }
 
-		private IApiErrorLogRequestModelValidator errorLogModelValidator;
+		protected IApiErrorLogRequestModelValidator ErrorLogModelValidator { get; private set; }
 
-		private IBOLErrorLogMapper bolErrorLogMapper;
+		protected IBOLErrorLogMapper BolErrorLogMapper { get; private set; }
 
-		private IDALErrorLogMapper dalErrorLogMapper;
+		protected IDALErrorLogMapper DalErrorLogMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALErrorLogMapper dalErrorLogMapper)
 			: base()
 		{
-			this.errorLogRepository = errorLogRepository;
-			this.errorLogModelValidator = errorLogModelValidator;
-			this.bolErrorLogMapper = bolErrorLogMapper;
-			this.dalErrorLogMapper = dalErrorLogMapper;
+			this.ErrorLogRepository = errorLogRepository;
+			this.ErrorLogModelValidator = errorLogModelValidator;
+			this.BolErrorLogMapper = bolErrorLogMapper;
+			this.DalErrorLogMapper = dalErrorLogMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiErrorLogResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.errorLogRepository.All(limit, offset);
+			var records = await this.ErrorLogRepository.All(limit, offset);
 
-			return this.bolErrorLogMapper.MapBOToModel(this.dalErrorLogMapper.MapEFToBO(records));
+			return this.BolErrorLogMapper.MapBOToModel(this.DalErrorLogMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiErrorLogResponseModel> Get(int errorLogID)
 		{
-			var record = await this.errorLogRepository.Get(errorLogID);
+			var record = await this.ErrorLogRepository.Get(errorLogID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolErrorLogMapper.MapBOToModel(this.dalErrorLogMapper.MapEFToBO(record));
+				return this.BolErrorLogMapper.MapBOToModel(this.DalErrorLogMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiErrorLogResponseModel>> Create(
 			ApiErrorLogRequestModel model)
 		{
-			CreateResponse<ApiErrorLogResponseModel> response = new CreateResponse<ApiErrorLogResponseModel>(await this.errorLogModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiErrorLogResponseModel> response = new CreateResponse<ApiErrorLogResponseModel>(await this.ErrorLogModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolErrorLogMapper.MapModelToBO(default(int), model);
-				var record = await this.errorLogRepository.Create(this.dalErrorLogMapper.MapBOToEF(bo));
+				var bo = this.BolErrorLogMapper.MapModelToBO(default(int), model);
+				var record = await this.ErrorLogRepository.Create(this.DalErrorLogMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolErrorLogMapper.MapBOToModel(this.dalErrorLogMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolErrorLogMapper.MapBOToModel(this.DalErrorLogMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int errorLogID,
 			ApiErrorLogRequestModel model)
 		{
-			var validationResult = await this.errorLogModelValidator.ValidateUpdateAsync(errorLogID, model);
+			var validationResult = await this.ErrorLogModelValidator.ValidateUpdateAsync(errorLogID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolErrorLogMapper.MapModelToBO(errorLogID, model);
-				await this.errorLogRepository.Update(this.dalErrorLogMapper.MapBOToEF(bo));
+				var bo = this.BolErrorLogMapper.MapModelToBO(errorLogID, model);
+				await this.ErrorLogRepository.Update(this.DalErrorLogMapper.MapBOToEF(bo));
 
-				var record = await this.errorLogRepository.Get(errorLogID);
+				var record = await this.ErrorLogRepository.Get(errorLogID);
 
-				return new UpdateResponse<ApiErrorLogResponseModel>(this.bolErrorLogMapper.MapBOToModel(this.dalErrorLogMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiErrorLogResponseModel>(this.BolErrorLogMapper.MapBOToModel(this.DalErrorLogMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int errorLogID)
 		{
-			ActionResponse response = new ActionResponse(await this.errorLogModelValidator.ValidateDeleteAsync(errorLogID));
+			ActionResponse response = new ActionResponse(await this.ErrorLogModelValidator.ValidateDeleteAsync(errorLogID));
 			if (response.Success)
 			{
-				await this.errorLogRepository.Delete(errorLogID);
+				await this.ErrorLogRepository.Delete(errorLogID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>06e250c514fc2ef66d3175fe5e827da1</Hash>
+    <Hash>dcf22fe613fe62b71fe45ea211755629</Hash>
 </Codenesium>*/

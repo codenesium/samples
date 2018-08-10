@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractSalesPersonQuotaHistoryService : AbstractService
 	{
-		private ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository;
+		protected ISalesPersonQuotaHistoryRepository SalesPersonQuotaHistoryRepository { get; private set; }
 
-		private IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator;
+		protected IApiSalesPersonQuotaHistoryRequestModelValidator SalesPersonQuotaHistoryModelValidator { get; private set; }
 
-		private IBOLSalesPersonQuotaHistoryMapper bolSalesPersonQuotaHistoryMapper;
+		protected IBOLSalesPersonQuotaHistoryMapper BolSalesPersonQuotaHistoryMapper { get; private set; }
 
-		private IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper;
+		protected IDALSalesPersonQuotaHistoryMapper DalSalesPersonQuotaHistoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALSalesPersonQuotaHistoryMapper dalSalesPersonQuotaHistoryMapper)
 			: base()
 		{
-			this.salesPersonQuotaHistoryRepository = salesPersonQuotaHistoryRepository;
-			this.salesPersonQuotaHistoryModelValidator = salesPersonQuotaHistoryModelValidator;
-			this.bolSalesPersonQuotaHistoryMapper = bolSalesPersonQuotaHistoryMapper;
-			this.dalSalesPersonQuotaHistoryMapper = dalSalesPersonQuotaHistoryMapper;
+			this.SalesPersonQuotaHistoryRepository = salesPersonQuotaHistoryRepository;
+			this.SalesPersonQuotaHistoryModelValidator = salesPersonQuotaHistoryModelValidator;
+			this.BolSalesPersonQuotaHistoryMapper = bolSalesPersonQuotaHistoryMapper;
+			this.DalSalesPersonQuotaHistoryMapper = dalSalesPersonQuotaHistoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiSalesPersonQuotaHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.salesPersonQuotaHistoryRepository.All(limit, offset);
+			var records = await this.SalesPersonQuotaHistoryRepository.All(limit, offset);
 
-			return this.bolSalesPersonQuotaHistoryMapper.MapBOToModel(this.dalSalesPersonQuotaHistoryMapper.MapEFToBO(records));
+			return this.BolSalesPersonQuotaHistoryMapper.MapBOToModel(this.DalSalesPersonQuotaHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiSalesPersonQuotaHistoryResponseModel> Get(int businessEntityID)
 		{
-			var record = await this.salesPersonQuotaHistoryRepository.Get(businessEntityID);
+			var record = await this.SalesPersonQuotaHistoryRepository.Get(businessEntityID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolSalesPersonQuotaHistoryMapper.MapBOToModel(this.dalSalesPersonQuotaHistoryMapper.MapEFToBO(record));
+				return this.BolSalesPersonQuotaHistoryMapper.MapBOToModel(this.DalSalesPersonQuotaHistoryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiSalesPersonQuotaHistoryResponseModel>> Create(
 			ApiSalesPersonQuotaHistoryRequestModel model)
 		{
-			CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> response = new CreateResponse<ApiSalesPersonQuotaHistoryResponseModel>(await this.salesPersonQuotaHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> response = new CreateResponse<ApiSalesPersonQuotaHistoryResponseModel>(await this.SalesPersonQuotaHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolSalesPersonQuotaHistoryMapper.MapModelToBO(default(int), model);
-				var record = await this.salesPersonQuotaHistoryRepository.Create(this.dalSalesPersonQuotaHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolSalesPersonQuotaHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.SalesPersonQuotaHistoryRepository.Create(this.DalSalesPersonQuotaHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolSalesPersonQuotaHistoryMapper.MapBOToModel(this.dalSalesPersonQuotaHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolSalesPersonQuotaHistoryMapper.MapBOToModel(this.DalSalesPersonQuotaHistoryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int businessEntityID,
 			ApiSalesPersonQuotaHistoryRequestModel model)
 		{
-			var validationResult = await this.salesPersonQuotaHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
+			var validationResult = await this.SalesPersonQuotaHistoryModelValidator.ValidateUpdateAsync(businessEntityID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolSalesPersonQuotaHistoryMapper.MapModelToBO(businessEntityID, model);
-				await this.salesPersonQuotaHistoryRepository.Update(this.dalSalesPersonQuotaHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolSalesPersonQuotaHistoryMapper.MapModelToBO(businessEntityID, model);
+				await this.SalesPersonQuotaHistoryRepository.Update(this.DalSalesPersonQuotaHistoryMapper.MapBOToEF(bo));
 
-				var record = await this.salesPersonQuotaHistoryRepository.Get(businessEntityID);
+				var record = await this.SalesPersonQuotaHistoryRepository.Get(businessEntityID);
 
-				return new UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel>(this.bolSalesPersonQuotaHistoryMapper.MapBOToModel(this.dalSalesPersonQuotaHistoryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel>(this.BolSalesPersonQuotaHistoryMapper.MapBOToModel(this.DalSalesPersonQuotaHistoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int businessEntityID)
 		{
-			ActionResponse response = new ActionResponse(await this.salesPersonQuotaHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
+			ActionResponse response = new ActionResponse(await this.SalesPersonQuotaHistoryModelValidator.ValidateDeleteAsync(businessEntityID));
 			if (response.Success)
 			{
-				await this.salesPersonQuotaHistoryRepository.Delete(businessEntityID);
+				await this.SalesPersonQuotaHistoryRepository.Delete(businessEntityID);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>adf0f8137af19a0863f60f29d5316158</Hash>
+    <Hash>6e4bc75663ea13e26c852edb066eea52</Hash>
 </Codenesium>*/

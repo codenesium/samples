@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLStateProvinceMapper
+	public partial interface IBOLStateProvinceMapper
 	{
 		BOStateProvince MapModelToBO(
 			int stateProvinceID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c9e82d6a0e67b486d5955e6c6b472ab0</Hash>
+    <Hash>30399b9277dfdbe171657d682c4a1927</Hash>
 </Codenesium>*/

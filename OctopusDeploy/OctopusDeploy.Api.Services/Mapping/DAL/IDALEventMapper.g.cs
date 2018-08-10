@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace OctopusDeployNS.Api.Services
 {
-	public interface IDALEventMapper
+	public partial interface IDALEventMapper
 	{
 		Event MapBOToEF(
 			BOEvent bo);
@@ -20,5 +20,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7cf599ec475afd6476b3cfb5da1288be</Hash>
+    <Hash>825b97fe764bf1f691e49a61f0fe76dd</Hash>
 </Codenesium>*/

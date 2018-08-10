@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IBillOfMaterialRepository
+	public partial interface IBillOfMaterialRepository
 	{
 		Task<BillOfMaterial> Create(BillOfMaterial item);
 
@@ -24,5 +24,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5f0144c3aa3346f116683dc31ce8ae31</Hash>
+    <Hash>66e6ff2c21c762ed0e899eb941ecd17e</Hash>
 </Codenesium>*/

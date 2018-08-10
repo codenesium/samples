@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.Services
 {
-	public interface IPipelineService
+	public partial interface IPipelineService
 	{
 		Task<CreateResponse<ApiPipelineResponseModel>> Create(
 			ApiPipelineRequestModel model);
@@ -24,5 +24,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>70835d150208cb0e350dc51c747cbb19</Hash>
+    <Hash>75e0ffc02f88ceb83bda3f2b0774bbee</Hash>
 </Codenesium>*/

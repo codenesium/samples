@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractProjectTriggerService : AbstractService
 	{
-		private IProjectTriggerRepository projectTriggerRepository;
+		protected IProjectTriggerRepository ProjectTriggerRepository { get; private set; }
 
-		private IApiProjectTriggerRequestModelValidator projectTriggerModelValidator;
+		protected IApiProjectTriggerRequestModelValidator ProjectTriggerModelValidator { get; private set; }
 
-		private IBOLProjectTriggerMapper bolProjectTriggerMapper;
+		protected IBOLProjectTriggerMapper BolProjectTriggerMapper { get; private set; }
 
-		private IDALProjectTriggerMapper dalProjectTriggerMapper;
+		protected IDALProjectTriggerMapper DalProjectTriggerMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALProjectTriggerMapper dalProjectTriggerMapper)
 			: base()
 		{
-			this.projectTriggerRepository = projectTriggerRepository;
-			this.projectTriggerModelValidator = projectTriggerModelValidator;
-			this.bolProjectTriggerMapper = bolProjectTriggerMapper;
-			this.dalProjectTriggerMapper = dalProjectTriggerMapper;
+			this.ProjectTriggerRepository = projectTriggerRepository;
+			this.ProjectTriggerModelValidator = projectTriggerModelValidator;
+			this.BolProjectTriggerMapper = bolProjectTriggerMapper;
+			this.DalProjectTriggerMapper = dalProjectTriggerMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProjectTriggerResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.projectTriggerRepository.All(limit, offset);
+			var records = await this.ProjectTriggerRepository.All(limit, offset);
 
-			return this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(records));
+			return this.BolProjectTriggerMapper.MapBOToModel(this.DalProjectTriggerMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProjectTriggerResponseModel> Get(string id)
 		{
-			var record = await this.projectTriggerRepository.Get(id);
+			var record = await this.ProjectTriggerRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(record));
+				return this.BolProjectTriggerMapper.MapBOToModel(this.DalProjectTriggerMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProjectTriggerResponseModel>> Create(
 			ApiProjectTriggerRequestModel model)
 		{
-			CreateResponse<ApiProjectTriggerResponseModel> response = new CreateResponse<ApiProjectTriggerResponseModel>(await this.projectTriggerModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProjectTriggerResponseModel> response = new CreateResponse<ApiProjectTriggerResponseModel>(await this.ProjectTriggerModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProjectTriggerMapper.MapModelToBO(default(string), model);
-				var record = await this.projectTriggerRepository.Create(this.dalProjectTriggerMapper.MapBOToEF(bo));
+				var bo = this.BolProjectTriggerMapper.MapModelToBO(default(string), model);
+				var record = await this.ProjectTriggerRepository.Create(this.DalProjectTriggerMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProjectTriggerMapper.MapBOToModel(this.DalProjectTriggerMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiProjectTriggerRequestModel model)
 		{
-			var validationResult = await this.projectTriggerModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ProjectTriggerModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProjectTriggerMapper.MapModelToBO(id, model);
-				await this.projectTriggerRepository.Update(this.dalProjectTriggerMapper.MapBOToEF(bo));
+				var bo = this.BolProjectTriggerMapper.MapModelToBO(id, model);
+				await this.ProjectTriggerRepository.Update(this.DalProjectTriggerMapper.MapBOToEF(bo));
 
-				var record = await this.projectTriggerRepository.Get(id);
+				var record = await this.ProjectTriggerRepository.Get(id);
 
-				return new UpdateResponse<ApiProjectTriggerResponseModel>(this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProjectTriggerResponseModel>(this.BolProjectTriggerMapper.MapBOToModel(this.DalProjectTriggerMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.projectTriggerModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ProjectTriggerModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.projectTriggerRepository.Delete(id);
+				await this.ProjectTriggerRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiProjectTriggerResponseModel> ByProjectIdName(string projectId, string name)
 		{
-			ProjectTrigger record = await this.projectTriggerRepository.ByProjectIdName(projectId, name);
+			ProjectTrigger record = await this.ProjectTriggerRepository.ByProjectIdName(projectId, name);
 
 			if (record == null)
 			{
@@ -118,19 +118,19 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(record));
+				return this.BolProjectTriggerMapper.MapBOToModel(this.DalProjectTriggerMapper.MapEFToBO(record));
 			}
 		}
 
 		public async Task<List<ApiProjectTriggerResponseModel>> ByProjectId(string projectId)
 		{
-			List<ProjectTrigger> records = await this.projectTriggerRepository.ByProjectId(projectId);
+			List<ProjectTrigger> records = await this.ProjectTriggerRepository.ByProjectId(projectId);
 
-			return this.bolProjectTriggerMapper.MapBOToModel(this.dalProjectTriggerMapper.MapEFToBO(records));
+			return this.BolProjectTriggerMapper.MapBOToModel(this.DalProjectTriggerMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46367b363516246e1e39feb65a3cc678</Hash>
+    <Hash>968c536efe2b17de23cd9dbf41e32fcf</Hash>
 </Codenesium>*/

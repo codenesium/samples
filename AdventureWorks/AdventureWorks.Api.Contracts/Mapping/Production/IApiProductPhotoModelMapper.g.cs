@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Contracts
 {
-	public interface IApiProductPhotoModelMapper
+	public partial interface IApiProductPhotoModelMapper
 	{
 		ApiProductPhotoResponseModel MapRequestToResponse(
 			int productPhotoID,
@@ -19,5 +19,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>b553f0738d1b1027a4383706469a91e8</Hash>
+    <Hash>43e4fcfa98d783bb5eece933b7c55637</Hash>
 </Codenesium>*/

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface ITransactionHistoryArchiveService
+	public partial interface ITransactionHistoryArchiveService
 	{
 		Task<CreateResponse<ApiTransactionHistoryArchiveResponseModel>> Create(
 			ApiTransactionHistoryArchiveRequestModel model);
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bc2e0fcd0da62c91619b9624b76fdc20</Hash>
+    <Hash>ba8ba891601ba637043b410f7366d501</Hash>
 </Codenesium>*/

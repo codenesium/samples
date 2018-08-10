@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NebulaNS.Api.Contracts
 {
-	public interface IApiTeamModelMapper
+	public partial interface IApiTeamModelMapper
 	{
 		ApiTeamResponseModel MapRequestToResponse(
 			int id,
@@ -19,5 +19,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1018d90b9263f44d1857605a8f55f04b</Hash>
+    <Hash>08e66c8eb5bf0c0cbb470daff336bcb7</Hash>
 </Codenesium>*/

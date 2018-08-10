@@ -5,7 +5,7 @@ using TicketingCRMNS.Api.Contracts;
 
 namespace TicketingCRMNS.Api.Services
 {
-	public interface IApiTicketRequestModelValidator
+	public partial interface IApiTicketRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiTicketRequestModel model);
 
@@ -16,5 +16,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dd3ada0a23c525dd033c4a0e35005b85</Hash>
+    <Hash>a2a92393eae4bbcfd485ebcf6fd7bdc6</Hash>
 </Codenesium>*/

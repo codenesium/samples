@@ -5,7 +5,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IBOLTimestampCheckMapper
+	public partial interface IBOLTimestampCheckMapper
 	{
 		BOTimestampCheck MapModelToBO(
 			int id,
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aee1be82845f24875f1eceabf4a5486e</Hash>
+    <Hash>34326901a73a594c0d1fc20542693795</Hash>
 </Codenesium>*/

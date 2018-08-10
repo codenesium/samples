@@ -14,13 +14,13 @@ namespace OctopusDeployNS.Api.Services
 {
 	public abstract class AbstractProxyService : AbstractService
 	{
-		private IProxyRepository proxyRepository;
+		protected IProxyRepository ProxyRepository { get; private set; }
 
-		private IApiProxyRequestModelValidator proxyModelValidator;
+		protected IApiProxyRequestModelValidator ProxyModelValidator { get; private set; }
 
-		private IBOLProxyMapper bolProxyMapper;
+		protected IBOLProxyMapper BolProxyMapper { get; private set; }
 
-		private IDALProxyMapper dalProxyMapper;
+		protected IDALProxyMapper DalProxyMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace OctopusDeployNS.Api.Services
 			IDALProxyMapper dalProxyMapper)
 			: base()
 		{
-			this.proxyRepository = proxyRepository;
-			this.proxyModelValidator = proxyModelValidator;
-			this.bolProxyMapper = bolProxyMapper;
-			this.dalProxyMapper = dalProxyMapper;
+			this.ProxyRepository = proxyRepository;
+			this.ProxyModelValidator = proxyModelValidator;
+			this.BolProxyMapper = bolProxyMapper;
+			this.DalProxyMapper = dalProxyMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiProxyResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.proxyRepository.All(limit, offset);
+			var records = await this.ProxyRepository.All(limit, offset);
 
-			return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(records));
+			return this.BolProxyMapper.MapBOToModel(this.DalProxyMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiProxyResponseModel> Get(string id)
 		{
-			var record = await this.proxyRepository.Get(id);
+			var record = await this.ProxyRepository.Get(id);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record));
+				return this.BolProxyMapper.MapBOToModel(this.DalProxyMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiProxyResponseModel>> Create(
 			ApiProxyRequestModel model)
 		{
-			CreateResponse<ApiProxyResponseModel> response = new CreateResponse<ApiProxyResponseModel>(await this.proxyModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiProxyResponseModel> response = new CreateResponse<ApiProxyResponseModel>(await this.ProxyModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolProxyMapper.MapModelToBO(default(string), model);
-				var record = await this.proxyRepository.Create(this.dalProxyMapper.MapBOToEF(bo));
+				var bo = this.BolProxyMapper.MapModelToBO(default(string), model);
+				var record = await this.ProxyRepository.Create(this.DalProxyMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolProxyMapper.MapBOToModel(this.DalProxyMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace OctopusDeployNS.Api.Services
 			string id,
 			ApiProxyRequestModel model)
 		{
-			var validationResult = await this.proxyModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.ProxyModelValidator.ValidateUpdateAsync(id, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolProxyMapper.MapModelToBO(id, model);
-				await this.proxyRepository.Update(this.dalProxyMapper.MapBOToEF(bo));
+				var bo = this.BolProxyMapper.MapModelToBO(id, model);
+				await this.ProxyRepository.Update(this.DalProxyMapper.MapBOToEF(bo));
 
-				var record = await this.proxyRepository.Get(id);
+				var record = await this.ProxyRepository.Get(id);
 
-				return new UpdateResponse<ApiProxyResponseModel>(this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiProxyResponseModel>(this.BolProxyMapper.MapBOToModel(this.DalProxyMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace OctopusDeployNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			string id)
 		{
-			ActionResponse response = new ActionResponse(await this.proxyModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.ProxyModelValidator.ValidateDeleteAsync(id));
 			if (response.Success)
 			{
-				await this.proxyRepository.Delete(id);
+				await this.ProxyRepository.Delete(id);
 			}
 
 			return response;
@@ -110,7 +110,7 @@ namespace OctopusDeployNS.Api.Services
 
 		public async Task<ApiProxyResponseModel> ByName(string name)
 		{
-			Proxy record = await this.proxyRepository.ByName(name);
+			Proxy record = await this.ProxyRepository.ByName(name);
 
 			if (record == null)
 			{
@@ -118,12 +118,12 @@ namespace OctopusDeployNS.Api.Services
 			}
 			else
 			{
-				return this.bolProxyMapper.MapBOToModel(this.dalProxyMapper.MapEFToBO(record));
+				return this.BolProxyMapper.MapBOToModel(this.DalProxyMapper.MapEFToBO(record));
 			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e79de4a322503b1cddf839c0e8862f4</Hash>
+    <Hash>7853f30e345c129307336af74f9fc6e1</Hash>
 </Codenesium>*/

@@ -14,13 +14,13 @@ namespace AdventureWorksNS.Api.Services
 {
 	public abstract class AbstractTransactionHistoryService : AbstractService
 	{
-		private ITransactionHistoryRepository transactionHistoryRepository;
+		protected ITransactionHistoryRepository TransactionHistoryRepository { get; private set; }
 
-		private IApiTransactionHistoryRequestModelValidator transactionHistoryModelValidator;
+		protected IApiTransactionHistoryRequestModelValidator TransactionHistoryModelValidator { get; private set; }
 
-		private IBOLTransactionHistoryMapper bolTransactionHistoryMapper;
+		protected IBOLTransactionHistoryMapper BolTransactionHistoryMapper { get; private set; }
 
-		private IDALTransactionHistoryMapper dalTransactionHistoryMapper;
+		protected IDALTransactionHistoryMapper DalTransactionHistoryMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -32,23 +32,23 @@ namespace AdventureWorksNS.Api.Services
 			IDALTransactionHistoryMapper dalTransactionHistoryMapper)
 			: base()
 		{
-			this.transactionHistoryRepository = transactionHistoryRepository;
-			this.transactionHistoryModelValidator = transactionHistoryModelValidator;
-			this.bolTransactionHistoryMapper = bolTransactionHistoryMapper;
-			this.dalTransactionHistoryMapper = dalTransactionHistoryMapper;
+			this.TransactionHistoryRepository = transactionHistoryRepository;
+			this.TransactionHistoryModelValidator = transactionHistoryModelValidator;
+			this.BolTransactionHistoryMapper = bolTransactionHistoryMapper;
+			this.DalTransactionHistoryMapper = dalTransactionHistoryMapper;
 			this.logger = logger;
 		}
 
 		public virtual async Task<List<ApiTransactionHistoryResponseModel>> All(int limit = 0, int offset = int.MaxValue)
 		{
-			var records = await this.transactionHistoryRepository.All(limit, offset);
+			var records = await this.TransactionHistoryRepository.All(limit, offset);
 
-			return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(records));
+			return this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(records));
 		}
 
 		public virtual async Task<ApiTransactionHistoryResponseModel> Get(int transactionID)
 		{
-			var record = await this.transactionHistoryRepository.Get(transactionID);
+			var record = await this.TransactionHistoryRepository.Get(transactionID);
 
 			if (record == null)
 			{
@@ -56,20 +56,20 @@ namespace AdventureWorksNS.Api.Services
 			}
 			else
 			{
-				return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(record));
+				return this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(record));
 			}
 		}
 
 		public virtual async Task<CreateResponse<ApiTransactionHistoryResponseModel>> Create(
 			ApiTransactionHistoryRequestModel model)
 		{
-			CreateResponse<ApiTransactionHistoryResponseModel> response = new CreateResponse<ApiTransactionHistoryResponseModel>(await this.transactionHistoryModelValidator.ValidateCreateAsync(model));
+			CreateResponse<ApiTransactionHistoryResponseModel> response = new CreateResponse<ApiTransactionHistoryResponseModel>(await this.TransactionHistoryModelValidator.ValidateCreateAsync(model));
 			if (response.Success)
 			{
-				var bo = this.bolTransactionHistoryMapper.MapModelToBO(default(int), model);
-				var record = await this.transactionHistoryRepository.Create(this.dalTransactionHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolTransactionHistoryMapper.MapModelToBO(default(int), model);
+				var record = await this.TransactionHistoryRepository.Create(this.DalTransactionHistoryMapper.MapBOToEF(bo));
 
-				response.SetRecord(this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(record)));
+				response.SetRecord(this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(record)));
 			}
 
 			return response;
@@ -79,16 +79,16 @@ namespace AdventureWorksNS.Api.Services
 			int transactionID,
 			ApiTransactionHistoryRequestModel model)
 		{
-			var validationResult = await this.transactionHistoryModelValidator.ValidateUpdateAsync(transactionID, model);
+			var validationResult = await this.TransactionHistoryModelValidator.ValidateUpdateAsync(transactionID, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.bolTransactionHistoryMapper.MapModelToBO(transactionID, model);
-				await this.transactionHistoryRepository.Update(this.dalTransactionHistoryMapper.MapBOToEF(bo));
+				var bo = this.BolTransactionHistoryMapper.MapModelToBO(transactionID, model);
+				await this.TransactionHistoryRepository.Update(this.DalTransactionHistoryMapper.MapBOToEF(bo));
 
-				var record = await this.transactionHistoryRepository.Get(transactionID);
+				var record = await this.TransactionHistoryRepository.Get(transactionID);
 
-				return new UpdateResponse<ApiTransactionHistoryResponseModel>(this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(record)));
+				return new UpdateResponse<ApiTransactionHistoryResponseModel>(this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(record)));
 			}
 			else
 			{
@@ -99,10 +99,10 @@ namespace AdventureWorksNS.Api.Services
 		public virtual async Task<ActionResponse> Delete(
 			int transactionID)
 		{
-			ActionResponse response = new ActionResponse(await this.transactionHistoryModelValidator.ValidateDeleteAsync(transactionID));
+			ActionResponse response = new ActionResponse(await this.TransactionHistoryModelValidator.ValidateDeleteAsync(transactionID));
 			if (response.Success)
 			{
-				await this.transactionHistoryRepository.Delete(transactionID);
+				await this.TransactionHistoryRepository.Delete(transactionID);
 			}
 
 			return response;
@@ -110,20 +110,20 @@ namespace AdventureWorksNS.Api.Services
 
 		public async Task<List<ApiTransactionHistoryResponseModel>> ByProductID(int productID)
 		{
-			List<TransactionHistory> records = await this.transactionHistoryRepository.ByProductID(productID);
+			List<TransactionHistory> records = await this.TransactionHistoryRepository.ByProductID(productID);
 
-			return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(records));
+			return this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(records));
 		}
 
 		public async Task<List<ApiTransactionHistoryResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
 		{
-			List<TransactionHistory> records = await this.transactionHistoryRepository.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
+			List<TransactionHistory> records = await this.TransactionHistoryRepository.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
 
-			return this.bolTransactionHistoryMapper.MapBOToModel(this.dalTransactionHistoryMapper.MapEFToBO(records));
+			return this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c164edf1a1279213b80200a772331c15</Hash>
+    <Hash>cedcff33dfe8c054c94e5831dcc7a4a5</Hash>
 </Codenesium>*/

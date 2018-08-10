@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IBOLErrorLogMapper
+	public partial interface IBOLErrorLogMapper
 	{
 		BOErrorLog MapModelToBO(
 			int errorLogID,
@@ -20,5 +20,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7b99e302950704de69f12ef60231803</Hash>
+    <Hash>8209202fc56c5100583663e1ae881a64</Hash>
 </Codenesium>*/

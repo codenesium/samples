@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.Services
 {
-	public interface IPaymentTypeService
+	public partial interface IPaymentTypeService
 	{
 		Task<CreateResponse<ApiPaymentTypeResponseModel>> Create(
 			ApiPaymentTypeRequestModel model);
@@ -26,5 +26,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13ee0b1e9fb32a76019147933047d67e</Hash>
+    <Hash>ec73ace566ffa94bf939175653c53428</Hash>
 </Codenesium>*/

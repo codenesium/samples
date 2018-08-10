@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public interface IPersonPhoneRepository
+	public partial interface IPersonPhoneRepository
 	{
 		Task<PersonPhone> Create(PersonPhone item);
 
@@ -22,5 +22,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2eb89d0af1d57a2e24f670e2c27c6eb5</Hash>
+    <Hash>d9d2f62af67744d6cc3bc3ba2ea164a3</Hash>
 </Codenesium>*/

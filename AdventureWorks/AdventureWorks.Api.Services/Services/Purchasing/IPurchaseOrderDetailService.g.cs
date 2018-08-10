@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IPurchaseOrderDetailService
+	public partial interface IPurchaseOrderDetailService
 	{
 		Task<CreateResponse<ApiPurchaseOrderDetailResponseModel>> Create(
 			ApiPurchaseOrderDetailRequestModel model);
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c1032992f73ed0958f2d01c05c5b8c94</Hash>
+    <Hash>7e454365bb91ec19acfb2e1e5071d3ff</Hash>
 </Codenesium>*/

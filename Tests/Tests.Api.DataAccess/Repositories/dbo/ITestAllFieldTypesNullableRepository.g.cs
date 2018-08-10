@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
-	public interface ITestAllFieldTypesNullableRepository
+	public partial interface ITestAllFieldTypesNullableRepository
 	{
 		Task<TestAllFieldTypesNullable> Create(TestAllFieldTypesNullable item);
 
@@ -20,5 +20,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3649b0f866c66608d87274801436c63e</Hash>
+    <Hash>51e988ed9e1853fec1c7c1404d49a71b</Hash>
 </Codenesium>*/

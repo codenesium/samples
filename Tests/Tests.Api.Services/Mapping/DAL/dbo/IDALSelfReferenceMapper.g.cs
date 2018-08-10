@@ -6,7 +6,7 @@ using TestsNS.Api.DataAccess;
 
 namespace TestsNS.Api.Services
 {
-	public interface IDALSelfReferenceMapper
+	public partial interface IDALSelfReferenceMapper
 	{
 		SelfReference MapBOToEF(
 			BOSelfReference bo);
@@ -20,5 +20,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52a14aad3e5585d3f6f875b0a8b862db</Hash>
+    <Hash>7f07e3c9a46841eb35d155dcf2e9f97b</Hash>
 </Codenesium>*/

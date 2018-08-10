@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.Services
 {
-	public interface IScrapReasonService
+	public partial interface IScrapReasonService
 	{
 		Task<CreateResponse<ApiScrapReasonResponseModel>> Create(
 			ApiScrapReasonRequestModel model);
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c6709bce0df452d13145de29b36e189a</Hash>
+    <Hash>11c05455db1686fbfe776e45120a6f87</Hash>
 </Codenesium>*/

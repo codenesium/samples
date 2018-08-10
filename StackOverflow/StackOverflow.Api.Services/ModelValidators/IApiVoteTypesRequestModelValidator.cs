@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.Services
 {
-	public interface IApiVoteTypesRequestModelValidator
+	public partial interface IApiVoteTypesRequestModelValidator
 	{
 		Task<ValidationResult> ValidateCreateAsync(ApiVoteTypesRequestModel model);
 
@@ -16,5 +16,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>05451e05f676d3c3f4126eb394ac0e1b</Hash>
+    <Hash>906959c24e77a72f3e8b44e444c2f18f</Hash>
 </Codenesium>*/
