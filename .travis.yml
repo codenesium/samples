@@ -22,7 +22,7 @@ script:
    -  dotnet test PetStore/PetStore.Api.DataAccess.Tests/PetStore.Api.DataAccess.Tests.csproj
    -  dotnet test TicketingCRM/TicketingCRM.Api.DataAccess.Tests/TicketingCRM.Api.DataAccess.Tests.csproj
    -  dotnet test OctopusDeploy/OctopusDeploy.Api.DataAccess.Tests/OctopusDeploy.Api.DataAccess.Tests.csproj
-   -  dotnet test StackOverflow/StackOverflow.Api.DataAccess.Tests/StackOverflow.Api.StackOverflow.Tests.csproj
+   -  dotnet test StackOverflow/StackOverflow.Api.DataAccess.Tests/StackOverflow.Api.DataAccess.Tests.csproj
    
    -  dotnet test ESPIOT/ESPIOT.Api.Services.Tests/ESPIOT.Api.Services.Tests.csproj
    -  dotnet test FileService/FileService.Api.Services.Tests/FileService.Api.Services.Tests.csproj
