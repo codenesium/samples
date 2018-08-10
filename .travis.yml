@@ -22,7 +22,7 @@ script:
    -  dotnet test PetStore/PetStore.Api.DataAccess.Tests/PetStore.Api.DataAccess.Tests.csproj
    -  dotnet test TicketingCRM/TicketingCRM.Api.DataAccess.Tests/TicketingCRM.Api.DataAccess.Tests.csproj
    -  dotnet test OctopusDeploy/OctopusDeploy.Api.DataAccess.Tests/OctopusDeploy.Api.DataAccess.Tests.csproj
-   -  dotnet test StackOverflow/StackOverflow.Api.DataAccess.Tests/v.Api.StackOverflow.Tests.csproj
+   -  dotnet test StackOverflow/StackOverflow.Api.DataAccess.Tests/StackOverflow.Api.StackOverflow.Tests.csproj
    
    -  dotnet test ESPIOT/ESPIOT.Api.Services.Tests/ESPIOT.Api.Services.Tests.csproj
    -  dotnet test FileService/FileService.Api.Services.Tests/FileService.Api.Services.Tests.csproj
@@ -34,7 +34,7 @@ script:
    -  dotnet test TicketingCRM/TicketingCRM.Api.Services.Tests/TicketingCRM.Api.Services.Tests.csproj
    -  dotnet test OctopusDeploy/OctopusDeploy.Api.Services.Tests/OctopusDeploy.Api.Services.Tests.csproj
    -  dotnet test StackOverflow/StackOverflow.Api.Services.Tests/StackOverflow.Api.Services.Tests.csproj
-	  
+
    -  dotnet test ESPIOT/ESPIOT.Api.Client.Tests/ESPIOT.Api.Client.Tests.csproj
    -  dotnet test FileService/FileService.Api.Client.Tests/FileService.Api.Client.Tests.csproj
    -  dotnet test Nebula/Nebula.Api.Client.Tests/Nebula.Api.Client.Tests.csproj
@@ -55,3 +55,4 @@ script:
    -  dotnet test PetStore/PetStore.Api.Web.Tests/PetStore.Api.Web.Tests.csproj
    -  dotnet test TicketingCRM/TicketingCRM.Api.Web.Tests/TicketingCRM.Api.Web.Tests.csproj
    -  dotnet test OctopusDeploy/OctopusDeploy.Api.Web.Tests/OctopusDeploy.Api.Web.Tests.csproj
+   -  dotnet test StackOverflow/StackOverflow.Api.Web.Tests/StackOverflows.Api.Web.Tests.csproj
