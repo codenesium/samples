@@ -35,6 +35,7 @@ namespace StackOverflowNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
+		[MaxLength(1073741823)]
 		[Column("Comment")]
 		public string Comment { get; private set; }
 
@@ -51,12 +52,15 @@ namespace StackOverflowNS.Api.DataAccess
 		[Column("PostId")]
 		public int PostId { get; private set; }
 
+		[MaxLength(36)]
 		[Column("RevisionGUID")]
 		public string RevisionGUID { get; private set; }
 
+		[MaxLength(1073741823)]
 		[Column("Text")]
 		public string Text { get; private set; }
 
+		[MaxLength(40)]
 		[Column("UserDisplayName")]
 		public string UserDisplayName { get; private set; }
 
@@ -66,5 +70,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8059389a97582e4297de492112d4cff</Hash>
+    <Hash>e0e738e216aa27c1c7f441e94807e6c4</Hash>
 </Codenesium>*/

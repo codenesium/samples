@@ -37,13 +37,16 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.WorkerPoolIds = workerPoolIds;
 		}
 
+		[MaxLength(50)]
 		[Column("CommunicationStyle")]
 		public string CommunicationStyle { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Fingerprint")]
 		public string Fingerprint { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -53,15 +56,18 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("MachinePolicyId")]
 		public string MachinePolicyId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
 		[Column("RelatedDocumentIds")]
 		public string RelatedDocumentIds { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Thumbprint")]
 		public string Thumbprint { get; private set; }
 
@@ -71,5 +77,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a8d8d34fe89d0abbca22f868f5e00f8b</Hash>
+    <Hash>ee2b23e0f8cbcd69dfba6b4238b41429</Hash>
 </Codenesium>*/

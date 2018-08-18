@@ -122,9 +122,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiBillOfMaterialResponseModel>> ByUnitMeasureCode(string unitMeasureCode)
+		public async Task<List<ApiBillOfMaterialResponseModel>> ByUnitMeasureCode(string unitMeasureCode, int limit = 0, int offset = int.MaxValue)
 		{
-			List<BillOfMaterial> records = await this.BillOfMaterialRepository.ByUnitMeasureCode(unitMeasureCode);
+			List<BillOfMaterial> records = await this.BillOfMaterialRepository.ByUnitMeasureCode(unitMeasureCode, limit, offset);
 
 			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>148ed5d3d5bd019784e0aaa839a1bf74</Hash>
+    <Hash>69d91743fd1c3771d2f76021e4a54897</Hash>
 </Codenesium>*/

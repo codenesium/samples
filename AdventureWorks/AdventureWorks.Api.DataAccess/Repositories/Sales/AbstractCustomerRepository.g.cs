@@ -83,9 +83,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			return records.FirstOrDefault();
 		}
 
-		public async Task<List<Customer>> ByTerritoryID(int? territoryID)
+		public async Task<List<Customer>> ByTerritoryID(int? territoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.TerritoryID == territoryID);
+			var records = await this.Where(x => x.TerritoryID == territoryID, limit, offset);
 
 			return records;
 		}
@@ -137,5 +137,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca4654968fb040de1fb9471095c55de5</Hash>
+    <Hash>cb4235d9198ba05b68f0d0166922ad4e</Hash>
 </Codenesium>*/

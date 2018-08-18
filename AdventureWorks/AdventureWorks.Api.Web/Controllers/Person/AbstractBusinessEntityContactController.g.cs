@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byContactTypeID/{contactTypeID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByContactTypeID(int contactTypeID)
+		public async virtual Task<IActionResult> ByContactTypeID(int contactTypeID, int? limit, int? offset)
 		{
-			List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.ByContactTypeID(contactTypeID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.ByContactTypeID(contactTypeID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byPersonID/{personID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByPersonID(int personID)
+		public async virtual Task<IActionResult> ByPersonID(int personID, int? limit, int? offset)
 		{
-			List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.ByPersonID(personID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityContactService.ByPersonID(personID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +258,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1de2bed686ff517dad449104e09a18d6</Hash>
+    <Hash>1f572d8c9ad6fc0dcf10bc3b4bccec3f</Hash>
 </Codenesium>*/

@@ -19,9 +19,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<SalesOrderHeader> BySalesOrderNumber(string salesOrderNumber);
 
-		Task<List<SalesOrderHeader>> ByCustomerID(int customerID);
+		Task<List<SalesOrderHeader>> ByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<SalesOrderHeader>> BySalesPersonID(int? salesPersonID);
+		Task<List<SalesOrderHeader>> BySalesPersonID(int? salesPersonID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<SalesOrderDetail>> SalesOrderDetails(int salesOrderID, int limit = int.MaxValue, int offset = 0);
 
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2cdc080be6bb472e0a790a450a704c43</Hash>
+    <Hash>7aba8a230793ec735433822ce8be8543</Hash>
 </Codenesium>*/

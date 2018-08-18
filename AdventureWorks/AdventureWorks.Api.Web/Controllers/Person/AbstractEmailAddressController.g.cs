@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiEmailAddressResponseModel> response = await this.EmailAddressService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byEmailAddress/{emailAddress1}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEmailAddressResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByEmailAddress(string emailAddress1)
+		public async virtual Task<IActionResult> ByEmailAddress(string emailAddress1, int? limit, int? offset)
 		{
-			List<ApiEmailAddressResponseModel> response = await this.EmailAddressService.ByEmailAddress(emailAddress1);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEmailAddressResponseModel> response = await this.EmailAddressService.ByEmailAddress(emailAddress1, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f2cc1214e8924f94333bce996c851d27</Hash>
+    <Hash>56cef9a58298b1eba37fe9c34a779bdd</Hash>
 </Codenesium>*/

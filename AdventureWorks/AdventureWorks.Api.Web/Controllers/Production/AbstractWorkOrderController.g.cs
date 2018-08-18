@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byProductID/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProductID(int productID)
+		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
 		{
-			List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByProductID(productID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByProductID(productID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byScrapReasonID/{scrapReasonID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiWorkOrderResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByScrapReasonID(short? scrapReasonID)
+		public async virtual Task<IActionResult> ByScrapReasonID(short? scrapReasonID, int? limit, int? offset)
 		{
-			List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByScrapReasonID(scrapReasonID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiWorkOrderResponseModel> response = await this.WorkOrderService.ByScrapReasonID(scrapReasonID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -230,8 +246,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> WorkOrderRoutings(int workOrderID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiWorkOrderRoutingResponseModel> response = await this.WorkOrderService.WorkOrderRoutings(workOrderID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -256,5 +275,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0d492fc6afb4df070511836997b9ce23</Hash>
+    <Hash>dbc85cd67b2bb415c822f393c7c024c6</Hash>
 </Codenesium>*/

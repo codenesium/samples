@@ -43,16 +43,19 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.Thumbprint = thumbprint;
 		}
 
+		[MaxLength(50)]
 		[Column("CommunicationStyle")]
 		public string CommunicationStyle { get; private set; }
 
 		[Column("EnvironmentIds")]
 		public string EnvironmentIds { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Fingerprint")]
 		public string Fingerprint { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -62,9 +65,11 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("MachinePolicyId")]
 		public string MachinePolicyId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
@@ -80,11 +85,12 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("TenantTags")]
 		public string TenantTags { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Thumbprint")]
 		public string Thumbprint { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>cb7eb450aac552f36168676bae76c7e0</Hash>
+    <Hash>7aa121db1d96df6cbcc35fb8355f9cda</Hash>
 </Codenesium>*/

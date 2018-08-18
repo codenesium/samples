@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProjectTriggerRepository>();
 			var records = new List<ProjectTrigger>();
 			records.Add(new ProjectTrigger());
-			mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProjectTriggerService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.ProjectTriggerModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiProjectTriggerResponseModel> response = await service.ByProjectId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByProjectId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProjectTriggerRepository>();
-			mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>())).Returns(Task.FromResult<List<ProjectTrigger>>(new List<ProjectTrigger>()));
+			mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProjectTrigger>>(new List<ProjectTrigger>()));
 			var service = new ProjectTriggerService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.ProjectTriggerModelValidatorMock.Object,
@@ -198,11 +198,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiProjectTriggerResponseModel> response = await service.ByProjectId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8268ca6840d5b83c4450e086bbf485ba</Hash>
+    <Hash>d972ba0393ad0cc7714a947f94acd438</Hash>
 </Codenesium>*/

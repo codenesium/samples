@@ -27,6 +27,7 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 
@@ -42,5 +43,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3574da90ee843f997df252ffc7de520</Hash>
+    <Hash>c7eb298ef35b5c759a472e69c38cb1e8</Hash>
 </Codenesium>*/

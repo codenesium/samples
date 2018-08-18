@@ -60,5 +60,5 @@ namespace StackOverflowNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>a5b6e69bb9648909441e94fadcb189a0</Hash>
+    <Hash>40570f903961ec9cd87c06b6c3433b9d</Hash>
 </Codenesium>*/

@@ -122,9 +122,9 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiLifecycleResponseModel>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<ApiLifecycleResponseModel>> ByDataVersion(byte[] dataVersion, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Lifecycle> records = await this.LifecycleRepository.ByDataVersion(dataVersion);
+			List<Lifecycle> records = await this.LifecycleRepository.ByDataVersion(dataVersion, limit, offset);
 
 			return this.BolLifecycleMapper.MapBOToModel(this.DalLifecycleMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c2d9ec02aa8b016583b9f9026e5f6f1b</Hash>
+    <Hash>283ca94c2c2eaf07ed5a02d226aafae0</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<Worker> ByName(string name);
 
-		Task<List<Worker>> ByMachinePolicyId(string machinePolicyId);
+		Task<List<Worker>> ByMachinePolicyId(string machinePolicyId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>56235b28675f497ecba8af92051a68be</Hash>
+    <Hash>eabb609634fb1ef2ce9b2b587bf69f47</Hash>
 </Codenesium>*/

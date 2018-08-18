@@ -47,7 +47,11 @@ namespace PetShippingNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiCountryResponseModel> response = await this.CountryService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -208,8 +212,11 @@ namespace PetShippingNS.Api.Web
 		public async virtual Task<IActionResult> CountryRequirements(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiCountryRequirementResponseModel> response = await this.CountryService.CountryRequirements(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -222,8 +229,11 @@ namespace PetShippingNS.Api.Web
 		public async virtual Task<IActionResult> Destinations(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiDestinationResponseModel> response = await this.CountryService.Destinations(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -248,5 +258,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e226c2d37309c709f577aa8dd1bb0f7a</Hash>
+    <Hash>22a2c65187dc28b9d62c51ed19877f8a</Hash>
 </Codenesium>*/

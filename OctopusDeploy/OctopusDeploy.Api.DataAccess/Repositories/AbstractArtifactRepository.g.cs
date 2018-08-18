@@ -76,9 +76,9 @@ namespace OctopusDeployNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Artifact>> ByTenantId(string tenantId)
+		public async Task<List<Artifact>> ByTenantId(string tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.TenantId == tenantId);
+			var records = await this.Where(x => x.TenantId == tenantId, limit, offset);
 
 			return records;
 		}
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c0d7e089ce70920f1c20c9eb6af4dc91</Hash>
+    <Hash>6de72a1941e8da88b4ef9497aec864a4</Hash>
 </Codenesium>*/

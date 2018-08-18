@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID)
+		public async Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.BusinessEntityID == businessEntityID);
+			var records = await this.Where(x => x.BusinessEntityID == businessEntityID, limit, offset);
 
 			return records;
 		}
@@ -115,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>11062ce73649b15ddc2acae05253a1e5</Hash>
+    <Hash>7bf8b7f01394087ad40de8a74f7c8dc5</Hash>
 </Codenesium>*/

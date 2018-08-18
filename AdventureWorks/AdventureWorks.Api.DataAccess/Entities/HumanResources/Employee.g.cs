@@ -57,24 +57,29 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("CurrentFlag")]
 		public bool CurrentFlag { get; private set; }
 
+		[MaxLength(1)]
 		[Column("Gender")]
 		public string Gender { get; private set; }
 
 		[Column("HireDate")]
 		public DateTime HireDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("JobTitle")]
 		public string JobTitle { get; private set; }
 
+		[MaxLength(256)]
 		[Column("LoginID")]
 		public string LoginID { get; private set; }
 
+		[MaxLength(1)]
 		[Column("MaritalStatus")]
 		public string MaritalStatu { get; private set; }
 
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(15)]
 		[Column("NationalIDNumber")]
 		public string NationalIDNumber { get; private set; }
 
@@ -98,5 +103,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>38bc9a1bf3e6b55081edee85bf1b7a2c</Hash>
+    <Hash>6a5759f32401f28ff4c1dddda0ba2e62</Hash>
 </Codenesium>*/

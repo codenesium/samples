@@ -21,10 +21,10 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<List<ApiDeploymentHistoryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDeploymentHistoryResponseModel>> ByCreated(DateTimeOffset created);
+		Task<List<ApiDeploymentHistoryResponseModel>> ByCreated(DateTimeOffset created, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>77b442cc23e9073fcf448739185d45e6</Hash>
+    <Hash>c09588f32e9131a2cd3652f96500a5f3</Hash>
 </Codenesium>*/

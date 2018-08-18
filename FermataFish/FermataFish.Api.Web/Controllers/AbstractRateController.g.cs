@@ -47,7 +47,11 @@ namespace FermataFishNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiRateResponseModel> response = await this.RateService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -220,5 +224,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e81b2359011a0a13ed17363c45393383</Hash>
+    <Hash>c337597db76038df144c438813479d51</Hash>
 </Codenesium>*/

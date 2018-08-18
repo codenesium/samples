@@ -47,7 +47,11 @@ namespace PetShippingNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiHandlerResponseModel> response = await this.HandlerService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -208,8 +212,11 @@ namespace PetShippingNS.Api.Web
 		public async virtual Task<IActionResult> AirTransports(int handlerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiAirTransportResponseModel> response = await this.HandlerService.AirTransports(handlerId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -222,8 +229,11 @@ namespace PetShippingNS.Api.Web
 		public async virtual Task<IActionResult> HandlerPipelineSteps(int handlerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiHandlerPipelineStepResponseModel> response = await this.HandlerService.HandlerPipelineSteps(handlerId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -236,8 +246,11 @@ namespace PetShippingNS.Api.Web
 		public async virtual Task<IActionResult> OtherTransports(int handlerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiOtherTransportResponseModel> response = await this.HandlerService.OtherTransports(handlerId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -262,5 +275,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>351d0a0dfcca0af63d2bd3780f31c63e</Hash>
+    <Hash>6a754db3d3ec1b74e227c21807994992</Hash>
 </Codenesium>*/

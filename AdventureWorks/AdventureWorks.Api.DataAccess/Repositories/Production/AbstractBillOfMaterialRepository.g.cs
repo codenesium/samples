@@ -83,9 +83,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			return records.FirstOrDefault();
 		}
 
-		public async Task<List<BillOfMaterial>> ByUnitMeasureCode(string unitMeasureCode)
+		public async Task<List<BillOfMaterial>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.UnitMeasureCode == unitMeasureCode);
+			var records = await this.Where(x => x.UnitMeasureCode == unitMeasureCode, limit, offset);
 
 			return records;
 		}
@@ -122,5 +122,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7842ca3e6c161986104486b072f3da3c</Hash>
+    <Hash>2942f00b6cddcdf3c9fadefa4f923a12</Hash>
 </Codenesium>*/

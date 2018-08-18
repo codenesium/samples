@@ -25,6 +25,7 @@ namespace NebulaNS.Api.Services
 		protected IBOLClaspMapper BolClaspMapper { get; private set; }
 
 		protected IDALClaspMapper DalClaspMapper { get; private set; }
+
 		protected IBOLLinkMapper BolLinkMapper { get; private set; }
 
 		protected IDALLinkMapper DalLinkMapper { get; private set; }
@@ -140,5 +141,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>487345599dac52a3553e1b6d900b31de</Hash>
+    <Hash>13a0164ef769a4de84e65bc7b6a8cfca</Hash>
 </Codenesium>*/

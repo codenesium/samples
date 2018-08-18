@@ -22,27 +22,23 @@ namespace ESPIOTNS.Api.Contracts
 			this.DeviceIdEntity = nameof(ApiResponse.Devices);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int DeviceId { get; private set; }
 
 		[JsonProperty]
 		public string DeviceIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string @Value { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>3f067fad698413ac74a70310f13edd3b</Hash>
+    <Hash>1bbaeb0c94d89a8ce149e1a074ac29ed</Hash>
 </Codenesium>*/

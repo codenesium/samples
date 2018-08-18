@@ -116,16 +116,16 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByEmployeeID(int employeeID)
+		public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByEmployeeID(int employeeID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.ByEmployeeID(employeeID);
+			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.ByEmployeeID(employeeID, limit, offset);
 
 			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByVendorID(int vendorID)
+		public async Task<List<ApiPurchaseOrderHeaderResponseModel>> ByVendorID(int vendorID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.ByVendorID(vendorID);
+			List<PurchaseOrderHeader> records = await this.PurchaseOrderHeaderRepository.ByVendorID(vendorID, limit, offset);
 
 			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9a009b75280d9edd1d18a1a71d8cb9f1</Hash>
+    <Hash>a64375eb1dd0557e48ddde2649872928</Hash>
 </Codenesium>*/

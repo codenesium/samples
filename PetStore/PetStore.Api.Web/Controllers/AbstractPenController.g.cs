@@ -47,7 +47,11 @@ namespace PetStoreNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiPenResponseModel> response = await this.PenService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -208,8 +212,11 @@ namespace PetStoreNS.Api.Web
 		public async virtual Task<IActionResult> Pets(int penId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiPetResponseModel> response = await this.PenService.Pets(penId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -234,5 +241,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e2a8e3e145c086964df68c62d764fec0</Hash>
+    <Hash>8998884a53890ccbc5f7d0d82cefcc39</Hash>
 </Codenesium>*/

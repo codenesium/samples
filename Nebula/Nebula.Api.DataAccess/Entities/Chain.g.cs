@@ -37,6 +37,7 @@ namespace NebulaNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 
@@ -52,5 +53,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d431b288e0e8683fba7bb9da9712da7b</Hash>
+    <Hash>35cbbc446a5e0b2cd5bad2249a3ca9ad</Hash>
 </Codenesium>*/

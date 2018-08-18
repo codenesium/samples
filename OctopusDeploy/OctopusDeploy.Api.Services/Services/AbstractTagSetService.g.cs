@@ -122,9 +122,9 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiTagSetResponseModel>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<ApiTagSetResponseModel>> ByDataVersion(byte[] dataVersion, int limit = 0, int offset = int.MaxValue)
 		{
-			List<TagSet> records = await this.TagSetRepository.ByDataVersion(dataVersion);
+			List<TagSet> records = await this.TagSetRepository.ByDataVersion(dataVersion, limit, offset);
 
 			return this.BolTagSetMapper.MapBOToModel(this.DalTagSetMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6623577867c33e9b5e239210ba460f0c</Hash>
+    <Hash>0210578ff4fb57a58a6a827b1a3eb668</Hash>
 </Codenesium>*/

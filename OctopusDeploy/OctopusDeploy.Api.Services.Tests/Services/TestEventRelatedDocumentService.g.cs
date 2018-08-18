@@ -136,7 +136,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
 			var records = new List<EventRelatedDocument>();
 			records.Add(new EventRelatedDocument());
-			mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
 			                                              mock.RepositoryMock.Object,
 			                                              mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiEventRelatedDocumentResponseModel> response = await service.ByEventId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByEventId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<string>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
+			mock.RepositoryMock.Setup(x => x.ByEventId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
 			var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
 			                                              mock.RepositoryMock.Object,
 			                                              mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
@@ -163,7 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiEventRelatedDocumentResponseModel> response = await service.ByEventId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByEventId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -172,7 +172,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
 			var records = new List<EventRelatedDocument>();
 			records.Add(new EventRelatedDocument());
-			mock.RepositoryMock.Setup(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
 			                                              mock.RepositoryMock.Object,
 			                                              mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
@@ -182,14 +182,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiEventRelatedDocumentResponseModel> response = await service.ByEventIdRelatedDocumentId(default(string), default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByEventIdRelatedDocumentId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IEventRelatedDocumentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
+			mock.RepositoryMock.Setup(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventRelatedDocument>>(new List<EventRelatedDocument>()));
 			var service = new EventRelatedDocumentService(mock.LoggerMock.Object,
 			                                              mock.RepositoryMock.Object,
 			                                              mock.ModelValidatorMockFactory.EventRelatedDocumentModelValidatorMock.Object,
@@ -199,11 +199,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiEventRelatedDocumentResponseModel> response = await service.ByEventIdRelatedDocumentId(default(string), default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByEventIdRelatedDocumentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dda3a8bbd1ee78fddd1e312bf0c17a5b</Hash>
+    <Hash>b637e68ccb55f05467093de0ef2c19d6</Hash>
 </Codenesium>*/

@@ -57,12 +57,14 @@ namespace StackOverflowNS.Api.DataAccess
 		[Column("CreationDate")]
 		public DateTime CreationDate { get; private set; }
 
+		[MaxLength(40)]
 		[Column("DisplayName")]
 		public string DisplayName { get; private set; }
 
 		[Column("DownVotes")]
 		public int DownVotes { get; private set; }
 
+		[MaxLength(40)]
 		[Column("EmailHash")]
 		public string EmailHash { get; private set; }
 
@@ -73,6 +75,7 @@ namespace StackOverflowNS.Api.DataAccess
 		[Column("LastAccessDate")]
 		public DateTime LastAccessDate { get; private set; }
 
+		[MaxLength(100)]
 		[Column("Location")]
 		public string Location { get; private set; }
 
@@ -85,11 +88,12 @@ namespace StackOverflowNS.Api.DataAccess
 		[Column("Views")]
 		public int Views { get; private set; }
 
+		[MaxLength(200)]
 		[Column("WebsiteUrl")]
 		public string WebsiteUrl { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d8d51a7cd9b2b64724da4ca7706f37c</Hash>
+    <Hash>492fa5bb5c8b3a6b8a9b43156ebd3bcc</Hash>
 </Codenesium>*/

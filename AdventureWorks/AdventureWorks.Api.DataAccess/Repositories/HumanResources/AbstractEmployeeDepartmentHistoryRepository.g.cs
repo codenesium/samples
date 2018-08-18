@@ -76,16 +76,16 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<EmployeeDepartmentHistory>> ByDepartmentID(short departmentID)
+		public async Task<List<EmployeeDepartmentHistory>> ByDepartmentID(short departmentID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.DepartmentID == departmentID);
+			var records = await this.Where(x => x.DepartmentID == departmentID, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<EmployeeDepartmentHistory>> ByShiftID(int shiftID)
+		public async Task<List<EmployeeDepartmentHistory>> ByShiftID(int shiftID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ShiftID == shiftID);
+			var records = await this.Where(x => x.ShiftID == shiftID, limit, offset);
 
 			return records;
 		}
@@ -122,5 +122,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>59ba87443e3e412f1fdf7822401597b5</Hash>
+    <Hash>bd6d607110b30bcd6f3928284f4af9c0</Hash>
 </Codenesium>*/

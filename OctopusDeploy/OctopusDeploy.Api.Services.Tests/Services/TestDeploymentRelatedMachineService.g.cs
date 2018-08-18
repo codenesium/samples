@@ -136,7 +136,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
 			var records = new List<DeploymentRelatedMachine>();
 			records.Add(new DeploymentRelatedMachine());
-			mock.RepositoryMock.Setup(x => x.ByDeploymentId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDeploymentId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
 			                                                  mock.RepositoryMock.Object,
 			                                                  mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentRelatedMachineResponseModel> response = await service.ByDeploymentId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDeploymentId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByDeploymentId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDeploymentId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDeploymentId(It.IsAny<string>())).Returns(Task.FromResult<List<DeploymentRelatedMachine>>(new List<DeploymentRelatedMachine>()));
+			mock.RepositoryMock.Setup(x => x.ByDeploymentId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DeploymentRelatedMachine>>(new List<DeploymentRelatedMachine>()));
 			var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
 			                                                  mock.RepositoryMock.Object,
 			                                                  mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Object,
@@ -163,7 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentRelatedMachineResponseModel> response = await service.ByDeploymentId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDeploymentId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByDeploymentId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -172,7 +172,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
 			var records = new List<DeploymentRelatedMachine>();
 			records.Add(new DeploymentRelatedMachine());
-			mock.RepositoryMock.Setup(x => x.ByMachineId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByMachineId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
 			                                                  mock.RepositoryMock.Object,
 			                                                  mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Object,
@@ -182,14 +182,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentRelatedMachineResponseModel> response = await service.ByMachineId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByMachineId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByMachineId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByMachineId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IDeploymentRelatedMachineRepository>();
-			mock.RepositoryMock.Setup(x => x.ByMachineId(It.IsAny<string>())).Returns(Task.FromResult<List<DeploymentRelatedMachine>>(new List<DeploymentRelatedMachine>()));
+			mock.RepositoryMock.Setup(x => x.ByMachineId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DeploymentRelatedMachine>>(new List<DeploymentRelatedMachine>()));
 			var service = new DeploymentRelatedMachineService(mock.LoggerMock.Object,
 			                                                  mock.RepositoryMock.Object,
 			                                                  mock.ModelValidatorMockFactory.DeploymentRelatedMachineModelValidatorMock.Object,
@@ -199,11 +199,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentRelatedMachineResponseModel> response = await service.ByMachineId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByMachineId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByMachineId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7076c7fccb809793a9df05e9479c9777</Hash>
+    <Hash>5300d50dfed2d269cd927a95be3826d1</Hash>
 </Codenesium>*/

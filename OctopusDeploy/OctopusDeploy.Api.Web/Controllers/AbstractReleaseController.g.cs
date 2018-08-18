@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiReleaseResponseModel> response = await this.ReleaseService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byIdAssembled/{id}/{assembled}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByIdAssembled(string id, DateTimeOffset assembled)
+		public async virtual Task<IActionResult> ByIdAssembled(string id, DateTimeOffset assembled, int? limit, int? offset)
 		{
-			List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdAssembled(id, assembled);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdAssembled(id, assembled, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -235,9 +245,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byProjectDeploymentProcessSnapshotId/{projectDeploymentProcessSnapshotId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
+		public async virtual Task<IActionResult> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId, int? limit, int? offset)
 		{
-			List<ApiReleaseResponseModel> response = await this.ReleaseService.ByProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiReleaseResponseModel> response = await this.ReleaseService.ByProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -246,9 +262,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled/{id}/{version}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{channelId}/{assembled}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
+		public async virtual Task<IActionResult> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled, int? limit, int? offset)
 		{
-			List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -257,9 +279,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled/{id}/{channelId}/{projectVariableSetSnapshotId}/{projectDeploymentProcessSnapshotId}/{jSON}/{projectId}/{version}/{assembled}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiReleaseResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
+		public async virtual Task<IActionResult> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled, int? limit, int? offset)
 		{
-			List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiReleaseResponseModel> response = await this.ReleaseService.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -283,5 +311,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1ba566242373540025a5cfa904c84855</Hash>
+    <Hash>46c2e26a64f33a7426d5d400a7feffb1</Hash>
 </Codenesium>*/

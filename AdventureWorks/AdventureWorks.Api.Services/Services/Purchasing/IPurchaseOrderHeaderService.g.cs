@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiPurchaseOrderHeaderResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPurchaseOrderHeaderResponseModel>> ByEmployeeID(int employeeID);
+		Task<List<ApiPurchaseOrderHeaderResponseModel>> ByEmployeeID(int employeeID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPurchaseOrderHeaderResponseModel>> ByVendorID(int vendorID);
+		Task<List<ApiPurchaseOrderHeaderResponseModel>> ByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiPurchaseOrderDetailResponseModel>> PurchaseOrderDetails(int purchaseOrderID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc7a1e3a613fb28a29911fe8d58e4410</Hash>
+    <Hash>8a204e85f49b3062b3dde16143aa3b39</Hash>
 </Codenesium>*/

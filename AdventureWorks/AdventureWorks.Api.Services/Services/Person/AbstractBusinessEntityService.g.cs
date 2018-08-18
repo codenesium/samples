@@ -25,9 +25,11 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLBusinessEntityAddressMapper BolBusinessEntityAddressMapper { get; private set; }
 
 		protected IDALBusinessEntityAddressMapper DalBusinessEntityAddressMapper { get; private set; }
+
 		protected IBOLBusinessEntityContactMapper BolBusinessEntityContactMapper { get; private set; }
 
 		protected IDALBusinessEntityContactMapper DalBusinessEntityContactMapper { get; private set; }
+
 		protected IBOLPersonMapper BolPersonMapper { get; private set; }
 
 		protected IDALPersonMapper DalPersonMapper { get; private set; }
@@ -154,5 +156,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8ec8944057936235ea04908890b081c9</Hash>
+    <Hash>a69d158c33c92f51e6096fa17eac1b29</Hash>
 </Codenesium>*/

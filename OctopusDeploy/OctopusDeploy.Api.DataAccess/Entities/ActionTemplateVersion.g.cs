@@ -29,19 +29,23 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.Version = version;
 		}
 
+		[MaxLength(50)]
 		[Column("ActionType")]
 		public string ActionType { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("LatestActionTemplateId")]
 		public string LatestActionTemplateId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
@@ -51,5 +55,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>df03af1c618d9c928408c6608a975d7e</Hash>
+    <Hash>421753dbec4845a823933cc1b4430c4d</Hash>
 </Codenesium>*/

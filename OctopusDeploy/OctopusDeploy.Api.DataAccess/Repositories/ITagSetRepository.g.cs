@@ -19,10 +19,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<TagSet> ByName(string name);
 
-		Task<List<TagSet>> ByDataVersion(byte[] dataVersion);
+		Task<List<TagSet>> ByDataVersion(byte[] dataVersion, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b595190df1cd6cfbe43a6fc27beed07d</Hash>
+    <Hash>815fbd73df41cf9e56fcae7928f72a8e</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace TicketingCRMNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiTransactionResponseModel> response = await this.TransactionService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace TicketingCRMNS.Api.Web
 		[Route("byTransactionStatusId/{transactionStatusId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTransactionResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByTransactionStatusId(int transactionStatusId)
+		public async virtual Task<IActionResult> ByTransactionStatusId(int transactionStatusId, int? limit, int? offset)
 		{
-			List<ApiTransactionResponseModel> response = await this.TransactionService.ByTransactionStatusId(transactionStatusId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTransactionResponseModel> response = await this.TransactionService.ByTransactionStatusId(transactionStatusId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -219,8 +229,11 @@ namespace TicketingCRMNS.Api.Web
 		public async virtual Task<IActionResult> Sales(int transactionId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiSaleResponseModel> response = await this.TransactionService.Sales(transactionId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -245,5 +258,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>381b75547cffd7603af4ab71b695785e</Hash>
+    <Hash>40b31188f0cfcb87450ad608b1be4e7c</Hash>
 </Codenesium>*/

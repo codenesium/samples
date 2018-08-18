@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiUserRoleResponseModel> response = await this.UserRoleService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -239,5 +243,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ce19c20c9e01f1256adb06eba58fd224</Hash>
+    <Hash>8a726d9dff79a109e742d38ab245be1b</Hash>
 </Codenesium>*/

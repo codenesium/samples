@@ -31,6 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("BusinessEntityID")]
 		public int BusinessEntityID { get; private set; }
 
+		[MaxLength(50)]
 		[Column("EmailAddress")]
 		public string EmailAddress1 { get; private set; }
 
@@ -48,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>debb6d640d800ae35e99bb9f8a29b115</Hash>
+    <Hash>66df5f2e35be62b322d8a4037f2598d1</Hash>
 </Codenesium>*/

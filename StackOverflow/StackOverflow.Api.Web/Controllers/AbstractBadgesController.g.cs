@@ -47,7 +47,11 @@ namespace StackOverflowNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiBadgesResponseModel> response = await this.BadgesService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -220,5 +224,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>cc1d385b8c53aa21949779f632198df2</Hash>
+    <Hash>a781966ce1b6dd5ede9d56edc7a8a1c4</Hash>
 </Codenesium>*/

@@ -39,9 +39,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Type = type;
 		}
 
+		[MaxLength(50)]
 		[Column("Category")]
 		public string Category { get; private set; }
 
+		[MaxLength(255)]
 		[Column("Description")]
 		public string Description { get; private set; }
 
@@ -72,11 +74,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("StartDate")]
 		public DateTime StartDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Type")]
 		public string Type { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5cb6c5242ea9283eb2ec9694498395e3</Hash>
+    <Hash>ecb398aee239ec2e2c7f38554b23457b</Hash>
 </Codenesium>*/

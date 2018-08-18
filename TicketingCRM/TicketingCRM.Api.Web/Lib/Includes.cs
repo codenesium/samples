@@ -359,7 +359,7 @@ namespace Codenesium.Foundation.CommonMVC
         {
         }
 
-		public void Process(int maxLimit, int defaultLimit, int? limit, int? offset, Dictionary<string, Microsoft.Extensions.Primitives.StringValues> queryParameters)
+		public bool Process(int maxLimit, int defaultLimit, int? limit, int? offset, Dictionary<string, Microsoft.Extensions.Primitives.StringValues> queryParameters)
         {
             this.Offset = offset ?? 0;
             this.Limit = limit ?? maxLimit;
@@ -367,7 +367,7 @@ namespace Codenesium.Foundation.CommonMVC
             if (this.Limit > maxLimit)
             {
                 this.Error = $"Limit of {this.Limit} exceeds maximum request size of {maxLimit} records";
-                return;
+                return false;
             }
 
             foreach (var parameter in queryParameters)
@@ -400,6 +400,8 @@ namespace Codenesium.Foundation.CommonMVC
             {
                 this.WhereClause = "1=1";
             }
+
+			return true;
         }
     }
 }

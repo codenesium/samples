@@ -108,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(int? businessEntityID)
+		public async Task<List<ApiJobCandidateResponseModel>> ByBusinessEntityID(int? businessEntityID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<JobCandidate> records = await this.JobCandidateRepository.ByBusinessEntityID(businessEntityID);
+			List<JobCandidate> records = await this.JobCandidateRepository.ByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7c838e8a33d1eb9e9978441af8962a38</Hash>
+    <Hash>8bd11cb9d6501a0515761da3a3898d15</Hash>
 </Codenesium>*/

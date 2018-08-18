@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiTenantVariableResponseModel> response = await this.TenantVariableService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byTenantId/{tenantId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTenantVariableResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByTenantId(string tenantId)
+		public async virtual Task<IActionResult> ByTenantId(string tenantId, int? limit, int? offset)
 		{
-			List<ApiTenantVariableResponseModel> response = await this.TenantVariableService.ByTenantId(tenantId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTenantVariableResponseModel> response = await this.TenantVariableService.ByTenantId(tenantId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -250,5 +260,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6af62ee6ac590193bb01b940ba39b921</Hash>
+    <Hash>332aa3a94a4e2ef50277aee0157b8c6a</Hash>
 </Codenesium>*/

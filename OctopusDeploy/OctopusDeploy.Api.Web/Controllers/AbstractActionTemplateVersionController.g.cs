@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiActionTemplateVersionResponseModel> response = await this.ActionTemplateVersionService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byLatestActionTemplateId/{latestActionTemplateId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiActionTemplateVersionResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByLatestActionTemplateId(string latestActionTemplateId)
+		public async virtual Task<IActionResult> ByLatestActionTemplateId(string latestActionTemplateId, int? limit, int? offset)
 		{
-			List<ApiActionTemplateVersionResponseModel> response = await this.ActionTemplateVersionService.ByLatestActionTemplateId(latestActionTemplateId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiActionTemplateVersionResponseModel> response = await this.ActionTemplateVersionService.ByLatestActionTemplateId(latestActionTemplateId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -250,5 +260,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c278dafd9effd58a689ad474b08df9e3</Hash>
+    <Hash>7737b62404153818f08675a208293cc6</Hash>
 </Codenesium>*/

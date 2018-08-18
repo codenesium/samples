@@ -83,9 +83,9 @@ namespace OctopusDeployNS.Api.DataAccess
 			return records.FirstOrDefault();
 		}
 
-		public async Task<List<ProjectTrigger>> ByProjectId(string projectId)
+		public async Task<List<ProjectTrigger>> ByProjectId(string projectId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ProjectId == projectId);
+			var records = await this.Where(x => x.ProjectId == projectId, limit, offset);
 
 			return records;
 		}
@@ -122,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cf7cf12c24c39c93d38655dcc93d327d</Hash>
+    <Hash>c6f695480a22fed1cbb900c2c6800ffa</Hash>
 </Codenesium>*/

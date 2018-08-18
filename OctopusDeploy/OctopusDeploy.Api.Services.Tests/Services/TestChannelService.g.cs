@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IChannelRepository>();
 			var records = new List<Channel>();
 			records.Add(new Channel());
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ChannelService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiChannelResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDataVersion_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IChannelRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Channel>>(new List<Channel>()));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Channel>>(new List<Channel>()));
 			var service = new ChannelService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
@@ -198,7 +198,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiChannelResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -207,7 +207,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IChannelRepository>();
 			var records = new List<Channel>();
 			records.Add(new Channel());
-			mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ChannelService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
@@ -217,14 +217,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiChannelResponseModel> response = await service.ByProjectId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByProjectId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IChannelRepository>();
-			mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>())).Returns(Task.FromResult<List<Channel>>(new List<Channel>()));
+			mock.RepositoryMock.Setup(x => x.ByProjectId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Channel>>(new List<Channel>()));
 			var service = new ChannelService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ChannelModelValidatorMock.Object,
@@ -234,11 +234,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiChannelResponseModel> response = await service.ByProjectId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByProjectId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>70696d3bddf62a06ae2022a8048cb403</Hash>
+    <Hash>ce1af2c9863171942a5297d2c2729f08</Hash>
 </Codenesium>*/

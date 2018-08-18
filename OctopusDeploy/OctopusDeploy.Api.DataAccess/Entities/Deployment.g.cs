@@ -43,48 +43,58 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
+		[MaxLength(50)]
 		[Column("ChannelId")]
 		public string ChannelId { get; private set; }
 
 		[Column("Created")]
 		public DateTimeOffset Created { get; private set; }
 
+		[MaxLength(200)]
 		[Column("DeployedBy")]
 		public string DeployedBy { get; private set; }
 
 		[Column("DeployedToMachineIds")]
 		public string DeployedToMachineIds { get; private set; }
 
+		[MaxLength(50)]
 		[Column("EnvironmentId")]
 		public string EnvironmentId { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectGroupId")]
 		public string ProjectGroupId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectId")]
 		public string ProjectId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ReleaseId")]
 		public string ReleaseId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TaskId")]
 		public string TaskId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TenantId")]
 		public string TenantId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>57a768bc0617b9e36b57426dc12fcda9</Hash>
+    <Hash>95ba10c1208f8d0cc82581062ac3e3b6</Hash>
 </Codenesium>*/

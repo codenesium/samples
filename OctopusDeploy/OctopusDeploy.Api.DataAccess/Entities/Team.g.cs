@@ -39,6 +39,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		public string EnvironmentIds { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -48,6 +49,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("MemberUserIds")]
 		public string MemberUserIds { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
@@ -66,5 +68,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2c50af6ab2c3c9ae10c105f51e72d6dc</Hash>
+    <Hash>dcb70581ebadb7ef0779f74283834307</Hash>
 </Codenesium>*/

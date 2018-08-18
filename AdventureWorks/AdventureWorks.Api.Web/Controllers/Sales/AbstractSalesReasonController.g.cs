@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiSalesReasonResponseModel> response = await this.SalesReasonService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -208,8 +212,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> SalesOrderHeaderSalesReasons(int salesReasonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await this.SalesReasonService.SalesOrderHeaderSalesReasons(salesReasonID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -234,5 +241,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4a15450ac9bd3274149984b6718f0c83</Hash>
+    <Hash>5dee3ce87f8e71f1fa5993064849ae18</Hash>
 </Codenesium>*/

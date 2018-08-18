@@ -45,12 +45,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("EndOfDayRate")]
 		public decimal EndOfDayRate { get; private set; }
 
+		[MaxLength(3)]
 		[Column("FromCurrencyCode")]
 		public string FromCurrencyCode { get; private set; }
 
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(3)]
 		[Column("ToCurrencyCode")]
 		public string ToCurrencyCode { get; private set; }
 
@@ -63,5 +65,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca0976087f04f0e5200a24086396930a</Hash>
+    <Hash>a1e81036c1149d700d64853881dc3e1e</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byDeploymentId/{deploymentId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiDeploymentRelatedMachineResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDeploymentId(string deploymentId)
+		public async virtual Task<IActionResult> ByDeploymentId(string deploymentId, int? limit, int? offset)
 		{
-			List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.ByDeploymentId(deploymentId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.ByDeploymentId(deploymentId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byMachineId/{machineId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiDeploymentRelatedMachineResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByMachineId(string machineId)
+		public async virtual Task<IActionResult> ByMachineId(string machineId, int? limit, int? offset)
 		{
-			List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.ByMachineId(machineId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiDeploymentRelatedMachineResponseModel> response = await this.DeploymentRelatedMachineService.ByMachineId(machineId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +258,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a76fd4b0333c1702888335ad3b6513c4</Hash>
+    <Hash>67ee4e7f5279f3ba4f1ee0a5c3ca362f</Hash>
 </Codenesium>*/

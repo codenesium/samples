@@ -47,7 +47,11 @@ namespace FileServiceNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiBucketResponseModel> response = await this.BucketService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -246,8 +250,11 @@ namespace FileServiceNS.Api.Web
 		public async virtual Task<IActionResult> Files(int bucketId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiFileResponseModel> response = await this.BucketService.Files(bucketId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -272,5 +279,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a6d733013d1c83939ec4ae397547e2b9</Hash>
+    <Hash>cefb90acf3cf22686a00bae8090334ba</Hash>
 </Codenesium>*/

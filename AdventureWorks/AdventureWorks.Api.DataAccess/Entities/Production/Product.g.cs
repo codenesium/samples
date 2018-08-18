@@ -67,9 +67,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.WeightUnitMeasureCode = weightUnitMeasureCode;
 		}
 
+		[MaxLength(2)]
 		[Column("Class")]
 		public string @Class { get; private set; }
 
+		[MaxLength(15)]
 		[Column("Color")]
 		public string Color { get; private set; }
 
@@ -91,6 +93,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
@@ -99,12 +102,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ProductID")]
 		public int ProductID { get; private set; }
 
+		[MaxLength(2)]
 		[Column("ProductLine")]
 		public string ProductLine { get; private set; }
 
 		[Column("ProductModelID")]
 		public int? ProductModelID { get; private set; }
 
+		[MaxLength(25)]
 		[Column("ProductNumber")]
 		public string ProductNumber { get; private set; }
 
@@ -127,26 +132,30 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("SellStartDate")]
 		public DateTime SellStartDate { get; private set; }
 
+		[MaxLength(5)]
 		[Column("Size")]
 		public string Size { get; private set; }
 
+		[MaxLength(3)]
 		[Column("SizeUnitMeasureCode")]
 		public string SizeUnitMeasureCode { get; private set; }
 
 		[Column("StandardCost")]
 		public decimal StandardCost { get; private set; }
 
+		[MaxLength(2)]
 		[Column("Style")]
 		public string Style { get; private set; }
 
 		[Column("Weight")]
 		public double? Weight { get; private set; }
 
+		[MaxLength(3)]
 		[Column("WeightUnitMeasureCode")]
 		public string WeightUnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d3f7ada44d7770b82a6268a08606c922</Hash>
+    <Hash>11f5cfccd8b2503d1ced1866cab863a3</Hash>
 </Codenesium>*/

@@ -27,6 +27,7 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
+		[MaxLength(200)]
 		[Column("ApiKeyHashed")]
 		public string ApiKeyHashed { get; private set; }
 
@@ -34,17 +35,19 @@ namespace OctopusDeployNS.Api.DataAccess
 		public DateTimeOffset Created { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("UserId")]
 		public string UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>67c1f43abd31547b847209a2b6a6d31a</Hash>
+    <Hash>8f2f3c67954fa53ba7ec681e016d051a</Hash>
 </Codenesium>*/

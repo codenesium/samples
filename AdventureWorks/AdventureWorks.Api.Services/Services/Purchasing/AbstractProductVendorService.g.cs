@@ -108,16 +108,16 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiProductVendorResponseModel>> ByBusinessEntityID(int businessEntityID)
+		public async Task<List<ApiProductVendorResponseModel>> ByBusinessEntityID(int businessEntityID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<ProductVendor> records = await this.ProductVendorRepository.ByBusinessEntityID(businessEntityID);
+			List<ProductVendor> records = await this.ProductVendorRepository.ByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiProductVendorResponseModel>> ByUnitMeasureCode(string unitMeasureCode)
+		public async Task<List<ApiProductVendorResponseModel>> ByUnitMeasureCode(string unitMeasureCode, int limit = 0, int offset = int.MaxValue)
 		{
-			List<ProductVendor> records = await this.ProductVendorRepository.ByUnitMeasureCode(unitMeasureCode);
+			List<ProductVendor> records = await this.ProductVendorRepository.ByUnitMeasureCode(unitMeasureCode, limit, offset);
 
 			return this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(records));
 		}
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3b471543fb750764142a5355106e6950</Hash>
+    <Hash>16ebd4019c8f707a0a6eb0846b494b86</Hash>
 </Codenesium>*/

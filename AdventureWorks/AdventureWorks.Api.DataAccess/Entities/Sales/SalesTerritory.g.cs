@@ -43,15 +43,18 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("CostYTD")]
 		public decimal CostYTD { get; private set; }
 
+		[MaxLength(3)]
 		[Column("CountryRegionCode")]
 		public string CountryRegionCode { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Group")]
 		public string @Group { get; private set; }
 
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
@@ -73,5 +76,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c4ebe0e54f5327b6fada9ce6830ca772</Hash>
+    <Hash>637b0b0fb5f4e516422bc49ea5e7dabf</Hash>
 </Codenesium>*/

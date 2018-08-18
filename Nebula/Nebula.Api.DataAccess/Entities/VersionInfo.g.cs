@@ -26,6 +26,7 @@ namespace NebulaNS.Api.DataAccess
 		[Column("AppliedOn")]
 		public DateTime? AppliedOn { get; private set; }
 
+		[MaxLength(1024)]
 		[Column("Description")]
 		public string Description { get; private set; }
 
@@ -36,5 +37,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a0ef75178494d1260209401a3f51642b</Hash>
+    <Hash>828adee5a5899b72c1761de5c31c9e14</Hash>
 </Codenesium>*/

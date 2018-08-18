@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IWorkerRepository>();
 			var records = new List<Worker>();
 			records.Add(new Worker());
-			mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new WorkerService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.WorkerModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiWorkerResponseModel> response = await service.ByMachinePolicyId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByMachinePolicyId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IWorkerRepository>();
-			mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>())).Returns(Task.FromResult<List<Worker>>(new List<Worker>()));
+			mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Worker>>(new List<Worker>()));
 			var service = new WorkerService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.WorkerModelValidatorMock.Object,
@@ -198,11 +198,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiWorkerResponseModel> response = await service.ByMachinePolicyId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0c6a69129838da6e1ffe976a2196810b</Hash>
+    <Hash>d7cef0ce964c1977a86eb71052c71a8a</Hash>
 </Codenesium>*/

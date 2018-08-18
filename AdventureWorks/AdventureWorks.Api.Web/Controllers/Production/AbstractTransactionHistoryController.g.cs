@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiTransactionHistoryResponseModel> response = await this.TransactionHistoryService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byProductID/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTransactionHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProductID(int productID)
+		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
 		{
-			List<ApiTransactionHistoryResponseModel> response = await this.TransactionHistoryService.ByProductID(productID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTransactionHistoryResponseModel> response = await this.TransactionHistoryService.ByProductID(productID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byReferenceOrderIDReferenceOrderLineID/{referenceOrderID}/{referenceOrderLineID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTransactionHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID)
+		public async virtual Task<IActionResult> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int? limit, int? offset)
 		{
-			List<ApiTransactionHistoryResponseModel> response = await this.TransactionHistoryService.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTransactionHistoryResponseModel> response = await this.TransactionHistoryService.ByReferenceOrderIDReferenceOrderLineID(referenceOrderID, referenceOrderLineID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +258,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f1d27e6d3a96994d7777708e49116c40</Hash>
+    <Hash>65528b0c5c529998ab4cce2eadc37503</Hash>
 </Codenesium>*/

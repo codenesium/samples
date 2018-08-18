@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiEmailAddressResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiEmailAddressResponseModel>> ByEmailAddress(string emailAddress1);
+		Task<List<ApiEmailAddressResponseModel>> ByEmailAddress(string emailAddress1, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4b0c14db30f0cd9436a473aeb24a301</Hash>
+    <Hash>9902a47616a3c75557dd5cb2e4d81fdd</Hash>
 </Codenesium>*/

@@ -108,16 +108,16 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByDepartmentID(short departmentID)
+		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByDepartmentID(short departmentID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<EmployeeDepartmentHistory> records = await this.EmployeeDepartmentHistoryRepository.ByDepartmentID(departmentID);
+			List<EmployeeDepartmentHistory> records = await this.EmployeeDepartmentHistoryRepository.ByDepartmentID(departmentID, limit, offset);
 
 			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByShiftID(int shiftID)
+		public async Task<List<ApiEmployeeDepartmentHistoryResponseModel>> ByShiftID(int shiftID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<EmployeeDepartmentHistory> records = await this.EmployeeDepartmentHistoryRepository.ByShiftID(shiftID);
+			List<EmployeeDepartmentHistory> records = await this.EmployeeDepartmentHistoryRepository.ByShiftID(shiftID, limit, offset);
 
 			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be6fb5e82922e4177972d117d239718d</Hash>
+    <Hash>b4b8016ee93cbf37d2df2be28f693dcf</Hash>
 </Codenesium>*/

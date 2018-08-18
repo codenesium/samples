@@ -7,20 +7,20 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace NebulaNS.Api.DataAccess
+namespace TicketingCRMNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace NebulaNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -40,27 +40,31 @@ namespace NebulaNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<Chain> Chains { get; set; }
+		public virtual DbSet<Admin> Admins { get; set; }
 
-		public virtual DbSet<ChainStatus> ChainStatus { get; set; }
+		public virtual DbSet<City> Cities { get; set; }
 
-		public virtual DbSet<Clasp> Clasps { get; set; }
+		public virtual DbSet<Country> Countries { get; set; }
 
-		public virtual DbSet<Link> Links { get; set; }
+		public virtual DbSet<Customer> Customers { get; set; }
 
-		public virtual DbSet<LinkLog> LinkLogs { get; set; }
+		public virtual DbSet<Event> Events { get; set; }
 
-		public virtual DbSet<LinkStatus> LinkStatus { get; set; }
+		public virtual DbSet<Province> Provinces { get; set; }
 
-		public virtual DbSet<Machine> Machines { get; set; }
+		public virtual DbSet<Sale> Sales { get; set; }
 
-		public virtual DbSet<MachineRefTeam> MachineRefTeams { get; set; }
+		public virtual DbSet<SaleTickets> SaleTickets { get; set; }
 
-		public virtual DbSet<Organization> Organizations { get; set; }
+		public virtual DbSet<Ticket> Tickets { get; set; }
 
-		public virtual DbSet<Team> Teams { get; set; }
+		public virtual DbSet<TicketStatus> TicketStatus { get; set; }
 
-		public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
+		public virtual DbSet<Transaction> Transactions { get; set; }
+
+		public virtual DbSet<TransactionStatus> TransactionStatus { get; set; }
+
+		public virtual DbSet<Venue> Venues { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -100,9 +104,9 @@ namespace NebulaNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Nebula.Api.Web");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "TicketingCRM.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -123,5 +127,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2bab24375e97975631f02efce3170818</Hash>
+    <Hash>07a91a7914a9dea1ab8fb004aa88021c</Hash>
 </Codenesium>*/

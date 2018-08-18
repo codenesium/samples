@@ -54,5 +54,5 @@ namespace ESPIOTNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>7fa158374f963597d79a6926be32a160</Hash>
+    <Hash>a8e7cfdd4a6dbbbdf43a58269bf592a4</Hash>
 </Codenesium>*/

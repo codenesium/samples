@@ -25,6 +25,7 @@ namespace PetShippingNS.Api.DataAccess
 			this.RequirementMet = requirementMet;
 		}
 
+		[MaxLength(2147483647)]
 		[Column("details")]
 		public string Details { get; private set; }
 
@@ -44,5 +45,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f57ceb5a8065c3ef1b2e7d300731a6a7</Hash>
+    <Hash>a1e1de3021eedc9a8cc8f39045c00cd4</Hash>
 </Codenesium>*/

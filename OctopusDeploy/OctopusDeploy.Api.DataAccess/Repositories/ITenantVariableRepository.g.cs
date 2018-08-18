@@ -19,10 +19,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<TenantVariable> ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId);
 
-		Task<List<TenantVariable>> ByTenantId(string tenantId);
+		Task<List<TenantVariable>> ByTenantId(string tenantId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>07abf0947a88fd1eab4c8e68269aadac</Hash>
+    <Hash>2d325b0d39c88042c325ea5bb72ae910</Hash>
 </Codenesium>*/

@@ -108,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiWorkOrderRoutingResponseModel>> ByProductID(int productID)
+		public async Task<List<ApiWorkOrderRoutingResponseModel>> ByProductID(int productID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<WorkOrderRouting> records = await this.WorkOrderRoutingRepository.ByProductID(productID);
+			List<WorkOrderRouting> records = await this.WorkOrderRoutingRepository.ByProductID(productID, limit, offset);
 
 			return this.BolWorkOrderRoutingMapper.MapBOToModel(this.DalWorkOrderRoutingMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6744e9f5844d11c14650f96c37110f4</Hash>
+    <Hash>76b7da4acba3d86f66af9788c6c3fae3</Hash>
 </Codenesium>*/

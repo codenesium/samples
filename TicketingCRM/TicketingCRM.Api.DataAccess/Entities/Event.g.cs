@@ -39,9 +39,11 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Website = website;
 		}
 
+		[MaxLength(128)]
 		[Column("address1")]
 		public string Address1 { get; private set; }
 
+		[MaxLength(128)]
 		[Column("address2")]
 		public string Address2 { get; private set; }
 
@@ -51,12 +53,14 @@ namespace TicketingCRMNS.Api.DataAccess
 		[Column("date")]
 		public DateTime Date { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("description")]
 		public string Description { get; private set; }
 
 		[Column("endDate")]
 		public DateTime EndDate { get; private set; }
 
+		[MaxLength(128)]
 		[Column("facebook")]
 		public string Facebook { get; private set; }
 
@@ -64,12 +68,14 @@ namespace TicketingCRMNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 
 		[Column("startDate")]
 		public DateTime StartDate { get; private set; }
 
+		[MaxLength(128)]
 		[Column("website")]
 		public string Website { get; private set; }
 
@@ -79,5 +85,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9f091202e8c222e0da36890666475377</Hash>
+    <Hash>fb6acf12f61a3a85ba0c7537ce2345aa</Hash>
 </Codenesium>*/

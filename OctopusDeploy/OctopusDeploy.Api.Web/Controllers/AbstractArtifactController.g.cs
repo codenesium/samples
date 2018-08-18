@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiArtifactResponseModel> response = await this.ArtifactService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byTenantId/{tenantId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiArtifactResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByTenantId(string tenantId)
+		public async virtual Task<IActionResult> ByTenantId(string tenantId, int? limit, int? offset)
 		{
-			List<ApiArtifactResponseModel> response = await this.ArtifactService.ByTenantId(tenantId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiArtifactResponseModel> response = await this.ArtifactService.ByTenantId(tenantId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>28533826792e13ae557c38f7df92aea5</Hash>
+    <Hash>c84d820fc89a527960bf7c4441ac5156</Hash>
 </Codenesium>*/

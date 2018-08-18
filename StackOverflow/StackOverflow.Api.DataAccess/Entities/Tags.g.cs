@@ -37,6 +37,7 @@ namespace StackOverflowNS.Api.DataAccess
 		[Column("Id")]
 		public int Id { get; private set; }
 
+		[MaxLength(150)]
 		[Column("TagName")]
 		public string TagName { get; private set; }
 
@@ -46,5 +47,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e9c07a5af80f866e99d41d0f1a87f972</Hash>
+    <Hash>739cc013afbf2464cda8fd678ca26222</Hash>
 </Codenesium>*/

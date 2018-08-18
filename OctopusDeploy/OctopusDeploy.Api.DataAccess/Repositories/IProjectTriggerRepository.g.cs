@@ -19,10 +19,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<ProjectTrigger> ByProjectIdName(string projectId, string name);
 
-		Task<List<ProjectTrigger>> ByProjectId(string projectId);
+		Task<List<ProjectTrigger>> ByProjectId(string projectId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1f9d0b9c3aef72f8e7c5de9661a5d726</Hash>
+    <Hash>46ebb0668c1574ecc150ceb38f7a2475</Hash>
 </Codenesium>*/

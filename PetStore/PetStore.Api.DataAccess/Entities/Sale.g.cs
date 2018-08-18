@@ -34,6 +34,7 @@ namespace PetStoreNS.Api.DataAccess
 		[Column("amount")]
 		public decimal Amount { get; private set; }
 
+		[MaxLength(90)]
 		[Column("firstName")]
 		public string FirstName { get; private set; }
 
@@ -42,6 +43,7 @@ namespace PetStoreNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(90)]
 		[Column("lastName")]
 		public string LastName { get; private set; }
 
@@ -51,6 +53,7 @@ namespace PetStoreNS.Api.DataAccess
 		[Column("petId")]
 		public int PetId { get; private set; }
 
+		[MaxLength(10)]
 		[Column("phone")]
 		public string Phone { get; private set; }
 
@@ -63,5 +66,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a25ff864d7e3bfb55a4a6bfec788eab7</Hash>
+    <Hash>436971a256f7df02d02e239250c49dfb</Hash>
 </Codenesium>*/

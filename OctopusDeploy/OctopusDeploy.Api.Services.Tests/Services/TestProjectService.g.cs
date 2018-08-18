@@ -206,7 +206,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProjectRepository>();
 			var records = new List<Project>();
 			records.Add(new Project());
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProjectService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
@@ -216,14 +216,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiProjectResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDataVersion_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProjectRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Project>>(new List<Project>()));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Project>>(new List<Project>()));
 			var service = new ProjectService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
@@ -233,7 +233,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiProjectResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -242,7 +242,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProjectRepository>();
 			var records = new List<Project>();
 			records.Add(new Project());
-			mock.RepositoryMock.Setup(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProjectService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
@@ -252,14 +252,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiProjectResponseModel> response = await service.ByDiscreteChannelReleaseId(default(bool), default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDiscreteChannelReleaseId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProjectRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>())).Returns(Task.FromResult<List<Project>>(new List<Project>()));
+			mock.RepositoryMock.Setup(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Project>>(new List<Project>()));
 			var service = new ProjectService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ProjectModelValidatorMock.Object,
@@ -269,11 +269,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiProjectResponseModel> response = await service.ByDiscreteChannelReleaseId(default(bool), default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByDiscreteChannelReleaseId(It.IsAny<bool>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>375f3e8f76b91c7b27b42f768717a893</Hash>
+    <Hash>d492f68a8da90b5d70a081c198f23a6c</Hash>
 </Codenesium>*/

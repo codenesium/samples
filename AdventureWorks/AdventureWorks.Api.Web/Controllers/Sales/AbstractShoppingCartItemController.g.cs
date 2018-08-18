@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byShoppingCartIDProductID/{shoppingCartID}/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiShoppingCartItemResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByShoppingCartIDProductID(string shoppingCartID, int productID)
+		public async virtual Task<IActionResult> ByShoppingCartIDProductID(string shoppingCartID, int productID, int? limit, int? offset)
 		{
-			List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.ByShoppingCartIDProductID(shoppingCartID, productID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiShoppingCartItemResponseModel> response = await this.ShoppingCartItemService.ByShoppingCartIDProductID(shoppingCartID, productID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7f83e0cf2cc81b33e54b6418139bebda</Hash>
+    <Hash>39e2777c86ab7bc852f1d2e2a2abdd08</Hash>
 </Codenesium>*/

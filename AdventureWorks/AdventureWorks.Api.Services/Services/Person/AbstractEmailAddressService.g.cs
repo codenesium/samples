@@ -108,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiEmailAddressResponseModel>> ByEmailAddress(string emailAddress1)
+		public async Task<List<ApiEmailAddressResponseModel>> ByEmailAddress(string emailAddress1, int limit = 0, int offset = int.MaxValue)
 		{
-			List<EmailAddress> records = await this.EmailAddressRepository.ByEmailAddress(emailAddress1);
+			List<EmailAddress> records = await this.EmailAddressRepository.ByEmailAddress(emailAddress1, limit, offset);
 
 			return this.BolEmailAddressMapper.MapBOToModel(this.DalEmailAddressMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0050120d5665a6e4a9a5a8cb732c2811</Hash>
+    <Hash>2d829b6e05c0baf3e80ab25dd77ef046</Hash>
 </Codenesium>*/

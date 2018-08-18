@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductReviewRepository>();
 			var records = new List<ProductReview>();
 			records.Add(new ProductReview());
-			mock.RepositoryMock.Setup(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductReviewService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductReviewResponseModel> response = await service.ByProductIDReviewerName(default(int), default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByProductIDReviewerName_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductReviewRepository>();
-			mock.RepositoryMock.Setup(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult<List<ProductReview>>(new List<ProductReview>()));
+			mock.RepositoryMock.Setup(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductReview>>(new List<ProductReview>()));
 			var service = new ProductReviewService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.ProductReviewModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductReviewResponseModel> response = await service.ByProductIDReviewerName(default(int), default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByProductIDReviewerName(It.IsAny<int>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>863c7e1c782a13868108dfca525dfdc2</Hash>
+    <Hash>096f49ff88e29b17946e744707e29938</Hash>
 </Codenesium>*/

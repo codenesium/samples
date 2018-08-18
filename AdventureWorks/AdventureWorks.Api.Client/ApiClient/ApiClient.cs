@@ -25,5 +25,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>0fc2e4d539bf720a6f437f5b6a019323</Hash>
+    <Hash>b128f6eda46a277bf0a97bb8adbe4799</Hash>
 </Codenesium>*/

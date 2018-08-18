@@ -44,13 +44,16 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("AutoId")]
 		public long AutoId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Category")]
 		public string Category { get; private set; }
 
+		[MaxLength(50)]
 		[Column("EnvironmentId")]
 		public string EnvironmentId { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -63,23 +66,27 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("Occurred")]
 		public DateTimeOffset Occurred { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectId")]
 		public string ProjectId { get; private set; }
 
 		[Column("RelatedDocumentIds")]
 		public string RelatedDocumentIds { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TenantId")]
 		public string TenantId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("UserId")]
 		public string UserId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Username")]
 		public string Username { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>78688ab95815f2e97831a00afe61534e</Hash>
+    <Hash>791093384fa2c21fe0f6fbe0c5a332c1</Hash>
 </Codenesium>*/

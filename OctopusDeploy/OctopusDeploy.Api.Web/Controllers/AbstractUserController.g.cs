@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiUserResponseModel> response = await this.UserService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byDisplayName/{displayName}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDisplayName(string displayName)
+		public async virtual Task<IActionResult> ByDisplayName(string displayName, int? limit, int? offset)
 		{
-			List<ApiUserResponseModel> response = await this.UserService.ByDisplayName(displayName);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiUserResponseModel> response = await this.UserService.ByDisplayName(displayName, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -235,9 +245,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byEmailAddress/{emailAddress}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByEmailAddress(string emailAddress)
+		public async virtual Task<IActionResult> ByEmailAddress(string emailAddress, int? limit, int? offset)
 		{
-			List<ApiUserResponseModel> response = await this.UserService.ByEmailAddress(emailAddress);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiUserResponseModel> response = await this.UserService.ByEmailAddress(emailAddress, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -246,9 +262,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byExternalId/{externalId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByExternalId(string externalId)
+		public async virtual Task<IActionResult> ByExternalId(string externalId, int? limit, int? offset)
 		{
-			List<ApiUserResponseModel> response = await this.UserService.ByExternalId(externalId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiUserResponseModel> response = await this.UserService.ByExternalId(externalId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -272,5 +294,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>563b3c757fcff8bcc2d4e3eb6ece79e3</Hash>
+    <Hash>8cea8ee2ba44fe115dc1de4dc195f035</Hash>
 </Codenesium>*/

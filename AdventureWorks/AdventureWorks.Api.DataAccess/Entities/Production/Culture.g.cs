@@ -24,17 +24,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Key]
+		[MaxLength(6)]
 		[Column("CultureID")]
 		public string CultureID { get; private set; }
 
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Name")]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>63acf181251627cd9fb939546182727f</Hash>
+    <Hash>5e8ccc3b8b6ca997fd50d3d310a7336b</Hash>
 </Codenesium>*/

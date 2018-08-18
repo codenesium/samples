@@ -17,9 +17,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<Store>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Store>> BySalesPersonID(int? salesPersonID);
+		Task<List<Store>> BySalesPersonID(int? salesPersonID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Store>> ByDemographic(string demographic);
+		Task<List<Store>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Customer>> Customers(int storeID, int limit = int.MaxValue, int offset = 0);
 
@@ -28,5 +28,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c4a611be25cfc126ea11c11456ef0fcb</Hash>
+    <Hash>b6e394e934a3c72fe9ed5d0f6bbab153</Hash>
 </Codenesium>*/

@@ -108,16 +108,16 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiBusinessEntityContactResponseModel>> ByContactTypeID(int contactTypeID)
+		public async Task<List<ApiBusinessEntityContactResponseModel>> ByContactTypeID(int contactTypeID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<BusinessEntityContact> records = await this.BusinessEntityContactRepository.ByContactTypeID(contactTypeID);
+			List<BusinessEntityContact> records = await this.BusinessEntityContactRepository.ByContactTypeID(contactTypeID, limit, offset);
 
 			return this.BolBusinessEntityContactMapper.MapBOToModel(this.DalBusinessEntityContactMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiBusinessEntityContactResponseModel>> ByPersonID(int personID)
+		public async Task<List<ApiBusinessEntityContactResponseModel>> ByPersonID(int personID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<BusinessEntityContact> records = await this.BusinessEntityContactRepository.ByPersonID(personID);
+			List<BusinessEntityContact> records = await this.BusinessEntityContactRepository.ByPersonID(personID, limit, offset);
 
 			return this.BolBusinessEntityContactMapper.MapBOToModel(this.DalBusinessEntityContactMapper.MapEFToBO(records));
 		}
@@ -125,5 +125,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3477a5fe0e390f459cd20c5bd2ad15dc</Hash>
+    <Hash>f394841208f303e162d9b93ae7893f98</Hash>
 </Codenesium>*/

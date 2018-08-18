@@ -23,10 +23,10 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<ApiMachineResponseModel> ByName(string name);
 
-		Task<List<ApiMachineResponseModel>> ByMachinePolicyId(string machinePolicyId);
+		Task<List<ApiMachineResponseModel>> ByMachinePolicyId(string machinePolicyId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ed44e34abb04da8eddb227b43cf9a3d</Hash>
+    <Hash>aa20421217095a2fa50784c25ff7bc14</Hash>
 </Codenesium>*/

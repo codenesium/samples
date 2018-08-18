@@ -51,11 +51,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("rowguid")]
 		public Guid Rowguid { get; private set; }
 
+		[MaxLength(10)]
 		[Column("Shelf")]
 		public string Shelf { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6267f79997a4c363f922d1458ca93eb0</Hash>
+    <Hash>51faaf42a9683f14f2e0585d1dff8db9</Hash>
 </Codenesium>*/

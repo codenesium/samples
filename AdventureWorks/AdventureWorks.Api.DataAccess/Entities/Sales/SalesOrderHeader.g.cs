@@ -69,15 +69,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.TotalDue = totalDue;
 		}
 
+		[MaxLength(15)]
 		[Column("AccountNumber")]
 		public string AccountNumber { get; private set; }
 
 		[Column("BillToAddressID")]
 		public int BillToAddressID { get; private set; }
 
+		[MaxLength(128)]
 		[Column("Comment")]
 		public string Comment { get; private set; }
 
+		[MaxLength(15)]
 		[Column("CreditCardApprovalCode")]
 		public string CreditCardApprovalCode { get; private set; }
 
@@ -105,6 +108,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("OrderDate")]
 		public DateTime OrderDate { get; private set; }
 
+		[MaxLength(25)]
 		[Column("PurchaseOrderNumber")]
 		public string PurchaseOrderNumber { get; private set; }
 
@@ -121,6 +125,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		public int SalesOrderID { get; private set; }
 
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[MaxLength(25)]
 		[Column("SalesOrderNumber")]
 		public string SalesOrderNumber { get; private set; }
 
@@ -170,5 +175,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d878fb6ed2bd4986ce62498053541e0c</Hash>
+    <Hash>751c1970d18284e773f4b800093ead62</Hash>
 </Codenesium>*/

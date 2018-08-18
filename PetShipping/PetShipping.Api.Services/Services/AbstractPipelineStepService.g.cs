@@ -25,15 +25,19 @@ namespace PetShippingNS.Api.Services
 		protected IBOLHandlerPipelineStepMapper BolHandlerPipelineStepMapper { get; private set; }
 
 		protected IDALHandlerPipelineStepMapper DalHandlerPipelineStepMapper { get; private set; }
+
 		protected IBOLOtherTransportMapper BolOtherTransportMapper { get; private set; }
 
 		protected IDALOtherTransportMapper DalOtherTransportMapper { get; private set; }
+
 		protected IBOLPipelineStepDestinationMapper BolPipelineStepDestinationMapper { get; private set; }
 
 		protected IDALPipelineStepDestinationMapper DalPipelineStepDestinationMapper { get; private set; }
+
 		protected IBOLPipelineStepNoteMapper BolPipelineStepNoteMapper { get; private set; }
 
 		protected IDALPipelineStepNoteMapper DalPipelineStepNoteMapper { get; private set; }
+
 		protected IBOLPipelineStepStepRequirementMapper BolPipelineStepStepRequirementMapper { get; private set; }
 
 		protected IDALPipelineStepStepRequirementMapper DalPipelineStepStepRequirementMapper { get; private set; }
@@ -182,5 +186,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7d70db0c018888b829ab871052c2fa7e</Hash>
+    <Hash>52dbcc3ec2ecb99e5676dea7e8cbc7a9</Hash>
 </Codenesium>*/

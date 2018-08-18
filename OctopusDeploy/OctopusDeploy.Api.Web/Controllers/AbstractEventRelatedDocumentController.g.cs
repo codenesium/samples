@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byEventId/{eventId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEventRelatedDocumentResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByEventId(string eventId)
+		public async virtual Task<IActionResult> ByEventId(string eventId, int? limit, int? offset)
 		{
-			List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.ByEventId(eventId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.ByEventId(eventId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byEventIdRelatedDocumentId/{eventId}/{relatedDocumentId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEventRelatedDocumentResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
+		public async virtual Task<IActionResult> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId, int? limit, int? offset)
 		{
-			List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.ByEventIdRelatedDocumentId(eventId, relatedDocumentId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEventRelatedDocumentResponseModel> response = await this.EventRelatedDocumentService.ByEventIdRelatedDocumentId(eventId, relatedDocumentId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +258,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d072b2b4d7f1cceeb0bbe8ea8d2f5acd</Hash>
+    <Hash>c1333b6f5860daf272f35fda9dbefe55</Hash>
 </Codenesium>*/

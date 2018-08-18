@@ -219,7 +219,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductModelRepository>();
 			var records = new List<ProductModel>();
 			records.Add(new ProductModel());
-			mock.RepositoryMock.Setup(x => x.ByCatalogDescription(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByCatalogDescription(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductModelService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductModelModelValidatorMock.Object,
@@ -235,14 +235,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductModelResponseModel> response = await service.ByCatalogDescription(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCatalogDescription(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByCatalogDescription(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByCatalogDescription_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductModelRepository>();
-			mock.RepositoryMock.Setup(x => x.ByCatalogDescription(It.IsAny<string>())).Returns(Task.FromResult<List<ProductModel>>(new List<ProductModel>()));
+			mock.RepositoryMock.Setup(x => x.ByCatalogDescription(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModel>>(new List<ProductModel>()));
 			var service = new ProductModelService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductModelModelValidatorMock.Object,
@@ -258,7 +258,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductModelResponseModel> response = await service.ByCatalogDescription(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCatalogDescription(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByCatalogDescription(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -267,7 +267,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductModelRepository>();
 			var records = new List<ProductModel>();
 			records.Add(new ProductModel());
-			mock.RepositoryMock.Setup(x => x.ByInstruction(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByInstruction(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductModelService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductModelModelValidatorMock.Object,
@@ -283,14 +283,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductModelResponseModel> response = await service.ByInstruction(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByInstruction(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByInstruction(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByInstruction_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductModelRepository>();
-			mock.RepositoryMock.Setup(x => x.ByInstruction(It.IsAny<string>())).Returns(Task.FromResult<List<ProductModel>>(new List<ProductModel>()));
+			mock.RepositoryMock.Setup(x => x.ByInstruction(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModel>>(new List<ProductModel>()));
 			var service = new ProductModelService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.ProductModelModelValidatorMock.Object,
@@ -306,7 +306,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductModelResponseModel> response = await service.ByInstruction(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByInstruction(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByInstruction(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -456,5 +456,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>569c38ffb68a34a40860addc189b8934</Hash>
+    <Hash>09de930ad96c524dd2a7c4af3bdba5d2</Hash>
 </Codenesium>*/

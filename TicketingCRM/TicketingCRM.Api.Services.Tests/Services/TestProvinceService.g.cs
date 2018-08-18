@@ -160,7 +160,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProvinceRepository>();
 			var records = new List<Province>();
 			records.Add(new Province());
-			mock.RepositoryMock.Setup(x => x.ByCountryId(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByCountryId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProvinceService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -174,14 +174,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiProvinceResponseModel> response = await service.ByCountryId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCountryId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByCountryId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByCountryId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
-			mock.RepositoryMock.Setup(x => x.ByCountryId(It.IsAny<int>())).Returns(Task.FromResult<List<Province>>(new List<Province>()));
+			mock.RepositoryMock.Setup(x => x.ByCountryId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Province>>(new List<Province>()));
 			var service = new ProvinceService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -195,7 +195,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiProvinceResponseModel> response = await service.ByCountryId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCountryId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByCountryId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -289,5 +289,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>54778177ebf4175757bb0a3ab416f448</Hash>
+    <Hash>e3a9973983254f5878f6955e1af0a5a6</Hash>
 </Codenesium>*/

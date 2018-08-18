@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiChannelResponseModel> response = await this.ChannelService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byDataVersion/{dataVersion}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiChannelResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
+		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion, int? limit, int? offset)
 		{
-			List<ApiChannelResponseModel> response = await this.ChannelService.ByDataVersion(dataVersion);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiChannelResponseModel> response = await this.ChannelService.ByDataVersion(dataVersion, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -235,9 +245,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byProjectId/{projectId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiChannelResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProjectId(string projectId)
+		public async virtual Task<IActionResult> ByProjectId(string projectId, int? limit, int? offset)
 		{
-			List<ApiChannelResponseModel> response = await this.ChannelService.ByProjectId(projectId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiChannelResponseModel> response = await this.ChannelService.ByProjectId(projectId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -261,5 +277,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>452486fae32ee733e62e25b2ffee3b88</Hash>
+    <Hash>dd16fa6056445963e0ff7dc6a5d5eea6</Hash>
 </Codenesium>*/

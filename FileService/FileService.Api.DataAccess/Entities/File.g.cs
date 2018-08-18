@@ -47,12 +47,14 @@ namespace FileServiceNS.Api.DataAccess
 		[Column("dateCreated")]
 		public DateTime DateCreated { get; private set; }
 
+		[MaxLength(255)]
 		[Column("description")]
 		public string Description { get; private set; }
 
 		[Column("expiration")]
 		public DateTime Expiration { get; private set; }
 
+		[MaxLength(32)]
 		[Column("extension")]
 		public string Extension { get; private set; }
 
@@ -69,12 +71,15 @@ namespace FileServiceNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(255)]
 		[Column("location")]
 		public string Location { get; private set; }
 
+		[MaxLength(64)]
 		[Column("privateKey")]
 		public string PrivateKey { get; private set; }
 
+		[MaxLength(64)]
 		[Column("publicKey")]
 		public string PublicKey { get; private set; }
 
@@ -87,5 +92,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5bdec86302eefb09d4a3b21e337cb376</Hash>
+    <Hash>ec295d7a8bbc0b9cf1841715d7567954</Hash>
 </Codenesium>*/

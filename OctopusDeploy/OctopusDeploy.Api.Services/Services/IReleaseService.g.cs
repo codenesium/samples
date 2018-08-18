@@ -23,16 +23,16 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<ApiReleaseResponseModel> ByVersionProjectId(string version, string projectId);
 
-		Task<List<ApiReleaseResponseModel>> ByIdAssembled(string id, DateTimeOffset assembled);
+		Task<List<ApiReleaseResponseModel>> ByIdAssembled(string id, DateTimeOffset assembled, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiReleaseResponseModel>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId);
+		Task<List<ApiReleaseResponseModel>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiReleaseResponseModel>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled);
+		Task<List<ApiReleaseResponseModel>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiReleaseResponseModel>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled);
+		Task<List<ApiReleaseResponseModel>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e3d7f0dc41cc37e14ea721ca6591b8c</Hash>
+    <Hash>4da1da19b2026c2dbc7e8b4c07f58ba6</Hash>
 </Codenesium>*/

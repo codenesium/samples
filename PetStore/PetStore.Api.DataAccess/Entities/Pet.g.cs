@@ -37,6 +37,7 @@ namespace PetStoreNS.Api.DataAccess
 		[Column("breedId")]
 		public int BreedId { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("description")]
 		public string Description { get; private set; }
 
@@ -66,5 +67,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3a64c050ea8627a47d55ad4eec82a5f3</Hash>
+    <Hash>02482d2da9936ecdfb5ea0a1a90a15af</Hash>
 </Codenesium>*/

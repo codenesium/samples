@@ -39,6 +39,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.UnitPriceDiscount = unitPriceDiscount;
 		}
 
+		[MaxLength(25)]
 		[Column("CarrierTrackingNumber")]
 		public string CarrierTrackingNumber { get; private set; }
 
@@ -88,5 +89,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e49232270f764cd3216ebaa08d546d1</Hash>
+    <Hash>3e41c9b962a3ab35312f608e6cac7ed8</Hash>
 </Codenesium>*/

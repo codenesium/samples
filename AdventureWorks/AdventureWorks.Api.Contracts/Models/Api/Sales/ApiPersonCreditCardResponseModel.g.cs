@@ -35,5 +35,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a235cb950b1b45d975b56a1bc041aa31</Hash>
+    <Hash>ba1794dca8332f798860bb80210a9dcc</Hash>
 </Codenesium>*/

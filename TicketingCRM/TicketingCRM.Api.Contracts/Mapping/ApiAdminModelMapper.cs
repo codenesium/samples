@@ -10,5 +10,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5c36189a760a045d13ca9721c7b7ea62</Hash>
+    <Hash>cb0071234d3cb7a851b39835ab1ce618</Hash>
 </Codenesium>*/

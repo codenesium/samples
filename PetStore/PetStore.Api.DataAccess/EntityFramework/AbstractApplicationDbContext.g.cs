@@ -7,20 +7,20 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace StackOverflowNS.Api.DataAccess
+namespace PetStoreNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace StackOverflowNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -40,29 +40,17 @@ namespace StackOverflowNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<Badges> Badges { get; set; }
+		public virtual DbSet<Breed> Breeds { get; set; }
 
-		public virtual DbSet<Comments> Comments { get; set; }
+		public virtual DbSet<PaymentType> PaymentTypes { get; set; }
 
-		public virtual DbSet<LinkTypes> LinkTypes { get; set; }
+		public virtual DbSet<Pen> Pens { get; set; }
 
-		public virtual DbSet<PostHistory> PostHistories { get; set; }
+		public virtual DbSet<Pet> Pets { get; set; }
 
-		public virtual DbSet<PostHistoryTypes> PostHistoryTypes { get; set; }
+		public virtual DbSet<Sale> Sales { get; set; }
 
-		public virtual DbSet<PostLinks> PostLinks { get; set; }
-
-		public virtual DbSet<Posts> Posts { get; set; }
-
-		public virtual DbSet<PostTypes> PostTypes { get; set; }
-
-		public virtual DbSet<Tags> Tags { get; set; }
-
-		public virtual DbSet<Users> Users { get; set; }
-
-		public virtual DbSet<Votes> Votes { get; set; }
-
-		public virtual DbSet<VoteTypes> VoteTypes { get; set; }
+		public virtual DbSet<Species> Species { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -102,9 +90,9 @@ namespace StackOverflowNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "StackOverflow.Api.Web");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "PetStore.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -125,5 +113,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fa447a96fd33a63e1db4b9757a2161d1</Hash>
+    <Hash>549834935dd5fca01386ce9079185ccc</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiTagSetResponseModel> response = await this.TagSetService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byDataVersion/{dataVersion}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTagSetResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
+		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion, int? limit, int? offset)
 		{
-			List<ApiTagSetResponseModel> response = await this.TagSetService.ByDataVersion(dataVersion);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTagSetResponseModel> response = await this.TagSetService.ByDataVersion(dataVersion, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -250,5 +260,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6a1bad6146d28eae8265d830a1852caa</Hash>
+    <Hash>68810e3ad9c05ddf6d8ee94229febac7</Hash>
 </Codenesium>*/

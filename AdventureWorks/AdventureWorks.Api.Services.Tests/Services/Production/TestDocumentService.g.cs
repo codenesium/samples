@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDocumentRepository>();
 			var records = new List<Document>();
 			records.Add(new Document());
-			mock.RepositoryMock.Setup(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DocumentService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.DocumentModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiDocumentResponseModel> response = await service.ByFileNameRevision(default(string), default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByFileNameRevision_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IDocumentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<List<Document>>(new List<Document>()));
+			mock.RepositoryMock.Setup(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Document>>(new List<Document>()));
 			var service = new DocumentService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.DocumentModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiDocumentResponseModel> response = await service.ByFileNameRevision(default(string), default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByFileNameRevision(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e124cdbb8237da7f74ced5b372f8daa</Hash>
+    <Hash>7e861fc767fa44e43fee697f1bbb1320</Hash>
 </Codenesium>*/

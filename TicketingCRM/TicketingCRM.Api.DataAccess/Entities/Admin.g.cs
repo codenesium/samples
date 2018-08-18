@@ -31,9 +31,11 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.Username = username;
 		}
 
+		[MaxLength(128)]
 		[Column("email")]
 		public string Email { get; private set; }
 
+		[MaxLength(128)]
 		[Column("firstName")]
 		public string FirstName { get; private set; }
 
@@ -41,20 +43,24 @@ namespace TicketingCRMNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("lastName")]
 		public string LastName { get; private set; }
 
+		[MaxLength(128)]
 		[Column("password")]
 		public string Password { get; private set; }
 
+		[MaxLength(128)]
 		[Column("phone")]
 		public string Phone { get; private set; }
 
+		[MaxLength(128)]
 		[Column("username")]
 		public string Username { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>99ab0253e8e9676f379806955ca1f945</Hash>
+    <Hash>c47ec2cae32d74ff8774d03e11e55fb5</Hash>
 </Codenesium>*/

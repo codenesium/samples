@@ -122,30 +122,30 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiReleaseResponseModel>> ByIdAssembled(string id, DateTimeOffset assembled)
+		public async Task<List<ApiReleaseResponseModel>> ByIdAssembled(string id, DateTimeOffset assembled, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Release> records = await this.ReleaseRepository.ByIdAssembled(id, assembled);
+			List<Release> records = await this.ReleaseRepository.ByIdAssembled(id, assembled, limit, offset);
 
 			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiReleaseResponseModel>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId)
+		public async Task<List<ApiReleaseResponseModel>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Release> records = await this.ReleaseRepository.ByProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId);
+			List<Release> records = await this.ReleaseRepository.ByProjectDeploymentProcessSnapshotId(projectDeploymentProcessSnapshotId, limit, offset);
 
 			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiReleaseResponseModel>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled)
+		public async Task<List<ApiReleaseResponseModel>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Release> records = await this.ReleaseRepository.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled);
+			List<Release> records = await this.ReleaseRepository.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(id, version, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, channelId, assembled, limit, offset);
 
 			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiReleaseResponseModel>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled)
+		public async Task<List<ApiReleaseResponseModel>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Release> records = await this.ReleaseRepository.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled);
+			List<Release> records = await this.ReleaseRepository.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(id, channelId, projectVariableSetSnapshotId, projectDeploymentProcessSnapshotId, jSON, projectId, version, assembled, limit, offset);
 
 			return this.BolReleaseMapper.MapBOToModel(this.DalReleaseMapper.MapEFToBO(records));
 		}
@@ -153,5 +153,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c677532cead618757cce0d39a9681109</Hash>
+    <Hash>b8dc88a402554018e3bf6c463378be36</Hash>
 </Codenesium>*/

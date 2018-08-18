@@ -76,9 +76,9 @@ namespace OctopusDeployNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DeploymentHistory>> ByCreated(DateTimeOffset created)
+		public async Task<List<DeploymentHistory>> ByCreated(DateTimeOffset created, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Created == created);
+			var records = await this.Where(x => x.Created == created, limit, offset);
 
 			return records;
 		}
@@ -115,5 +115,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>530a36676367917fd0942f3bf9848405</Hash>
+    <Hash>6e5d0dcfa9acf3c771308c9a85d5a07b</Hash>
 </Codenesium>*/

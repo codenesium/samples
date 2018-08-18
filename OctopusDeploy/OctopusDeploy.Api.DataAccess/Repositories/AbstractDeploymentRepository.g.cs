@@ -76,23 +76,23 @@ namespace OctopusDeployNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Deployment>> ByChannelId(string channelId)
+		public async Task<List<Deployment>> ByChannelId(string channelId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ChannelId == channelId);
+			var records = await this.Where(x => x.ChannelId == channelId, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Deployment>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
+		public async Task<List<Deployment>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Id == id && x.ProjectId == projectId && x.ProjectGroupId == projectGroupId && x.Name == name && x.Created == created && x.ReleaseId == releaseId && x.TaskId == taskId && x.EnvironmentId == environmentId);
+			var records = await this.Where(x => x.Id == id && x.ProjectId == projectId && x.ProjectGroupId == projectGroupId && x.Name == name && x.Created == created && x.ReleaseId == releaseId && x.TaskId == taskId && x.EnvironmentId == environmentId, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Deployment>> ByTenantId(string tenantId)
+		public async Task<List<Deployment>> ByTenantId(string tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.TenantId == tenantId);
+			var records = await this.Where(x => x.TenantId == tenantId, limit, offset);
 
 			return records;
 		}
@@ -134,5 +134,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6ef504edd2595512cf4b027e2fc1ab62</Hash>
+    <Hash>bec353f219332ad8077eb64552b6be2c</Hash>
 </Codenesium>*/

@@ -19,9 +19,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<ProductModel> ByName(string name);
 
-		Task<List<ProductModel>> ByCatalogDescription(string catalogDescription);
+		Task<List<ProductModel>> ByCatalogDescription(string catalogDescription, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ProductModel>> ByInstruction(string instruction);
+		Task<List<ProductModel>> ByInstruction(string instruction, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Product>> Products(int productModelID, int limit = int.MaxValue, int offset = 0);
 
@@ -32,5 +32,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4e49107fc297142de179178936e5c186</Hash>
+    <Hash>57f200d323f9e43b87b55997836260ba</Hash>
 </Codenesium>*/

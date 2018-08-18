@@ -24,17 +24,20 @@ namespace ESPIOTNS.Api.Contracts
 			this.@Value = @value;
 		}
 
+		[Required]
 		[JsonProperty]
 		public int DeviceId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string @Value { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2cabc5a00ba704ee06f13b5786eacc7f</Hash>
+    <Hash>760fbeea647149ecc1ea3da6f3c6f493</Hash>
 </Codenesium>*/

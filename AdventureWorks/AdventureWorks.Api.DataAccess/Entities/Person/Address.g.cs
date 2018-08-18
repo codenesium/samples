@@ -38,18 +38,22 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("AddressID")]
 		public int AddressID { get; private set; }
 
+		[MaxLength(60)]
 		[Column("AddressLine1")]
 		public string AddressLine1 { get; private set; }
 
+		[MaxLength(60)]
 		[Column("AddressLine2")]
 		public string AddressLine2 { get; private set; }
 
+		[MaxLength(30)]
 		[Column("City")]
 		public string City { get; private set; }
 
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(15)]
 		[Column("PostalCode")]
 		public string PostalCode { get; private set; }
 
@@ -63,5 +67,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2d08fd8cfa8aa4125766c3f84a6f3f0a</Hash>
+    <Hash>37a1317102c59e3fb83369f786176920</Hash>
 </Codenesium>*/

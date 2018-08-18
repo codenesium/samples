@@ -19,7 +19,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Customer> ByAccountNumber(string accountNumber);
 
-		Task<List<Customer>> ByTerritoryID(int? territoryID);
+		Task<List<Customer>> ByTerritoryID(int? territoryID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<SalesOrderHeader>> SalesOrderHeaders(int customerID, int limit = int.MaxValue, int offset = 0);
 
@@ -30,5 +30,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>801d4c9d53c94add5b53a637b2824b4a</Hash>
+    <Hash>d79c8792d9ecbe6d40accbf2cf314618</Hash>
 </Codenesium>*/

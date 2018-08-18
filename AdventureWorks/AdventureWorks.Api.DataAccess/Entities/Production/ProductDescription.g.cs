@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Rowguid = rowguid;
 		}
 
+		[MaxLength(400)]
 		[Column("Description")]
 		public string Description { get; private set; }
 
@@ -43,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>71f2f360e9ce65ead77ae71e8d1ba0e3</Hash>
+    <Hash>a8c103b96c8bf6a3f196d5f409c1b578</Hash>
 </Codenesium>*/

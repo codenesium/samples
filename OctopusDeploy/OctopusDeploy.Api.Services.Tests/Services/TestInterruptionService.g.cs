@@ -136,7 +136,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IInterruptionRepository>();
 			var records = new List<Interruption>();
 			records.Add(new Interruption());
-			mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new InterruptionService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.InterruptionModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiInterruptionResponseModel> response = await service.ByTenantId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByTenantId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IInterruptionRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<Interruption>>(new List<Interruption>()));
+			mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Interruption>>(new List<Interruption>()));
 			var service = new InterruptionService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.InterruptionModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiInterruptionResponseModel> response = await service.ByTenantId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf870f78cbb48c9b1466d9d627a0875f</Hash>
+    <Hash>eaa938ca775ff3860f74af5549c6255d</Hash>
 </Codenesium>*/

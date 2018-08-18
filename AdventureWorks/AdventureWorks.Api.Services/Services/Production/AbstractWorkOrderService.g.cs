@@ -116,16 +116,16 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiWorkOrderResponseModel>> ByProductID(int productID)
+		public async Task<List<ApiWorkOrderResponseModel>> ByProductID(int productID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<WorkOrder> records = await this.WorkOrderRepository.ByProductID(productID);
+			List<WorkOrder> records = await this.WorkOrderRepository.ByProductID(productID, limit, offset);
 
 			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiWorkOrderResponseModel>> ByScrapReasonID(short? scrapReasonID)
+		public async Task<List<ApiWorkOrderResponseModel>> ByScrapReasonID(short? scrapReasonID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<WorkOrder> records = await this.WorkOrderRepository.ByScrapReasonID(scrapReasonID);
+			List<WorkOrder> records = await this.WorkOrderRepository.ByScrapReasonID(scrapReasonID, limit, offset);
 
 			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7cf38e8a27a1f2d234885815dbe0ee5c</Hash>
+    <Hash>1ab02f898c626ff5791275e2848c7364</Hash>
 </Codenesium>*/

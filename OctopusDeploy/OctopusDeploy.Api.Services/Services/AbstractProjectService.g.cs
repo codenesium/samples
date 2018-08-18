@@ -136,16 +136,16 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiProjectResponseModel>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<ApiProjectResponseModel>> ByDataVersion(byte[] dataVersion, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Project> records = await this.ProjectRepository.ByDataVersion(dataVersion);
+			List<Project> records = await this.ProjectRepository.ByDataVersion(dataVersion, limit, offset);
 
 			return this.BolProjectMapper.MapBOToModel(this.DalProjectMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiProjectResponseModel>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id)
+		public async Task<List<ApiProjectResponseModel>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Project> records = await this.ProjectRepository.ByDiscreteChannelReleaseId(discreteChannelRelease, id);
+			List<Project> records = await this.ProjectRepository.ByDiscreteChannelReleaseId(discreteChannelRelease, id, limit, offset);
 
 			return this.BolProjectMapper.MapBOToModel(this.DalProjectMapper.MapEFToBO(records));
 		}
@@ -153,5 +153,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>41df0628170e4bac0c3cf5a3f55845f9</Hash>
+    <Hash>8a2aaaa8411d954c7570998577dec47a</Hash>
 </Codenesium>*/

@@ -33,12 +33,15 @@ namespace FermataFishNS.Api.DataAccess
 			this.Zip = zip;
 		}
 
+		[MaxLength(128)]
 		[Column("address1")]
 		public string Address1 { get; private set; }
 
+		[MaxLength(128)]
 		[Column("address2")]
 		public string Address2 { get; private set; }
 
+		[MaxLength(128)]
 		[Column("city")]
 		public string City { get; private set; }
 
@@ -46,15 +49,18 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 
 		[Column("stateId")]
 		public int StateId { get; private set; }
 
+		[MaxLength(128)]
 		[Column("website")]
 		public string Website { get; private set; }
 
+		[MaxLength(128)]
 		[Column("zip")]
 		public string Zip { get; private set; }
 
@@ -64,5 +70,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>65151da1c0d7c9139c1a50f5ea5c9d2e</Hash>
+    <Hash>5a68d0f029db4cf7fa9848d5995f5b55</Hash>
 </Codenesium>*/

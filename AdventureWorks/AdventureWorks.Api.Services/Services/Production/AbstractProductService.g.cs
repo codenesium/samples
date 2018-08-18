@@ -25,24 +25,31 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLBillOfMaterialMapper BolBillOfMaterialMapper { get; private set; }
 
 		protected IDALBillOfMaterialMapper DalBillOfMaterialMapper { get; private set; }
+
 		protected IBOLProductCostHistoryMapper BolProductCostHistoryMapper { get; private set; }
 
 		protected IDALProductCostHistoryMapper DalProductCostHistoryMapper { get; private set; }
+
 		protected IBOLProductInventoryMapper BolProductInventoryMapper { get; private set; }
 
 		protected IDALProductInventoryMapper DalProductInventoryMapper { get; private set; }
+
 		protected IBOLProductListPriceHistoryMapper BolProductListPriceHistoryMapper { get; private set; }
 
 		protected IDALProductListPriceHistoryMapper DalProductListPriceHistoryMapper { get; private set; }
+
 		protected IBOLProductProductPhotoMapper BolProductProductPhotoMapper { get; private set; }
 
 		protected IDALProductProductPhotoMapper DalProductProductPhotoMapper { get; private set; }
+
 		protected IBOLProductReviewMapper BolProductReviewMapper { get; private set; }
 
 		protected IDALProductReviewMapper DalProductReviewMapper { get; private set; }
+
 		protected IBOLTransactionHistoryMapper BolTransactionHistoryMapper { get; private set; }
 
 		protected IDALTransactionHistoryMapper DalTransactionHistoryMapper { get; private set; }
+
 		protected IBOLWorkOrderMapper BolWorkOrderMapper { get; private set; }
 
 		protected IDALWorkOrderMapper DalWorkOrderMapper { get; private set; }
@@ -252,5 +259,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>252b0e3ce176ac7dcaa92c59acbf170f</Hash>
+    <Hash>befc97ba9cb0cdc232e86ecabada7401</Hash>
 </Codenesium>*/

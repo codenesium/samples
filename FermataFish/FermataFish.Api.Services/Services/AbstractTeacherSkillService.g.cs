@@ -25,6 +25,7 @@ namespace FermataFishNS.Api.Services
 		protected IBOLRateMapper BolRateMapper { get; private set; }
 
 		protected IDALRateMapper DalRateMapper { get; private set; }
+
 		protected IBOLTeacherXTeacherSkillMapper BolTeacherXTeacherSkillMapper { get; private set; }
 
 		protected IDALTeacherXTeacherSkillMapper DalTeacherXTeacherSkillMapper { get; private set; }
@@ -140,5 +141,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>72374c9e237948cae0775c070adf454e</Hash>
+    <Hash>9481fb032639a599121695d0165d32ed</Hash>
 </Codenesium>*/

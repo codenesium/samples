@@ -42,16 +42,19 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("Created")]
 		public DateTimeOffset Created { get; private set; }
 
+		[MaxLength(50)]
 		[Column("EnvironmentId")]
 		public string EnvironmentId { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectId")]
 		public string ProjectId { get; private set; }
 
@@ -61,20 +64,24 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("ResponsibleTeamIds")]
 		public string ResponsibleTeamIds { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Status")]
 		public string Status { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TaskId")]
 		public string TaskId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TenantId")]
 		public string TenantId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Title")]
 		public string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>41def437081c38ade653721be4e81a8c</Hash>
+    <Hash>7656e0e7642b2efa3ebbd71bb214b736</Hash>
 </Codenesium>*/

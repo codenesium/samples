@@ -27,5 +27,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a083a890140828757cfab0169029bae6</Hash>
+    <Hash>aff872f1d71ff95cfc4d707c00f49775</Hash>
 </Codenesium>*/

@@ -28,6 +28,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
@@ -43,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>937aa8bccaef3139272d9b6492107099</Hash>
+    <Hash>f9ef99b8c12ee1af6cc4bef7651c0571</Hash>
 </Codenesium>*/

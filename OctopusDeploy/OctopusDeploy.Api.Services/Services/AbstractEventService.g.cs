@@ -116,30 +116,30 @@ namespace OctopusDeployNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiEventResponseModel>> ByAutoId(long autoId)
+		public async Task<List<ApiEventResponseModel>> ByAutoId(long autoId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Event> records = await this.EventRepository.ByAutoId(autoId);
+			List<Event> records = await this.EventRepository.ByAutoId(autoId, limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiEventResponseModel>> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
+		public async Task<List<ApiEventResponseModel>> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Event> records = await this.EventRepository.ByIdRelatedDocumentIdsOccurredCategoryAutoId(id, relatedDocumentIds, occurred, category, autoId);
+			List<Event> records = await this.EventRepository.ByIdRelatedDocumentIdsOccurredCategoryAutoId(id, relatedDocumentIds, occurred, category, autoId, limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiEventResponseModel>> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
+		public async Task<List<ApiEventResponseModel>> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Event> records = await this.EventRepository.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(id, relatedDocumentIds, projectId, environmentId, category, userId, occurred, tenantId);
+			List<Event> records = await this.EventRepository.ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(id, relatedDocumentIds, projectId, environmentId, category, userId, occurred, tenantId, limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiEventResponseModel>> ByIdOccurred(string id, DateTimeOffset occurred)
+		public async Task<List<ApiEventResponseModel>> ByIdOccurred(string id, DateTimeOffset occurred, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Event> records = await this.EventRepository.ByIdOccurred(id, occurred);
+			List<Event> records = await this.EventRepository.ByIdOccurred(id, occurred, limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
@@ -154,5 +154,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6bee29d5b96f5b1d033cb8fd9f50ef5d</Hash>
+    <Hash>344244994627cb79a123647d47857ec8</Hash>
 </Codenesium>*/

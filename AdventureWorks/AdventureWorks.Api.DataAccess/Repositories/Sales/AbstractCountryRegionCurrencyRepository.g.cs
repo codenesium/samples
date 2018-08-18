@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<CountryRegionCurrency>> ByCurrencyCode(string currencyCode)
+		public async Task<List<CountryRegionCurrency>> ByCurrencyCode(string currencyCode, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.CurrencyCode == currencyCode);
+			var records = await this.Where(x => x.CurrencyCode == currencyCode, limit, offset);
 
 			return records;
 		}
@@ -120,5 +120,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>28f08eabc9f9d11f477f207eda2a128d</Hash>
+    <Hash>dfc1254e10392e1725b675309e29e026</Hash>
 </Codenesium>*/

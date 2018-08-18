@@ -35,6 +35,7 @@ namespace PetShippingNS.Api.DataAccess
 		[Column("airlineId")]
 		public int AirlineId { get; private set; }
 
+		[MaxLength(12)]
 		[Column("flightNumber")]
 		public string FlightNumber { get; private set; }
 
@@ -59,5 +60,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>66185f2b3ada635d48bcd48269c26a36</Hash>
+    <Hash>5a4cb7e8c5b1d60c4a06657e6d190042</Hash>
 </Codenesium>*/

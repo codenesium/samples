@@ -47,7 +47,11 @@ namespace TestsNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiSchemaAPersonResponseModel> response = await this.SchemaAPersonService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -220,5 +224,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ada5cb452f8f70431c1a8d1736958e78</Hash>
+    <Hash>adcca5412854676fe2424dbf66b8f597</Hash>
 </Codenesium>*/

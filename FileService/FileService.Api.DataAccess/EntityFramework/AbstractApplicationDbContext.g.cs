@@ -7,20 +7,20 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace TestsNS.Api.DataAccess
+namespace FileServiceNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace TestsNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -40,25 +40,13 @@ namespace TestsNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<Person> People { get; set; }
+		public virtual DbSet<Bucket> Buckets { get; set; }
 
-		public virtual DbSet<RowVersionCheck> RowVersionChecks { get; set; }
+		public virtual DbSet<File> Files { get; set; }
 
-		public virtual DbSet<SelfReference> SelfReferences { get; set; }
+		public virtual DbSet<FileType> FileTypes { get; set; }
 
-		public virtual DbSet<Table> Tables { get; set; }
-
-		public virtual DbSet<TestAllFieldType> TestAllFieldTypes { get; set; }
-
-		public virtual DbSet<TestAllFieldTypesNullable> TestAllFieldTypesNullables { get; set; }
-
-		public virtual DbSet<TimestampCheck> TimestampChecks { get; set; }
-
-		public virtual DbSet<SchemaAPerson> SchemaAPersons { get; set; }
-
-		public virtual DbSet<SchemaBPerson> SchemaBPersons { get; set; }
-
-		public virtual DbSet<PersonRef> PersonRefs { get; set; }
+		public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -98,9 +86,9 @@ namespace TestsNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Tests.Api.Web");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FileService.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -121,5 +109,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2657fa00b31afa0fa50d9a2fbe87d8c0</Hash>
+    <Hash>593915ef04684a278e4581e43bae2ef9</Hash>
 </Codenesium>*/

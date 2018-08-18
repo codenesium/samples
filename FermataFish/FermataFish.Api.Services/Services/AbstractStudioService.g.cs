@@ -25,27 +25,35 @@ namespace FermataFishNS.Api.Services
 		protected IBOLAdminMapper BolAdminMapper { get; private set; }
 
 		protected IDALAdminMapper DalAdminMapper { get; private set; }
+
 		protected IBOLFamilyMapper BolFamilyMapper { get; private set; }
 
 		protected IDALFamilyMapper DalFamilyMapper { get; private set; }
+
 		protected IBOLLessonMapper BolLessonMapper { get; private set; }
 
 		protected IDALLessonMapper DalLessonMapper { get; private set; }
+
 		protected IBOLLessonStatusMapper BolLessonStatusMapper { get; private set; }
 
 		protected IDALLessonStatusMapper DalLessonStatusMapper { get; private set; }
+
 		protected IBOLSpaceMapper BolSpaceMapper { get; private set; }
 
 		protected IDALSpaceMapper DalSpaceMapper { get; private set; }
+
 		protected IBOLSpaceFeatureMapper BolSpaceFeatureMapper { get; private set; }
 
 		protected IDALSpaceFeatureMapper DalSpaceFeatureMapper { get; private set; }
+
 		protected IBOLStudentMapper BolStudentMapper { get; private set; }
 
 		protected IDALStudentMapper DalStudentMapper { get; private set; }
+
 		protected IBOLTeacherMapper BolTeacherMapper { get; private set; }
 
 		protected IDALTeacherMapper DalTeacherMapper { get; private set; }
+
 		protected IBOLTeacherSkillMapper BolTeacherSkillMapper { get; private set; }
 
 		protected IDALTeacherSkillMapper DalTeacherSkillMapper { get; private set; }
@@ -238,5 +246,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ad8d338a6d4dd8c8aa2b824e8e9f02d7</Hash>
+    <Hash>d26fe61bf2dd305fb0b7bc5bac44e34b</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byAddressID/{addressID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByAddressID(int addressID)
+		public async virtual Task<IActionResult> ByAddressID(int addressID, int? limit, int? offset)
 		{
-			List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.ByAddressID(addressID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.ByAddressID(addressID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byAddressTypeID/{addressTypeID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByAddressTypeID(int addressTypeID)
+		public async virtual Task<IActionResult> ByAddressTypeID(int addressTypeID, int? limit, int? offset)
 		{
-			List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.ByAddressTypeID(addressTypeID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityAddressService.ByAddressTypeID(addressTypeID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +258,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d71e04cf080ba787c8c49de35a80a664</Hash>
+    <Hash>2cd194009aeb2fed19be8f427a894bbe</Hash>
 </Codenesium>*/

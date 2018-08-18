@@ -35,6 +35,7 @@ namespace NebulaNS.Api.DataAccess
 		[Column("linkId")]
 		public int LinkId { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("log")]
 		public string Log { get; private set; }
 
@@ -44,5 +45,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>709ae26da7e9429e01b362f27544f315</Hash>
+    <Hash>190ceaa86ab686f688e13e4c87e45f2c</Hash>
 </Codenesium>*/

@@ -26,11 +26,12 @@ namespace PetStoreNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>55a6da6acda0c87bc9518b442c2f97d0</Hash>
+    <Hash>b91178d8c2c2c077ef2d5c24bc75d968</Hash>
 </Codenesium>*/

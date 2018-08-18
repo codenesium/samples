@@ -24,17 +24,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Key]
+		[MaxLength(3)]
 		[Column("CountryRegionCode")]
 		public string CountryRegionCode { get; private set; }
 
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Name")]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>cfa59abc1463b227b45093433658ef73</Hash>
+    <Hash>b330a86519182926fd6b4932d69a5e48</Hash>
 </Codenesium>*/

@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLProductVendorMapper BolProductVendorMapper { get; private set; }
 
 		protected IDALProductVendorMapper DalProductVendorMapper { get; private set; }
+
 		protected IBOLPurchaseOrderHeaderMapper BolPurchaseOrderHeaderMapper { get; private set; }
 
 		protected IDALPurchaseOrderHeaderMapper DalPurchaseOrderHeaderMapper { get; private set; }
@@ -154,5 +155,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>532b746a7edaf099dab3018afa29637c</Hash>
+    <Hash>61796a03d73a44e9e2be99360131c21b</Hash>
 </Codenesium>*/

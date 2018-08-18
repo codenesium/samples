@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IWorkOrderRoutingRepository>();
 			var records = new List<WorkOrderRouting>();
 			records.Add(new WorkOrderRouting());
-			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new WorkOrderRoutingService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.WorkOrderRoutingModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiWorkOrderRoutingResponseModel> response = await service.ByProductID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByProductID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IWorkOrderRoutingRepository>();
-			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrderRouting>>(new List<WorkOrderRouting>()));
+			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrderRouting>>(new List<WorkOrderRouting>()));
 			var service = new WorkOrderRoutingService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.WorkOrderRoutingModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiWorkOrderRoutingResponseModel> response = await service.ByProductID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>44127cd9135d05147e60904ac8cc3c9c</Hash>
+    <Hash>3db2ac6fb6fd5af3fc5df67da68906d9</Hash>
 </Codenesium>*/

@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLCountryRegionCurrencyMapper BolCountryRegionCurrencyMapper { get; private set; }
 
 		protected IDALCountryRegionCurrencyMapper DalCountryRegionCurrencyMapper { get; private set; }
+
 		protected IBOLCurrencyRateMapper BolCurrencyRateMapper { get; private set; }
 
 		protected IDALCurrencyRateMapper DalCurrencyRateMapper { get; private set; }
@@ -154,5 +155,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>124681a2c165e59b7e42acd6f8b2e997</Hash>
+    <Hash>a5e480078940040ce07d93669277a4ba</Hash>
 </Codenesium>*/

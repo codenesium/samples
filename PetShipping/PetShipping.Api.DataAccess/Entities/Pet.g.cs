@@ -37,6 +37,7 @@ namespace PetShippingNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 
@@ -52,5 +53,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ba01ed78f73e62c46b77e50839161ae7</Hash>
+    <Hash>9c306c5889421d18818d1c94bab54adc</Hash>
 </Codenesium>*/

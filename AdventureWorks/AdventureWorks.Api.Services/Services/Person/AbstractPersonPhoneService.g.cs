@@ -108,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiPersonPhoneResponseModel>> ByPhoneNumber(string phoneNumber)
+		public async Task<List<ApiPersonPhoneResponseModel>> ByPhoneNumber(string phoneNumber, int limit = 0, int offset = int.MaxValue)
 		{
-			List<PersonPhone> records = await this.PersonPhoneRepository.ByPhoneNumber(phoneNumber);
+			List<PersonPhone> records = await this.PersonPhoneRepository.ByPhoneNumber(phoneNumber, limit, offset);
 
 			return this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17645ca1f8fa118e9b71b0cc70c25ee7</Hash>
+    <Hash>f5d0823c5b9cf19eb7d3a3e048235938</Hash>
 </Codenesium>*/

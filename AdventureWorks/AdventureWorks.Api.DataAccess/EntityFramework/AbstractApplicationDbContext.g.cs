@@ -9,18 +9,18 @@ using System.Linq;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -218,7 +218,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
 			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "AdventureWorks.Api.Web");
 
@@ -241,5 +241,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>95de81897e49b4b57dd5c19fb1dec4a4</Hash>
+    <Hash>48689287ea9267b39aed8daae29de027</Hash>
 </Codenesium>*/

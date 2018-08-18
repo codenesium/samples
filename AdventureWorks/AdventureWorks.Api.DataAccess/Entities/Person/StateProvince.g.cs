@@ -33,6 +33,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.TerritoryID = territoryID;
 		}
 
+		[MaxLength(3)]
 		[Column("CountryRegionCode")]
 		public string CountryRegionCode { get; private set; }
 
@@ -42,6 +43,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
@@ -49,6 +51,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("rowguid")]
 		public Guid Rowguid { get; private set; }
 
+		[MaxLength(3)]
 		[Column("StateProvinceCode")]
 		public string StateProvinceCode { get; private set; }
 
@@ -63,5 +66,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>df62ba1631a8a5997169206518980516</Hash>
+    <Hash>68ea87e216aa99206de1901790f537dd</Hash>
 </Codenesium>*/

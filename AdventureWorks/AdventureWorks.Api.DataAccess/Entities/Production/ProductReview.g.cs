@@ -33,9 +33,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ReviewerName = reviewerName;
 		}
 
+		[MaxLength(3850)]
 		[Column("Comments")]
 		public string Comment { get; private set; }
 
+		[MaxLength(50)]
 		[Column("EmailAddress")]
 		public string EmailAddress { get; private set; }
 
@@ -56,11 +58,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ReviewDate")]
 		public DateTime ReviewDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ReviewerName")]
 		public string ReviewerName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>3aac61a8ca69fb277bcd2b6be4975e56</Hash>
+    <Hash>1f61779f4dc04bea90792e072a162244</Hash>
 </Codenesium>*/

@@ -18,20 +18,17 @@ namespace ESPIOTNS.Api.Contracts
 			this.PublicId = publicId;
 		}
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public Guid PublicId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e7db40d746262bba1c90cc78bb31155</Hash>
+    <Hash>afe751c663c207b8581c52ff15c1f965</Hash>
 </Codenesium>*/

@@ -108,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiDocumentResponseModel>> ByFileNameRevision(string fileName, string revision)
+		public async Task<List<ApiDocumentResponseModel>> ByFileNameRevision(string fileName, string revision, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Document> records = await this.DocumentRepository.ByFileNameRevision(fileName, revision);
+			List<Document> records = await this.DocumentRepository.ByFileNameRevision(fileName, revision, limit, offset);
 
 			return this.BolDocumentMapper.MapBOToModel(this.DalDocumentMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6a71b18f226c66c3ece9ab25323d0258</Hash>
+    <Hash>19ddfb7604f7fe59301dd9b391647611</Hash>
 </Codenesium>*/

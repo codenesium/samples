@@ -25,11 +25,12 @@ namespace TicketingCRMNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>981dfb26bc9ecee1e009a6d012ea569e</Hash>
+    <Hash>791af0307c0af4b14eb9fc64d804a055</Hash>
 </Codenesium>*/

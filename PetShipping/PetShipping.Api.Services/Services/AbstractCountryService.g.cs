@@ -25,6 +25,7 @@ namespace PetShippingNS.Api.Services
 		protected IBOLCountryRequirementMapper BolCountryRequirementMapper { get; private set; }
 
 		protected IDALCountryRequirementMapper DalCountryRequirementMapper { get; private set; }
+
 		protected IBOLDestinationMapper BolDestinationMapper { get; private set; }
 
 		protected IDALDestinationMapper DalDestinationMapper { get; private set; }
@@ -140,5 +141,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93caa45738264f66978cb3b0455133f9</Hash>
+    <Hash>9be0aaad75e947fc82166ff322e6f222</Hash>
 </Codenesium>*/

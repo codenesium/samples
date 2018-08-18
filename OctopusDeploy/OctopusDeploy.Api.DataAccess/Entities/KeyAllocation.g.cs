@@ -25,11 +25,12 @@ namespace OctopusDeployNS.Api.DataAccess
 		public int Allocated { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("CollectionName")]
 		public string CollectionName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9bf77a09d7fbb48fc5902e333aedd080</Hash>
+    <Hash>57291d78394762ecab820c03cd4ac851</Hash>
 </Codenesium>*/

@@ -10,5 +10,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>85e85fb6dc8d14107d0b0f8cfb874cdb</Hash>
+    <Hash>b237a0f571ee7cd711993a028534c212</Hash>
 </Codenesium>*/

@@ -25,21 +25,24 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.Name = name;
 		}
 
+		[MaxLength(1000)]
 		[Column("ExtensionAuthor")]
 		public string ExtensionAuthor { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(1000)]
 		[Column("Name")]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b08ef22d2e250b3af3869efa41d7660d</Hash>
+    <Hash>0a4468ed29d0cf14fe5a7ee00fd137d1</Hash>
 </Codenesium>*/

@@ -76,16 +76,16 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Venue>> ByAdminId(int adminId)
+		public async Task<List<Venue>> ByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.AdminId == adminId);
+			var records = await this.Where(x => x.AdminId == adminId, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Venue>> ByProvinceId(int provinceId)
+		public async Task<List<Venue>> ByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ProvinceId == provinceId);
+			var records = await this.Where(x => x.ProvinceId == provinceId, limit, offset);
 
 			return records;
 		}
@@ -132,5 +132,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6d8d16c757d487f62b3763b5743d3b8f</Hash>
+    <Hash>6376f7f12b4826fea30239812176ba10</Hash>
 </Codenesium>*/

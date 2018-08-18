@@ -76,16 +76,16 @@ namespace OctopusDeployNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<EventRelatedDocument>> ByEventId(string eventId)
+		public async Task<List<EventRelatedDocument>> ByEventId(string eventId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.EventId == eventId);
+			var records = await this.Where(x => x.EventId == eventId, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<EventRelatedDocument>> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId)
+		public async Task<List<EventRelatedDocument>> ByEventIdRelatedDocumentId(string eventId, string relatedDocumentId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.EventId == eventId && x.RelatedDocumentId == relatedDocumentId);
+			var records = await this.Where(x => x.EventId == eventId && x.RelatedDocumentId == relatedDocumentId, limit, offset);
 
 			return records;
 		}
@@ -127,5 +127,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a70eed65a5745393286999354353cb92</Hash>
+    <Hash>fb44c3ff7880e41c66406a0d2c18aa23</Hash>
 </Codenesium>*/

@@ -76,30 +76,30 @@ namespace OctopusDeployNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Event>> ByAutoId(long autoId)
+		public async Task<List<Event>> ByAutoId(long autoId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.AutoId == autoId);
+			var records = await this.Where(x => x.AutoId == autoId, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Event>> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId)
+		public async Task<List<Event>> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.Occurred == occurred && x.Category == category && x.AutoId == autoId);
+			var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.Occurred == occurred && x.Category == category && x.AutoId == autoId, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Event>> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId)
+		public async Task<List<Event>> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.Category == category && x.UserId == userId && x.Occurred == occurred && x.TenantId == tenantId);
+			var records = await this.Where(x => x.Id == id && x.RelatedDocumentIds == relatedDocumentIds && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.Category == category && x.UserId == userId && x.Occurred == occurred && x.TenantId == tenantId, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Event>> ByIdOccurred(string id, DateTimeOffset occurred)
+		public async Task<List<Event>> ByIdOccurred(string id, DateTimeOffset occurred, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Id == id && x.Occurred == occurred);
+			var records = await this.Where(x => x.Id == id && x.Occurred == occurred, limit, offset);
 
 			return records;
 		}
@@ -141,5 +141,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>91fce0027c0632834c8f6a4d03dcb721</Hash>
+    <Hash>1c535da7aed4ff7fc11c04397effafe2</Hash>
 </Codenesium>*/

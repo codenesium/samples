@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPersonPhoneRepository>();
 			var records = new List<PersonPhone>();
 			records.Add(new PersonPhone());
-			mock.RepositoryMock.Setup(x => x.ByPhoneNumber(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByPhoneNumber(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PersonPhoneService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PersonPhoneModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPersonPhoneResponseModel> response = await service.ByPhoneNumber(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByPhoneNumber(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByPhoneNumber(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByPhoneNumber_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IPersonPhoneRepository>();
-			mock.RepositoryMock.Setup(x => x.ByPhoneNumber(It.IsAny<string>())).Returns(Task.FromResult<List<PersonPhone>>(new List<PersonPhone>()));
+			mock.RepositoryMock.Setup(x => x.ByPhoneNumber(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PersonPhone>>(new List<PersonPhone>()));
 			var service = new PersonPhoneService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.PersonPhoneModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPersonPhoneResponseModel> response = await service.ByPhoneNumber(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByPhoneNumber(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByPhoneNumber(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fde85ac55e9f10b7cec96a32d18f76a2</Hash>
+    <Hash>c36bc756a53f4128c8c6e91a1e90cd9c</Hash>
 </Codenesium>*/

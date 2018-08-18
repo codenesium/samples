@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<EmailAddress>> ByEmailAddress(string emailAddress1)
+		public async Task<List<EmailAddress>> ByEmailAddress(string emailAddress1, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.EmailAddress1 == emailAddress1);
+			var records = await this.Where(x => x.EmailAddress1 == emailAddress1, limit, offset);
 
 			return records;
 		}
@@ -115,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8abddee04feceebbbec57fa7c5d2aa73</Hash>
+    <Hash>9996c7842c69236a21ea38a9000861ad</Hash>
 </Codenesium>*/

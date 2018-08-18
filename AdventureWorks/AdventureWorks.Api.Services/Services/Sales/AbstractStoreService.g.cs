@@ -116,16 +116,16 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiStoreResponseModel>> BySalesPersonID(int? salesPersonID)
+		public async Task<List<ApiStoreResponseModel>> BySalesPersonID(int? salesPersonID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Store> records = await this.StoreRepository.BySalesPersonID(salesPersonID);
+			List<Store> records = await this.StoreRepository.BySalesPersonID(salesPersonID, limit, offset);
 
 			return this.BolStoreMapper.MapBOToModel(this.DalStoreMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiStoreResponseModel>> ByDemographic(string demographic)
+		public async Task<List<ApiStoreResponseModel>> ByDemographic(string demographic, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Store> records = await this.StoreRepository.ByDemographic(demographic);
+			List<Store> records = await this.StoreRepository.ByDemographic(demographic, limit, offset);
 
 			return this.BolStoreMapper.MapBOToModel(this.DalStoreMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9711ee541ae8efcef6a343f474473617</Hash>
+    <Hash>8da5a03e785e6f8ce83e3e981867b97b</Hash>
 </Codenesium>*/

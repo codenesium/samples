@@ -136,7 +136,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISaleTicketsRepository>();
 			var records = new List<SaleTickets>();
 			records.Add(new SaleTickets());
-			mock.RepositoryMock.Setup(x => x.ByTicketId(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByTicketId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SaleTicketsService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SaleTicketsModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiSaleTicketsResponseModel> response = await service.ByTicketId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTicketId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByTicketId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByTicketId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISaleTicketsRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTicketId(It.IsAny<int>())).Returns(Task.FromResult<List<SaleTickets>>(new List<SaleTickets>()));
+			mock.RepositoryMock.Setup(x => x.ByTicketId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SaleTickets>>(new List<SaleTickets>()));
 			var service = new SaleTicketsService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SaleTicketsModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiSaleTicketsResponseModel> response = await service.ByTicketId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTicketId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByTicketId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>463bcae7c086d08c66052e75a1f3ed9d</Hash>
+    <Hash>c952f75fd23c4d31406c9fb905a15082</Hash>
 </Codenesium>*/

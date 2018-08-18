@@ -116,9 +116,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiSaleResponseModel>> ByTransactionId(int transactionId)
+		public async Task<List<ApiSaleResponseModel>> ByTransactionId(int transactionId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Sale> records = await this.SaleRepository.ByTransactionId(transactionId);
+			List<Sale> records = await this.SaleRepository.ByTransactionId(transactionId, limit, offset);
 
 			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
@@ -133,5 +133,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd38f0e9a2716f6fa7d0dea4368f4cdc</Hash>
+    <Hash>290efc3fac22c5b784cd3f57aa1054d8</Hash>
 </Codenesium>*/

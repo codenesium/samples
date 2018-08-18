@@ -33,6 +33,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.PurchasingWebServiceURL = purchasingWebServiceURL;
 		}
 
+		[MaxLength(15)]
 		[Column("AccountNumber")]
 		public string AccountNumber { get; private set; }
 
@@ -49,17 +50,19 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
 		[Column("PreferredVendorStatus")]
 		public bool PreferredVendorStatu { get; private set; }
 
+		[MaxLength(1024)]
 		[Column("PurchasingWebServiceURL")]
 		public string PurchasingWebServiceURL { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e540e2d5b181239c1f21def23a46f182</Hash>
+    <Hash>5f412ca16b374826f54760300b35f102</Hash>
 </Codenesium>*/

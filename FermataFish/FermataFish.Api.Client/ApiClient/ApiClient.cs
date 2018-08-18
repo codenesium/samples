@@ -25,5 +25,5 @@ namespace FermataFishNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>bce2e195ebd9341f2134200d61c80362</Hash>
+    <Hash>ae2fb1a03a766f49065b2c09608adda0</Hash>
 </Codenesium>*/

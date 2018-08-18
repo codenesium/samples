@@ -27,24 +27,28 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.VariableSetId = variableSetId;
 		}
 
+		[MaxLength(50)]
 		[Column("ContentType")]
 		public string ContentType { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[MaxLength(150)]
 		[Column("VariableSetId")]
 		public string VariableSetId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8654805dbafa2fa4b878a2670e8cdd1c</Hash>
+    <Hash>d7a38c620519ac58c3841976f55434e9</Hash>
 </Codenesium>*/

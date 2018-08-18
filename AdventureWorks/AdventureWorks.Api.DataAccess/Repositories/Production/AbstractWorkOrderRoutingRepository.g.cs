@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<WorkOrderRouting>> ByProductID(int productID)
+		public async Task<List<WorkOrderRouting>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ProductID == productID);
+			var records = await this.Where(x => x.ProductID == productID, limit, offset);
 
 			return records;
 		}
@@ -115,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a89235e132cbeb5a2937f84eb38353a9</Hash>
+    <Hash>af9407d41353ed33587cf03ed58c7324</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiVendorResponseModel> response = await this.VendorService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -227,8 +231,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> ProductVendors(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiProductVendorResponseModel> response = await this.VendorService.ProductVendors(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -241,8 +248,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> PurchaseOrderHeaders(int vendorID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiPurchaseOrderHeaderResponseModel> response = await this.VendorService.PurchaseOrderHeaders(vendorID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -267,5 +277,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>52afffe2070bc70ed93265664dcb62b3</Hash>
+    <Hash>9faa4330bfe221a3506e7701da5a59e1</Hash>
 </Codenesium>*/

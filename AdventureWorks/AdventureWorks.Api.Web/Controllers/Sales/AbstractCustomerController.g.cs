@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiCustomerResponseModel> response = await this.CustomerService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byTerritoryID/{territoryID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByTerritoryID(int? territoryID)
+		public async virtual Task<IActionResult> ByTerritoryID(int? territoryID, int? limit, int? offset)
 		{
-			List<ApiCustomerResponseModel> response = await this.CustomerService.ByTerritoryID(territoryID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiCustomerResponseModel> response = await this.CustomerService.ByTerritoryID(territoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -238,8 +248,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> SalesOrderHeaders(int customerID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiSalesOrderHeaderResponseModel> response = await this.CustomerService.SalesOrderHeaders(customerID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -264,5 +277,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>195b0430ac88156a4291749a0e5bcbe7</Hash>
+    <Hash>c756576a4cfd64e4d1726fee72953b77</Hash>
 </Codenesium>*/

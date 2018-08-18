@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionHistoryRepository>();
 			var records = new List<TransactionHistory>();
 			records.Add(new TransactionHistory());
-			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionHistoryService(mock.LoggerMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.TransactionHistoryModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiTransactionHistoryResponseModel> response = await service.ByProductID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByProductID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITransactionHistoryRepository>();
-			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistory>>(new List<TransactionHistory>()));
+			mock.RepositoryMock.Setup(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistory>>(new List<TransactionHistory>()));
 			var service = new TransactionHistoryService(mock.LoggerMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.TransactionHistoryModelValidatorMock.Object,
@@ -163,7 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiTransactionHistoryResponseModel> response = await service.ByProductID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByProductID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -172,7 +172,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionHistoryRepository>();
 			var records = new List<TransactionHistory>();
 			records.Add(new TransactionHistory());
-			mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionHistoryService(mock.LoggerMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.TransactionHistoryModelValidatorMock.Object,
@@ -182,14 +182,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiTransactionHistoryResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByReferenceOrderIDReferenceOrderLineID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITransactionHistoryRepository>();
-			mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistory>>(new List<TransactionHistory>()));
+			mock.RepositoryMock.Setup(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TransactionHistory>>(new List<TransactionHistory>()));
 			var service = new TransactionHistoryService(mock.LoggerMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.TransactionHistoryModelValidatorMock.Object,
@@ -199,11 +199,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiTransactionHistoryResponseModel> response = await service.ByReferenceOrderIDReferenceOrderLineID(default(int), default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByReferenceOrderIDReferenceOrderLineID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dea8992818409e94c76da14d5414ac27</Hash>
+    <Hash>bd801c1b884d23f40ba3ffabddbe6583</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiProductReviewResponseModel> response = await this.ProductReviewService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byProductIDReviewerName/{productID}/{reviewerName}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProductReviewResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProductIDReviewerName(int productID, string reviewerName)
+		public async virtual Task<IActionResult> ByProductIDReviewerName(int productID, string reviewerName, int? limit, int? offset)
 		{
-			List<ApiProductReviewResponseModel> response = await this.ProductReviewService.ByProductIDReviewerName(productID, reviewerName);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiProductReviewResponseModel> response = await this.ProductReviewService.ByProductIDReviewerName(productID, reviewerName, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6decc4105190a6a45e09c01cb76f7e39</Hash>
+    <Hash>40c8543a6dd76e3a6a0ef2170634845e</Hash>
 </Codenesium>*/

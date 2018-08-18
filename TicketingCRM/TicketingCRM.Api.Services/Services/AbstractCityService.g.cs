@@ -116,9 +116,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiCityResponseModel>> ByProvinceId(int provinceId)
+		public async Task<List<ApiCityResponseModel>> ByProvinceId(int provinceId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<City> records = await this.CityRepository.ByProvinceId(provinceId);
+			List<City> records = await this.CityRepository.ByProvinceId(provinceId, limit, offset);
 
 			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
 		}
@@ -133,5 +133,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>94a9c464895e69e966d6b9aafcf83474</Hash>
+    <Hash>dfbea3221d90503c73eab75808b9e737</Hash>
 </Codenesium>*/

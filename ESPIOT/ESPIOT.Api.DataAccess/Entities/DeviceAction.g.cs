@@ -29,12 +29,15 @@ namespace ESPIOTNS.Api.DataAccess
 		public int DeviceId { get; private set; }
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(90)]
 		[Column("name")]
 		public string Name { get; private set; }
 
+		[MaxLength(4000)]
 		[Column("value")]
 		public string @Value { get; private set; }
 
@@ -44,5 +47,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dc21c1298a8bdeca7333d9015ce7d8e4</Hash>
+    <Hash>2b3c03e8561d3dce3304fa76f0579783</Hash>
 </Codenesium>*/

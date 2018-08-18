@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiProductReviewResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductReviewResponseModel>> ByProductIDReviewerName(int productID, string reviewerName);
+		Task<List<ApiProductReviewResponseModel>> ByProductIDReviewerName(int productID, string reviewerName, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cba1dc1d07c231590ef3ce6a8a722bba</Hash>
+    <Hash>03c37f20fed362312fbce91665f0a64e</Hash>
 </Codenesium>*/

@@ -91,6 +91,7 @@ namespace StackOverflowNS.Api.DataAccess
 		[Column("LastEditDate")]
 		public DateTime? LastEditDate { get; private set; }
 
+		[MaxLength(40)]
 		[Column("LastEditorDisplayName")]
 		public string LastEditorDisplayName { get; private set; }
 
@@ -109,9 +110,11 @@ namespace StackOverflowNS.Api.DataAccess
 		[Column("Score")]
 		public int Score { get; private set; }
 
+		[MaxLength(150)]
 		[Column("Tags")]
 		public string Tags { get; private set; }
 
+		[MaxLength(250)]
 		[Column("Title")]
 		public string Title { get; private set; }
 
@@ -121,5 +124,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7892fbf12926fcf39e0dd14b5a53e922</Hash>
+    <Hash>7bd8b461730cb8da10caa67882ccfca9</Hash>
 </Codenesium>*/

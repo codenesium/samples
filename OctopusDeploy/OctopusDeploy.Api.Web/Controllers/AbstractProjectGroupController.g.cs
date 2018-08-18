@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiProjectGroupResponseModel> response = await this.ProjectGroupService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byDataVersion/{dataVersion}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProjectGroupResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
+		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion, int? limit, int? offset)
 		{
-			List<ApiProjectGroupResponseModel> response = await this.ProjectGroupService.ByDataVersion(dataVersion);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiProjectGroupResponseModel> response = await this.ProjectGroupService.ByDataVersion(dataVersion, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -250,5 +260,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bba0fbb9a04586527751a4aa26208f66</Hash>
+    <Hash>10e55e7824bc450d7ff7c3f3975d7bee</Hash>
 </Codenesium>*/

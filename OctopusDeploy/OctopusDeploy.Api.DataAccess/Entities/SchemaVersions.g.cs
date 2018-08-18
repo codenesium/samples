@@ -30,11 +30,12 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("Id")]
 		public int Id { get; private set; }
 
+		[MaxLength(255)]
 		[Column("ScriptName")]
 		public string ScriptName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ec359a3d1bbd54397cdfdab13b504a6d</Hash>
+    <Hash>0213c63a5e072aa010b88f6c86b6c880</Hash>
 </Codenesium>*/

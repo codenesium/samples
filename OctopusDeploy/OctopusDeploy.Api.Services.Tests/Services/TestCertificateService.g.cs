@@ -136,7 +136,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICertificateRepository>();
 			var records = new List<Certificate>();
 			records.Add(new Certificate());
-			mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CertificateService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiCertificateResponseModel> response = await service.ByCreated(default(DateTimeOffset));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByCreated_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICertificateRepository>();
-			mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
+			mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
 			var service = new CertificateService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
@@ -163,7 +163,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiCertificateResponseModel> response = await service.ByCreated(default(DateTimeOffset));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -172,7 +172,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICertificateRepository>();
 			var records = new List<Certificate>();
 			records.Add(new Certificate());
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CertificateService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
@@ -182,14 +182,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiCertificateResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDataVersion_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICertificateRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
 			var service = new CertificateService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
@@ -199,7 +199,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiCertificateResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -208,7 +208,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICertificateRepository>();
 			var records = new List<Certificate>();
 			records.Add(new Certificate());
-			mock.RepositoryMock.Setup(x => x.ByNotAfter(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByNotAfter(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CertificateService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
@@ -218,14 +218,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiCertificateResponseModel> response = await service.ByNotAfter(default(DateTimeOffset));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByNotAfter(It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByNotAfter(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByNotAfter_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICertificateRepository>();
-			mock.RepositoryMock.Setup(x => x.ByNotAfter(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
+			mock.RepositoryMock.Setup(x => x.ByNotAfter(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
 			var service = new CertificateService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
@@ -235,7 +235,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiCertificateResponseModel> response = await service.ByNotAfter(default(DateTimeOffset));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByNotAfter(It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByNotAfter(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -244,7 +244,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICertificateRepository>();
 			var records = new List<Certificate>();
 			records.Add(new Certificate());
-			mock.RepositoryMock.Setup(x => x.ByThumbprint(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByThumbprint(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CertificateService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
@@ -254,14 +254,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiCertificateResponseModel> response = await service.ByThumbprint(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByThumbprint(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByThumbprint(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByThumbprint_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICertificateRepository>();
-			mock.RepositoryMock.Setup(x => x.ByThumbprint(It.IsAny<string>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
+			mock.RepositoryMock.Setup(x => x.ByThumbprint(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Certificate>>(new List<Certificate>()));
 			var service = new CertificateService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.CertificateModelValidatorMock.Object,
@@ -271,11 +271,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiCertificateResponseModel> response = await service.ByThumbprint(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByThumbprint(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByThumbprint(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4bc2fae0745a73fd3bad510e4b5caa8</Hash>
+    <Hash>94234729a41c566df81b78697850f04f</Hash>
 </Codenesium>*/

@@ -42,6 +42,7 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("birthday")]
 		public DateTime Birthday { get; private set; }
 
+		[MaxLength(128)]
 		[Column("email")]
 		public string Email { get; private set; }
 
@@ -51,6 +52,7 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("familyId")]
 		public int FamilyId { get; private set; }
 
+		[MaxLength(128)]
 		[Column("firstName")]
 		public string FirstName { get; private set; }
 
@@ -61,9 +63,11 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("isAdult")]
 		public bool IsAdult { get; private set; }
 
+		[MaxLength(128)]
 		[Column("lastName")]
 		public string LastName { get; private set; }
 
+		[MaxLength(128)]
 		[Column("phone")]
 		public string Phone { get; private set; }
 
@@ -82,5 +86,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8953a658ad04b802ccb9e49e9e433a15</Hash>
+    <Hash>cf524e007afe854defbfa07200ce787e</Hash>
 </Codenesium>*/

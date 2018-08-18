@@ -35,18 +35,23 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("notes")]
 		public string Notes { get; private set; }
 
+		[MaxLength(128)]
 		[Column("pcEmail")]
 		public string PcEmail { get; private set; }
 
+		[MaxLength(128)]
 		[Column("pcFirstName")]
 		public string PcFirstName { get; private set; }
 
+		[MaxLength(128)]
 		[Column("pcLastName")]
 		public string PcLastName { get; private set; }
 
+		[MaxLength(128)]
 		[Column("pcPhone")]
 		public string PcPhone { get; private set; }
 
@@ -62,5 +67,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>939d5a9752b9e8c0d275b58e2579d4a0</Hash>
+    <Hash>ad6d5cb07483966a6f2f6128c71fecca</Hash>
 </Codenesium>*/

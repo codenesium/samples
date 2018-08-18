@@ -61,11 +61,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("StartDate")]
 		public DateTime StartDate { get; private set; }
 
+		[MaxLength(3)]
 		[Column("UnitMeasureCode")]
 		public string UnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0fe7c6bb592f6eef36109f9d2aac555</Hash>
+    <Hash>405057e50db592360a94054a0ac55243</Hash>
 </Codenesium>*/

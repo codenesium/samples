@@ -17,10 +17,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<EmailAddress>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<EmailAddress>> ByEmailAddress(string emailAddress1);
+		Task<List<EmailAddress>> ByEmailAddress(string emailAddress1, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b554624f614cea06fd45a36d6e394f4</Hash>
+    <Hash>8945aa4363051a86fac489eb82fa021f</Hash>
 </Codenesium>*/

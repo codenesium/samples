@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiPersonPhoneResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPersonPhoneResponseModel>> ByPhoneNumber(string phoneNumber);
+		Task<List<ApiPersonPhoneResponseModel>> ByPhoneNumber(string phoneNumber, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>afbd25f9cad72fe90d1084b2ac34e1cf</Hash>
+    <Hash>afb6eb4c47f620f1424ee994c0308683</Hash>
 </Codenesium>*/

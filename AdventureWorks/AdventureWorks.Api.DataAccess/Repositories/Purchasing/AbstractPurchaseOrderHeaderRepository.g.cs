@@ -76,16 +76,16 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID)
+		public async Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.EmployeeID == employeeID);
+			var records = await this.Where(x => x.EmployeeID == employeeID, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID)
+		public async Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.VendorID == vendorID);
+			var records = await this.Where(x => x.VendorID == vendorID, limit, offset);
 
 			return records;
 		}
@@ -127,5 +127,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bc2d9685ec04bba4a3c628157dfbee5b</Hash>
+    <Hash>027dd611acc9acc35f8dfd0a2f952f02</Hash>
 </Codenesium>*/

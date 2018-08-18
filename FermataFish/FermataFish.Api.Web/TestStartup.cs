@@ -19,7 +19,7 @@ namespace FermataFishNS.Api.Web
                 this.Configuration = builder.Build();
 		}
 
-        public override ApplicationDbContext SetupDatabase(IServiceCollection services, bool enableSensitiveDataLogging)
+        public override DbContextOptions SetupDatabase(bool enableSensitiveDataLogging)
         {
             SqliteConnectionStringBuilder connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };
             string connectionString = connectionStringBuilder.ToString();
@@ -32,8 +32,8 @@ namespace FermataFishNS.Api.Web
 
 		    options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlite(connection);
-            ApplicationDbContext context = new ApplicationDbContext(options.Options);
-			return context;
+
+			return options.Options;
         }
 
 		public override void MigrateDatabase(ApplicationDbContext context)

@@ -187,7 +187,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICustomerRepository>();
 			var records = new List<Customer>();
 			records.Add(new Customer());
-			mock.RepositoryMock.Setup(x => x.ByTerritoryID(It.IsAny<int?>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByTerritoryID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CustomerService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Object,
@@ -199,14 +199,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiCustomerResponseModel> response = await service.ByTerritoryID(default(int?));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTerritoryID(It.IsAny<int?>()));
+			mock.RepositoryMock.Verify(x => x.ByTerritoryID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByTerritoryID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICustomerRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTerritoryID(It.IsAny<int?>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
+			mock.RepositoryMock.Setup(x => x.ByTerritoryID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
 			var service = new CustomerService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CustomerModelValidatorMock.Object,
@@ -218,7 +218,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiCustomerResponseModel> response = await service.ByTerritoryID(default(int?));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTerritoryID(It.IsAny<int?>()));
+			mock.RepositoryMock.Verify(x => x.ByTerritoryID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -264,5 +264,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e75c24b67484e072b6b747c4514aa0a0</Hash>
+    <Hash>da0eab6c8529fbbab0b1ae0e00c07fc1</Hash>
 </Codenesium>*/

@@ -17,18 +17,18 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<List<Event>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Event>> ByAutoId(long autoId);
+		Task<List<Event>> ByAutoId(long autoId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Event>> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId);
+		Task<List<Event>> ByIdRelatedDocumentIdsOccurredCategoryAutoId(string id, string relatedDocumentIds, DateTimeOffset occurred, string category, long autoId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Event>> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId);
+		Task<List<Event>> ByIdRelatedDocumentIdsProjectIdEnvironmentIdCategoryUserIdOccurredTenantId(string id, string relatedDocumentIds, string projectId, string environmentId, string category, string userId, DateTimeOffset occurred, string tenantId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Event>> ByIdOccurred(string id, DateTimeOffset occurred);
+		Task<List<Event>> ByIdOccurred(string id, DateTimeOffset occurred, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<EventRelatedDocument>> EventRelatedDocuments(string eventId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ea2e55d1650ac966d713eb1d1d5408c</Hash>
+    <Hash>5a14ddb2629fe2b6b42a69f2b980a490</Hash>
 </Codenesium>*/

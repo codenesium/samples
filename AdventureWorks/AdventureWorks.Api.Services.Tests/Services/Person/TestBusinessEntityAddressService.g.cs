@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBusinessEntityAddressRepository>();
 			var records = new List<BusinessEntityAddress>();
 			records.Add(new BusinessEntityAddress());
-			mock.RepositoryMock.Setup(x => x.ByAddressID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByAddressID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BusinessEntityAddressService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.BusinessEntityAddressModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBusinessEntityAddressResponseModel> response = await service.ByAddressID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByAddressID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByAddressID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByAddressID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IBusinessEntityAddressRepository>();
-			mock.RepositoryMock.Setup(x => x.ByAddressID(It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityAddress>>(new List<BusinessEntityAddress>()));
+			mock.RepositoryMock.Setup(x => x.ByAddressID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityAddress>>(new List<BusinessEntityAddress>()));
 			var service = new BusinessEntityAddressService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.BusinessEntityAddressModelValidatorMock.Object,
@@ -163,7 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBusinessEntityAddressResponseModel> response = await service.ByAddressID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByAddressID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByAddressID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -172,7 +172,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBusinessEntityAddressRepository>();
 			var records = new List<BusinessEntityAddress>();
 			records.Add(new BusinessEntityAddress());
-			mock.RepositoryMock.Setup(x => x.ByAddressTypeID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByAddressTypeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BusinessEntityAddressService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.BusinessEntityAddressModelValidatorMock.Object,
@@ -182,14 +182,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBusinessEntityAddressResponseModel> response = await service.ByAddressTypeID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByAddressTypeID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByAddressTypeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByAddressTypeID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IBusinessEntityAddressRepository>();
-			mock.RepositoryMock.Setup(x => x.ByAddressTypeID(It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityAddress>>(new List<BusinessEntityAddress>()));
+			mock.RepositoryMock.Setup(x => x.ByAddressTypeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityAddress>>(new List<BusinessEntityAddress>()));
 			var service = new BusinessEntityAddressService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.BusinessEntityAddressModelValidatorMock.Object,
@@ -199,11 +199,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBusinessEntityAddressResponseModel> response = await service.ByAddressTypeID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByAddressTypeID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByAddressTypeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef3eab1d8a0bc5da99676236a4f62bcf</Hash>
+    <Hash>3a40ac5339e896f084e68fd3045e77b1</Hash>
 </Codenesium>*/

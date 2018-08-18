@@ -19,10 +19,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<ActionTemplateVersion> ByNameVersion(string name, int version);
 
-		Task<List<ActionTemplateVersion>> ByLatestActionTemplateId(string latestActionTemplateId);
+		Task<List<ActionTemplateVersion>> ByLatestActionTemplateId(string latestActionTemplateId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a16c4d1c4553c5230c4fa9b8b5570271</Hash>
+    <Hash>e58a013a4b27668755853822ca60df9f</Hash>
 </Codenesium>*/

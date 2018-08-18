@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITenantRepository>();
 			var records = new List<Tenant>();
 			records.Add(new Tenant());
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TenantService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiTenantResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDataVersion_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITenantRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Tenant>>(new List<Tenant>()));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Tenant>>(new List<Tenant>()));
 			var service = new TenantService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
@@ -198,11 +198,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiTenantResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f2d974ef627b2b701dc508f897641319</Hash>
+    <Hash>231caa9353a2e9a20b468a70b7498465</Hash>
 </Codenesium>*/

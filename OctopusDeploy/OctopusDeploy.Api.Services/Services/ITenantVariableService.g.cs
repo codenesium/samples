@@ -23,10 +23,10 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<ApiTenantVariableResponseModel> ByTenantIdOwnerIdEnvironmentIdVariableTemplateId(string tenantId, string ownerId, string environmentId, string variableTemplateId);
 
-		Task<List<ApiTenantVariableResponseModel>> ByTenantId(string tenantId);
+		Task<List<ApiTenantVariableResponseModel>> ByTenantId(string tenantId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>90e94e60552a5c36578818ec2740dbd2</Hash>
+    <Hash>634246fe943bb56b8f25ed265347b53f</Hash>
 </Codenesium>*/

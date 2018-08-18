@@ -36,30 +36,36 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("Assembled")]
 		public DateTimeOffset Assembled { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ChannelId")]
 		public string ChannelId { get; private set; }
 
 		[Key]
+		[MaxLength(150)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(150)]
 		[Column("ProjectDeploymentProcessSnapshotId")]
 		public string ProjectDeploymentProcessSnapshotId { get; private set; }
 
+		[MaxLength(150)]
 		[Column("ProjectId")]
 		public string ProjectId { get; private set; }
 
+		[MaxLength(150)]
 		[Column("ProjectVariableSetSnapshotId")]
 		public string ProjectVariableSetSnapshotId { get; private set; }
 
+		[MaxLength(100)]
 		[Column("Version")]
 		public string Version { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f1cf8720ddab397b02919849c2f6f1be</Hash>
+    <Hash>364616b679d5f9b6217e39567e26a16b</Hash>
 </Codenesium>*/

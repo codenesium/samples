@@ -171,7 +171,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
 			var records = new List<BillOfMaterial>();
 			records.Add(new BillOfMaterial());
-			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBillOfMaterialResponseModel> response = await service.ByUnitMeasureCode(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByUnitMeasureCode_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
-			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<List<BillOfMaterial>>(new List<BillOfMaterial>()));
+			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BillOfMaterial>>(new List<BillOfMaterial>()));
 			var service = new BillOfMaterialService(mock.LoggerMock.Object,
 			                                        mock.RepositoryMock.Object,
 			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
@@ -198,11 +198,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBillOfMaterialResponseModel> response = await service.ByUnitMeasureCode(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>833fa8b7395a551a2f165863a9beb9ed</Hash>
+    <Hash>62438f6b6d15b0c00b0f072b786c57e3</Hash>
 </Codenesium>*/

@@ -93,5 +93,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>7ccf733b64b47201518b4c6603b583b1</Hash>
+    <Hash>487752c26b0276178373122bae2f2259</Hash>
 </Codenesium>*/

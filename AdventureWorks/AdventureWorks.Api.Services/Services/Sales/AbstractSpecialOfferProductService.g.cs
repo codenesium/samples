@@ -116,9 +116,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiSpecialOfferProductResponseModel>> ByProductID(int productID)
+		public async Task<List<ApiSpecialOfferProductResponseModel>> ByProductID(int productID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<SpecialOfferProduct> records = await this.SpecialOfferProductRepository.ByProductID(productID);
+			List<SpecialOfferProduct> records = await this.SpecialOfferProductRepository.ByProductID(productID, limit, offset);
 
 			return this.BolSpecialOfferProductMapper.MapBOToModel(this.DalSpecialOfferProductMapper.MapEFToBO(records));
 		}
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>781e904668d618819355f4f1de57b5b5</Hash>
+    <Hash>d9ce4a9e2dd35b23a3dcfd1a3d953079</Hash>
 </Codenesium>*/

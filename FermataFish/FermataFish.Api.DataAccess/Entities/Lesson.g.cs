@@ -59,12 +59,14 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("scheduledStartDate")]
 		public DateTime? ScheduledStartDate { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("studentNotes")]
 		public string StudentNotes { get; private set; }
 
 		[Column("studioId")]
 		public int StudioId { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("teacherNotes")]
 		public string TeacherNotes { get; private set; }
 
@@ -77,5 +79,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>68a013f2ddb864c2a0b3465d9372b305</Hash>
+    <Hash>7a35bbca7e3718b465529206cfcc28bf</Hash>
 </Codenesium>*/

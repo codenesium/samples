@@ -136,7 +136,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IVenueRepository>();
 			var records = new List<Venue>();
 			records.Add(new Venue());
-			mock.RepositoryMock.Setup(x => x.ByAdminId(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByAdminId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VenueService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiVenueResponseModel> response = await service.ByAdminId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByAdminId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByAdminId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByAdminId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IVenueRepository>();
-			mock.RepositoryMock.Setup(x => x.ByAdminId(It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
+			mock.RepositoryMock.Setup(x => x.ByAdminId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
 			var service = new VenueService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
@@ -163,7 +163,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiVenueResponseModel> response = await service.ByAdminId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByAdminId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByAdminId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -172,7 +172,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IVenueRepository>();
 			var records = new List<Venue>();
 			records.Add(new Venue());
-			mock.RepositoryMock.Setup(x => x.ByProvinceId(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByProvinceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VenueService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
@@ -182,14 +182,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiVenueResponseModel> response = await service.ByProvinceId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProvinceId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByProvinceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByProvinceId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IVenueRepository>();
-			mock.RepositoryMock.Setup(x => x.ByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
+			mock.RepositoryMock.Setup(x => x.ByProvinceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
 			var service = new VenueService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.VenueModelValidatorMock.Object,
@@ -199,11 +199,11 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiVenueResponseModel> response = await service.ByProvinceId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProvinceId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByProvinceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>03e418ec0161a79ec2136afbcec7234c</Hash>
+    <Hash>94c4f31453417838ed9b97f68037a14b</Hash>
 </Codenesium>*/

@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBusinessEntityContactRepository>();
 			var records = new List<BusinessEntityContact>();
 			records.Add(new BusinessEntityContact());
-			mock.RepositoryMock.Setup(x => x.ByContactTypeID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByContactTypeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BusinessEntityContactService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.BusinessEntityContactModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBusinessEntityContactResponseModel> response = await service.ByContactTypeID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByContactTypeID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByContactTypeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByContactTypeID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IBusinessEntityContactRepository>();
-			mock.RepositoryMock.Setup(x => x.ByContactTypeID(It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityContact>>(new List<BusinessEntityContact>()));
+			mock.RepositoryMock.Setup(x => x.ByContactTypeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityContact>>(new List<BusinessEntityContact>()));
 			var service = new BusinessEntityContactService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.BusinessEntityContactModelValidatorMock.Object,
@@ -163,7 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBusinessEntityContactResponseModel> response = await service.ByContactTypeID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByContactTypeID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByContactTypeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -172,7 +172,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IBusinessEntityContactRepository>();
 			var records = new List<BusinessEntityContact>();
 			records.Add(new BusinessEntityContact());
-			mock.RepositoryMock.Setup(x => x.ByPersonID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByPersonID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new BusinessEntityContactService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.BusinessEntityContactModelValidatorMock.Object,
@@ -182,14 +182,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBusinessEntityContactResponseModel> response = await service.ByPersonID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByPersonID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByPersonID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByPersonID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IBusinessEntityContactRepository>();
-			mock.RepositoryMock.Setup(x => x.ByPersonID(It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityContact>>(new List<BusinessEntityContact>()));
+			mock.RepositoryMock.Setup(x => x.ByPersonID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<BusinessEntityContact>>(new List<BusinessEntityContact>()));
 			var service = new BusinessEntityContactService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.BusinessEntityContactModelValidatorMock.Object,
@@ -199,11 +199,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiBusinessEntityContactResponseModel> response = await service.ByPersonID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByPersonID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByPersonID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>34f381a172b513c354a218e2bd7162b1</Hash>
+    <Hash>3d2490dd5559ed075b06ed5c5a88c05b</Hash>
 </Codenesium>*/

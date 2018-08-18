@@ -26,11 +26,12 @@ namespace TestsNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(50)]
 		[Column("name")]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e2a3974e3ac0ffb9046f7c84dc98a1f</Hash>
+    <Hash>97f4da6ea958fd4f89a1c58e29566053</Hash>
 </Codenesium>*/

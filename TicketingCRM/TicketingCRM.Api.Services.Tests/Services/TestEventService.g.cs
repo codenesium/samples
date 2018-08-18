@@ -136,7 +136,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEventRepository>();
 			var records = new List<Event>();
 			records.Add(new Event());
-			mock.RepositoryMock.Setup(x => x.ByCityId(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByCityId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new EventService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiEventResponseModel> response = await service.ByCityId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCityId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByCityId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByCityId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IEventRepository>();
-			mock.RepositoryMock.Setup(x => x.ByCityId(It.IsAny<int>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
+			mock.RepositoryMock.Setup(x => x.ByCityId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Event>>(new List<Event>()));
 			var service = new EventService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.EventModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiEventResponseModel> response = await service.ByCityId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCityId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByCityId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fea4be245bff1a4b9fd400c4f61992ca</Hash>
+    <Hash>e8e36cc39ebd062a8bd4e0d6bc7307d8</Hash>
 </Codenesium>*/

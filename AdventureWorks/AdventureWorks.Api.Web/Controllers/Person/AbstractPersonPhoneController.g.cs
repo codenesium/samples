@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiPersonPhoneResponseModel> response = await this.PersonPhoneService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byPhoneNumber/{phoneNumber}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPersonPhoneResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByPhoneNumber(string phoneNumber)
+		public async virtual Task<IActionResult> ByPhoneNumber(string phoneNumber, int? limit, int? offset)
 		{
-			List<ApiPersonPhoneResponseModel> response = await this.PersonPhoneService.ByPhoneNumber(phoneNumber);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiPersonPhoneResponseModel> response = await this.PersonPhoneService.ByPhoneNumber(phoneNumber, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8f246c92bf7a217c6c395300c4e9be01</Hash>
+    <Hash>3cbf0aa1686c04f54cd7b3f2ebae441c</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiPersonResponseModel> response = await this.PersonService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byLastNameFirstNameMiddleName/{lastName}/{firstName}/{middleName}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
+		public async virtual Task<IActionResult> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName, int? limit, int? offset)
 		{
-			List<ApiPersonResponseModel> response = await this.PersonService.ByLastNameFirstNameMiddleName(lastName, firstName, middleName);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiPersonResponseModel> response = await this.PersonService.ByLastNameFirstNameMiddleName(lastName, firstName, middleName, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byAdditionalContactInfo/{additionalContactInfo}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByAdditionalContactInfo(string additionalContactInfo)
+		public async virtual Task<IActionResult> ByAdditionalContactInfo(string additionalContactInfo, int? limit, int? offset)
 		{
-			List<ApiPersonResponseModel> response = await this.PersonService.ByAdditionalContactInfo(additionalContactInfo);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiPersonResponseModel> response = await this.PersonService.ByAdditionalContactInfo(additionalContactInfo, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -227,9 +243,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byDemographics/{demographic}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDemographic(string demographic)
+		public async virtual Task<IActionResult> ByDemographic(string demographic, int? limit, int? offset)
 		{
-			List<ApiPersonResponseModel> response = await this.PersonService.ByDemographic(demographic);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiPersonResponseModel> response = await this.PersonService.ByDemographic(demographic, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -241,8 +263,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> BusinessEntityContacts(int personID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiBusinessEntityContactResponseModel> response = await this.PersonService.BusinessEntityContacts(personID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -255,8 +280,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> EmailAddresses(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiEmailAddressResponseModel> response = await this.PersonService.EmailAddresses(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -269,8 +297,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> Passwords(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiPasswordResponseModel> response = await this.PersonService.Passwords(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -283,8 +314,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> PersonPhones(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiPersonPhoneResponseModel> response = await this.PersonService.PersonPhones(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -309,5 +343,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5804a4134fe672c5cab52d56aa8dfae8</Hash>
+    <Hash>c770f0bf35490158c61abbe763976912</Hash>
 </Codenesium>*/

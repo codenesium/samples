@@ -35,18 +35,22 @@ namespace OctopusDeployNS.Api.DataAccess
 		public byte[] DataVersion { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("LifecycleId")]
 		public string LifecycleId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectId")]
 		public string ProjectId { get; private set; }
 
@@ -56,5 +60,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>722cbd97c781e7c89350e981d8db718e</Hash>
+    <Hash>1dbc3b1e3cc7aa2e2774bc422422425c</Hash>
 </Codenesium>*/

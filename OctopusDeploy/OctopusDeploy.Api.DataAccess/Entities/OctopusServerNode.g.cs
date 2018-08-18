@@ -32,6 +32,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		}
 
 		[Key]
+		[MaxLength(250)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -47,14 +48,16 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("MaxConcurrentTasks")]
 		public int MaxConcurrentTasks { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Rank")]
 		public string Rank { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ee89fd77bdb7dc2d325c7999383803a</Hash>
+    <Hash>f1ae9ccc6e54f7945557a62f79d337d1</Hash>
 </Codenesium>*/

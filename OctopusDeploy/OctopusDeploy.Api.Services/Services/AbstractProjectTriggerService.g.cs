@@ -122,9 +122,9 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiProjectTriggerResponseModel>> ByProjectId(string projectId)
+		public async Task<List<ApiProjectTriggerResponseModel>> ByProjectId(string projectId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<ProjectTrigger> records = await this.ProjectTriggerRepository.ByProjectId(projectId);
+			List<ProjectTrigger> records = await this.ProjectTriggerRepository.ByProjectId(projectId, limit, offset);
 
 			return this.BolProjectTriggerMapper.MapBOToModel(this.DalProjectTriggerMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>968c536efe2b17de23cd9dbf41e32fcf</Hash>
+    <Hash>8b59f798d5cf275d282667aff5f169a7</Hash>
 </Codenesium>*/

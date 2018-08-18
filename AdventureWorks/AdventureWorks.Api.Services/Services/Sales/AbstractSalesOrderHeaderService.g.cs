@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLSalesOrderDetailMapper BolSalesOrderDetailMapper { get; private set; }
 
 		protected IDALSalesOrderDetailMapper DalSalesOrderDetailMapper { get; private set; }
+
 		protected IBOLSalesOrderHeaderSalesReasonMapper BolSalesOrderHeaderSalesReasonMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderSalesReasonMapper DalSalesOrderHeaderSalesReasonMapper { get; private set; }
@@ -137,16 +138,16 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiSalesOrderHeaderResponseModel>> ByCustomerID(int customerID)
+		public async Task<List<ApiSalesOrderHeaderResponseModel>> ByCustomerID(int customerID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.ByCustomerID(customerID);
+			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.ByCustomerID(customerID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(int? salesPersonID)
+		public async Task<List<ApiSalesOrderHeaderResponseModel>> BySalesPersonID(int? salesPersonID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.BySalesPersonID(salesPersonID);
+			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.BySalesPersonID(salesPersonID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
@@ -168,5 +169,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2cb169b94ed032e6bacf6975a3e6f645</Hash>
+    <Hash>69e29db59fb1ab303609dc16877c0295</Hash>
 </Codenesium>*/

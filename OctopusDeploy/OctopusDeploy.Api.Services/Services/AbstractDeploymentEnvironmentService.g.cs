@@ -122,9 +122,9 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiDeploymentEnvironmentResponseModel>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<ApiDeploymentEnvironmentResponseModel>> ByDataVersion(byte[] dataVersion, int limit = 0, int offset = int.MaxValue)
 		{
-			List<DeploymentEnvironment> records = await this.DeploymentEnvironmentRepository.ByDataVersion(dataVersion);
+			List<DeploymentEnvironment> records = await this.DeploymentEnvironmentRepository.ByDataVersion(dataVersion, limit, offset);
 
 			return this.BolDeploymentEnvironmentMapper.MapBOToModel(this.DalDeploymentEnvironmentMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>def816598ee69ce71d58631dc53b028a</Hash>
+    <Hash>325d256406878209e116092ad0554d83</Hash>
 </Codenesium>*/

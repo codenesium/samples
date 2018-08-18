@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiStateProvinceResponseModel> response = await this.StateProvinceService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -246,8 +250,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> Addresses(int stateProvinceID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiAddressResponseModel> response = await this.StateProvinceService.Addresses(stateProvinceID, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -272,5 +279,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ff7b214564313f79c3b7571df4bf9265</Hash>
+    <Hash>4434927fa7b0798e8dd925c508540795</Hash>
 </Codenesium>*/

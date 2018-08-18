@@ -23,10 +23,10 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<ApiProjectTriggerResponseModel> ByProjectIdName(string projectId, string name);
 
-		Task<List<ApiProjectTriggerResponseModel>> ByProjectId(string projectId);
+		Task<List<ApiProjectTriggerResponseModel>> ByProjectId(string projectId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1b0cbfb6b4dd680d14825af0cb16887f</Hash>
+    <Hash>1be8d539ab68d118a2e8f93efe8ee26d</Hash>
 </Codenesium>*/

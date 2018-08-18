@@ -17,10 +17,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<PersonPhone>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<PersonPhone>> ByPhoneNumber(string phoneNumber);
+		Task<List<PersonPhone>> ByPhoneNumber(string phoneNumber, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9d2f62af67744d6cc3bc3ba2ea164a3</Hash>
+    <Hash>73035f8ba26355d640b22e493f22c22c</Hash>
 </Codenesium>*/

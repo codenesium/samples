@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ILifecycleRepository>();
 			var records = new List<Lifecycle>();
 			records.Add(new Lifecycle());
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LifecycleService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiLifecycleResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDataVersion_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ILifecycleRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>())).Returns(Task.FromResult<List<Lifecycle>>(new List<Lifecycle>()));
+			mock.RepositoryMock.Setup(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Lifecycle>>(new List<Lifecycle>()));
 			var service = new LifecycleService(mock.LoggerMock.Object,
 			                                   mock.RepositoryMock.Object,
 			                                   mock.ModelValidatorMockFactory.LifecycleModelValidatorMock.Object,
@@ -198,11 +198,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiLifecycleResponseModel> response = await service.ByDataVersion(default(byte[]));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>()));
+			mock.RepositoryMock.Verify(x => x.ByDataVersion(It.IsAny<byte[]>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f391a17e316a885099addbece091603a</Hash>
+    <Hash>5dcf4282465be859926185143059a657</Hash>
 </Codenesium>*/

@@ -30,6 +30,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		}
 
 		[Key]
+		[MaxLength(150)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -39,6 +40,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(150)]
 		[Column("OwnerId")]
 		public string OwnerId { get; private set; }
 
@@ -51,5 +53,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8da923960397a36ef282d3d466b4c9f1</Hash>
+    <Hash>daf2348b698c78065f296d6c3aebf1a3</Hash>
 </Codenesium>*/

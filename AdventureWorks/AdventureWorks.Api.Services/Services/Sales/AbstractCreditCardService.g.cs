@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLPersonCreditCardMapper BolPersonCreditCardMapper { get; private set; }
 
 		protected IDALPersonCreditCardMapper DalPersonCreditCardMapper { get; private set; }
+
 		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
@@ -154,5 +155,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1bf49201a3bdd907b4ebd63ceb7dbe1c</Hash>
+    <Hash>ef6fadc16d8e66aed717899a248a9114</Hash>
 </Codenesium>*/

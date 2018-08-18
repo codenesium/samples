@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiProjectTriggerResponseModel> response = await this.ProjectTriggerService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byProjectId/{projectId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProjectTriggerResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProjectId(string projectId)
+		public async virtual Task<IActionResult> ByProjectId(string projectId, int? limit, int? offset)
 		{
-			List<ApiProjectTriggerResponseModel> response = await this.ProjectTriggerService.ByProjectId(projectId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiProjectTriggerResponseModel> response = await this.ProjectTriggerService.ByProjectId(projectId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -250,5 +260,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>02497d4855f9c3576862b8cd80f7f371</Hash>
+    <Hash>aa51e145fcbe09f95098648976b2cbba</Hash>
 </Codenesium>*/

@@ -148,7 +148,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeploymentRepository>();
 			var records = new List<Deployment>();
 			records.Add(new Deployment());
-			mock.RepositoryMock.Setup(x => x.ByChannelId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByChannelId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeploymentService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -160,14 +160,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentResponseModel> response = await service.ByChannelId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByChannelId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByChannelId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByChannelId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IDeploymentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByChannelId(It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
+			mock.RepositoryMock.Setup(x => x.ByChannelId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
 			var service = new DeploymentService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -179,7 +179,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentResponseModel> response = await service.ByChannelId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByChannelId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByChannelId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -188,7 +188,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeploymentRepository>();
 			var records = new List<Deployment>();
 			records.Add(new Deployment());
-			mock.RepositoryMock.Setup(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeploymentService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -200,14 +200,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentResponseModel> response = await service.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string), default(string), default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IDeploymentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
+			mock.RepositoryMock.Setup(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
 			var service = new DeploymentService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -219,7 +219,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentResponseModel> response = await service.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(default(string), default(string), default(string), default(string), default(DateTimeOffset), default(string), default(string), default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -228,7 +228,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeploymentRepository>();
 			var records = new List<Deployment>();
 			records.Add(new Deployment());
-			mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeploymentService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -240,14 +240,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentResponseModel> response = await service.ByTenantId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByTenantId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IDeploymentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
+			mock.RepositoryMock.Setup(x => x.ByTenantId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Deployment>>(new List<Deployment>()));
 			var service = new DeploymentService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.DeploymentModelValidatorMock.Object,
@@ -259,7 +259,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentResponseModel> response = await service.ByTenantId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByTenantId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -305,5 +305,5 @@ namespace OctopusDeployNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ce891d75db3b28aaa9ad867665b07526</Hash>
+    <Hash>cc647a8a053f05b640b830f7da7466ab</Hash>
 </Codenesium>*/

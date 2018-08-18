@@ -33,23 +33,27 @@ namespace OctopusDeployNS.Api.DataAccess
 		public bool Exclusive { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TaskId")]
 		public string TaskId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("WorkerId")]
 		public string WorkerId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2120bd0ff42f53e973476be9b0afedc1</Hash>
+    <Hash>1cff6e3d6ad1479f9c04159ac7af9f6f</Hash>
 </Codenesium>*/

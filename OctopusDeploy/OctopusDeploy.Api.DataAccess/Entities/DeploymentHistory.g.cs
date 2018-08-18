@@ -59,9 +59,11 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.TenantName = tenantName;
 		}
 
+		[MaxLength(50)]
 		[Column("ChannelId")]
 		public string ChannelId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("ChannelName")]
 		public string ChannelName { get; private set; }
 
@@ -71,60 +73,74 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("Created")]
 		public DateTimeOffset Created { get; private set; }
 
+		[MaxLength(200)]
 		[Column("DeployedBy")]
 		public string DeployedBy { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("DeploymentId")]
 		public string DeploymentId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("DeploymentName")]
 		public string DeploymentName { get; private set; }
 
 		[Column("DurationSeconds")]
 		public int? DurationSeconds { get; private set; }
 
+		[MaxLength(50)]
 		[Column("EnvironmentId")]
 		public string EnvironmentId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("EnvironmentName")]
 		public string EnvironmentName { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectId")]
 		public string ProjectId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("ProjectName")]
 		public string ProjectName { get; private set; }
 
+		[MaxLength(210)]
 		[Column("ProjectSlug")]
 		public string ProjectSlug { get; private set; }
 
 		[Column("QueueTime")]
 		public DateTimeOffset QueueTime { get; private set; }
 
+		[MaxLength(150)]
 		[Column("ReleaseId")]
 		public string ReleaseId { get; private set; }
 
+		[MaxLength(100)]
 		[Column("ReleaseVersion")]
 		public string ReleaseVersion { get; private set; }
 
 		[Column("StartTime")]
 		public DateTimeOffset? StartTime { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TaskId")]
 		public string TaskId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TaskState")]
 		public string TaskState { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TenantId")]
 		public string TenantId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("TenantName")]
 		public string TenantName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1dd568b49fd5f655dbadce860b0443fc</Hash>
+    <Hash>8929c2aefee83e6f4053f485872f672a</Hash>
 </Codenesium>*/

@@ -9,18 +9,18 @@ using System.Linq;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -172,7 +172,7 @@ namespace OctopusDeployNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
 			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "OctopusDeploy.Api.Web");
 
@@ -195,5 +195,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c42c6f9c862009b202ecb3e02fdb3daf</Hash>
+    <Hash>07cbb5de5dd8c9c23a53f8aec1172157</Hash>
 </Codenesium>*/

@@ -83,9 +83,9 @@ namespace OctopusDeployNS.Api.DataAccess
 			return records.FirstOrDefault();
 		}
 
-		public async Task<List<Lifecycle>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<Lifecycle>> ByDataVersion(byte[] dataVersion, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.DataVersion == dataVersion);
+			var records = await this.Where(x => x.DataVersion == dataVersion, limit, offset);
 
 			return records;
 		}
@@ -122,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>22c78c791c974d74d9e2f290da0efdce</Hash>
+    <Hash>0692c9918aebc1a356449bb9f380ef35</Hash>
 </Codenesium>*/

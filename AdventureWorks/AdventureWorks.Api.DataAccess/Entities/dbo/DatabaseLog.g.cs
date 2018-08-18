@@ -38,18 +38,22 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("DatabaseLogID")]
 		public int DatabaseLogID { get; private set; }
 
+		[MaxLength(128)]
 		[Column("DatabaseUser")]
 		public string DatabaseUser { get; private set; }
 
+		[MaxLength(128)]
 		[Column("Event")]
 		public string @Event { get; private set; }
 
+		[MaxLength(128)]
 		[Column("Object")]
 		public string @Object { get; private set; }
 
 		[Column("PostTime")]
 		public DateTime PostTime { get; private set; }
 
+		[MaxLength(128)]
 		[Column("Schema")]
 		public string Schema { get; private set; }
 
@@ -62,5 +66,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>74fc4acc54ab35b0a32cd95b5cb5d26d</Hash>
+    <Hash>7445b384d5d8d9f8e8aaa932371f2bc5</Hash>
 </Codenesium>*/

@@ -75,6 +75,30 @@ namespace ESPIOTNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
 		public async void Name_Create_length()
 		{
 			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
@@ -96,6 +120,30 @@ namespace ESPIOTNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 91));
+		}
+
+		[Fact]
+		public async void @Value_Create_null()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.@Value, null as string);
+		}
+
+		[Fact]
+		public async void @Value_Update_null()
+		{
+			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
+			deviceActionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new DeviceAction()));
+
+			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.@Value, null as string);
 		}
 
 		[Fact]
@@ -125,5 +173,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3b97f6a1769cfca5c0858d8943bf84ff</Hash>
+    <Hash>4712ecffb36829dbc45b26da4d527ff4</Hash>
 </Codenesium>*/

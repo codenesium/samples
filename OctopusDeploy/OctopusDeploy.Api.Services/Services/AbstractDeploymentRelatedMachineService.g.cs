@@ -108,16 +108,16 @@ namespace OctopusDeployNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiDeploymentRelatedMachineResponseModel>> ByDeploymentId(string deploymentId)
+		public async Task<List<ApiDeploymentRelatedMachineResponseModel>> ByDeploymentId(string deploymentId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<DeploymentRelatedMachine> records = await this.DeploymentRelatedMachineRepository.ByDeploymentId(deploymentId);
+			List<DeploymentRelatedMachine> records = await this.DeploymentRelatedMachineRepository.ByDeploymentId(deploymentId, limit, offset);
 
 			return this.BolDeploymentRelatedMachineMapper.MapBOToModel(this.DalDeploymentRelatedMachineMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiDeploymentRelatedMachineResponseModel>> ByMachineId(string machineId)
+		public async Task<List<ApiDeploymentRelatedMachineResponseModel>> ByMachineId(string machineId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<DeploymentRelatedMachine> records = await this.DeploymentRelatedMachineRepository.ByMachineId(machineId);
+			List<DeploymentRelatedMachine> records = await this.DeploymentRelatedMachineRepository.ByMachineId(machineId, limit, offset);
 
 			return this.BolDeploymentRelatedMachineMapper.MapBOToModel(this.DalDeploymentRelatedMachineMapper.MapEFToBO(records));
 		}
@@ -125,5 +125,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3ffe3f5e4b580241475ef6e0380bec17</Hash>
+    <Hash>d482f0e8c461b3327d67c8b134eefb2e</Hash>
 </Codenesium>*/

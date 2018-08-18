@@ -19,16 +19,16 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<Release> ByVersionProjectId(string version, string projectId);
 
-		Task<List<Release>> ByIdAssembled(string id, DateTimeOffset assembled);
+		Task<List<Release>> ByIdAssembled(string id, DateTimeOffset assembled, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Release>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId);
+		Task<List<Release>> ByProjectDeploymentProcessSnapshotId(string projectDeploymentProcessSnapshotId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Release>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled);
+		Task<List<Release>> ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(string id, string version, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string channelId, DateTimeOffset assembled, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Release>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled);
+		Task<List<Release>> ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(string id, string channelId, string projectVariableSetSnapshotId, string projectDeploymentProcessSnapshotId, string jSON, string projectId, string version, DateTimeOffset assembled, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>59532ef3296a6eabb13992a72ee75a45</Hash>
+    <Hash>c8837507ad3559eb7602e9c751c328c7</Hash>
 </Codenesium>*/

@@ -24,9 +24,11 @@ namespace OctopusDeployNS.Api.DataAccess
 		}
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
+		[MaxLength(200)]
 		[Column("InvitationCode")]
 		public string InvitationCode { get; private set; }
 
@@ -36,5 +38,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>06497e2d3c999b7956b8bf1f0846bc46</Hash>
+    <Hash>c90800544038354110a1338a30b51d89</Hash>
 </Codenesium>*/

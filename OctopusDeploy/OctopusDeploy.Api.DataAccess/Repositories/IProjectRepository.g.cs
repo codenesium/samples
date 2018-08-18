@@ -21,12 +21,12 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<Project> BySlug(string slug);
 
-		Task<List<Project>> ByDataVersion(byte[] dataVersion);
+		Task<List<Project>> ByDataVersion(byte[] dataVersion, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Project>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id);
+		Task<List<Project>> ByDiscreteChannelReleaseId(bool discreteChannelRelease, string id, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9b1c62a8515eab52a5a65603a3437a5d</Hash>
+    <Hash>ac1b5e2ce9900dbbb063c4ff42164ff6</Hash>
 </Codenesium>*/

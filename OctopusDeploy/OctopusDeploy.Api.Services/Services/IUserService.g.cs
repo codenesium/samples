@@ -23,14 +23,14 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<ApiUserResponseModel> ByUsername(string username);
 
-		Task<List<ApiUserResponseModel>> ByDisplayName(string displayName);
+		Task<List<ApiUserResponseModel>> ByDisplayName(string displayName, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiUserResponseModel>> ByEmailAddress(string emailAddress);
+		Task<List<ApiUserResponseModel>> ByEmailAddress(string emailAddress, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiUserResponseModel>> ByExternalId(string externalId);
+		Task<List<ApiUserResponseModel>> ByExternalId(string externalId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bca28e46cff5632a0f89c3c37639fd43</Hash>
+    <Hash>22c40ec752e2fb8755904909f9d3d8c8</Hash>
 </Codenesium>*/

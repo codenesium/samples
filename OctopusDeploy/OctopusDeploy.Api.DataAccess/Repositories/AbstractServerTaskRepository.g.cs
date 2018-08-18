@@ -76,23 +76,23 @@ namespace OctopusDeployNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<ServerTask>> ByDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, DateTimeOffset? startTime, DateTimeOffset? completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId)
+		public async Task<List<ServerTask>> ByDescriptionQueueTimeStartTimeCompletedTimeErrorMessageConcurrencyTagHasPendingInterruptionsHasWarningsOrErrorsDurationSecondsJSONStateNameProjectIdEnvironmentIdTenantIdServerNodeId(string description, DateTimeOffset queueTime, DateTimeOffset? startTime, DateTimeOffset? completedTime, string errorMessage, string concurrencyTag, bool hasPendingInterruptions, bool hasWarningsOrErrors, int durationSeconds, string jSON, string state, string name, string projectId, string environmentId, string tenantId, string serverNodeId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Description == description && x.QueueTime == queueTime && x.StartTime == startTime && x.CompletedTime == completedTime && x.ErrorMessage == errorMessage && x.ConcurrencyTag == concurrencyTag && x.HasPendingInterruptions == hasPendingInterruptions && x.HasWarningsOrErrors == hasWarningsOrErrors && x.DurationSeconds == durationSeconds && x.JSON == jSON && x.State == state && x.Name == name && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.TenantId == tenantId && x.ServerNodeId == serverNodeId);
+			var records = await this.Where(x => x.Description == description && x.QueueTime == queueTime && x.StartTime == startTime && x.CompletedTime == completedTime && x.ErrorMessage == errorMessage && x.ConcurrencyTag == concurrencyTag && x.HasPendingInterruptions == hasPendingInterruptions && x.HasWarningsOrErrors == hasWarningsOrErrors && x.DurationSeconds == durationSeconds && x.JSON == jSON && x.State == state && x.Name == name && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.TenantId == tenantId && x.ServerNodeId == serverNodeId, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<ServerTask>> ByStateConcurrencyTag(string state, string concurrencyTag)
+		public async Task<List<ServerTask>> ByStateConcurrencyTag(string state, string concurrencyTag, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.State == state && x.ConcurrencyTag == concurrencyTag);
+			var records = await this.Where(x => x.State == state && x.ConcurrencyTag == concurrencyTag, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<ServerTask>> ByNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, DateTimeOffset? startTime, DateTimeOffset? completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId)
+		public async Task<List<ServerTask>> ByNameDescriptionStartTimeCompletedTimeErrorMessageHasWarningsOrErrorsProjectIdEnvironmentIdTenantIdDurationSecondsJSONQueueTimeStateConcurrencyTagHasPendingInterruptionsServerNodeId(string name, string description, DateTimeOffset? startTime, DateTimeOffset? completedTime, string errorMessage, bool hasWarningsOrErrors, string projectId, string environmentId, string tenantId, int durationSeconds, string jSON, DateTimeOffset queueTime, string state, string concurrencyTag, bool hasPendingInterruptions, string serverNodeId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Name == name && x.Description == description && x.StartTime == startTime && x.CompletedTime == completedTime && x.ErrorMessage == errorMessage && x.HasWarningsOrErrors == hasWarningsOrErrors && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.TenantId == tenantId && x.DurationSeconds == durationSeconds && x.JSON == jSON && x.QueueTime == queueTime && x.State == state && x.ConcurrencyTag == concurrencyTag && x.HasPendingInterruptions == hasPendingInterruptions && x.ServerNodeId == serverNodeId);
+			var records = await this.Where(x => x.Name == name && x.Description == description && x.StartTime == startTime && x.CompletedTime == completedTime && x.ErrorMessage == errorMessage && x.HasWarningsOrErrors == hasWarningsOrErrors && x.ProjectId == projectId && x.EnvironmentId == environmentId && x.TenantId == tenantId && x.DurationSeconds == durationSeconds && x.JSON == jSON && x.QueueTime == queueTime && x.State == state && x.ConcurrencyTag == concurrencyTag && x.HasPendingInterruptions == hasPendingInterruptions && x.ServerNodeId == serverNodeId, limit, offset);
 
 			return records;
 		}
@@ -129,5 +129,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>caa157045672c9e673e8ecc9de47d6b1</Hash>
+    <Hash>ad05f5d5de1d3c2075da4b8d6146124a</Hash>
 </Codenesium>*/

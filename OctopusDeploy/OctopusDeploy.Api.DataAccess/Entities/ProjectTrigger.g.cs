@@ -30,6 +30,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		}
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -39,17 +40,20 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectId")]
 		public string ProjectId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TriggerType")]
 		public string TriggerType { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7860e0b96cf9d020d08351e25b876b70</Hash>
+    <Hash>858c4ad40fdf4d225ff5d4b32efad6a6</Hash>
 </Codenesium>*/

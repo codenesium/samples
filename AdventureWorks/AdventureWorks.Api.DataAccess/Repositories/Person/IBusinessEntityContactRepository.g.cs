@@ -17,12 +17,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<BusinessEntityContact>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<BusinessEntityContact>> ByContactTypeID(int contactTypeID);
+		Task<List<BusinessEntityContact>> ByContactTypeID(int contactTypeID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<BusinessEntityContact>> ByPersonID(int personID);
+		Task<List<BusinessEntityContact>> ByPersonID(int personID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7dfd4664822efec2c6305aa6f2347cf4</Hash>
+    <Hash>66931e61412b840e56c285cb39117d62</Hash>
 </Codenesium>*/

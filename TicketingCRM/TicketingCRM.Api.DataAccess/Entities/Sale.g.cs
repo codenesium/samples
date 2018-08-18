@@ -31,9 +31,11 @@ namespace TicketingCRMNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("ipAddress")]
 		public string IpAddress { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("notes")]
 		public string Notes { get; private set; }
 
@@ -49,5 +51,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0e0d717c7260445b3c220f12562ee21f</Hash>
+    <Hash>542fe169f490caa05092c01bff76ad19</Hash>
 </Codenesium>*/

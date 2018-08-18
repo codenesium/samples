@@ -54,12 +54,14 @@ namespace OctopusDeployNS.Api.DataAccess
 		public string EnvironmentIds { get; private set; }
 
 		[Key]
+		[MaxLength(210)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
@@ -75,11 +77,12 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("TenantTags")]
 		public string TenantTags { get; private set; }
 
+		[MaxLength(128)]
 		[Column("Thumbprint")]
 		public string Thumbprint { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d8b4bafe08ed05517acdfe5fc17275de</Hash>
+    <Hash>3829604a0ad940ca70b2b5baf215a181</Hash>
 </Codenesium>*/

@@ -17,12 +17,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<EmployeeDepartmentHistory>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<EmployeeDepartmentHistory>> ByDepartmentID(short departmentID);
+		Task<List<EmployeeDepartmentHistory>> ByDepartmentID(short departmentID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<EmployeeDepartmentHistory>> ByShiftID(int shiftID);
+		Task<List<EmployeeDepartmentHistory>> ByShiftID(int shiftID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bda48cabb009240069d55ce653a24566</Hash>
+    <Hash>6026f90fba58dfac9f6d268833797ef0</Hash>
 </Codenesium>*/

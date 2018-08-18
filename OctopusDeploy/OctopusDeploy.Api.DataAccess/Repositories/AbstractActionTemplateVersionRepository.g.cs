@@ -83,9 +83,9 @@ namespace OctopusDeployNS.Api.DataAccess
 			return records.FirstOrDefault();
 		}
 
-		public async Task<List<ActionTemplateVersion>> ByLatestActionTemplateId(string latestActionTemplateId)
+		public async Task<List<ActionTemplateVersion>> ByLatestActionTemplateId(string latestActionTemplateId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.LatestActionTemplateId == latestActionTemplateId);
+			var records = await this.Where(x => x.LatestActionTemplateId == latestActionTemplateId, limit, offset);
 
 			return records;
 		}
@@ -122,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a6dc037ef48cc5425f6a4d57a29f1b6d</Hash>
+    <Hash>f9d0b4baf270dd349c3fd99d0543868f</Hash>
 </Codenesium>*/

@@ -25,9 +25,11 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLProductMapper BolProductMapper { get; private set; }
 
 		protected IDALProductMapper DalProductMapper { get; private set; }
+
 		protected IBOLProductModelIllustrationMapper BolProductModelIllustrationMapper { get; private set; }
 
 		protected IDALProductModelIllustrationMapper DalProductModelIllustrationMapper { get; private set; }
+
 		protected IBOLProductModelProductDescriptionCultureMapper BolProductModelProductDescriptionCultureMapper { get; private set; }
 
 		protected IDALProductModelProductDescriptionCultureMapper DalProductModelProductDescriptionCultureMapper { get; private set; }
@@ -144,16 +146,16 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiProductModelResponseModel>> ByCatalogDescription(string catalogDescription)
+		public async Task<List<ApiProductModelResponseModel>> ByCatalogDescription(string catalogDescription, int limit = 0, int offset = int.MaxValue)
 		{
-			List<ProductModel> records = await this.ProductModelRepository.ByCatalogDescription(catalogDescription);
+			List<ProductModel> records = await this.ProductModelRepository.ByCatalogDescription(catalogDescription, limit, offset);
 
 			return this.BolProductModelMapper.MapBOToModel(this.DalProductModelMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiProductModelResponseModel>> ByInstruction(string instruction)
+		public async Task<List<ApiProductModelResponseModel>> ByInstruction(string instruction, int limit = 0, int offset = int.MaxValue)
 		{
-			List<ProductModel> records = await this.ProductModelRepository.ByInstruction(instruction);
+			List<ProductModel> records = await this.ProductModelRepository.ByInstruction(instruction, limit, offset);
 
 			return this.BolProductModelMapper.MapBOToModel(this.DalProductModelMapper.MapEFToBO(records));
 		}
@@ -182,5 +184,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3e855703931a29db222499b69344d84c</Hash>
+    <Hash>d836ce2fc8d24820a3e300667cda9133</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace TicketingCRMNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiProvinceResponseModel> response = await this.ProvinceService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace TicketingCRMNS.Api.Web
 		[Route("byCountryId/{countryId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProvinceResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByCountryId(int countryId)
+		public async virtual Task<IActionResult> ByCountryId(int countryId, int? limit, int? offset)
 		{
-			List<ApiProvinceResponseModel> response = await this.ProvinceService.ByCountryId(countryId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiProvinceResponseModel> response = await this.ProvinceService.ByCountryId(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -219,8 +229,11 @@ namespace TicketingCRMNS.Api.Web
 		public async virtual Task<IActionResult> Cities(int provinceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiCityResponseModel> response = await this.ProvinceService.Cities(provinceId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -233,8 +246,11 @@ namespace TicketingCRMNS.Api.Web
 		public async virtual Task<IActionResult> Venues(int provinceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
 
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
 			List<ApiVenueResponseModel> response = await this.ProvinceService.Venues(provinceId, query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -259,5 +275,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ebe3cb27621208d7e85a87387ef9b46f</Hash>
+    <Hash>3432547b98a294f623e2f2307cc61b75</Hash>
 </Codenesium>*/

@@ -83,9 +83,9 @@ namespace OctopusDeployNS.Api.DataAccess
 			return records.FirstOrDefault();
 		}
 
-		public async Task<List<Machine>> ByMachinePolicyId(string machinePolicyId)
+		public async Task<List<Machine>> ByMachinePolicyId(string machinePolicyId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.MachinePolicyId == machinePolicyId);
+			var records = await this.Where(x => x.MachinePolicyId == machinePolicyId, limit, offset);
 
 			return records;
 		}
@@ -122,5 +122,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>782e41774c56a48ad32f0c54f740be13</Hash>
+    <Hash>8056ebc3dfa7ed5c211150362f02a93e</Hash>
 </Codenesium>*/

@@ -69,7 +69,7 @@ namespace AdventureWorksNS.Api.Web
                    && level == LogLevel.Information)
             });
 
-	    public virtual ApplicationDbContext SetupDatabase(IServiceCollection services, bool enableSensitiveDataLogging)
+	    public virtual DbContextOptions SetupDatabase(bool enableSensitiveDataLogging)
         {
             DbContextOptionsBuilder options = new DbContextOptionsBuilder();
 			if (enableSensitiveDataLogging)
@@ -79,8 +79,8 @@ namespace AdventureWorksNS.Api.Web
 
             options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
-            ApplicationDbContext context = new ApplicationDbContext(options.Options);
-			return context;
+           
+			return options.Options;
         }
 
 		public virtual void MigrateDatabase(ApplicationDbContext context)
@@ -234,31 +234,41 @@ namespace AdventureWorksNS.Api.Web
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
 
+			// register the global settings object
             builder.Register(ctx => ctx.Resolve<IOptions<ApiSettings>>().Value);
 
-            ApplicationDbContext context = this.SetupDatabase(services, true);
+			// create entity framework options
+			DbContextOptions dbOptions = this.SetupDatabase(true);
 
-			builder.RegisterInstance(context).As<ApplicationDbContext>();
+			// register the entity framework options
+			builder.Register(c => dbOptions).As<DbContextOptions>();
 
-            builder.RegisterInstance(context).As<DbContext>();
+			// register the ApplicationDbContext
+			builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
+
+			// register the ApplicationDbContext as DbContext for anywhere we interact with DbContext like the TransactionCoordinator
+			builder.RegisterType<ApplicationDbContext>().As<DbContext>().InstancePerLifetimeScope();
 
             // Set up the transaction coordinator for Entity Framework
             builder.RegisterType<EntityFrameworkTransactionCoordinator>()
                 .As<ITransactionCoordinator>()
                 .InstancePerLifetimeScope();
-
+			
+			// register mappers in the contracts assembly
 			var contractsAssembly = typeof(AbstractApiRequestModel).Assembly;
 		    builder.RegisterAssemblyTypes(contractsAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Mapper"))
                 .AsImplementedInterfaces()
 			    .PropertiesAutowired();
 			
+			// register services, model validators and mappers in the services assembly
 			var servicesAssembly = typeof(AbstractService).Assembly;
             builder.RegisterAssemblyTypes(servicesAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && (t.Name.EndsWith("Service") || t.Name.EndsWith("ModelValidator") || t.Name.EndsWith("Mapper")))
                 .AsImplementedInterfaces()
 			    .PropertiesAutowired();
 
+			// register repositories in the data access assembly
             var dataAccessAssembly = typeof(AbstractRepository).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
 				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
@@ -273,6 +283,7 @@ namespace AdventureWorksNS.Api.Web
                     !(t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Meta<>)))
             );
 
+			// build the DI container
             this.ApplicationApiContainer = builder.Build();
             return new AutofacServiceProvider(this.ApplicationApiContainer);
         }
@@ -337,8 +348,7 @@ namespace AdventureWorksNS.Api.Web
             {
                 Title = "AdventureWorks API " + description.ApiVersion,
                 Version = description.ApiVersion.ToString(),
-                Description = "Visit https://generator.swagger.io/ to generate a client for this API",
-                Contact = new Contact() { Name = "test", Email = "test@test.com" },
+                Description = "Visit http://editor.swagger.io/ to generate a client for this API",
                 TermsOfService = string.Empty,
                 License = new License() { Name = "MIT", Url = "https://opensource.org/licenses/MIT" }
             };

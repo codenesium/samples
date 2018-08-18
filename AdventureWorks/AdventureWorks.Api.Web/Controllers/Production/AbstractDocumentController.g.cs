@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiDocumentResponseModel> response = await this.DocumentService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byFileNameRevision/{fileName}/{revision}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByFileNameRevision(string fileName, string revision)
+		public async virtual Task<IActionResult> ByFileNameRevision(string fileName, string revision, int? limit, int? offset)
 		{
-			List<ApiDocumentResponseModel> response = await this.DocumentService.ByFileNameRevision(fileName, revision);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiDocumentResponseModel> response = await this.DocumentService.ByFileNameRevision(fileName, revision, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fd19b21fd4cb5442d2a33bfb7d1284d1</Hash>
+    <Hash>92c3a357f2de1a9ff93786b55734fbd7</Hash>
 </Codenesium>*/

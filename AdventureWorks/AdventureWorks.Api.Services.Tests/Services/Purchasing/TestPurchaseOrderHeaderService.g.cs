@@ -148,7 +148,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPurchaseOrderHeaderRepository>();
 			var records = new List<PurchaseOrderHeader>();
 			records.Add(new PurchaseOrderHeader());
-			mock.RepositoryMock.Setup(x => x.ByEmployeeID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByEmployeeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PurchaseOrderHeaderService(mock.LoggerMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.PurchaseOrderHeaderModelValidatorMock.Object,
@@ -160,14 +160,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPurchaseOrderHeaderResponseModel> response = await service.ByEmployeeID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEmployeeID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByEmployeeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByEmployeeID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IPurchaseOrderHeaderRepository>();
-			mock.RepositoryMock.Setup(x => x.ByEmployeeID(It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
+			mock.RepositoryMock.Setup(x => x.ByEmployeeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
 			var service = new PurchaseOrderHeaderService(mock.LoggerMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.PurchaseOrderHeaderModelValidatorMock.Object,
@@ -179,7 +179,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPurchaseOrderHeaderResponseModel> response = await service.ByEmployeeID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEmployeeID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByEmployeeID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -188,7 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPurchaseOrderHeaderRepository>();
 			var records = new List<PurchaseOrderHeader>();
 			records.Add(new PurchaseOrderHeader());
-			mock.RepositoryMock.Setup(x => x.ByVendorID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByVendorID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PurchaseOrderHeaderService(mock.LoggerMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.PurchaseOrderHeaderModelValidatorMock.Object,
@@ -200,14 +200,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPurchaseOrderHeaderResponseModel> response = await service.ByVendorID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByVendorID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByVendorID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByVendorID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IPurchaseOrderHeaderRepository>();
-			mock.RepositoryMock.Setup(x => x.ByVendorID(It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
+			mock.RepositoryMock.Setup(x => x.ByVendorID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
 			var service = new PurchaseOrderHeaderService(mock.LoggerMock.Object,
 			                                             mock.RepositoryMock.Object,
 			                                             mock.ModelValidatorMockFactory.PurchaseOrderHeaderModelValidatorMock.Object,
@@ -219,7 +219,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPurchaseOrderHeaderResponseModel> response = await service.ByVendorID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByVendorID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByVendorID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -265,5 +265,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bddf0460f0a78af26c2d9b5a32ad71cc</Hash>
+    <Hash>e62d6b87d6d28fe6a1c92b0bd52407f5</Hash>
 </Codenesium>*/

@@ -25,6 +25,7 @@ namespace FermataFishNS.Api.DataAccess
 			this.StudioId = studioId;
 		}
 
+		[MaxLength(128)]
 		[Column("description")]
 		public string Description { get; private set; }
 
@@ -32,6 +33,7 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 
@@ -44,5 +46,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>842f6b472d289ce03af7ab74ce10a28c</Hash>
+    <Hash>a450a89b07c4adb6fbb48c9c171666a2</Hash>
 </Codenesium>*/

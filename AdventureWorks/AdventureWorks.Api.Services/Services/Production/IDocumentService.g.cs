@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiDocumentResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDocumentResponseModel>> ByFileNameRevision(string fileName, string revision);
+		Task<List<ApiDocumentResponseModel>> ByFileNameRevision(string fileName, string revision, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f7cff7f6b1a98f0c6e119acbb0836748</Hash>
+    <Hash>19a741cd855ceaf4ca78eacdf94321c6</Hash>
 </Codenesium>*/

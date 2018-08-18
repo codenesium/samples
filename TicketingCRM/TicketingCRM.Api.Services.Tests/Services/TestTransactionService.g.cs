@@ -148,7 +148,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ITransactionRepository>();
 			var records = new List<Transaction>();
 			records.Add(new Transaction());
-			mock.RepositoryMock.Setup(x => x.ByTransactionStatusId(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByTransactionStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
@@ -160,14 +160,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiTransactionResponseModel> response = await service.ByTransactionStatusId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTransactionStatusId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByTransactionStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByTransactionStatusId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITransactionRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTransactionStatusId(It.IsAny<int>())).Returns(Task.FromResult<List<Transaction>>(new List<Transaction>()));
+			mock.RepositoryMock.Setup(x => x.ByTransactionStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Transaction>>(new List<Transaction>()));
 			var service = new TransactionService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
@@ -179,7 +179,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			List<ApiTransactionResponseModel> response = await service.ByTransactionStatusId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTransactionStatusId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByTransactionStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -225,5 +225,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>058d1a0b6af5c270e4ab44fb8bb09dbf</Hash>
+    <Hash>eb60766ae1562fb56d49fe0c8afd6072</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiSalesOrderDetailResponseModel> response = await this.SalesOrderDetailService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byProductID/{productID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSalesOrderDetailResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProductID(int productID)
+		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
 		{
-			List<ApiSalesOrderDetailResponseModel> response = await this.SalesOrderDetailService.ByProductID(productID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiSalesOrderDetailResponseModel> response = await this.SalesOrderDetailService.ByProductID(productID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e9dc2ae0a50cbcc01f5e0b7f7aca67b1</Hash>
+    <Hash>5d068cd0f7a23e831f30ca9d5c5acb4e</Hash>
 </Codenesium>*/

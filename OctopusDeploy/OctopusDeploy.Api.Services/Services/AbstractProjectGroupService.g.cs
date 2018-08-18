@@ -122,9 +122,9 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiProjectGroupResponseModel>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<ApiProjectGroupResponseModel>> ByDataVersion(byte[] dataVersion, int limit = 0, int offset = int.MaxValue)
 		{
-			List<ProjectGroup> records = await this.ProjectGroupRepository.ByDataVersion(dataVersion);
+			List<ProjectGroup> records = await this.ProjectGroupRepository.ByDataVersion(dataVersion, limit, offset);
 
 			return this.BolProjectGroupMapper.MapBOToModel(this.DalProjectGroupMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0876e6030909fecd59ce5d3776c6dc45</Hash>
+    <Hash>03b15c2d820cf9105906c669aa724402</Hash>
 </Codenesium>*/

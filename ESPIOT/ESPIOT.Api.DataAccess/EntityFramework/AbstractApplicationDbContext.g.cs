@@ -7,20 +7,20 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace FileServiceNS.Api.DataAccess
+namespace ESPIOTNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace FileServiceNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -40,13 +40,9 @@ namespace FileServiceNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<Bucket> Buckets { get; set; }
+		public virtual DbSet<Device> Devices { get; set; }
 
-		public virtual DbSet<File> Files { get; set; }
-
-		public virtual DbSet<FileType> FileTypes { get; set; }
-
-		public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
+		public virtual DbSet<DeviceAction> DeviceActions { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -86,9 +82,9 @@ namespace FileServiceNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FileService.Api.Web");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "ESPIOT.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -109,5 +105,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>52c3c749c0626a3ba25543e0e7d8a7cb</Hash>
+    <Hash>b4673b4e0c719a55f620a4399dbd055d</Hash>
 </Codenesium>*/

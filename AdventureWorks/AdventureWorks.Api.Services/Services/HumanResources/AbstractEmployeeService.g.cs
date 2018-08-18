@@ -25,9 +25,11 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLEmployeeDepartmentHistoryMapper BolEmployeeDepartmentHistoryMapper { get; private set; }
 
 		protected IDALEmployeeDepartmentHistoryMapper DalEmployeeDepartmentHistoryMapper { get; private set; }
+
 		protected IBOLEmployeePayHistoryMapper BolEmployeePayHistoryMapper { get; private set; }
 
 		protected IDALEmployeePayHistoryMapper DalEmployeePayHistoryMapper { get; private set; }
+
 		protected IBOLJobCandidateMapper BolJobCandidateMapper { get; private set; }
 
 		protected IDALJobCandidateMapper DalJobCandidateMapper { get; private set; }
@@ -182,5 +184,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4383361eae978e20432e1b0638b47e13</Hash>
+    <Hash>1d17fd19e2117bc39d17786cf664ae3a</Hash>
 </Codenesium>*/

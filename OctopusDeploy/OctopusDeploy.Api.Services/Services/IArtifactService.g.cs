@@ -21,10 +21,10 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<List<ApiArtifactResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiArtifactResponseModel>> ByTenantId(string tenantId);
+		Task<List<ApiArtifactResponseModel>> ByTenantId(string tenantId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e39f174069adba3ec89f07b83b0caec</Hash>
+    <Hash>fc9cce2baf8237c00baea1f2b8f6080c</Hash>
 </Codenesium>*/

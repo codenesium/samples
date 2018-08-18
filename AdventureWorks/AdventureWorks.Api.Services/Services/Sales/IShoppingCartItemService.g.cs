@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiShoppingCartItemResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiShoppingCartItemResponseModel>> ByShoppingCartIDProductID(string shoppingCartID, int productID);
+		Task<List<ApiShoppingCartItemResponseModel>> ByShoppingCartIDProductID(string shoppingCartID, int productID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ff10ea467e162d25045ccb8e2e0c67b7</Hash>
+    <Hash>fcf642ee8804a7e3df6969caa9edc9f6</Hash>
 </Codenesium>*/

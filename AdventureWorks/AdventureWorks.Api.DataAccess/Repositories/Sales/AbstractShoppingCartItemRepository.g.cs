@@ -76,9 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<ShoppingCartItem>> ByShoppingCartIDProductID(string shoppingCartID, int productID)
+		public async Task<List<ShoppingCartItem>> ByShoppingCartIDProductID(string shoppingCartID, int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID);
+			var records = await this.Where(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID, limit, offset);
 
 			return records;
 		}
@@ -115,5 +115,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4dacae8f99e43a8a1317046d19319b67</Hash>
+    <Hash>f57e21306f7a73f7361a238d92364604</Hash>
 </Codenesium>*/

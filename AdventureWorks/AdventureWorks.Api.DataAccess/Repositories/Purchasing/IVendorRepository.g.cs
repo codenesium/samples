@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1cee22bcab9559368457590c392971cb</Hash>
+    <Hash>345dbb74d0e8913777f2600b3565e0a1</Hash>
 </Codenesium>*/

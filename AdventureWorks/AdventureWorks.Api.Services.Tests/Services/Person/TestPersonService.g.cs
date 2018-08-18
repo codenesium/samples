@@ -184,7 +184,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPersonRepository>();
 			var records = new List<Person>();
 			records.Add(new Person());
-			mock.RepositoryMock.Setup(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PersonService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -202,14 +202,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPersonResponseModel> response = await service.ByLastNameFirstNameMiddleName(default(string), default(string), default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByLastNameFirstNameMiddleName_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
+			mock.RepositoryMock.Setup(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
 			var service = new PersonService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -227,7 +227,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPersonResponseModel> response = await service.ByLastNameFirstNameMiddleName(default(string), default(string), default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByLastNameFirstNameMiddleName(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -236,7 +236,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPersonRepository>();
 			var records = new List<Person>();
 			records.Add(new Person());
-			mock.RepositoryMock.Setup(x => x.ByAdditionalContactInfo(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByAdditionalContactInfo(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PersonService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -254,14 +254,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPersonResponseModel> response = await service.ByAdditionalContactInfo(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByAdditionalContactInfo(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByAdditionalContactInfo(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByAdditionalContactInfo_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.ByAdditionalContactInfo(It.IsAny<string>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
+			mock.RepositoryMock.Setup(x => x.ByAdditionalContactInfo(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
 			var service = new PersonService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -279,7 +279,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPersonResponseModel> response = await service.ByAdditionalContactInfo(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByAdditionalContactInfo(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByAdditionalContactInfo(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -288,7 +288,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IPersonRepository>();
 			var records = new List<Person>();
 			records.Add(new Person());
-			mock.RepositoryMock.Setup(x => x.ByDemographic(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDemographic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PersonService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -306,14 +306,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPersonResponseModel> response = await service.ByDemographic(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDemographic_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDemographic(It.IsAny<string>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
+			mock.RepositoryMock.Setup(x => x.ByDemographic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Person>>(new List<Person>()));
 			var service = new PersonService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
@@ -331,7 +331,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiPersonResponseModel> response = await service.ByDemographic(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByDemographic(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -545,5 +545,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fabe1d371ce70d2ddb116f8f1612d222</Hash>
+    <Hash>09cf7c0d090f2b96478b997f71aa7996</Hash>
 </Codenesium>*/

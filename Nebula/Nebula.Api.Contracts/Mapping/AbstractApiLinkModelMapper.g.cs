@@ -69,5 +69,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>93110227711b5ee1ce1c59bbd3b6b512</Hash>
+    <Hash>b5306f64bf7aeacca608e6824d309687</Hash>
 </Codenesium>*/

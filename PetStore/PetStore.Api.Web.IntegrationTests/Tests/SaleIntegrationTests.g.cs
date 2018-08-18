@@ -93,5 +93,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3da203ebb863ae84b1310bb4aa1cfba8</Hash>
+    <Hash>31b2466b6eaf59286578d5c1051d6442</Hash>
 </Codenesium>*/

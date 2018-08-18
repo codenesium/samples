@@ -27,6 +27,7 @@ namespace PetShippingNS.Api.DataAccess
 			this.LastName = lastName;
 		}
 
+		[MaxLength(128)]
 		[Column("firstName")]
 		public string FirstName { get; private set; }
 
@@ -40,11 +41,12 @@ namespace PetShippingNS.Api.DataAccess
 		[Column("isShipper")]
 		public bool IsShipper { get; private set; }
 
+		[MaxLength(128)]
 		[Column("lastName")]
 		public string LastName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a04cdf2dfa31179e5f9f50a9e6fa3e12</Hash>
+    <Hash>1411762fbb78493c229e04c7a0f9827e</Hash>
 </Codenesium>*/

@@ -108,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiProductReviewResponseModel>> ByProductIDReviewerName(int productID, string reviewerName)
+		public async Task<List<ApiProductReviewResponseModel>> ByProductIDReviewerName(int productID, string reviewerName, int limit = 0, int offset = int.MaxValue)
 		{
-			List<ProductReview> records = await this.ProductReviewRepository.ByProductIDReviewerName(productID, reviewerName);
+			List<ProductReview> records = await this.ProductReviewRepository.ByProductIDReviewerName(productID, reviewerName, limit, offset);
 
 			return this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5bdb55a182b8a05d30013e33608f7645</Hash>
+    <Hash>ff521c49d054568b673178a3e7571836</Hash>
 </Codenesium>*/

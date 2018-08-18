@@ -55,6 +55,7 @@ namespace NebulaNS.Api.DataAccess
 		[Column("dateStarted")]
 		public DateTime? DateStarted { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("dynamicParameters")]
 		public string DynamicParameters { get; private set; }
 
@@ -68,15 +69,18 @@ namespace NebulaNS.Api.DataAccess
 		[Column("linkStatusId")]
 		public int LinkStatusId { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 
 		[Column("order")]
 		public int Order { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("response")]
 		public string Response { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("staticParameters")]
 		public string StaticParameters { get; private set; }
 
@@ -95,5 +99,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8a73e3a7098594cc94512de0b8eef9f</Hash>
+    <Hash>5df79e87ece6f0ad01c51ab8dd8a0591</Hash>
 </Codenesium>*/

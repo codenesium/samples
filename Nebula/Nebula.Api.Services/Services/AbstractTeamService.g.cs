@@ -25,6 +25,7 @@ namespace NebulaNS.Api.Services
 		protected IBOLChainMapper BolChainMapper { get; private set; }
 
 		protected IDALChainMapper DalChainMapper { get; private set; }
+
 		protected IBOLMachineRefTeamMapper BolMachineRefTeamMapper { get; private set; }
 
 		protected IDALMachineRefTeamMapper DalMachineRefTeamMapper { get; private set; }
@@ -140,5 +141,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>999943568ae70ba4a7f3a19f157e9248</Hash>
+    <Hash>5fc370b199cba98a8f8ebc6d5e783178</Hash>
 </Codenesium>*/

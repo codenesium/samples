@@ -24,9 +24,11 @@ namespace ESPIOTNS.Api.DataAccess
 		}
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(90)]
 		[Column("name")]
 		public string Name { get; private set; }
 
@@ -36,5 +38,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d2f7e350556f4e83e5bb92cf8e39c68a</Hash>
+    <Hash>61e263e41e74494cfe60c692e5c7329e</Hash>
 </Codenesium>*/

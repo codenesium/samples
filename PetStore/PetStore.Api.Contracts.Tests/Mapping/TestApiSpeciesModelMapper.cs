@@ -51,5 +51,5 @@ namespace PetStoreNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>bcc6c9a4ae8731405618ac126e4e3b60</Hash>
+    <Hash>fce4b8cf99096fdaaaabdbf7e2ab5904</Hash>
 </Codenesium>*/

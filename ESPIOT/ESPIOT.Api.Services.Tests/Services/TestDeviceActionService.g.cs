@@ -136,7 +136,7 @@ namespace ESPIOTNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
 			var records = new List<DeviceAction>();
 			records.Add(new DeviceAction());
-			mock.RepositoryMock.Setup(x => x.ByDeviceId(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDeviceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace ESPIOTNS.Api.Services.Tests
 			List<ApiDeviceActionResponseModel> response = await service.ByDeviceId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDeviceId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByDeviceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDeviceId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IDeviceActionRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDeviceId(It.IsAny<int>())).Returns(Task.FromResult<List<DeviceAction>>(new List<DeviceAction>()));
+			mock.RepositoryMock.Setup(x => x.ByDeviceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DeviceAction>>(new List<DeviceAction>()));
 			var service = new DeviceActionService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.DeviceActionModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace ESPIOTNS.Api.Services.Tests
 			List<ApiDeviceActionResponseModel> response = await service.ByDeviceId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDeviceId(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByDeviceId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4bca0a5d841bc5166ab1e33638483642</Hash>
+    <Hash>03097d345a932666220b189e443f84df</Hash>
 </Codenesium>*/

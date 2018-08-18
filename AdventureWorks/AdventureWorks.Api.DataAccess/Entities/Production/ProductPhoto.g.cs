@@ -32,6 +32,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("LargePhoto")]
 		public byte[] LargePhoto { get; private set; }
 
+		[MaxLength(50)]
 		[Column("LargePhotoFileName")]
 		public string LargePhotoFileName { get; private set; }
 
@@ -46,11 +47,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ThumbNailPhoto")]
 		public byte[] ThumbNailPhoto { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ThumbnailPhotoFileName")]
 		public string ThumbnailPhotoFileName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>94753bd7a58c17e9c6595d636bfa790f</Hash>
+    <Hash>6aa5933a914ad133ef0a81cf42188f3d</Hash>
 </Codenesium>*/

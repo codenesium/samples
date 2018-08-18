@@ -29,9 +29,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ModifiedDate = modifiedDate;
 		}
 
+		[MaxLength(25)]
 		[Column("CardNumber")]
 		public string CardNumber { get; private set; }
 
+		[MaxLength(50)]
 		[Column("CardType")]
 		public string CardType { get; private set; }
 
@@ -52,5 +54,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>550b8d624f0a8d7ecf7445d0fc9463c3</Hash>
+    <Hash>dbffaf90d670448e69ea4badf0dd30bd</Hash>
 </Codenesium>*/

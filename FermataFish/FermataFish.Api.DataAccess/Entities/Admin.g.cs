@@ -34,9 +34,11 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("birthday")]
 		public DateTime? Birthday { get; private set; }
 
+		[MaxLength(128)]
 		[Column("email")]
 		public string Email { get; private set; }
 
+		[MaxLength(128)]
 		[Column("firstName")]
 		public string FirstName { get; private set; }
 
@@ -44,9 +46,11 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("lastName")]
 		public string LastName { get; private set; }
 
+		[MaxLength(128)]
 		[Column("phone")]
 		public string Phone { get; private set; }
 
@@ -59,5 +63,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c2e47101a5c3133f0b512597b26e3ad9</Hash>
+    <Hash>fb9f78e2c84d6f1e522f14a462d511bd</Hash>
 </Codenesium>*/

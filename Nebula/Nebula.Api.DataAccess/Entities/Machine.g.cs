@@ -29,6 +29,7 @@ namespace NebulaNS.Api.DataAccess
 			this.Name = name;
 		}
 
+		[MaxLength(2147483647)]
 		[Column("description")]
 		public string Description { get; private set; }
 
@@ -36,20 +37,23 @@ namespace NebulaNS.Api.DataAccess
 		[Column("id")]
 		public int Id { get; private set; }
 
+		[MaxLength(128)]
 		[Column("jwtKey")]
 		public string JwtKey { get; private set; }
 
+		[MaxLength(128)]
 		[Column("lastIpAddress")]
 		public string LastIpAddress { get; private set; }
 
 		[Column("machineGuid")]
 		public Guid MachineGuid { get; private set; }
 
+		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d17d4e071e94e6034fc4f5f1be8d67fa</Hash>
+    <Hash>49256a85b82d017f243485ee260fbfd4</Hash>
 </Codenesium>*/

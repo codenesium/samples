@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiLifecycleResponseModel> response = await this.LifecycleService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byDataVersion/{dataVersion}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiLifecycleResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
+		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion, int? limit, int? offset)
 		{
-			List<ApiLifecycleResponseModel> response = await this.LifecycleService.ByDataVersion(dataVersion);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiLifecycleResponseModel> response = await this.LifecycleService.ByDataVersion(dataVersion, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -250,5 +260,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>da15c361768d9042d8ac49beb7cdecb1</Hash>
+    <Hash>6620ef4fc502f158904dbf793f113c83</Hash>
 </Codenesium>*/

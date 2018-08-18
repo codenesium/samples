@@ -21,12 +21,12 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<List<ApiDeploymentRelatedMachineResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDeploymentRelatedMachineResponseModel>> ByDeploymentId(string deploymentId);
+		Task<List<ApiDeploymentRelatedMachineResponseModel>> ByDeploymentId(string deploymentId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDeploymentRelatedMachineResponseModel>> ByMachineId(string machineId);
+		Task<List<ApiDeploymentRelatedMachineResponseModel>> ByMachineId(string machineId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ac0dbf3af9a7371418bd40c499dc102</Hash>
+    <Hash>c3273086067ba150cd1e6f65adf1b5b3</Hash>
 </Codenesium>*/

@@ -108,30 +108,30 @@ namespace OctopusDeployNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiCertificateResponseModel>> ByCreated(DateTimeOffset created)
+		public async Task<List<ApiCertificateResponseModel>> ByCreated(DateTimeOffset created, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Certificate> records = await this.CertificateRepository.ByCreated(created);
+			List<Certificate> records = await this.CertificateRepository.ByCreated(created, limit, offset);
 
 			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiCertificateResponseModel>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<ApiCertificateResponseModel>> ByDataVersion(byte[] dataVersion, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Certificate> records = await this.CertificateRepository.ByDataVersion(dataVersion);
+			List<Certificate> records = await this.CertificateRepository.ByDataVersion(dataVersion, limit, offset);
 
 			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiCertificateResponseModel>> ByNotAfter(DateTimeOffset notAfter)
+		public async Task<List<ApiCertificateResponseModel>> ByNotAfter(DateTimeOffset notAfter, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Certificate> records = await this.CertificateRepository.ByNotAfter(notAfter);
+			List<Certificate> records = await this.CertificateRepository.ByNotAfter(notAfter, limit, offset);
 
 			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiCertificateResponseModel>> ByThumbprint(string thumbprint)
+		public async Task<List<ApiCertificateResponseModel>> ByThumbprint(string thumbprint, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Certificate> records = await this.CertificateRepository.ByThumbprint(thumbprint);
+			List<Certificate> records = await this.CertificateRepository.ByThumbprint(thumbprint, limit, offset);
 
 			return this.BolCertificateMapper.MapBOToModel(this.DalCertificateMapper.MapEFToBO(records));
 		}
@@ -139,5 +139,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08c64db81c8caa708d359d1357fdf933</Hash>
+    <Hash>d45c82a2a320ef5914940d05dfc076f1</Hash>
 </Codenesium>*/

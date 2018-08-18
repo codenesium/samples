@@ -60,11 +60,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("TransactionID")]
 		public int TransactionID { get; private set; }
 
+		[MaxLength(1)]
 		[Column("TransactionType")]
 		public string TransactionType { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>18f4f5e9149436830b652b00d86027e7</Hash>
+    <Hash>d340192f5fe8784cc5014e460a097c25</Hash>
 </Codenesium>*/

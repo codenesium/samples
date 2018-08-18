@@ -42,6 +42,7 @@ namespace StackOverflowNS.Api.DataAccess
 		[Column("Score")]
 		public int? Score { get; private set; }
 
+		[MaxLength(700)]
 		[Column("Text")]
 		public string Text { get; private set; }
 
@@ -51,5 +52,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>694a2f394904aaac98b73d77e194b30b</Hash>
+    <Hash>4945832519d22f49d7a9713b5a2a8e04</Hash>
 </Codenesium>*/

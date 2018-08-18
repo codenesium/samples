@@ -7,20 +7,20 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace FermataFishNS.Api.DataAccess
+namespace NebulaNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace FermataFishNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -40,39 +40,27 @@ namespace FermataFishNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<Admin> Admins { get; set; }
+		public virtual DbSet<Chain> Chains { get; set; }
 
-		public virtual DbSet<Family> Families { get; set; }
+		public virtual DbSet<ChainStatus> ChainStatus { get; set; }
 
-		public virtual DbSet<Lesson> Lessons { get; set; }
+		public virtual DbSet<Clasp> Clasps { get; set; }
 
-		public virtual DbSet<LessonStatus> LessonStatus { get; set; }
+		public virtual DbSet<Link> Links { get; set; }
 
-		public virtual DbSet<LessonXStudent> LessonXStudents { get; set; }
+		public virtual DbSet<LinkLog> LinkLogs { get; set; }
 
-		public virtual DbSet<LessonXTeacher> LessonXTeachers { get; set; }
+		public virtual DbSet<LinkStatus> LinkStatus { get; set; }
 
-		public virtual DbSet<Rate> Rates { get; set; }
+		public virtual DbSet<Machine> Machines { get; set; }
 
-		public virtual DbSet<Space> Spaces { get; set; }
+		public virtual DbSet<MachineRefTeam> MachineRefTeams { get; set; }
 
-		public virtual DbSet<SpaceFeature> SpaceFeatures { get; set; }
+		public virtual DbSet<Organization> Organizations { get; set; }
 
-		public virtual DbSet<SpaceXSpaceFeature> SpaceXSpaceFeatures { get; set; }
+		public virtual DbSet<Team> Teams { get; set; }
 
-		public virtual DbSet<State> States { get; set; }
-
-		public virtual DbSet<Student> Students { get; set; }
-
-		public virtual DbSet<StudentXFamily> StudentXFamilies { get; set; }
-
-		public virtual DbSet<Studio> Studios { get; set; }
-
-		public virtual DbSet<Teacher> Teachers { get; set; }
-
-		public virtual DbSet<TeacherSkill> TeacherSkills { get; set; }
-
-		public virtual DbSet<TeacherXTeacherSkill> TeacherXTeacherSkills { get; set; }
+		public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -112,9 +100,9 @@ namespace FermataFishNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FermataFish.Api.Web");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "Nebula.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -135,5 +123,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d8b858c7372dac78d12f6af0052bfd9b</Hash>
+    <Hash>881f6e0db859a4bd691bab4b1b27580f</Hash>
 </Codenesium>*/

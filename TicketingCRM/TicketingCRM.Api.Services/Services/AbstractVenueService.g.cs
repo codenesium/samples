@@ -108,16 +108,16 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiVenueResponseModel>> ByAdminId(int adminId)
+		public async Task<List<ApiVenueResponseModel>> ByAdminId(int adminId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Venue> records = await this.VenueRepository.ByAdminId(adminId);
+			List<Venue> records = await this.VenueRepository.ByAdminId(adminId, limit, offset);
 
 			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiVenueResponseModel>> ByProvinceId(int provinceId)
+		public async Task<List<ApiVenueResponseModel>> ByProvinceId(int provinceId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Venue> records = await this.VenueRepository.ByProvinceId(provinceId);
+			List<Venue> records = await this.VenueRepository.ByProvinceId(provinceId, limit, offset);
 
 			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
 		}
@@ -125,5 +125,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa5acb5e82370dc75d452263c9d5517d</Hash>
+    <Hash>60028d4860fd2bbf0bc390d32f579ece</Hash>
 </Codenesium>*/

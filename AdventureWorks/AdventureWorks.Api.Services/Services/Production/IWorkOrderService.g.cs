@@ -21,14 +21,14 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiWorkOrderResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiWorkOrderResponseModel>> ByProductID(int productID);
+		Task<List<ApiWorkOrderResponseModel>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiWorkOrderResponseModel>> ByScrapReasonID(short? scrapReasonID);
+		Task<List<ApiWorkOrderResponseModel>> ByScrapReasonID(short? scrapReasonID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>09703c10cb98b1fb29cf24cb9a5a1485</Hash>
+    <Hash>4e732e8bc8ee67e1d6810544d82da6ad</Hash>
 </Codenesium>*/

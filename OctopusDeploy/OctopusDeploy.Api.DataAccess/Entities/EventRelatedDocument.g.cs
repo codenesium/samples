@@ -23,6 +23,7 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.RelatedDocumentId = relatedDocumentId;
 		}
 
+		[MaxLength(50)]
 		[Column("EventId")]
 		public string EventId { get; private set; }
 
@@ -30,6 +31,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("Id")]
 		public int Id { get; private set; }
 
+		[MaxLength(250)]
 		[Column("RelatedDocumentId")]
 		public string RelatedDocumentId { get; private set; }
 
@@ -39,5 +41,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d8ed7faeaa882f51f2cedb34f69156e4</Hash>
+    <Hash>a20ce8f19cbb574542b30d6c39f565cd</Hash>
 </Codenesium>*/

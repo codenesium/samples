@@ -56,9 +56,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("DocumentSummary")]
 		public string DocumentSummary { get; private set; }
 
+		[MaxLength(8)]
 		[Column("FileExtension")]
 		public string FileExtension { get; private set; }
 
+		[MaxLength(400)]
 		[Column("FileName")]
 		public string FileName { get; private set; }
 
@@ -71,6 +73,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Owner")]
 		public int Owner { get; private set; }
 
+		[MaxLength(5)]
 		[Column("Revision")]
 		public string Revision { get; private set; }
 
@@ -82,11 +85,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Status")]
 		public int Status { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Title")]
 		public string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7aaa84c59399b0bf7bdaa762cd52c760</Hash>
+    <Hash>770425c2abd0d68517321a0d363d6d49</Hash>
 </Codenesium>*/

@@ -29,17 +29,19 @@ namespace OctopusDeployNS.Api.DataAccess
 		public byte[] DataVersion { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>232790fefc1504981fc645c72ec8d417</Hash>
+    <Hash>2be6137b208537dbfe4dfd65746029d5</Hash>
 </Codenesium>*/

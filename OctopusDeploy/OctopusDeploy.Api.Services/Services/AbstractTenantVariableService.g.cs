@@ -122,9 +122,9 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiTenantVariableResponseModel>> ByTenantId(string tenantId)
+		public async Task<List<ApiTenantVariableResponseModel>> ByTenantId(string tenantId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<TenantVariable> records = await this.TenantVariableRepository.ByTenantId(tenantId);
+			List<TenantVariable> records = await this.TenantVariableRepository.ByTenantId(tenantId, limit, offset);
 
 			return this.BolTenantVariableMapper.MapBOToModel(this.DalTenantVariableMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>af002a78e0a8bd0a2ee02d2ed8173429</Hash>
+    <Hash>d4848d366a7f0dc06468c59ab4e34172</Hash>
 </Codenesium>*/

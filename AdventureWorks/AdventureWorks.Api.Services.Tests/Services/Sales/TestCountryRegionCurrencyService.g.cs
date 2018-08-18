@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ICountryRegionCurrencyRepository>();
 			var records = new List<CountryRegionCurrency>();
 			records.Add(new CountryRegionCurrency());
-			mock.RepositoryMock.Setup(x => x.ByCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByCurrencyCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CountryRegionCurrencyService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CountryRegionCurrencyModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiCountryRegionCurrencyResponseModel> response = await service.ByCurrencyCode(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCurrencyCode(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByCurrencyCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByCurrencyCode_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICountryRegionCurrencyRepository>();
-			mock.RepositoryMock.Setup(x => x.ByCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<List<CountryRegionCurrency>>(new List<CountryRegionCurrency>()));
+			mock.RepositoryMock.Setup(x => x.ByCurrencyCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CountryRegionCurrency>>(new List<CountryRegionCurrency>()));
 			var service = new CountryRegionCurrencyService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.CountryRegionCurrencyModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiCountryRegionCurrencyResponseModel> response = await service.ByCurrencyCode(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCurrencyCode(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByCurrencyCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>87ffe7fd233a63d5f7364fd67f99efdf</Hash>
+    <Hash>a75472e9db679d36d3a5420b5e953389</Hash>
 </Codenesium>*/

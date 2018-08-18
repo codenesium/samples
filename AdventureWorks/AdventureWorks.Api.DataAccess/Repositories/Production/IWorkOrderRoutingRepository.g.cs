@@ -17,10 +17,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<WorkOrderRouting>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<WorkOrderRouting>> ByProductID(int productID);
+		Task<List<WorkOrderRouting>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a8fb4b64ac4f17c109a8b8d2bfc1a0b</Hash>
+    <Hash>3793399846e4efba4d35392a4e84a0f9</Hash>
 </Codenesium>*/

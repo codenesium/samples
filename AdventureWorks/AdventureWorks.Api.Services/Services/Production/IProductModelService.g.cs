@@ -23,9 +23,9 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiProductModelResponseModel> ByName(string name);
 
-		Task<List<ApiProductModelResponseModel>> ByCatalogDescription(string catalogDescription);
+		Task<List<ApiProductModelResponseModel>> ByCatalogDescription(string catalogDescription, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductModelResponseModel>> ByInstruction(string instruction);
+		Task<List<ApiProductModelResponseModel>> ByInstruction(string instruction, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiProductResponseModel>> Products(int productModelID, int limit = int.MaxValue, int offset = 0);
 
@@ -36,5 +36,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3f83fab80c61f3874a4e979b63d31c95</Hash>
+    <Hash>8dd0f99668571fc93174024f143c65d8</Hash>
 </Codenesium>*/

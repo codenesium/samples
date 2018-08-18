@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiMachineResponseModel> response = await this.MachineService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -224,9 +228,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byMachinePolicyId/{machinePolicyId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByMachinePolicyId(string machinePolicyId)
+		public async virtual Task<IActionResult> ByMachinePolicyId(string machinePolicyId, int? limit, int? offset)
 		{
-			List<ApiMachineResponseModel> response = await this.MachineService.ByMachinePolicyId(machinePolicyId);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiMachineResponseModel> response = await this.MachineService.ByMachinePolicyId(machinePolicyId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -250,5 +260,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dc236abd48a4477f221a915c401ae04e</Hash>
+    <Hash>aa67f5f2e16114ec306bbaea38dba180</Hash>
 </Codenesium>*/

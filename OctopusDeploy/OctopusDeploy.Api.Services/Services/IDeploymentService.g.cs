@@ -21,16 +21,16 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<List<ApiDeploymentResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDeploymentResponseModel>> ByChannelId(string channelId);
+		Task<List<ApiDeploymentResponseModel>> ByChannelId(string channelId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDeploymentResponseModel>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId);
+		Task<List<ApiDeploymentResponseModel>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDeploymentResponseModel>> ByTenantId(string tenantId);
+		Task<List<ApiDeploymentResponseModel>> ByTenantId(string tenantId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiDeploymentRelatedMachineResponseModel>> DeploymentRelatedMachines(string deploymentId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>662b413748d7a86c13b42612adc8d9be</Hash>
+    <Hash>306bc619b67826b53339a5dec08f7cad</Hash>
 </Codenesium>*/

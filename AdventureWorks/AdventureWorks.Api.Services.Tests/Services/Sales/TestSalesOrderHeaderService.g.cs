@@ -203,7 +203,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
 			var records = new List<SalesOrderHeader>();
 			records.Add(new SalesOrderHeader());
-			mock.RepositoryMock.Setup(x => x.ByCustomerID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByCustomerID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
@@ -217,14 +217,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiSalesOrderHeaderResponseModel> response = await service.ByCustomerID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCustomerID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByCustomerID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByCustomerID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
-			mock.RepositoryMock.Setup(x => x.ByCustomerID(It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
+			mock.RepositoryMock.Setup(x => x.ByCustomerID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
 			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
@@ -238,7 +238,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiSalesOrderHeaderResponseModel> response = await service.ByCustomerID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCustomerID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByCustomerID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -247,7 +247,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
 			var records = new List<SalesOrderHeader>();
 			records.Add(new SalesOrderHeader());
-			mock.RepositoryMock.Setup(x => x.BySalesPersonID(It.IsAny<int?>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.BySalesPersonID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
@@ -261,14 +261,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiSalesOrderHeaderResponseModel> response = await service.BySalesPersonID(default(int?));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.BySalesPersonID(It.IsAny<int?>()));
+			mock.RepositoryMock.Verify(x => x.BySalesPersonID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void BySalesPersonID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
-			mock.RepositoryMock.Setup(x => x.BySalesPersonID(It.IsAny<int?>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
+			mock.RepositoryMock.Setup(x => x.BySalesPersonID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
 			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
@@ -282,7 +282,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiSalesOrderHeaderResponseModel> response = await service.BySalesPersonID(default(int?));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.BySalesPersonID(It.IsAny<int?>()));
+			mock.RepositoryMock.Verify(x => x.BySalesPersonID(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -376,5 +376,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>36aa5c514038f48dea4af78741ca4bf4</Hash>
+    <Hash>e495820551034bb0d986dc3711c4bbd6</Hash>
 </Codenesium>*/

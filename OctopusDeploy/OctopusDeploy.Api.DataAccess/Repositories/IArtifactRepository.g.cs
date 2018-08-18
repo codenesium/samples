@@ -17,10 +17,10 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		Task<List<Artifact>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Artifact>> ByTenantId(string tenantId);
+		Task<List<Artifact>> ByTenantId(string tenantId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6dc0260b7407cc29baee8b11430a3a1</Hash>
+    <Hash>eb9ccff2467b4a4fbd3eed2ab208a524</Hash>
 </Codenesium>*/

@@ -49,6 +49,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("DataVersion")]
 		public byte[] DataVersion { get; private set; }
 
+		[MaxLength(50)]
 		[Column("DeploymentProcessId")]
 		public string DeploymentProcessId { get; private set; }
 
@@ -56,6 +57,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		public bool DiscreteChannelRelease { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -68,23 +70,28 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("LifecycleId")]
 		public string LifecycleId { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectGroupId")]
 		public string ProjectGroupId { get; private set; }
 
+		[MaxLength(210)]
 		[Column("Slug")]
 		public string Slug { get; private set; }
 
+		[MaxLength(150)]
 		[Column("VariableSetId")]
 		public string VariableSetId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b4f32370732e460058d88527247cd50</Hash>
+    <Hash>e14abaad4c6016e78e05e6395f8908a9</Hash>
 </Codenesium>*/

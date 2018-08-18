@@ -17,7 +17,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<SalesOrderDetail>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<SalesOrderDetail>> ByProductID(int productID);
+		Task<List<SalesOrderDetail>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
 		Task<SpecialOfferProduct> GetSpecialOfferProduct(int productID);
 
@@ -26,5 +26,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>211444295a4a02fda38e7c9c3a5ea43f</Hash>
+    <Hash>4389db99e0cbd892811b9d9a7e9e3204</Hash>
 </Codenesium>*/

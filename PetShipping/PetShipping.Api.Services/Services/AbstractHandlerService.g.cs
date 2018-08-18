@@ -25,9 +25,11 @@ namespace PetShippingNS.Api.Services
 		protected IBOLAirTransportMapper BolAirTransportMapper { get; private set; }
 
 		protected IDALAirTransportMapper DalAirTransportMapper { get; private set; }
+
 		protected IBOLHandlerPipelineStepMapper BolHandlerPipelineStepMapper { get; private set; }
 
 		protected IDALHandlerPipelineStepMapper DalHandlerPipelineStepMapper { get; private set; }
+
 		protected IBOLOtherTransportMapper BolOtherTransportMapper { get; private set; }
 
 		protected IDALOtherTransportMapper DalOtherTransportMapper { get; private set; }
@@ -154,5 +156,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>edefaa8ca2de3056d32b81b9523223a6</Hash>
+    <Hash>6058cedc351a3b0ccea4b5f30d6641f5</Hash>
 </Codenesium>*/

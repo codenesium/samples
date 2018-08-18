@@ -23,10 +23,10 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<ApiDeploymentEnvironmentResponseModel> ByName(string name);
 
-		Task<List<ApiDeploymentEnvironmentResponseModel>> ByDataVersion(byte[] dataVersion);
+		Task<List<ApiDeploymentEnvironmentResponseModel>> ByDataVersion(byte[] dataVersion, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0836cf14896fa000285755d77d69128f</Hash>
+    <Hash>0d9ad8f7450f69a1b8167dfcdd44f4e4</Hash>
 </Codenesium>*/

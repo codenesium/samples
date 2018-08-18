@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<User>();
 			records.Add(new User());
-			mock.RepositoryMock.Setup(x => x.ByDisplayName(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByDisplayName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiUserResponseModel> response = await service.ByDisplayName(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDisplayName(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByDisplayName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByDisplayName_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.ByDisplayName(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
+			mock.RepositoryMock.Setup(x => x.ByDisplayName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<User>>(new List<User>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -198,7 +198,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiUserResponseModel> response = await service.ByDisplayName(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByDisplayName(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByDisplayName(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -207,7 +207,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<User>();
 			records.Add(new User());
-			mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -217,14 +217,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiUserResponseModel> response = await service.ByEmailAddress(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByEmailAddress_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
+			mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<User>>(new List<User>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -234,7 +234,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiUserResponseModel> response = await service.ByEmailAddress(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -243,7 +243,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<User>();
 			records.Add(new User());
-			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -253,14 +253,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiUserResponseModel> response = await service.ByExternalId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByExternalId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<string>())).Returns(Task.FromResult<List<User>>(new List<User>()));
+			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<User>>(new List<User>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -270,11 +270,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiUserResponseModel> response = await service.ByExternalId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c006630042fa854c35b00eebf07f571</Hash>
+    <Hash>40d216d90d355f16e8f31d63cdc98240</Hash>
 </Codenesium>*/

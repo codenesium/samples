@@ -23,12 +23,12 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<ApiChannelResponseModel> ByNameProjectId(string name, string projectId);
 
-		Task<List<ApiChannelResponseModel>> ByDataVersion(byte[] dataVersion);
+		Task<List<ApiChannelResponseModel>> ByDataVersion(byte[] dataVersion, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiChannelResponseModel>> ByProjectId(string projectId);
+		Task<List<ApiChannelResponseModel>> ByProjectId(string projectId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e1adc18fc911eec8a350c6a1823ed486</Hash>
+    <Hash>e03750bcde778363831e32652043eb37</Hash>
 </Codenesium>*/

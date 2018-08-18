@@ -54,6 +54,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("CompletedTime")]
 		public DateTimeOffset? CompletedTime { get; private set; }
 
+		[MaxLength(100)]
 		[Column("ConcurrencyTag")]
 		public string ConcurrencyTag { get; private set; }
 
@@ -63,6 +64,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("DurationSeconds")]
 		public int DurationSeconds { get; private set; }
 
+		[MaxLength(50)]
 		[Column("EnvironmentId")]
 		public string EnvironmentId { get; private set; }
 
@@ -76,35 +78,41 @@ namespace OctopusDeployNS.Api.DataAccess
 		public bool HasWarningsOrErrors { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ProjectId")]
 		public string ProjectId { get; private set; }
 
 		[Column("QueueTime")]
 		public DateTimeOffset QueueTime { get; private set; }
 
+		[MaxLength(250)]
 		[Column("ServerNodeId")]
 		public string ServerNodeId { get; private set; }
 
 		[Column("StartTime")]
 		public DateTimeOffset? StartTime { get; private set; }
 
+		[MaxLength(50)]
 		[Column("State")]
 		public string State { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TenantId")]
 		public string TenantId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>db7681f19db04fd349c3ebb74dd1617b</Hash>
+    <Hash>7836e6433dfc7d8f497b4a2cdb64be8c</Hash>
 </Codenesium>*/

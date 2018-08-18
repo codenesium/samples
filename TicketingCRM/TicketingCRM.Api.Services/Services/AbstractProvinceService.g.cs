@@ -25,6 +25,7 @@ namespace TicketingCRMNS.Api.Services
 		protected IBOLCityMapper BolCityMapper { get; private set; }
 
 		protected IDALCityMapper DalCityMapper { get; private set; }
+
 		protected IBOLVenueMapper BolVenueMapper { get; private set; }
 
 		protected IDALVenueMapper DalVenueMapper { get; private set; }
@@ -123,9 +124,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiProvinceResponseModel>> ByCountryId(int countryId)
+		public async Task<List<ApiProvinceResponseModel>> ByCountryId(int countryId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Province> records = await this.ProvinceRepository.ByCountryId(countryId);
+			List<Province> records = await this.ProvinceRepository.ByCountryId(countryId, limit, offset);
 
 			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
 		}
@@ -147,5 +148,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1e82c9c0f301939190155eea2160488</Hash>
+    <Hash>2dcf528965968187ad9cceb586e0004e</Hash>
 </Codenesium>*/

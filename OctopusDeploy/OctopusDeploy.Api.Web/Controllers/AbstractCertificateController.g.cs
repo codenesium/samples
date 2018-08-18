@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiCertificateResponseModel> response = await this.CertificateService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byCreated/{created}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByCreated(DateTimeOffset created)
+		public async virtual Task<IActionResult> ByCreated(DateTimeOffset created, int? limit, int? offset)
 		{
-			List<ApiCertificateResponseModel> response = await this.CertificateService.ByCreated(created);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiCertificateResponseModel> response = await this.CertificateService.ByCreated(created, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byDataVersion/{dataVersion}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion)
+		public async virtual Task<IActionResult> ByDataVersion(byte[] dataVersion, int? limit, int? offset)
 		{
-			List<ApiCertificateResponseModel> response = await this.CertificateService.ByDataVersion(dataVersion);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiCertificateResponseModel> response = await this.CertificateService.ByDataVersion(dataVersion, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -227,9 +243,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byNotAfter/{notAfter}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByNotAfter(DateTimeOffset notAfter)
+		public async virtual Task<IActionResult> ByNotAfter(DateTimeOffset notAfter, int? limit, int? offset)
 		{
-			List<ApiCertificateResponseModel> response = await this.CertificateService.ByNotAfter(notAfter);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiCertificateResponseModel> response = await this.CertificateService.ByNotAfter(notAfter, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -238,9 +260,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byThumbprint/{thumbprint}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCertificateResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByThumbprint(string thumbprint)
+		public async virtual Task<IActionResult> ByThumbprint(string thumbprint, int? limit, int? offset)
 		{
-			List<ApiCertificateResponseModel> response = await this.CertificateService.ByThumbprint(thumbprint);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiCertificateResponseModel> response = await this.CertificateService.ByThumbprint(thumbprint, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -264,5 +292,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>94b84ab3941caebf8442e8077bfb0fc5</Hash>
+    <Hash>36bbf2031bc292bfb64538e34c469cc2</Hash>
 </Codenesium>*/

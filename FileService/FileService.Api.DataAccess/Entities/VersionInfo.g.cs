@@ -26,6 +26,7 @@ namespace FileServiceNS.Api.DataAccess
 		[Column("AppliedOn")]
 		public DateTime? AppliedOn { get; private set; }
 
+		[MaxLength(1024)]
 		[Column("Description")]
 		public string Description { get; private set; }
 
@@ -36,5 +37,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dd50a9031b66a2d71600f57da78904eb</Hash>
+    <Hash>434f1b85ca0c9cca53471e3086652619</Hash>
 </Codenesium>*/

@@ -70,11 +70,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("StandardPrice")]
 		public decimal StandardPrice { get; private set; }
 
+		[MaxLength(3)]
 		[Column("UnitMeasureCode")]
 		public string UnitMeasureCode { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>05df7496e6fae79239708601f6e233ec</Hash>
+    <Hash>2af4a1efbc52cc0799e320818eb5e66b</Hash>
 </Codenesium>*/

@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IReleaseRepository>();
 			var records = new List<Release>();
 			records.Add(new Release());
-			mock.RepositoryMock.Setup(x => x.ByIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ReleaseService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiReleaseResponseModel> response = await service.ByIdAssembled(default(string), default(DateTimeOffset));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByIdAssembled_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IReleaseRepository>();
-			mock.RepositoryMock.Setup(x => x.ByIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Release>>(new List<Release>()));
+			mock.RepositoryMock.Setup(x => x.ByIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Release>>(new List<Release>()));
 			var service = new ReleaseService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
@@ -198,7 +198,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiReleaseResponseModel> response = await service.ByIdAssembled(default(string), default(DateTimeOffset));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByIdAssembled(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -207,7 +207,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IReleaseRepository>();
 			var records = new List<Release>();
 			records.Add(new Release());
-			mock.RepositoryMock.Setup(x => x.ByProjectDeploymentProcessSnapshotId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByProjectDeploymentProcessSnapshotId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ReleaseService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
@@ -217,14 +217,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiReleaseResponseModel> response = await service.ByProjectDeploymentProcessSnapshotId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProjectDeploymentProcessSnapshotId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByProjectDeploymentProcessSnapshotId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByProjectDeploymentProcessSnapshotId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IReleaseRepository>();
-			mock.RepositoryMock.Setup(x => x.ByProjectDeploymentProcessSnapshotId(It.IsAny<string>())).Returns(Task.FromResult<List<Release>>(new List<Release>()));
+			mock.RepositoryMock.Setup(x => x.ByProjectDeploymentProcessSnapshotId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Release>>(new List<Release>()));
 			var service = new ReleaseService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
@@ -234,7 +234,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiReleaseResponseModel> response = await service.ByProjectDeploymentProcessSnapshotId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByProjectDeploymentProcessSnapshotId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByProjectDeploymentProcessSnapshotId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -243,7 +243,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IReleaseRepository>();
 			var records = new List<Release>();
 			records.Add(new Release());
-			mock.RepositoryMock.Setup(x => x.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ReleaseService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
@@ -253,14 +253,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiReleaseResponseModel> response = await service.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(default(string), default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IReleaseRepository>();
-			mock.RepositoryMock.Setup(x => x.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Release>>(new List<Release>()));
+			mock.RepositoryMock.Setup(x => x.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Release>>(new List<Release>()));
 			var service = new ReleaseService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
@@ -270,7 +270,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiReleaseResponseModel> response = await service.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(default(string), default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByIdVersionProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdChannelIdAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -279,7 +279,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IReleaseRepository>();
 			var records = new List<Release>();
 			records.Add(new Release());
-			mock.RepositoryMock.Setup(x => x.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ReleaseService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
@@ -289,14 +289,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiReleaseResponseModel> response = await service.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(default(string), default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IReleaseRepository>();
-			mock.RepositoryMock.Setup(x => x.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<Release>>(new List<Release>()));
+			mock.RepositoryMock.Setup(x => x.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Release>>(new List<Release>()));
 			var service = new ReleaseService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.ReleaseModelValidatorMock.Object,
@@ -306,11 +306,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiReleaseResponseModel> response = await service.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(default(string), default(string), default(string), default(string), default(string), default(string), default(string), default(DateTimeOffset));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByIdChannelIdProjectVariableSetSnapshotIdProjectDeploymentProcessSnapshotIdJSONProjectIdVersionAssembled(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a84c9ca3eef199e45e28593c2f25e5a6</Hash>
+    <Hash>0c0c6d3693f3dcbc97fe513e16a60a74</Hash>
 </Codenesium>*/

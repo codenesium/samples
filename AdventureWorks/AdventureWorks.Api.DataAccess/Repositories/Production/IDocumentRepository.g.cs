@@ -17,10 +17,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<Document>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Document>> ByFileNameRevision(string fileName, string revision);
+		Task<List<Document>> ByFileNameRevision(string fileName, string revision, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ceacb7a2773dd4e5593843595d74f882</Hash>
+    <Hash>6bf6a24f922908b4f8bcd0606b3f7b35</Hash>
 </Codenesium>*/

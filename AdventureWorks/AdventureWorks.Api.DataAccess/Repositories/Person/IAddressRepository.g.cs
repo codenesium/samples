@@ -19,12 +19,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode);
 
-		Task<List<Address>> ByStateProvinceID(int stateProvinceID);
+		Task<List<Address>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>546764c9709c068b4bf4c261bcd78932</Hash>
+    <Hash>6a5b918d114aee4134efca3b8d8177ba</Hash>
 </Codenesium>*/

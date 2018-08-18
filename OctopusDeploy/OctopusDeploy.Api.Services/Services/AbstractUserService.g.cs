@@ -122,23 +122,23 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiUserResponseModel>> ByDisplayName(string displayName)
+		public async Task<List<ApiUserResponseModel>> ByDisplayName(string displayName, int limit = 0, int offset = int.MaxValue)
 		{
-			List<User> records = await this.UserRepository.ByDisplayName(displayName);
+			List<User> records = await this.UserRepository.ByDisplayName(displayName, limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiUserResponseModel>> ByEmailAddress(string emailAddress)
+		public async Task<List<ApiUserResponseModel>> ByEmailAddress(string emailAddress, int limit = 0, int offset = int.MaxValue)
 		{
-			List<User> records = await this.UserRepository.ByEmailAddress(emailAddress);
+			List<User> records = await this.UserRepository.ByEmailAddress(emailAddress, limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiUserResponseModel>> ByExternalId(string externalId)
+		public async Task<List<ApiUserResponseModel>> ByExternalId(string externalId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<User> records = await this.UserRepository.ByExternalId(externalId);
+			List<User> records = await this.UserRepository.ByExternalId(externalId, limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
@@ -146,5 +146,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e715b75026b1170d552364a7ab3f3de6</Hash>
+    <Hash>de484e74da5bbb436f5674346abc7199</Hash>
 </Codenesium>*/

@@ -31,30 +31,35 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.VariableTemplateId = variableTemplateId;
 		}
 
+		[MaxLength(50)]
 		[Column("EnvironmentId")]
 		public string EnvironmentId { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(50)]
 		[Column("OwnerId")]
 		public string OwnerId { get; private set; }
 
 		[Column("RelatedDocumentId")]
 		public string RelatedDocumentId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("TenantId")]
 		public string TenantId { get; private set; }
 
+		[MaxLength(50)]
 		[Column("VariableTemplateId")]
 		public string VariableTemplateId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1de214f46934e47f573f694853edab28</Hash>
+    <Hash>720e4c7067277a70f5492f3db371b20e</Hash>
 </Codenesium>*/

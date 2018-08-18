@@ -17,11 +17,11 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<Person>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Person>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName);
+		Task<List<Person>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Person>> ByAdditionalContactInfo(string additionalContactInfo);
+		Task<List<Person>> ByAdditionalContactInfo(string additionalContactInfo, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Person>> ByDemographic(string demographic);
+		Task<List<Person>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<BusinessEntityContact>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0);
 
@@ -34,5 +34,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>32de6a163e0211980abfbe2c59c65bed</Hash>
+    <Hash>d083d76ff518676c4dbc9ec79dbd4a42</Hash>
 </Codenesium>*/

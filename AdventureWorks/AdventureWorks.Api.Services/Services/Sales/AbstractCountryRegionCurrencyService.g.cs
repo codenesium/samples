@@ -108,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiCountryRegionCurrencyResponseModel>> ByCurrencyCode(string currencyCode)
+		public async Task<List<ApiCountryRegionCurrencyResponseModel>> ByCurrencyCode(string currencyCode, int limit = 0, int offset = int.MaxValue)
 		{
-			List<CountryRegionCurrency> records = await this.CountryRegionCurrencyRepository.ByCurrencyCode(currencyCode);
+			List<CountryRegionCurrency> records = await this.CountryRegionCurrencyRepository.ByCurrencyCode(currencyCode, limit, offset);
 
 			return this.BolCountryRegionCurrencyMapper.MapBOToModel(this.DalCountryRegionCurrencyMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5f05afd36bc0eac3299e1c791af8a67</Hash>
+    <Hash>fcf0df84a880b1f005a6288ab11a1027</Hash>
 </Codenesium>*/

@@ -37,12 +37,15 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.Username = username;
 		}
 
+		[MaxLength(200)]
 		[Column("DisplayName")]
 		public string DisplayName { get; private set; }
 
+		[MaxLength(400)]
 		[Column("EmailAddress")]
 		public string EmailAddress { get; private set; }
 
+		[MaxLength(400)]
 		[Column("ExternalId")]
 		public string ExternalId { get; private set; }
 
@@ -50,6 +53,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		public string ExternalIdentifiers { get; private set; }
 
 		[Key]
+		[MaxLength(50)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
@@ -65,11 +69,12 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(200)]
 		[Column("Username")]
 		public string Username { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>98783e9e5adc5213388c249167b1c9c4</Hash>
+    <Hash>7cd2b1807f7ec8afe710f23f463509a3</Hash>
 </Codenesium>*/

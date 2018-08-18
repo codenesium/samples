@@ -23,6 +23,7 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.MachineId = machineId;
 		}
 
+		[MaxLength(50)]
 		[Column("DeploymentId")]
 		public string DeploymentId { get; private set; }
 
@@ -30,6 +31,7 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("Id")]
 		public int Id { get; private set; }
 
+		[MaxLength(50)]
 		[Column("MachineId")]
 		public string MachineId { get; private set; }
 
@@ -39,5 +41,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>84d8287597fc22b152a8612b68ff1731</Hash>
+    <Hash>18c7bfa6896f509dfb9a9dc4728bb8ad</Hash>
 </Codenesium>*/

@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
 			var records = new List<ActionTemplateVersion>();
 			records.Add(new ActionTemplateVersion());
-			mock.RepositoryMock.Setup(x => x.ByLatestActionTemplateId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByLatestActionTemplateId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.ActionTemplateVersionModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiActionTemplateVersionResponseModel> response = await service.ByLatestActionTemplateId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByLatestActionTemplateId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByLatestActionTemplateId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByLatestActionTemplateId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IActionTemplateVersionRepository>();
-			mock.RepositoryMock.Setup(x => x.ByLatestActionTemplateId(It.IsAny<string>())).Returns(Task.FromResult<List<ActionTemplateVersion>>(new List<ActionTemplateVersion>()));
+			mock.RepositoryMock.Setup(x => x.ByLatestActionTemplateId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ActionTemplateVersion>>(new List<ActionTemplateVersion>()));
 			var service = new ActionTemplateVersionService(mock.LoggerMock.Object,
 			                                               mock.RepositoryMock.Object,
 			                                               mock.ModelValidatorMockFactory.ActionTemplateVersionModelValidatorMock.Object,
@@ -198,11 +198,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiActionTemplateVersionResponseModel> response = await service.ByLatestActionTemplateId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByLatestActionTemplateId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByLatestActionTemplateId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe8721c8912afbb2b403633917bfde38</Hash>
+    <Hash>c4b367e41b94e8f01c4bc34ff58c4018</Hash>
 </Codenesium>*/

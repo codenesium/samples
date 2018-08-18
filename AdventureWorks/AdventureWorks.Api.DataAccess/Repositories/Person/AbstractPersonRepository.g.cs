@@ -76,23 +76,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Person>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName)
+		public async Task<List<Person>> ByLastNameFirstNameMiddleName(string lastName, string firstName, string middleName, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.LastName == lastName && x.FirstName == firstName && x.MiddleName == middleName);
+			var records = await this.Where(x => x.LastName == lastName && x.FirstName == firstName && x.MiddleName == middleName, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Person>> ByAdditionalContactInfo(string additionalContactInfo)
+		public async Task<List<Person>> ByAdditionalContactInfo(string additionalContactInfo, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.AdditionalContactInfo == additionalContactInfo);
+			var records = await this.Where(x => x.AdditionalContactInfo == additionalContactInfo, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Person>> ByDemographic(string demographic)
+		public async Task<List<Person>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Demographic == demographic);
+			var records = await this.Where(x => x.Demographic == demographic, limit, offset);
 
 			return records;
 		}
@@ -149,5 +149,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>68b5fbf1cb99d61f03ec47cd92dc30bb</Hash>
+    <Hash>8a1925924a553d18f637efe9731163ce</Hash>
 </Codenesium>*/

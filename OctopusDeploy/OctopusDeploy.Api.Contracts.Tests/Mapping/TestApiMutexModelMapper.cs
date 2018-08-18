@@ -51,5 +51,5 @@ namespace OctopusDeployNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>308f4bc079aca9253a09a4802339e8b0</Hash>
+    <Hash>479519c7fb1ce75cb8bbd2cfdce5b14f</Hash>
 </Codenesium>*/

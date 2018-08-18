@@ -41,6 +41,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Quantity")]
 		public int Quantity { get; private set; }
 
+		[MaxLength(50)]
 		[Column("ShoppingCartID")]
 		public string ShoppingCartID { get; private set; }
 
@@ -52,5 +53,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>38c49d3b91bf8d63ae2567e3a13c75c3</Hash>
+    <Hash>eeded8d0df3ace61811445def1de675d</Hash>
 </Codenesium>*/

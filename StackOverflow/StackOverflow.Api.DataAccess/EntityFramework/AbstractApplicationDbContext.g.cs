@@ -7,20 +7,20 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace PetShippingNS.Api.DataAccess
+namespace StackOverflowNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace PetShippingNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -40,49 +40,29 @@ namespace PetShippingNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<Airline> Airlines { get; set; }
+		public virtual DbSet<Badges> Badges { get; set; }
 
-		public virtual DbSet<AirTransport> AirTransports { get; set; }
+		public virtual DbSet<Comments> Comments { get; set; }
 
-		public virtual DbSet<Breed> Breeds { get; set; }
+		public virtual DbSet<LinkTypes> LinkTypes { get; set; }
 
-		public virtual DbSet<Client> Clients { get; set; }
+		public virtual DbSet<PostHistory> PostHistories { get; set; }
 
-		public virtual DbSet<ClientCommunication> ClientCommunications { get; set; }
+		public virtual DbSet<PostHistoryTypes> PostHistoryTypes { get; set; }
 
-		public virtual DbSet<Country> Countries { get; set; }
+		public virtual DbSet<PostLinks> PostLinks { get; set; }
 
-		public virtual DbSet<CountryRequirement> CountryRequirements { get; set; }
+		public virtual DbSet<Posts> Posts { get; set; }
 
-		public virtual DbSet<Destination> Destinations { get; set; }
+		public virtual DbSet<PostTypes> PostTypes { get; set; }
 
-		public virtual DbSet<Employee> Employees { get; set; }
+		public virtual DbSet<Tags> Tags { get; set; }
 
-		public virtual DbSet<Handler> Handlers { get; set; }
+		public virtual DbSet<Users> Users { get; set; }
 
-		public virtual DbSet<HandlerPipelineStep> HandlerPipelineSteps { get; set; }
+		public virtual DbSet<Votes> Votes { get; set; }
 
-		public virtual DbSet<OtherTransport> OtherTransports { get; set; }
-
-		public virtual DbSet<Pet> Pets { get; set; }
-
-		public virtual DbSet<Pipeline> Pipelines { get; set; }
-
-		public virtual DbSet<PipelineStatus> PipelineStatus { get; set; }
-
-		public virtual DbSet<PipelineStep> PipelineSteps { get; set; }
-
-		public virtual DbSet<PipelineStepDestination> PipelineStepDestinations { get; set; }
-
-		public virtual DbSet<PipelineStepNote> PipelineStepNotes { get; set; }
-
-		public virtual DbSet<PipelineStepStatus> PipelineStepStatus { get; set; }
-
-		public virtual DbSet<PipelineStepStepRequirement> PipelineStepStepRequirements { get; set; }
-
-		public virtual DbSet<Sale> Sales { get; set; }
-
-		public virtual DbSet<Species> Species { get; set; }
+		public virtual DbSet<VoteTypes> VoteTypes { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -122,9 +102,9 @@ namespace PetShippingNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "PetShipping.Api.Web");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "StackOverflow.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -145,5 +125,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b5f6e5f54dda780f2d0e997f482515c7</Hash>
+    <Hash>de7726fd7fd0ca07583171578e8c9fa5</Hash>
 </Codenesium>*/

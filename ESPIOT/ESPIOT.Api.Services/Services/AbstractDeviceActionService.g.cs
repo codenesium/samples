@@ -108,9 +108,9 @@ namespace ESPIOTNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiDeviceActionResponseModel>> ByDeviceId(int deviceId)
+		public async Task<List<ApiDeviceActionResponseModel>> ByDeviceId(int deviceId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<DeviceAction> records = await this.DeviceActionRepository.ByDeviceId(deviceId);
+			List<DeviceAction> records = await this.DeviceActionRepository.ByDeviceId(deviceId, limit, offset);
 
 			return this.BolDeviceActionMapper.MapBOToModel(this.DalDeviceActionMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>830c97a20e719bd7f8c0a304b4396d7b</Hash>
+    <Hash>14fedb04bd3c86d4e5eb8f06b2bb04c2</Hash>
 </Codenesium>*/

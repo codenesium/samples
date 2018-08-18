@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiCustomerResponseModel>> ByTerritoryID(int? territoryID)
+		public async Task<List<ApiCustomerResponseModel>> ByTerritoryID(int? territoryID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Customer> records = await this.CustomerRepository.ByTerritoryID(territoryID);
+			List<Customer> records = await this.CustomerRepository.ByTerritoryID(territoryID, limit, offset);
 
 			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
 		}
@@ -147,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>83ff8b13df68144c7f97cd7500679459</Hash>
+    <Hash>f4b7c0ae1097e05983e8340125feb54a</Hash>
 </Codenesium>*/

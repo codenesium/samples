@@ -56,12 +56,15 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("EmailPromotion")]
 		public int EmailPromotion { get; private set; }
 
+		[MaxLength(50)]
 		[Column("FirstName")]
 		public string FirstName { get; private set; }
 
+		[MaxLength(50)]
 		[Column("LastName")]
 		public string LastName { get; private set; }
 
+		[MaxLength(50)]
 		[Column("MiddleName")]
 		public string MiddleName { get; private set; }
 
@@ -71,6 +74,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("NameStyle")]
 		public bool NameStyle { get; private set; }
 
+		[MaxLength(2)]
 		[Column("PersonType")]
 		public string PersonType { get; private set; }
 
@@ -78,14 +82,16 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("rowguid")]
 		public Guid Rowguid { get; private set; }
 
+		[MaxLength(10)]
 		[Column("Suffix")]
 		public string Suffix { get; private set; }
 
+		[MaxLength(8)]
 		[Column("Title")]
 		public string Title { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3be8479cf096b1868d5853d0a463e7c</Hash>
+    <Hash>f56db013076b4884b4c04a101b319b3c</Hash>
 </Codenesium>*/

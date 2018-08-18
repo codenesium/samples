@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductVendorRepository>();
 			var records = new List<ProductVendor>();
 			records.Add(new ProductVendor());
-			mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductVendorService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.ProductVendorModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductVendorResponseModel> response = await service.ByBusinessEntityID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByBusinessEntityID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductVendorRepository>();
-			mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<int>())).Returns(Task.FromResult<List<ProductVendor>>(new List<ProductVendor>()));
+			mock.RepositoryMock.Setup(x => x.ByBusinessEntityID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductVendor>>(new List<ProductVendor>()));
 			var service = new ProductVendorService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.ProductVendorModelValidatorMock.Object,
@@ -163,7 +163,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductVendorResponseModel> response = await service.ByBusinessEntityID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ByBusinessEntityID(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -172,7 +172,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IProductVendorRepository>();
 			var records = new List<ProductVendor>();
 			records.Add(new ProductVendor());
-			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductVendorService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.ProductVendorModelValidatorMock.Object,
@@ -182,14 +182,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductVendorResponseModel> response = await service.ByUnitMeasureCode(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByUnitMeasureCode_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductVendorRepository>();
-			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>())).Returns(Task.FromResult<List<ProductVendor>>(new List<ProductVendor>()));
+			mock.RepositoryMock.Setup(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductVendor>>(new List<ProductVendor>()));
 			var service = new ProductVendorService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.ProductVendorModelValidatorMock.Object,
@@ -199,11 +199,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiProductVendorResponseModel> response = await service.ByUnitMeasureCode(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByUnitMeasureCode(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c0105fe0c8ddabe5b02a49335eaaf083</Hash>
+    <Hash>b0ac70d5daa2de4ecf5ecda9b9d9ee22</Hash>
 </Codenesium>*/

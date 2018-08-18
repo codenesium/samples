@@ -28,6 +28,7 @@ namespace TicketingCRMNS.Api.DataAccess
 		[Column("amount")]
 		public decimal Amount { get; private set; }
 
+		[MaxLength(1)]
 		[Column("gatewayConfirmationNumber")]
 		public string GatewayConfirmationNumber { get; private set; }
 
@@ -44,5 +45,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>892bd40128fcafe5468e892fa4df1877</Hash>
+    <Hash>638212b6e5085117a7084228935d019d</Hash>
 </Codenesium>*/

@@ -21,16 +21,16 @@ namespace OctopusDeployNS.Api.Services
 
 		Task<List<ApiCertificateResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCertificateResponseModel>> ByCreated(DateTimeOffset created);
+		Task<List<ApiCertificateResponseModel>> ByCreated(DateTimeOffset created, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCertificateResponseModel>> ByDataVersion(byte[] dataVersion);
+		Task<List<ApiCertificateResponseModel>> ByDataVersion(byte[] dataVersion, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCertificateResponseModel>> ByNotAfter(DateTimeOffset notAfter);
+		Task<List<ApiCertificateResponseModel>> ByNotAfter(DateTimeOffset notAfter, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCertificateResponseModel>> ByThumbprint(string thumbprint);
+		Task<List<ApiCertificateResponseModel>> ByThumbprint(string thumbprint, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>853be2b467c8afd149c3c497ec320fcf</Hash>
+    <Hash>2c892d827106eb708a690eb035b6f9f1</Hash>
 </Codenesium>*/

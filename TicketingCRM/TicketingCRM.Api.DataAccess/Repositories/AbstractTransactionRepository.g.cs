@@ -76,9 +76,9 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Transaction>> ByTransactionStatusId(int transactionStatusId)
+		public async Task<List<Transaction>> ByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.TransactionStatusId == transactionStatusId);
+			var records = await this.Where(x => x.TransactionStatusId == transactionStatusId, limit, offset);
 
 			return records;
 		}
@@ -125,5 +125,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>647d4f9c55c1c2a37ed4f4e8133ad6a6</Hash>
+    <Hash>2ef4ab18b75f014cf17d45d156a7f72a</Hash>
 </Codenesium>*/

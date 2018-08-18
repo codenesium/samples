@@ -43,12 +43,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ErrorLogID")]
 		public int ErrorLogID { get; private set; }
 
+		[MaxLength(4000)]
 		[Column("ErrorMessage")]
 		public string ErrorMessage { get; private set; }
 
 		[Column("ErrorNumber")]
 		public int ErrorNumber { get; private set; }
 
+		[MaxLength(126)]
 		[Column("ErrorProcedure")]
 		public string ErrorProcedure { get; private set; }
 
@@ -61,11 +63,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ErrorTime")]
 		public DateTime ErrorTime { get; private set; }
 
+		[MaxLength(128)]
 		[Column("UserName")]
 		public string UserName { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fafc427b75d154cde80caf36cf6ed920</Hash>
+    <Hash>3812b038f6994042e9d5c5b1258fdefe</Hash>
 </Codenesium>*/

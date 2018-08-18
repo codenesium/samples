@@ -83,23 +83,23 @@ namespace OctopusDeployNS.Api.DataAccess
 			return records.FirstOrDefault();
 		}
 
-		public async Task<List<User>> ByDisplayName(string displayName)
+		public async Task<List<User>> ByDisplayName(string displayName, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.DisplayName == displayName);
+			var records = await this.Where(x => x.DisplayName == displayName, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<User>> ByEmailAddress(string emailAddress)
+		public async Task<List<User>> ByEmailAddress(string emailAddress, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.EmailAddress == emailAddress);
+			var records = await this.Where(x => x.EmailAddress == emailAddress, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<User>> ByExternalId(string externalId)
+		public async Task<List<User>> ByExternalId(string externalId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ExternalId == externalId);
+			var records = await this.Where(x => x.ExternalId == externalId, limit, offset);
 
 			return records;
 		}
@@ -136,5 +136,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7c15b049b9fd4abf9e312389edd1093f</Hash>
+    <Hash>3b4fa40736c71aed4e8b1451ee39e62b</Hash>
 </Codenesium>*/

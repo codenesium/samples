@@ -19,5 +19,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6cffe9e5347f5a4ed9aeb776ed6dd9e5</Hash>
+    <Hash>4be49c2df006b4280ea5d75f0bfff0b3</Hash>
 </Codenesium>*/

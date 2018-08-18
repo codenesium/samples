@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byDepartmentID/{departmentID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByDepartmentID(short departmentID)
+		public async virtual Task<IActionResult> ByDepartmentID(short departmentID, int? limit, int? offset)
 		{
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.ByDepartmentID(departmentID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.ByDepartmentID(departmentID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -216,9 +226,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byShiftID/{shiftID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByShiftID(int shiftID)
+		public async virtual Task<IActionResult> ByShiftID(int shiftID, int? limit, int? offset)
 		{
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.ByShiftID(shiftID);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeDepartmentHistoryService.ByShiftID(shiftID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +258,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e36ff309b80ffaee6913adaf088baf38</Hash>
+    <Hash>246d26b40270d8b368e53a3c803e2c1c</Hash>
 </Codenesium>*/

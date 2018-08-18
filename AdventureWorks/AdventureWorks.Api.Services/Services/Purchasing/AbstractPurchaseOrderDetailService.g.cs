@@ -108,9 +108,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiPurchaseOrderDetailResponseModel>> ByProductID(int productID)
+		public async Task<List<ApiPurchaseOrderDetailResponseModel>> ByProductID(int productID, int limit = 0, int offset = int.MaxValue)
 		{
-			List<PurchaseOrderDetail> records = await this.PurchaseOrderDetailRepository.ByProductID(productID);
+			List<PurchaseOrderDetail> records = await this.PurchaseOrderDetailRepository.ByProductID(productID, limit, offset);
 
 			return this.BolPurchaseOrderDetailMapper.MapBOToModel(this.DalPurchaseOrderDetailMapper.MapEFToBO(records));
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>232b5345bc755526ac54893bb7997065</Hash>
+    <Hash>ecdfa03c4bfbff9b2620744af362dddc</Hash>
 </Codenesium>*/

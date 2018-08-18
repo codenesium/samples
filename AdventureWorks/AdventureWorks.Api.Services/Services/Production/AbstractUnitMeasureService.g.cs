@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLBillOfMaterialMapper BolBillOfMaterialMapper { get; private set; }
 
 		protected IDALBillOfMaterialMapper DalBillOfMaterialMapper { get; private set; }
+
 		protected IBOLProductMapper BolProductMapper { get; private set; }
 
 		protected IDALProductMapper DalProductMapper { get; private set; }
@@ -154,5 +155,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d72623c8229cec05285fba2d4b87c4cb</Hash>
+    <Hash>a201b9abaf309cda466afecbb75da1d4</Hash>
 </Codenesium>*/

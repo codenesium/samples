@@ -122,9 +122,9 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiWorkerResponseModel>> ByMachinePolicyId(string machinePolicyId)
+		public async Task<List<ApiWorkerResponseModel>> ByMachinePolicyId(string machinePolicyId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Worker> records = await this.WorkerRepository.ByMachinePolicyId(machinePolicyId);
+			List<Worker> records = await this.WorkerRepository.ByMachinePolicyId(machinePolicyId, limit, offset);
 
 			return this.BolWorkerMapper.MapBOToModel(this.DalWorkerMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d89bfd12a50f4fd089e372be840d442e</Hash>
+    <Hash>cb807e291fb08d716a6e85ac24a6fc8b</Hash>
 </Codenesium>*/

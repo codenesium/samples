@@ -136,7 +136,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
 			var records = new List<DeploymentHistory>();
 			records.Add(new DeploymentHistory());
-			mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new DeploymentHistoryService(mock.LoggerMock.Object,
 			                                           mock.RepositoryMock.Object,
 			                                           mock.ModelValidatorMockFactory.DeploymentHistoryModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentHistoryResponseModel> response = await service.ByCreated(default(DateTimeOffset));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByCreated_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IDeploymentHistoryRepository>();
-			mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>())).Returns(Task.FromResult<List<DeploymentHistory>>(new List<DeploymentHistory>()));
+			mock.RepositoryMock.Setup(x => x.ByCreated(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DeploymentHistory>>(new List<DeploymentHistory>()));
 			var service = new DeploymentHistoryService(mock.LoggerMock.Object,
 			                                           mock.RepositoryMock.Object,
 			                                           mock.ModelValidatorMockFactory.DeploymentHistoryModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiDeploymentHistoryResponseModel> response = await service.ByCreated(default(DateTimeOffset));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>()));
+			mock.RepositoryMock.Verify(x => x.ByCreated(It.IsAny<DateTimeOffset>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d6066d99544f89c707d38c47f481f61</Hash>
+    <Hash>b9958263c8cb0bb11d138919ca5b5bfb</Hash>
 </Codenesium>*/

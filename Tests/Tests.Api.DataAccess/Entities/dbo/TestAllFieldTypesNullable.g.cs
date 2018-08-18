@@ -78,12 +78,14 @@ namespace TestsNS.Api.DataAccess
 		[Column("fieldBigInt")]
 		public long? FieldBigInt { get; private set; }
 
+		[MaxLength(50)]
 		[Column("fieldBinary")]
 		public byte[] FieldBinary { get; private set; }
 
 		[Column("fieldBit")]
 		public bool? FieldBit { get; private set; }
 
+		[MaxLength(10)]
 		[Column("fieldChar")]
 		public string FieldChar { get; private set; }
 
@@ -111,15 +113,18 @@ namespace TestsNS.Api.DataAccess
 		[Column("fieldMoney")]
 		public decimal? FieldMoney { get; private set; }
 
+		[MaxLength(10)]
 		[Column("fieldNChar")]
 		public string FieldNChar { get; private set; }
 
+		[MaxLength(1073741823)]
 		[Column("fieldNText")]
 		public string FieldNText { get; private set; }
 
 		[Column("fieldNumeric")]
 		public decimal? FieldNumeric { get; private set; }
 
+		[MaxLength(50)]
 		[Column("fieldNVarchar")]
 		public string FieldNVarchar { get; private set; }
 
@@ -135,6 +140,7 @@ namespace TestsNS.Api.DataAccess
 		[Column("fieldSmallMoney")]
 		public decimal? FieldSmallMoney { get; private set; }
 
+		[MaxLength(2147483647)]
 		[Column("fieldText")]
 		public string FieldText { get; private set; }
 
@@ -151,9 +157,11 @@ namespace TestsNS.Api.DataAccess
 		[Column("fieldUniqueIdentifier")]
 		public Guid? FieldUniqueIdentifier { get; private set; }
 
+		[MaxLength(50)]
 		[Column("fieldVarBinary")]
 		public byte[] FieldVarBinary { get; private set; }
 
+		[MaxLength(50)]
 		[Column("fieldVarchar")]
 		public string FieldVarchar { get; private set; }
 
@@ -168,5 +176,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>185a06acdf67a80386518ba37c7638d3</Hash>
+    <Hash>1dde7d8ff23aaa8a825400623c7616b7</Hash>
 </Codenesium>*/

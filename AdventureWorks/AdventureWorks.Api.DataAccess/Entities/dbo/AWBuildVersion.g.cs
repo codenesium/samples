@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.VersionDate = versionDate;
 		}
 
+		[MaxLength(25)]
 		[Column("Database Version")]
 		public string Database_Version { get; private set; }
 
@@ -42,5 +43,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3608b85457b0011ea653a5da4d4a90e1</Hash>
+    <Hash>2084aeec7553c1e6037dea71e3a3dcae</Hash>
 </Codenesium>*/

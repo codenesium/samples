@@ -136,7 +136,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IEmailAddressRepository>();
 			var records = new List<EmailAddress>();
 			records.Add(new EmailAddress());
-			mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new EmailAddressService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.EmailAddressModelValidatorMock.Object,
@@ -146,14 +146,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiEmailAddressResponseModel> response = await service.ByEmailAddress(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByEmailAddress_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IEmailAddressRepository>();
-			mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>())).Returns(Task.FromResult<List<EmailAddress>>(new List<EmailAddress>()));
+			mock.RepositoryMock.Setup(x => x.ByEmailAddress(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EmailAddress>>(new List<EmailAddress>()));
 			var service = new EmailAddressService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.EmailAddressModelValidatorMock.Object,
@@ -163,11 +163,11 @@ namespace AdventureWorksNS.Api.Services.Tests
 			List<ApiEmailAddressResponseModel> response = await service.ByEmailAddress(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByEmailAddress(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>98889ae453743a43988cfd7418915982</Hash>
+    <Hash>2146ed73c54c02231cf6fe2a46a6d317</Hash>
 </Codenesium>*/

@@ -21,12 +21,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiTransactionHistoryArchiveResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTransactionHistoryArchiveResponseModel>> ByProductID(int productID);
+		Task<List<ApiTransactionHistoryArchiveResponseModel>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTransactionHistoryArchiveResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID);
+		Task<List<ApiTransactionHistoryArchiveResponseModel>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ba8ba891601ba637043b410f7366d501</Hash>
+    <Hash>b9290bb262d3e65cba4d2473df6b79b0</Hash>
 </Codenesium>*/

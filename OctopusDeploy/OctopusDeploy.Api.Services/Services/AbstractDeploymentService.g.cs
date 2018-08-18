@@ -116,23 +116,23 @@ namespace OctopusDeployNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiDeploymentResponseModel>> ByChannelId(string channelId)
+		public async Task<List<ApiDeploymentResponseModel>> ByChannelId(string channelId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Deployment> records = await this.DeploymentRepository.ByChannelId(channelId);
+			List<Deployment> records = await this.DeploymentRepository.ByChannelId(channelId, limit, offset);
 
 			return this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiDeploymentResponseModel>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId)
+		public async Task<List<ApiDeploymentResponseModel>> ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(string id, string projectId, string projectGroupId, string name, DateTimeOffset created, string releaseId, string taskId, string environmentId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Deployment> records = await this.DeploymentRepository.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId);
+			List<Deployment> records = await this.DeploymentRepository.ByIdProjectIdProjectGroupIdNameCreatedReleaseIdTaskIdEnvironmentId(id, projectId, projectGroupId, name, created, releaseId, taskId, environmentId, limit, offset);
 
 			return this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(records));
 		}
 
-		public async Task<List<ApiDeploymentResponseModel>> ByTenantId(string tenantId)
+		public async Task<List<ApiDeploymentResponseModel>> ByTenantId(string tenantId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Deployment> records = await this.DeploymentRepository.ByTenantId(tenantId);
+			List<Deployment> records = await this.DeploymentRepository.ByTenantId(tenantId, limit, offset);
 
 			return this.BolDeploymentMapper.MapBOToModel(this.DalDeploymentMapper.MapEFToBO(records));
 		}
@@ -147,5 +147,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a67c638a3c38d7d6f78e033cce3c181</Hash>
+    <Hash>2ee77be87261c676cfab71cbecf9c9de</Hash>
 </Codenesium>*/

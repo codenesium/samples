@@ -36,15 +36,18 @@ namespace OctopusDeployNS.Api.DataAccess
 		}
 
 		[Key]
+		[MaxLength(450)]
 		[Column("Id")]
 		public string Id { get; private set; }
 
 		[Column("JSON")]
 		public string JSON { get; private set; }
 
+		[MaxLength(100)]
 		[Column("PackageId")]
 		public string PackageId { get; private set; }
 
+		[MaxLength(349)]
 		[Column("Version")]
 		public string Version { get; private set; }
 
@@ -60,11 +63,12 @@ namespace OctopusDeployNS.Api.DataAccess
 		[Column("VersionRevision")]
 		public int VersionRevision { get; private set; }
 
+		[MaxLength(250)]
 		[Column("VersionSpecial")]
 		public string VersionSpecial { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>06edb116c3b5991b5f732a82495b542c</Hash>
+    <Hash>c22c7abc01a8d05746b11208a93e5045</Hash>
 </Codenesium>*/

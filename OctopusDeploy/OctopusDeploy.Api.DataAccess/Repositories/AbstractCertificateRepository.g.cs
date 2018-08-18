@@ -76,30 +76,30 @@ namespace OctopusDeployNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Certificate>> ByCreated(DateTimeOffset created)
+		public async Task<List<Certificate>> ByCreated(DateTimeOffset created, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Created == created);
+			var records = await this.Where(x => x.Created == created, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Certificate>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<Certificate>> ByDataVersion(byte[] dataVersion, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.DataVersion == dataVersion);
+			var records = await this.Where(x => x.DataVersion == dataVersion, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Certificate>> ByNotAfter(DateTimeOffset notAfter)
+		public async Task<List<Certificate>> ByNotAfter(DateTimeOffset notAfter, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.NotAfter == notAfter);
+			var records = await this.Where(x => x.NotAfter == notAfter, limit, offset);
 
 			return records;
 		}
 
-		public async Task<List<Certificate>> ByThumbprint(string thumbprint)
+		public async Task<List<Certificate>> ByThumbprint(string thumbprint, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Thumbprint == thumbprint);
+			var records = await this.Where(x => x.Thumbprint == thumbprint, limit, offset);
 
 			return records;
 		}
@@ -136,5 +136,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e364e5951e543399fd02b8b93777e71</Hash>
+    <Hash>3e1ac40d4927892f87b714b755bfccbb</Hash>
 </Codenesium>*/

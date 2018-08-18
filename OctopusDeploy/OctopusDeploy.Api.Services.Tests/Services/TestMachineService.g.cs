@@ -171,7 +171,7 @@ namespace OctopusDeployNS.Api.Services.Tests
 			var mock = new ServiceMockFacade<IMachineRepository>();
 			var records = new List<Machine>();
 			records.Add(new Machine());
-			mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new MachineService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
@@ -181,14 +181,14 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiMachineResponseModel> response = await service.ByMachinePolicyId(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
 		public async void ByMachinePolicyId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IMachineRepository>();
-			mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>())).Returns(Task.FromResult<List<Machine>>(new List<Machine>()));
+			mock.RepositoryMock.Setup(x => x.ByMachinePolicyId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Machine>>(new List<Machine>()));
 			var service = new MachineService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
@@ -198,11 +198,11 @@ namespace OctopusDeployNS.Api.Services.Tests
 			List<ApiMachineResponseModel> response = await service.ByMachinePolicyId(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>()));
+			mock.RepositoryMock.Verify(x => x.ByMachinePolicyId(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e55236ac46fbff6201cdd72e54d3a306</Hash>
+    <Hash>886f3629fdc83b8c1bb26ca5f04f79c4</Hash>
 </Codenesium>*/

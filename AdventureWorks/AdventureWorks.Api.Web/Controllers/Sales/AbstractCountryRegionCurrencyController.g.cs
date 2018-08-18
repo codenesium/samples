@@ -47,7 +47,11 @@ namespace AdventureWorksNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiCountryRegionCurrencyResponseModel> response = await this.CountryRegionCurrencyService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace AdventureWorksNS.Api.Web
 		[Route("byCurrencyCode/{currencyCode}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCountryRegionCurrencyResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByCurrencyCode(string currencyCode)
+		public async virtual Task<IActionResult> ByCurrencyCode(string currencyCode, int? limit, int? offset)
 		{
-			List<ApiCountryRegionCurrencyResponseModel> response = await this.CountryRegionCurrencyService.ByCurrencyCode(currencyCode);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiCountryRegionCurrencyResponseModel> response = await this.CountryRegionCurrencyService.ByCurrencyCode(currencyCode, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c6d8260e96aad62d6476c9bac09652b5</Hash>
+    <Hash>6c9a2f4011593cc759859fa732c65771</Hash>
 </Codenesium>*/

@@ -47,7 +47,11 @@ namespace OctopusDeployNS.Api.Web
 		public async virtual Task<IActionResult> All(int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
-			query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value));
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
 			List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.All(query.Limit, query.Offset);
 
 			return this.Ok(response);
@@ -205,9 +209,15 @@ namespace OctopusDeployNS.Api.Web
 		[Route("byCreated/{created}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiDeploymentHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByCreated(DateTimeOffset created)
+		public async virtual Task<IActionResult> ByCreated(DateTimeOffset created, int? limit, int? offset)
 		{
-			List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.ByCreated(created);
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiDeploymentHistoryResponseModel> response = await this.DeploymentHistoryService.ByCreated(created, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -231,5 +241,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7bd5516a73605707fb9c0d7a58054888</Hash>
+    <Hash>b953078f5ae23831ac2779b5dbf51388</Hash>
 </Codenesium>*/

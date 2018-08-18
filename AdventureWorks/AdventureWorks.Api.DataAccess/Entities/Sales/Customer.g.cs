@@ -32,6 +32,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+		[MaxLength(10)]
 		[Column("AccountNumber")]
 		public string AccountNumber { get; private set; }
 
@@ -65,5 +66,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9d2079a311253324e2387ed643dd07ef</Hash>
+    <Hash>729923e575bf19bf470208310946665b</Hash>
 </Codenesium>*/

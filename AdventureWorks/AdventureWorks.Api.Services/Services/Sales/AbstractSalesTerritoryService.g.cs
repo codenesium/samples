@@ -25,12 +25,15 @@ namespace AdventureWorksNS.Api.Services
 		protected IBOLCustomerMapper BolCustomerMapper { get; private set; }
 
 		protected IDALCustomerMapper DalCustomerMapper { get; private set; }
+
 		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
+
 		protected IBOLSalesPersonMapper BolSalesPersonMapper { get; private set; }
 
 		protected IDALSalesPersonMapper DalSalesPersonMapper { get; private set; }
+
 		protected IBOLSalesTerritoryHistoryMapper BolSalesTerritoryHistoryMapper { get; private set; }
 
 		protected IDALSalesTerritoryHistoryMapper DalSalesTerritoryHistoryMapper { get; private set; }
@@ -182,5 +185,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6ac87629ec461e00136940619072a414</Hash>
+    <Hash>bd5d4a7e0b4bf1a710766ccbdef4c84a</Hash>
 </Codenesium>*/

@@ -63,5 +63,5 @@ namespace NebulaNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>133802b0e11b1946915caa284f7b3c17</Hash>
+    <Hash>5e50cbb39ff838ceca26bd8422cf4ed9</Hash>
 </Codenesium>*/

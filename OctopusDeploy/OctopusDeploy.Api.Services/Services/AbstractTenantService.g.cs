@@ -122,9 +122,9 @@ namespace OctopusDeployNS.Api.Services
 			}
 		}
 
-		public async Task<List<ApiTenantResponseModel>> ByDataVersion(byte[] dataVersion)
+		public async Task<List<ApiTenantResponseModel>> ByDataVersion(byte[] dataVersion, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Tenant> records = await this.TenantRepository.ByDataVersion(dataVersion);
+			List<Tenant> records = await this.TenantRepository.ByDataVersion(dataVersion, limit, offset);
 
 			return this.BolTenantMapper.MapBOToModel(this.DalTenantMapper.MapEFToBO(records));
 		}
@@ -132,5 +132,5 @@ namespace OctopusDeployNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b8f5d6aba991babf492f4d8d07c6cfe7</Hash>
+    <Hash>38c08ea63ecabb601a8626bcd0f13945</Hash>
 </Codenesium>*/

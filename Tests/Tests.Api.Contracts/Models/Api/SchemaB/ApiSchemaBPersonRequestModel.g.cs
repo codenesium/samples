@@ -27,5 +27,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e92d291695acb1cbcb7ded5451b6c06e</Hash>
+    <Hash>0377cd3b3bd15c45835d71f6ba9268a2</Hash>
 </Codenesium>*/

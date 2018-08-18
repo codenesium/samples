@@ -76,9 +76,9 @@ namespace ESPIOTNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<DeviceAction>> ByDeviceId(int deviceId)
+		public async Task<List<DeviceAction>> ByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.DeviceId == deviceId);
+			var records = await this.Where(x => x.DeviceId == deviceId, limit, offset);
 
 			return records;
 		}
@@ -120,5 +120,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>60d4d26f0889877c4d096a1f78a177fb</Hash>
+    <Hash>689468614f77c2efd10979d68b30403b</Hash>
 </Codenesium>*/

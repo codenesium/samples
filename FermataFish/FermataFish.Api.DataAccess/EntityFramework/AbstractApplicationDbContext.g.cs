@@ -7,20 +7,20 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace TicketingCRMNS.Api.DataAccess
+namespace FermataFishNS.Api.DataAccess
 {
-	public partial class ApplicationDbContext : DbContext
+	public abstract class AbstractApplicationDbContext : DbContext
 	{
 		public Guid UserId { get; private set; }
 
 		public int TenantId { get; private set; }
 
-		public ApplicationDbContext(DbContextOptions options)
+		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
 		{
 		}
 
-		public void SetUserId(Guid userId)
+		public virtual void SetUserId(Guid userId)
 		{
 			if (userId == default(Guid))
 			{
@@ -30,7 +30,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.UserId = userId;
 		}
 
-		public void SetTenantId(int tenantId)
+		public virtual void SetTenantId(int tenantId)
 		{
 			if (tenantId <= 0)
 			{
@@ -42,29 +42,37 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		public virtual DbSet<Admin> Admins { get; set; }
 
-		public virtual DbSet<City> Cities { get; set; }
+		public virtual DbSet<Family> Families { get; set; }
 
-		public virtual DbSet<Country> Countries { get; set; }
+		public virtual DbSet<Lesson> Lessons { get; set; }
 
-		public virtual DbSet<Customer> Customers { get; set; }
+		public virtual DbSet<LessonStatus> LessonStatus { get; set; }
 
-		public virtual DbSet<Event> Events { get; set; }
+		public virtual DbSet<LessonXStudent> LessonXStudents { get; set; }
 
-		public virtual DbSet<Province> Provinces { get; set; }
+		public virtual DbSet<LessonXTeacher> LessonXTeachers { get; set; }
 
-		public virtual DbSet<Sale> Sales { get; set; }
+		public virtual DbSet<Rate> Rates { get; set; }
 
-		public virtual DbSet<SaleTickets> SaleTickets { get; set; }
+		public virtual DbSet<Space> Spaces { get; set; }
 
-		public virtual DbSet<Ticket> Tickets { get; set; }
+		public virtual DbSet<SpaceFeature> SpaceFeatures { get; set; }
 
-		public virtual DbSet<TicketStatus> TicketStatus { get; set; }
+		public virtual DbSet<SpaceXSpaceFeature> SpaceXSpaceFeatures { get; set; }
 
-		public virtual DbSet<Transaction> Transactions { get; set; }
+		public virtual DbSet<State> States { get; set; }
 
-		public virtual DbSet<TransactionStatus> TransactionStatus { get; set; }
+		public virtual DbSet<Student> Students { get; set; }
 
-		public virtual DbSet<Venue> Venues { get; set; }
+		public virtual DbSet<StudentXFamily> StudentXFamilies { get; set; }
+
+		public virtual DbSet<Studio> Studios { get; set; }
+
+		public virtual DbSet<Teacher> Teachers { get; set; }
+
+		public virtual DbSet<TeacherSkill> TeacherSkills { get; set; }
+
+		public virtual DbSet<TeacherXTeacherSkill> TeacherXTeacherSkills { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -104,9 +112,9 @@ namespace TicketingCRMNS.Api.DataAccess
 
 	public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public ApplicationDbContext CreateDbContext(string[] args)
+		public virtual ApplicationDbContext CreateDbContext(string[] args)
 		{
-			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "TicketingCRM.Api.Web");
+			string settingsDirectory = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName, "FermataFish.Api.Web");
 
 			string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
@@ -127,5 +135,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dc9c36eb8bdcdef53b4dfb57424a3de9</Hash>
+    <Hash>a10c45d0fb6a408a254eadf482715d09</Hash>
 </Codenesium>*/
