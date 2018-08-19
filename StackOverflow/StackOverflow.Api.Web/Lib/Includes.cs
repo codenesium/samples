@@ -63,9 +63,9 @@ namespace Codenesium.Foundation.CommonMVC
         void DisableChangeTracking();
     }
 
-	/// <summary>
+    /// <summary>
     /// EntityFrameworkTransactionCoordinator is the transaction coordinator when using
-	///  Entity Framework
+    ///  Entity Framework
     /// </summary>
     public class EntityFrameworkTransactionCoordinator : ITransactionCoordinator
     {
@@ -118,16 +118,16 @@ namespace Codenesium.Foundation.CommonMVC
 
         protected ILogger Logger { get; private set;  }
 
-		protected ApiSettings Settings { get; private set;  }
+        protected ApiSettings Settings { get; private set;  }
 
         public AbstractApiController(
-	        ApiSettings settings,
+            ApiSettings settings,
             ILogger logger,
             ITransactionCoordinator transactionCooordinator
             )
         {
             this.Logger = logger;
-			this.Settings = settings;
+            this.Settings = settings;
             this.TransactionCooordinator = transactionCooordinator;
         }
     }
@@ -170,20 +170,20 @@ namespace Codenesium.Foundation.CommonMVC
                 }
             }
         }
-	}
+    }
 
     /// <summary>
     /// This attribute can be added to disable entity framework change tracking for read only scenarios. This can
-	/// drastically improve performance.
+    /// drastically improve performance.
     /// </summary>
     public class ReadOnlyAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-			if (!(actionContext.Controller is AbstractApiController))
-			{
-				throw new Exception("ReadOnlyFilter can only be applied to controllers that inherit from AbstractApiController");
-			}
+            if (!(actionContext.Controller is AbstractApiController))
+            {
+                throw new Exception("ReadOnlyFilter can only be applied to controllers that inherit from AbstractApiController");
+            }
 
             AbstractApiController controller = (AbstractApiController)actionContext.Controller;
 
@@ -196,23 +196,23 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
 
-	/// <summary>
+    /// <summary>
     /// This attribute enabled transaction support on a request by hooking in to the request pipeline
-	/// and starting a transaction when a request begins and committing or rolling back the transaction if 
-	/// there is an exception during the request.
+    /// and starting a transaction when a request begins and committing or rolling back the transaction if 
+    /// there is an exception during the request.
     /// </summary>
     public class UnitOfWorkAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-			if (!(actionContext.Controller is AbstractApiController))
-			{
-				throw new Exception("UnitOfWorkActionFilter can only be applied to controllers that inherit from AbstractApiController");
-			}
+            if (!(actionContext.Controller is AbstractApiController))
+            {
+                throw new Exception("UnitOfWorkActionFilter can only be applied to controllers that inherit from AbstractApiController");
+            }
 
-			AbstractApiController controller = (AbstractApiController)actionContext.Controller;
+            AbstractApiController controller = (AbstractApiController)actionContext.Controller;
 
-			controller.TransactionCooordinator.BeginTransaction();
+            controller.TransactionCooordinator.BeginTransaction();
         }
 
         public override void OnActionExecuted(ActionExecutedContext actionExecutedContext)
@@ -225,7 +225,7 @@ namespace Codenesium.Foundation.CommonMVC
                 {
                     controller.TransactionCooordinator.CommitTransaction();
                 }
-			    catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)
                 {
                     throw;
                 }
@@ -250,12 +250,12 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
 
-	/// <summary>
+    /// <summary>
     /// This filter logs the time it takes to execute a request and returns the execution time
-	/// to the client in the header x-time-elapsed
+    /// to the client in the header x-time-elapsed
     /// 
     /// </summary>
-	public class BenchmarkAttribute : ActionFilterAttribute
+    public class BenchmarkAttribute : ActionFilterAttribute
     {
         public override async Task OnActionExecutionAsync(ActionExecutingContext actionContext, ActionExecutionDelegate next)
         {
@@ -268,7 +268,7 @@ namespace Codenesium.Foundation.CommonMVC
   
     public class ResponseAttribute : ActionFilterAttribute
     {
-		public override void OnActionExecuted(ActionExecutedContext context)
+        public override void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Result is OkObjectResult)
             {
@@ -325,7 +325,7 @@ namespace Codenesium.Foundation.CommonMVC
         }
     }
 
-	public class ApiSettings
+    public class ApiSettings
     {
         public virtual string ExternalBaseUrl { get; set; }
 
@@ -359,7 +359,7 @@ namespace Codenesium.Foundation.CommonMVC
         {
         }
 
-		public bool Process(int maxLimit, int defaultLimit, int? limit, int? offset, Dictionary<string, Microsoft.Extensions.Primitives.StringValues> queryParameters)
+        public bool Process(int maxLimit, int defaultLimit, int? limit, int? offset, Dictionary<string, Microsoft.Extensions.Primitives.StringValues> queryParameters)
         {
             this.Offset = offset ?? 0;
             this.Limit = limit ?? maxLimit;
@@ -395,13 +395,13 @@ namespace Codenesium.Foundation.CommonMVC
                     this.WhereClause += $"{parameter.Key}.Equals(\"{parameter.Value}\")";
                 }
             }
-			
+            
             if (string.IsNullOrWhiteSpace(this.WhereClause))
             {
                 this.WhereClause = "1=1";
             }
 
-			return true;
+            return true;
         }
     }
 }

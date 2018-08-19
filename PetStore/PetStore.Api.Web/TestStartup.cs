@@ -10,14 +10,14 @@ namespace PetStoreNS.Api.Web
 {
     public class TestStartup : Startup
     {
-		public TestStartup(IHostingEnvironment env)
-		{
-			 var builder = new ConfigurationBuilder()
+        public TestStartup(IHostingEnvironment env)
+        {
+             var builder = new ConfigurationBuilder()
                     .SetBasePath(env.ContentRootPath)
                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: false, reloadOnChange: true)
                     .AddEnvironmentVariables();
                 this.Configuration = builder.Build();
-		}
+        }
 
         public override DbContextOptions SetupDatabase(bool enableSensitiveDataLogging)
         {
@@ -25,22 +25,22 @@ namespace PetStoreNS.Api.Web
             string connectionString = connectionStringBuilder.ToString();
             SqliteConnection connection = new SqliteConnection(connectionString);
             DbContextOptionsBuilder options = new DbContextOptionsBuilder();
-			if (enableSensitiveDataLogging)
-			{
-				options.EnableSensitiveDataLogging();
-			}
+            if (enableSensitiveDataLogging)
+            {
+                options.EnableSensitiveDataLogging();
+            }
 
-		    options.UseLoggerFactory(Startup.LoggerFactory);
+            options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlite(connection);
 
-			return options.Options;
+            return options.Options;
         }
 
-		public override void MigrateDatabase(ApplicationDbContext context)
+        public override void MigrateDatabase(ApplicationDbContext context)
         {
-			context.Database.OpenConnection();
-			context.Database.EnsureCreated();
-			IntegrationTestMigration migrator = new IntegrationTestMigration(context);
+            context.Database.OpenConnection();
+            context.Database.EnsureCreated();
+            IntegrationTestMigration migrator = new IntegrationTestMigration(context);
             migrator.Migrate();
         }
     }

@@ -48,7 +48,7 @@ namespace FermataFishNS.Api.Web
             this.Configuration = builder.Build();
         }
 
-	    public Startup()
+        public Startup()
         {
         }
 
@@ -56,7 +56,7 @@ namespace FermataFishNS.Api.Web
 
         public IConfigurationRoot Configuration { get; protected set; }
 
-		public static readonly LoggerFactory LoggerFactory
+        public static readonly LoggerFactory LoggerFactory
             = new LoggerFactory(new List<ILoggerProvider>()
             {
                 new ConsoleLoggerProvider((category, level)
@@ -69,21 +69,21 @@ namespace FermataFishNS.Api.Web
                    && level == LogLevel.Information)
             });
 
-	    public virtual DbContextOptions SetupDatabase(bool enableSensitiveDataLogging)
+        public virtual DbContextOptions SetupDatabase(bool enableSensitiveDataLogging)
         {
             DbContextOptionsBuilder options = new DbContextOptionsBuilder();
-			if (enableSensitiveDataLogging)
-			{
-				options.EnableSensitiveDataLogging();
-			}
+            if (enableSensitiveDataLogging)
+            {
+                options.EnableSensitiveDataLogging();
+            }
 
             options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
            
-			return options.Options;
+            return options.Options;
         }
 
-		public virtual void MigrateDatabase(ApplicationDbContext context)
+        public virtual void MigrateDatabase(ApplicationDbContext context)
         {
             if (this.Configuration.GetValue<bool>("MigrateDatabase"))
             {
@@ -91,53 +91,53 @@ namespace FermataFishNS.Api.Web
             }
         }
 
-		public virtual void SetupLogging(IServiceCollection services)
-		{
-			services.AddLogging(logBuilder => logBuilder
+        public virtual void SetupLogging(IServiceCollection services)
+        {
+            services.AddLogging(logBuilder => logBuilder
                 .AddConfiguration(this.Configuration.GetSection("Logging"))
                 .AddConsole()
                 .AddDebug());
-		}
+        }
 
-		public virtual void SetupSecurity(IServiceCollection services)
-		{
-			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
-			{
-				var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
-				services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddJwtBearer(jwtBearerOptions =>
-				{
-					jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
-					{
-						ClockSkew = TimeSpan.FromMinutes(5),
-						ValidateAudience = true,
-						ValidateIssuer = true,
-						ValidateLifetime = true,
-						RequireSignedTokens = true,
-						RequireExpirationTime = true,
-						ValidAudience = this.Configuration["JwtAudience"],
-						ValidIssuer = this.Configuration["JwtIssuer"],
-						IssuerSigningKey = new SymmetricSecurityKey(key)
-					};
-				});
-			}
-		}
-
-		public virtual void EnableSecurity(IApplicationBuilder app)
+        public virtual void SetupSecurity(IServiceCollection services)
         {
             if (this.Configuration.GetValue<bool>("SecurityEnabled"))
-			{
-				 app.UseAuthentication();
-		    }
+            {
+                var key = Encoding.UTF8.GetBytes(this.Configuration["JwtSigningKey"]);
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(jwtBearerOptions =>
+                {
+                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ClockSkew = TimeSpan.FromMinutes(5),
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        RequireSignedTokens = true,
+                        RequireExpirationTime = true,
+                        ValidAudience = this.Configuration["JwtAudience"],
+                        ValidIssuer = this.Configuration["JwtIssuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(key)
+                    };
+                });
+            }
+        }
+
+        public virtual void EnableSecurity(IApplicationBuilder app)
+        {
+            if (this.Configuration.GetValue<bool>("SecurityEnabled"))
+            {
+                 app.UseAuthentication();
+            }
         }
 
         // ConfigureServices is where you register dependencies. This gets
         // called by the runtime before the Configure method, below.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-		   services.Configure<ApiSettings>(this.Configuration);
+           services.Configure<ApiSettings>(this.Configuration);
 
-		   services.AddCors(config =>
+           services.AddCors(config =>
            {
                 var policy = new CorsPolicy();
                 policy.Headers.Add("*");
@@ -147,17 +147,17 @@ namespace FermataFishNS.Api.Web
                 config.AddPolicy("AllowAll", policy);
             });
 
-			services.AddMvcCore(config =>
+            services.AddMvcCore(config =>
             {
                 if (this.Configuration.GetValue<bool>("SecurityEnabled"))
-				{
-					 var policy = new AuthorizationPolicyBuilder()
-								  .RequireAuthenticatedUser()
-								  .Build();
-					 config.Filters.Add(new AuthorizeFilter(policy));
-				 }
-				 config.Filters.Add(new BenchmarkAttribute());
-				 config.Filters.Add(new NullModelValidaterAttribute());
+                {
+                     var policy = new AuthorizationPolicyBuilder()
+                                  .RequireAuthenticatedUser()
+                                  .Build();
+                     config.Filters.Add(new AuthorizeFilter(policy));
+                 }
+                 config.Filters.Add(new BenchmarkAttribute());
+                 config.Filters.Add(new NullModelValidaterAttribute());
             }).AddVersionedApiExplorer(
             o =>
             {
@@ -168,9 +168,9 @@ namespace FermataFishNS.Api.Web
                 o.SubstituteApiVersionInUrl = true;
             });
 
-			// Enable MVC for app and disable the built in model validation
-			// We're disabling the built in validation because we're using Fluent Valdidation to 
-			// handle it. 
+            // Enable MVC for app and disable the built in model validation
+            // We're disabling the built in validation because we're using Fluent Valdidation to 
+            // handle it. 
             services.AddMvc(options => options.ModelValidatorProviders.Clear());
 
             services.AddApiVersioning(
@@ -179,7 +179,7 @@ namespace FermataFishNS.Api.Web
                  // reporting api versions will return the headers "api-supported-versions" and "api-deprecated-versions"
                  o.ReportApiVersions = true;
                  o.ApiVersionReader = new HeaderApiVersionReader("api-version");
-				 o.AssumeDefaultVersionWhenUnspecified = true;
+                 o.AssumeDefaultVersionWhenUnspecified = true;
                  o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
              });
 
@@ -187,7 +187,7 @@ namespace FermataFishNS.Api.Web
             {
                 o.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
-				// resolve the IApiVersionDescriptionProvider service
+                // resolve the IApiVersionDescriptionProvider service
                 // note: that we have to build a temporary service provider here because one has not been created yet
                 var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
 
@@ -203,20 +203,20 @@ namespace FermataFishNS.Api.Web
 
                 // integrate xml comments
                 // o.IncludeXmlComments( XmlCommentsFilePath );
-				if (this.Configuration.GetValue<bool>("SecurityEnabled"))
-				{
-				   var security = new Dictionary<string, IEnumerable<string>>
-			       {
-						{"Bearer", new string[] { }},
-				   };
+                if (this.Configuration.GetValue<bool>("SecurityEnabled"))
+                {
+                   var security = new Dictionary<string, IEnumerable<string>>
+                   {
+                        {"Bearer", new string[] { }},
+                   };
                    o.AddSecurityRequirement(security);
-			       o.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert JWT prefixed with Bearer", Name = "Authorization", Type = "apiKey" });
-				}
+                   o.AddSecurityDefinition("Bearer", new ApiKeyScheme() { In = "header", Description = "Please insert JWT prefixed with Bearer", Name = "Authorization", Type = "apiKey" });
+                }
             });
 
-			this.SetupLogging(services);
+            this.SetupLogging(services);
 
-			this.SetupSecurity(services);
+            this.SetupSecurity(services);
 
             // Create the container builder.
             var builder = new ContainerBuilder();
@@ -234,56 +234,56 @@ namespace FermataFishNS.Api.Web
             // in the ServiceCollection. Mix and match as needed.
             builder.Populate(services);
 
-			// register the global settings object
+            // register the global settings object
             builder.Register(ctx => ctx.Resolve<IOptions<ApiSettings>>().Value);
 
-			// create entity framework options
-			DbContextOptions dbOptions = this.SetupDatabase(true);
+            // create entity framework options
+            DbContextOptions dbOptions = this.SetupDatabase(true);
 
-			// register the entity framework options
-			builder.Register(c => dbOptions).As<DbContextOptions>();
+            // register the entity framework options
+            builder.Register(c => dbOptions).As<DbContextOptions>();
 
-			// register the ApplicationDbContext
-			builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
+            // register the ApplicationDbContext
+            builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
 
-			// register the ApplicationDbContext as DbContext for anywhere we interact with DbContext like the TransactionCoordinator
-			builder.RegisterType<ApplicationDbContext>().As<DbContext>().InstancePerLifetimeScope();
+            // register the ApplicationDbContext as DbContext for anywhere we interact with DbContext like the TransactionCoordinator
+            builder.RegisterType<ApplicationDbContext>().As<DbContext>().InstancePerLifetimeScope();
 
             // Set up the transaction coordinator for Entity Framework
             builder.RegisterType<EntityFrameworkTransactionCoordinator>()
                 .As<ITransactionCoordinator>()
                 .InstancePerLifetimeScope();
-			
-			// register mappers in the contracts assembly
-			var contractsAssembly = typeof(AbstractApiRequestModel).Assembly;
-		    builder.RegisterAssemblyTypes(contractsAssembly)
+            
+            // register mappers in the contracts assembly
+            var contractsAssembly = typeof(AbstractApiRequestModel).Assembly;
+            builder.RegisterAssemblyTypes(contractsAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Mapper"))
                 .AsImplementedInterfaces()
-			    .PropertiesAutowired();
-			
-			// register services, model validators and mappers in the services assembly
-			var servicesAssembly = typeof(AbstractService).Assembly;
+                .PropertiesAutowired();
+            
+            // register services, model validators and mappers in the services assembly
+            var servicesAssembly = typeof(AbstractService).Assembly;
             builder.RegisterAssemblyTypes(servicesAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract && (t.Name.EndsWith("Service") || t.Name.EndsWith("ModelValidator") || t.Name.EndsWith("Mapper")))
                 .AsImplementedInterfaces()
-			    .PropertiesAutowired();
+                .PropertiesAutowired();
 
-			// register repositories in the data access assembly
+            // register repositories in the data access assembly
             var dataAccessAssembly = typeof(AbstractRepository).Assembly;
             builder.RegisterAssemblyTypes(dataAccessAssembly)
-				.Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
-				.AsImplementedInterfaces();
+                .Where(t => t.IsClass && !t.IsAbstract && t.Name.EndsWith("Repository"))
+                .AsImplementedInterfaces();
 
             // Register anything else we might have that isn't a system, Microsoft, Abstract or Generic class
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource(
                 t =>
                     !t.FullName.StartsWith("System") &&
                     !t.FullName.StartsWith("Microsoft") &&
-					!t.IsAbstract &&
+                    !t.IsAbstract &&
                     !(t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Meta<>)))
             );
 
-			// build the DI container
+            // build the DI container
             this.ApplicationApiContainer = builder.Build();
             return new AutofacServiceProvider(this.ApplicationApiContainer);
         }
@@ -292,36 +292,36 @@ namespace FermataFishNS.Api.Web
         // ConfigureServices. You can use IApplicationBuilder.ApplicationServices
         // here if you need to resolve things from the container.
         public void Configure(
-		  IHostingEnvironment env,
+          IHostingEnvironment env,
           IApplicationBuilder app,
           ILoggerFactory loggerFactory,
           IApplicationLifetime appLifetime,
-		  ApplicationDbContext context)
+          ApplicationDbContext context)
         {
             loggerFactory.AddConsole(this.Configuration.GetSection("Logging"));
             
-			loggerFactory.AddDebug();
+            loggerFactory.AddDebug();
 
             app.UseExceptionHandler(new ExceptionHandlerOptions
             {
                 ExceptionHandler = new ExceptionMiddleWare(env, loggerFactory).Invoke
             });
 
-		    this.MigrateDatabase(context);
+            this.MigrateDatabase(context);
 
-			this.EnableSecurity(app);
+            this.EnableSecurity(app);
 
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
-				// remove .. from this line to make the swagger endpoint work from a console app
-				// we have this to make it work in IIS with a virtual directory
-				// c.SwaggerEndpoint("../swagger/v1/swagger.json", "FermataFish");
+                // remove .. from this line to make the swagger endpoint work from a console app
+                // we have this to make it work in IIS with a virtual directory
+                // c.SwaggerEndpoint("../swagger/v1/swagger.json", "FermataFish");
                 c.SwaggerEndpoint("../swagger/v1/swagger.json", "FermataFish");
             });
 
-			app.UseCors("AllowAll");
+            app.UseCors("AllowAll");
 
             app.UseMvc();
 
@@ -332,7 +332,7 @@ namespace FermataFishNS.Api.Web
             appLifetime.ApplicationStopped.Register(() => this.ApplicationApiContainer.Dispose());
         }
 
-		private static string XmlCommentsFilePath
+        private static string XmlCommentsFilePath
         {
             get
             {
@@ -362,7 +362,7 @@ namespace FermataFishNS.Api.Web
         }
     }
 
-	public static class ExceptionMiddleWareExtentions
+    public static class ExceptionMiddleWareExtentions
     {
         public static IApplicationBuilder UseExceptionMiddleWare(
             this IApplicationBuilder builder)
@@ -371,18 +371,18 @@ namespace FermataFishNS.Api.Web
         }
     }
 
-	/// <summary>
+    /// <summary>
     ///  This middleware lets us return errors as a json object intead of html.
     /// </summary>
     public class ExceptionMiddleWare
     {
-		private IHostingEnvironment env;
+        private IHostingEnvironment env;
 
         private ILogger logger;
 
         public ExceptionMiddleWare(IHostingEnvironment env, ILoggerFactory loggerFactory)
-		{
-			this.env = env;
+        {
+            this.env = env;
             this.logger = loggerFactory.CreateLogger<ExceptionMiddleWare>();
         }
 
@@ -404,7 +404,7 @@ namespace FermataFishNS.Api.Web
 
                 if (this.env.IsDevelopment())
                 {
-					error.SetProperties(ex.Message, ex.Source, ex.StackTrace);
+                    error.SetProperties(ex.Message, ex.Source, ex.StackTrace);
                 }
                 else
                 {
@@ -420,21 +420,21 @@ namespace FermataFishNS.Api.Web
                 }
             }
         }
-	}
+    }
 
-	public class ApiError
-	{
-		public string Message { get; private set; }
+    public class ApiError
+    {
+        public string Message { get; private set; }
 
-		public string Source { get; private set; }
+        public string Source { get; private set; }
 
-		public string StackTrace { get; private set; }
+        public string StackTrace { get; private set; }
 
-		public void SetProperties(string message, string source, string stackTrace)
-		{
-			this.Message = message;
-			this.Source = source;
-			this.StackTrace = stackTrace;
-		}
-	}
+        public void SetProperties(string message, string source, string stackTrace)
+        {
+            this.Message = message;
+            this.Source = source;
+            this.StackTrace = stackTrace;
+        }
+    }
 }
