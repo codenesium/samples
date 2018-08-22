@@ -21,6 +21,68 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
+
+--IF OBJECT_ID('dbo.Badges', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Badges]
+--END
+--GO
+--IF OBJECT_ID('dbo.Comments', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Comments]
+--END
+--GO
+--IF OBJECT_ID('dbo.LinkTypes', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[LinkTypes]
+--END
+--GO
+--IF OBJECT_ID('dbo.PostHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[PostHistory]
+--END
+--GO
+--IF OBJECT_ID('dbo.PostHistoryTypes', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[PostHistoryTypes]
+--END
+--GO
+--IF OBJECT_ID('dbo.PostLinks', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[PostLinks]
+--END
+--GO
+--IF OBJECT_ID('dbo.Posts', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Posts]
+--END
+--GO
+--IF OBJECT_ID('dbo.PostTypes', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[PostTypes]
+--END
+--GO
+--IF OBJECT_ID('dbo.Tags', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Tags]
+--END
+--GO
+--IF OBJECT_ID('dbo.Users', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Users]
+--END
+--GO
+--IF OBJECT_ID('dbo.Votes', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Votes]
+--END
+--GO
+--IF OBJECT_ID('dbo.VoteTypes', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[VoteTypes]
+--END
+--GO
+
 CREATE TABLE [dbo].[Badges](
 [Id] [int]   IDENTITY(1,1)  NOT NULL,
 [Date] [datetime]     NOT NULL,

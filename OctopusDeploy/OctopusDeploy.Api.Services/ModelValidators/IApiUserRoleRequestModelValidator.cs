@@ -7,14 +7,9 @@ namespace OctopusDeployNS.Api.Services
 {
 	public partial interface IApiUserRoleRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiUserRoleRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(string id, ApiUserRoleRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(string id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>080b4312f251405fc8dddfe0d13ebffe</Hash>
+    <Hash>0f966d5472f1fec5e8234599c45299d6</Hash>
 </Codenesium>*/

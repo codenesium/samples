@@ -14,22 +14,27 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			DateTime? birthday,
 			string email,
 			string firstName,
-			int id,
 			string lastName,
 			string phone,
 			int studioId)
 		{
+			this.Id = id;
 			this.Birthday = birthday;
 			this.Email = email;
 			this.FirstName = firstName;
-			this.Id = id;
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.StudioId = studioId;
 		}
+
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id")]
+		public int Id { get; private set; }
 
 		[Column("birthday")]
 		public DateTime? Birthday { get; private set; }
@@ -41,10 +46,6 @@ namespace FermataFishNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("firstName")]
 		public string FirstName { get; private set; }
-
-		[Key]
-		[Column("id")]
-		public int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("lastName")]
@@ -63,5 +64,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb9f78e2c84d6f1e522f14a462d511bd</Hash>
+    <Hash>4cf8a7cac527597063baad8c43b5fea8</Hash>
 </Codenesium>*/

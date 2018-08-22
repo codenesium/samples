@@ -14,24 +14,29 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			string address1,
 			string address2,
 			string city,
-			int id,
 			string name,
-			int stateId,
+			string province,
 			string website,
 			string zip)
 		{
+			this.Id = id;
 			this.Address1 = address1;
 			this.Address2 = address2;
 			this.City = city;
-			this.Id = id;
 			this.Name = name;
-			this.StateId = stateId;
+			this.Province = province;
 			this.Website = website;
 			this.Zip = zip;
 		}
+
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id")]
+		public int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("address1")]
@@ -45,16 +50,13 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("city")]
 		public string City { get; private set; }
 
-		[Key]
-		[Column("id")]
-		public int Id { get; private set; }
-
 		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
 
-		[Column("stateId")]
-		public int StateId { get; private set; }
+		[MaxLength(90)]
+		[Column("province")]
+		public string Province { get; private set; }
 
 		[MaxLength(128)]
 		[Column("website")]
@@ -63,12 +65,9 @@ namespace FermataFishNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("zip")]
 		public string Zip { get; private set; }
-
-		[ForeignKey("StateId")]
-		public virtual State StateNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a68d0f029db4cf7fa9848d5995f5b55</Hash>
+    <Hash>105461c8be3b7f1d03973683a7336e38</Hash>
 </Codenesium>*/

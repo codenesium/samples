@@ -21,9 +21,9 @@ namespace FermataFishNS.Api.Services
 				model.LessonStatusId,
 				model.ScheduledEndDate,
 				model.ScheduledStartDate,
-				model.StudentNotes,
-				model.StudioId,
-				model.TeacherNotes);
+				model.StudentNote,
+				model.TeacherNote,
+				model.StudioId);
 			return boLesson;
 		}
 
@@ -32,7 +32,7 @@ namespace FermataFishNS.Api.Services
 		{
 			var model = new ApiLessonResponseModel();
 
-			model.SetProperties(boLesson.Id, boLesson.ActualEndDate, boLesson.ActualStartDate, boLesson.BillAmount, boLesson.LessonStatusId, boLesson.ScheduledEndDate, boLesson.ScheduledStartDate, boLesson.StudentNotes, boLesson.StudioId, boLesson.TeacherNotes);
+			model.SetProperties(boLesson.Id, boLesson.ActualEndDate, boLesson.ActualStartDate, boLesson.BillAmount, boLesson.LessonStatusId, boLesson.ScheduledEndDate, boLesson.ScheduledStartDate, boLesson.StudentNote, boLesson.TeacherNote, boLesson.StudioId);
 
 			return model;
 		}
@@ -53,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3997c39b5e4d105bd9eee4772749ae6b</Hash>
+    <Hash>ee0ae921a704b7bf6d53468edef03914</Hash>
 </Codenesium>*/

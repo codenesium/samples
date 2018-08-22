@@ -7,14 +7,9 @@ namespace ESPIOTNS.Api.Services
 {
 	public partial interface IApiDeviceRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiDeviceRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeviceRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ef00dd655c802fc7ea14fb20dfdb27b</Hash>
+    <Hash>ca523ad98ece249246cf5b54f29499b2</Hash>
 </Codenesium>*/

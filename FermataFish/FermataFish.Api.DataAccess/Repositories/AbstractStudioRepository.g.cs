@@ -76,14 +76,19 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<Admin>> Admins(int studioId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<Admin>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
-		}
-
 		public async virtual Task<List<Family>> Families(int id, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Family>().Where(x => x.Id == id).AsQueryable().Skip(offset).Take(limit).ToListAsync<Family>();
+		}
+
+		public async virtual Task<List<LessonStatus>> LessonStatuses(int id, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<LessonStatus>().Where(x => x.Id == id).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonStatus>();
+		}
+
+		public async virtual Task<List<Admin>> Admins(int studioId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Admin>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
 		public async virtual Task<List<Lesson>> Lessons(int studioId, int limit = int.MaxValue, int offset = 0)
@@ -91,9 +96,14 @@ namespace FermataFishNS.Api.DataAccess
 			return await this.Context.Set<Lesson>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Lesson>();
 		}
 
-		public async virtual Task<List<LessonStatus>> LessonStatus(int id, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<LessonXStudent>> LessonXStudents(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<LessonStatus>().Where(x => x.Id == id).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonStatus>();
+			return await this.Context.Set<LessonXStudent>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonXStudent>();
+		}
+
+		public async virtual Task<List<Rate>> Rates(int studioId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Rate>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
 		public async virtual Task<List<Space>> Spaces(int studioId, int limit = int.MaxValue, int offset = 0)
@@ -106,9 +116,19 @@ namespace FermataFishNS.Api.DataAccess
 			return await this.Context.Set<SpaceFeature>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceFeature>();
 		}
 
+		public async virtual Task<List<SpaceXSpaceFeature>> SpaceXSpaceFeatures(int studioId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<SpaceXSpaceFeature>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceXSpaceFeature>();
+		}
+
 		public async virtual Task<List<Student>> Students(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Student>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
+		}
+
+		public async virtual Task<List<StudentXFamily>> StudentXFamilies(int studioId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<StudentXFamily>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<StudentXFamily>();
 		}
 
 		public async virtual Task<List<Teacher>> Teachers(int studioId, int limit = int.MaxValue, int offset = 0)
@@ -121,9 +141,9 @@ namespace FermataFishNS.Api.DataAccess
 			return await this.Context.Set<TeacherSkill>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
 		}
 
-		public async virtual Task<State> GetState(int stateId)
+		public async virtual Task<List<TeacherXTeacherSkill>> TeacherXTeacherSkills(int studioId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<State>().SingleOrDefaultAsync(x => x.Id == stateId);
+			return await this.Context.Set<TeacherXTeacherSkill>().Where(x => x.StudioId == studioId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherXTeacherSkill>();
 		}
 
 		protected async Task<List<Studio>> Where(
@@ -158,5 +178,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bf81fa7af995bbe5f35f691539ecce2f</Hash>
+    <Hash>96898aaf0b6a1ee4c3432324552cca7f</Hash>
 </Codenesium>*/

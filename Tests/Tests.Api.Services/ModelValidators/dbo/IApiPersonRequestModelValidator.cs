@@ -7,14 +7,9 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IApiPersonRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiPersonRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPersonRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>36abf5e89978625449ea1e09f1b4c01a</Hash>
+    <Hash>30ca85689b31a5bb552af074b1e71acd</Hash>
 </Codenesium>*/

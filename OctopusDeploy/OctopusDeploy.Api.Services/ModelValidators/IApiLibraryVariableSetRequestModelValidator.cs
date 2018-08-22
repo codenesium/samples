@@ -7,14 +7,9 @@ namespace OctopusDeployNS.Api.Services
 {
 	public partial interface IApiLibraryVariableSetRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiLibraryVariableSetRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(string id, ApiLibraryVariableSetRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(string id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c704b7bd4686c8f474a5ea01167875c1</Hash>
+    <Hash>6e08437b0c9db2aa3cd873c444b1f6e8</Hash>
 </Codenesium>*/

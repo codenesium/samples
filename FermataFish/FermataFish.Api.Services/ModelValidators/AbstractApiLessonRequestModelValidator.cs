@@ -40,7 +40,6 @@ namespace FermataFishNS.Api.Services
 
 		public virtual void LessonStatusIdRules()
 		{
-			this.RuleFor(x => x.LessonStatusId).MustAsync(this.BeValidLessonStatus).When(x => x?.LessonStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ScheduledEndDateRules()
@@ -51,26 +50,19 @@ namespace FermataFishNS.Api.Services
 		{
 		}
 
-		public virtual void StudentNotesRules()
+		public virtual void StudentNoteRules()
 		{
-			this.RuleFor(x => x.StudentNotes).Length(0, 2147483647);
+			this.RuleFor(x => x.StudentNote).Length(0, 2147483647);
+		}
+
+		public virtual void TeacherNoteRules()
+		{
+			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647);
 		}
 
 		public virtual void StudioIdRules()
 		{
 			this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
-		}
-
-		public virtual void TeacherNotesRules()
-		{
-			this.RuleFor(x => x.TeacherNotes).Length(0, 2147483647);
-		}
-
-		private async Task<bool> BeValidLessonStatus(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.lessonRepository.GetLessonStatus(id);
-
-			return record != null;
 		}
 
 		private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
@@ -83,5 +75,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13ebea5d74938aeb2399ba3bc824d85d</Hash>
+    <Hash>9a1e2ac03f2a37e3f2a89d5ccfd1c384</Hash>
 </Codenesium>*/

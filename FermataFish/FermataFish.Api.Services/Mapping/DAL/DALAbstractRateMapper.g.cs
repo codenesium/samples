@@ -13,10 +13,11 @@ namespace FermataFishNS.Api.Services
 		{
 			Rate efRate = new Rate();
 			efRate.SetProperties(
-				bo.AmountPerMinute,
 				bo.Id,
+				bo.AmountPerMinute,
 				bo.TeacherId,
-				bo.TeacherSkillId);
+				bo.TeacherSkillId,
+				bo.StudioId);
 			return efRate;
 		}
 
@@ -29,7 +30,8 @@ namespace FermataFishNS.Api.Services
 				ef.Id,
 				ef.AmountPerMinute,
 				ef.TeacherId,
-				ef.TeacherSkillId);
+				ef.TeacherSkillId,
+				ef.StudioId);
 			return bo;
 		}
 
@@ -49,5 +51,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>838228d8021fcd6186846ad5d60a395d</Hash>
+    <Hash>a263288491e8845a5c16286020b035a0</Hash>
 </Codenesium>*/

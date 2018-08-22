@@ -18,14 +18,14 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudioMapper();
 			ApiStudioRequestModel model = new ApiStudioRequestModel();
-			model.SetProperties("A", "A", "A", "A", 1, "A", "A");
+			model.SetProperties("A", "A", "A", "A", "A", "A", "A");
 			BOStudio response = mapper.MapModelToBO(1, model);
 
 			response.Address1.Should().Be("A");
 			response.Address2.Should().Be("A");
 			response.City.Should().Be("A");
 			response.Name.Should().Be("A");
-			response.StateId.Should().Be(1);
+			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
 		}
@@ -35,15 +35,15 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudioMapper();
 			BOStudio bo = new BOStudio();
-			bo.SetProperties(1, "A", "A", "A", "A", 1, "A", "A");
+			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
 			ApiStudioResponseModel response = mapper.MapBOToModel(bo);
 
+			response.Id.Should().Be(1);
 			response.Address1.Should().Be("A");
 			response.Address2.Should().Be("A");
 			response.City.Should().Be("A");
-			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.StateId.Should().Be(1);
+			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
 		}
@@ -53,7 +53,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudioMapper();
 			BOStudio bo = new BOStudio();
-			bo.SetProperties(1, "A", "A", "A", "A", 1, "A", "A");
+			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
 			List<ApiStudioResponseModel> response = mapper.MapBOToModel(new List<BOStudio>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -62,5 +62,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>742bdb7f38e2b348c05d2f3c4ca02a53</Hash>
+    <Hash>97a441884ad18b96418cd657e86b8fb0</Hash>
 </Codenesium>*/

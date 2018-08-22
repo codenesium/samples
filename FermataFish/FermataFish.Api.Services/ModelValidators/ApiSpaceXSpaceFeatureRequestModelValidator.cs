@@ -17,6 +17,7 @@ namespace FermataFishNS.Api.Services
 		{
 			this.SpaceFeatureIdRules();
 			this.SpaceIdRules();
+			this.StudioIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -24,6 +25,7 @@ namespace FermataFishNS.Api.Services
 		{
 			this.SpaceFeatureIdRules();
 			this.SpaceIdRules();
+			this.StudioIdRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff8d061c95472412c1011ab81e8a647f</Hash>
+    <Hash>2c538f024d2f4e84b575adc1efc92f14</Hash>
 </Codenesium>*/

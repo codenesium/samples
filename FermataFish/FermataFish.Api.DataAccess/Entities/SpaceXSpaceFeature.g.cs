@@ -16,14 +16,17 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual void SetProperties(
 			int id,
 			int spaceFeatureId,
-			int spaceId)
+			int spaceId,
+			int studioId)
 		{
 			this.Id = id;
 			this.SpaceFeatureId = spaceFeatureId;
 			this.SpaceId = spaceId;
+			this.StudioId = studioId;
 		}
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -33,14 +36,20 @@ namespace FermataFishNS.Api.DataAccess
 		[Column("spaceId")]
 		public int SpaceId { get; private set; }
 
+		[Column("studioId")]
+		public int StudioId { get; private set; }
+
 		[ForeignKey("SpaceFeatureId")]
 		public virtual SpaceFeature SpaceFeatureNavigation { get; private set; }
 
 		[ForeignKey("SpaceId")]
 		public virtual Space SpaceNavigation { get; private set; }
+
+		[ForeignKey("StudioId")]
+		public virtual Studio StudioNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>02231915143296b6612292aeb7a2069c</Hash>
+    <Hash>fad257feb51a0cf7a093dfa737e8da9c</Hash>
 </Codenesium>*/

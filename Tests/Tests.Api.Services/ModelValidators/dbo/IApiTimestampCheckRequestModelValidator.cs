@@ -7,14 +7,9 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IApiTimestampCheckRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiTimestampCheckRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiTimestampCheckRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d1b2d9b3c50894da6bffa53954aece78</Hash>
+    <Hash>b1c8d5a44266f2a7dcca2151e9d1daff</Hash>
 </Codenesium>*/

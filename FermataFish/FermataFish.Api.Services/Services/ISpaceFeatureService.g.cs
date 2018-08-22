@@ -21,10 +21,12 @@ namespace FermataFishNS.Api.Services
 
 		Task<List<ApiSpaceFeatureResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<List<ApiSpaceFeatureResponseModel>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0);
+
 		Task<List<ApiSpaceXSpaceFeatureResponseModel>> SpaceXSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b8dfc65a6bd99c8fdf9fb5d4975480a7</Hash>
+    <Hash>2fc739fd94f13c10f3431b581383b36b</Hash>
 </Codenesium>*/

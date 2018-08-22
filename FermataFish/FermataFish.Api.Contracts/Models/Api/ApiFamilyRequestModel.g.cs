@@ -15,14 +15,14 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		public virtual void SetProperties(
-			string notes,
+			string note,
 			string pcEmail,
 			string pcFirstName,
 			string pcLastName,
 			string pcPhone,
 			int studioId)
 		{
-			this.Notes = notes;
+			this.Note = note;
 			this.PcEmail = pcEmail;
 			this.PcFirstName = pcFirstName;
 			this.PcLastName = pcLastName;
@@ -30,26 +30,32 @@ namespace FermataFishNS.Api.Contracts
 			this.StudioId = studioId;
 		}
 
+		[Required]
 		[JsonProperty]
-		public string Notes { get; private set; }
+		public string Note { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string PcEmail { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string PcFirstName { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string PcLastName { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string PcPhone { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int StudioId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fb9d9030d8e5144d6ddb8664d8d0292e</Hash>
+    <Hash>e7743a1a0ea031e879b93c1869f1c771</Hash>
 </Codenesium>*/

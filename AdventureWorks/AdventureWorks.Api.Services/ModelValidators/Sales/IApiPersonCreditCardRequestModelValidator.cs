@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiPersonCreditCardRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiPersonCreditCardRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPersonCreditCardRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>418a33f43d4fde2a74ff85eef18a8baf</Hash>
+    <Hash>ca15de85b6cf7b32cc084b4c7b63390a</Hash>
 </Codenesium>*/

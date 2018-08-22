@@ -17,12 +17,13 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceXSpaceFeatureModelMapper();
 			var model = new ApiSpaceXSpaceFeatureRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			ApiSpaceXSpaceFeatureResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Id.Should().Be(1);
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -30,11 +31,12 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceXSpaceFeatureModelMapper();
 			var model = new ApiSpaceXSpaceFeatureResponseModel();
-			model.SetProperties(1, 1, 1);
+			model.SetProperties(1, 1, 1, 1);
 			ApiSpaceXSpaceFeatureRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -42,17 +44,18 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceXSpaceFeatureModelMapper();
 			var model = new ApiSpaceXSpaceFeatureRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 
 			JsonPatchDocument<ApiSpaceXSpaceFeatureRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiSpaceXSpaceFeatureRequestModel();
 			patch.ApplyTo(response);
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>34278eafeb80884827111f323f073044</Hash>
+    <Hash>47c82188b80546610b554cd0d5459244</Hash>
 </Codenesium>*/

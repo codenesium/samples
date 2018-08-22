@@ -78,7 +78,7 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 		private async Task<ApiStudioResponseModel> CreateRecord()
 		{
 			var model = new ApiStudioRequestModel();
-			model.SetProperties("B", "B", "B", "B", 1, "B", "B");
+			model.SetProperties("B", "B", "B", "B", "B", "B", "B");
 			CreateResponse<ApiStudioResponseModel> result = await this.Client.StudioCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>4bfee38a7950e691451bca714e42baf4</Hash>
+    <Hash>0055127ccc93699b9569908f809990c7</Hash>
 </Codenesium>*/

@@ -16,9 +16,9 @@ namespace FermataFishNS.Api.Contracts
 			int lessonStatusId,
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
-			string studentNotes,
-			int studioId,
-			string teacherNotes)
+			string studentNote,
+			string teacherNote,
+			int studioId)
 		{
 			this.Id = id;
 			this.ActualEndDate = actualEndDate;
@@ -27,13 +27,15 @@ namespace FermataFishNS.Api.Contracts
 			this.LessonStatusId = lessonStatusId;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.StudentNotes = studentNotes;
+			this.StudentNote = studentNote;
+			this.TeacherNote = teacherNote;
 			this.StudioId = studioId;
-			this.TeacherNotes = teacherNotes;
 
-			this.LessonStatusIdEntity = nameof(ApiResponse.LessonStatus);
 			this.StudioIdEntity = nameof(ApiResponse.Studios);
 		}
+
+		[JsonProperty]
+		public int Id { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -47,16 +49,8 @@ namespace FermataFishNS.Api.Contracts
 		[JsonProperty]
 		public decimal? BillAmount { get; private set; }
 
-		[Required]
-		[JsonProperty]
-		public int Id { get; private set; }
-
-		[Required]
 		[JsonProperty]
 		public int LessonStatusId { get; private set; }
-
-		[JsonProperty]
-		public string LessonStatusIdEntity { get; set; }
 
 		[Required]
 		[JsonProperty]
@@ -68,21 +62,20 @@ namespace FermataFishNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string StudentNotes { get; private set; }
+		public string StudentNote { get; private set; }
 
 		[Required]
+		[JsonProperty]
+		public string TeacherNote { get; private set; }
+
 		[JsonProperty]
 		public int StudioId { get; private set; }
 
 		[JsonProperty]
 		public string StudioIdEntity { get; set; }
-
-		[Required]
-		[JsonProperty]
-		public string TeacherNotes { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>365c4d56d1dbeb9c89abae0d816def36</Hash>
+    <Hash>d92c3f977743d0be34bcb9dad26b43fd</Hash>
 </Codenesium>*/

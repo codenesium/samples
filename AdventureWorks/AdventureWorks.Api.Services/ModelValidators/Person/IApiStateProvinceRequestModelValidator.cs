@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiStateProvinceRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiStateProvinceRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiStateProvinceRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>38dbc32e11e0f2bb91e0978f558d2810</Hash>
+    <Hash>41d323ee361c0fe3eae011b6c6e4a9de</Hash>
 </Codenesium>*/

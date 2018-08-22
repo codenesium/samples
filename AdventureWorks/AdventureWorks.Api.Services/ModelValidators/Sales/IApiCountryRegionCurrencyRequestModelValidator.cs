@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiCountryRegionCurrencyRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiCountryRegionCurrencyRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(string id, ApiCountryRegionCurrencyRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(string id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>36d3702415327924f15763eb70f71ee4</Hash>
+    <Hash>a1fb057f82eefea2d6c3c89101cc4233</Hash>
 </Codenesium>*/

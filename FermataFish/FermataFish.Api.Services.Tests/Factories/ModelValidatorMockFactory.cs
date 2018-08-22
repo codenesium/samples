@@ -29,8 +29,6 @@ namespace FermataFishNS.Api.Services.Tests
 
 		public Mock<IApiSpaceXSpaceFeatureRequestModelValidator> SpaceXSpaceFeatureModelValidatorMock { get; set; } = new Mock<IApiSpaceXSpaceFeatureRequestModelValidator>();
 
-		public Mock<IApiStateRequestModelValidator> StateModelValidatorMock { get; set; } = new Mock<IApiStateRequestModelValidator>();
-
 		public Mock<IApiStudentRequestModelValidator> StudentModelValidatorMock { get; set; } = new Mock<IApiStudentRequestModelValidator>();
 
 		public Mock<IApiStudentXFamilyRequestModelValidator> StudentXFamilyModelValidatorMock { get; set; } = new Mock<IApiStudentXFamilyRequestModelValidator>();
@@ -85,10 +83,6 @@ namespace FermataFishNS.Api.Services.Tests
 			this.SpaceXSpaceFeatureModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceXSpaceFeatureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SpaceXSpaceFeatureModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.StateModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiStateRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.StateModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.StateModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.StudentModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.StudentModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.StudentModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -117,5 +111,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>37ff09333b442169f46e27d6dd3d4107</Hash>
+    <Hash>4bd71b41242cc80df177fd5051ff6822</Hash>
 </Codenesium>*/

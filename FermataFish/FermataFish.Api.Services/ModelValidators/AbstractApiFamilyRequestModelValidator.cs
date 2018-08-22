@@ -26,28 +26,33 @@ namespace FermataFishNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
-		public virtual void NotesRules()
+		public virtual void NoteRules()
 		{
-			this.RuleFor(x => x.Notes).Length(0, 2147483647);
+			this.RuleFor(x => x.Note).NotNull();
+			this.RuleFor(x => x.Note).Length(0, 2147483647);
 		}
 
 		public virtual void PcEmailRules()
 		{
+			this.RuleFor(x => x.PcEmail).NotNull();
 			this.RuleFor(x => x.PcEmail).Length(0, 128);
 		}
 
 		public virtual void PcFirstNameRules()
 		{
+			this.RuleFor(x => x.PcFirstName).NotNull();
 			this.RuleFor(x => x.PcFirstName).Length(0, 128);
 		}
 
 		public virtual void PcLastNameRules()
 		{
+			this.RuleFor(x => x.PcLastName).NotNull();
 			this.RuleFor(x => x.PcLastName).Length(0, 128);
 		}
 
 		public virtual void PcPhoneRules()
 		{
+			this.RuleFor(x => x.PcPhone).NotNull();
 			this.RuleFor(x => x.PcPhone).Length(0, 128);
 		}
 
@@ -66,5 +71,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84ff839c15e4921e866251668078dfa5</Hash>
+    <Hash>db1af3eb465ed8038062eaae3286c105</Hash>
 </Codenesium>*/

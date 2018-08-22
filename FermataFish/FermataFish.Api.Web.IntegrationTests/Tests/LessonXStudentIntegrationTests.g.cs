@@ -78,7 +78,7 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 		private async Task<ApiLessonXStudentResponseModel> CreateRecord()
 		{
 			var model = new ApiLessonXStudentRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			CreateResponse<ApiLessonXStudentResponseModel> result = await this.Client.LessonXStudentCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>7cbe443faf5218dbdef3e95b1dc29824</Hash>
+    <Hash>4bde755a6ca97ff6c938c1a6cd3954df</Hash>
 </Codenesium>*/

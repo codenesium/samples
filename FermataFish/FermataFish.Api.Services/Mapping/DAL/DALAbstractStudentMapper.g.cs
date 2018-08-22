@@ -13,12 +13,12 @@ namespace FermataFishNS.Api.Services
 		{
 			Student efStudent = new Student();
 			efStudent.SetProperties(
+				bo.Id,
 				bo.Birthday,
 				bo.Email,
 				bo.EmailRemindersEnabled,
 				bo.FamilyId,
 				bo.FirstName,
-				bo.Id,
 				bo.IsAdult,
 				bo.LastName,
 				bo.Phone,
@@ -63,5 +63,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>52e3cea04b3660a5fa9d270c2a6d4db8</Hash>
+    <Hash>07f21f272f9d2f86b695d9e37924df97</Hash>
 </Codenesium>*/

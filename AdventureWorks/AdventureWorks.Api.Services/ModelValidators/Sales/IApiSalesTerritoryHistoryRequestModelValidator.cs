@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiSalesTerritoryHistoryRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiSalesTerritoryHistoryRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSalesTerritoryHistoryRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>01c6a27f4952b802ebc02ba6f9a30329</Hash>
+    <Hash>006b9c8efc1cf9cd296922ada56ecc7e</Hash>
 </Codenesium>*/

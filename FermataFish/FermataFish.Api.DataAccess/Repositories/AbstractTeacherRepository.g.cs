@@ -76,6 +76,13 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
+		public async Task<List<Teacher>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0)
+		{
+			var records = await this.Where(x => x.StudioId == studioId, limit, offset);
+
+			return records;
+		}
+
 		public async virtual Task<List<Rate>> Rates(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Rate>().Where(x => x.TeacherId == teacherId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
@@ -123,5 +130,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>de3183f81d4ac3b69ce46f4df84448d2</Hash>
+    <Hash>0243cf775c4b692d4406d39627d99b33</Hash>
 </Codenesium>*/

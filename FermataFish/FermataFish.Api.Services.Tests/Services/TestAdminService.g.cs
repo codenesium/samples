@@ -129,9 +129,45 @@ namespace FermataFishNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.AdminModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void ByStudioId_Exists()
+		{
+			var mock = new ServiceMockFacade<IAdminRepository>();
+			var records = new List<Admin>();
+			records.Add(new Admin());
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new AdminService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                               mock.DALMapperMockFactory.DALAdminMapperMock);
+
+			List<ApiAdminResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByStudioId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IAdminRepository>();
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Admin>>(new List<Admin>()));
+			var service = new AdminService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                               mock.DALMapperMockFactory.DALAdminMapperMock);
+
+			List<ApiAdminResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eb67fc939be5c0e18bdf9b106f2d8bb9</Hash>
+    <Hash>caf51a88abaa00e17f25e2dcafbd9610</Hash>
 </Codenesium>*/

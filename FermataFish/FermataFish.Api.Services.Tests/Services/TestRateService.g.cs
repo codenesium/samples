@@ -129,9 +129,45 @@ namespace FermataFishNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.RateModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void ByStudioId_Exists()
+		{
+			var mock = new ServiceMockFacade<IRateRepository>();
+			var records = new List<Rate>();
+			records.Add(new Rate());
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                              mock.DALMapperMockFactory.DALRateMapperMock);
+
+			List<ApiRateResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByStudioId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IRateRepository>();
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
+			var service = new RateService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.RateModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                              mock.DALMapperMockFactory.DALRateMapperMock);
+
+			List<ApiRateResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>511678f5426ed1e244f91e67ba283444</Hash>
+    <Hash>4a4b42e2093e59bac278b7b239c628bc</Hash>
 </Codenesium>*/

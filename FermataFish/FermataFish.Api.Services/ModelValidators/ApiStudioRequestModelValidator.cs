@@ -19,7 +19,7 @@ namespace FermataFishNS.Api.Services
 			this.Address2Rules();
 			this.CityRules();
 			this.NameRules();
-			this.StateIdRules();
+			this.ProvinceRules();
 			this.WebsiteRules();
 			this.ZipRules();
 			return await this.ValidateAsync(model);
@@ -31,7 +31,7 @@ namespace FermataFishNS.Api.Services
 			this.Address2Rules();
 			this.CityRules();
 			this.NameRules();
-			this.StateIdRules();
+			this.ProvinceRules();
 			this.WebsiteRules();
 			this.ZipRules();
 			return await this.ValidateAsync(model, id);
@@ -45,5 +45,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6cdf70c0f50f408af5f0d51605ed6017</Hash>
+    <Hash>cf396ff76edfc5f4e258aa29a171035e</Hash>
 </Codenesium>*/

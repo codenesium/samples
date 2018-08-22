@@ -18,11 +18,12 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLTeacherXTeacherSkillMapper();
 			ApiTeacherXTeacherSkillRequestModel model = new ApiTeacherXTeacherSkillRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			BOTeacherXTeacherSkill response = mapper.MapModelToBO(1, model);
 
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -30,12 +31,13 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLTeacherXTeacherSkillMapper();
 			BOTeacherXTeacherSkill bo = new BOTeacherXTeacherSkill();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1, 1, 1);
 			ApiTeacherXTeacherSkillResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -43,7 +45,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLTeacherXTeacherSkillMapper();
 			BOTeacherXTeacherSkill bo = new BOTeacherXTeacherSkill();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1, 1, 1);
 			List<ApiTeacherXTeacherSkillResponseModel> response = mapper.MapBOToModel(new List<BOTeacherXTeacherSkill>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -52,5 +54,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>50d532794c9bef82b32c20e2a4fd678d</Hash>
+    <Hash>373810dfbe52e95563ecb34ff9465dbb</Hash>
 </Codenesium>*/

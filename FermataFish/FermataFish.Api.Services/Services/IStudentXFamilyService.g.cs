@@ -20,9 +20,11 @@ namespace FermataFishNS.Api.Services
 		Task<ApiStudentXFamilyResponseModel> Get(int id);
 
 		Task<List<ApiStudentXFamilyResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiStudentXFamilyResponseModel>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0659bf25d458d0069476ae5ce8413626</Hash>
+    <Hash>3470153ebc7d1e195bbcfd52e6f7a4b4</Hash>
 </Codenesium>*/

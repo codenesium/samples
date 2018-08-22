@@ -13,7 +13,7 @@ namespace FermataFishNS.Api.Contracts
 		{
 			var response = new ApiFamilyResponseModel();
 			response.SetProperties(id,
-			                       request.Notes,
+			                       request.Note,
 			                       request.PcEmail,
 			                       request.PcFirstName,
 			                       request.PcLastName,
@@ -27,7 +27,7 @@ namespace FermataFishNS.Api.Contracts
 		{
 			var request = new ApiFamilyRequestModel();
 			request.SetProperties(
-				response.Notes,
+				response.Note,
 				response.PcEmail,
 				response.PcFirstName,
 				response.PcLastName,
@@ -39,7 +39,7 @@ namespace FermataFishNS.Api.Contracts
 		public JsonPatchDocument<ApiFamilyRequestModel> CreatePatch(ApiFamilyRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiFamilyRequestModel>();
-			patch.Replace(x => x.Notes, model.Notes);
+			patch.Replace(x => x.Note, model.Note);
 			patch.Replace(x => x.PcEmail, model.PcEmail);
 			patch.Replace(x => x.PcFirstName, model.PcFirstName);
 			patch.Replace(x => x.PcLastName, model.PcLastName);
@@ -51,5 +51,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>78edebf875e65ef019740a4be6cc2e40</Hash>
+    <Hash>360a501503e996797c16941ef2f4b2d5</Hash>
 </Codenesium>*/

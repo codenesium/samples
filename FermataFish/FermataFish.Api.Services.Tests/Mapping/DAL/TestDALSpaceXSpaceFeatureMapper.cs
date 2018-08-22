@@ -17,13 +17,14 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceXSpaceFeatureMapper();
 			var bo = new BOSpaceXSpaceFeature();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1, 1, 1);
 
 			SpaceXSpaceFeature response = mapper.MapBOToEF(bo);
 
 			response.Id.Should().Be(1);
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -31,13 +32,14 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceXSpaceFeatureMapper();
 			SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-			entity.SetProperties(1, 1, 1);
+			entity.SetProperties(1, 1, 1, 1);
 
 			BOSpaceXSpaceFeature response = mapper.MapEFToBO(entity);
 
 			response.Id.Should().Be(1);
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -45,7 +47,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceXSpaceFeatureMapper();
 			SpaceXSpaceFeature entity = new SpaceXSpaceFeature();
-			entity.SetProperties(1, 1, 1);
+			entity.SetProperties(1, 1, 1, 1);
 
 			List<BOSpaceXSpaceFeature> response = mapper.MapEFToBO(new List<SpaceXSpaceFeature>() { entity });
 
@@ -55,5 +57,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a42e63d584a724f8a082553797e003f5</Hash>
+    <Hash>b25871309e95472e712560975968eaad</Hash>
 </Codenesium>*/

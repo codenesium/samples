@@ -21,8 +21,8 @@ namespace FermataFishNS.Api.Services.Tests
 
 			Space response = mapper.MapBOToEF(bo);
 
-			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
+			response.Description.Should().Be("A");
 			response.Name.Should().Be("A");
 			response.StudioId.Should().Be(1);
 		}
@@ -32,12 +32,12 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceMapper();
 			Space entity = new Space();
-			entity.SetProperties("A", 1, "A", 1);
+			entity.SetProperties(1, "A", "A", 1);
 
 			BOSpace response = mapper.MapEFToBO(entity);
 
-			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
+			response.Description.Should().Be("A");
 			response.Name.Should().Be("A");
 			response.StudioId.Should().Be(1);
 		}
@@ -47,7 +47,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceMapper();
 			Space entity = new Space();
-			entity.SetProperties("A", 1, "A", 1);
+			entity.SetProperties(1, "A", "A", 1);
 
 			List<BOSpace> response = mapper.MapEFToBO(new List<Space>() { entity });
 
@@ -57,5 +57,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>06040aba2d0ebe2be47c3f91d34c5cf0</Hash>
+    <Hash>b21f0d70962791c02337c89feebb4b20</Hash>
 </Codenesium>*/

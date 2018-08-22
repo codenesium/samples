@@ -205,6 +205,23 @@ namespace FermataFishNS.Api.Web
 			}
 		}
 
+		[HttpGet]
+		[Route("byStudioId/{studioId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiSpaceXSpaceFeatureResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByStudioId(int studioId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiSpaceXSpaceFeatureResponseModel> response = await this.SpaceXSpaceFeatureService.ByStudioId(studioId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiSpaceXSpaceFeatureRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpaceXSpaceFeatureRequestModel> patch)
 		{
 			var record = await this.SpaceXSpaceFeatureService.Get(id);
@@ -224,5 +241,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>318e3e1ada060d0fdd152befae6a8d04</Hash>
+    <Hash>5851874556d957e8e261ee05cd522add</Hash>
 </Codenesium>*/

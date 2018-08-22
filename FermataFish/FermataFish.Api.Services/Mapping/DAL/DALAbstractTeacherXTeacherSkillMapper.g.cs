@@ -15,7 +15,8 @@ namespace FermataFishNS.Api.Services
 			efTeacherXTeacherSkill.SetProperties(
 				bo.Id,
 				bo.TeacherId,
-				bo.TeacherSkillId);
+				bo.TeacherSkillId,
+				bo.StudioId);
 			return efTeacherXTeacherSkill;
 		}
 
@@ -27,7 +28,8 @@ namespace FermataFishNS.Api.Services
 			bo.SetProperties(
 				ef.Id,
 				ef.TeacherId,
-				ef.TeacherSkillId);
+				ef.TeacherSkillId,
+				ef.StudioId);
 			return bo;
 		}
 
@@ -47,5 +49,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>822643a372760eee2a10f2a5581613a3</Hash>
+    <Hash>1ca9e9d13ee9fb3ff7432ffe42ded31b</Hash>
 </Codenesium>*/

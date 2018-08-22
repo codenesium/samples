@@ -15,19 +15,21 @@ namespace FermataFishNS.Api.Services
 		                                  string address2,
 		                                  string city,
 		                                  string name,
-		                                  int stateId,
+		                                  string province,
 		                                  string website,
 		                                  string zip)
 		{
+			this.Id = id;
 			this.Address1 = address1;
 			this.Address2 = address2;
 			this.City = city;
-			this.Id = id;
 			this.Name = name;
-			this.StateId = stateId;
+			this.Province = province;
 			this.Website = website;
 			this.Zip = zip;
 		}
+
+		public int Id { get; private set; }
 
 		public string Address1 { get; private set; }
 
@@ -35,11 +37,9 @@ namespace FermataFishNS.Api.Services
 
 		public string City { get; private set; }
 
-		public int Id { get; private set; }
-
 		public string Name { get; private set; }
 
-		public int StateId { get; private set; }
+		public string Province { get; private set; }
 
 		public string Website { get; private set; }
 
@@ -48,5 +48,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65215acd1abc72c08d6523398fa29557</Hash>
+    <Hash>f67b4e97c15e2f3e43a882e76e741839</Hash>
 </Codenesium>*/

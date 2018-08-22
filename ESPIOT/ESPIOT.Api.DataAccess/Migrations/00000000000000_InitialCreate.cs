@@ -21,6 +21,23 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.FK_DeviceAction_Device', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[DeviceAction] DROP CONSTRAINT [FK_DeviceAction_Device]
+--END
+--GO
+
+--IF OBJECT_ID('dbo.Device', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Device]
+--END
+--GO
+--IF OBJECT_ID('dbo.DeviceAction', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[DeviceAction]
+--END
+--GO
+
 CREATE TABLE [dbo].[Device](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [name] [varchar]  (90)   NOT NULL,

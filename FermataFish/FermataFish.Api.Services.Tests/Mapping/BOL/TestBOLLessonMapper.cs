@@ -18,7 +18,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLLessonMapper();
 			ApiLessonRequestModel model = new ApiLessonRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1);
 			BOLesson response = mapper.MapModelToBO(1, model);
 
 			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -27,9 +27,9 @@ namespace FermataFishNS.Api.Services.Tests
 			response.LessonStatusId.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.StudentNotes.Should().Be("A");
+			response.StudentNote.Should().Be("A");
+			response.TeacherNote.Should().Be("A");
 			response.StudioId.Should().Be(1);
-			response.TeacherNotes.Should().Be("A");
 		}
 
 		[Fact]
@@ -37,19 +37,19 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLLessonMapper();
 			BOLesson bo = new BOLesson();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1);
 			ApiLessonResponseModel response = mapper.MapBOToModel(bo);
 
+			response.Id.Should().Be(1);
 			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.BillAmount.Should().Be(1m);
-			response.Id.Should().Be(1);
 			response.LessonStatusId.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
-			response.StudentNotes.Should().Be("A");
+			response.StudentNote.Should().Be("A");
+			response.TeacherNote.Should().Be("A");
 			response.StudioId.Should().Be(1);
-			response.TeacherNotes.Should().Be("A");
 		}
 
 		[Fact]
@@ -57,7 +57,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLLessonMapper();
 			BOLesson bo = new BOLesson();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, "A");
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1);
 			List<ApiLessonResponseModel> response = mapper.MapBOToModel(new List<BOLesson>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -66,5 +66,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>555563d37feff6b38f81e190660b7827</Hash>
+    <Hash>1c4f26d8492337ef357df9d6ba59bd37</Hash>
 </Codenesium>*/

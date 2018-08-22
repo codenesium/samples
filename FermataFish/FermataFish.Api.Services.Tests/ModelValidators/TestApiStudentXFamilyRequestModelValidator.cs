@@ -123,9 +123,59 @@ namespace FermataFishNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
 		}
+
+		[Fact]
+		public async void StudioId_Create_Valid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Create_Invalid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiStudentXFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Update_Valid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Update_Invalid_Reference()
+		{
+			Mock<IStudentXFamilyRepository> studentXFamilyRepository = new Mock<IStudentXFamilyRepository>();
+			studentXFamilyRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+
+			var validator = new ApiStudentXFamilyRequestModelValidator(studentXFamilyRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiStudentXFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9540a51306e7d7df5b6e03ebdf162772</Hash>
+    <Hash>13a9689f3f8e377667a67f9c1f0d8395</Hash>
 </Codenesium>*/

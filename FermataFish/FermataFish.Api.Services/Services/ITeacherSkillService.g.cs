@@ -21,6 +21,8 @@ namespace FermataFishNS.Api.Services
 
 		Task<List<ApiTeacherSkillResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<List<ApiTeacherSkillResponseModel>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0);
+
 		Task<List<ApiRateResponseModel>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiTeacherXTeacherSkillResponseModel>> TeacherXTeacherSkills(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
@@ -28,5 +30,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>01f78096cb1cee37bc6d00a925496723</Hash>
+    <Hash>5aa17908250ddf1b35050672c4713df0</Hash>
 </Codenesium>*/

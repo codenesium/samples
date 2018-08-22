@@ -76,6 +76,13 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
+		public async Task<List<SpaceXSpaceFeature>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0)
+		{
+			var records = await this.Where(x => x.StudioId == studioId, limit, offset);
+
+			return records;
+		}
+
 		public async virtual Task<SpaceFeature> GetSpaceFeature(int spaceFeatureId)
 		{
 			return await this.Context.Set<SpaceFeature>().SingleOrDefaultAsync(x => x.Id == spaceFeatureId);
@@ -84,6 +91,11 @@ namespace FermataFishNS.Api.DataAccess
 		public async virtual Task<Space> GetSpace(int spaceId)
 		{
 			return await this.Context.Set<Space>().SingleOrDefaultAsync(x => x.Id == spaceId);
+		}
+
+		public async virtual Task<Studio> GetStudio(int studioId)
+		{
+			return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
 		}
 
 		protected async Task<List<SpaceXSpaceFeature>> Where(
@@ -118,5 +130,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca3f8b7f146f38c70af3055fab957ad3</Hash>
+    <Hash>08eb9492a4026a4ef0c61f12b7f87629</Hash>
 </Codenesium>*/

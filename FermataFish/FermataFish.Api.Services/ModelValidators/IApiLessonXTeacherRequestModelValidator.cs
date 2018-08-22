@@ -7,14 +7,9 @@ namespace FermataFishNS.Api.Services
 {
 	public partial interface IApiLessonXTeacherRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiLessonXTeacherRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiLessonXTeacherRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2947d4523b3028e672c38f1bde0a152d</Hash>
+    <Hash>d68b7b743e877a6de5aea4c0b542efe7</Hash>
 </Codenesium>*/

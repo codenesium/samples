@@ -51,6 +51,823 @@ WHERE name = N'Sales')
 EXEC('CREATE SCHEMA [Sales] AUTHORIZATION [dbo]');
 GO
 
+
+--IF (OBJECT_ID('HumanResources.FK_Employee_Person_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [HumanResources].[Employee] DROP CONSTRAINT [FK_Employee_Person_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('HumanResources.FK_EmployeeDepartmentHistory_Department_DepartmentID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] DROP CONSTRAINT [FK_EmployeeDepartmentHistory_Department_DepartmentID]
+--END
+--GO
+--IF (OBJECT_ID('HumanResources.FK_EmployeeDepartmentHistory_Employee_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] DROP CONSTRAINT [FK_EmployeeDepartmentHistory_Employee_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('HumanResources.FK_EmployeeDepartmentHistory_Shift_ShiftID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] DROP CONSTRAINT [FK_EmployeeDepartmentHistory_Shift_ShiftID]
+--END
+--GO
+--IF (OBJECT_ID('HumanResources.FK_EmployeePayHistory_Employee_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [HumanResources].[EmployeePayHistory] DROP CONSTRAINT [FK_EmployeePayHistory_Employee_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('HumanResources.FK_JobCandidate_Employee_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [HumanResources].[JobCandidate] DROP CONSTRAINT [FK_JobCandidate_Employee_BusinessEntityID]
+--END
+--GO
+
+--IF (OBJECT_ID('Person.FK_Address_StateProvince_StateProvinceID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[Address] DROP CONSTRAINT [FK_Address_StateProvince_StateProvinceID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_BusinessEntityAddress_Address_AddressID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[BusinessEntityAddress] DROP CONSTRAINT [FK_BusinessEntityAddress_Address_AddressID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_BusinessEntityAddress_AddressType_AddressTypeID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[BusinessEntityAddress] DROP CONSTRAINT [FK_BusinessEntityAddress_AddressType_AddressTypeID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[BusinessEntityAddress] DROP CONSTRAINT [FK_BusinessEntityAddress_BusinessEntity_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_BusinessEntityContact_BusinessEntity_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[BusinessEntityContact] DROP CONSTRAINT [FK_BusinessEntityContact_BusinessEntity_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_BusinessEntityContact_ContactType_ContactTypeID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[BusinessEntityContact] DROP CONSTRAINT [FK_BusinessEntityContact_ContactType_ContactTypeID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_BusinessEntityContact_Person_PersonID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[BusinessEntityContact] DROP CONSTRAINT [FK_BusinessEntityContact_Person_PersonID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_EmailAddress_Person_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[EmailAddress] DROP CONSTRAINT [FK_EmailAddress_Person_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_Password_Person_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[Password] DROP CONSTRAINT [FK_Password_Person_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_Person_BusinessEntity_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[Person] DROP CONSTRAINT [FK_Person_BusinessEntity_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_PersonPhone_Person_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[PersonPhone] DROP CONSTRAINT [FK_PersonPhone_Person_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[PersonPhone] DROP CONSTRAINT [FK_PersonPhone_PhoneNumberType_PhoneNumberTypeID]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_StateProvince_CountryRegion_CountryRegionCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[StateProvince] DROP CONSTRAINT [FK_StateProvince_CountryRegion_CountryRegionCode]
+--END
+--GO
+--IF (OBJECT_ID('Person.FK_StateProvince_SalesTerritory_TerritoryID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Person].[StateProvince] DROP CONSTRAINT [FK_StateProvince_SalesTerritory_TerritoryID]
+--END
+--GO
+
+--IF (OBJECT_ID('Production.FK_BillOfMaterials_Product_ComponentID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[BillOfMaterials] DROP CONSTRAINT [FK_BillOfMaterials_Product_ComponentID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_BillOfMaterials_Product_ProductAssemblyID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[BillOfMaterials] DROP CONSTRAINT [FK_BillOfMaterials_Product_ProductAssemblyID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_BillOfMaterials_UnitMeasure_UnitMeasureCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[BillOfMaterials] DROP CONSTRAINT [FK_BillOfMaterials_UnitMeasure_UnitMeasureCode]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_Document_Employee_Owner', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[Document] DROP CONSTRAINT [FK_Document_Employee_Owner]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_Product_UnitMeasure_SizeUnitMeasureCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[Product] DROP CONSTRAINT [FK_Product_UnitMeasure_SizeUnitMeasureCode]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_Product_UnitMeasure_WeightUnitMeasureCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[Product] DROP CONSTRAINT [FK_Product_UnitMeasure_WeightUnitMeasureCode]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_Product_ProductModel_ProductModelID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[Product] DROP CONSTRAINT [FK_Product_ProductModel_ProductModelID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_Product_ProductSubcategory_ProductSubcategoryID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[Product] DROP CONSTRAINT [FK_Product_ProductSubcategory_ProductSubcategoryID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductCostHistory_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductCostHistory] DROP CONSTRAINT [FK_ProductCostHistory_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductDocument_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductDocument] DROP CONSTRAINT [FK_ProductDocument_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductDocument_Document_DocumentNode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductDocument] DROP CONSTRAINT [FK_ProductDocument_Document_DocumentNode]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductInventory_Location_LocationID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductInventory] DROP CONSTRAINT [FK_ProductInventory_Location_LocationID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductInventory_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductInventory] DROP CONSTRAINT [FK_ProductInventory_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductListPriceHistory_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductListPriceHistory] DROP CONSTRAINT [FK_ProductListPriceHistory_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductModelIllustration_ProductModel_ProductModelID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductModelIllustration] DROP CONSTRAINT [FK_ProductModelIllustration_ProductModel_ProductModelID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductModelIllustration_Illustration_IllustrationID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductModelIllustration] DROP CONSTRAINT [FK_ProductModelIllustration_Illustration_IllustrationID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductModelProductDescriptionCulture_Culture_CultureID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductModelProductDescriptionCulture] DROP CONSTRAINT [FK_ProductModelProductDescriptionCulture_Culture_CultureID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductModelProductDescriptionCulture] DROP CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductModelProductDescriptionCulture] DROP CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductProductPhoto_ProductPhoto_ProductPhotoID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductProductPhoto] DROP CONSTRAINT [FK_ProductProductPhoto_ProductPhoto_ProductPhotoID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductProductPhoto_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductProductPhoto] DROP CONSTRAINT [FK_ProductProductPhoto_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductReview_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductReview] DROP CONSTRAINT [FK_ProductReview_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductSubcategory_ProductCategory_ProductCategoryID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductSubcategory] DROP CONSTRAINT [FK_ProductSubcategory_ProductCategory_ProductCategoryID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_TransactionHistory_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[TransactionHistory] DROP CONSTRAINT [FK_TransactionHistory_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_WorkOrder_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[WorkOrder] DROP CONSTRAINT [FK_WorkOrder_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_WorkOrder_ScrapReason_ScrapReasonID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[WorkOrder] DROP CONSTRAINT [FK_WorkOrder_ScrapReason_ScrapReasonID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_WorkOrderRouting_WorkOrder_WorkOrderID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[WorkOrderRouting] DROP CONSTRAINT [FK_WorkOrderRouting_WorkOrder_WorkOrderID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_WorkOrderRouting_Location_LocationID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[WorkOrderRouting] DROP CONSTRAINT [FK_WorkOrderRouting_Location_LocationID]
+--END
+--GO
+
+--IF (OBJECT_ID('Purchasing.FK_ProductVendor_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[ProductVendor] DROP CONSTRAINT [FK_ProductVendor_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_ProductVendor_Vendor_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[ProductVendor] DROP CONSTRAINT [FK_ProductVendor_Vendor_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_ProductVendor_UnitMeasure_UnitMeasureCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[ProductVendor] DROP CONSTRAINT [FK_ProductVendor_UnitMeasure_UnitMeasureCode]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[PurchaseOrderDetail] DROP CONSTRAINT [FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_PurchaseOrderDetail_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[PurchaseOrderDetail] DROP CONSTRAINT [FK_PurchaseOrderDetail_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_PurchaseOrderHeader_Employee_EmployeeID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[PurchaseOrderHeader] DROP CONSTRAINT [FK_PurchaseOrderHeader_Employee_EmployeeID]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_PurchaseOrderHeader_ShipMethod_ShipMethodID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[PurchaseOrderHeader] DROP CONSTRAINT [FK_PurchaseOrderHeader_ShipMethod_ShipMethodID]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_PurchaseOrderHeader_Vendor_VendorID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[PurchaseOrderHeader] DROP CONSTRAINT [FK_PurchaseOrderHeader_Vendor_VendorID]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_Vendor_BusinessEntity_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[Vendor] DROP CONSTRAINT [FK_Vendor_BusinessEntity_BusinessEntityID]
+--END
+--GO
+
+--IF (OBJECT_ID('Sales.FK_CountryRegionCurrency_CountryRegion_CountryRegionCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[CountryRegionCurrency] DROP CONSTRAINT [FK_CountryRegionCurrency_CountryRegion_CountryRegionCode]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_CountryRegionCurrency_Currency_CurrencyCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[CountryRegionCurrency] DROP CONSTRAINT [FK_CountryRegionCurrency_Currency_CurrencyCode]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_CurrencyRate_Currency_FromCurrencyCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[CurrencyRate] DROP CONSTRAINT [FK_CurrencyRate_Currency_FromCurrencyCode]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_CurrencyRate_Currency_ToCurrencyCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[CurrencyRate] DROP CONSTRAINT [FK_CurrencyRate_Currency_ToCurrencyCode]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_Customer_Person_PersonID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[Customer] DROP CONSTRAINT [FK_Customer_Person_PersonID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_Customer_SalesTerritory_TerritoryID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[Customer] DROP CONSTRAINT [FK_Customer_SalesTerritory_TerritoryID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_Customer_Store_StoreID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[Customer] DROP CONSTRAINT [FK_Customer_Store_StoreID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_PersonCreditCard_Person_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[PersonCreditCard] DROP CONSTRAINT [FK_PersonCreditCard_Person_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_PersonCreditCard_CreditCard_CreditCardID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[PersonCreditCard] DROP CONSTRAINT [FK_PersonCreditCard_CreditCard_CreditCardID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderDetail] DROP CONSTRAINT [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderDetail] DROP CONSTRAINT [FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_SalesPerson_SalesPersonID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_SalesPerson_SalesPersonID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_SalesTerritory_TerritoryID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_SalesTerritory_TerritoryID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_CreditCard_CreditCardID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_CreditCard_CreditCardID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_CurrencyRate_CurrencyRateID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_CurrencyRate_CurrencyRateID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_Customer_CustomerID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_Customer_CustomerID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_ShipMethod_ShipMethodID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_ShipMethod_ShipMethodID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_Address_BillToAddressID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_Address_BillToAddressID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_Address_ShipToAddressID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_Address_ShipToAddressID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeaderSalesReason] DROP CONSTRAINT [FK_SalesOrderHeaderSalesReason_SalesOrderHeader_SalesOrderID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeaderSalesReason] DROP CONSTRAINT [FK_SalesOrderHeaderSalesReason_SalesReason_SalesReasonID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesPerson_SalesTerritory_TerritoryID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesPerson] DROP CONSTRAINT [FK_SalesPerson_SalesTerritory_TerritoryID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesPerson_Employee_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesPerson] DROP CONSTRAINT [FK_SalesPerson_Employee_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesPersonQuotaHistory] DROP CONSTRAINT [FK_SalesPersonQuotaHistory_SalesPerson_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesTaxRate_StateProvince_StateProvinceID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesTaxRate] DROP CONSTRAINT [FK_SalesTaxRate_StateProvince_StateProvinceID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesTerritory_CountryRegion_CountryRegionCode', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesTerritory] DROP CONSTRAINT [FK_SalesTerritory_CountryRegion_CountryRegionCode]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesTerritoryHistory_SalesPerson_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesTerritoryHistory] DROP CONSTRAINT [FK_SalesTerritoryHistory_SalesPerson_BusinessEntityID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesTerritoryHistory_SalesTerritory_TerritoryID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesTerritoryHistory] DROP CONSTRAINT [FK_SalesTerritoryHistory_SalesTerritory_TerritoryID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_ShoppingCartItem_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[ShoppingCartItem] DROP CONSTRAINT [FK_ShoppingCartItem_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SpecialOfferProduct_Product_ProductID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SpecialOfferProduct] DROP CONSTRAINT [FK_SpecialOfferProduct_Product_ProductID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SpecialOfferProduct] DROP CONSTRAINT [FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_Store_SalesPerson_SalesPersonID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[Store] DROP CONSTRAINT [FK_Store_SalesPerson_SalesPersonID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_Store_BusinessEntity_BusinessEntityID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[Store] DROP CONSTRAINT [FK_Store_BusinessEntity_BusinessEntityID]
+--END
+--GO
+
+--IF OBJECT_ID('dbo.AWBuildVersion', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[AWBuildVersion]
+--END
+--GO
+--IF OBJECT_ID('dbo.DatabaseLog', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[DatabaseLog]
+--END
+--GO
+--IF OBJECT_ID('dbo.ErrorLog', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ErrorLog]
+--END
+--GO
+
+--IF OBJECT_ID('HumanResources.Department', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[Department]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.Employee', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[Employee]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.EmployeeDepartmentHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[EmployeeDepartmentHistory]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.EmployeePayHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[EmployeePayHistory]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.JobCandidate', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[JobCandidate]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.Shift', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[Shift]
+--END
+--GO
+
+--IF OBJECT_ID('Person.Address', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[Address]
+--END
+--GO
+--IF OBJECT_ID('Person.AddressType', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[AddressType]
+--END
+--GO
+--IF OBJECT_ID('Person.BusinessEntity', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[BusinessEntity]
+--END
+--GO
+--IF OBJECT_ID('Person.BusinessEntityAddress', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[BusinessEntityAddress]
+--END
+--GO
+--IF OBJECT_ID('Person.BusinessEntityContact', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[BusinessEntityContact]
+--END
+--GO
+--IF OBJECT_ID('Person.ContactType', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[ContactType]
+--END
+--GO
+--IF OBJECT_ID('Person.CountryRegion', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[CountryRegion]
+--END
+--GO
+--IF OBJECT_ID('Person.EmailAddress', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[EmailAddress]
+--END
+--GO
+--IF OBJECT_ID('Person.Password', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[Password]
+--END
+--GO
+--IF OBJECT_ID('Person.Person', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[Person]
+--END
+--GO
+--IF OBJECT_ID('Person.PersonPhone', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[PersonPhone]
+--END
+--GO
+--IF OBJECT_ID('Person.PhoneNumberType', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[PhoneNumberType]
+--END
+--GO
+--IF OBJECT_ID('Person.StateProvince', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[StateProvince]
+--END
+--GO
+
+--IF OBJECT_ID('Production.BillOfMaterials', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[BillOfMaterials]
+--END
+--GO
+--IF OBJECT_ID('Production.Culture', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[Culture]
+--END
+--GO
+--IF OBJECT_ID('Production.Document', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[Document]
+--END
+--GO
+--IF OBJECT_ID('Production.Illustration', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[Illustration]
+--END
+--GO
+--IF OBJECT_ID('Production.Location', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[Location]
+--END
+--GO
+--IF OBJECT_ID('Production.Product', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[Product]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductCategory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductCategory]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductCostHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductCostHistory]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductDescription', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductDescription]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductDocument', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductDocument]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductInventory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductInventory]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductListPriceHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductListPriceHistory]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductModel', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductModel]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductModelIllustration', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductModelIllustration]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductModelProductDescriptionCulture', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductModelProductDescriptionCulture]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductPhoto', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductPhoto]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductProductPhoto', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductProductPhoto]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductReview', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductReview]
+--END
+--GO
+--IF OBJECT_ID('Production.ProductSubcategory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ProductSubcategory]
+--END
+--GO
+--IF OBJECT_ID('Production.ScrapReason', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[ScrapReason]
+--END
+--GO
+--IF OBJECT_ID('Production.TransactionHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[TransactionHistory]
+--END
+--GO
+--IF OBJECT_ID('Production.TransactionHistoryArchive', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[TransactionHistoryArchive]
+--END
+--GO
+--IF OBJECT_ID('Production.UnitMeasure', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[UnitMeasure]
+--END
+--GO
+--IF OBJECT_ID('Production.WorkOrder', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[WorkOrder]
+--END
+--GO
+--IF OBJECT_ID('Production.WorkOrderRouting', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[WorkOrderRouting]
+--END
+--GO
+
+--IF OBJECT_ID('Purchasing.ProductVendor', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Purchasing].[ProductVendor]
+--END
+--GO
+--IF OBJECT_ID('Purchasing.PurchaseOrderDetail', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Purchasing].[PurchaseOrderDetail]
+--END
+--GO
+--IF OBJECT_ID('Purchasing.PurchaseOrderHeader', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Purchasing].[PurchaseOrderHeader]
+--END
+--GO
+--IF OBJECT_ID('Purchasing.ShipMethod', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Purchasing].[ShipMethod]
+--END
+--GO
+--IF OBJECT_ID('Purchasing.Vendor', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Purchasing].[Vendor]
+--END
+--GO
+
+--IF OBJECT_ID('Sales.CountryRegionCurrency', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[CountryRegionCurrency]
+--END
+--GO
+--IF OBJECT_ID('Sales.CreditCard', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[CreditCard]
+--END
+--GO
+--IF OBJECT_ID('Sales.Currency', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[Currency]
+--END
+--GO
+--IF OBJECT_ID('Sales.CurrencyRate', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[CurrencyRate]
+--END
+--GO
+--IF OBJECT_ID('Sales.Customer', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[Customer]
+--END
+--GO
+--IF OBJECT_ID('Sales.PersonCreditCard', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[PersonCreditCard]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesOrderDetail', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesOrderDetail]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesOrderHeader', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesOrderHeader]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesOrderHeaderSalesReason', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesOrderHeaderSalesReason]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesPerson', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesPerson]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesPersonQuotaHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesPersonQuotaHistory]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesReason', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesReason]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesTaxRate', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesTaxRate]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesTerritory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesTerritory]
+--END
+--GO
+--IF OBJECT_ID('Sales.SalesTerritoryHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SalesTerritoryHistory]
+--END
+--GO
+--IF OBJECT_ID('Sales.ShoppingCartItem', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[ShoppingCartItem]
+--END
+--GO
+--IF OBJECT_ID('Sales.SpecialOffer', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SpecialOffer]
+--END
+--GO
+--IF OBJECT_ID('Sales.SpecialOfferProduct', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[SpecialOfferProduct]
+--END
+--GO
+--IF OBJECT_ID('Sales.Store', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[Store]
+--END
+--GO
+
 CREATE TABLE [dbo].[AWBuildVersion](
 [SystemInformationID] [tinyint]     NOT NULL,
 [Database Version] [nvarchar]  (25)   NOT NULL,

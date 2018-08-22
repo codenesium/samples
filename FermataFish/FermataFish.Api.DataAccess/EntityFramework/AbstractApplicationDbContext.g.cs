@@ -46,7 +46,7 @@ namespace FermataFishNS.Api.DataAccess
 
 		public virtual DbSet<Lesson> Lessons { get; set; }
 
-		public virtual DbSet<LessonStatus> LessonStatus { get; set; }
+		public virtual DbSet<LessonStatus> LessonStatuses { get; set; }
 
 		public virtual DbSet<LessonXStudent> LessonXStudents { get; set; }
 
@@ -59,8 +59,6 @@ namespace FermataFishNS.Api.DataAccess
 		public virtual DbSet<SpaceFeature> SpaceFeatures { get; set; }
 
 		public virtual DbSet<SpaceXSpaceFeature> SpaceXSpaceFeatures { get; set; }
-
-		public virtual DbSet<State> States { get; set; }
 
 		public virtual DbSet<Student> Students { get; set; }
 
@@ -135,5 +133,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a10c45d0fb6a408a254eadf482715d09</Hash>
+    <Hash>da6281dee297d78cd2530a36644f6eb8</Hash>
 </Codenesium>*/

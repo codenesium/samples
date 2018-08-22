@@ -7,14 +7,9 @@ namespace NebulaNS.Api.Services
 {
 	public partial interface IApiLinkLogRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiLinkLogRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiLinkLogRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9fc82694a8c75b2b418dac2932973620</Hash>
+    <Hash>755c74e396cfeb8cd1bd0c13deb8eac9</Hash>
 </Codenesium>*/

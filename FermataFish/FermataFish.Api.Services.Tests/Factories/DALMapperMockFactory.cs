@@ -28,8 +28,6 @@ namespace FermataFishNS.Api.Services.Tests
 
 		public IDALSpaceXSpaceFeatureMapper DALSpaceXSpaceFeatureMapperMock { get; set; } = new DALSpaceXSpaceFeatureMapper();
 
-		public IDALStateMapper DALStateMapperMock { get; set; } = new DALStateMapper();
-
 		public IDALStudentMapper DALStudentMapperMock { get; set; } = new DALStudentMapper();
 
 		public IDALStudentXFamilyMapper DALStudentXFamilyMapperMock { get; set; } = new DALStudentXFamilyMapper();
@@ -49,5 +47,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>04f9f622af6c85bfb8544f68373afad3</Hash>
+    <Hash>35852abd88f6a1ee62dad06247196a08</Hash>
 </Codenesium>*/

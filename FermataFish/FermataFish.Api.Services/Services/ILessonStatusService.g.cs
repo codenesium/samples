@@ -21,10 +21,10 @@ namespace FermataFishNS.Api.Services
 
 		Task<List<ApiLessonStatusResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiLessonResponseModel>> Lessons(int lessonStatusId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiLessonStatusResponseModel>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>eac58b41b75f9ae224fe25004dd0fc22</Hash>
+    <Hash>8778fe813b8f4346280b6eb182a7cc80</Hash>
 </Codenesium>*/

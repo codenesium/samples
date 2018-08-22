@@ -21,9 +21,9 @@ namespace FermataFishNS.Api.Services
 			this.LessonStatusIdRules();
 			this.ScheduledEndDateRules();
 			this.ScheduledStartDateRules();
-			this.StudentNotesRules();
+			this.StudentNoteRules();
+			this.TeacherNoteRules();
 			this.StudioIdRules();
-			this.TeacherNotesRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -35,9 +35,9 @@ namespace FermataFishNS.Api.Services
 			this.LessonStatusIdRules();
 			this.ScheduledEndDateRules();
 			this.ScheduledStartDateRules();
-			this.StudentNotesRules();
+			this.StudentNoteRules();
+			this.TeacherNoteRules();
 			this.StudioIdRules();
-			this.TeacherNotesRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -49,5 +49,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>028bad5493796a202fa124ab582c8c86</Hash>
+    <Hash>6bd56e185e3b33e4b8774376bd4e9f73</Hash>
 </Codenesium>*/

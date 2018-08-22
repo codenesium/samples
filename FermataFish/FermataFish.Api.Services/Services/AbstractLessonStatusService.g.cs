@@ -22,10 +22,6 @@ namespace FermataFishNS.Api.Services
 
 		protected IDALLessonStatusMapper DalLessonStatusMapper { get; private set; }
 
-		protected IBOLLessonMapper BolLessonMapper { get; private set; }
-
-		protected IDALLessonMapper DalLessonMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractLessonStatusService(
@@ -33,17 +29,13 @@ namespace FermataFishNS.Api.Services
 			ILessonStatusRepository lessonStatusRepository,
 			IApiLessonStatusRequestModelValidator lessonStatusModelValidator,
 			IBOLLessonStatusMapper bolLessonStatusMapper,
-			IDALLessonStatusMapper dalLessonStatusMapper,
-			IBOLLessonMapper bolLessonMapper,
-			IDALLessonMapper dalLessonMapper)
+			IDALLessonStatusMapper dalLessonStatusMapper)
 			: base()
 		{
 			this.LessonStatusRepository = lessonStatusRepository;
 			this.LessonStatusModelValidator = lessonStatusModelValidator;
 			this.BolLessonStatusMapper = bolLessonStatusMapper;
 			this.DalLessonStatusMapper = dalLessonStatusMapper;
-			this.BolLessonMapper = bolLessonMapper;
-			this.DalLessonMapper = dalLessonMapper;
 			this.logger = logger;
 		}
 
@@ -116,15 +108,15 @@ namespace FermataFishNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiLessonResponseModel>> Lessons(int lessonStatusId, int limit = int.MaxValue, int offset = 0)
+		public async Task<List<ApiLessonStatusResponseModel>> ByStudioId(int studioId, int limit = 0, int offset = int.MaxValue)
 		{
-			List<Lesson> records = await this.LessonStatusRepository.Lessons(lessonStatusId, limit, offset);
+			List<LessonStatus> records = await this.LessonStatusRepository.ByStudioId(studioId, limit, offset);
 
-			return this.BolLessonMapper.MapBOToModel(this.DalLessonMapper.MapEFToBO(records));
+			return this.BolLessonStatusMapper.MapBOToModel(this.DalLessonStatusMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a5a26c50483df4904849e4cb3246f6c</Hash>
+    <Hash>0ec523ba78e5ffe179a54f4781025a81</Hash>
 </Codenesium>*/

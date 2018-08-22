@@ -13,8 +13,8 @@ namespace FermataFishNS.Api.Services
 		{
 			Space efSpace = new Space();
 			efSpace.SetProperties(
-				bo.Description,
 				bo.Id,
+				bo.Description,
 				bo.Name,
 				bo.StudioId);
 			return efSpace;
@@ -49,5 +49,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7fd4a87e960c55f4d0bdcd3b82901fc0</Hash>
+    <Hash>1efb03e355d3937e4ba130bc0266f0bd</Hash>
 </Codenesium>*/

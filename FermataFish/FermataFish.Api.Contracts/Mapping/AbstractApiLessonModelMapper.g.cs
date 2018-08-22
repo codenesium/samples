@@ -19,9 +19,9 @@ namespace FermataFishNS.Api.Contracts
 			                       request.LessonStatusId,
 			                       request.ScheduledEndDate,
 			                       request.ScheduledStartDate,
-			                       request.StudentNotes,
-			                       request.StudioId,
-			                       request.TeacherNotes);
+			                       request.StudentNote,
+			                       request.TeacherNote,
+			                       request.StudioId);
 			return response;
 		}
 
@@ -36,9 +36,9 @@ namespace FermataFishNS.Api.Contracts
 				response.LessonStatusId,
 				response.ScheduledEndDate,
 				response.ScheduledStartDate,
-				response.StudentNotes,
-				response.StudioId,
-				response.TeacherNotes);
+				response.StudentNote,
+				response.TeacherNote,
+				response.StudioId);
 			return request;
 		}
 
@@ -51,14 +51,14 @@ namespace FermataFishNS.Api.Contracts
 			patch.Replace(x => x.LessonStatusId, model.LessonStatusId);
 			patch.Replace(x => x.ScheduledEndDate, model.ScheduledEndDate);
 			patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
-			patch.Replace(x => x.StudentNotes, model.StudentNotes);
+			patch.Replace(x => x.StudentNote, model.StudentNote);
+			patch.Replace(x => x.TeacherNote, model.TeacherNote);
 			patch.Replace(x => x.StudioId, model.StudioId);
-			patch.Replace(x => x.TeacherNotes, model.TeacherNotes);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e86f8d6b505e334f182ee4271d1404f</Hash>
+    <Hash>51e7df0125904c6e62f7fccead1c4601</Hash>
 </Codenesium>*/

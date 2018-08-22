@@ -36,6 +36,11 @@ namespace FermataFishNS.Api.Services
 			this.RuleFor(x => x.SpaceId).MustAsync(this.BeValidSpace).When(x => x?.SpaceId != null).WithMessage("Invalid reference");
 		}
 
+		public virtual void StudioIdRules()
+		{
+			this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
+		}
+
 		private async Task<bool> BeValidSpaceFeature(int id,  CancellationToken cancellationToken)
 		{
 			var record = await this.spaceXSpaceFeatureRepository.GetSpaceFeature(id);
@@ -49,9 +54,16 @@ namespace FermataFishNS.Api.Services
 
 			return record != null;
 		}
+
+		private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.spaceXSpaceFeatureRepository.GetStudio(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0c4f7a4c625e3b3da4594c336017b2d7</Hash>
+    <Hash>7f5039f39047375e193530980aab0e97</Hash>
 </Codenesium>*/

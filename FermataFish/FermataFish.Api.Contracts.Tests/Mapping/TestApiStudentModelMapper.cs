@@ -20,12 +20,12 @@ namespace FermataFishNS.Api.Contracts.Tests
 			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
 			ApiStudentResponseModel response = mapper.MapRequestToResponse(1, model);
 
+			response.Id.Should().Be(1);
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Email.Should().Be("A");
 			response.EmailRemindersEnabled.Should().Be(true);
 			response.FamilyId.Should().Be(1);
 			response.FirstName.Should().Be("A");
-			response.Id.Should().Be(1);
 			response.IsAdult.Should().Be(true);
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
@@ -78,5 +78,5 @@ namespace FermataFishNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>9b72b2dedb8cb32f153fc5d491788bd3</Hash>
+    <Hash>015debd9cdffafe8692ec854715eea17</Hash>
 </Codenesium>*/

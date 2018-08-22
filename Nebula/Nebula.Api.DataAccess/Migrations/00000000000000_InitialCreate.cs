@@ -21,6 +21,118 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.FK_Chain_chainStatusId_ChainStatus_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Chain] DROP CONSTRAINT [FK_Chain_chainStatusId_ChainStatus_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Chain_teamId_Team_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Chain] DROP CONSTRAINT [FK_Chain_teamId_Team_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Clasp_nextChainId_Chain_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Clasp] DROP CONSTRAINT [FK_Clasp_nextChainId_Chain_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Clasp_previousChainId_Chain_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Clasp] DROP CONSTRAINT [FK_Clasp_previousChainId_Chain_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Link_chainId_Chain_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_chainId_Chain_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Link_linkStatusId_LinkStatus_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_linkStatusId_LinkStatus_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Link_assignedMachineId_Machine_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Link] DROP CONSTRAINT [FK_Link_assignedMachineId_Machine_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_LinkLog_linkId_Link_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[LinkLog] DROP CONSTRAINT [FK_LinkLog_linkId_Link_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_MachineRefTeam_machineId_Machine_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[MachineRefTeam] DROP CONSTRAINT [FK_MachineRefTeam_machineId_Machine_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_machineRefTeam_teamId_Team_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[MachineRefTeam] DROP CONSTRAINT [FK_machineRefTeam_teamId_Team_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Team_organizationId_Organization_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Team] DROP CONSTRAINT [FK_Team_organizationId_Organization_id]
+--END
+--GO
+
+--IF OBJECT_ID('dbo.Chain', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Chain]
+--END
+--GO
+--IF OBJECT_ID('dbo.ChainStatus', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ChainStatus]
+--END
+--GO
+--IF OBJECT_ID('dbo.Clasp', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Clasp]
+--END
+--GO
+--IF OBJECT_ID('dbo.Link', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Link]
+--END
+--GO
+--IF OBJECT_ID('dbo.LinkLog', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[LinkLog]
+--END
+--GO
+--IF OBJECT_ID('dbo.LinkStatus', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[LinkStatus]
+--END
+--GO
+--IF OBJECT_ID('dbo.Machine', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Machine]
+--END
+--GO
+--IF OBJECT_ID('dbo.MachineRefTeam', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[MachineRefTeam]
+--END
+--GO
+--IF OBJECT_ID('dbo.Organization', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Organization]
+--END
+--GO
+--IF OBJECT_ID('dbo.Team', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Team]
+--END
+--GO
+--IF OBJECT_ID('dbo.VersionInfo', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[VersionInfo]
+--END
+--GO
+
 CREATE TABLE [dbo].[Chain](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [chainStatusId] [int]     NOT NULL,

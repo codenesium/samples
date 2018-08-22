@@ -34,8 +34,8 @@ namespace FermataFishNS.Api.Services.Tests
 			bo.SetProperties(1, "A", "A", 1);
 			ApiSpaceResponseModel response = mapper.MapBOToModel(bo);
 
-			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
+			response.Description.Should().Be("A");
 			response.Name.Should().Be("A");
 			response.StudioId.Should().Be(1);
 		}
@@ -54,5 +54,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>213b4564d6628424717551a4423742d4</Hash>
+    <Hash>98eeb8c5f37ec8eab94f95707130be44</Hash>
 </Codenesium>*/

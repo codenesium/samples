@@ -76,6 +76,13 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
+		public async Task<List<Lesson>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0)
+		{
+			var records = await this.Where(x => x.StudioId == studioId, limit, offset);
+
+			return records;
+		}
+
 		public async virtual Task<List<LessonXStudent>> LessonXStudents(int lessonId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<LessonXStudent>().Where(x => x.LessonId == lessonId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonXStudent>();
@@ -84,11 +91,6 @@ namespace FermataFishNS.Api.DataAccess
 		public async virtual Task<List<LessonXTeacher>> LessonXTeachers(int lessonId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<LessonXTeacher>().Where(x => x.LessonId == lessonId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LessonXTeacher>();
-		}
-
-		public async virtual Task<LessonStatus> GetLessonStatus(int lessonStatusId)
-		{
-			return await this.Context.Set<LessonStatus>().SingleOrDefaultAsync(x => x.Id == lessonStatusId);
 		}
 
 		public async virtual Task<Studio> GetStudio(int studioId)
@@ -128,5 +130,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5278755b712e048f5dac332104ebbad3</Hash>
+    <Hash>fb62246e61dce2cc84c7bdeaf61ac74e</Hash>
 </Codenesium>*/

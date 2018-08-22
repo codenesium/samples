@@ -206,6 +206,23 @@ namespace FermataFishNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byStudioId/{studioId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTeacherSkillResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByStudioId(int studioId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTeacherSkillResponseModel> response = await this.TeacherSkillService.ByStudioId(studioId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
 		[Route("{teacherSkillId}/Rates")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiRateResponseModel>), 200)]
@@ -258,5 +275,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bea9a8c2aff634dd4f0e1213fff35e74</Hash>
+    <Hash>a239697becbe88233752c11a9aa7225f</Hash>
 </Codenesium>*/

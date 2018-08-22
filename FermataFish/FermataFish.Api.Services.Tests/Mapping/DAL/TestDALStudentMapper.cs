@@ -21,12 +21,12 @@ namespace FermataFishNS.Api.Services.Tests
 
 			Student response = mapper.MapBOToEF(bo);
 
+			response.Id.Should().Be(1);
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Email.Should().Be("A");
 			response.EmailRemindersEnabled.Should().Be(true);
 			response.FamilyId.Should().Be(1);
 			response.FirstName.Should().Be("A");
-			response.Id.Should().Be(1);
 			response.IsAdult.Should().Be(true);
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
@@ -39,16 +39,16 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALStudentMapper();
 			Student entity = new Student();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1);
+			entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
 
 			BOStudent response = mapper.MapEFToBO(entity);
 
+			response.Id.Should().Be(1);
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Email.Should().Be("A");
 			response.EmailRemindersEnabled.Should().Be(true);
 			response.FamilyId.Should().Be(1);
 			response.FirstName.Should().Be("A");
-			response.Id.Should().Be(1);
 			response.IsAdult.Should().Be(true);
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
@@ -61,7 +61,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALStudentMapper();
 			Student entity = new Student();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1);
+			entity.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
 
 			List<BOStudent> response = mapper.MapEFToBO(new List<Student>() { entity });
 
@@ -71,5 +71,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>64b060fb30cfec539031fd144a0e3257</Hash>
+    <Hash>0be1917a39d6f3fb504e18e6200d24d9</Hash>
 </Codenesium>*/

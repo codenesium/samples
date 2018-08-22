@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiWorkOrderRoutingRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiWorkOrderRoutingRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiWorkOrderRoutingRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>36a6a4d88f379d595f1de604ba67d3f4</Hash>
+    <Hash>e49c7a9954bf2243fe91014d1400b2f5</Hash>
 </Codenesium>*/

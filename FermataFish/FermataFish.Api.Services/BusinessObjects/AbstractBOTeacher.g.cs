@@ -18,22 +18,22 @@ namespace FermataFishNS.Api.Services
 		                                  string phone,
 		                                  int studioId)
 		{
+			this.Id = id;
 			this.Birthday = birthday;
 			this.Email = email;
 			this.FirstName = firstName;
-			this.Id = id;
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.StudioId = studioId;
 		}
+
+		public int Id { get; private set; }
 
 		public DateTime Birthday { get; private set; }
 
 		public string Email { get; private set; }
 
 		public string FirstName { get; private set; }
-
-		public int Id { get; private set; }
 
 		public string LastName { get; private set; }
 
@@ -44,5 +44,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7017e27bbdea17c515a94f834b55c4dd</Hash>
+    <Hash>462130f310be2b26992e9ae846ec962a</Hash>
 </Codenesium>*/

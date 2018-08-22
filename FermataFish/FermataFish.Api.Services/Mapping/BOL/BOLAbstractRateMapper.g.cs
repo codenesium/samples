@@ -17,7 +17,8 @@ namespace FermataFishNS.Api.Services
 				id,
 				model.AmountPerMinute,
 				model.TeacherId,
-				model.TeacherSkillId);
+				model.TeacherSkillId,
+				model.StudioId);
 			return boRate;
 		}
 
@@ -26,7 +27,7 @@ namespace FermataFishNS.Api.Services
 		{
 			var model = new ApiRateResponseModel();
 
-			model.SetProperties(boRate.Id, boRate.AmountPerMinute, boRate.TeacherId, boRate.TeacherSkillId);
+			model.SetProperties(boRate.Id, boRate.AmountPerMinute, boRate.TeacherId, boRate.TeacherSkillId, boRate.StudioId);
 
 			return model;
 		}
@@ -47,5 +48,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>be2ea0f0bf1df75deeaaaed3f56b9e7e</Hash>
+    <Hash>e96f53d00687a2d4b5dd341324086c38</Hash>
 </Codenesium>*/

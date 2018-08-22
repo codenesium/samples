@@ -7,14 +7,9 @@ namespace OctopusDeployNS.Api.Services
 {
 	public partial interface IApiMutexRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiMutexRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(string id, ApiMutexRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(string id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5d91cf3413a1d0391b878667264f0f61</Hash>
+    <Hash>78f8c7ade14618af9ca5e98e2cd34c67</Hash>
 </Codenesium>*/

@@ -78,7 +78,7 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 		private async Task<ApiSpaceXSpaceFeatureResponseModel> CreateRecord()
 		{
 			var model = new ApiSpaceXSpaceFeatureRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			CreateResponse<ApiSpaceXSpaceFeatureResponseModel> result = await this.Client.SpaceXSpaceFeatureCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace FermataFishNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>cf740ce876aabb39e4015cf101b628f1</Hash>
+    <Hash>6150281195cf06528c9c63d0cf7a4054</Hash>
 </Codenesium>*/

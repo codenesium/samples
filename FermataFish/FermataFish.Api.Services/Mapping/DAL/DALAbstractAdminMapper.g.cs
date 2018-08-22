@@ -13,10 +13,10 @@ namespace FermataFishNS.Api.Services
 		{
 			Admin efAdmin = new Admin();
 			efAdmin.SetProperties(
+				bo.Id,
 				bo.Birthday,
 				bo.Email,
 				bo.FirstName,
-				bo.Id,
 				bo.LastName,
 				bo.Phone,
 				bo.StudioId);
@@ -55,5 +55,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>91c6c2e34fdbd78668ca5b2181695f4f</Hash>
+    <Hash>98a7ab1447bce24d70bf0a1285e50351</Hash>
 </Codenesium>*/

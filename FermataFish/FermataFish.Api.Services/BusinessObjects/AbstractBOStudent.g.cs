@@ -22,18 +22,20 @@ namespace FermataFishNS.Api.Services
 		                                  bool smsRemindersEnabled,
 		                                  int studioId)
 		{
+			this.Id = id;
 			this.Birthday = birthday;
 			this.Email = email;
 			this.EmailRemindersEnabled = emailRemindersEnabled;
 			this.FamilyId = familyId;
 			this.FirstName = firstName;
-			this.Id = id;
 			this.IsAdult = isAdult;
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled;
 			this.StudioId = studioId;
 		}
+
+		public int Id { get; private set; }
 
 		public DateTime Birthday { get; private set; }
 
@@ -44,8 +46,6 @@ namespace FermataFishNS.Api.Services
 		public int FamilyId { get; private set; }
 
 		public string FirstName { get; private set; }
-
-		public int Id { get; private set; }
 
 		public bool IsAdult { get; private set; }
 
@@ -60,5 +60,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>97a34a5e2e824a1717e5be685cbe8054</Hash>
+    <Hash>cf6253ebbfd378bf4016f17882da71b8</Hash>
 </Codenesium>*/

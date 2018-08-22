@@ -7,14 +7,9 @@ namespace OctopusDeployNS.Api.Services
 {
 	public partial interface IApiDeploymentRelatedMachineRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiDeploymentRelatedMachineRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiDeploymentRelatedMachineRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>78f46f1b00996fa7afb12a34bfd6a866</Hash>
+    <Hash>8f091f2f2303d4f4081be1286d7c95cc</Hash>
 </Codenesium>*/

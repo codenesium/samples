@@ -123,9 +123,59 @@ namespace FermataFishNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.StudentId, 1);
 		}
+
+		[Fact]
+		public async void StudioId_Create_Valid_Reference()
+		{
+			Mock<ILessonXStudentRepository> lessonXStudentRepository = new Mock<ILessonXStudentRepository>();
+			lessonXStudentRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+
+			var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLessonXStudentRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Create_Invalid_Reference()
+		{
+			Mock<ILessonXStudentRepository> lessonXStudentRepository = new Mock<ILessonXStudentRepository>();
+			lessonXStudentRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+
+			var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiLessonXStudentRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Update_Valid_Reference()
+		{
+			Mock<ILessonXStudentRepository> lessonXStudentRepository = new Mock<ILessonXStudentRepository>();
+			lessonXStudentRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+
+			var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonXStudentRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Update_Invalid_Reference()
+		{
+			Mock<ILessonXStudentRepository> lessonXStudentRepository = new Mock<ILessonXStudentRepository>();
+			lessonXStudentRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+
+			var validator = new ApiLessonXStudentRequestModelValidator(lessonXStudentRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiLessonXStudentRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4b422b0ce00ab5323d245aad39bba0a0</Hash>
+    <Hash>d66b1c0543595deb8f9bc4f8d6b4e7a6</Hash>
 </Codenesium>*/

@@ -7,14 +7,9 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IApiCommentsRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiCommentsRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiCommentsRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ed38750bf09d0f5be80b0d47ad04a265</Hash>
+    <Hash>1ec46cc7d0dac78d2491834dc2ade76c</Hash>
 </Codenesium>*/

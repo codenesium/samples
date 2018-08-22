@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiSalesOrderDetailRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiSalesOrderDetailRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSalesOrderDetailRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>75f9dda58dd3ce951bec077af68883bd</Hash>
+    <Hash>06962be831463d5071fd0a4dcb43aad2</Hash>
 </Codenesium>*/

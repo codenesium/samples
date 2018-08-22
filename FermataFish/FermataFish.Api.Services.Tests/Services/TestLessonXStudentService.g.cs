@@ -129,9 +129,45 @@ namespace FermataFishNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.LessonXStudentModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void ByStudioId_Exists()
+		{
+			var mock = new ServiceMockFacade<ILessonXStudentRepository>();
+			var records = new List<LessonXStudent>();
+			records.Add(new LessonXStudent());
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new LessonXStudentService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.LessonXStudentModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                        mock.DALMapperMockFactory.DALLessonXStudentMapperMock);
+
+			List<ApiLessonXStudentResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByStudioId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ILessonXStudentRepository>();
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<LessonXStudent>>(new List<LessonXStudent>()));
+			var service = new LessonXStudentService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.LessonXStudentModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                        mock.DALMapperMockFactory.DALLessonXStudentMapperMock);
+
+			List<ApiLessonXStudentResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8aa04dc44a7b9cdd0ce00d245fb60cb3</Hash>
+    <Hash>84db43cb8c98a07448c2d4b947602a4c</Hash>
 </Codenesium>*/

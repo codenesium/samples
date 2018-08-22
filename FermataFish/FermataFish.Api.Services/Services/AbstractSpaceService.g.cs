@@ -116,6 +116,13 @@ namespace FermataFishNS.Api.Services
 			return response;
 		}
 
+		public async Task<List<ApiSpaceResponseModel>> ByStudioId(int studioId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<Space> records = await this.SpaceRepository.ByStudioId(studioId, limit, offset);
+
+			return this.BolSpaceMapper.MapBOToModel(this.DalSpaceMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiSpaceXSpaceFeatureResponseModel>> SpaceXSpaceFeatures(int spaceId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SpaceXSpaceFeature> records = await this.SpaceRepository.SpaceXSpaceFeatures(spaceId, limit, offset);
@@ -126,5 +133,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7959eeda69a4b69596a9d7dc97ff073a</Hash>
+    <Hash>69e074183fe090668b44b9ad7bbc4acf</Hash>
 </Codenesium>*/

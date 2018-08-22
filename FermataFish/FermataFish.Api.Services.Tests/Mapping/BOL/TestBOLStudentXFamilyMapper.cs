@@ -18,11 +18,12 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudentXFamilyMapper();
 			ApiStudentXFamilyRequestModel model = new ApiStudentXFamilyRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			BOStudentXFamily response = mapper.MapModelToBO(1, model);
 
 			response.FamilyId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -30,12 +31,13 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudentXFamilyMapper();
 			BOStudentXFamily bo = new BOStudentXFamily();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1, 1, 1);
 			ApiStudentXFamilyResponseModel response = mapper.MapBOToModel(bo);
 
-			response.FamilyId.Should().Be(1);
 			response.Id.Should().Be(1);
+			response.FamilyId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -43,7 +45,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudentXFamilyMapper();
 			BOStudentXFamily bo = new BOStudentXFamily();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1, 1, 1);
 			List<ApiStudentXFamilyResponseModel> response = mapper.MapBOToModel(new List<BOStudentXFamily>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -52,5 +54,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>97db5b3e591b9973a30aa193e0bdb6c0</Hash>
+    <Hash>c7512fdb9a7a38124ed8ff1a34ca6c92</Hash>
 </Codenesium>*/

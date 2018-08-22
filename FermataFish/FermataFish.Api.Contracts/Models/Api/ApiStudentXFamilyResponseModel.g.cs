@@ -11,36 +11,42 @@ namespace FermataFishNS.Api.Contracts
 		public virtual void SetProperties(
 			int id,
 			int familyId,
-			int studentId)
+			int studentId,
+			int studioId)
 		{
 			this.Id = id;
 			this.FamilyId = familyId;
 			this.StudentId = studentId;
+			this.StudioId = studioId;
 
 			this.FamilyIdEntity = nameof(ApiResponse.Families);
 			this.StudentIdEntity = nameof(ApiResponse.Students);
+			this.StudioIdEntity = nameof(ApiResponse.Studios);
 		}
 
-		[Required]
+		[JsonProperty]
+		public int Id { get; private set; }
+
 		[JsonProperty]
 		public int FamilyId { get; private set; }
 
 		[JsonProperty]
 		public string FamilyIdEntity { get; set; }
 
-		[Required]
-		[JsonProperty]
-		public int Id { get; private set; }
-
-		[Required]
 		[JsonProperty]
 		public int StudentId { get; private set; }
 
 		[JsonProperty]
 		public string StudentIdEntity { get; set; }
+
+		[JsonProperty]
+		public int StudioId { get; private set; }
+
+		[JsonProperty]
+		public string StudioIdEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>99d56dea5efb787603592c1b6a062675</Hash>
+    <Hash>4ed33c3200c82ecaf00f0e309db327b1</Hash>
 </Codenesium>*/

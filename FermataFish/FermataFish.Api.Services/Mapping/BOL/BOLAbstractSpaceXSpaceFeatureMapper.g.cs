@@ -16,7 +16,8 @@ namespace FermataFishNS.Api.Services
 			boSpaceXSpaceFeature.SetProperties(
 				id,
 				model.SpaceFeatureId,
-				model.SpaceId);
+				model.SpaceId,
+				model.StudioId);
 			return boSpaceXSpaceFeature;
 		}
 
@@ -25,7 +26,7 @@ namespace FermataFishNS.Api.Services
 		{
 			var model = new ApiSpaceXSpaceFeatureResponseModel();
 
-			model.SetProperties(boSpaceXSpaceFeature.Id, boSpaceXSpaceFeature.SpaceFeatureId, boSpaceXSpaceFeature.SpaceId);
+			model.SetProperties(boSpaceXSpaceFeature.Id, boSpaceXSpaceFeature.SpaceFeatureId, boSpaceXSpaceFeature.SpaceId, boSpaceXSpaceFeature.StudioId);
 
 			return model;
 		}
@@ -46,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4411f115ff547c9433f9ce2f7de8d54c</Hash>
+    <Hash>44c0f3cf28502a96e098c4f5eff82803</Hash>
 </Codenesium>*/

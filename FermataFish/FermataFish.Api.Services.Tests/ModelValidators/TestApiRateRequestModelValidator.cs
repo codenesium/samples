@@ -123,9 +123,59 @@ namespace FermataFishNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.TeacherSkillId, 1);
 		}
+
+		[Fact]
+		public async void StudioId_Create_Valid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			await validator.ValidateCreateAsync(new ApiRateRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Create_Invalid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiRateRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Update_Valid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Update_Invalid_Reference()
+		{
+			Mock<IRateRepository> rateRepository = new Mock<IRateRepository>();
+			rateRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+
+			var validator = new ApiRateRequestModelValidator(rateRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiRateRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>15df388851c7abd84ceeb05383edfeee</Hash>
+    <Hash>e78cac93e66ef2d206d16ab92cbbfb17</Hash>
 </Codenesium>*/

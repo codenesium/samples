@@ -17,7 +17,7 @@ namespace FermataFishNS.Api.Contracts
 			                       request.Address2,
 			                       request.City,
 			                       request.Name,
-			                       request.StateId,
+			                       request.Province,
 			                       request.Website,
 			                       request.Zip);
 			return response;
@@ -32,7 +32,7 @@ namespace FermataFishNS.Api.Contracts
 				response.Address2,
 				response.City,
 				response.Name,
-				response.StateId,
+				response.Province,
 				response.Website,
 				response.Zip);
 			return request;
@@ -45,7 +45,7 @@ namespace FermataFishNS.Api.Contracts
 			patch.Replace(x => x.Address2, model.Address2);
 			patch.Replace(x => x.City, model.City);
 			patch.Replace(x => x.Name, model.Name);
-			patch.Replace(x => x.StateId, model.StateId);
+			patch.Replace(x => x.Province, model.Province);
 			patch.Replace(x => x.Website, model.Website);
 			patch.Replace(x => x.Zip, model.Zip);
 			return patch;
@@ -54,5 +54,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1183ec82f47b92ca7a7673ebf721a2ee</Hash>
+    <Hash>287f1b9e27c1edc4d65fdb1cf275e65c</Hash>
 </Codenesium>*/

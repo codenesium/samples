@@ -16,7 +16,8 @@ namespace FermataFishNS.Api.Services
 			boStudentXFamily.SetProperties(
 				id,
 				model.FamilyId,
-				model.StudentId);
+				model.StudentId,
+				model.StudioId);
 			return boStudentXFamily;
 		}
 
@@ -25,7 +26,7 @@ namespace FermataFishNS.Api.Services
 		{
 			var model = new ApiStudentXFamilyResponseModel();
 
-			model.SetProperties(boStudentXFamily.Id, boStudentXFamily.FamilyId, boStudentXFamily.StudentId);
+			model.SetProperties(boStudentXFamily.Id, boStudentXFamily.FamilyId, boStudentXFamily.StudentId, boStudentXFamily.StudioId);
 
 			return model;
 		}
@@ -46,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9f357d094427afa409a438517da0caee</Hash>
+    <Hash>f403d500ddb2a8f497b3dd69a7d3daf6</Hash>
 </Codenesium>*/

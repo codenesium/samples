@@ -33,6 +33,82 @@ WHERE name = N'SchemaB')
 EXEC('CREATE SCHEMA [SchemaB] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.FK_selfReference_selfReference', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[selfReference] DROP CONSTRAINT [FK_selfReference_selfReference]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_selfReference_selfReference2', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[selfReference] DROP CONSTRAINT [FK_selfReference_selfReference2]
+--END
+--GO
+
+
+--IF (OBJECT_ID('SchemaB.FK_PersonRef_PersonA', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [SchemaB].[PersonRef] DROP CONSTRAINT [FK_PersonRef_PersonA]
+--END
+--GO
+--IF (OBJECT_ID('SchemaB.FK_PersonRef_PersonB', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [SchemaB].[PersonRef] DROP CONSTRAINT [FK_PersonRef_PersonB]
+--END
+--GO
+
+--IF OBJECT_ID('dbo.PERSON', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[PERSON]
+--END
+--GO
+--IF OBJECT_ID('dbo.RowVersionCheck', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[RowVersionCheck]
+--END
+--GO
+--IF OBJECT_ID('dbo.selfReference', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[selfReference]
+--END
+--GO
+--IF OBJECT_ID('dbo.Tables', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Tables]
+--END
+--GO
+--IF OBJECT_ID('dbo.TestAllFieldTypes', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[TestAllFieldTypes]
+--END
+--GO
+--IF OBJECT_ID('dbo.TestAllFieldTypesNullable', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[TestAllFieldTypesNullable]
+--END
+--GO
+--IF OBJECT_ID('dbo.TimestampCheck', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[TimestampCheck]
+--END
+--GO
+
+--IF OBJECT_ID('SchemaA.Person', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [SchemaA].[Person]
+--END
+--GO
+
+--IF OBJECT_ID('SchemaB.Person', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [SchemaB].[Person]
+--END
+--GO
+--IF OBJECT_ID('SchemaB.PersonRef', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [SchemaB].[PersonRef]
+--END
+--GO
+
 CREATE TABLE [dbo].[PERSON](
 [PERSON_ID] [int]   IDENTITY(1,1)  NOT NULL,
 [PERSON_NAME] [varchar]  (50)   NOT NULL,

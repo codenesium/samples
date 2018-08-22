@@ -14,33 +14,42 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int familyId,
 			int id,
-			int studentId)
+			int familyId,
+			int studentId,
+			int studioId)
 		{
-			this.FamilyId = familyId;
 			this.Id = id;
+			this.FamilyId = familyId;
 			this.StudentId = studentId;
+			this.StudioId = studioId;
 		}
+
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id")]
+		public int Id { get; private set; }
 
 		[Column("familyId")]
 		public int FamilyId { get; private set; }
 
-		[Key]
-		[Column("id")]
-		public int Id { get; private set; }
-
 		[Column("studentId")]
 		public int StudentId { get; private set; }
+
+		[Column("studioId")]
+		public int StudioId { get; private set; }
 
 		[ForeignKey("FamilyId")]
 		public virtual Family FamilyNavigation { get; private set; }
 
 		[ForeignKey("StudentId")]
 		public virtual Student StudentNavigation { get; private set; }
+
+		[ForeignKey("StudioId")]
+		public virtual Studio StudioNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f133f979587a0ccc6561ad6c85c5bbcf</Hash>
+    <Hash>15d5b88d75864a148f1b368f65588d81</Hash>
 </Codenesium>*/

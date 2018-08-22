@@ -13,16 +13,16 @@ namespace FermataFishNS.Api.Services
 		{
 			Lesson efLesson = new Lesson();
 			efLesson.SetProperties(
+				bo.Id,
 				bo.ActualEndDate,
 				bo.ActualStartDate,
 				bo.BillAmount,
-				bo.Id,
 				bo.LessonStatusId,
 				bo.ScheduledEndDate,
 				bo.ScheduledStartDate,
-				bo.StudentNotes,
-				bo.StudioId,
-				bo.TeacherNotes);
+				bo.StudentNote,
+				bo.TeacherNote,
+				bo.StudioId);
 			return efLesson;
 		}
 
@@ -39,9 +39,9 @@ namespace FermataFishNS.Api.Services
 				ef.LessonStatusId,
 				ef.ScheduledEndDate,
 				ef.ScheduledStartDate,
-				ef.StudentNotes,
-				ef.StudioId,
-				ef.TeacherNotes);
+				ef.StudentNote,
+				ef.TeacherNote,
+				ef.StudioId);
 			return bo;
 		}
 
@@ -61,5 +61,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>953fccb81e0ad1894e49bf24ff01a1ca</Hash>
+    <Hash>6b3d90cf14bfd24332d97cc964171417</Hash>
 </Codenesium>*/

@@ -15,7 +15,8 @@ namespace FermataFishNS.Api.Services
 			efSpaceXSpaceFeature.SetProperties(
 				bo.Id,
 				bo.SpaceFeatureId,
-				bo.SpaceId);
+				bo.SpaceId,
+				bo.StudioId);
 			return efSpaceXSpaceFeature;
 		}
 
@@ -27,7 +28,8 @@ namespace FermataFishNS.Api.Services
 			bo.SetProperties(
 				ef.Id,
 				ef.SpaceFeatureId,
-				ef.SpaceId);
+				ef.SpaceId,
+				ef.StudioId);
 			return bo;
 		}
 
@@ -47,5 +49,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a9b13858ecda19040f476b56436ab3f4</Hash>
+    <Hash>a94311e1ac12210c3cca7bea40651a00</Hash>
 </Codenesium>*/

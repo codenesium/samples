@@ -30,24 +30,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiStudioResponseModel> response = await service.All();
 
@@ -66,24 +76,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			ApiStudioResponseModel response = await service.Get(default(int));
 
@@ -101,24 +121,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			ApiStudioResponseModel response = await service.Get(default(int));
 
@@ -137,24 +167,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			CreateResponse<ApiStudioResponseModel> response = await service.Create(model);
 
@@ -175,24 +215,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			UpdateResponse<ApiStudioResponseModel> response = await service.Update(default(int), model);
 
@@ -212,102 +262,40 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.StudioModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void Admins_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudioRepository>();
-			var records = new List<Admin>();
-			records.Add(new Admin());
-			mock.RepositoryMock.Setup(x => x.Admins(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new StudioService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
-
-			List<ApiAdminResponseModel> response = await service.Admins(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Admins(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void Admins_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudioRepository>();
-			mock.RepositoryMock.Setup(x => x.Admins(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Admin>>(new List<Admin>()));
-			var service = new StudioService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
-
-			List<ApiAdminResponseModel> response = await service.Admins(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Admins(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -322,24 +310,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiFamilyResponseModel> response = await service.Families(default(int));
 
@@ -357,29 +355,223 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiFamilyResponseModel> response = await service.Families(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.Families(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void LessonStatuses_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var records = new List<LessonStatus>();
+			records.Add(new LessonStatus());
+			mock.RepositoryMock.Setup(x => x.LessonStatuses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiLessonStatusResponseModel> response = await service.LessonStatuses(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.LessonStatuses(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void LessonStatuses_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			mock.RepositoryMock.Setup(x => x.LessonStatuses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<LessonStatus>>(new List<LessonStatus>()));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiLessonStatusResponseModel> response = await service.LessonStatuses(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.LessonStatuses(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Admins_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var records = new List<Admin>();
+			records.Add(new Admin());
+			mock.RepositoryMock.Setup(x => x.Admins(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiAdminResponseModel> response = await service.Admins(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.Admins(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Admins_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			mock.RepositoryMock.Setup(x => x.Admins(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Admin>>(new List<Admin>()));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiAdminResponseModel> response = await service.Admins(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.Admins(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -394,24 +586,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiLessonResponseModel> response = await service.Lessons(default(int));
 
@@ -429,24 +631,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiLessonResponseModel> response = await service.Lessons(default(int));
 
@@ -455,75 +667,187 @@ namespace FermataFishNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void LessonStatus_Exists()
+		public async void LessonXStudents_Exists()
 		{
 			var mock = new ServiceMockFacade<IStudioRepository>();
-			var records = new List<LessonStatus>();
-			records.Add(new LessonStatus());
-			mock.RepositoryMock.Setup(x => x.LessonStatus(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var records = new List<LessonXStudent>();
+			records.Add(new LessonXStudent());
+			mock.RepositoryMock.Setup(x => x.LessonXStudents(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new StudioService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-			List<ApiLessonStatusResponseModel> response = await service.LessonStatus(default(int));
+			List<ApiLessonXStudentResponseModel> response = await service.LessonXStudents(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.LessonStatus(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.LessonXStudents(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void LessonStatus_Not_Exists()
+		public async void LessonXStudents_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IStudioRepository>();
-			mock.RepositoryMock.Setup(x => x.LessonStatus(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<LessonStatus>>(new List<LessonStatus>()));
+			mock.RepositoryMock.Setup(x => x.LessonXStudents(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<LessonXStudent>>(new List<LessonXStudent>()));
 			var service = new StudioService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
-			List<ApiLessonStatusResponseModel> response = await service.LessonStatus(default(int));
+			List<ApiLessonXStudentResponseModel> response = await service.LessonXStudents(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.LessonStatus(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.LessonXStudents(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Rates_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var records = new List<Rate>();
+			records.Add(new Rate());
+			mock.RepositoryMock.Setup(x => x.Rates(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiRateResponseModel> response = await service.Rates(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.Rates(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void Rates_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			mock.RepositoryMock.Setup(x => x.Rates(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Rate>>(new List<Rate>()));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiRateResponseModel> response = await service.Rates(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.Rates(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -538,24 +862,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiSpaceResponseModel> response = await service.Spaces(default(int));
 
@@ -573,24 +907,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiSpaceResponseModel> response = await service.Spaces(default(int));
 
@@ -610,24 +954,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiSpaceFeatureResponseModel> response = await service.SpaceFeatures(default(int));
 
@@ -645,29 +999,131 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiSpaceFeatureResponseModel> response = await service.SpaceFeatures(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.SpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void SpaceXSpaceFeatures_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var records = new List<SpaceXSpaceFeature>();
+			records.Add(new SpaceXSpaceFeature());
+			mock.RepositoryMock.Setup(x => x.SpaceXSpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiSpaceXSpaceFeatureResponseModel> response = await service.SpaceXSpaceFeatures(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.SpaceXSpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void SpaceXSpaceFeatures_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			mock.RepositoryMock.Setup(x => x.SpaceXSpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SpaceXSpaceFeature>>(new List<SpaceXSpaceFeature>()));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiSpaceXSpaceFeatureResponseModel> response = await service.SpaceXSpaceFeatures(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.SpaceXSpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -682,24 +1138,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiStudentResponseModel> response = await service.Students(default(int));
 
@@ -717,29 +1183,131 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiStudentResponseModel> response = await service.Students(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.Students(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void StudentXFamilies_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var records = new List<StudentXFamily>();
+			records.Add(new StudentXFamily());
+			mock.RepositoryMock.Setup(x => x.StudentXFamilies(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiStudentXFamilyResponseModel> response = await service.StudentXFamilies(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.StudentXFamilies(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void StudentXFamilies_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			mock.RepositoryMock.Setup(x => x.StudentXFamilies(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<StudentXFamily>>(new List<StudentXFamily>()));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiStudentXFamilyResponseModel> response = await service.StudentXFamilies(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.StudentXFamilies(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -754,24 +1322,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiTeacherResponseModel> response = await service.Teachers(default(int));
 
@@ -789,24 +1367,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiTeacherResponseModel> response = await service.Teachers(default(int));
 
@@ -826,24 +1414,34 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiTeacherSkillResponseModel> response = await service.TeacherSkills(default(int));
 
@@ -861,33 +1459,135 @@ namespace FermataFishNS.Api.Services.Tests
 			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
 			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
-			                                mock.DALMapperMockFactory.DALLessonMapperMock,
 			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock);
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
 
 			List<ApiTeacherSkillResponseModel> response = await service.TeacherSkills(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.TeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void TeacherXTeacherSkills_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			var records = new List<TeacherXTeacherSkill>();
+			records.Add(new TeacherXTeacherSkill());
+			mock.RepositoryMock.Setup(x => x.TeacherXTeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiTeacherXTeacherSkillResponseModel> response = await service.TeacherXTeacherSkills(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.TeacherXTeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void TeacherXTeacherSkills_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudioRepository>();
+			mock.RepositoryMock.Setup(x => x.TeacherXTeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TeacherXTeacherSkill>>(new List<TeacherXTeacherSkill>()));
+			var service = new StudioService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.StudioModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
+			                                mock.DALMapperMockFactory.DALStudioMapperMock,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonStatusMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonStatusMapperMock,
+			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
+			                                mock.DALMapperMockFactory.DALAdminMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
+			                                mock.DALMapperMockFactory.DALRateMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
+			                                mock.BOLMapperMockFactory.BOLTeacherXTeacherSkillMapperMock,
+			                                mock.DALMapperMockFactory.DALTeacherXTeacherSkillMapperMock);
+
+			List<ApiTeacherXTeacherSkillResponseModel> response = await service.TeacherXTeacherSkills(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.TeacherXTeacherSkills(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd78b1221f302543fe9d864400cbc06b</Hash>
+    <Hash>a1606fa379547810c332233aa9b554d1</Hash>
 </Codenesium>*/

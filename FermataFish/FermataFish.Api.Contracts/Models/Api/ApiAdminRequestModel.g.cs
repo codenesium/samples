@@ -33,23 +33,28 @@ namespace FermataFishNS.Api.Contracts
 		[JsonProperty]
 		public DateTime? Birthday { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Email { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string FirstName { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string LastName { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Phone { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int StudioId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>16a65cc760db3f94c0794a6898a81209</Hash>
+    <Hash>1a333493c567cac9580d31f01ae91ebb</Hash>
 </Codenesium>*/

@@ -107,9 +107,16 @@ namespace FermataFishNS.Api.Services
 
 			return response;
 		}
+
+		public async Task<List<ApiSpaceXSpaceFeatureResponseModel>> ByStudioId(int studioId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<SpaceXSpaceFeature> records = await this.SpaceXSpaceFeatureRepository.ByStudioId(studioId, limit, offset);
+
+			return this.BolSpaceXSpaceFeatureMapper.MapBOToModel(this.DalSpaceXSpaceFeatureMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c73dcb4c14666adeaa3a653100fa870a</Hash>
+    <Hash>d1ac51cf429150eea78571aa00686e1a</Hash>
 </Codenesium>*/

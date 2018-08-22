@@ -21,7 +21,7 @@ namespace FermataFishNS.Api.Services.Tests
 			model.SetProperties("A", "A", "A", "A", "A", 1);
 			BOFamily response = mapper.MapModelToBO(1, model);
 
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.PcEmail.Should().Be("A");
 			response.PcFirstName.Should().Be("A");
 			response.PcLastName.Should().Be("A");
@@ -38,7 +38,7 @@ namespace FermataFishNS.Api.Services.Tests
 			ApiFamilyResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.PcEmail.Should().Be("A");
 			response.PcFirstName.Should().Be("A");
 			response.PcLastName.Should().Be("A");
@@ -60,5 +60,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d587acae6b077791601861a580e46c38</Hash>
+    <Hash>68d3820dc38298253630c14d27792b3e</Hash>
 </Codenesium>*/

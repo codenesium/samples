@@ -123,9 +123,59 @@ namespace FermataFishNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.TeacherSkillId, 1);
 		}
+
+		[Fact]
+		public async void StudioId_Create_Valid_Reference()
+		{
+			Mock<ITeacherXTeacherSkillRepository> teacherXTeacherSkillRepository = new Mock<ITeacherXTeacherSkillRepository>();
+			teacherXTeacherSkillRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+
+			var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTeacherXTeacherSkillRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Create_Invalid_Reference()
+		{
+			Mock<ITeacherXTeacherSkillRepository> teacherXTeacherSkillRepository = new Mock<ITeacherXTeacherSkillRepository>();
+			teacherXTeacherSkillRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+
+			var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiTeacherXTeacherSkillRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Update_Valid_Reference()
+		{
+			Mock<ITeacherXTeacherSkillRepository> teacherXTeacherSkillRepository = new Mock<ITeacherXTeacherSkillRepository>();
+			teacherXTeacherSkillRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(new Studio()));
+
+			var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTeacherXTeacherSkillRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.StudioId, 1);
+		}
+
+		[Fact]
+		public async void StudioId_Update_Invalid_Reference()
+		{
+			Mock<ITeacherXTeacherSkillRepository> teacherXTeacherSkillRepository = new Mock<ITeacherXTeacherSkillRepository>();
+			teacherXTeacherSkillRepository.Setup(x => x.GetStudio(It.IsAny<int>())).Returns(Task.FromResult<Studio>(null));
+
+			var validator = new ApiTeacherXTeacherSkillRequestModelValidator(teacherXTeacherSkillRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiTeacherXTeacherSkillRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.StudioId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>cf3409836f5d3ac417028edeb027507b</Hash>
+    <Hash>b4c342a8a4a2dfbdeac4be4f659fd7d6</Hash>
 </Codenesium>*/

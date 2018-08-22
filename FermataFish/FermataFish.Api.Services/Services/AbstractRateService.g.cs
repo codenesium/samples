@@ -107,9 +107,16 @@ namespace FermataFishNS.Api.Services
 
 			return response;
 		}
+
+		public async Task<List<ApiRateResponseModel>> ByStudioId(int studioId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<Rate> records = await this.RateRepository.ByStudioId(studioId, limit, offset);
+
+			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>12a1d691c23f75c6a0ec52a1c6dbad5c</Hash>
+    <Hash>0e823509cf8e836fe22ffc945063fb52</Hash>
 </Codenesium>*/

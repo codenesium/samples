@@ -124,6 +124,13 @@ namespace FermataFishNS.Api.Services
 			return response;
 		}
 
+		public async Task<List<ApiTeacherSkillResponseModel>> ByStudioId(int studioId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<TeacherSkill> records = await this.TeacherSkillRepository.ByStudioId(studioId, limit, offset);
+
+			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiRateResponseModel>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Rate> records = await this.TeacherSkillRepository.Rates(teacherSkillId, limit, offset);
@@ -141,5 +148,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9481fb032639a599121695d0165d32ed</Hash>
+    <Hash>29e80d9119f1dd935a8c616fa8f48372</Hash>
 </Codenesium>*/

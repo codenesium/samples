@@ -18,6 +18,7 @@ namespace FermataFishNS.Api.Services
 			this.AmountPerMinuteRules();
 			this.TeacherIdRules();
 			this.TeacherSkillIdRules();
+			this.StudioIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -26,6 +27,7 @@ namespace FermataFishNS.Api.Services
 			this.AmountPerMinuteRules();
 			this.TeacherIdRules();
 			this.TeacherSkillIdRules();
+			this.StudioIdRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -37,5 +39,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>65ce4254e8feee8b5979318aee42e865</Hash>
+    <Hash>74b0fc40b204e49f30e6c41542cbd755</Hash>
 </Codenesium>*/

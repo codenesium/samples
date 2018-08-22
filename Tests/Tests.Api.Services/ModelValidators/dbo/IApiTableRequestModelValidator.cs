@@ -7,14 +7,9 @@ namespace TestsNS.Api.Services
 {
 	public partial interface IApiTableRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiTableRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiTableRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c79ce085c168ebd8aaece6bacbd8a7a</Hash>
+    <Hash>8e1681c33364830213788399970578a5</Hash>
 </Codenesium>*/

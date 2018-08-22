@@ -129,9 +129,45 @@ namespace FermataFishNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SpaceXSpaceFeatureModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void ByStudioId_Exists()
+		{
+			var mock = new ServiceMockFacade<ISpaceXSpaceFeatureRepository>();
+			var records = new List<SpaceXSpaceFeature>();
+			records.Add(new SpaceXSpaceFeature());
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new SpaceXSpaceFeatureService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            mock.ModelValidatorMockFactory.SpaceXSpaceFeatureModelValidatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                            mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock);
+
+			List<ApiSpaceXSpaceFeatureResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByStudioId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ISpaceXSpaceFeatureRepository>();
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SpaceXSpaceFeature>>(new List<SpaceXSpaceFeature>()));
+			var service = new SpaceXSpaceFeatureService(mock.LoggerMock.Object,
+			                                            mock.RepositoryMock.Object,
+			                                            mock.ModelValidatorMockFactory.SpaceXSpaceFeatureModelValidatorMock.Object,
+			                                            mock.BOLMapperMockFactory.BOLSpaceXSpaceFeatureMapperMock,
+			                                            mock.DALMapperMockFactory.DALSpaceXSpaceFeatureMapperMock);
+
+			List<ApiSpaceXSpaceFeatureResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>095bd43f4477e5a79f7b206dffbbddd1</Hash>
+    <Hash>e643636cde94ff0f322091ef6eaa89d8</Hash>
 </Codenesium>*/

@@ -7,14 +7,9 @@ namespace FileServiceNS.Api.Services
 {
 	public partial interface IApiVersionInfoRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiVersionInfoRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(long id, ApiVersionInfoRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(long id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>384ff7a87f6f4f8bec97a4ef56e17085</Hash>
+    <Hash>10011faf768923ade9d3b4337ef2dfd1</Hash>
 </Codenesium>*/

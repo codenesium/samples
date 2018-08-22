@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Web
 {
-	[Route("api/lessonStatus")]
+	[Route("api/lessonStatuses")]
 	[ApiController]
 	[ApiVersion("1.0")]
 	public class LessonStatusController : AbstractLessonStatusController
@@ -39,5 +39,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dbce2b10170238274637a0075854d33a</Hash>
+    <Hash>96b80c8963f94dcb3b04eb3633d845ad</Hash>
 </Codenesium>*/

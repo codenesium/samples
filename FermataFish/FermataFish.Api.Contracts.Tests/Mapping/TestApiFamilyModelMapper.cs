@@ -21,7 +21,7 @@ namespace FermataFishNS.Api.Contracts.Tests
 			ApiFamilyResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Id.Should().Be(1);
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.PcEmail.Should().Be("A");
 			response.PcFirstName.Should().Be("A");
 			response.PcLastName.Should().Be("A");
@@ -37,7 +37,7 @@ namespace FermataFishNS.Api.Contracts.Tests
 			model.SetProperties(1, "A", "A", "A", "A", "A", 1);
 			ApiFamilyRequestModel response = mapper.MapResponseToRequest(model);
 
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.PcEmail.Should().Be("A");
 			response.PcFirstName.Should().Be("A");
 			response.PcLastName.Should().Be("A");
@@ -55,7 +55,7 @@ namespace FermataFishNS.Api.Contracts.Tests
 			JsonPatchDocument<ApiFamilyRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiFamilyRequestModel();
 			patch.ApplyTo(response);
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.PcEmail.Should().Be("A");
 			response.PcFirstName.Should().Be("A");
 			response.PcLastName.Should().Be("A");
@@ -66,5 +66,5 @@ namespace FermataFishNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>9f466de2c1234be6ff15dadb39efc754</Hash>
+    <Hash>7ef505b3511a1fff1d3d59c7cde3997f</Hash>
 </Codenesium>*/

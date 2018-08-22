@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiEmailAddressRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiEmailAddressRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiEmailAddressRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cddb0eb607413419b4c2c8e016676e78</Hash>
+    <Hash>fb5e3967639612b9563f99b7ad0c77e6</Hash>
 </Codenesium>*/

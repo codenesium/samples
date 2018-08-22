@@ -19,7 +19,7 @@ namespace FermataFishNS.Api.Services
 				model.Address2,
 				model.City,
 				model.Name,
-				model.StateId,
+				model.Province,
 				model.Website,
 				model.Zip);
 			return boStudio;
@@ -30,7 +30,7 @@ namespace FermataFishNS.Api.Services
 		{
 			var model = new ApiStudioResponseModel();
 
-			model.SetProperties(boStudio.Id, boStudio.Address1, boStudio.Address2, boStudio.City, boStudio.Name, boStudio.StateId, boStudio.Website, boStudio.Zip);
+			model.SetProperties(boStudio.Id, boStudio.Address1, boStudio.Address2, boStudio.City, boStudio.Name, boStudio.Province, boStudio.Website, boStudio.Zip);
 
 			return model;
 		}
@@ -51,5 +51,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9feb0586d32a1c7b9fca961f1189a6f7</Hash>
+    <Hash>ada0f1a62fd9b017b314a808842985e7</Hash>
 </Codenesium>*/

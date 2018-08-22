@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiShiftRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiShiftRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiShiftRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad185ef36fe1c8f035556a6b080dc663</Hash>
+    <Hash>2518885e98d3d9614753712df53273ec</Hash>
 </Codenesium>*/

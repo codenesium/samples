@@ -17,15 +17,15 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudioModelMapper();
 			var model = new ApiStudioRequestModel();
-			model.SetProperties("A", "A", "A", "A", 1, "A", "A");
+			model.SetProperties("A", "A", "A", "A", "A", "A", "A");
 			ApiStudioResponseModel response = mapper.MapRequestToResponse(1, model);
 
+			response.Id.Should().Be(1);
 			response.Address1.Should().Be("A");
 			response.Address2.Should().Be("A");
 			response.City.Should().Be("A");
-			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.StateId.Should().Be(1);
+			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
 		}
@@ -35,14 +35,14 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudioModelMapper();
 			var model = new ApiStudioResponseModel();
-			model.SetProperties(1, "A", "A", "A", "A", 1, "A", "A");
+			model.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
 			ApiStudioRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Address1.Should().Be("A");
 			response.Address2.Should().Be("A");
 			response.City.Should().Be("A");
 			response.Name.Should().Be("A");
-			response.StateId.Should().Be(1);
+			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
 		}
@@ -52,7 +52,7 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudioModelMapper();
 			var model = new ApiStudioRequestModel();
-			model.SetProperties("A", "A", "A", "A", 1, "A", "A");
+			model.SetProperties("A", "A", "A", "A", "A", "A", "A");
 
 			JsonPatchDocument<ApiStudioRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiStudioRequestModel();
@@ -61,7 +61,7 @@ namespace FermataFishNS.Api.Contracts.Tests
 			response.Address2.Should().Be("A");
 			response.City.Should().Be("A");
 			response.Name.Should().Be("A");
-			response.StateId.Should().Be(1);
+			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
 		}
@@ -69,5 +69,5 @@ namespace FermataFishNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>9a077dfca56c6d8423a5f9d49b20ff76</Hash>
+    <Hash>167a4c7ff7191e5333914b7c8687b0f1</Hash>
 </Codenesium>*/

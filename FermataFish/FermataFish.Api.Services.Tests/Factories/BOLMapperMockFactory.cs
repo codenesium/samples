@@ -28,8 +28,6 @@ namespace FermataFishNS.Api.Services.Tests
 
 		public IBOLSpaceXSpaceFeatureMapper BOLSpaceXSpaceFeatureMapperMock { get; set; } = new BOLSpaceXSpaceFeatureMapper();
 
-		public IBOLStateMapper BOLStateMapperMock { get; set; } = new BOLStateMapper();
-
 		public IBOLStudentMapper BOLStudentMapperMock { get; set; } = new BOLStudentMapper();
 
 		public IBOLStudentXFamilyMapper BOLStudentXFamilyMapperMock { get; set; } = new BOLStudentXFamilyMapper();
@@ -49,5 +47,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>67b471c841abf40eaef6a62df929b87c</Hash>
+    <Hash>13958c9e00d1dd4e1128f29e459894b5</Hash>
 </Codenesium>*/

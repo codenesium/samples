@@ -37,50 +37,39 @@ namespace FermataFishNS.Api.Contracts
 			this.StudioIdEntity = nameof(ApiResponse.Studios);
 		}
 
-		[Required]
+		[JsonProperty]
+		public int Id { get; private set; }
+
 		[JsonProperty]
 		public DateTime Birthday { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Email { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public bool EmailRemindersEnabled { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int FamilyId { get; private set; }
 
 		[JsonProperty]
 		public string FamilyIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public string FirstName { get; private set; }
 
-		[Required]
-		[JsonProperty]
-		public int Id { get; private set; }
-
-		[Required]
 		[JsonProperty]
 		public bool IsAdult { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string LastName { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Phone { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public bool SmsRemindersEnabled { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int StudioId { get; private set; }
 
@@ -90,5 +79,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>73c34e597ed9fd349e55449780b6df5c</Hash>
+    <Hash>ddfe4a07f7d6f21989d3d1f0cba9b037</Hash>
 </Codenesium>*/

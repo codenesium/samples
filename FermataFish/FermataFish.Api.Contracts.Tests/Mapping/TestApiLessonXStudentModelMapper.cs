@@ -17,12 +17,13 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiLessonXStudentModelMapper();
 			var model = new ApiLessonXStudentRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			ApiLessonXStudentResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Id.Should().Be(1);
 			response.LessonId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -30,11 +31,12 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiLessonXStudentModelMapper();
 			var model = new ApiLessonXStudentResponseModel();
-			model.SetProperties(1, 1, 1);
+			model.SetProperties(1, 1, 1, 1);
 			ApiLessonXStudentRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.LessonId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -42,17 +44,18 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiLessonXStudentModelMapper();
 			var model = new ApiLessonXStudentRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 
 			JsonPatchDocument<ApiLessonXStudentRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiLessonXStudentRequestModel();
 			patch.ApplyTo(response);
 			response.LessonId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>023de44cb225bf6b5bf80f4731521cac</Hash>
+    <Hash>2813928332e5a25bfab5ecbcb76376df</Hash>
 </Codenesium>*/

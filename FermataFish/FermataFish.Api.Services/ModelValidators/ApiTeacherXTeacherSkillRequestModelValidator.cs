@@ -17,6 +17,7 @@ namespace FermataFishNS.Api.Services
 		{
 			this.TeacherIdRules();
 			this.TeacherSkillIdRules();
+			this.StudioIdRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -24,6 +25,7 @@ namespace FermataFishNS.Api.Services
 		{
 			this.TeacherIdRules();
 			this.TeacherSkillIdRules();
+			this.StudioIdRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -35,5 +37,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>db0b04406a8461af6a925277155fc02e</Hash>
+    <Hash>f8fa30b35d2ac712d7557f8c2f0914e7</Hash>
 </Codenesium>*/

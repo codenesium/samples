@@ -7,14 +7,9 @@ namespace PetShippingNS.Api.Services
 {
 	public partial interface IApiPetRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiPetRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPetRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>836c6dc7e4864ae76f22bee00994939a</Hash>
+    <Hash>6a7fa131b310ea847321f7488aaecc9d</Hash>
 </Codenesium>*/

@@ -155,6 +155,50 @@ namespace FermataFishNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ByStudioId_Exists()
+		{
+			var mock = new ServiceMockFacade<ILessonRepository>();
+			var records = new List<Lesson>();
+			records.Add(new Lesson());
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new LessonService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.LessonModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXTeacherMapperMock);
+
+			List<ApiLessonResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByStudioId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ILessonRepository>();
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Lesson>>(new List<Lesson>()));
+			var service = new LessonService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.LessonModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLLessonMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLLessonXTeacherMapperMock,
+			                                mock.DALMapperMockFactory.DALLessonXTeacherMapperMock);
+
+			List<ApiLessonResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
 		public async void LessonXStudents_Exists()
 		{
 			var mock = new ServiceMockFacade<ILessonRepository>();
@@ -245,5 +289,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>20c2621685ccb6dda35afc32391eb827</Hash>
+    <Hash>6f009aa1a2a366e2b9bc5f28291dbc09</Hash>
 </Codenesium>*/

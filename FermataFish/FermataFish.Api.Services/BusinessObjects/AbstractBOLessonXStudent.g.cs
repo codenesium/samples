@@ -12,11 +12,13 @@ namespace FermataFishNS.Api.Services
 
 		public virtual void SetProperties(int id,
 		                                  int lessonId,
-		                                  int studentId)
+		                                  int studentId,
+		                                  int studioId)
 		{
 			this.Id = id;
 			this.LessonId = lessonId;
 			this.StudentId = studentId;
+			this.StudioId = studioId;
 		}
 
 		public int Id { get; private set; }
@@ -24,9 +26,11 @@ namespace FermataFishNS.Api.Services
 		public int LessonId { get; private set; }
 
 		public int StudentId { get; private set; }
+
+		public int StudioId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b803de519a5bf100dd1a89f21ef8aba</Hash>
+    <Hash>d6da7583a58119d7b8c7a1f94ed08075</Hash>
 </Codenesium>*/

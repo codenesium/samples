@@ -25,56 +25,6 @@ namespace FermataFishNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void LessonStatusId_Create_Valid_Reference()
-		{
-			Mock<ILessonRepository> lessonRepository = new Mock<ILessonRepository>();
-			lessonRepository.Setup(x => x.GetLessonStatus(It.IsAny<int>())).Returns(Task.FromResult<LessonStatus>(new LessonStatus()));
-
-			var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
-			await validator.ValidateCreateAsync(new ApiLessonRequestModel());
-
-			validator.ShouldNotHaveValidationErrorFor(x => x.LessonStatusId, 1);
-		}
-
-		[Fact]
-		public async void LessonStatusId_Create_Invalid_Reference()
-		{
-			Mock<ILessonRepository> lessonRepository = new Mock<ILessonRepository>();
-			lessonRepository.Setup(x => x.GetLessonStatus(It.IsAny<int>())).Returns(Task.FromResult<LessonStatus>(null));
-
-			var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
-
-			await validator.ValidateCreateAsync(new ApiLessonRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.LessonStatusId, 1);
-		}
-
-		[Fact]
-		public async void LessonStatusId_Update_Valid_Reference()
-		{
-			Mock<ILessonRepository> lessonRepository = new Mock<ILessonRepository>();
-			lessonRepository.Setup(x => x.GetLessonStatus(It.IsAny<int>())).Returns(Task.FromResult<LessonStatus>(new LessonStatus()));
-
-			var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiLessonRequestModel());
-
-			validator.ShouldNotHaveValidationErrorFor(x => x.LessonStatusId, 1);
-		}
-
-		[Fact]
-		public async void LessonStatusId_Update_Invalid_Reference()
-		{
-			Mock<ILessonRepository> lessonRepository = new Mock<ILessonRepository>();
-			lessonRepository.Setup(x => x.GetLessonStatus(It.IsAny<int>())).Returns(Task.FromResult<LessonStatus>(null));
-
-			var validator = new ApiLessonRequestModelValidator(lessonRepository.Object);
-
-			await validator.ValidateUpdateAsync(default(int), new ApiLessonRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.LessonStatusId, 1);
-		}
-
-		[Fact]
 		public async void StudioId_Create_Valid_Reference()
 		{
 			Mock<ILessonRepository> lessonRepository = new Mock<ILessonRepository>();
@@ -127,5 +77,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>17bfb143c09eda7d955fb6a5a9bca2f4</Hash>
+    <Hash>d2cdcf0aa079613ff1e466ca0a8f1319</Hash>
 </Codenesium>*/

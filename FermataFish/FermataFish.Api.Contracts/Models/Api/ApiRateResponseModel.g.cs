@@ -12,41 +12,46 @@ namespace FermataFishNS.Api.Contracts
 			int id,
 			decimal amountPerMinute,
 			int teacherId,
-			int teacherSkillId)
+			int teacherSkillId,
+			int studioId)
 		{
 			this.Id = id;
 			this.AmountPerMinute = amountPerMinute;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
+			this.StudioId = studioId;
 
 			this.TeacherIdEntity = nameof(ApiResponse.Teachers);
 			this.TeacherSkillIdEntity = nameof(ApiResponse.TeacherSkills);
+			this.StudioIdEntity = nameof(ApiResponse.Studios);
 		}
 
-		[Required]
-		[JsonProperty]
-		public decimal AmountPerMinute { get; private set; }
-
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
+		[JsonProperty]
+		public decimal AmountPerMinute { get; private set; }
+
 		[JsonProperty]
 		public int TeacherId { get; private set; }
 
 		[JsonProperty]
 		public string TeacherIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public int TeacherSkillId { get; private set; }
 
 		[JsonProperty]
 		public string TeacherSkillIdEntity { get; set; }
+
+		[JsonProperty]
+		public int StudioId { get; private set; }
+
+		[JsonProperty]
+		public string StudioIdEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>66c159d2c52aecdf9db4d8d15852bcad</Hash>
+    <Hash>ff7725217fc53b41d97156a404496e00</Hash>
 </Codenesium>*/

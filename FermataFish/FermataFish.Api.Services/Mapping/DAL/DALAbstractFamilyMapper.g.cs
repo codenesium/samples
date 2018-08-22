@@ -14,7 +14,7 @@ namespace FermataFishNS.Api.Services
 			Family efFamily = new Family();
 			efFamily.SetProperties(
 				bo.Id,
-				bo.Notes,
+				bo.Note,
 				bo.PcEmail,
 				bo.PcFirstName,
 				bo.PcLastName,
@@ -30,7 +30,7 @@ namespace FermataFishNS.Api.Services
 
 			bo.SetProperties(
 				ef.Id,
-				ef.Notes,
+				ef.Note,
 				ef.PcEmail,
 				ef.PcFirstName,
 				ef.PcLastName,
@@ -55,5 +55,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bbb49fb5dd6de5ba34fdd32a0358eb79</Hash>
+    <Hash>af85a0254c7be0051bfd2b20e38e2bee</Hash>
 </Codenesium>*/

@@ -17,13 +17,14 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALStudentXFamilyMapper();
 			var bo = new BOStudentXFamily();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1, 1, 1);
 
 			StudentXFamily response = mapper.MapBOToEF(bo);
 
-			response.FamilyId.Should().Be(1);
 			response.Id.Should().Be(1);
+			response.FamilyId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -31,13 +32,14 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALStudentXFamilyMapper();
 			StudentXFamily entity = new StudentXFamily();
-			entity.SetProperties(1, 1, 1);
+			entity.SetProperties(1, 1, 1, 1);
 
 			BOStudentXFamily response = mapper.MapEFToBO(entity);
 
-			response.FamilyId.Should().Be(1);
 			response.Id.Should().Be(1);
+			response.FamilyId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -45,7 +47,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new DALStudentXFamilyMapper();
 			StudentXFamily entity = new StudentXFamily();
-			entity.SetProperties(1, 1, 1);
+			entity.SetProperties(1, 1, 1, 1);
 
 			List<BOStudentXFamily> response = mapper.MapEFToBO(new List<StudentXFamily>() { entity });
 
@@ -55,5 +57,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ed2943a7e510a45d7c4294bdba3e4aed</Hash>
+    <Hash>576ce24e74725424139c3c6601ab6f6f</Hash>
 </Codenesium>*/

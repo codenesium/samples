@@ -22,7 +22,7 @@ namespace FermataFishNS.Api.Services.Tests
 			Family response = mapper.MapBOToEF(bo);
 
 			response.Id.Should().Be(1);
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.PcEmail.Should().Be("A");
 			response.PcFirstName.Should().Be("A");
 			response.PcLastName.Should().Be("A");
@@ -40,7 +40,7 @@ namespace FermataFishNS.Api.Services.Tests
 			BOFamily response = mapper.MapEFToBO(entity);
 
 			response.Id.Should().Be(1);
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.PcEmail.Should().Be("A");
 			response.PcFirstName.Should().Be("A");
 			response.PcLastName.Should().Be("A");
@@ -63,5 +63,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fe82b4f70fda198afc81ad7519e6a172</Hash>
+    <Hash>9025798b9498fb91b50ce29e4f0bb1ef</Hash>
 </Codenesium>*/

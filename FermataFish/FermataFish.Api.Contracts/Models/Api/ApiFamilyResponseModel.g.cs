@@ -10,7 +10,7 @@ namespace FermataFishNS.Api.Contracts
 	{
 		public virtual void SetProperties(
 			int id,
-			string notes,
+			string note,
 			string pcEmail,
 			string pcFirstName,
 			string pcLastName,
@@ -18,7 +18,7 @@ namespace FermataFishNS.Api.Contracts
 			int studioId)
 		{
 			this.Id = id;
-			this.Notes = notes;
+			this.Note = note;
 			this.PcEmail = pcEmail;
 			this.PcFirstName = pcFirstName;
 			this.PcLastName = pcLastName;
@@ -29,34 +29,27 @@ namespace FermataFishNS.Api.Contracts
 			this.StudioIdEntity = nameof(ApiResponse.Studios);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
 		[JsonProperty]
 		public string IdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
-		public string Notes { get; private set; }
+		public string Note { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string PcEmail { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string PcFirstName { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string PcLastName { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string PcPhone { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int StudioId { get; private set; }
 
@@ -66,5 +59,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0cab085a377399b380e944db0414b83a</Hash>
+    <Hash>b2a2ed9e46ab0f6919010a20e4424743</Hash>
 </Codenesium>*/

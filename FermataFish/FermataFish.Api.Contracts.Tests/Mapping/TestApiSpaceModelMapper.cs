@@ -20,8 +20,8 @@ namespace FermataFishNS.Api.Contracts.Tests
 			model.SetProperties("A", "A", 1);
 			ApiSpaceResponseModel response = mapper.MapRequestToResponse(1, model);
 
-			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
+			response.Description.Should().Be("A");
 			response.Name.Should().Be("A");
 			response.StudioId.Should().Be(1);
 		}
@@ -57,5 +57,5 @@ namespace FermataFishNS.Api.Contracts.Tests
 }
 
 /*<Codenesium>
-    <Hash>8bb0bd3970cc162eda03d6e87cd1c978</Hash>
+    <Hash>8aa23f7c711a2aa127368863a6267a77</Hash>
 </Codenesium>*/

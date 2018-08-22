@@ -21,6 +21,63 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.FK_Pet_breedId_Breed_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Pet] DROP CONSTRAINT [FK_Pet_breedId_Breed_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Pet_penId_Pen_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Pet] DROP CONSTRAINT [FK_Pet_penId_Pen_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Pet_speciesId_Species_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Pet] DROP CONSTRAINT [FK_Pet_speciesId_Species_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Sale_petId_Pet_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_petId_Pet_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Sale_paymentTypeId_PaymentType_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_paymentTypeId_PaymentType_id]
+--END
+--GO
+
+--IF OBJECT_ID('dbo.Breed', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Breed]
+--END
+--GO
+--IF OBJECT_ID('dbo.PaymentType', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[PaymentType]
+--END
+--GO
+--IF OBJECT_ID('dbo.Pen', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Pen]
+--END
+--GO
+--IF OBJECT_ID('dbo.Pet', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Pet]
+--END
+--GO
+--IF OBJECT_ID('dbo.Sale', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Sale]
+--END
+--GO
+--IF OBJECT_ID('dbo.Species', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Species]
+--END
+--GO
+
 CREATE TABLE [dbo].[Breed](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [name] [varchar]  (128)   NOT NULL,

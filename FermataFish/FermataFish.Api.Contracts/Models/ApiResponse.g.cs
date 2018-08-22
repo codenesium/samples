@@ -16,14 +16,13 @@ namespace FermataFishNS.Api.Contracts
 			from.Admins.ForEach(x => this.AddAdmin(x));
 			from.Families.ForEach(x => this.AddFamily(x));
 			from.Lessons.ForEach(x => this.AddLesson(x));
-			from.LessonStatus.ForEach(x => this.AddLessonStatus(x));
+			from.LessonStatuses.ForEach(x => this.AddLessonStatus(x));
 			from.LessonXStudents.ForEach(x => this.AddLessonXStudent(x));
 			from.LessonXTeachers.ForEach(x => this.AddLessonXTeacher(x));
 			from.Rates.ForEach(x => this.AddRate(x));
 			from.Spaces.ForEach(x => this.AddSpace(x));
 			from.SpaceFeatures.ForEach(x => this.AddSpaceFeature(x));
 			from.SpaceXSpaceFeatures.ForEach(x => this.AddSpaceXSpaceFeature(x));
-			from.States.ForEach(x => this.AddState(x));
 			from.Students.ForEach(x => this.AddStudent(x));
 			from.StudentXFamilies.ForEach(x => this.AddStudentXFamily(x));
 			from.Studios.ForEach(x => this.AddStudio(x));
@@ -38,7 +37,7 @@ namespace FermataFishNS.Api.Contracts
 
 		public List<ApiLessonResponseModel> Lessons { get; private set; } = new List<ApiLessonResponseModel>();
 
-		public List<ApiLessonStatusResponseModel> LessonStatus { get; private set; } = new List<ApiLessonStatusResponseModel>();
+		public List<ApiLessonStatusResponseModel> LessonStatuses { get; private set; } = new List<ApiLessonStatusResponseModel>();
 
 		public List<ApiLessonXStudentResponseModel> LessonXStudents { get; private set; } = new List<ApiLessonXStudentResponseModel>();
 
@@ -51,8 +50,6 @@ namespace FermataFishNS.Api.Contracts
 		public List<ApiSpaceFeatureResponseModel> SpaceFeatures { get; private set; } = new List<ApiSpaceFeatureResponseModel>();
 
 		public List<ApiSpaceXSpaceFeatureResponseModel> SpaceXSpaceFeatures { get; private set; } = new List<ApiSpaceXSpaceFeatureResponseModel>();
-
-		public List<ApiStateResponseModel> States { get; private set; } = new List<ApiStateResponseModel>();
 
 		public List<ApiStudentResponseModel> Students { get; private set; } = new List<ApiStudentResponseModel>();
 
@@ -115,18 +112,18 @@ namespace FermataFishNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLessonStatusValue { get; private set; } = true;
+		public bool ShouldSerializeLessonStatusesValue { get; private set; } = true;
 
-		public bool ShouldSerializeLessonStatus()
+		public bool ShouldSerializeLessonStatuses()
 		{
-			return this.ShouldSerializeLessonStatusValue;
+			return this.ShouldSerializeLessonStatusesValue;
 		}
 
 		public void AddLessonStatus(ApiLessonStatusResponseModel item)
 		{
-			if (!this.LessonStatus.Any(x => x.Id == item.Id))
+			if (!this.LessonStatuses.Any(x => x.Id == item.Id))
 			{
-				this.LessonStatus.Add(item);
+				this.LessonStatuses.Add(item);
 			}
 		}
 
@@ -223,22 +220,6 @@ namespace FermataFishNS.Api.Contracts
 			if (!this.SpaceXSpaceFeatures.Any(x => x.Id == item.Id))
 			{
 				this.SpaceXSpaceFeatures.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeStatesValue { get; private set; } = true;
-
-		public bool ShouldSerializeStates()
-		{
-			return this.ShouldSerializeStatesValue;
-		}
-
-		public void AddState(ApiStateResponseModel item)
-		{
-			if (!this.States.Any(x => x.Id == item.Id))
-			{
-				this.States.Add(item);
 			}
 		}
 
@@ -355,9 +336,9 @@ namespace FermataFishNS.Api.Contracts
 				this.ShouldSerializeLessonsValue = false;
 			}
 
-			if (this.LessonStatus.Count == 0)
+			if (this.LessonStatuses.Count == 0)
 			{
-				this.ShouldSerializeLessonStatusValue = false;
+				this.ShouldSerializeLessonStatusesValue = false;
 			}
 
 			if (this.LessonXStudents.Count == 0)
@@ -388,11 +369,6 @@ namespace FermataFishNS.Api.Contracts
 			if (this.SpaceXSpaceFeatures.Count == 0)
 			{
 				this.ShouldSerializeSpaceXSpaceFeaturesValue = false;
-			}
-
-			if (this.States.Count == 0)
-			{
-				this.ShouldSerializeStatesValue = false;
 			}
 
 			if (this.Students.Count == 0)
@@ -429,5 +405,5 @@ namespace FermataFishNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>04d1c1b0e45bca289e2f5c7dc158b162</Hash>
+    <Hash>28b407459d32057b358f513682f1f9f1</Hash>
 </Codenesium>*/

@@ -7,14 +7,9 @@ namespace FermataFishNS.Api.Services
 {
 	public partial interface IApiSpaceFeatureRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiSpaceFeatureRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiSpaceFeatureRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>51cb57510b919668c07314677c268075</Hash>
+    <Hash>5671c29c01b49e5caae2ece1874df69a</Hash>
 </Codenesium>*/

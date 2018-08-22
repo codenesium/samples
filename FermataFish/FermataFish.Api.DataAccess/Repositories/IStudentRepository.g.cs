@@ -17,6 +17,8 @@ namespace FermataFishNS.Api.DataAccess
 
 		Task<List<Student>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<List<Student>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0);
+
 		Task<List<LessonXStudent>> LessonXStudents(int studentId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<LessonXTeacher>> LessonXTeachers(int studentId, int limit = int.MaxValue, int offset = 0);
@@ -30,5 +32,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b49a803f34aca166ad8057deef6251f5</Hash>
+    <Hash>23e96e2b0eee3e61b5a66a0b3ad88ff9</Hash>
 </Codenesium>*/

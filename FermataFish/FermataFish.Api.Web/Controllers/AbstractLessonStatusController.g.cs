@@ -118,7 +118,7 @@ namespace FermataFishNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/LessonStatus/{result.Record.Id}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/LessonStatuses/{result.Record.Id}", result);
 			}
 			else
 			{
@@ -206,10 +206,10 @@ namespace FermataFishNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{lessonStatusId}/Lessons")]
+		[Route("byStudioId/{studioId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLessonResponseModel>), 200)]
-		public async virtual Task<IActionResult> Lessons(int lessonStatusId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiLessonStatusResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByStudioId(int studioId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -217,7 +217,7 @@ namespace FermataFishNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLessonResponseModel> response = await this.LessonStatusService.Lessons(lessonStatusId, query.Limit, query.Offset);
+			List<ApiLessonStatusResponseModel> response = await this.LessonStatusService.ByStudioId(studioId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -241,5 +241,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b5a8956221db910e777dc473effd84b3</Hash>
+    <Hash>7c0121621d86e873ba7816b227ed69fb</Hash>
 </Codenesium>*/

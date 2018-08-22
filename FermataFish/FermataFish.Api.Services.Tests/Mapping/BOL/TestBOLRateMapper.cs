@@ -18,12 +18,13 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLRateMapper();
 			ApiRateRequestModel model = new ApiRateRequestModel();
-			model.SetProperties(1m, 1, 1);
+			model.SetProperties(1m, 1, 1, 1);
 			BORate response = mapper.MapModelToBO(1, model);
 
 			response.AmountPerMinute.Should().Be(1m);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -31,13 +32,14 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLRateMapper();
 			BORate bo = new BORate();
-			bo.SetProperties(1, 1m, 1, 1);
+			bo.SetProperties(1, 1m, 1, 1, 1);
 			ApiRateResponseModel response = mapper.MapBOToModel(bo);
 
-			response.AmountPerMinute.Should().Be(1m);
 			response.Id.Should().Be(1);
+			response.AmountPerMinute.Should().Be(1m);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -45,7 +47,7 @@ namespace FermataFishNS.Api.Services.Tests
 		{
 			var mapper = new BOLRateMapper();
 			BORate bo = new BORate();
-			bo.SetProperties(1, 1m, 1, 1);
+			bo.SetProperties(1, 1m, 1, 1, 1);
 			List<ApiRateResponseModel> response = mapper.MapBOToModel(new List<BORate>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -54,5 +56,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f0101387c59cc9ae069a3b2e5ff3be84</Hash>
+    <Hash>f3b21d8412274cdca4d5beb4ffa710ab</Hash>
 </Codenesium>*/

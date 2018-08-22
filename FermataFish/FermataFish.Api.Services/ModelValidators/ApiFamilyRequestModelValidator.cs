@@ -15,7 +15,7 @@ namespace FermataFishNS.Api.Services
 
 		public async Task<ValidationResult> ValidateCreateAsync(ApiFamilyRequestModel model)
 		{
-			this.NotesRules();
+			this.NoteRules();
 			this.PcEmailRules();
 			this.PcFirstNameRules();
 			this.PcLastNameRules();
@@ -26,7 +26,7 @@ namespace FermataFishNS.Api.Services
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiFamilyRequestModel model)
 		{
-			this.NotesRules();
+			this.NoteRules();
 			this.PcEmailRules();
 			this.PcFirstNameRules();
 			this.PcLastNameRules();
@@ -43,5 +43,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ed9a9efed14e59e11aa251024c1cd7ba</Hash>
+    <Hash>94b96b1c89b2bead32928cd654598311</Hash>
 </Codenesium>*/

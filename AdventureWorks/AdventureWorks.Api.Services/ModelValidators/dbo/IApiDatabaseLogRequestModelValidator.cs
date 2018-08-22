@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiDatabaseLogRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiDatabaseLogRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiDatabaseLogRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7efc33b04da1f5a302452f658a98bbbe</Hash>
+    <Hash>e7bd4fd85c13ad4c12a9e6085652bc89</Hash>
 </Codenesium>*/

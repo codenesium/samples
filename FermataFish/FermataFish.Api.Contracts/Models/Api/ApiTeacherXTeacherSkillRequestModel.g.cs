@@ -16,20 +16,28 @@ namespace FermataFishNS.Api.Contracts
 
 		public virtual void SetProperties(
 			int teacherId,
-			int teacherSkillId)
+			int teacherSkillId,
+			int studioId)
 		{
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
+			this.StudioId = studioId;
 		}
 
+		[Required]
 		[JsonProperty]
 		public int TeacherId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int TeacherSkillId { get; private set; }
+
+		[Required]
+		[JsonProperty]
+		public int StudioId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fcd3488971e704d967283ea687c8fe92</Hash>
+    <Hash>c668d5f2e6093ed0d82f9d0750b8c973</Hash>
 </Codenesium>*/

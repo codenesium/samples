@@ -21,6 +21,258 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.FK_DeploymentRelatedMachine_DeploymentId', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[DeploymentRelatedMachine] DROP CONSTRAINT [FK_DeploymentRelatedMachine_DeploymentId]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_EventRelatedDocument_EventId', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[EventRelatedDocument] DROP CONSTRAINT [FK_EventRelatedDocument_EventId]
+--END
+--GO
+
+--IF OBJECT_ID('dbo.Account', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Account]
+--END
+--GO
+--IF OBJECT_ID('dbo.ActionTemplate', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ActionTemplate]
+--END
+--GO
+--IF OBJECT_ID('dbo.ActionTemplateVersion', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ActionTemplateVersion]
+--END
+--GO
+--IF OBJECT_ID('dbo.ApiKey', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ApiKey]
+--END
+--GO
+--IF OBJECT_ID('dbo.Artifact', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Artifact]
+--END
+--GO
+--IF OBJECT_ID('dbo.Certificate', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Certificate]
+--END
+--GO
+--IF OBJECT_ID('dbo.Channel', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Channel]
+--END
+--GO
+--IF OBJECT_ID('dbo.CommunityActionTemplate', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[CommunityActionTemplate]
+--END
+--GO
+--IF OBJECT_ID('dbo.Configuration', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Configuration]
+--END
+--GO
+--IF OBJECT_ID('dbo.DashboardConfiguration', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[DashboardConfiguration]
+--END
+--GO
+--IF OBJECT_ID('dbo.Deployment', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Deployment]
+--END
+--GO
+--IF OBJECT_ID('dbo.DeploymentEnvironment', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[DeploymentEnvironment]
+--END
+--GO
+--IF OBJECT_ID('dbo.DeploymentHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[DeploymentHistory]
+--END
+--GO
+--IF OBJECT_ID('dbo.DeploymentProcess', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[DeploymentProcess]
+--END
+--GO
+--IF OBJECT_ID('dbo.DeploymentRelatedMachine', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[DeploymentRelatedMachine]
+--END
+--GO
+--IF OBJECT_ID('dbo.Event', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Event]
+--END
+--GO
+--IF OBJECT_ID('dbo.EventRelatedDocument', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[EventRelatedDocument]
+--END
+--GO
+--IF OBJECT_ID('dbo.ExtensionConfiguration', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ExtensionConfiguration]
+--END
+--GO
+--IF OBJECT_ID('dbo.Feed', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Feed]
+--END
+--GO
+--IF OBJECT_ID('dbo.Interruption', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Interruption]
+--END
+--GO
+--IF OBJECT_ID('dbo.Invitation', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Invitation]
+--END
+--GO
+--IF OBJECT_ID('dbo.KeyAllocation', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[KeyAllocation]
+--END
+--GO
+--IF OBJECT_ID('dbo.LibraryVariableSet', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[LibraryVariableSet]
+--END
+--GO
+--IF OBJECT_ID('dbo.Lifecycle', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Lifecycle]
+--END
+--GO
+--IF OBJECT_ID('dbo.Machine', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Machine]
+--END
+--GO
+--IF OBJECT_ID('dbo.MachinePolicy', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[MachinePolicy]
+--END
+--GO
+--IF OBJECT_ID('dbo.Mutex', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Mutex]
+--END
+--GO
+--IF OBJECT_ID('dbo.NuGetPackage', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[NuGetPackage]
+--END
+--GO
+--IF OBJECT_ID('dbo.OctopusServerInstallationHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[OctopusServerInstallationHistory]
+--END
+--GO
+--IF OBJECT_ID('dbo.OctopusServerNode', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[OctopusServerNode]
+--END
+--GO
+--IF OBJECT_ID('dbo.Project', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Project]
+--END
+--GO
+--IF OBJECT_ID('dbo.ProjectGroup', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ProjectGroup]
+--END
+--GO
+--IF OBJECT_ID('dbo.ProjectTrigger', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ProjectTrigger]
+--END
+--GO
+--IF OBJECT_ID('dbo.Proxy', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Proxy]
+--END
+--GO
+--IF OBJECT_ID('dbo.Release', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Release]
+--END
+--GO
+--IF OBJECT_ID('dbo.SchemaVersions', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[SchemaVersions]
+--END
+--GO
+--IF OBJECT_ID('dbo.ServerTask', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ServerTask]
+--END
+--GO
+--IF OBJECT_ID('dbo.Subscription', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Subscription]
+--END
+--GO
+--IF OBJECT_ID('dbo.TagSet', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[TagSet]
+--END
+--GO
+--IF OBJECT_ID('dbo.Team', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Team]
+--END
+--GO
+--IF OBJECT_ID('dbo.Tenant', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Tenant]
+--END
+--GO
+--IF OBJECT_ID('dbo.TenantVariable', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[TenantVariable]
+--END
+--GO
+--IF OBJECT_ID('dbo.User', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[User]
+--END
+--GO
+--IF OBJECT_ID('dbo.UserRole', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[UserRole]
+--END
+--GO
+--IF OBJECT_ID('dbo.VariableSet', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[VariableSet]
+--END
+--GO
+--IF OBJECT_ID('dbo.Worker', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Worker]
+--END
+--GO
+--IF OBJECT_ID('dbo.WorkerPool', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[WorkerPool]
+--END
+--GO
+--IF OBJECT_ID('dbo.WorkerTaskLease', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[WorkerTaskLease]
+--END
+--GO
+
 CREATE TABLE [dbo].[Account](
 [Id] [nvarchar]  (210)   NOT NULL,
 [AccountType] [nvarchar]  (50)   NOT NULL,

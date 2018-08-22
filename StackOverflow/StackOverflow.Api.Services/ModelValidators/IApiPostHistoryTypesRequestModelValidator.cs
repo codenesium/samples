@@ -7,14 +7,9 @@ namespace StackOverflowNS.Api.Services
 {
 	public partial interface IApiPostHistoryTypesRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiPostHistoryTypesRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPostHistoryTypesRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6dc24bbad7d4759c3bb080f14702ab6a</Hash>
+    <Hash>048bbf002144165d23b2094c4d68d749</Hash>
 </Codenesium>*/

@@ -14,7 +14,8 @@ namespace FermataFishNS.Api.Contracts
 			var response = new ApiStudentXFamilyResponseModel();
 			response.SetProperties(id,
 			                       request.FamilyId,
-			                       request.StudentId);
+			                       request.StudentId,
+			                       request.StudioId);
 			return response;
 		}
 
@@ -24,7 +25,8 @@ namespace FermataFishNS.Api.Contracts
 			var request = new ApiStudentXFamilyRequestModel();
 			request.SetProperties(
 				response.FamilyId,
-				response.StudentId);
+				response.StudentId,
+				response.StudioId);
 			return request;
 		}
 
@@ -33,11 +35,12 @@ namespace FermataFishNS.Api.Contracts
 			var patch = new JsonPatchDocument<ApiStudentXFamilyRequestModel>();
 			patch.Replace(x => x.FamilyId, model.FamilyId);
 			patch.Replace(x => x.StudentId, model.StudentId);
+			patch.Replace(x => x.StudioId, model.StudioId);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>841cdb43c5be63e3795ceb40e6c5b0bf</Hash>
+    <Hash>51285779132eb4165e827d6e62207a31</Hash>
 </Codenesium>*/

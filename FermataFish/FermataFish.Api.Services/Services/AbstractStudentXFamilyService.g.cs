@@ -107,9 +107,16 @@ namespace FermataFishNS.Api.Services
 
 			return response;
 		}
+
+		public async Task<List<ApiStudentXFamilyResponseModel>> ByStudioId(int studioId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<StudentXFamily> records = await this.StudentXFamilyRepository.ByStudioId(studioId, limit, offset);
+
+			return this.BolStudentXFamilyMapper.MapBOToModel(this.DalStudentXFamilyMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a07f18dd2857d47bdb372bdb5143ec6</Hash>
+    <Hash>cf3bee8a9e22922f1c646a6a7b8e4518</Hash>
 </Codenesium>*/

@@ -14,28 +14,33 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			DateTime? actualEndDate,
 			DateTime? actualStartDate,
 			decimal? billAmount,
-			int id,
 			int lessonStatusId,
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
-			string studentNotes,
-			int studioId,
-			string teacherNotes)
+			string studentNote,
+			string teacherNote,
+			int studioId)
 		{
+			this.Id = id;
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
 			this.BillAmount = billAmount;
-			this.Id = id;
 			this.LessonStatusId = lessonStatusId;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.StudentNotes = studentNotes;
+			this.StudentNote = studentNote;
+			this.TeacherNote = teacherNote;
 			this.StudioId = studioId;
-			this.TeacherNotes = teacherNotes;
 		}
+
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id")]
+		public int Id { get; private set; }
 
 		[Column("actualEndDate")]
 		public DateTime? ActualEndDate { get; private set; }
@@ -45,10 +50,6 @@ namespace FermataFishNS.Api.DataAccess
 
 		[Column("billAmount")]
 		public decimal? BillAmount { get; private set; }
-
-		[Key]
-		[Column("id")]
-		public int Id { get; private set; }
 
 		[Column("lessonStatusId")]
 		public int LessonStatusId { get; private set; }
@@ -61,17 +62,14 @@ namespace FermataFishNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("studentNotes")]
-		public string StudentNotes { get; private set; }
-
-		[Column("studioId")]
-		public int StudioId { get; private set; }
+		public string StudentNote { get; private set; }
 
 		[MaxLength(2147483647)]
 		[Column("teacherNotes")]
-		public string TeacherNotes { get; private set; }
+		public string TeacherNote { get; private set; }
 
-		[ForeignKey("LessonStatusId")]
-		public virtual LessonStatus LessonStatusNavigation { get; private set; }
+		[Column("studioId")]
+		public int StudioId { get; private set; }
 
 		[ForeignKey("StudioId")]
 		public virtual Studio StudioNavigation { get; private set; }
@@ -79,5 +77,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7a35bbca7e3718b465529206cfcc28bf</Hash>
+    <Hash>6de0983b3e318f7ff8b849ed590fb0c4</Hash>
 </Codenesium>*/

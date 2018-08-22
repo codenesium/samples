@@ -16,7 +16,8 @@ namespace FermataFishNS.Api.Services
 			boTeacherXTeacherSkill.SetProperties(
 				id,
 				model.TeacherId,
-				model.TeacherSkillId);
+				model.TeacherSkillId,
+				model.StudioId);
 			return boTeacherXTeacherSkill;
 		}
 
@@ -25,7 +26,7 @@ namespace FermataFishNS.Api.Services
 		{
 			var model = new ApiTeacherXTeacherSkillResponseModel();
 
-			model.SetProperties(boTeacherXTeacherSkill.Id, boTeacherXTeacherSkill.TeacherId, boTeacherXTeacherSkill.TeacherSkillId);
+			model.SetProperties(boTeacherXTeacherSkill.Id, boTeacherXTeacherSkill.TeacherId, boTeacherXTeacherSkill.TeacherSkillId, boTeacherXTeacherSkill.StudioId);
 
 			return model;
 		}
@@ -46,5 +47,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>880bbaf4d104fbb38436ee5e36dc2717</Hash>
+    <Hash>5b9648fce6fd0ef5b6afccd9b0a5c3d7</Hash>
 </Codenesium>*/

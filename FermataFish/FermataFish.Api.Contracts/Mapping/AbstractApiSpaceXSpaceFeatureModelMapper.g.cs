@@ -14,7 +14,8 @@ namespace FermataFishNS.Api.Contracts
 			var response = new ApiSpaceXSpaceFeatureResponseModel();
 			response.SetProperties(id,
 			                       request.SpaceFeatureId,
-			                       request.SpaceId);
+			                       request.SpaceId,
+			                       request.StudioId);
 			return response;
 		}
 
@@ -24,7 +25,8 @@ namespace FermataFishNS.Api.Contracts
 			var request = new ApiSpaceXSpaceFeatureRequestModel();
 			request.SetProperties(
 				response.SpaceFeatureId,
-				response.SpaceId);
+				response.SpaceId,
+				response.StudioId);
 			return request;
 		}
 
@@ -33,11 +35,12 @@ namespace FermataFishNS.Api.Contracts
 			var patch = new JsonPatchDocument<ApiSpaceXSpaceFeatureRequestModel>();
 			patch.Replace(x => x.SpaceFeatureId, model.SpaceFeatureId);
 			patch.Replace(x => x.SpaceId, model.SpaceId);
+			patch.Replace(x => x.StudioId, model.StudioId);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>df82c54b24cf14f53f2c378d5ecbeb1d</Hash>
+    <Hash>24574d172672e76c97807e9f36337195</Hash>
 </Codenesium>*/

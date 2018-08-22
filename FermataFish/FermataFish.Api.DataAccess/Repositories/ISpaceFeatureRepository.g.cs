@@ -17,6 +17,8 @@ namespace FermataFishNS.Api.DataAccess
 
 		Task<List<SpaceFeature>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<List<SpaceFeature>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0);
+
 		Task<List<SpaceXSpaceFeature>> SpaceXSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0);
 
 		Task<Studio> GetStudio(int studioId);
@@ -24,5 +26,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>90b1dd942adcb91b38fe8d42e03feba4</Hash>
+    <Hash>f210042edb803b270e21fcf782948770</Hash>
 </Codenesium>*/

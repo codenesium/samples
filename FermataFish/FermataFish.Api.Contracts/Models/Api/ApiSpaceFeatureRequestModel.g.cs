@@ -22,14 +22,16 @@ namespace FermataFishNS.Api.Contracts
 			this.StudioId = studioId;
 		}
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int StudioId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>407c7b19099f438b3ca1738d151cf1b8</Hash>
+    <Hash>d288428aedce47f01706996905607174</Hash>
 </Codenesium>*/

@@ -25,6 +25,30 @@ namespace FermataFishNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Description_Create_null()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
+
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
+		}
+
+		[Fact]
+		public async void Description_Update_null()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
+
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Description, null as string);
+		}
+
+		[Fact]
 		public async void Description_Create_length()
 		{
 			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
@@ -46,6 +70,30 @@ namespace FermataFishNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.Description, new string('A', 129));
+		}
+
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
+
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSpaceRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ISpaceRepository> spaceRepository = new Mock<ISpaceRepository>();
+			spaceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Space()));
+
+			var validator = new ApiSpaceRequestModelValidator(spaceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSpaceRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
 		}
 
 		[Fact]
@@ -125,5 +173,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>51abd02a2616c881acdf27f91eaea620</Hash>
+    <Hash>f99825c1803f25d1cd056737fa90f09e</Hash>
 </Codenesium>*/

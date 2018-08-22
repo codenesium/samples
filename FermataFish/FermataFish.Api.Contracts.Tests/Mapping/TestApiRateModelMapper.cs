@@ -17,13 +17,14 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiRateModelMapper();
 			var model = new ApiRateRequestModel();
-			model.SetProperties(1m, 1, 1);
+			model.SetProperties(1m, 1, 1, 1);
 			ApiRateResponseModel response = mapper.MapRequestToResponse(1, model);
 
-			response.AmountPerMinute.Should().Be(1m);
 			response.Id.Should().Be(1);
+			response.AmountPerMinute.Should().Be(1m);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -31,12 +32,13 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiRateModelMapper();
 			var model = new ApiRateResponseModel();
-			model.SetProperties(1, 1m, 1, 1);
+			model.SetProperties(1, 1m, 1, 1, 1);
 			ApiRateRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.AmountPerMinute.Should().Be(1m);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -44,7 +46,7 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiRateModelMapper();
 			var model = new ApiRateRequestModel();
-			model.SetProperties(1m, 1, 1);
+			model.SetProperties(1m, 1, 1, 1);
 
 			JsonPatchDocument<ApiRateRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiRateRequestModel();
@@ -52,10 +54,11 @@ namespace FermataFishNS.Api.Contracts.Tests
 			response.AmountPerMinute.Should().Be(1m);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>632073b63a951271a8a7da89093f0aa5</Hash>
+    <Hash>db2e3c10706c0b0e070533abea58ce7e</Hash>
 </Codenesium>*/

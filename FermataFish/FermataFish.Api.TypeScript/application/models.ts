@@ -1,8 +1,8 @@
 export class ApiAdminRequestModel {
-				birthday:string;
+				id:number;
+birthday:string;
 email:string;
 firstName:string;
-id:number;
 lastName:string;
 phone:string;
 studioId:number;
@@ -10,10 +10,10 @@ studioIdEntity:number;
 
 	
 				constructor() {
-					this.birthday = '';
+					this.id = 0;
+this.birthday = '';
 this.email = '';
 this.firstName = '';
-this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.studioId = 0;
@@ -23,10 +23,10 @@ this.studioId = 0;
 			}
 
 			export class ApiAdminResponseModel {
-				birthday:string;
+				id:number;
+birthday:string;
 email:string;
 firstName:string;
-id:number;
 lastName:string;
 phone:string;
 studioId:number;
@@ -34,10 +34,10 @@ studioIdEntity:number;
 
 	
 				constructor() {
-					this.birthday = '';
+					this.id = 0;
+this.birthday = '';
 this.email = '';
 this.firstName = '';
-this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.studioId = 0;
@@ -48,7 +48,7 @@ this.studioId = 0;
 			export class ApiFamilyRequestModel {
 				id:number;
 idEntity:number;
-notes:string;
+note:string;
 pcEmail:string;
 pcFirstName:string;
 pcLastName:string;
@@ -59,7 +59,7 @@ studioIdEntity:number;
 	
 				constructor() {
 					this.id = 0;
-this.notes = '';
+this.note = '';
 this.pcEmail = '';
 this.pcFirstName = '';
 this.pcLastName = '';
@@ -73,7 +73,7 @@ this.studioId = 0;
 			export class ApiFamilyResponseModel {
 				id:number;
 idEntity:number;
-notes:string;
+note:string;
 pcEmail:string;
 pcFirstName:string;
 pcLastName:string;
@@ -84,7 +84,7 @@ studioIdEntity:number;
 	
 				constructor() {
 					this.id = 0;
-this.notes = '';
+this.note = '';
 this.pcEmail = '';
 this.pcFirstName = '';
 this.pcLastName = '';
@@ -95,62 +95,60 @@ this.studioId = 0;
 				}
 			}
 			export class ApiLessonRequestModel {
-				actualEndDate:string;
+				id:number;
+actualEndDate:string;
 actualStartDate:string;
 billAmount:number;
-id:number;
 lessonStatusId:number;
-lessonStatusIdEntity:number;
 scheduledEndDate:string;
 scheduledStartDate:string;
-studentNotes:string;
+studentNote:string;
+teacherNote:string;
 studioId:number;
 studioIdEntity:number;
-teacherNotes:string;
 
 	
 				constructor() {
-					this.actualEndDate = '';
+					this.id = 0;
+this.actualEndDate = '';
 this.actualStartDate = '';
 this.billAmount = 0;
-this.id = 0;
 this.lessonStatusId = 0;
 this.scheduledEndDate = '';
 this.scheduledStartDate = '';
-this.studentNotes = '';
+this.studentNote = '';
+this.teacherNote = '';
 this.studioId = 0;
-this.teacherNotes = '';
 
 		
 				}
 			}
 
 			export class ApiLessonResponseModel {
-				actualEndDate:string;
+				id:number;
+actualEndDate:string;
 actualStartDate:string;
 billAmount:number;
-id:number;
 lessonStatusId:number;
-lessonStatusIdEntity:number;
 scheduledEndDate:string;
 scheduledStartDate:string;
-studentNotes:string;
+studentNote:string;
+teacherNote:string;
 studioId:number;
 studioIdEntity:number;
-teacherNotes:string;
 
 	
 				constructor() {
-					this.actualEndDate = '';
+					this.id = 0;
+this.actualEndDate = '';
 this.actualStartDate = '';
 this.billAmount = 0;
-this.id = 0;
 this.lessonStatusId = 0;
 this.scheduledEndDate = '';
 this.scheduledStartDate = '';
-this.studentNotes = '';
+this.studentNote = '';
+this.teacherNote = '';
 this.studioId = 0;
-this.teacherNotes = '';
 
 		
 				}
@@ -194,12 +192,15 @@ lessonId:number;
 lessonIdEntity:number;
 studentId:number;
 studentIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
 					this.id = 0;
 this.lessonId = 0;
 this.studentId = 0;
+this.studioId = 0;
 
 		
 				}
@@ -211,12 +212,15 @@ lessonId:number;
 lessonIdEntity:number;
 studentId:number;
 studentIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
 					this.id = 0;
 this.lessonId = 0;
 this.studentId = 0;
+this.studioId = 0;
 
 		
 				}
@@ -255,53 +259,59 @@ this.studentId = 0;
 				}
 			}
 			export class ApiRateRequestModel {
-				amountPerMinute:number;
-id:number;
+				id:number;
+amountPerMinute:number;
 teacherId:number;
 teacherIdEntity:number;
 teacherSkillId:number;
 teacherSkillIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
-					this.amountPerMinute = 0;
-this.id = 0;
+					this.id = 0;
+this.amountPerMinute = 0;
 this.teacherId = 0;
 this.teacherSkillId = 0;
+this.studioId = 0;
 
 		
 				}
 			}
 
 			export class ApiRateResponseModel {
-				amountPerMinute:number;
-id:number;
+				id:number;
+amountPerMinute:number;
 teacherId:number;
 teacherIdEntity:number;
 teacherSkillId:number;
 teacherSkillIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
-					this.amountPerMinute = 0;
-this.id = 0;
+					this.id = 0;
+this.amountPerMinute = 0;
 this.teacherId = 0;
 this.teacherSkillId = 0;
+this.studioId = 0;
 
 		
 				}
 			}
 			export class ApiSpaceRequestModel {
-				description:string;
-id:number;
+				id:number;
+description:string;
 name:string;
 studioId:number;
 studioIdEntity:number;
 
 	
 				constructor() {
-					this.description = '';
-this.id = 0;
+					this.id = 0;
+this.description = '';
 this.name = '';
 this.studioId = 0;
 
@@ -310,16 +320,16 @@ this.studioId = 0;
 			}
 
 			export class ApiSpaceResponseModel {
-				description:string;
-id:number;
+				id:number;
+description:string;
 name:string;
 studioId:number;
 studioIdEntity:number;
 
 	
 				constructor() {
-					this.description = '';
-this.id = 0;
+					this.id = 0;
+this.description = '';
 this.name = '';
 this.studioId = 0;
 
@@ -363,12 +373,15 @@ spaceFeatureId:number;
 spaceFeatureIdEntity:number;
 spaceId:number;
 spaceIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
 					this.id = 0;
 this.spaceFeatureId = 0;
 this.spaceId = 0;
+this.studioId = 0;
 
 		
 				}
@@ -380,49 +393,27 @@ spaceFeatureId:number;
 spaceFeatureIdEntity:number;
 spaceId:number;
 spaceIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
 					this.id = 0;
 this.spaceFeatureId = 0;
 this.spaceId = 0;
-
-		
-				}
-			}
-			export class ApiStateRequestModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
-
-		
-				}
-			}
-
-			export class ApiStateResponseModel {
-				id:number;
-name:string;
-
-	
-				constructor() {
-					this.id = 0;
-this.name = '';
+this.studioId = 0;
 
 		
 				}
 			}
 			export class ApiStudentRequestModel {
-				birthday:string;
+				id:number;
+birthday:string;
 email:string;
 emailRemindersEnabled:boolean;
 familyId:number;
 familyIdEntity:number;
 firstName:string;
-id:number;
 isAdult:boolean;
 lastName:string;
 phone:string;
@@ -432,12 +423,12 @@ studioIdEntity:number;
 
 	
 				constructor() {
-					this.birthday = '';
+					this.id = 0;
+this.birthday = '';
 this.email = '';
 this.emailRemindersEnabled = false;
 this.familyId = 0;
 this.firstName = '';
-this.id = 0;
 this.isAdult = false;
 this.lastName = '';
 this.phone = '';
@@ -449,13 +440,13 @@ this.studioId = 0;
 			}
 
 			export class ApiStudentResponseModel {
-				birthday:string;
+				id:number;
+birthday:string;
 email:string;
 emailRemindersEnabled:boolean;
 familyId:number;
 familyIdEntity:number;
 firstName:string;
-id:number;
 isAdult:boolean;
 lastName:string;
 phone:string;
@@ -465,12 +456,12 @@ studioIdEntity:number;
 
 	
 				constructor() {
-					this.birthday = '';
+					this.id = 0;
+this.birthday = '';
 this.email = '';
 this.emailRemindersEnabled = false;
 this.familyId = 0;
 this.firstName = '';
-this.id = 0;
 this.isAdult = false;
 this.lastName = '';
 this.phone = '';
@@ -481,57 +472,62 @@ this.studioId = 0;
 				}
 			}
 			export class ApiStudentXFamilyRequestModel {
-				familyId:number;
+				id:number;
+familyId:number;
 familyIdEntity:number;
-id:number;
 studentId:number;
 studentIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
-					this.familyId = 0;
-this.id = 0;
+					this.id = 0;
+this.familyId = 0;
 this.studentId = 0;
+this.studioId = 0;
 
 		
 				}
 			}
 
 			export class ApiStudentXFamilyResponseModel {
-				familyId:number;
+				id:number;
+familyId:number;
 familyIdEntity:number;
-id:number;
 studentId:number;
 studentIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
-					this.familyId = 0;
-this.id = 0;
+					this.id = 0;
+this.familyId = 0;
 this.studentId = 0;
+this.studioId = 0;
 
 		
 				}
 			}
 			export class ApiStudioRequestModel {
-				address1:string;
+				id:number;
+address1:string;
 address2:string;
 city:string;
-id:number;
 name:string;
-stateId:number;
-stateIdEntity:number;
+province:string;
 website:string;
 zip:string;
 
 	
 				constructor() {
-					this.address1 = '';
+					this.id = 0;
+this.address1 = '';
 this.address2 = '';
 this.city = '';
-this.id = 0;
 this.name = '';
-this.stateId = 0;
+this.province = '';
 this.website = '';
 this.zip = '';
 
@@ -540,24 +536,23 @@ this.zip = '';
 			}
 
 			export class ApiStudioResponseModel {
-				address1:string;
+				id:number;
+address1:string;
 address2:string;
 city:string;
-id:number;
 name:string;
-stateId:number;
-stateIdEntity:number;
+province:string;
 website:string;
 zip:string;
 
 	
 				constructor() {
-					this.address1 = '';
+					this.id = 0;
+this.address1 = '';
 this.address2 = '';
 this.city = '';
-this.id = 0;
 this.name = '';
-this.stateId = 0;
+this.province = '';
 this.website = '';
 this.zip = '';
 
@@ -565,10 +560,10 @@ this.zip = '';
 				}
 			}
 			export class ApiTeacherRequestModel {
-				birthday:string;
+				id:number;
+birthday:string;
 email:string;
 firstName:string;
-id:number;
 lastName:string;
 phone:string;
 studioId:number;
@@ -576,10 +571,10 @@ studioIdEntity:number;
 
 	
 				constructor() {
-					this.birthday = '';
+					this.id = 0;
+this.birthday = '';
 this.email = '';
 this.firstName = '';
-this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.studioId = 0;
@@ -589,10 +584,10 @@ this.studioId = 0;
 			}
 
 			export class ApiTeacherResponseModel {
-				birthday:string;
+				id:number;
+birthday:string;
 email:string;
 firstName:string;
-id:number;
 lastName:string;
 phone:string;
 studioId:number;
@@ -600,10 +595,10 @@ studioIdEntity:number;
 
 	
 				constructor() {
-					this.birthday = '';
+					this.id = 0;
+this.birthday = '';
 this.email = '';
 this.firstName = '';
-this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.studioId = 0;
@@ -648,12 +643,15 @@ teacherId:number;
 teacherIdEntity:number;
 teacherSkillId:number;
 teacherSkillIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
 					this.id = 0;
 this.teacherId = 0;
 this.teacherSkillId = 0;
+this.studioId = 0;
 
 		
 				}
@@ -665,12 +663,15 @@ teacherId:number;
 teacherIdEntity:number;
 teacherSkillId:number;
 teacherSkillIdEntity:number;
+studioId:number;
+studioIdEntity:number;
 
 	
 				constructor() {
 					this.id = 0;
 this.teacherId = 0;
 this.teacherSkillId = 0;
+this.studioId = 0;
 
 		
 				}

@@ -17,12 +17,13 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudentXFamilyModelMapper();
 			var model = new ApiStudentXFamilyRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 			ApiStudentXFamilyResponseModel response = mapper.MapRequestToResponse(1, model);
 
-			response.FamilyId.Should().Be(1);
 			response.Id.Should().Be(1);
+			response.FamilyId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -30,11 +31,12 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudentXFamilyModelMapper();
 			var model = new ApiStudentXFamilyResponseModel();
-			model.SetProperties(1, 1, 1);
+			model.SetProperties(1, 1, 1, 1);
 			ApiStudentXFamilyRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.FamilyId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 
 		[Fact]
@@ -42,17 +44,18 @@ namespace FermataFishNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudentXFamilyModelMapper();
 			var model = new ApiStudentXFamilyRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1, 1, 1);
 
 			JsonPatchDocument<ApiStudentXFamilyRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiStudentXFamilyRequestModel();
 			patch.ApplyTo(response);
 			response.FamilyId.Should().Be(1);
 			response.StudentId.Should().Be(1);
+			response.StudioId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6cdba64519cdb221b9b33e924d05499</Hash>
+    <Hash>e0a61d5f69d9f66c79a59d73b5bdb1f0</Hash>
 </Codenesium>*/

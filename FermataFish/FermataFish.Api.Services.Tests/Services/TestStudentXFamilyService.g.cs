@@ -129,9 +129,45 @@ namespace FermataFishNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.StudentXFamilyModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void ByStudioId_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudentXFamilyRepository>();
+			var records = new List<StudentXFamily>();
+			records.Add(new StudentXFamily());
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new StudentXFamilyService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.StudentXFamilyModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                        mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
+
+			List<ApiStudentXFamilyResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByStudioId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IStudentXFamilyRepository>();
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<StudentXFamily>>(new List<StudentXFamily>()));
+			var service = new StudentXFamilyService(mock.LoggerMock.Object,
+			                                        mock.RepositoryMock.Object,
+			                                        mock.ModelValidatorMockFactory.StudentXFamilyModelValidatorMock.Object,
+			                                        mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                        mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
+
+			List<ApiStudentXFamilyResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>307fc5a6e3d1d5dfe44cf8bc1a21944f</Hash>
+    <Hash>5667d48035d38a9e9ca219b088d0cb64</Hash>
 </Codenesium>*/

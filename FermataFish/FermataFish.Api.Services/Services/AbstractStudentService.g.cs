@@ -132,6 +132,13 @@ namespace FermataFishNS.Api.Services
 			return response;
 		}
 
+		public async Task<List<ApiStudentResponseModel>> ByStudioId(int studioId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<Student> records = await this.StudentRepository.ByStudioId(studioId, limit, offset);
+
+			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiLessonXStudentResponseModel>> LessonXStudents(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<LessonXStudent> records = await this.StudentRepository.LessonXStudents(studentId, limit, offset);
@@ -156,5 +163,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>75b9b5da054cf266e76a3689c54d35fc</Hash>
+    <Hash>a7a9968b5f48f7e91e0f202ed71ec3bc</Hash>
 </Codenesium>*/

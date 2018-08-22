@@ -17,12 +17,16 @@ namespace FermataFishNS.Api.DataAccess
 
 		Task<List<Rate>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<List<Rate>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0);
+
 		Task<Teacher> GetTeacher(int teacherId);
 
 		Task<TeacherSkill> GetTeacherSkill(int teacherSkillId);
+
+		Task<Studio> GetStudio(int studioId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>34b2edd57cd5c7cb334f0a3b97c343bf</Hash>
+    <Hash>f219bbbee40ad642372f57a8edd6df1e</Hash>
 </Codenesium>*/

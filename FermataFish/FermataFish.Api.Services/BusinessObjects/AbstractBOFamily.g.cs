@@ -11,7 +11,7 @@ namespace FermataFishNS.Api.Services
 		}
 
 		public virtual void SetProperties(int id,
-		                                  string notes,
+		                                  string note,
 		                                  string pcEmail,
 		                                  string pcFirstName,
 		                                  string pcLastName,
@@ -19,7 +19,7 @@ namespace FermataFishNS.Api.Services
 		                                  int studioId)
 		{
 			this.Id = id;
-			this.Notes = notes;
+			this.Note = note;
 			this.PcEmail = pcEmail;
 			this.PcFirstName = pcFirstName;
 			this.PcLastName = pcLastName;
@@ -29,7 +29,7 @@ namespace FermataFishNS.Api.Services
 
 		public int Id { get; private set; }
 
-		public string Notes { get; private set; }
+		public string Note { get; private set; }
 
 		public string PcEmail { get; private set; }
 
@@ -44,5 +44,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42a7e66b89fb60961ae9537538ec804f</Hash>
+    <Hash>343ecf5aeaba728dd863a9d15dd855e0</Hash>
 </Codenesium>*/

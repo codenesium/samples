@@ -37,10 +37,10 @@ namespace FermataFishNS.Api.Services.Tests
 			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			ApiAdminResponseModel response = mapper.MapBOToModel(bo);
 
+			response.Id.Should().Be(1);
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.Email.Should().Be("A");
 			response.FirstName.Should().Be("A");
-			response.Id.Should().Be(1);
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.StudioId.Should().Be(1);
@@ -60,5 +60,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3a235abb085261c90ed09360d11dedf5</Hash>
+    <Hash>d4e059c50c3cdeff8fa19a01f65f0cc4</Hash>
 </Codenesium>*/

@@ -13,10 +13,10 @@ namespace FermataFishNS.Api.Services
 		{
 			Teacher efTeacher = new Teacher();
 			efTeacher.SetProperties(
+				bo.Id,
 				bo.Birthday,
 				bo.Email,
 				bo.FirstName,
-				bo.Id,
 				bo.LastName,
 				bo.Phone,
 				bo.StudioId);
@@ -55,5 +55,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>81f64c66cac36516b6fcf79247abf4cd</Hash>
+    <Hash>ccf4500580132718127c8065d803aa80</Hash>
 </Codenesium>*/

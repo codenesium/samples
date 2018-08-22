@@ -28,11 +28,13 @@ namespace FermataFishNS.Api.Services
 
 		public virtual void DescriptionRules()
 		{
+			this.RuleFor(x => x.Description).NotNull();
 			this.RuleFor(x => x.Description).Length(0, 128);
 		}
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
@@ -51,5 +53,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7498cfacc4a9bbaaab8b4601cc49a062</Hash>
+    <Hash>4f03084fc98eb1fb19e81f680d605c91</Hash>
 </Codenesium>*/

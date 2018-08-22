@@ -14,30 +14,35 @@ namespace FermataFishNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
+			int id,
 			DateTime birthday,
 			string email,
 			bool emailRemindersEnabled,
 			int familyId,
 			string firstName,
-			int id,
 			bool isAdult,
 			string lastName,
 			string phone,
 			bool smsRemindersEnabled,
 			int studioId)
 		{
+			this.Id = id;
 			this.Birthday = birthday;
 			this.Email = email;
 			this.EmailRemindersEnabled = emailRemindersEnabled;
 			this.FamilyId = familyId;
 			this.FirstName = firstName;
-			this.Id = id;
 			this.IsAdult = isAdult;
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled;
 			this.StudioId = studioId;
 		}
+
+		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[Column("id")]
+		public int Id { get; private set; }
 
 		[Column("birthday")]
 		public DateTime Birthday { get; private set; }
@@ -55,10 +60,6 @@ namespace FermataFishNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("firstName")]
 		public string FirstName { get; private set; }
-
-		[Key]
-		[Column("id")]
-		public int Id { get; private set; }
 
 		[Column("isAdult")]
 		public bool IsAdult { get; private set; }
@@ -86,5 +87,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cf524e007afe854defbfa07200ce787e</Hash>
+    <Hash>5bcec5230b1204ac6e61a7bd21b05ba8</Hash>
 </Codenesium>*/

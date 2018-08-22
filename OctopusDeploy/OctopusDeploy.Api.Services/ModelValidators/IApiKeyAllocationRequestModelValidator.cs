@@ -7,14 +7,9 @@ namespace OctopusDeployNS.Api.Services
 {
 	public partial interface IApiKeyAllocationRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiKeyAllocationRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(string id, ApiKeyAllocationRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(string id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>714b9933d0566b1cdffead25e5672885</Hash>
+    <Hash>93e23dcc858b3dfd3b067ed86733f7e0</Hash>
 </Codenesium>*/

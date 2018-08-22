@@ -28,48 +28,48 @@ namespace FermataFishNS.Api.Services
 
 		public virtual void Address1Rules()
 		{
+			this.RuleFor(x => x.Address1).NotNull();
 			this.RuleFor(x => x.Address1).Length(0, 128);
 		}
 
 		public virtual void Address2Rules()
 		{
+			this.RuleFor(x => x.Address2).NotNull();
 			this.RuleFor(x => x.Address2).Length(0, 128);
 		}
 
 		public virtual void CityRules()
 		{
+			this.RuleFor(x => x.City).NotNull();
 			this.RuleFor(x => x.City).Length(0, 128);
 		}
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
-		public virtual void StateIdRules()
+		public virtual void ProvinceRules()
 		{
-			this.RuleFor(x => x.StateId).MustAsync(this.BeValidState).When(x => x?.StateId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.Province).NotNull();
+			this.RuleFor(x => x.Province).Length(0, 90);
 		}
 
 		public virtual void WebsiteRules()
 		{
+			this.RuleFor(x => x.Website).NotNull();
 			this.RuleFor(x => x.Website).Length(0, 128);
 		}
 
 		public virtual void ZipRules()
 		{
+			this.RuleFor(x => x.Zip).NotNull();
 			this.RuleFor(x => x.Zip).Length(0, 128);
-		}
-
-		private async Task<bool> BeValidState(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.studioRepository.GetState(id);
-
-			return record != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5cd66298102b95ac225ecba7cf06dd6d</Hash>
+    <Hash>d48472abe8512e7672b5f38ce4f8a584</Hash>
 </Codenesium>*/

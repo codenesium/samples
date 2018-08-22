@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiPhoneNumberTypeRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiPhoneNumberTypeRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiPhoneNumberTypeRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6d1eb358af0ac6fcd6819a878e93f72b</Hash>
+    <Hash>4e8f5e6b8a777b484b6a3c6467e93cb6</Hash>
 </Codenesium>*/

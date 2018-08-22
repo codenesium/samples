@@ -21,9 +21,9 @@ namespace FermataFishNS.Api.Contracts
 			int lessonStatusId,
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
-			string studentNotes,
-			int studioId,
-			string teacherNotes)
+			string studentNote,
+			string teacherNote,
+			int studioId)
 		{
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
@@ -31,9 +31,9 @@ namespace FermataFishNS.Api.Contracts
 			this.LessonStatusId = lessonStatusId;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.StudentNotes = studentNotes;
+			this.StudentNote = studentNote;
+			this.TeacherNote = teacherNote;
 			this.StudioId = studioId;
-			this.TeacherNotes = teacherNotes;
 		}
 
 		[JsonProperty]
@@ -45,6 +45,7 @@ namespace FermataFishNS.Api.Contracts
 		[JsonProperty]
 		public decimal? BillAmount { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int LessonStatusId { get; private set; }
 
@@ -55,16 +56,17 @@ namespace FermataFishNS.Api.Contracts
 		public DateTime? ScheduledStartDate { get; private set; }
 
 		[JsonProperty]
-		public string StudentNotes { get; private set; }
+		public string StudentNote { get; private set; }
 
+		[JsonProperty]
+		public string TeacherNote { get; private set; }
+
+		[Required]
 		[JsonProperty]
 		public int StudioId { get; private set; }
-
-		[JsonProperty]
-		public string TeacherNotes { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bb7ee695fe35ab94ae866628a87db6ce</Hash>
+    <Hash>5baa0f4cbca5751f7475207bd3f97830</Hash>
 </Codenesium>*/

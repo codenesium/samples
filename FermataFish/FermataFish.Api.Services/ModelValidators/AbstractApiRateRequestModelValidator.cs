@@ -40,6 +40,11 @@ namespace FermataFishNS.Api.Services
 			this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkill).When(x => x?.TeacherSkillId != null).WithMessage("Invalid reference");
 		}
 
+		public virtual void StudioIdRules()
+		{
+			this.RuleFor(x => x.StudioId).MustAsync(this.BeValidStudio).When(x => x?.StudioId != null).WithMessage("Invalid reference");
+		}
+
 		private async Task<bool> BeValidTeacher(int id,  CancellationToken cancellationToken)
 		{
 			var record = await this.rateRepository.GetTeacher(id);
@@ -53,9 +58,16 @@ namespace FermataFishNS.Api.Services
 
 			return record != null;
 		}
+
+		private async Task<bool> BeValidStudio(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.rateRepository.GetStudio(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e2c025391955c16e097bd6f701ec62f</Hash>
+    <Hash>ae9d08b5fbe8d1672d6d707b046f3c44</Hash>
 </Codenesium>*/

@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiLocationRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiLocationRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(short id, ApiLocationRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(short id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>60d9c716c2c12eba097b83a785df2f36</Hash>
+    <Hash>42ddeb97cb96e3b3ef61b7b5282b5020</Hash>
 </Codenesium>*/

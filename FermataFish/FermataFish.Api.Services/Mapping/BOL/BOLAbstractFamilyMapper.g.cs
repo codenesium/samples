@@ -15,7 +15,7 @@ namespace FermataFishNS.Api.Services
 			BOFamily boFamily = new BOFamily();
 			boFamily.SetProperties(
 				id,
-				model.Notes,
+				model.Note,
 				model.PcEmail,
 				model.PcFirstName,
 				model.PcLastName,
@@ -29,7 +29,7 @@ namespace FermataFishNS.Api.Services
 		{
 			var model = new ApiFamilyResponseModel();
 
-			model.SetProperties(boFamily.Id, boFamily.Notes, boFamily.PcEmail, boFamily.PcFirstName, boFamily.PcLastName, boFamily.PcPhone, boFamily.StudioId);
+			model.SetProperties(boFamily.Id, boFamily.Note, boFamily.PcEmail, boFamily.PcFirstName, boFamily.PcLastName, boFamily.PcPhone, boFamily.StudioId);
 
 			return model;
 		}
@@ -50,5 +50,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>21ad2e28baa9ece766e6bc787d22fe10</Hash>
+    <Hash>1060685493a76bd277f88fc87345b550</Hash>
 </Codenesium>*/

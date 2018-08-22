@@ -7,14 +7,9 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IApiShipMethodRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiShipMethodRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiShipMethodRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>504e78a2e67df3fbc4b356c9c80c8428</Hash>
+    <Hash>0f0300e2ef2f1b0b1898d2a43f64bacf</Hash>
 </Codenesium>*/

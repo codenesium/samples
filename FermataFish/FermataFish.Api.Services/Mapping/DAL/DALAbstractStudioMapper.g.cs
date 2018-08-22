@@ -13,12 +13,12 @@ namespace FermataFishNS.Api.Services
 		{
 			Studio efStudio = new Studio();
 			efStudio.SetProperties(
+				bo.Id,
 				bo.Address1,
 				bo.Address2,
 				bo.City,
-				bo.Id,
 				bo.Name,
-				bo.StateId,
+				bo.Province,
 				bo.Website,
 				bo.Zip);
 			return efStudio;
@@ -35,7 +35,7 @@ namespace FermataFishNS.Api.Services
 				ef.Address2,
 				ef.City,
 				ef.Name,
-				ef.StateId,
+				ef.Province,
 				ef.Website,
 				ef.Zip);
 			return bo;
@@ -57,5 +57,5 @@ namespace FermataFishNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a8cde9e82e96ff5040ae16b2f534539d</Hash>
+    <Hash>56abff8920b7538bb24b3bd3974e66a5</Hash>
 </Codenesium>*/

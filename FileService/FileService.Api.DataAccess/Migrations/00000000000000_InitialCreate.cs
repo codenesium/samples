@@ -21,6 +21,38 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.FK_File_Bucket', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[File] DROP CONSTRAINT [FK_File_Bucket]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_File_fileTypeId_FileType_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[File] DROP CONSTRAINT [FK_File_fileTypeId_FileType_id]
+--END
+--GO
+
+--IF OBJECT_ID('dbo.Bucket', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Bucket]
+--END
+--GO
+--IF OBJECT_ID('dbo.File', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[File]
+--END
+--GO
+--IF OBJECT_ID('dbo.FileType', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[FileType]
+--END
+--GO
+--IF OBJECT_ID('dbo.VersionInfo', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[VersionInfo]
+--END
+--GO
+
 CREATE TABLE [dbo].[Bucket](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [externalId] [uniqueidentifier]     NOT NULL,

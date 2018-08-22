@@ -76,6 +76,13 @@ namespace FermataFishNS.Api.DataAccess
 			}
 		}
 
+		public async Task<List<Admin>> ByStudioId(int studioId, int limit = int.MaxValue, int offset = 0)
+		{
+			var records = await this.Where(x => x.StudioId == studioId, limit, offset);
+
+			return records;
+		}
+
 		public async virtual Task<Studio> GetStudio(int studioId)
 		{
 			return await this.Context.Set<Studio>().SingleOrDefaultAsync(x => x.Id == studioId);
@@ -113,5 +120,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>81806eeef75fc42c6624f85da85417a8</Hash>
+    <Hash>6a53bd049c142e32976d1bf534a91de9</Hash>
 </Codenesium>*/

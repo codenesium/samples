@@ -25,6 +25,54 @@ namespace FermataFishNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Note_Create_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
+
+		[Fact]
+		public async void Note_Update_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
+
+		[Fact]
+		public async void PcEmail_Create_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PcEmail, null as string);
+		}
+
+		[Fact]
+		public async void PcEmail_Update_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PcEmail, null as string);
+		}
+
+		[Fact]
 		public async void PcEmail_Create_length()
 		{
 			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
@@ -46,6 +94,30 @@ namespace FermataFishNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.PcEmail, new string('A', 129));
+		}
+
+		[Fact]
+		public async void PcFirstName_Create_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PcFirstName, null as string);
+		}
+
+		[Fact]
+		public async void PcFirstName_Update_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PcFirstName, null as string);
 		}
 
 		[Fact]
@@ -73,6 +145,30 @@ namespace FermataFishNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void PcLastName_Create_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PcLastName, null as string);
+		}
+
+		[Fact]
+		public async void PcLastName_Update_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PcLastName, null as string);
+		}
+
+		[Fact]
 		public async void PcLastName_Create_length()
 		{
 			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
@@ -94,6 +190,30 @@ namespace FermataFishNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.PcLastName, new string('A', 129));
+		}
+
+		[Fact]
+		public async void PcPhone_Create_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PcPhone, null as string);
+		}
+
+		[Fact]
+		public async void PcPhone_Update_null()
+		{
+			Mock<IFamilyRepository> familyRepository = new Mock<IFamilyRepository>();
+			familyRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Family()));
+
+			var validator = new ApiFamilyRequestModelValidator(familyRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFamilyRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PcPhone, null as string);
 		}
 
 		[Fact]
@@ -173,5 +293,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0d7b70aa8fc53abeb970db8a0265cc7e</Hash>
+    <Hash>63f6a66066effa07e8571debcbc01990</Hash>
 </Codenesium>*/

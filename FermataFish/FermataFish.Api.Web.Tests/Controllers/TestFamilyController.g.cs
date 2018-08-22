@@ -191,7 +191,7 @@ namespace FermataFishNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>()))
 			.Callback<int, ApiFamilyRequestModel>(
-				(id, model) => model.Notes.Should().Be("A")
+				(id, model) => model.Note.Should().Be("A")
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiFamilyResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiFamilyResponseModel>(new ApiFamilyResponseModel()));
@@ -200,7 +200,7 @@ namespace FermataFishNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiFamilyRequestModel>();
-			patch.Replace(x => x.Notes, "A");
+			patch.Replace(x => x.Note, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -220,7 +220,7 @@ namespace FermataFishNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiFamilyRequestModel>();
-			patch.Replace(x => x.Notes, "A");
+			patch.Replace(x => x.Note, "A");
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -338,5 +338,5 @@ namespace FermataFishNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>ee5a6da35b9dcce94ec2fed27277b948</Hash>
+    <Hash>557a11a59df798e2271c85f91ec276b1</Hash>
 </Codenesium>*/

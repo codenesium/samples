@@ -155,6 +155,50 @@ namespace FermataFishNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ByStudioId_Exists()
+		{
+			var mock = new ServiceMockFacade<IFamilyRepository>();
+			var records = new List<Family>();
+			records.Add(new Family());
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
+
+			List<ApiFamilyResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByStudioId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IFamilyRepository>();
+			mock.RepositoryMock.Setup(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Family>>(new List<Family>()));
+			var service = new FamilyService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.FamilyModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentMapperMock,
+			                                mock.BOLMapperMockFactory.BOLStudentXFamilyMapperMock,
+			                                mock.DALMapperMockFactory.DALStudentXFamilyMapperMock);
+
+			List<ApiFamilyResponseModel> response = await service.ByStudioId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByStudioId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
 		public async void Students_Exists()
 		{
 			var mock = new ServiceMockFacade<IFamilyRepository>();
@@ -245,5 +289,5 @@ namespace FermataFishNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>19b4dbbd2f7662188a9236ab8c56e2bc</Hash>
+    <Hash>d45e96d451c811cc7c4919b18a331d46</Hash>
 </Codenesium>*/

@@ -7,14 +7,9 @@ namespace FileServiceNS.Api.Services
 {
 	public partial interface IApiBucketRequestModelValidator
 	{
-		Task<ValidationResult> ValidateCreateAsync(ApiBucketRequestModel model);
-
-		Task<ValidationResult> ValidateUpdateAsync(int id, ApiBucketRequestModel model);
-
-		Task<ValidationResult> ValidateDeleteAsync(int id);
 	}
 }
 
 /*<Codenesium>
-    <Hash>634bbab3970692df89ab7476882121f9</Hash>
+    <Hash>6a586354d3c5c4fb47bc339b00d0a43d</Hash>
 </Codenesium>*/

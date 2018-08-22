@@ -21,6 +21,123 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.fk_city_provinceid_province_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[City] DROP CONSTRAINT [fk_city_provinceid_province_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_event_cityid_city_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Event] DROP CONSTRAINT [fk_event_cityid_city_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_province_countryid_country_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Province] DROP CONSTRAINT [fk_province_countryid_country_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_sale_transactionid_transaction_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [fk_sale_transactionid_transaction_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_saleTickets_saleId_sale_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[SaleTickets] DROP CONSTRAINT [FK_saleTickets_saleId_sale_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_saletickets_ticketid_ticket_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[SaleTickets] DROP CONSTRAINT [fk_saletickets_ticketid_ticket_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_ticket_ticketstatusid_ticketstatus_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Ticket] DROP CONSTRAINT [fk_ticket_ticketstatusid_ticketstatus_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_transaction_transactionstatusid_transactionstatus_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Transaction] DROP CONSTRAINT [fk_transaction_transactionstatusid_transactionstatus_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_venue_provinceid_province_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Venue] DROP CONSTRAINT [fk_venue_provinceid_province_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_venue_adminid_admin_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Venue] DROP CONSTRAINT [fk_venue_adminid_admin_id]
+--END
+--GO
+
+--IF OBJECT_ID('dbo.Admin', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Admin]
+--END
+--GO
+--IF OBJECT_ID('dbo.City', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[City]
+--END
+--GO
+--IF OBJECT_ID('dbo.Country', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Country]
+--END
+--GO
+--IF OBJECT_ID('dbo.Customer', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Customer]
+--END
+--GO
+--IF OBJECT_ID('dbo.Event', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Event]
+--END
+--GO
+--IF OBJECT_ID('dbo.Province', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Province]
+--END
+--GO
+--IF OBJECT_ID('dbo.Sale', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Sale]
+--END
+--GO
+--IF OBJECT_ID('dbo.SaleTickets', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[SaleTickets]
+--END
+--GO
+--IF OBJECT_ID('dbo.Ticket', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Ticket]
+--END
+--GO
+--IF OBJECT_ID('dbo.TicketStatus', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[TicketStatus]
+--END
+--GO
+--IF OBJECT_ID('dbo.Transaction', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Transaction]
+--END
+--GO
+--IF OBJECT_ID('dbo.TransactionStatus', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[TransactionStatus]
+--END
+--GO
+--IF OBJECT_ID('dbo.Venue', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[Venue]
+--END
+--GO
+
 CREATE TABLE [dbo].[Admin](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [email] [varchar]  (128)   NOT NULL,
