@@ -2,6 +2,7 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -277,5 +278,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f998fbe5cc5d678fcf34864a56de331d</Hash>
+    <Hash>0ea4d16aca3e39b09a99e45d0d4dff36</Hash>
 </Codenesium>*/

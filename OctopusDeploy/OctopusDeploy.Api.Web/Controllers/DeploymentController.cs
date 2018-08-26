@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace OctopusDeployNS.Api.Web
 	[Route("api/deployments")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class DeploymentController : AbstractDeploymentController
 	{
 		public DeploymentController(
@@ -39,5 +41,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>addadf30d9e2a4aa3d629552a5b85595</Hash>
+    <Hash>df1f0125ed77a8315f2e9079c91990ac</Hash>
 </Codenesium>*/

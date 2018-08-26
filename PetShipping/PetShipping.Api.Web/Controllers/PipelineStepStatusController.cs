@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace PetShippingNS.Api.Web
 	[Route("api/pipelineStepStatus")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class PipelineStepStatusController : AbstractPipelineStepStatusController
 	{
 		public PipelineStepStatusController(
@@ -39,5 +41,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>88f78387d1f9b429fc092e05b284ae8a</Hash>
+    <Hash>a3b66d6a3ce51949db5d3350fdd4e2f6</Hash>
 </Codenesium>*/

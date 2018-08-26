@@ -2,6 +2,7 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/shoppingCartItems")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class ShoppingCartItemController : AbstractShoppingCartItemController
 	{
 		public ShoppingCartItemController(
@@ -39,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>61e5cec6322aa4d495f50582144cd42d</Hash>
+    <Hash>2e37ea8ac1612b5c2042fb256cf8ca69</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace NebulaNS.Api.Web
 	[Route("api/teams")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class TeamController : AbstractTeamController
 	{
 		public TeamController(
@@ -39,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ab8f4b3aea4e765021877b71576f2581</Hash>
+    <Hash>0e8dbc50a8df8a82efd604c6bc7a306b</Hash>
 </Codenesium>*/

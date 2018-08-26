@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/postLinks")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class PostLinksController : AbstractPostLinksController
 	{
 		public PostLinksController(
@@ -39,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d4eb124b7af5fc9cf27ef4265597604d</Hash>
+    <Hash>db40e5c3c501249ea9e53117cd356bf2</Hash>
 </Codenesium>*/

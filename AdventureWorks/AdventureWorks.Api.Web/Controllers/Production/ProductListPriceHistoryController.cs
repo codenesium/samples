@@ -2,6 +2,7 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/productListPriceHistories")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class ProductListPriceHistoryController : AbstractProductListPriceHistoryController
 	{
 		public ProductListPriceHistoryController(
@@ -39,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a0d122b4d7f633a18ad5f62f738d2073</Hash>
+    <Hash>7f4175a630d061a2a6739059e5bea339</Hash>
 </Codenesium>*/

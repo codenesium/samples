@@ -2,6 +2,7 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/errorLogs")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class ErrorLogController : AbstractErrorLogController
 	{
 		public ErrorLogController(
@@ -39,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>453bccd9a206e28ba579241af32a94a6</Hash>
+    <Hash>c04d57f77b7f0d7abba9d2a1a2fd51ba</Hash>
 </Codenesium>*/

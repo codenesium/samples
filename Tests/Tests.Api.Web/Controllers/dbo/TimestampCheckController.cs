@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TestsNS.Api.Web
 	[Route("api/timestampChecks")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class TimestampCheckController : AbstractTimestampCheckController
 	{
 		public TimestampCheckController(
@@ -39,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1fdcfdbc4228d73b09fd79f3cb2d4c35</Hash>
+    <Hash>a8ba963b6b744f2db9c3cf85a6544a55</Hash>
 </Codenesium>*/

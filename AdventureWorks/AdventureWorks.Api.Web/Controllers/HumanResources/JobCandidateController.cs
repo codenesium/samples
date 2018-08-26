@@ -2,6 +2,7 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/jobCandidates")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class JobCandidateController : AbstractJobCandidateController
 	{
 		public JobCandidateController(
@@ -39,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3159591bdfa085c1bf0e57dd2899c698</Hash>
+    <Hash>c2d4fbcb5e9d3bc18339012102ae5b72</Hash>
 </Codenesium>*/

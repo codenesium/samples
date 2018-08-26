@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/transactions")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class TransactionController : AbstractTransactionController
 	{
 		public TransactionController(
@@ -39,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>241a02b988016c9ff5332326e33bbc24</Hash>
+    <Hash>6e28e5c2cd6ad4838bb856aa17403f32</Hash>
 </Codenesium>*/

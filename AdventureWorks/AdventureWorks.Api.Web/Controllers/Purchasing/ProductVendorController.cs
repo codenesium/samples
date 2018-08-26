@@ -2,6 +2,7 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/productVendors")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class ProductVendorController : AbstractProductVendorController
 	{
 		public ProductVendorController(
@@ -39,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d64cd212d5ec56826f0ecc7453679b91</Hash>
+    <Hash>428906c9a1d818877e4a5488e6c68ade</Hash>
 </Codenesium>*/

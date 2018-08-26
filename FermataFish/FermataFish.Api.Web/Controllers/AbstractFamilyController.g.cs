@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -275,5 +276,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>27c48a682f5dcc1b1e3b493a1722f0df</Hash>
+    <Hash>7a3eb744de6013454daa0f5c70365574</Hash>
 </Codenesium>*/

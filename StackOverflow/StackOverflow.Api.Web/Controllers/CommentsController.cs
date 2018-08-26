@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/comments")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class CommentsController : AbstractCommentsController
 	{
 		public CommentsController(
@@ -39,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d0588abe7ddf475f29b783ac062596b4</Hash>
+    <Hash>51c5978b8db66a56796a46aacc8615aa</Hash>
 </Codenesium>*/

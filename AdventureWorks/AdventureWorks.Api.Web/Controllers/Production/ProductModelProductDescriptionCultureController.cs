@@ -2,6 +2,7 @@ using AdventureWorksNS.Api.Contracts;
 using AdventureWorksNS.Api.Services;
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace AdventureWorksNS.Api.Web
 	[Route("api/productModelProductDescriptionCultures")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class ProductModelProductDescriptionCultureController : AbstractProductModelProductDescriptionCultureController
 	{
 		public ProductModelProductDescriptionCultureController(
@@ -39,5 +41,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>54bbbbae75ae52740a49319ff38765ad</Hash>
+    <Hash>9f30f2198d6d01b2019bbbc45e169d0b</Hash>
 </Codenesium>*/

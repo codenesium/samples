@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TestsNS.Api.Web
 	[Route("api/testAllFieldTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class TestAllFieldTypeController : AbstractTestAllFieldTypeController
 	{
 		public TestAllFieldTypeController(
@@ -39,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>da44962f7653c818a435136f382aad9a</Hash>
+    <Hash>28e6a0c73006a04c9135c8c4e7c32848</Hash>
 </Codenesium>*/

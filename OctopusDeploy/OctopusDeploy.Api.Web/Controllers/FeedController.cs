@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace OctopusDeployNS.Api.Web
 	[Route("api/feeds")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class FeedController : AbstractFeedController
 	{
 		public FeedController(
@@ -39,5 +41,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>adf995abe49bfd4c99113aa5a2939bd3</Hash>
+    <Hash>a78d8522269e23f2067f0542ed762ed3</Hash>
 </Codenesium>*/

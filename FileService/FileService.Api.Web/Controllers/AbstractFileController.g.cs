@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -224,5 +225,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9a68f3d96f270bfa585a813ec0a9035b</Hash>
+    <Hash>ccf5509d8fa7eefd33b9d23f9782cc0d</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace OctopusDeployNS.Api.Web
 	[Route("api/schemaVersions")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class SchemaVersionsController : AbstractSchemaVersionsController
 	{
 		public SchemaVersionsController(
@@ -39,5 +41,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>368ed5ec8573d8f2338de9fbdc53b82f</Hash>
+    <Hash>a67b6eaf7c8b7df0bc347c6607560d01</Hash>
 </Codenesium>*/

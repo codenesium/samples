@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace OctopusDeployNS.Api.Web
 	[Route("api/projectTriggers")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class ProjectTriggerController : AbstractProjectTriggerController
 	{
 		public ProjectTriggerController(
@@ -39,5 +41,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ac68dce6fe243df38276936629206069</Hash>
+    <Hash>6020a278cff90bfd0d365dda58786351</Hash>
 </Codenesium>*/

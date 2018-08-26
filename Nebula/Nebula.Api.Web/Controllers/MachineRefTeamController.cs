@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace NebulaNS.Api.Web
 	[Route("api/machineRefTeams")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class MachineRefTeamController : AbstractMachineRefTeamController
 	{
 		public MachineRefTeamController(
@@ -39,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>edf350f6a05507c6811da88ba39e626a</Hash>
+    <Hash>8f894c628b8ac07bfa0945560d34d5f7</Hash>
 </Codenesium>*/

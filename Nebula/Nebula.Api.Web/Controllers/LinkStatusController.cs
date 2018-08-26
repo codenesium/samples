@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace NebulaNS.Api.Web
 	[Route("api/linkStatus")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class LinkStatusController : AbstractLinkStatusController
 	{
 		public LinkStatusController(
@@ -39,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>29b2492af8d828db65e379c031929bf3</Hash>
+    <Hash>4120d0e153b51c7dedde5c2df6a9cc79</Hash>
 </Codenesium>*/

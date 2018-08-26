@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -224,5 +225,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a1c991bf1bc890bed6a2e55d9b643e40</Hash>
+    <Hash>e40bb2ff80e136841d6565e96cb6f1c9</Hash>
 </Codenesium>*/

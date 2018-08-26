@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/countries")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class CountryController : AbstractCountryController
 	{
 		public CountryController(
@@ -39,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>549fb6647cf78e96b017feeb07cb198b</Hash>
+    <Hash>0e5d6fa61bf840e4963d21bdf2ddfc16</Hash>
 </Codenesium>*/

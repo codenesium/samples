@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/cities")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class CityController : AbstractCityController
 	{
 		public CityController(
@@ -39,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ac3861f47756c07d792a74b41087ce8d</Hash>
+    <Hash>c6ea09a47d7b76d0c2dc60efb87ef6c6</Hash>
 </Codenesium>*/

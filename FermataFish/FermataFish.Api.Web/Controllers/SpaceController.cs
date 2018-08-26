@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace FermataFishNS.Api.Web
 	[Route("api/spaces")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class SpaceController : AbstractSpaceController
 	{
 		public SpaceController(
@@ -39,5 +41,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fe953a15f7917e5a7a663555b536b6b7</Hash>
+    <Hash>a74386db5812db335b920fd183400420</Hash>
 </Codenesium>*/

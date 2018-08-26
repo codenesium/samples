@@ -99,7 +99,7 @@ namespace PetShippingNS.Api.Web
                 .AddDebug());
         }
 
-        public virtual void SetupSecurity(IServiceCollection services)
+        public virtual void SetupAuthentication(IServiceCollection services)
         {
             if (this.Configuration.GetValue<bool>("SecurityEnabled"))
             {
@@ -122,6 +122,40 @@ namespace PetShippingNS.Api.Web
                 });
             }
         }
+
+		/// <summary>
+		/// Set up authorization and require the SuperUser claim in order to access
+		/// the API. If SecurityEnabled is set to false in the appsettings then disable all 
+		/// authorization.
+		/// </summary>
+		/// <param name="services"></param>
+		public virtual void SetupAuthorization(IServiceCollection services)
+		{
+			if (this.Configuration.GetValue<bool>("SecurityEnabled"))
+			{
+				services.AddAuthorization(options =>
+				{
+				    // set up the DefaultAccess to require an authenticated user only
+					// this can be modified to require claims or roles
+					options.AddPolicy("DefaultAccess", policy =>
+									  	policy.RequireAuthenticatedUser());
+				});
+			}
+			else
+			{
+				services.AddAuthorization(options =>
+				{
+					// remove the requirement that a user be authenticated
+					options.DefaultPolicy = new AuthorizationPolicyBuilder()
+				   .RequireAssertion(_ => true)
+				   .Build();
+
+				    // set up the DefaultAccess policy to always allow access
+					options.AddPolicy("DefaultAccess", policy =>
+					 policy.RequireAssertion(_ => true));
+				});
+			}
+		}
 
         public virtual void EnableSecurity(IApplicationBuilder app)
         {
@@ -216,7 +250,9 @@ namespace PetShippingNS.Api.Web
 
             this.SetupLogging(services);
 
-            this.SetupSecurity(services);
+            this.SetupAuthentication(services);
+
+			this.SetupAuthorization(services);
 
             // Create the container builder.
             var builder = new ContainerBuilder();

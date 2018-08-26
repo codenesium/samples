@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/voteTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class VoteTypesController : AbstractVoteTypesController
 	{
 		public VoteTypesController(
@@ -39,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2020130fddfa066571b417be97a8c7f6</Hash>
+    <Hash>93e870c4ba508590a2b706994a736815</Hash>
 </Codenesium>*/

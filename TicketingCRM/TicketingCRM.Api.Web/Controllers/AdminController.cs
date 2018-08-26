@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/admins")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class AdminController : AbstractAdminController
 	{
 		public AdminController(
@@ -39,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ed4ae1b620f5e70e3402c79a772e3187</Hash>
+    <Hash>ee6c4074ef54f3db220fc90209c4bc7a</Hash>
 </Codenesium>*/

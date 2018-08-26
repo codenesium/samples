@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace PetStoreNS.Api.Web
 	[Route("api/species")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class SpeciesController : AbstractSpeciesController
 	{
 		public SpeciesController(
@@ -39,5 +41,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>43df8dd0ce6554b221ec4b7b649b605c</Hash>
+    <Hash>3b63acd7faba2a92a08fcd54e0884149</Hash>
 </Codenesium>*/

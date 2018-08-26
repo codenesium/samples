@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TicketingCRMNS.Api.Web
 	[Route("api/sales")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class SaleController : AbstractSaleController
 	{
 		public SaleController(
@@ -39,5 +41,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>dd3900c02aff37c2582286a77b48bd0f</Hash>
+    <Hash>df8febbb8f098e3816a5058d0739c343</Hash>
 </Codenesium>*/

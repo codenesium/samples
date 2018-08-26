@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/badges")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class BadgesController : AbstractBadgesController
 	{
 		public BadgesController(
@@ -39,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>714f0d45ea5d997de90e3c11677e9724</Hash>
+    <Hash>5a697fb129de08e32ee1d3754191d200</Hash>
 </Codenesium>*/

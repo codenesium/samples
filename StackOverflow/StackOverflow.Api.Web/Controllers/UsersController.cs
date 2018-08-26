@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace StackOverflowNS.Api.Web
 	[Route("api/users")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class UsersController : AbstractUsersController
 	{
 		public UsersController(
@@ -39,5 +41,5 @@ namespace StackOverflowNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb1030a0143fb28b00677c6771a10f3a</Hash>
+    <Hash>258f674043034ada5d073848a18c8ef8</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace NebulaNS.Api.Web
 	[Route("api/organizations")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class OrganizationController : AbstractOrganizationController
 	{
 		public OrganizationController(
@@ -39,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>814aff7bdba3effa6cc6bd293e83a03c</Hash>
+    <Hash>72e1159f0804564e657f14ccc610466b</Hash>
 </Codenesium>*/

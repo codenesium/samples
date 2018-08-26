@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace NebulaNS.Api.Web
 	[Route("api/linkLogs")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class LinkLogController : AbstractLinkLogController
 	{
 		public LinkLogController(
@@ -39,5 +41,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ed6f9926dbf07f0581ef9b690ca9425f</Hash>
+    <Hash>b83ed373f154071b3030f6064bfd17aa</Hash>
 </Codenesium>*/

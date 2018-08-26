@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace OctopusDeployNS.Api.Web
 	[Route("api/workerTaskLeases")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class WorkerTaskLeaseController : AbstractWorkerTaskLeaseController
 	{
 		public WorkerTaskLeaseController(
@@ -39,5 +41,5 @@ namespace OctopusDeployNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ef39a0b7b7b4f20fe00583fe73b796d6</Hash>
+    <Hash>a3e42d573aba6e07de499ad33c33a13d</Hash>
 </Codenesium>*/

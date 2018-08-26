@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TestsNS.Api.Web
 	[Route("api/rowVersionChecks")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class RowVersionCheckController : AbstractRowVersionCheckController
 	{
 		public RowVersionCheckController(
@@ -39,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6321e77f8a86df8eed287babbc8c6553</Hash>
+    <Hash>95fffd682680f249edb705608ddbff9a</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace FermataFishNS.Api.Web
 	[Route("api/admins")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class AdminController : AbstractAdminController
 	{
 		public AdminController(
@@ -39,5 +41,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0df08a3d0e3107f9bd975cf6f85d6130</Hash>
+    <Hash>c582f241e26e3faaf949c213f268bd0a</Hash>
 </Codenesium>*/

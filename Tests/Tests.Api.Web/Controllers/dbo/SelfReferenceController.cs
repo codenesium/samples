@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TestsNS.Api.Web
 	[Route("api/selfReferences")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class SelfReferenceController : AbstractSelfReferenceController
 	{
 		public SelfReferenceController(
@@ -39,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7120854e52e578b0f7b33c88c355effb</Hash>
+    <Hash>9dbb1175366dbd53ff17dc3d3f02be7d</Hash>
 </Codenesium>*/

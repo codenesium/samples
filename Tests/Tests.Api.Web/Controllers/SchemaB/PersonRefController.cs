@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TestsNS.Api.Web
 	[Route("api/personRefs")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class PersonRefController : AbstractPersonRefController
 	{
 		public PersonRefController(
@@ -39,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>19ba793c546c38b8c6a79c16530ba618</Hash>
+    <Hash>8c4e52e6861e1b44a0771268eca37f30</Hash>
 </Codenesium>*/

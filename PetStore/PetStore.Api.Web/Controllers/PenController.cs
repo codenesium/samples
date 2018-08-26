@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace PetStoreNS.Api.Web
 	[Route("api/pens")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class PenController : AbstractPenController
 	{
 		public PenController(
@@ -39,5 +41,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1a41dc7939adad769212bada12d86954</Hash>
+    <Hash>b4ee9b136edeea5d0bd45cf5a641e0e5</Hash>
 </Codenesium>*/

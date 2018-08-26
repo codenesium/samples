@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace FermataFishNS.Api.Web
 	[Route("api/studentXFamilies")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class StudentXFamilyController : AbstractStudentXFamilyController
 	{
 		public StudentXFamilyController(
@@ -39,5 +41,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ee25747df438417f386c4f962d740c2d</Hash>
+    <Hash>7daa85448fe33d63e56786a2abf4a7ef</Hash>
 </Codenesium>*/

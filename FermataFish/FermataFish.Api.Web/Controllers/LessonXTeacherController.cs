@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using FermataFishNS.Api.Contracts;
 using FermataFishNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace FermataFishNS.Api.Web
 	[Route("api/lessonXTeachers")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class LessonXTeacherController : AbstractLessonXTeacherController
 	{
 		public LessonXTeacherController(
@@ -39,5 +41,5 @@ namespace FermataFishNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d661b9eff244ab00367fdcdefece67c7</Hash>
+    <Hash>e102733b388bf4035f714ebd524471c6</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace PetStoreNS.Api.Web
 	[Route("api/sales")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class SaleController : AbstractSaleController
 	{
 		public SaleController(
@@ -39,5 +41,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>17e2ac88bc8f7b37dfe57b8ef1c58ba5</Hash>
+    <Hash>277577258d4f5e1b34a779ca27f4fe2e</Hash>
 </Codenesium>*/

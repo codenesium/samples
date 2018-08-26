@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace TestsNS.Api.Web
 	[Route("api/testAllFieldTypesNullables")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class TestAllFieldTypesNullableController : AbstractTestAllFieldTypesNullableController
 	{
 		public TestAllFieldTypesNullableController(
@@ -39,5 +41,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>69d3d6142234175b625f765590517809</Hash>
+    <Hash>85a7c478377750f85cbd9cb32ac3f401</Hash>
 </Codenesium>*/

@@ -1,5 +1,6 @@
 using Codenesium.Foundation.CommonMVC;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -241,5 +242,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4cf98e059dfcbc0c864a1e29455f065f</Hash>
+    <Hash>c4977faa84d7a5b9dfd0e914478d83f4</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace FileServiceNS.Api.Web
 	[Route("api/versionInfoes")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class VersionInfoController : AbstractVersionInfoController
 	{
 		public VersionInfoController(
@@ -39,5 +41,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2fc030b665a5745d3a6d71d07814cc2a</Hash>
+    <Hash>9a0298412216584ee53def37b68858cd</Hash>
 </Codenesium>*/

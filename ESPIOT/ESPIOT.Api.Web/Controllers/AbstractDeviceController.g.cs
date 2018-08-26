@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -260,5 +261,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ecbbaa93703e6419e4f907eb92688f07</Hash>
+    <Hash>e39560a745afd75857a8ec35c92ed620</Hash>
 </Codenesium>*/

@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using FileServiceNS.Api.Contracts;
 using FileServiceNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace FileServiceNS.Api.Web
 	[Route("api/fileTypes")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class FileTypeController : AbstractFileTypeController
 	{
 		public FileTypeController(
@@ -39,5 +41,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ae6a3e24e1e7774b42edd6bd8ebbd57a</Hash>
+    <Hash>0483b6f4053680e8f4657a5eeb5054e0</Hash>
 </Codenesium>*/

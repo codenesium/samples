@@ -2,6 +2,7 @@ using Codenesium.Foundation.CommonMVC;
 using ESPIOTNS.Api.Contracts;
 using ESPIOTNS.Api.Services;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Logging;
@@ -16,6 +17,7 @@ namespace ESPIOTNS.Api.Web
 	[Route("api/deviceActions")]
 	[ApiController]
 	[ApiVersion("1.0")]
+	[Authorize(Policy = "DefaultAccess")]
 	public class DeviceActionController : AbstractDeviceActionController
 	{
 		public DeviceActionController(
@@ -39,5 +41,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>4226eab64ce9d9fb14bea18ac91985c2</Hash>
+    <Hash>790c5eca43dce4c40d1a99053daaf6e3</Hash>
 </Codenesium>*/
