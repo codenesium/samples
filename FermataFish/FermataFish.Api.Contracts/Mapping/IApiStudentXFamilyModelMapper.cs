@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.Contracts
 {
-    public partial interface IApiStudentXFamilyModelMapper
-    {		
-    }
+	public partial interface IApiStudentXFamilyModelMapper
+	{
+	}
 }
 
 /*<Codenesium>
-    <Hash>7fae3bf2cc7e308c567912da95717212</Hash>
+    <Hash>ca4115814d929784bb59bb213157e025</Hash>
 </Codenesium>*/
