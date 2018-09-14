@@ -80,8 +80,8 @@ namespace TicketingCRMNS.Api.Web
 
             options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
-            // options.UseNpgsql(this.Configuration.GetConnectionString(nameof(ApplicationDbContext))); uncomment to use PostgreSQL
-
+            
+			// options.UseNpgsql(this.Configuration.GetConnectionString(nameof(ApplicationDbContext))); uncomment to use PostgreSQL
             return options.Options;
         }
 
@@ -281,7 +281,7 @@ namespace TicketingCRMNS.Api.Web
             // register the entity framework options
             builder.Register(c => dbOptions).As<DbContextOptions>();
 
-            // register the ApplicationDbContext
+			// register the ApplicationDbContext
             builder.RegisterType<ApplicationDbContext>().AsSelf().InstancePerLifetimeScope();
 
             // register the ApplicationDbContext as DbContext for anywhere we interact with DbContext like the TransactionCoordinator

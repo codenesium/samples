@@ -62,8 +62,8 @@ namespace TestsNS.Api.DataAccess
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
-		/// RowVersion is a very common type of column and it does not work with SQLite.
-		/// To work around this limitation we detect RowVersion columns here and set the value.
+		/// ROWGUID is a very common type of column and it does not work with SQLite.
+		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
@@ -121,5 +121,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8d0ecbefe4dbcbe78f69782072b2c2df</Hash>
+    <Hash>98f8f104d367ea5b08e4d5c6a248692e</Hash>
 </Codenesium>*/

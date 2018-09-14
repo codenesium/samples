@@ -46,8 +46,8 @@ namespace ESPIOTNS.Api.DataAccess
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
-		/// RowVersion is a very common type of column and it does not work with SQLite.
-		/// To work around this limitation we detect RowVersion columns here and set the value.
+		/// ROWGUID is a very common type of column and it does not work with SQLite.
+		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
@@ -105,5 +105,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cbaee8346b7bc42c260935f42b1b8192</Hash>
+    <Hash>9c932011e4ca9999ff5aff89c6fab979</Hash>
 </Codenesium>*/

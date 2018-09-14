@@ -68,8 +68,8 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
-		/// RowVersion is a very common type of column and it does not work with SQLite.
-		/// To work around this limitation we detect RowVersion columns here and set the value.
+		/// ROWGUID is a very common type of column and it does not work with SQLite.
+		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
@@ -127,5 +127,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>47c9147d80f33bd5f47911bbd37c166f</Hash>
+    <Hash>82e545e84db43b4ef5dfa0dfcd21a71a</Hash>
 </Codenesium>*/

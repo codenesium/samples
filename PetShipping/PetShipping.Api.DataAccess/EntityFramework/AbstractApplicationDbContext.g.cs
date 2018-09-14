@@ -86,8 +86,8 @@ namespace PetShippingNS.Api.DataAccess
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
-		/// RowVersion is a very common type of column and it does not work with SQLite.
-		/// To work around this limitation we detect RowVersion columns here and set the value.
+		/// ROWGUID is a very common type of column and it does not work with SQLite.
+		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
@@ -145,5 +145,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dcf82558ff091a59ebb85c80d55e4da1</Hash>
+    <Hash>58b275e43b462dd283e3339da1b939fe</Hash>
 </Codenesium>*/

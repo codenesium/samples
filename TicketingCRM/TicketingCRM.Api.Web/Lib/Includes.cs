@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TicketingCRMNS.Api.Contracts;
+using TicketingCRMNS.Api.DataAccess;
 
 namespace Codenesium.Foundation.CommonMVC
 {
@@ -69,9 +70,9 @@ namespace Codenesium.Foundation.CommonMVC
     /// </summary>
     public class EntityFrameworkTransactionCoordinator : ITransactionCoordinator
     {
-        private DbContext context;
+        private ApplicationDbContext context;
 
-        public EntityFrameworkTransactionCoordinator(DbContext context)
+        public EntityFrameworkTransactionCoordinator(ApplicationDbContext context)
         {
             this.context = context;
         }

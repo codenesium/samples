@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using Xunit;
+using OctopusDeployNS.Api.DataAccess;
 
 namespace Codenesium.Foundation.CommonMVC.Tests
 {
@@ -87,7 +88,7 @@ namespace Codenesium.Foundation.CommonMVC.Tests
         public int Id { get; set; }
     }
 
-    public class TestContext : DbContext
+    public class TestContext : ApplicationDbContext
     {
         public TestContext(DbContextOptions options)
                         : base(options)

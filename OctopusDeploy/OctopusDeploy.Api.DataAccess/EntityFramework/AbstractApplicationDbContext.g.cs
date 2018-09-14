@@ -136,8 +136,8 @@ namespace OctopusDeployNS.Api.DataAccess
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
-		/// RowVersion is a very common type of column and it does not work with SQLite.
-		/// To work around this limitation we detect RowVersion columns here and set the value.
+		/// ROWGUID is a very common type of column and it does not work with SQLite.
+		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
@@ -195,5 +195,5 @@ namespace OctopusDeployNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>23bb985e40749565c8f515e0cbaf67a4</Hash>
+    <Hash>aa6e3519c8d33024d696fc31d6f8a47c</Hash>
 </Codenesium>*/
