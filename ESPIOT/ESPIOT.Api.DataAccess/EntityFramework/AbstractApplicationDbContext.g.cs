@@ -58,7 +58,7 @@ namespace ESPIOTNS.Api.DataAccess
 			{
 				foreach (var createdEntry in entries)
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWVERSION");
+					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
@@ -105,5 +105,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b4673b4e0c719a55f620a4399dbd055d</Hash>
+    <Hash>cbaee8346b7bc42c260935f42b1b8192</Hash>
 </Codenesium>*/

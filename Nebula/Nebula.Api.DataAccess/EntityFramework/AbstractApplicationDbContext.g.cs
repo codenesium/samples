@@ -76,7 +76,7 @@ namespace NebulaNS.Api.DataAccess
 			{
 				foreach (var createdEntry in entries)
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWVERSION");
+					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
@@ -123,5 +123,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>881f6e0db859a4bd691bab4b1b27580f</Hash>
+    <Hash>f462508cca321d121eb6714fd923c0ef</Hash>
 </Codenesium>*/

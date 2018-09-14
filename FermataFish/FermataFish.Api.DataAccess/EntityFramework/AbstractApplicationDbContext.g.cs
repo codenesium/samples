@@ -86,7 +86,7 @@ namespace FermataFishNS.Api.DataAccess
 			{
 				foreach (var createdEntry in entries)
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWVERSION");
+					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
@@ -133,5 +133,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>da6281dee297d78cd2530a36644f6eb8</Hash>
+    <Hash>e84aa1a4be875da8103f6d039d1b510e</Hash>
 </Codenesium>*/

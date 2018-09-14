@@ -98,7 +98,7 @@ namespace PetShippingNS.Api.DataAccess
 			{
 				foreach (var createdEntry in entries)
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWVERSION");
+					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
@@ -145,5 +145,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>20ddf305f29fd6cbb6f805917a170b6a</Hash>
+    <Hash>dcf82558ff091a59ebb85c80d55e4da1</Hash>
 </Codenesium>*/

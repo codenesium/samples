@@ -80,7 +80,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			{
 				foreach (var createdEntry in entries)
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWVERSION");
+					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
@@ -127,5 +127,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>07a91a7914a9dea1ab8fb004aa88021c</Hash>
+    <Hash>47c9147d80f33bd5f47911bbd37c166f</Hash>
 </Codenesium>*/

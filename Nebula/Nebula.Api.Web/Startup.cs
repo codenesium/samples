@@ -6,8 +6,10 @@ using Codenesium.Foundation.CommonMVC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -19,18 +21,17 @@ using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.Logging.Debug;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Diagnostics;
-using Newtonsoft.Json;
-using System.Net;
 using NebulaNS.Api.Contracts;
 using NebulaNS.Api.Services;
 using NebulaNS.Api.DataAccess;
@@ -79,7 +80,8 @@ namespace NebulaNS.Api.Web
 
             options.UseLoggerFactory(Startup.LoggerFactory);
             options.UseSqlServer(this.Configuration.GetConnectionString(nameof(ApplicationDbContext)));
-           
+            // options.UseNpgsql(this.Configuration.GetConnectionString(nameof(ApplicationDbContext))); uncomment to use PostgreSQL
+
             return options.Options;
         }
 

@@ -446,7 +446,7 @@ GO
 
 CREATE TABLE [dbo].[Event](
 [Id] [nvarchar]  (50)   NOT NULL,
-[AutoId] [bigint]     NOT NULL,
+[AutoId] [bigint]   IDENTITY(1,1)  NOT NULL,
 [Category] [nvarchar]  (50)   NOT NULL,
 [EnvironmentId] [nvarchar]  (50)   NULL,
 [JSON] [nvarchar]     NOT NULL,
