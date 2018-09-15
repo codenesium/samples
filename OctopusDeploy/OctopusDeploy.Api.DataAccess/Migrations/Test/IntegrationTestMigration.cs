@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OctopusDeployNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace OctopusDeployNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var accountItem1 = new Account();
 			accountItem1.SetProperties("A", "A", "A", "A", "A", "A", "A");
@@ -204,11 +206,11 @@ namespace OctopusDeployNS.Api.DataAccess
 			workerTaskLeaseItem1.SetProperties(true, "A", "A", "A", "A", "A");
 			this.context.WorkerTaskLeases.Add(workerTaskLeaseItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b05ed85d1bfe85a006cd9f28f0e3357e</Hash>
+    <Hash>60754072c2cf761422faadb77d59cb55</Hash>
 </Codenesium>*/

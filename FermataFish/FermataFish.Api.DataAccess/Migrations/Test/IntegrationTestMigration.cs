@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace FermataFishNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var adminItem1 = new Admin();
 			adminItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
@@ -80,11 +82,11 @@ namespace FermataFishNS.Api.DataAccess
 			teacherXTeacherSkillItem1.SetProperties(1, 1, 1, 1);
 			this.context.TeacherXTeacherSkills.Add(teacherXTeacherSkillItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e6415a8cd756c86324aa4760baf86fd</Hash>
+    <Hash>155ee759b07b6e14e7f3ba00f758b633</Hash>
 </Codenesium>*/

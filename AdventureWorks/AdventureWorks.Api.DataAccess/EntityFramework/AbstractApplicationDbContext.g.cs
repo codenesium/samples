@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -187,7 +189,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
-		public override int SaveChanges()
+		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
 			if (entries.Any())
@@ -202,7 +204,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				}
 			}
 
-			return base.SaveChanges();
+			return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -241,5 +243,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0e02f065b6adb6da81a040eaecaade20</Hash>
+    <Hash>963216388cc0112de1ab590d853bfb73</Hash>
 </Codenesium>*/

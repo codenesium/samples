@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
@@ -71,7 +73,7 @@ namespace StackOverflowNS.Api.DataAccess
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
-		public override int SaveChanges()
+		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
 			if (entries.Any())
@@ -86,7 +88,7 @@ namespace StackOverflowNS.Api.DataAccess
 				}
 			}
 
-			return base.SaveChanges();
+			return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -125,5 +127,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f64eaa9f32e2cf8b7af85012e6fcfb68</Hash>
+    <Hash>8e2992811cad66eb4b10e918ced89710</Hash>
 </Codenesium>*/

@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace NebulaNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var chainItem1 = new Chain();
 			chainItem1.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1);
@@ -60,11 +62,11 @@ namespace NebulaNS.Api.DataAccess
 			versionInfoItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 			this.context.VersionInfoes.Add(versionInfoItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>48d1a76507becff30e8faa79a64fec77</Hash>
+    <Hash>8ee327310649c3addea11ac644313bff</Hash>
 </Codenesium>*/

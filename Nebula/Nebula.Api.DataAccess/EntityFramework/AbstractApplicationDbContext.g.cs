@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace NebulaNS.Api.DataAccess
 {
@@ -69,7 +71,7 @@ namespace NebulaNS.Api.DataAccess
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
-		public override int SaveChanges()
+		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
 			if (entries.Any())
@@ -84,7 +86,7 @@ namespace NebulaNS.Api.DataAccess
 				}
 			}
 
-			return base.SaveChanges();
+			return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -123,5 +125,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0caf6e2017b95c646c088f023f17b224</Hash>
+    <Hash>089d2237c33731b1b40afb4e981bacf9</Hash>
 </Codenesium>*/

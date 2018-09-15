@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FermataFishNS.Api.DataAccess
 {
@@ -79,7 +81,7 @@ namespace FermataFishNS.Api.DataAccess
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
-		public override int SaveChanges()
+		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
 			if (entries.Any())
@@ -94,7 +96,7 @@ namespace FermataFishNS.Api.DataAccess
 				}
 			}
 
-			return base.SaveChanges();
+			return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -133,5 +135,5 @@ namespace FermataFishNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>063405e50a29d926690e07a660a3a1dc</Hash>
+    <Hash>4dd9c567eb944eb8973e10c591f93f13</Hash>
 </Codenesium>*/

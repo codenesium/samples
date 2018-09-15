@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PetStoreNS.Api.DataAccess
 {
@@ -59,7 +61,7 @@ namespace PetStoreNS.Api.DataAccess
 		/// On SQL Server the database would set the value.
 		/// </summary>
 		/// <returns>int</returns>
-		public override int SaveChanges()
+		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
 			if (entries.Any())
@@ -74,7 +76,7 @@ namespace PetStoreNS.Api.DataAccess
 				}
 			}
 
-			return base.SaveChanges();
+			return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 
 		protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -113,5 +115,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9fe153523ae66d8a679e472d531b77ce</Hash>
+    <Hash>8e6e810063226ebacc316986c81ca04c</Hash>
 </Codenesium>*/

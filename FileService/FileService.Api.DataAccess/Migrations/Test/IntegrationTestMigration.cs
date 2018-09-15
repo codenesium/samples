@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FileServiceNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace FileServiceNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var bucketItem1 = new Bucket();
 			bucketItem1.SetProperties(Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A");
@@ -32,11 +34,11 @@ namespace FileServiceNS.Api.DataAccess
 			versionInfoItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
 			this.context.VersionInfoes.Add(versionInfoItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad5532f24bbc7c25d3c6b88aec973d42</Hash>
+    <Hash>b5b736006cf3b51dc848742d57b19595</Hash>
 </Codenesium>*/

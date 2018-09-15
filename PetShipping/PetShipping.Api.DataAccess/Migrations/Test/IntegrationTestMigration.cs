@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace PetShippingNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace PetShippingNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var airlineItem1 = new Airline();
 			airlineItem1.SetProperties(1, "A");
@@ -104,11 +106,11 @@ namespace PetShippingNS.Api.DataAccess
 			speciesItem1.SetProperties(1, "A");
 			this.context.Species.Add(speciesItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>10823aa3834c5a418c67cd998ec427ec</Hash>
+    <Hash>dbad8d9ab2c29c76fada4ae06e5e4c2e</Hash>
 </Codenesium>*/

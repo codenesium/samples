@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TicketingCRMNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var adminItem1 = new Admin();
 			adminItem1.SetProperties("A", "A", 1, "A", "A", "A", "A");
@@ -68,11 +70,11 @@ namespace TicketingCRMNS.Api.DataAccess
 			venueItem1.SetProperties("A", "A", 1, "A", "A", 1, "A", "A", 1, "A");
 			this.context.Venues.Add(venueItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>57128e7d016c20951ee2009887c32784</Hash>
+    <Hash>9da97066fd4c8cb0e94baefed1d8d05e</Hash>
 </Codenesium>*/

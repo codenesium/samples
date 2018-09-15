@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace StackOverflowNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace StackOverflowNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var badgesItem1 = new Badges();
 			badgesItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, "A", 1);
@@ -64,11 +66,11 @@ namespace StackOverflowNS.Api.DataAccess
 			voteTypesItem1.SetProperties(1, "A");
 			this.context.VoteTypes.Add(voteTypesItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6df5169173f3eb2c2367e17bf742b341</Hash>
+    <Hash>576e40fc1073a5ea97dc0d7de9e89b86</Hash>
 </Codenesium>*/

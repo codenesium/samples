@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace TestsNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace TestsNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var personItem1 = new Person();
 			personItem1.SetProperties(1, "A");
@@ -44,12 +46,14 @@ namespace TestsNS.Api.DataAccess
 			timestampCheckItem1.SetProperties(1, "A", BitConverter.GetBytes(1));
 			this.context.TimestampChecks.Add(timestampCheckItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
+
 			var schemaAPersonItem1 = new SchemaAPerson();
 			schemaAPersonItem1.SetProperties(1, "A");
 			this.context.SchemaAPersons.Add(schemaAPersonItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
+
 			var schemaBPersonItem1 = new SchemaBPerson();
 			schemaBPersonItem1.SetProperties(1, "A");
 			this.context.SchemaBPersons.Add(schemaBPersonItem1);
@@ -58,11 +62,11 @@ namespace TestsNS.Api.DataAccess
 			personRefItem1.SetProperties(1, 1, 1);
 			this.context.PersonRefs.Add(personRefItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>39757b1d40c08367b6b59304490a265f</Hash>
+    <Hash>dc1269b7b43322255cecca5fa224fec2</Hash>
 </Codenesium>*/

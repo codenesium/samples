@@ -2,6 +2,8 @@ using Codenesium.DataConversionExtensions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AdventureWorksNS.Api.DataAccess
 {
@@ -14,7 +16,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.context = context;
 		}
 
-		public void Migrate()
+		public async void Migrate()
 		{
 			var aWBuildVersionItem1 = new AWBuildVersion();
 			aWBuildVersionItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -28,7 +30,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			errorLogItem1.SetProperties(1, 1, "A", 1, "A", 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			this.context.ErrorLogs.Add(errorLogItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
+
 			var departmentItem1 = new Department();
 			departmentItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			this.context.Departments.Add(departmentItem1);
@@ -53,7 +56,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			shiftItem1.SetProperties(TimeSpan.Parse("0"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, TimeSpan.Parse("0"));
 			this.context.Shifts.Add(shiftItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
+
 			var addressItem1 = new Address();
 			addressItem1.SetProperties(1, "A", "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
 			this.context.Addresses.Add(addressItem1);
@@ -106,7 +110,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			stateProvinceItem1.SetProperties("A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, 1);
 			this.context.StateProvinces.Add(stateProvinceItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
+
 			var billOfMaterialItem1 = new BillOfMaterial();
 			billOfMaterialItem1.SetProperties(1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A");
 			this.context.BillOfMaterials.Add(billOfMaterialItem1);
@@ -203,7 +208,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			workOrderRoutingItem1.SetProperties(1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 			this.context.WorkOrderRoutings.Add(workOrderRoutingItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
+
 			var productVendorItem1 = new ProductVendor();
 			productVendorItem1.SetProperties(1, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1m, "A");
 			this.context.ProductVendors.Add(productVendorItem1);
@@ -224,7 +230,8 @@ namespace AdventureWorksNS.Api.DataAccess
 			vendorItem1.SetProperties("A", true, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, "A");
 			this.context.Vendors.Add(vendorItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
+
 			var countryRegionCurrencyItem1 = new CountryRegionCurrency();
 			countryRegionCurrencyItem1.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
 			this.context.CountryRegionCurrencies.Add(countryRegionCurrencyItem1);
@@ -301,11 +308,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			storeItem1.SetProperties(1, "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1);
 			this.context.Stores.Add(storeItem1);
 
-			this.context.SaveChanges();
+			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c23b07b9d878453c0f526754e78433d5</Hash>
+    <Hash>e411a79f437f4f68670ce04cd72c22c4</Hash>
 </Codenesium>*/
