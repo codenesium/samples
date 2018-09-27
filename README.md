@@ -8,6 +8,10 @@ https://www.codenesium.com
 
 [![Build Status](https://travis-ci.org/codenesium/samples.svg?branch=master)](https://travis-ci.org/codenesium/samples)
 
+#### Getting Started Guide
+https://www.youtube.com/watch?v=tvScMDq_xGs
+
+
 
 #### Nebula
 Deployment orchestration service similar to Octupus Deploy. This runs the Codenesium deployment system.
