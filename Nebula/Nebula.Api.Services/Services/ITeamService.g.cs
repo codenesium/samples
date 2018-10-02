@@ -21,6 +21,8 @@ namespace NebulaNS.Api.Services
 
 		Task<List<ApiTeamResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<ApiTeamResponseModel> ByName(string name);
+
 		Task<List<ApiChainResponseModel>> Chains(int teamId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0);
@@ -28,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>39166d2f59aa260cecabd7bc426744e7</Hash>
+    <Hash>1e7ec8a187ed48162276b926afcf4a63</Hash>
 </Codenesium>*/

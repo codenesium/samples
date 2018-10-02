@@ -18,14 +18,14 @@ namespace PetShippingNS.Api.DataAccess
 			string firstName,
 			int id,
 			string lastName,
-			string notes,
+			string note,
 			string phone)
 		{
 			this.Email = email;
 			this.FirstName = firstName;
 			this.Id = id;
 			this.LastName = lastName;
-			this.Notes = notes;
+			this.Note = note;
 			this.Phone = phone;
 		}
 
@@ -38,6 +38,7 @@ namespace PetShippingNS.Api.DataAccess
 		public string FirstName { get; private set; }
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -47,7 +48,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("notes")]
-		public string Notes { get; private set; }
+		public string Note { get; private set; }
 
 		[MaxLength(10)]
 		[Column("phone")]
@@ -56,5 +57,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f86ca9ddcef963e8be837f2fda080575</Hash>
+    <Hash>afae23d9b4adc207f604def3a6d4d1b7</Hash>
 </Codenesium>*/

@@ -28,11 +28,27 @@ namespace NebulaNS.Api.Services
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiOrganizationRequestModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 128);
+		}
+
+		private async Task<bool> BeUniqueByName(ApiOrganizationRequestModel model,  CancellationToken cancellationToken)
+		{
+			Organization record = await this.organizationRepository.ByName(model.Name);
+
+			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b07cbfe43abd52a829dc3f971eab3b2</Hash>
+    <Hash>f68a8bfd95a7c11a09037d85db024448</Hash>
 </Codenesium>*/

@@ -110,6 +110,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			stateProvinceItem1.SetProperties("A", true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A", 1, 1);
 			this.context.StateProvinces.Add(stateProvinceItem1);
 
+			var vStateProvinceCountryRegionItem1 = new VStateProvinceCountryRegion();
+			vStateProvinceCountryRegionItem1.SetProperties("A", "A", true, "A", 1, "A", 1);
+			this.context.VStateProvinceCountryRegions.Add(vStateProvinceCountryRegionItem1);
+
 			await this.context.SaveChangesAsync();
 
 			var billOfMaterialItem1 = new BillOfMaterial();
@@ -199,6 +203,10 @@ namespace AdventureWorksNS.Api.DataAccess
 			var unitMeasureItem1 = new UnitMeasure();
 			unitMeasureItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 			this.context.UnitMeasures.Add(unitMeasureItem1);
+
+			var vProductAndDescriptionItem1 = new VProductAndDescription();
+			vProductAndDescriptionItem1.SetProperties("A", "A", "A", 1, "A");
+			this.context.VProductAndDescriptions.Add(vProductAndDescriptionItem1);
 
 			var workOrderItem1 = new WorkOrder();
 			workOrderItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
@@ -314,5 +322,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e411a79f437f4f68670ce04cd72c22c4</Hash>
+    <Hash>2ebd63d06a74d3f0249d3aeaeeb395e3</Hash>
 </Codenesium>*/

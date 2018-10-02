@@ -19,14 +19,14 @@ namespace NebulaNS.Api.Services
 				model.ChainId,
 				model.DateCompleted,
 				model.DateStarted,
-				model.DynamicParameters,
+				model.DynamicParameter,
 				model.ExternalId,
 				model.LinkStatusId,
 				model.Name,
 				model.Order,
 				model.Response,
-				model.StaticParameters,
-				model.TimeoutInSeconds);
+				model.StaticParameter,
+				model.TimeoutInSecond);
 			return boLink;
 		}
 
@@ -35,7 +35,7 @@ namespace NebulaNS.Api.Services
 		{
 			var model = new ApiLinkResponseModel();
 
-			model.SetProperties(boLink.Id, boLink.AssignedMachineId, boLink.ChainId, boLink.DateCompleted, boLink.DateStarted, boLink.DynamicParameters, boLink.ExternalId, boLink.LinkStatusId, boLink.Name, boLink.Order, boLink.Response, boLink.StaticParameters, boLink.TimeoutInSeconds);
+			model.SetProperties(boLink.Id, boLink.AssignedMachineId, boLink.ChainId, boLink.DateCompleted, boLink.DateStarted, boLink.DynamicParameter, boLink.ExternalId, boLink.LinkStatusId, boLink.Name, boLink.Order, boLink.Response, boLink.StaticParameter, boLink.TimeoutInSecond);
 
 			return model;
 		}
@@ -56,5 +56,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>51d03dcc053fda632c0dd9589910fd35</Hash>
+    <Hash>107d1ef024aa82e11c6f7103a9ae11d4</Hash>
 </Codenesium>*/

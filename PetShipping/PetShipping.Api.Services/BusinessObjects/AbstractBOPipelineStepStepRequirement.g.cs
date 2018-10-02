@@ -11,17 +11,17 @@ namespace PetShippingNS.Api.Services
 		}
 
 		public virtual void SetProperties(int id,
-		                                  string details,
+		                                  string detail,
 		                                  int pipelineStepId,
 		                                  bool requirementMet)
 		{
-			this.Details = details;
+			this.Detail = detail;
 			this.Id = id;
 			this.PipelineStepId = pipelineStepId;
 			this.RequirementMet = requirementMet;
 		}
 
-		public string Details { get; private set; }
+		public string Detail { get; private set; }
 
 		public int Id { get; private set; }
 
@@ -32,5 +32,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dbda8a76258416d0a1f160557366eff9</Hash>
+    <Hash>973988060e21669ad97b8009b07cdccc</Hash>
 </Codenesium>*/

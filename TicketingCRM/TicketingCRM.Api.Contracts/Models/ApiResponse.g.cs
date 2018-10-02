@@ -20,11 +20,11 @@ namespace TicketingCRMNS.Api.Contracts
 			from.Events.ForEach(x => this.AddEvent(x));
 			from.Provinces.ForEach(x => this.AddProvince(x));
 			from.Sales.ForEach(x => this.AddSale(x));
-			from.SaleTickets.ForEach(x => this.AddSaleTickets(x));
+			from.SaleTickets.ForEach(x => this.AddSaleTicket(x));
 			from.Tickets.ForEach(x => this.AddTicket(x));
-			from.TicketStatus.ForEach(x => this.AddTicketStatus(x));
+			from.TicketStatus.ForEach(x => this.AddTicketStatu(x));
 			from.Transactions.ForEach(x => this.AddTransaction(x));
-			from.TransactionStatus.ForEach(x => this.AddTransactionStatus(x));
+			from.TransactionStatus.ForEach(x => this.AddTransactionStatu(x));
 			from.Venues.ForEach(x => this.AddVenue(x));
 		}
 
@@ -42,15 +42,15 @@ namespace TicketingCRMNS.Api.Contracts
 
 		public List<ApiSaleResponseModel> Sales { get; private set; } = new List<ApiSaleResponseModel>();
 
-		public List<ApiSaleTicketsResponseModel> SaleTickets { get; private set; } = new List<ApiSaleTicketsResponseModel>();
+		public List<ApiSaleTicketResponseModel> SaleTickets { get; private set; } = new List<ApiSaleTicketResponseModel>();
 
 		public List<ApiTicketResponseModel> Tickets { get; private set; } = new List<ApiTicketResponseModel>();
 
-		public List<ApiTicketStatusResponseModel> TicketStatus { get; private set; } = new List<ApiTicketStatusResponseModel>();
+		public List<ApiTicketStatuResponseModel> TicketStatus { get; private set; } = new List<ApiTicketStatuResponseModel>();
 
 		public List<ApiTransactionResponseModel> Transactions { get; private set; } = new List<ApiTransactionResponseModel>();
 
-		public List<ApiTransactionStatusResponseModel> TransactionStatus { get; private set; } = new List<ApiTransactionStatusResponseModel>();
+		public List<ApiTransactionStatuResponseModel> TransactionStatus { get; private set; } = new List<ApiTransactionStatuResponseModel>();
 
 		public List<ApiVenueResponseModel> Venues { get; private set; } = new List<ApiVenueResponseModel>();
 
@@ -174,7 +174,7 @@ namespace TicketingCRMNS.Api.Contracts
 			return this.ShouldSerializeSaleTicketsValue;
 		}
 
-		public void AddSaleTickets(ApiSaleTicketsResponseModel item)
+		public void AddSaleTicket(ApiSaleTicketResponseModel item)
 		{
 			if (!this.SaleTickets.Any(x => x.Id == item.Id))
 			{
@@ -206,7 +206,7 @@ namespace TicketingCRMNS.Api.Contracts
 			return this.ShouldSerializeTicketStatusValue;
 		}
 
-		public void AddTicketStatus(ApiTicketStatusResponseModel item)
+		public void AddTicketStatu(ApiTicketStatuResponseModel item)
 		{
 			if (!this.TicketStatus.Any(x => x.Id == item.Id))
 			{
@@ -238,7 +238,7 @@ namespace TicketingCRMNS.Api.Contracts
 			return this.ShouldSerializeTransactionStatusValue;
 		}
 
-		public void AddTransactionStatus(ApiTransactionStatusResponseModel item)
+		public void AddTransactionStatu(ApiTransactionStatuResponseModel item)
 		{
 			if (!this.TransactionStatus.Any(x => x.Id == item.Id))
 			{
@@ -333,5 +333,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9de88fd53a17dea0d5c5c151fb6c230c</Hash>
+    <Hash>9b76f70bad90b6c4f7cbddf64ddca0cc</Hash>
 </Codenesium>*/

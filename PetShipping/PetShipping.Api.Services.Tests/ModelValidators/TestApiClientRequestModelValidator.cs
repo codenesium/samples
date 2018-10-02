@@ -25,6 +25,30 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Email_Create_null()
+		{
+			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
+			clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
+
+			var validator = new ApiClientRequestModelValidator(clientRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClientRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
+		}
+
+		[Fact]
+		public async void Email_Update_null()
+		{
+			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
+			clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
+
+			var validator = new ApiClientRequestModelValidator(clientRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClientRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
+		}
+
+		[Fact]
 		public async void Email_Create_length()
 		{
 			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
@@ -46,6 +70,30 @@ namespace PetShippingNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiClientRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
+		}
+
+		[Fact]
+		public async void FirstName_Create_null()
+		{
+			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
+			clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
+
+			var validator = new ApiClientRequestModelValidator(clientRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClientRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
+		}
+
+		[Fact]
+		public async void FirstName_Update_null()
+		{
+			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
+			clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
+
+			var validator = new ApiClientRequestModelValidator(clientRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClientRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
 		}
 
 		[Fact]
@@ -73,6 +121,30 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void LastName_Create_null()
+		{
+			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
+			clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
+
+			var validator = new ApiClientRequestModelValidator(clientRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClientRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
+		}
+
+		[Fact]
+		public async void LastName_Update_null()
+		{
+			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
+			clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
+
+			var validator = new ApiClientRequestModelValidator(clientRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClientRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
+		}
+
+		[Fact]
 		public async void LastName_Create_length()
 		{
 			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
@@ -94,6 +166,30 @@ namespace PetShippingNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiClientRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
+		}
+
+		[Fact]
+		public async void Phone_Create_null()
+		{
+			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
+			clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
+
+			var validator = new ApiClientRequestModelValidator(clientRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClientRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
+		}
+
+		[Fact]
+		public async void Phone_Update_null()
+		{
+			Mock<IClientRepository> clientRepository = new Mock<IClientRepository>();
+			clientRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Client()));
+
+			var validator = new ApiClientRequestModelValidator(clientRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClientRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
 		}
 
 		[Fact]
@@ -123,5 +219,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1f6af9655dcb0877692273077d7e760f</Hash>
+    <Hash>09036ad7f0d0f802a94cea0689d68828</Hash>
 </Codenesium>*/

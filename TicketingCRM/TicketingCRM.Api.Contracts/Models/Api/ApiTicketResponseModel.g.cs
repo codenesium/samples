@@ -20,15 +20,12 @@ namespace TicketingCRMNS.Api.Contracts
 			this.TicketStatusIdEntity = nameof(ApiResponse.TicketStatus);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string PublicId { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int TicketStatusId { get; private set; }
 
@@ -38,5 +35,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>efd37e0f3b42334f7a60df59276134cc</Hash>
+    <Hash>6aafa7c86abeb37a2787d8eb81da3fe4</Hash>
 </Codenesium>*/

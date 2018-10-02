@@ -76,6 +76,13 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		public async Task<Team> ByName(string name)
+		{
+			var records = await this.Where(x => x.Name == name);
+
+			return records.FirstOrDefault();
+		}
+
 		public async virtual Task<List<Chain>> Chains(int teamId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Chain>().Where(x => x.TeamId == teamId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
@@ -123,5 +130,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ea0de39d002f57c0e912aef550210d08</Hash>
+    <Hash>6fcb37e895cc91b42ed138377ae533c1</Hash>
 </Codenesium>*/

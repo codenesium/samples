@@ -15,7 +15,7 @@ namespace ESPIOTNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+		public int TenantId { get; private set; } = 1;
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -52,6 +52,8 @@ namespace ESPIOTNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
+		/// <param name="acceptAllChangesOnSuccess"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -64,6 +66,12 @@ namespace ESPIOTNS.Api.DataAccess
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
+					}
+
+					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					if (tenantEntity != null)
+					{
+						tenantEntity.CurrentValue = this.TenantId;
 					}
 				}
 			}
@@ -92,7 +100,8 @@ namespace ESPIOTNS.Api.DataAccess
 
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -107,5 +116,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>042136d7e86f79f2c67c9536e9f77af3</Hash>
+    <Hash>df3e3cec2e799453fdab4cf1fe5a2d00</Hash>
 </Codenesium>*/

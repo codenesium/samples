@@ -20,9 +20,11 @@ namespace TestsNS.Api.Services
 		Task<ApiPersonResponseModel> Get(int personId);
 
 		Task<List<ApiPersonResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTables(int person, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e86875bf52d0fb36839ab27e01b7aa21</Hash>
+    <Hash>495416c34996ff9a71dd1a10fdb3e835</Hash>
 </Codenesium>*/

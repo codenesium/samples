@@ -14,7 +14,7 @@ namespace TicketingCRMNS.Api.Contracts
 			var response = new ApiSaleResponseModel();
 			response.SetProperties(id,
 			                       request.IpAddress,
-			                       request.Notes,
+			                       request.Note,
 			                       request.SaleDate,
 			                       request.TransactionId);
 			return response;
@@ -26,7 +26,7 @@ namespace TicketingCRMNS.Api.Contracts
 			var request = new ApiSaleRequestModel();
 			request.SetProperties(
 				response.IpAddress,
-				response.Notes,
+				response.Note,
 				response.SaleDate,
 				response.TransactionId);
 			return request;
@@ -36,7 +36,7 @@ namespace TicketingCRMNS.Api.Contracts
 		{
 			var patch = new JsonPatchDocument<ApiSaleRequestModel>();
 			patch.Replace(x => x.IpAddress, model.IpAddress);
-			patch.Replace(x => x.Notes, model.Notes);
+			patch.Replace(x => x.Note, model.Note);
 			patch.Replace(x => x.SaleDate, model.SaleDate);
 			patch.Replace(x => x.TransactionId, model.TransactionId);
 			return patch;
@@ -45,5 +45,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c57a4044804aa8ad211d9f643419c8a0</Hash>
+    <Hash>318eabe4cc3bdabc88561c1fa9891b73</Hash>
 </Codenesium>*/

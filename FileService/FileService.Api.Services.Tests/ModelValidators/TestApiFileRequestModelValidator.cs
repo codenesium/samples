@@ -99,6 +99,30 @@ namespace FileServiceNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Extension_Create_null()
+		{
+			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
+			fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+
+			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFileRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Extension, null as string);
+		}
+
+		[Fact]
+		public async void Extension_Update_null()
+		{
+			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
+			fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+
+			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Extension, null as string);
+		}
+
+		[Fact]
 		public async void Extension_Create_length()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
@@ -173,6 +197,30 @@ namespace FileServiceNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Location_Create_null()
+		{
+			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
+			fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+
+			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFileRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Location, null as string);
+		}
+
+		[Fact]
+		public async void Location_Update_null()
+		{
+			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
+			fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+
+			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Location, null as string);
+		}
+
+		[Fact]
 		public async void Location_Create_length()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
@@ -197,6 +245,30 @@ namespace FileServiceNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void PrivateKey_Create_null()
+		{
+			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
+			fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+
+			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFileRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PrivateKey, null as string);
+		}
+
+		[Fact]
+		public async void PrivateKey_Update_null()
+		{
+			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
+			fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+
+			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PrivateKey, null as string);
+		}
+
+		[Fact]
 		public async void PrivateKey_Create_length()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
@@ -218,6 +290,30 @@ namespace FileServiceNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.PrivateKey, new string('A', 65));
+		}
+
+		[Fact]
+		public async void PublicKey_Create_null()
+		{
+			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
+			fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+
+			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFileRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PublicKey, null as string);
+		}
+
+		[Fact]
+		public async void PublicKey_Update_null()
+		{
+			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
+			fileRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new File()));
+
+			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.PublicKey, null as string);
 		}
 
 		[Fact]
@@ -247,5 +343,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5f324f7b5f8b053a745862e38b02049b</Hash>
+    <Hash>25d9b5498455d99d95d599c0a2fe262e</Hash>
 </Codenesium>*/

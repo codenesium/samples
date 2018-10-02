@@ -52,6 +52,8 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IDALStateProvinceMapper DALStateProvinceMapperMock { get; set; } = new DALStateProvinceMapper();
 
+		public IDALVStateProvinceCountryRegionMapper DALVStateProvinceCountryRegionMapperMock { get; set; } = new DALVStateProvinceCountryRegionMapper();
+
 		public IDALBillOfMaterialMapper DALBillOfMaterialMapperMock { get; set; } = new DALBillOfMaterialMapper();
 
 		public IDALCultureMapper DALCultureMapperMock { get; set; } = new DALCultureMapper();
@@ -95,6 +97,8 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public IDALTransactionHistoryArchiveMapper DALTransactionHistoryArchiveMapperMock { get; set; } = new DALTransactionHistoryArchiveMapper();
 
 		public IDALUnitMeasureMapper DALUnitMeasureMapperMock { get; set; } = new DALUnitMeasureMapper();
+
+		public IDALVProductAndDescriptionMapper DALVProductAndDescriptionMapperMock { get; set; } = new DALVProductAndDescriptionMapper();
 
 		public IDALWorkOrderMapper DALWorkOrderMapperMock { get; set; } = new DALWorkOrderMapper();
 
@@ -155,5 +159,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6683b893a602e5c0d8458aab87f1f404</Hash>
+    <Hash>149b597e7310243efcefaaec6ba23d98</Hash>
 </Codenesium>*/

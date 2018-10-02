@@ -18,28 +18,32 @@ namespace PetShippingNS.Api.Contracts
 			int clientId,
 			DateTime dateCreated,
 			int employeeId,
-			string notes)
+			string note)
 		{
 			this.ClientId = clientId;
 			this.DateCreated = dateCreated;
 			this.EmployeeId = employeeId;
-			this.Notes = notes;
+			this.Note = note;
 		}
 
+		[Required]
 		[JsonProperty]
 		public int ClientId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public DateTime DateCreated { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int EmployeeId { get; private set; }
 
+		[Required]
 		[JsonProperty]
-		public string Notes { get; private set; }
+		public string Note { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>06a325033ca300cb79540ef915428740</Hash>
+    <Hash>f5282298946d6372f7f2918a501bb4db</Hash>
 </Codenesium>*/

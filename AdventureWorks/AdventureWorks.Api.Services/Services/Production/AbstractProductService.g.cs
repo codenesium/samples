@@ -200,9 +200,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<BillOfMaterial> records = await this.ProductRepository.BillOfMaterials(componentID, limit, offset);
+			List<BillOfMaterial> records = await this.ProductRepository.BillOfMaterials(productAssemblyID, limit, offset);
 
 			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
@@ -259,5 +259,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>befc97ba9cb0cdc232e86ecabada7401</Hash>
+    <Hash>57897916234b6b459c70574363d5f323</Hash>
 </Codenesium>*/

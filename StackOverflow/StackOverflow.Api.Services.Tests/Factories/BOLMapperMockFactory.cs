@@ -8,29 +8,29 @@ namespace StackOverflowNS.Api.Services.Tests
 {
 	public class BOLMapperMockFactory
 	{
-		public IBOLBadgesMapper BOLBadgesMapperMock { get; set; } = new BOLBadgesMapper();
+		public IBOLBadgeMapper BOLBadgeMapperMock { get; set; } = new BOLBadgeMapper();
 
-		public IBOLCommentsMapper BOLCommentsMapperMock { get; set; } = new BOLCommentsMapper();
+		public IBOLCommentMapper BOLCommentMapperMock { get; set; } = new BOLCommentMapper();
 
-		public IBOLLinkTypesMapper BOLLinkTypesMapperMock { get; set; } = new BOLLinkTypesMapper();
+		public IBOLLinkTypeMapper BOLLinkTypeMapperMock { get; set; } = new BOLLinkTypeMapper();
 
 		public IBOLPostHistoryMapper BOLPostHistoryMapperMock { get; set; } = new BOLPostHistoryMapper();
 
-		public IBOLPostHistoryTypesMapper BOLPostHistoryTypesMapperMock { get; set; } = new BOLPostHistoryTypesMapper();
+		public IBOLPostHistoryTypeMapper BOLPostHistoryTypeMapperMock { get; set; } = new BOLPostHistoryTypeMapper();
 
-		public IBOLPostLinksMapper BOLPostLinksMapperMock { get; set; } = new BOLPostLinksMapper();
+		public IBOLPostLinkMapper BOLPostLinkMapperMock { get; set; } = new BOLPostLinkMapper();
 
-		public IBOLPostsMapper BOLPostsMapperMock { get; set; } = new BOLPostsMapper();
+		public IBOLPostMapper BOLPostMapperMock { get; set; } = new BOLPostMapper();
 
-		public IBOLPostTypesMapper BOLPostTypesMapperMock { get; set; } = new BOLPostTypesMapper();
+		public IBOLPostTypeMapper BOLPostTypeMapperMock { get; set; } = new BOLPostTypeMapper();
 
-		public IBOLTagsMapper BOLTagsMapperMock { get; set; } = new BOLTagsMapper();
+		public IBOLTagMapper BOLTagMapperMock { get; set; } = new BOLTagMapper();
 
-		public IBOLUsersMapper BOLUsersMapperMock { get; set; } = new BOLUsersMapper();
+		public IBOLUserMapper BOLUserMapperMock { get; set; } = new BOLUserMapper();
 
-		public IBOLVotesMapper BOLVotesMapperMock { get; set; } = new BOLVotesMapper();
+		public IBOLVoteMapper BOLVoteMapperMock { get; set; } = new BOLVoteMapper();
 
-		public IBOLVoteTypesMapper BOLVoteTypesMapperMock { get; set; } = new BOLVoteTypesMapper();
+		public IBOLVoteTypeMapper BOLVoteTypeMapperMock { get; set; } = new BOLVoteTypeMapper();
 
 		public BOLMapperMockFactory()
 		{
@@ -39,5 +39,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>24d96bbc507d94dbc96d25d2caaa2f21</Hash>
+    <Hash>2ce56a5f86ed98c0a9c83d8bb3af8523</Hash>
 </Codenesium>*/

@@ -101,9 +101,9 @@ namespace PetShippingNS.Api.DataAccess
 			return await this.Context.Set<PipelineStepStepRequirement>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
 		}
 
-		public async virtual Task<PipelineStepStatus> GetPipelineStepStatus(int pipelineStepStatusId)
+		public async virtual Task<PipelineStepStatu> GetPipelineStepStatu(int pipelineStepStatusId)
 		{
-			return await this.Context.Set<PipelineStepStatus>().SingleOrDefaultAsync(x => x.Id == pipelineStepStatusId);
+			return await this.Context.Set<PipelineStepStatu>().SingleOrDefaultAsync(x => x.Id == pipelineStepStatusId);
 		}
 
 		public async virtual Task<Employee> GetEmployee(int shipperId)
@@ -143,5 +143,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0f8b4cdab55f18f078c97494b8583b98</Hash>
+    <Hash>7cd2f9527ae2ad129e348b730490d2cb</Hash>
 </Codenesium>*/

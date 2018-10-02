@@ -19,7 +19,7 @@ namespace FileServiceNS.Api.Services
 				bo.Expiration,
 				bo.Extension,
 				bo.ExternalId,
-				bo.FileSizeInBytes,
+				bo.FileSizeInByte,
 				bo.FileTypeId,
 				bo.Id,
 				bo.Location,
@@ -41,7 +41,7 @@ namespace FileServiceNS.Api.Services
 				ef.Expiration,
 				ef.Extension,
 				ef.ExternalId,
-				ef.FileSizeInBytes,
+				ef.FileSizeInByte,
 				ef.FileTypeId,
 				ef.Location,
 				ef.PrivateKey,
@@ -65,5 +65,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>baf94892e77c9494cf27c970adc2919e</Hash>
+    <Hash>878cbfa120da3bc59d0c3207e913627e</Hash>
 </Codenesium>*/

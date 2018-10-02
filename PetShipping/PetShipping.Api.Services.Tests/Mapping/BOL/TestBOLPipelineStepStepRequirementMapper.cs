@@ -21,7 +21,7 @@ namespace PetShippingNS.Api.Services.Tests
 			model.SetProperties("A", 1, true);
 			BOPipelineStepStepRequirement response = mapper.MapModelToBO(1, model);
 
-			response.Details.Should().Be("A");
+			response.Detail.Should().Be("A");
 			response.PipelineStepId.Should().Be(1);
 			response.RequirementMet.Should().Be(true);
 		}
@@ -34,7 +34,7 @@ namespace PetShippingNS.Api.Services.Tests
 			bo.SetProperties(1, "A", 1, true);
 			ApiPipelineStepStepRequirementResponseModel response = mapper.MapBOToModel(bo);
 
-			response.Details.Should().Be("A");
+			response.Detail.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.PipelineStepId.Should().Be(1);
 			response.RequirementMet.Should().Be(true);
@@ -54,5 +54,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>39103a1486e170c528d6ed348678859d</Hash>
+    <Hash>e34fcefb2225c3ce116f92330ea54ffe</Hash>
 </Codenesium>*/

@@ -8,6 +8,12 @@ namespace TestsNS.Api.Services.Tests
 {
 	public class BOLMapperMockFactory
 	{
+		public IBOLColumnSameAsFKTableMapper BOLColumnSameAsFKTableMapperMock { get; set; } = new BOLColumnSameAsFKTableMapper();
+
+		public IBOLCompositePrimaryKeyMapper BOLCompositePrimaryKeyMapperMock { get; set; } = new BOLCompositePrimaryKeyMapper();
+
+		public IBOLIncludedColumnTestMapper BOLIncludedColumnTestMapperMock { get; set; } = new BOLIncludedColumnTestMapper();
+
 		public IBOLPersonMapper BOLPersonMapperMock { get; set; } = new BOLPersonMapper();
 
 		public IBOLRowVersionCheckMapper BOLRowVersionCheckMapperMock { get; set; } = new BOLRowVersionCheckMapper();
@@ -22,6 +28,8 @@ namespace TestsNS.Api.Services.Tests
 
 		public IBOLTimestampCheckMapper BOLTimestampCheckMapperMock { get; set; } = new BOLTimestampCheckMapper();
 
+		public IBOLVPersonMapper BOLVPersonMapperMock { get; set; } = new BOLVPersonMapper();
+
 		public IBOLSchemaAPersonMapper BOLSchemaAPersonMapperMock { get; set; } = new BOLSchemaAPersonMapper();
 
 		public IBOLSchemaBPersonMapper BOLSchemaBPersonMapperMock { get; set; } = new BOLSchemaBPersonMapper();
@@ -35,5 +43,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>745c7c032f2f4a1fca4d407c9fd3b583</Hash>
+    <Hash>0e51efcbccafa315aa7e99325945d873</Hash>
 </Codenesium>*/

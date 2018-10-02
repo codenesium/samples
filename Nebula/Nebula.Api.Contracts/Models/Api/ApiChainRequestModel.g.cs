@@ -26,20 +26,24 @@ namespace NebulaNS.Api.Contracts
 			this.TeamId = teamId;
 		}
 
+		[Required]
 		[JsonProperty]
 		public int ChainStatusId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public Guid ExternalId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int TeamId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f5fd746fe611a78ebbca5719682707f</Hash>
+    <Hash>ae60dc96aa5f3ae64b5c2e786022be12</Hash>
 </Codenesium>*/

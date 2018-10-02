@@ -719,46 +719,46 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiPipelineStatusResponseModel>> PipelineStatusCreateAsync(ApiPipelineStatusRequestModel item)
+		public virtual async Task<CreateResponse<ApiPipelineStatuResponseModel>> PipelineStatuCreateAsync(ApiPipelineStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStatus", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiPipelineStatusResponseModel>> PipelineStatusUpdateAsync(int id, ApiPipelineStatusRequestModel item)
+		public virtual async Task<UpdateResponse<ApiPipelineStatuResponseModel>> PipelineStatuUpdateAsync(int id, ApiPipelineStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PipelineStatus/{id}", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> PipelineStatusDeleteAsync(int id)
+		public virtual async Task<ActionResponse> PipelineStatuDeleteAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/PipelineStatus/{id}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiPipelineStatusResponseModel> PipelineStatusGetAsync(int id)
+		public virtual async Task<ApiPipelineStatuResponseModel> PipelineStatuGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineStatus/{id}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiPipelineStatusResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiPipelineStatuResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStatusResponseModel>> PipelineStatusAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiPipelineStatuResponseModel>> PipelineStatuAllAsync(int limit = 1000, int offset = 0)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineStatus?limit={limit}&offset={offset}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPipelineStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStatusResponseModel>> PipelineStatusBulkInsertAsync(List<ApiPipelineStatusRequestModel> items)
+		public virtual async Task<List<ApiPipelineStatuResponseModel>> PipelineStatuBulkInsertAsync(List<ApiPipelineStatuRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStatus/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPipelineStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiPipelineResponseModel>> Pipelines(int pipelineStatusId)
@@ -901,46 +901,46 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepNoteResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiPipelineStepStatusResponseModel>> PipelineStepStatusCreateAsync(ApiPipelineStepStatusRequestModel item)
+		public virtual async Task<CreateResponse<ApiPipelineStepStatuResponseModel>> PipelineStepStatuCreateAsync(ApiPipelineStepStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepStatus", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStepStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStepStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiPipelineStepStatusResponseModel>> PipelineStepStatusUpdateAsync(int id, ApiPipelineStepStatusRequestModel item)
+		public virtual async Task<UpdateResponse<ApiPipelineStepStatuResponseModel>> PipelineStepStatuUpdateAsync(int id, ApiPipelineStepStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PipelineStepStatus/{id}", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStepStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStepStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> PipelineStepStatusDeleteAsync(int id)
+		public virtual async Task<ActionResponse> PipelineStepStatuDeleteAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/PipelineStepStatus/{id}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiPipelineStepStatusResponseModel> PipelineStepStatusGetAsync(int id)
+		public virtual async Task<ApiPipelineStepStatuResponseModel> PipelineStepStatuGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineStepStatus/{id}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiPipelineStepStatusResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiPipelineStepStatuResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStepStatusResponseModel>> PipelineStepStatusAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiPipelineStepStatuResponseModel>> PipelineStepStatuAllAsync(int limit = 1000, int offset = 0)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineStepStatus?limit={limit}&offset={offset}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineStepStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStepStatusResponseModel>> PipelineStepStatusBulkInsertAsync(List<ApiPipelineStepStatusRequestModel> items)
+		public virtual async Task<List<ApiPipelineStepStatuResponseModel>> PipelineStepStatuBulkInsertAsync(List<ApiPipelineStepStatuRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepStatus/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineStepStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirementCreateAsync(ApiPipelineStepStepRequirementRequestModel item)
@@ -1079,5 +1079,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>4a9037b7befcc6d5ac2f1d81802d91d9</Hash>
+    <Hash>64d1e80622d29d67f5889cca5b0d2ba9</Hash>
 </Codenesium>*/

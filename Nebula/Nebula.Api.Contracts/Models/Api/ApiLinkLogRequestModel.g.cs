@@ -24,17 +24,20 @@ namespace NebulaNS.Api.Contracts
 			this.Log = log;
 		}
 
+		[Required]
 		[JsonProperty]
 		public DateTime DateEntered { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int LinkId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Log { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>da40fa146117e7c51e61183d25325dda</Hash>
+    <Hash>03a3c7fd42db5c0d59ac33914a170dae</Hash>
 </Codenesium>*/

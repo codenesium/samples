@@ -30,26 +30,32 @@ namespace PetShippingNS.Api.Contracts
 			this.SalesPersonId = salesPersonId;
 		}
 
+		[Required]
 		[JsonProperty]
 		public decimal Amount { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int ClientId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Note { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int PetId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public DateTime SaleDate { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int SalesPersonId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>aee3cb155d032314c8676644cf3b1848</Hash>
+    <Hash>1f759cbd6094832fe0b25b626612f620</Hash>
 </Codenesium>*/

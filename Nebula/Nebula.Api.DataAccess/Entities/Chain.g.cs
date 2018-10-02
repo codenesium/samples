@@ -34,6 +34,7 @@ namespace NebulaNS.Api.DataAccess
 		public Guid ExternalId { get; private set; }
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -45,7 +46,7 @@ namespace NebulaNS.Api.DataAccess
 		public int TeamId { get; private set; }
 
 		[ForeignKey("ChainStatusId")]
-		public virtual ChainStatus ChainStatusNavigation { get; private set; }
+		public virtual ChainStatu ChainStatuNavigation { get; private set; }
 
 		[ForeignKey("TeamId")]
 		public virtual Team TeamNavigation { get; private set; }
@@ -53,5 +54,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>35cbbc446a5e0b2cd5bad2249a3ca9ad</Hash>
+    <Hash>e7ba61f6f85a68c0352e4ba9413703c3</Hash>
 </Codenesium>*/

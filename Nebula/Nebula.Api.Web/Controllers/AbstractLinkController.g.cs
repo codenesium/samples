@@ -207,6 +207,42 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byExternalId/{externalId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiLinkResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByExternalId(Guid externalId)
+		{
+			ApiLinkResponseModel response = await this.LinkService.ByExternalId(externalId);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
+		[Route("byChainId/{chainId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByChainId(int chainId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiLinkResponseModel> response = await this.LinkService.ByChainId(chainId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
 		[Route("{linkId}/LinkLogs")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiLinkLogResponseModel>), 200)]
@@ -242,5 +278,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9612724577134c149204eb8a7fc6e6ca</Hash>
+    <Hash>d1a49e5bffd037a58802d0d04760e87a</Hash>
 </Codenesium>*/

@@ -25,34 +25,29 @@ namespace PetShippingNS.Api.Contracts
 			this.ClientIdEntity = nameof(ApiResponse.Clients);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int BreedId { get; private set; }
 
 		[JsonProperty]
 		public string BreedIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public int ClientId { get; private set; }
 
 		[JsonProperty]
 		public string ClientIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int Weight { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e1177c466af456b8422f39ebded59004</Hash>
+    <Hash>7c157d1141b25454df2550515db79b54</Hash>
 </Codenesium>*/

@@ -13,43 +13,43 @@ namespace StackOverflowNS.Api.Contracts
 
 		public void Merge(ApiResponse from)
 		{
-			from.Badges.ForEach(x => this.AddBadges(x));
-			from.Comments.ForEach(x => this.AddComments(x));
-			from.LinkTypes.ForEach(x => this.AddLinkTypes(x));
+			from.Badges.ForEach(x => this.AddBadge(x));
+			from.Comments.ForEach(x => this.AddComment(x));
+			from.LinkTypes.ForEach(x => this.AddLinkType(x));
 			from.PostHistories.ForEach(x => this.AddPostHistory(x));
-			from.PostHistoryTypes.ForEach(x => this.AddPostHistoryTypes(x));
-			from.PostLinks.ForEach(x => this.AddPostLinks(x));
-			from.Posts.ForEach(x => this.AddPosts(x));
-			from.PostTypes.ForEach(x => this.AddPostTypes(x));
-			from.Tags.ForEach(x => this.AddTags(x));
-			from.Users.ForEach(x => this.AddUsers(x));
-			from.Votes.ForEach(x => this.AddVotes(x));
-			from.VoteTypes.ForEach(x => this.AddVoteTypes(x));
+			from.PostHistoryTypes.ForEach(x => this.AddPostHistoryType(x));
+			from.PostLinks.ForEach(x => this.AddPostLink(x));
+			from.Posts.ForEach(x => this.AddPost(x));
+			from.PostTypes.ForEach(x => this.AddPostType(x));
+			from.Tags.ForEach(x => this.AddTag(x));
+			from.Users.ForEach(x => this.AddUser(x));
+			from.Votes.ForEach(x => this.AddVote(x));
+			from.VoteTypes.ForEach(x => this.AddVoteType(x));
 		}
 
-		public List<ApiBadgesResponseModel> Badges { get; private set; } = new List<ApiBadgesResponseModel>();
+		public List<ApiBadgeResponseModel> Badges { get; private set; } = new List<ApiBadgeResponseModel>();
 
-		public List<ApiCommentsResponseModel> Comments { get; private set; } = new List<ApiCommentsResponseModel>();
+		public List<ApiCommentResponseModel> Comments { get; private set; } = new List<ApiCommentResponseModel>();
 
-		public List<ApiLinkTypesResponseModel> LinkTypes { get; private set; } = new List<ApiLinkTypesResponseModel>();
+		public List<ApiLinkTypeResponseModel> LinkTypes { get; private set; } = new List<ApiLinkTypeResponseModel>();
 
 		public List<ApiPostHistoryResponseModel> PostHistories { get; private set; } = new List<ApiPostHistoryResponseModel>();
 
-		public List<ApiPostHistoryTypesResponseModel> PostHistoryTypes { get; private set; } = new List<ApiPostHistoryTypesResponseModel>();
+		public List<ApiPostHistoryTypeResponseModel> PostHistoryTypes { get; private set; } = new List<ApiPostHistoryTypeResponseModel>();
 
-		public List<ApiPostLinksResponseModel> PostLinks { get; private set; } = new List<ApiPostLinksResponseModel>();
+		public List<ApiPostLinkResponseModel> PostLinks { get; private set; } = new List<ApiPostLinkResponseModel>();
 
-		public List<ApiPostsResponseModel> Posts { get; private set; } = new List<ApiPostsResponseModel>();
+		public List<ApiPostResponseModel> Posts { get; private set; } = new List<ApiPostResponseModel>();
 
-		public List<ApiPostTypesResponseModel> PostTypes { get; private set; } = new List<ApiPostTypesResponseModel>();
+		public List<ApiPostTypeResponseModel> PostTypes { get; private set; } = new List<ApiPostTypeResponseModel>();
 
-		public List<ApiTagsResponseModel> Tags { get; private set; } = new List<ApiTagsResponseModel>();
+		public List<ApiTagResponseModel> Tags { get; private set; } = new List<ApiTagResponseModel>();
 
-		public List<ApiUsersResponseModel> Users { get; private set; } = new List<ApiUsersResponseModel>();
+		public List<ApiUserResponseModel> Users { get; private set; } = new List<ApiUserResponseModel>();
 
-		public List<ApiVotesResponseModel> Votes { get; private set; } = new List<ApiVotesResponseModel>();
+		public List<ApiVoteResponseModel> Votes { get; private set; } = new List<ApiVoteResponseModel>();
 
-		public List<ApiVoteTypesResponseModel> VoteTypes { get; private set; } = new List<ApiVoteTypesResponseModel>();
+		public List<ApiVoteTypeResponseModel> VoteTypes { get; private set; } = new List<ApiVoteTypeResponseModel>();
 
 		[JsonIgnore]
 		public bool ShouldSerializeBadgesValue { get; private set; } = true;
@@ -59,7 +59,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializeBadgesValue;
 		}
 
-		public void AddBadges(ApiBadgesResponseModel item)
+		public void AddBadge(ApiBadgeResponseModel item)
 		{
 			if (!this.Badges.Any(x => x.Id == item.Id))
 			{
@@ -75,7 +75,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializeCommentsValue;
 		}
 
-		public void AddComments(ApiCommentsResponseModel item)
+		public void AddComment(ApiCommentResponseModel item)
 		{
 			if (!this.Comments.Any(x => x.Id == item.Id))
 			{
@@ -91,7 +91,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializeLinkTypesValue;
 		}
 
-		public void AddLinkTypes(ApiLinkTypesResponseModel item)
+		public void AddLinkType(ApiLinkTypeResponseModel item)
 		{
 			if (!this.LinkTypes.Any(x => x.Id == item.Id))
 			{
@@ -123,7 +123,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializePostHistoryTypesValue;
 		}
 
-		public void AddPostHistoryTypes(ApiPostHistoryTypesResponseModel item)
+		public void AddPostHistoryType(ApiPostHistoryTypeResponseModel item)
 		{
 			if (!this.PostHistoryTypes.Any(x => x.Id == item.Id))
 			{
@@ -139,7 +139,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializePostLinksValue;
 		}
 
-		public void AddPostLinks(ApiPostLinksResponseModel item)
+		public void AddPostLink(ApiPostLinkResponseModel item)
 		{
 			if (!this.PostLinks.Any(x => x.Id == item.Id))
 			{
@@ -155,7 +155,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializePostsValue;
 		}
 
-		public void AddPosts(ApiPostsResponseModel item)
+		public void AddPost(ApiPostResponseModel item)
 		{
 			if (!this.Posts.Any(x => x.Id == item.Id))
 			{
@@ -171,7 +171,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializePostTypesValue;
 		}
 
-		public void AddPostTypes(ApiPostTypesResponseModel item)
+		public void AddPostType(ApiPostTypeResponseModel item)
 		{
 			if (!this.PostTypes.Any(x => x.Id == item.Id))
 			{
@@ -187,7 +187,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializeTagsValue;
 		}
 
-		public void AddTags(ApiTagsResponseModel item)
+		public void AddTag(ApiTagResponseModel item)
 		{
 			if (!this.Tags.Any(x => x.Id == item.Id))
 			{
@@ -203,7 +203,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializeUsersValue;
 		}
 
-		public void AddUsers(ApiUsersResponseModel item)
+		public void AddUser(ApiUserResponseModel item)
 		{
 			if (!this.Users.Any(x => x.Id == item.Id))
 			{
@@ -219,7 +219,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializeVotesValue;
 		}
 
-		public void AddVotes(ApiVotesResponseModel item)
+		public void AddVote(ApiVoteResponseModel item)
 		{
 			if (!this.Votes.Any(x => x.Id == item.Id))
 			{
@@ -235,7 +235,7 @@ namespace StackOverflowNS.Api.Contracts
 			return this.ShouldSerializeVoteTypesValue;
 		}
 
-		public void AddVoteTypes(ApiVoteTypesResponseModel item)
+		public void AddVoteType(ApiVoteTypeResponseModel item)
 		{
 			if (!this.VoteTypes.Any(x => x.Id == item.Id))
 			{
@@ -309,5 +309,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>92d9381e966a6621efa52c7a9b2ff0c9</Hash>
+    <Hash>1e41e0796bfade6da325d5e5ab2d0dd3</Hash>
 </Codenesium>*/

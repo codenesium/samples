@@ -22,6 +22,10 @@ namespace TestsNS.Api.Services
 
 		protected IDALPersonMapper DalPersonMapper { get; private set; }
 
+		protected IBOLColumnSameAsFKTableMapper BolColumnSameAsFKTableMapper { get; private set; }
+
+		protected IDALColumnSameAsFKTableMapper DalColumnSameAsFKTableMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractPersonService(
@@ -29,13 +33,17 @@ namespace TestsNS.Api.Services
 			IPersonRepository personRepository,
 			IApiPersonRequestModelValidator personModelValidator,
 			IBOLPersonMapper bolPersonMapper,
-			IDALPersonMapper dalPersonMapper)
+			IDALPersonMapper dalPersonMapper,
+			IBOLColumnSameAsFKTableMapper bolColumnSameAsFKTableMapper,
+			IDALColumnSameAsFKTableMapper dalColumnSameAsFKTableMapper)
 			: base()
 		{
 			this.PersonRepository = personRepository;
 			this.PersonModelValidator = personModelValidator;
 			this.BolPersonMapper = bolPersonMapper;
 			this.DalPersonMapper = dalPersonMapper;
+			this.BolColumnSameAsFKTableMapper = bolColumnSameAsFKTableMapper;
+			this.DalColumnSameAsFKTableMapper = dalColumnSameAsFKTableMapper;
 			this.logger = logger;
 		}
 
@@ -107,9 +115,16 @@ namespace TestsNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTables(int person, int limit = int.MaxValue, int offset = 0)
+		{
+			List<ColumnSameAsFKTable> records = await this.PersonRepository.ColumnSameAsFKTables(person, limit, offset);
+
+			return this.BolColumnSameAsFKTableMapper.MapBOToModel(this.DalColumnSameAsFKTableMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a0ca3c6d1988afa33eefada6882292d1</Hash>
+    <Hash>eefa67ad31dce31cd9f7b9925bb4f5f5</Hash>
 </Codenesium>*/

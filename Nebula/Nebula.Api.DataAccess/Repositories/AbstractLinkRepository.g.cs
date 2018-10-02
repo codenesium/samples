@@ -76,6 +76,20 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		public async Task<Link> ByExternalId(Guid externalId)
+		{
+			var records = await this.Where(x => x.ExternalId == externalId);
+
+			return records.FirstOrDefault();
+		}
+
+		public async Task<List<Link>> ByChainId(int chainId, int limit = int.MaxValue, int offset = 0)
+		{
+			var records = await this.Where(x => x.ChainId == chainId, limit, offset);
+
+			return records;
+		}
+
 		public async virtual Task<List<LinkLog>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<LinkLog>().Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
@@ -91,9 +105,9 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.Id == chainId);
 		}
 
-		public async virtual Task<LinkStatus> GetLinkStatus(int linkStatusId)
+		public async virtual Task<LinkStatu> GetLinkStatu(int linkStatusId)
 		{
-			return await this.Context.Set<LinkStatus>().SingleOrDefaultAsync(x => x.Id == linkStatusId);
+			return await this.Context.Set<LinkStatu>().SingleOrDefaultAsync(x => x.Id == linkStatusId);
 		}
 
 		protected async Task<List<Link>> Where(
@@ -128,5 +142,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e0dc7b3fe085f8d67c9898fbc68fa911</Hash>
+    <Hash>e3e8019f2730f2b9bf1be126533ce30f</Hash>
 </Codenesium>*/

@@ -26,20 +26,24 @@ namespace PetShippingNS.Api.Contracts
 			this.Weight = weight;
 		}
 
+		[Required]
 		[JsonProperty]
 		public int BreedId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int ClientId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int Weight { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f328cd3e2eb58acc563328b1325f1b35</Hash>
+    <Hash>b611f40e63939669723aec03400c3fd1</Hash>
 </Codenesium>*/

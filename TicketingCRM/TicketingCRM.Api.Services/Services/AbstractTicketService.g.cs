@@ -22,9 +22,9 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IDALTicketMapper DalTicketMapper { get; private set; }
 
-		protected IBOLSaleTicketsMapper BolSaleTicketsMapper { get; private set; }
+		protected IBOLSaleTicketMapper BolSaleTicketMapper { get; private set; }
 
-		protected IDALSaleTicketsMapper DalSaleTicketsMapper { get; private set; }
+		protected IDALSaleTicketMapper DalSaleTicketMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -34,16 +34,16 @@ namespace TicketingCRMNS.Api.Services
 			IApiTicketRequestModelValidator ticketModelValidator,
 			IBOLTicketMapper bolTicketMapper,
 			IDALTicketMapper dalTicketMapper,
-			IBOLSaleTicketsMapper bolSaleTicketsMapper,
-			IDALSaleTicketsMapper dalSaleTicketsMapper)
+			IBOLSaleTicketMapper bolSaleTicketMapper,
+			IDALSaleTicketMapper dalSaleTicketMapper)
 			: base()
 		{
 			this.TicketRepository = ticketRepository;
 			this.TicketModelValidator = ticketModelValidator;
 			this.BolTicketMapper = bolTicketMapper;
 			this.DalTicketMapper = dalTicketMapper;
-			this.BolSaleTicketsMapper = bolSaleTicketsMapper;
-			this.DalSaleTicketsMapper = dalSaleTicketsMapper;
+			this.BolSaleTicketMapper = bolSaleTicketMapper;
+			this.DalSaleTicketMapper = dalSaleTicketMapper;
 			this.logger = logger;
 		}
 
@@ -123,15 +123,15 @@ namespace TicketingCRMNS.Api.Services
 			return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSaleTicketsResponseModel>> SaleTickets(int ticketId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSaleTicketResponseModel>> SaleTickets(int ticketId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SaleTickets> records = await this.TicketRepository.SaleTickets(ticketId, limit, offset);
+			List<SaleTicket> records = await this.TicketRepository.SaleTickets(ticketId, limit, offset);
 
-			return this.BolSaleTicketsMapper.MapBOToModel(this.DalSaleTicketsMapper.MapEFToBO(records));
+			return this.BolSaleTicketMapper.MapBOToModel(this.DalSaleTicketMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ba39b6b14c9603821ef72df6f485b3bd</Hash>
+    <Hash>c1f809c80e43722980fb78b883a9736d</Hash>
 </Codenesium>*/

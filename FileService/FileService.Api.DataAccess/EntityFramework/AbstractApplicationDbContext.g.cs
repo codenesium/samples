@@ -15,7 +15,7 @@ namespace FileServiceNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+		public int TenantId { get; private set; } = 1;
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -56,6 +56,8 @@ namespace FileServiceNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
+		/// <param name="acceptAllChangesOnSuccess"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -68,6 +70,12 @@ namespace FileServiceNS.Api.DataAccess
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
+					}
+
+					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					if (tenantEntity != null)
+					{
+						tenantEntity.CurrentValue = this.TenantId;
 					}
 				}
 			}
@@ -96,7 +104,8 @@ namespace FileServiceNS.Api.DataAccess
 
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -111,5 +120,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a54e7296b5e76e6d14caf8d74281824f</Hash>
+    <Hash>766a26dcc7ef5c3c8fee175e3a873267</Hash>
 </Codenesium>*/

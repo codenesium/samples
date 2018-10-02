@@ -24,17 +24,20 @@ namespace TicketingCRMNS.Api.Contracts
 			this.TransactionStatusId = transactionStatusId;
 		}
 
+		[Required]
 		[JsonProperty]
 		public decimal Amount { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string GatewayConfirmationNumber { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int TransactionStatusId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>60ce62f185680be5013759871285e21e</Hash>
+    <Hash>d0d8143a2fbe6c1a37829623ce48ec40</Hash>
 </Codenesium>*/

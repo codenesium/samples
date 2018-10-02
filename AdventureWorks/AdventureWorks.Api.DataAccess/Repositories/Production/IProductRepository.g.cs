@@ -21,7 +21,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Product> ByProductNumber(string productNumber);
 
-		Task<List<BillOfMaterial>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0);
+		Task<List<BillOfMaterial>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ProductCostHistory>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
 
@@ -40,5 +40,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3512ddab547a836cd4a5f6175006b0f0</Hash>
+    <Hash>0b79fe16a16c1c8d83e8e2fbe36f90ca</Hash>
 </Codenesium>*/

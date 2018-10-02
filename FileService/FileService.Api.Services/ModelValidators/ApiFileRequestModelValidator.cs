@@ -21,7 +21,7 @@ namespace FileServiceNS.Api.Services
 			this.ExpirationRules();
 			this.ExtensionRules();
 			this.ExternalIdRules();
-			this.FileSizeInBytesRules();
+			this.FileSizeInByteRules();
 			this.FileTypeIdRules();
 			this.LocationRules();
 			this.PrivateKeyRules();
@@ -37,7 +37,7 @@ namespace FileServiceNS.Api.Services
 			this.ExpirationRules();
 			this.ExtensionRules();
 			this.ExternalIdRules();
-			this.FileSizeInBytesRules();
+			this.FileSizeInByteRules();
 			this.FileTypeIdRules();
 			this.LocationRules();
 			this.PrivateKeyRules();
@@ -53,5 +53,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>185a449ccc21148c3c9e50760295f30d</Hash>
+    <Hash>d0971986024febd0595082e15a4e2a6f</Hash>
 </Codenesium>*/

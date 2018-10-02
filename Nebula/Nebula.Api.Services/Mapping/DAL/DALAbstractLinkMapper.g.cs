@@ -17,15 +17,15 @@ namespace NebulaNS.Api.Services
 				bo.ChainId,
 				bo.DateCompleted,
 				bo.DateStarted,
-				bo.DynamicParameters,
+				bo.DynamicParameter,
 				bo.ExternalId,
 				bo.Id,
 				bo.LinkStatusId,
 				bo.Name,
 				bo.Order,
 				bo.Response,
-				bo.StaticParameters,
-				bo.TimeoutInSeconds);
+				bo.StaticParameter,
+				bo.TimeoutInSecond);
 			return efLink;
 		}
 
@@ -40,14 +40,14 @@ namespace NebulaNS.Api.Services
 				ef.ChainId,
 				ef.DateCompleted,
 				ef.DateStarted,
-				ef.DynamicParameters,
+				ef.DynamicParameter,
 				ef.ExternalId,
 				ef.LinkStatusId,
 				ef.Name,
 				ef.Order,
 				ef.Response,
-				ef.StaticParameters,
-				ef.TimeoutInSeconds);
+				ef.StaticParameter,
+				ef.TimeoutInSecond);
 			return bo;
 		}
 
@@ -67,5 +67,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a33242b44326ff6a7f1b6671133cc586</Hash>
+    <Hash>1f7b6f1d152b8f8af2791f195cad480f</Hash>
 </Codenesium>*/

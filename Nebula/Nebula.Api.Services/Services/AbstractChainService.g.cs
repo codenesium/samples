@@ -124,6 +124,20 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
+		public async Task<ApiChainResponseModel> ByExternalId(Guid externalId)
+		{
+			Chain record = await this.ChainRepository.ByExternalId(externalId);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(record));
+			}
+		}
+
 		public async virtual Task<List<ApiClaspResponseModel>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Clasp> records = await this.ChainRepository.Clasps(nextChainId, limit, offset);
@@ -141,5 +155,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13a0164ef769a4de84e65bc7b6a8cfca</Hash>
+    <Hash>2eab4495b6696b0e95a07db89db9b8e1</Hash>
 </Codenesium>*/

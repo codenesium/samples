@@ -21,10 +21,14 @@ namespace NebulaNS.Api.Services
 
 		Task<List<ApiLinkResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<ApiLinkResponseModel> ByExternalId(Guid externalId);
+
+		Task<List<ApiLinkResponseModel>> ByChainId(int chainId, int limit = int.MaxValue, int offset = 0);
+
 		Task<List<ApiLinkLogResponseModel>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5acf15042b0c7efb5ef145cd16c81fb</Hash>
+    <Hash>e405204fa1380e98f04959edebc3e34d</Hash>
 </Codenesium>*/

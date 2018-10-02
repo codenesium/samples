@@ -20,15 +20,12 @@ namespace PetShippingNS.Api.Contracts
 			this.SpeciesIdEntity = nameof(ApiResponse.Species);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int SpeciesId { get; private set; }
 
@@ -38,5 +35,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>77a34f9d3c1ea50e9e01b16496b3fa95</Hash>
+    <Hash>2a6861a4cb9aa793ea668ab0d0858fdd</Hash>
 </Codenesium>*/

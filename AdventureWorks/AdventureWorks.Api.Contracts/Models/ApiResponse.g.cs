@@ -35,6 +35,7 @@ namespace AdventureWorksNS.Api.Contracts
 			from.PersonPhones.ForEach(x => this.AddPersonPhone(x));
 			from.PhoneNumberTypes.ForEach(x => this.AddPhoneNumberType(x));
 			from.StateProvinces.ForEach(x => this.AddStateProvince(x));
+			from.VStateProvinceCountryRegions.ForEach(x => this.AddVStateProvinceCountryRegion(x));
 			from.BillOfMaterials.ForEach(x => this.AddBillOfMaterial(x));
 			from.Cultures.ForEach(x => this.AddCulture(x));
 			from.Documents.ForEach(x => this.AddDocument(x));
@@ -57,6 +58,7 @@ namespace AdventureWorksNS.Api.Contracts
 			from.TransactionHistories.ForEach(x => this.AddTransactionHistory(x));
 			from.TransactionHistoryArchives.ForEach(x => this.AddTransactionHistoryArchive(x));
 			from.UnitMeasures.ForEach(x => this.AddUnitMeasure(x));
+			from.VProductAndDescriptions.ForEach(x => this.AddVProductAndDescription(x));
 			from.WorkOrders.ForEach(x => this.AddWorkOrder(x));
 			from.WorkOrderRoutings.ForEach(x => this.AddWorkOrderRouting(x));
 			from.ProductVendors.ForEach(x => this.AddProductVendor(x));
@@ -129,6 +131,8 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public List<ApiStateProvinceResponseModel> StateProvinces { get; private set; } = new List<ApiStateProvinceResponseModel>();
 
+		public List<ApiVStateProvinceCountryRegionResponseModel> VStateProvinceCountryRegions { get; private set; } = new List<ApiVStateProvinceCountryRegionResponseModel>();
+
 		public List<ApiBillOfMaterialResponseModel> BillOfMaterials { get; private set; } = new List<ApiBillOfMaterialResponseModel>();
 
 		public List<ApiCultureResponseModel> Cultures { get; private set; } = new List<ApiCultureResponseModel>();
@@ -172,6 +176,8 @@ namespace AdventureWorksNS.Api.Contracts
 		public List<ApiTransactionHistoryArchiveResponseModel> TransactionHistoryArchives { get; private set; } = new List<ApiTransactionHistoryArchiveResponseModel>();
 
 		public List<ApiUnitMeasureResponseModel> UnitMeasures { get; private set; } = new List<ApiUnitMeasureResponseModel>();
+
+		public List<ApiVProductAndDescriptionResponseModel> VProductAndDescriptions { get; private set; } = new List<ApiVProductAndDescriptionResponseModel>();
 
 		public List<ApiWorkOrderResponseModel> WorkOrders { get; private set; } = new List<ApiWorkOrderResponseModel>();
 
@@ -578,6 +584,22 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeVStateProvinceCountryRegionsValue { get; private set; } = true;
+
+		public bool ShouldSerializeVStateProvinceCountryRegions()
+		{
+			return this.ShouldSerializeVStateProvinceCountryRegionsValue;
+		}
+
+		public void AddVStateProvinceCountryRegion(ApiVStateProvinceCountryRegionResponseModel item)
+		{
+			if (!this.VStateProvinceCountryRegions.Any(x => x.StateProvinceID == item.StateProvinceID))
+			{
+				this.VStateProvinceCountryRegions.Add(item);
+			}
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeBillOfMaterialsValue { get; private set; } = true;
 
 		public bool ShouldSerializeBillOfMaterials()
@@ -926,6 +948,22 @@ namespace AdventureWorksNS.Api.Contracts
 			if (!this.UnitMeasures.Any(x => x.UnitMeasureCode == item.UnitMeasureCode))
 			{
 				this.UnitMeasures.Add(item);
+			}
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeVProductAndDescriptionsValue { get; private set; } = true;
+
+		public bool ShouldSerializeVProductAndDescriptions()
+		{
+			return this.ShouldSerializeVProductAndDescriptionsValue;
+		}
+
+		public void AddVProductAndDescription(ApiVProductAndDescriptionResponseModel item)
+		{
+			if (!this.VProductAndDescriptions.Any(x => x.CultureID == item.CultureID))
+			{
+				this.VProductAndDescriptions.Add(item);
 			}
 		}
 
@@ -1457,6 +1495,11 @@ namespace AdventureWorksNS.Api.Contracts
 				this.ShouldSerializeStateProvincesValue = false;
 			}
 
+			if (this.VStateProvinceCountryRegions.Count == 0)
+			{
+				this.ShouldSerializeVStateProvinceCountryRegionsValue = false;
+			}
+
 			if (this.BillOfMaterials.Count == 0)
 			{
 				this.ShouldSerializeBillOfMaterialsValue = false;
@@ -1565,6 +1608,11 @@ namespace AdventureWorksNS.Api.Contracts
 			if (this.UnitMeasures.Count == 0)
 			{
 				this.ShouldSerializeUnitMeasuresValue = false;
+			}
+
+			if (this.VProductAndDescriptions.Count == 0)
+			{
+				this.ShouldSerializeVProductAndDescriptionsValue = false;
 			}
 
 			if (this.WorkOrders.Count == 0)
@@ -1701,5 +1749,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0a0d858cce56de89b0a34f431e2b529e</Hash>
+    <Hash>2d13c6ab9e52d91c2721d41cc08c403a</Hash>
 </Codenesium>*/

@@ -14,28 +14,28 @@ namespace NebulaNS.Api.Contracts
 			int chainId,
 			DateTime? dateCompleted,
 			DateTime? dateStarted,
-			string dynamicParameters,
+			string dynamicParameter,
 			Guid externalId,
 			int linkStatusId,
 			string name,
 			int order,
 			string response,
-			string staticParameters,
-			int timeoutInSeconds)
+			string staticParameter,
+			int timeoutInSecond)
 		{
 			this.Id = id;
 			this.AssignedMachineId = assignedMachineId;
 			this.ChainId = chainId;
 			this.DateCompleted = dateCompleted;
 			this.DateStarted = dateStarted;
-			this.DynamicParameters = dynamicParameters;
+			this.DynamicParameter = dynamicParameter;
 			this.ExternalId = externalId;
 			this.LinkStatusId = linkStatusId;
 			this.Name = name;
 			this.Order = order;
 			this.Response = response;
-			this.StaticParameters = staticParameters;
-			this.TimeoutInSeconds = timeoutInSeconds;
+			this.StaticParameter = staticParameter;
+			this.TimeoutInSecond = timeoutInSecond;
 
 			this.AssignedMachineIdEntity = nameof(ApiResponse.Machines);
 			this.ChainIdEntity = nameof(ApiResponse.Chains);
@@ -49,7 +49,6 @@ namespace NebulaNS.Api.Contracts
 		[JsonProperty]
 		public string AssignedMachineIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public int ChainId { get; private set; }
 
@@ -66,28 +65,23 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string DynamicParameters { get; private set; }
+		public string DynamicParameter { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public Guid ExternalId { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int LinkStatusId { get; private set; }
 
 		[JsonProperty]
 		public string LinkStatusIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int Order { get; private set; }
 
@@ -97,14 +91,13 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string StaticParameters { get; private set; }
+		public string StaticParameter { get; private set; }
 
-		[Required]
 		[JsonProperty]
-		public int TimeoutInSeconds { get; private set; }
+		public int TimeoutInSecond { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a85d9090de030227609afefa9b17479</Hash>
+    <Hash>384effc5f150989bc66754d974c71357</Hash>
 </Codenesium>*/

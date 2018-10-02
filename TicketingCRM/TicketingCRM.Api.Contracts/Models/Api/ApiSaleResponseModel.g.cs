@@ -11,36 +11,31 @@ namespace TicketingCRMNS.Api.Contracts
 		public virtual void SetProperties(
 			int id,
 			string ipAddress,
-			string notes,
+			string note,
 			DateTime saleDate,
 			int transactionId)
 		{
 			this.Id = id;
 			this.IpAddress = ipAddress;
-			this.Notes = notes;
+			this.Note = note;
 			this.SaleDate = saleDate;
 			this.TransactionId = transactionId;
 
 			this.TransactionIdEntity = nameof(ApiResponse.Transactions);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string IpAddress { get; private set; }
 
-		[Required]
 		[JsonProperty]
-		public string Notes { get; private set; }
+		public string Note { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public DateTime SaleDate { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int TransactionId { get; private set; }
 
@@ -50,5 +45,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5c599d7deee8ac7834ceb98507dc3a5f</Hash>
+    <Hash>f4aa8b06fd1c9cfee9874b1c5a995581</Hash>
 </Codenesium>*/

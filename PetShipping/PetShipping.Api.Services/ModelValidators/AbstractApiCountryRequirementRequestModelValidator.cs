@@ -31,9 +31,10 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountry).When(x => x?.CountryId != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void DetailsRules()
+		public virtual void DetailRules()
 		{
-			this.RuleFor(x => x.Details).Length(0, 2147483647);
+			this.RuleFor(x => x.Detail).NotNull();
+			this.RuleFor(x => x.Detail).Length(0, 2147483647);
 		}
 
 		private async Task<bool> BeValidCountry(int id,  CancellationToken cancellationToken)
@@ -46,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea10846766042f3e256446ee09a8e7a5</Hash>
+    <Hash>678992dc83aa818b625cd6990a4c121f</Hash>
 </Codenesium>*/

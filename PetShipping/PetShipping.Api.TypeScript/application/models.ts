@@ -106,7 +106,7 @@ this.speciesId = 0;
 firstName:string;
 id:number;
 lastName:string;
-notes:string;
+note:string;
 phone:string;
 
 	
@@ -115,7 +115,7 @@ phone:string;
 this.firstName = '';
 this.id = 0;
 this.lastName = '';
-this.notes = '';
+this.note = '';
 this.phone = '';
 
 		
@@ -127,7 +127,7 @@ this.phone = '';
 firstName:string;
 id:number;
 lastName:string;
-notes:string;
+note:string;
 phone:string;
 
 	
@@ -136,7 +136,7 @@ phone:string;
 this.firstName = '';
 this.id = 0;
 this.lastName = '';
-this.notes = '';
+this.note = '';
 this.phone = '';
 
 		
@@ -149,7 +149,7 @@ dateCreated:string;
 employeeId:number;
 employeeIdEntity:number;
 id:number;
-notes:string;
+note:string;
 
 	
 				constructor() {
@@ -157,7 +157,7 @@ notes:string;
 this.dateCreated = '';
 this.employeeId = 0;
 this.id = 0;
-this.notes = '';
+this.note = '';
 
 		
 				}
@@ -170,7 +170,7 @@ dateCreated:string;
 employeeId:number;
 employeeIdEntity:number;
 id:number;
-notes:string;
+note:string;
 
 	
 				constructor() {
@@ -178,7 +178,7 @@ notes:string;
 this.dateCreated = '';
 this.employeeId = 0;
 this.id = 0;
-this.notes = '';
+this.note = '';
 
 		
 				}
@@ -211,13 +211,13 @@ this.name = '';
 			export class ApiCountryRequirementRequestModel {
 				countryId:number;
 countryIdEntity:number;
-details:string;
+detail:string;
 id:number;
 
 	
 				constructor() {
 					this.countryId = 0;
-this.details = '';
+this.detail = '';
 this.id = 0;
 
 		
@@ -227,13 +227,13 @@ this.id = 0;
 			export class ApiCountryRequirementResponseModel {
 				countryId:number;
 countryIdEntity:number;
-details:string;
+detail:string;
 id:number;
 
 	
 				constructor() {
 					this.countryId = 0;
-this.details = '';
+this.detail = '';
 this.id = 0;
 
 		
@@ -490,7 +490,7 @@ this.saleId = 0;
 		
 				}
 			}
-			export class ApiPipelineStatusRequestModel {
+			export class ApiPipelineStatuRequestModel {
 				id:number;
 name:string;
 
@@ -503,7 +503,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiPipelineStatusResponseModel {
+			export class ApiPipelineStatuResponseModel {
 				id:number;
 name:string;
 
@@ -622,7 +622,7 @@ this.pipelineStepId = 0;
 		
 				}
 			}
-			export class ApiPipelineStepStatusRequestModel {
+			export class ApiPipelineStepStatuRequestModel {
 				id:number;
 name:string;
 
@@ -635,7 +635,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiPipelineStepStatusResponseModel {
+			export class ApiPipelineStepStatuResponseModel {
 				id:number;
 name:string;
 
@@ -648,7 +648,7 @@ this.name = '';
 				}
 			}
 			export class ApiPipelineStepStepRequirementRequestModel {
-				details:string;
+				detail:string;
 id:number;
 pipelineStepId:number;
 pipelineStepIdEntity:number;
@@ -656,7 +656,7 @@ requirementMet:boolean;
 
 	
 				constructor() {
-					this.details = '';
+					this.detail = '';
 this.id = 0;
 this.pipelineStepId = 0;
 this.requirementMet = false;
@@ -666,7 +666,7 @@ this.requirementMet = false;
 			}
 
 			export class ApiPipelineStepStepRequirementResponseModel {
-				details:string;
+				detail:string;
 id:number;
 pipelineStepId:number;
 pipelineStepIdEntity:number;
@@ -674,7 +674,7 @@ requirementMet:boolean;
 
 	
 				constructor() {
-					this.details = '';
+					this.detail = '';
 this.id = 0;
 this.pipelineStepId = 0;
 this.requirementMet = false;

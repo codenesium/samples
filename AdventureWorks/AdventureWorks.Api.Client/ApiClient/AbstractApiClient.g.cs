@@ -1223,6 +1223,55 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiAddressResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<CreateResponse<ApiVStateProvinceCountryRegionResponseModel>> VStateProvinceCountryRegionCreateAsync(ApiVStateProvinceCountryRegionRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VStateProvinceCountryRegions", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<CreateResponse<ApiVStateProvinceCountryRegionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiVStateProvinceCountryRegionResponseModel>> VStateProvinceCountryRegionUpdateAsync(int id, ApiVStateProvinceCountryRegionRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VStateProvinceCountryRegions/{id}", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiVStateProvinceCountryRegionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> VStateProvinceCountryRegionDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VStateProvinceCountryRegions/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiVStateProvinceCountryRegionResponseModel> VStateProvinceCountryRegionGetAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VStateProvinceCountryRegions/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiVStateProvinceCountryRegionResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiVStateProvinceCountryRegionResponseModel>> VStateProvinceCountryRegionAllAsync(int limit = 1000, int offset = 0)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VStateProvinceCountryRegions?limit={limit}&offset={offset}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiVStateProvinceCountryRegionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiVStateProvinceCountryRegionResponseModel>> VStateProvinceCountryRegionBulkInsertAsync(List<ApiVStateProvinceCountryRegionRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VStateProvinceCountryRegions/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiVStateProvinceCountryRegionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiVStateProvinceCountryRegionResponseModel> GetVStateProvinceCountryRegionByStateProvinceIDCountryRegionCode(int stateProvinceID, string countryRegionCode)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VStateProvinceCountryRegions/byStateProvinceIDCountryRegionCode/{stateProvinceID}/{countryRegionCode}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiVStateProvinceCountryRegionResponseModel>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiBillOfMaterialResponseModel>> BillOfMaterialCreateAsync(ApiBillOfMaterialRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/BillOfMaterials", item).ConfigureAwait(false);
@@ -1552,9 +1601,9 @@ namespace AdventureWorksNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiProductResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int componentID)
+		public virtual async Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int productAssemblyID)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products/BillOfMaterials/{componentID}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Products/BillOfMaterials/{productAssemblyID}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiBillOfMaterialResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -2369,6 +2418,55 @@ namespace AdventureWorksNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/UnitMeasures/byName/{name}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ApiUnitMeasureResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiVProductAndDescriptionResponseModel>> VProductAndDescriptionCreateAsync(ApiVProductAndDescriptionRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VProductAndDescriptions", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<CreateResponse<ApiVProductAndDescriptionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiVProductAndDescriptionResponseModel>> VProductAndDescriptionUpdateAsync(string id, ApiVProductAndDescriptionRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VProductAndDescriptions/{id}", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiVProductAndDescriptionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> VProductAndDescriptionDeleteAsync(string id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VProductAndDescriptions/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiVProductAndDescriptionResponseModel> VProductAndDescriptionGetAsync(string id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VProductAndDescriptions/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiVProductAndDescriptionResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiVProductAndDescriptionResponseModel>> VProductAndDescriptionAllAsync(int limit = 1000, int offset = 0)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VProductAndDescriptions?limit={limit}&offset={offset}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiVProductAndDescriptionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiVProductAndDescriptionResponseModel>> VProductAndDescriptionBulkInsertAsync(List<ApiVProductAndDescriptionRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VProductAndDescriptions/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiVProductAndDescriptionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiVProductAndDescriptionResponseModel> GetVProductAndDescriptionByCultureIDProductID(string cultureID, int productID)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VProductAndDescriptions/byCultureIDProductID/{cultureID}/{productID}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiVProductAndDescriptionResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiWorkOrderResponseModel>> WorkOrderCreateAsync(ApiWorkOrderRequestModel item)
@@ -3753,5 +3851,5 @@ namespace AdventureWorksNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>d95f018aef65b20a8524b83993d222e8</Hash>
+    <Hash>c995f381a114bd35e964664cc9fc6b39</Hash>
 </Codenesium>*/

@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IDALPipelineMapper DALPipelineMapperMock { get; set; } = new DALPipelineMapper();
 
-		public IDALPipelineStatusMapper DALPipelineStatusMapperMock { get; set; } = new DALPipelineStatusMapper();
+		public IDALPipelineStatuMapper DALPipelineStatuMapperMock { get; set; } = new DALPipelineStatuMapper();
 
 		public IDALPipelineStepMapper DALPipelineStepMapperMock { get; set; } = new DALPipelineStepMapper();
 
@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IDALPipelineStepNoteMapper DALPipelineStepNoteMapperMock { get; set; } = new DALPipelineStepNoteMapper();
 
-		public IDALPipelineStepStatusMapper DALPipelineStepStatusMapperMock { get; set; } = new DALPipelineStepStatusMapper();
+		public IDALPipelineStepStatuMapper DALPipelineStepStatuMapperMock { get; set; } = new DALPipelineStepStatuMapper();
 
 		public IDALPipelineStepStepRequirementMapper DALPipelineStepStepRequirementMapperMock { get; set; } = new DALPipelineStepStepRequirementMapper();
 
@@ -59,5 +59,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e590ea52a7c1e61152818f43b97e82dd</Hash>
+    <Hash>4e18d2b712b97dc34eda3172c4613b85</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace FileServiceNS.Api.Services
 		                                  DateTime expiration,
 		                                  string extension,
 		                                  Guid externalId,
-		                                  decimal fileSizeInBytes,
+		                                  double fileSizeInByte,
 		                                  int fileTypeId,
 		                                  string location,
 		                                  string privateKey,
@@ -29,7 +29,7 @@ namespace FileServiceNS.Api.Services
 			this.Expiration = expiration;
 			this.Extension = extension;
 			this.ExternalId = externalId;
-			this.FileSizeInBytes = fileSizeInBytes;
+			this.FileSizeInByte = fileSizeInByte;
 			this.FileTypeId = fileTypeId;
 			this.Id = id;
 			this.Location = location;
@@ -49,7 +49,7 @@ namespace FileServiceNS.Api.Services
 
 		public Guid ExternalId { get; private set; }
 
-		public decimal FileSizeInBytes { get; private set; }
+		public double FileSizeInByte { get; private set; }
 
 		public int FileTypeId { get; private set; }
 
@@ -64,5 +64,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f5907f9bbac453d61f115890af22ec77</Hash>
+    <Hash>33031e15d20f456954e481d35ae2ed6b</Hash>
 </Codenesium>*/

@@ -16,7 +16,7 @@ namespace PetShippingNS.Api.Contracts
 			                       request.Email,
 			                       request.FirstName,
 			                       request.LastName,
-			                       request.Notes,
+			                       request.Note,
 			                       request.Phone);
 			return response;
 		}
@@ -29,7 +29,7 @@ namespace PetShippingNS.Api.Contracts
 				response.Email,
 				response.FirstName,
 				response.LastName,
-				response.Notes,
+				response.Note,
 				response.Phone);
 			return request;
 		}
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.Contracts
 			patch.Replace(x => x.Email, model.Email);
 			patch.Replace(x => x.FirstName, model.FirstName);
 			patch.Replace(x => x.LastName, model.LastName);
-			patch.Replace(x => x.Notes, model.Notes);
+			patch.Replace(x => x.Note, model.Note);
 			patch.Replace(x => x.Phone, model.Phone);
 			return patch;
 		}
@@ -48,5 +48,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>22fc5f2fd5ecf822714d29c2e6e65e92</Hash>
+    <Hash>881fbc22b4a196e98d1feb558b99d756</Hash>
 </Codenesium>*/

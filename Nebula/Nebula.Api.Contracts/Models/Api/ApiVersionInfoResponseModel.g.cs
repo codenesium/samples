@@ -26,12 +26,11 @@ namespace NebulaNS.Api.Contracts
 		[JsonProperty]
 		public string Description { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public long Version { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ac5d232229d923cbdae224201a301ba</Hash>
+    <Hash>4ff7bbdd40dc7f430be16514aa970884</Hash>
 </Codenesium>*/

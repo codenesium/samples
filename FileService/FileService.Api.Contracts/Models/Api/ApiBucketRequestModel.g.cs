@@ -22,14 +22,16 @@ namespace FileServiceNS.Api.Contracts
 			this.Name = name;
 		}
 
+		[Required]
 		[JsonProperty]
 		public Guid ExternalId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f88a0ef039c145694c48858aa86cf041</Hash>
+    <Hash>5c9fe6937f6be8f03924aff3a868ffd4</Hash>
 </Codenesium>*/

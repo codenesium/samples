@@ -13,6 +13,9 @@ namespace TestsNS.Api.Contracts
 
 		public void Merge(ApiResponse from)
 		{
+			from.ColumnSameAsFKTables.ForEach(x => this.AddColumnSameAsFKTable(x));
+			from.CompositePrimaryKeys.ForEach(x => this.AddCompositePrimaryKey(x));
+			from.IncludedColumnTests.ForEach(x => this.AddIncludedColumnTest(x));
 			from.People.ForEach(x => this.AddPerson(x));
 			from.RowVersionChecks.ForEach(x => this.AddRowVersionCheck(x));
 			from.SelfReferences.ForEach(x => this.AddSelfReference(x));
@@ -20,10 +23,17 @@ namespace TestsNS.Api.Contracts
 			from.TestAllFieldTypes.ForEach(x => this.AddTestAllFieldType(x));
 			from.TestAllFieldTypesNullables.ForEach(x => this.AddTestAllFieldTypesNullable(x));
 			from.TimestampChecks.ForEach(x => this.AddTimestampCheck(x));
+			from.VPersons.ForEach(x => this.AddVPerson(x));
 			from.SchemaAPersons.ForEach(x => this.AddSchemaAPerson(x));
 			from.SchemaBPersons.ForEach(x => this.AddSchemaBPerson(x));
 			from.PersonRefs.ForEach(x => this.AddPersonRef(x));
 		}
+
+		public List<ApiColumnSameAsFKTableResponseModel> ColumnSameAsFKTables { get; private set; } = new List<ApiColumnSameAsFKTableResponseModel>();
+
+		public List<ApiCompositePrimaryKeyResponseModel> CompositePrimaryKeys { get; private set; } = new List<ApiCompositePrimaryKeyResponseModel>();
+
+		public List<ApiIncludedColumnTestResponseModel> IncludedColumnTests { get; private set; } = new List<ApiIncludedColumnTestResponseModel>();
 
 		public List<ApiPersonResponseModel> People { get; private set; } = new List<ApiPersonResponseModel>();
 
@@ -39,11 +49,61 @@ namespace TestsNS.Api.Contracts
 
 		public List<ApiTimestampCheckResponseModel> TimestampChecks { get; private set; } = new List<ApiTimestampCheckResponseModel>();
 
+		public List<ApiVPersonResponseModel> VPersons { get; private set; } = new List<ApiVPersonResponseModel>();
+
 		public List<ApiSchemaAPersonResponseModel> SchemaAPersons { get; private set; } = new List<ApiSchemaAPersonResponseModel>();
 
 		public List<ApiSchemaBPersonResponseModel> SchemaBPersons { get; private set; } = new List<ApiSchemaBPersonResponseModel>();
 
 		public List<ApiPersonRefResponseModel> PersonRefs { get; private set; } = new List<ApiPersonRefResponseModel>();
+
+		[JsonIgnore]
+		public bool ShouldSerializeColumnSameAsFKTablesValue { get; private set; } = true;
+
+		public bool ShouldSerializeColumnSameAsFKTables()
+		{
+			return this.ShouldSerializeColumnSameAsFKTablesValue;
+		}
+
+		public void AddColumnSameAsFKTable(ApiColumnSameAsFKTableResponseModel item)
+		{
+			if (!this.ColumnSameAsFKTables.Any(x => x.Id == item.Id))
+			{
+				this.ColumnSameAsFKTables.Add(item);
+			}
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeCompositePrimaryKeysValue { get; private set; } = true;
+
+		public bool ShouldSerializeCompositePrimaryKeys()
+		{
+			return this.ShouldSerializeCompositePrimaryKeysValue;
+		}
+
+		public void AddCompositePrimaryKey(ApiCompositePrimaryKeyResponseModel item)
+		{
+			if (!this.CompositePrimaryKeys.Any(x => x.Id == item.Id))
+			{
+				this.CompositePrimaryKeys.Add(item);
+			}
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeIncludedColumnTestsValue { get; private set; } = true;
+
+		public bool ShouldSerializeIncludedColumnTests()
+		{
+			return this.ShouldSerializeIncludedColumnTestsValue;
+		}
+
+		public void AddIncludedColumnTest(ApiIncludedColumnTestResponseModel item)
+		{
+			if (!this.IncludedColumnTests.Any(x => x.Id == item.Id))
+			{
+				this.IncludedColumnTests.Add(item);
+			}
+		}
 
 		[JsonIgnore]
 		public bool ShouldSerializePeopleValue { get; private set; } = true;
@@ -158,6 +218,22 @@ namespace TestsNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeVPersonsValue { get; private set; } = true;
+
+		public bool ShouldSerializeVPersons()
+		{
+			return this.ShouldSerializeVPersonsValue;
+		}
+
+		public void AddVPerson(ApiVPersonResponseModel item)
+		{
+			if (!this.VPersons.Any(x => x.PersonId == item.PersonId))
+			{
+				this.VPersons.Add(item);
+			}
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeSchemaAPersonsValue { get; private set; } = true;
 
 		public bool ShouldSerializeSchemaAPersons()
@@ -207,6 +283,21 @@ namespace TestsNS.Api.Contracts
 
 		public void DisableSerializationOfEmptyFields()
 		{
+			if (this.ColumnSameAsFKTables.Count == 0)
+			{
+				this.ShouldSerializeColumnSameAsFKTablesValue = false;
+			}
+
+			if (this.CompositePrimaryKeys.Count == 0)
+			{
+				this.ShouldSerializeCompositePrimaryKeysValue = false;
+			}
+
+			if (this.IncludedColumnTests.Count == 0)
+			{
+				this.ShouldSerializeIncludedColumnTestsValue = false;
+			}
+
 			if (this.People.Count == 0)
 			{
 				this.ShouldSerializePeopleValue = false;
@@ -242,6 +333,11 @@ namespace TestsNS.Api.Contracts
 				this.ShouldSerializeTimestampChecksValue = false;
 			}
 
+			if (this.VPersons.Count == 0)
+			{
+				this.ShouldSerializeVPersonsValue = false;
+			}
+
 			if (this.SchemaAPersons.Count == 0)
 			{
 				this.ShouldSerializeSchemaAPersonsValue = false;
@@ -261,5 +357,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>55fe74516c95e3d9a49a91f3e28191a1</Hash>
+    <Hash>bbe1ba5a9fe92b73a8e2eb3a1fd4e30c</Hash>
 </Codenesium>*/

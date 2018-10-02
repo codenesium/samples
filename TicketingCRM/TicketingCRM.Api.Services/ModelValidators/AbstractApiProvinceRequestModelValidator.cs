@@ -33,6 +33,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
@@ -46,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a3354524437bbe14178b4d48d0ab5521</Hash>
+    <Hash>85ce61d0a79b2c4976ec16b77557db50</Hash>
 </Codenesium>*/

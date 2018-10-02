@@ -116,6 +116,20 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
+		public async Task<ApiOrganizationResponseModel> ByName(string name)
+		{
+			Organization record = await this.OrganizationRepository.ByName(name);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolOrganizationMapper.MapBOToModel(this.DalOrganizationMapper.MapEFToBO(record));
+			}
+		}
+
 		public async virtual Task<List<ApiTeamResponseModel>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Team> records = await this.OrganizationRepository.Teams(organizationId, limit, offset);
@@ -126,5 +140,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>39f9a304b149c612052fcb56535dfa36</Hash>
+    <Hash>ce519990e9bea959139f508eab763bd2</Hash>
 </Codenesium>*/

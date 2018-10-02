@@ -18,18 +18,22 @@ namespace TestsNS.Api.Services
 			IPersonRepository personRepository,
 			IApiPersonRequestModelValidator personModelValidator,
 			IBOLPersonMapper bolpersonMapper,
-			IDALPersonMapper dalpersonMapper
+			IDALPersonMapper dalpersonMapper,
+			IBOLColumnSameAsFKTableMapper bolColumnSameAsFKTableMapper,
+			IDALColumnSameAsFKTableMapper dalColumnSameAsFKTableMapper
 			)
 			: base(logger,
 			       personRepository,
 			       personModelValidator,
 			       bolpersonMapper,
-			       dalpersonMapper)
+			       dalpersonMapper,
+			       bolColumnSameAsFKTableMapper,
+			       dalColumnSameAsFKTableMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c15a20aea7afa480cf37ac873e5cc266</Hash>
+    <Hash>52fd8eae3af2bbd03687c5d385a2a585</Hash>
 </Codenesium>*/

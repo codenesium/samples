@@ -14,7 +14,7 @@ namespace PetShippingNS.Api.Services
 			CountryRequirement efCountryRequirement = new CountryRequirement();
 			efCountryRequirement.SetProperties(
 				bo.CountryId,
-				bo.Details,
+				bo.Detail,
 				bo.Id);
 			return efCountryRequirement;
 		}
@@ -27,7 +27,7 @@ namespace PetShippingNS.Api.Services
 			bo.SetProperties(
 				ef.Id,
 				ef.CountryId,
-				ef.Details);
+				ef.Detail);
 			return bo;
 		}
 
@@ -47,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a188fe2ac4e8963bf70486565ad82bf</Hash>
+    <Hash>5e602888727930b4bf0975eb54b4b7ce</Hash>
 </Codenesium>*/

@@ -75,6 +75,30 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Note_Create_null()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
+
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
+
+		[Fact]
+		public async void Note_Update_null()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
+
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
+
+		[Fact]
 		public async void PetId_Create_Valid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
@@ -127,5 +151,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cc47f63ba75053e47f3c9ea1abefd907</Hash>
+    <Hash>2b3f7c66c276a025456c6dfee1b05c78</Hash>
 </Codenesium>*/

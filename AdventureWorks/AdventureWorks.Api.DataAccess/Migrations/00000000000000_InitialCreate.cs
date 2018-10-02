@@ -57,11 +57,6 @@ GO
 --ALTER TABLE [HumanResources].[Employee] DROP CONSTRAINT [FK_Employee_Person_BusinessEntityID]
 --END
 --GO
---IF (OBJECT_ID('HumanResources.FK_EmployeeDepartmentHistory_Department_DepartmentID', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] DROP CONSTRAINT [FK_EmployeeDepartmentHistory_Department_DepartmentID]
---END
---GO
 --IF (OBJECT_ID('HumanResources.FK_EmployeeDepartmentHistory_Employee_BusinessEntityID', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] DROP CONSTRAINT [FK_EmployeeDepartmentHistory_Employee_BusinessEntityID]
@@ -70,6 +65,11 @@ GO
 --IF (OBJECT_ID('HumanResources.FK_EmployeeDepartmentHistory_Shift_ShiftID', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] DROP CONSTRAINT [FK_EmployeeDepartmentHistory_Shift_ShiftID]
+--END
+--GO
+--IF (OBJECT_ID('HumanResources.FK_EmployeeDepartmentHistory_Department_DepartmentID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [HumanResources].[EmployeeDepartmentHistory] DROP CONSTRAINT [FK_EmployeeDepartmentHistory_Department_DepartmentID]
 --END
 --GO
 --IF (OBJECT_ID('HumanResources.FK_EmployeePayHistory_Employee_BusinessEntityID', 'F') IS NOT NULL)
@@ -154,14 +154,14 @@ GO
 --END
 --GO
 
---IF (OBJECT_ID('Production.FK_BillOfMaterials_Product_ComponentID', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [Production].[BillOfMaterials] DROP CONSTRAINT [FK_BillOfMaterials_Product_ComponentID]
---END
---GO
 --IF (OBJECT_ID('Production.FK_BillOfMaterials_Product_ProductAssemblyID', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [Production].[BillOfMaterials] DROP CONSTRAINT [FK_BillOfMaterials_Product_ProductAssemblyID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_BillOfMaterials_Product_ComponentID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[BillOfMaterials] DROP CONSTRAINT [FK_BillOfMaterials_Product_ComponentID]
 --END
 --GO
 --IF (OBJECT_ID('Production.FK_BillOfMaterials_UnitMeasure_UnitMeasureCode', 'F') IS NOT NULL)
@@ -239,14 +239,14 @@ GO
 --ALTER TABLE [Production].[ProductModelProductDescriptionCulture] DROP CONSTRAINT [FK_ProductModelProductDescriptionCulture_Culture_CultureID]
 --END
 --GO
---IF (OBJECT_ID('Production.FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [Production].[ProductModelProductDescriptionCulture] DROP CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID]
---END
---GO
 --IF (OBJECT_ID('Production.FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [Production].[ProductModelProductDescriptionCulture] DROP CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID]
+--END
+--GO
+--IF (OBJECT_ID('Production.FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Production].[ProductModelProductDescriptionCulture] DROP CONSTRAINT [FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID]
 --END
 --GO
 --IF (OBJECT_ID('Production.FK_ProductProductPhoto_ProductPhoto_ProductPhotoID', 'F') IS NOT NULL)
@@ -295,9 +295,9 @@ GO
 --END
 --GO
 
---IF (OBJECT_ID('Purchasing.FK_ProductVendor_Product_ProductID', 'F') IS NOT NULL)
+--IF (OBJECT_ID('Purchasing.FK_ProductVendor_UnitMeasure_UnitMeasureCode', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [Purchasing].[ProductVendor] DROP CONSTRAINT [FK_ProductVendor_Product_ProductID]
+--ALTER TABLE [Purchasing].[ProductVendor] DROP CONSTRAINT [FK_ProductVendor_UnitMeasure_UnitMeasureCode]
 --END
 --GO
 --IF (OBJECT_ID('Purchasing.FK_ProductVendor_Vendor_BusinessEntityID', 'F') IS NOT NULL)
@@ -305,14 +305,9 @@ GO
 --ALTER TABLE [Purchasing].[ProductVendor] DROP CONSTRAINT [FK_ProductVendor_Vendor_BusinessEntityID]
 --END
 --GO
---IF (OBJECT_ID('Purchasing.FK_ProductVendor_UnitMeasure_UnitMeasureCode', 'F') IS NOT NULL)
+--IF (OBJECT_ID('Purchasing.FK_ProductVendor_Product_ProductID', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [Purchasing].[ProductVendor] DROP CONSTRAINT [FK_ProductVendor_UnitMeasure_UnitMeasureCode]
---END
---GO
---IF (OBJECT_ID('Purchasing.FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [Purchasing].[PurchaseOrderDetail] DROP CONSTRAINT [FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID]
+--ALTER TABLE [Purchasing].[ProductVendor] DROP CONSTRAINT [FK_ProductVendor_Product_ProductID]
 --END
 --GO
 --IF (OBJECT_ID('Purchasing.FK_PurchaseOrderDetail_Product_ProductID', 'F') IS NOT NULL)
@@ -320,9 +315,9 @@ GO
 --ALTER TABLE [Purchasing].[PurchaseOrderDetail] DROP CONSTRAINT [FK_PurchaseOrderDetail_Product_ProductID]
 --END
 --GO
---IF (OBJECT_ID('Purchasing.FK_PurchaseOrderHeader_Employee_EmployeeID', 'F') IS NOT NULL)
+--IF (OBJECT_ID('Purchasing.FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [Purchasing].[PurchaseOrderHeader] DROP CONSTRAINT [FK_PurchaseOrderHeader_Employee_EmployeeID]
+--ALTER TABLE [Purchasing].[PurchaseOrderDetail] DROP CONSTRAINT [FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID]
 --END
 --GO
 --IF (OBJECT_ID('Purchasing.FK_PurchaseOrderHeader_ShipMethod_ShipMethodID', 'F') IS NOT NULL)
@@ -333,6 +328,11 @@ GO
 --IF (OBJECT_ID('Purchasing.FK_PurchaseOrderHeader_Vendor_VendorID', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [Purchasing].[PurchaseOrderHeader] DROP CONSTRAINT [FK_PurchaseOrderHeader_Vendor_VendorID]
+--END
+--GO
+--IF (OBJECT_ID('Purchasing.FK_PurchaseOrderHeader_Employee_EmployeeID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Purchasing].[PurchaseOrderHeader] DROP CONSTRAINT [FK_PurchaseOrderHeader_Employee_EmployeeID]
 --END
 --GO
 --IF (OBJECT_ID('Purchasing.FK_Vendor_BusinessEntity_BusinessEntityID', 'F') IS NOT NULL)
@@ -396,14 +396,14 @@ GO
 --ALTER TABLE [Sales].[SalesOrderDetail] DROP CONSTRAINT [FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID]
 --END
 --GO
---IF (OBJECT_ID('Sales.FK_SalesOrderHeader_SalesPerson_SalesPersonID', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_SalesPerson_SalesPersonID]
---END
---GO
 --IF (OBJECT_ID('Sales.FK_SalesOrderHeader_SalesTerritory_TerritoryID', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_SalesTerritory_TerritoryID]
+--END
+--GO
+--IF (OBJECT_ID('Sales.FK_SalesOrderHeader_SalesPerson_SalesPersonID', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [Sales].[SalesOrderHeader] DROP CONSTRAINT [FK_SalesOrderHeader_SalesPerson_SalesPersonID]
 --END
 --GO
 --IF (OBJECT_ID('Sales.FK_SalesOrderHeader_CreditCard_CreditCardID', 'F') IS NOT NULL)
@@ -553,6 +553,36 @@ GO
 --DROP TABLE [HumanResources].[Shift]
 --END
 --GO
+--IF OBJECT_ID('HumanResources.vEmployee', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[vEmployee]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.vEmployeeDepartment', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[vEmployeeDepartment]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.vEmployeeDepartmentHistory', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[vEmployeeDepartmentHistory]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.vJobCandidate', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[vJobCandidate]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.vJobCandidateEducation', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[vJobCandidateEducation]
+--END
+--GO
+--IF OBJECT_ID('HumanResources.vJobCandidateEmployment', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [HumanResources].[vJobCandidateEmployment]
+--END
+--GO
 
 --IF OBJECT_ID('Person.Address', 'U') IS NOT NULL 
 --BEGIN
@@ -617,6 +647,16 @@ GO
 --IF OBJECT_ID('Person.StateProvince', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [Person].[StateProvince]
+--END
+--GO
+--IF OBJECT_ID('Person.vAdditionalContactInfo', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[vAdditionalContactInfo]
+--END
+--GO
+--IF OBJECT_ID('Person.vStateProvinceCountryRegion', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Person].[vStateProvinceCountryRegion]
 --END
 --GO
 
@@ -735,6 +775,21 @@ GO
 --DROP TABLE [Production].[UnitMeasure]
 --END
 --GO
+--IF OBJECT_ID('Production.vProductAndDescription', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[vProductAndDescription]
+--END
+--GO
+--IF OBJECT_ID('Production.vProductModelCatalogDescription', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[vProductModelCatalogDescription]
+--END
+--GO
+--IF OBJECT_ID('Production.vProductModelInstructions', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Production].[vProductModelInstructions]
+--END
+--GO
 --IF OBJECT_ID('Production.WorkOrder', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [Production].[WorkOrder]
@@ -769,6 +824,16 @@ GO
 --IF OBJECT_ID('Purchasing.Vendor', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [Purchasing].[Vendor]
+--END
+--GO
+--IF OBJECT_ID('Purchasing.vVendorWithAddresses', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Purchasing].[vVendorWithAddresses]
+--END
+--GO
+--IF OBJECT_ID('Purchasing.vVendorWithContacts', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Purchasing].[vVendorWithContacts]
 --END
 --GO
 
@@ -865,6 +930,41 @@ GO
 --IF OBJECT_ID('Sales.Store', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [Sales].[Store]
+--END
+--GO
+--IF OBJECT_ID('Sales.vIndividualCustomer', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[vIndividualCustomer]
+--END
+--GO
+--IF OBJECT_ID('Sales.vPersonDemographics', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[vPersonDemographics]
+--END
+--GO
+--IF OBJECT_ID('Sales.vSalesPerson', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[vSalesPerson]
+--END
+--GO
+--IF OBJECT_ID('Sales.vSalesPersonSalesByFiscalYears', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[vSalesPersonSalesByFiscalYears]
+--END
+--GO
+--IF OBJECT_ID('Sales.vStoreWithAddresses', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[vStoreWithAddresses]
+--END
+--GO
+--IF OBJECT_ID('Sales.vStoreWithContacts', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[vStoreWithContacts]
+--END
+--GO
+--IF OBJECT_ID('Sales.vStoreWithDemographics', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [Sales].[vStoreWithDemographics]
 --END
 --GO
 
@@ -965,6 +1065,109 @@ CREATE TABLE [HumanResources].[Shift](
 ) ON[PRIMARY]
 GO
 
+CREATE TABLE [HumanResources].[vEmployee](
+[AdditionalContactInfo] [xml]     NULL,
+[AddressLine1] [nvarchar]  (60)   NOT NULL,
+[AddressLine2] [nvarchar]  (60)   NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[City] [nvarchar]  (30)   NOT NULL,
+[CountryRegionName] [nvarchar]  (50)   NOT NULL,
+[EmailAddress] [nvarchar]  (50)   NULL,
+[EmailPromotion] [int]     NOT NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[JobTitle] [nvarchar]  (50)   NOT NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[PhoneNumber] [nvarchar]  (25)   NULL,
+[PhoneNumberType] [nvarchar]  (50)   NULL,
+[PostalCode] [nvarchar]  (15)   NOT NULL,
+[StateProvinceName] [nvarchar]  (50)   NOT NULL,
+[Suffix] [nvarchar]  (10)   NULL,
+[Title] [nvarchar]  (8)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [HumanResources].[vEmployeeDepartment](
+[BusinessEntityID] [int]     NOT NULL,
+[Department] [nvarchar]  (50)   NOT NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[GroupName] [nvarchar]  (50)   NOT NULL,
+[JobTitle] [nvarchar]  (50)   NOT NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[StartDate] [date]     NOT NULL,
+[Suffix] [nvarchar]  (10)   NULL,
+[Title] [nvarchar]  (8)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [HumanResources].[vEmployeeDepartmentHistory](
+[BusinessEntityID] [int]     NOT NULL,
+[Department] [nvarchar]  (50)   NOT NULL,
+[EndDate] [date]     NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[GroupName] [nvarchar]  (50)   NOT NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[Shift] [nvarchar]  (50)   NOT NULL,
+[StartDate] [date]     NOT NULL,
+[Suffix] [nvarchar]  (10)   NULL,
+[Title] [nvarchar]  (8)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [HumanResources].[vJobCandidate](
+[Addr.Loc.City] [nvarchar]  (100)   NULL,
+[Addr.Loc.CountryRegion] [nvarchar]  (100)   NULL,
+[Addr.Loc.State] [nvarchar]  (100)   NULL,
+[Addr.PostalCode] [nvarchar]  (20)   NULL,
+[Addr.Type] [nvarchar]  (30)   NULL,
+[BusinessEntityID] [int]     NULL,
+[EMail] [nvarchar]     NULL,
+[JobCandidateID] [int]     NOT NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name.First] [nvarchar]  (30)   NULL,
+[Name.Last] [nvarchar]  (30)   NULL,
+[Name.Middle] [nvarchar]  (30)   NULL,
+[Name.Prefix] [nvarchar]  (30)   NULL,
+[Name.Suffix] [nvarchar]  (30)   NULL,
+[Skills] [nvarchar]     NULL,
+[WebSite] [nvarchar]     NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [HumanResources].[vJobCandidateEducation](
+[Edu.Degree] [nvarchar]  (50)   NULL,
+[Edu.EndDate] [datetime]     NULL,
+[Edu.GPA] [nvarchar]  (5)   NULL,
+[Edu.GPAScale] [nvarchar]  (5)   NULL,
+[Edu.Level] [nvarchar]     NULL,
+[Edu.Loc.City] [nvarchar]  (100)   NULL,
+[Edu.Loc.CountryRegion] [nvarchar]  (100)   NULL,
+[Edu.Loc.State] [nvarchar]  (100)   NULL,
+[Edu.Major] [nvarchar]  (50)   NULL,
+[Edu.Minor] [nvarchar]  (50)   NULL,
+[Edu.School] [nvarchar]  (100)   NULL,
+[Edu.StartDate] [datetime]     NULL,
+[JobCandidateID] [int]     NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [HumanResources].[vJobCandidateEmployment](
+[Emp.EndDate] [datetime]     NULL,
+[Emp.FunctionCategory] [nvarchar]     NULL,
+[Emp.IndustryCategory] [nvarchar]     NULL,
+[Emp.JobTitle] [nvarchar]  (100)   NULL,
+[Emp.Loc.City] [nvarchar]     NULL,
+[Emp.Loc.CountryRegion] [nvarchar]     NULL,
+[Emp.Loc.State] [nvarchar]     NULL,
+[Emp.OrgName] [nvarchar]  (100)   NULL,
+[Emp.Responsibility] [nvarchar]     NULL,
+[Emp.StartDate] [datetime]     NULL,
+[JobCandidateID] [int]     NOT NULL,
+) ON[PRIMARY]
+GO
+
 CREATE TABLE [Person].[Address](
 [AddressID] [int]   IDENTITY(1,1)  NOT NULL,
 [AddressLine1] [nvarchar]  (60)   NOT NULL,
@@ -1028,7 +1231,7 @@ GO
 CREATE TABLE [Person].[EmailAddress](
 [BusinessEntityID] [int]     NOT NULL,
 [EmailAddress] [nvarchar]  (50)   NULL,
-[EmailAddressID] [int]     NOT NULL,
+[EmailAddressID] [int]   IDENTITY(1,1)  NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 ) ON[PRIMARY]
@@ -1083,6 +1286,38 @@ CREATE TABLE [Person].[StateProvince](
 [Name] [nvarchar]  (50)   NOT NULL,
 [rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [StateProvinceCode] [nchar]  (3)   NOT NULL,
+[TerritoryID] [int]     NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Person].[vAdditionalContactInfo](
+[BusinessEntityID] [int]     NOT NULL,
+[City] [nvarchar]  (50)   NULL,
+[CountryRegion] [nvarchar]  (50)   NULL,
+[EMailAddress] [nvarchar]  (128)   NULL,
+[EMailSpecialInstructions] [nvarchar]     NULL,
+[EMailTelephoneNumber] [nvarchar]  (50)   NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[HomeAddressSpecialInstructions] [nvarchar]     NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[PostalCode] [nvarchar]  (50)   NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[StateProvince] [nvarchar]  (50)   NULL,
+[Street] [nvarchar]  (50)   NULL,
+[TelephoneNumber] [nvarchar]  (50)   NULL,
+[TelephoneSpecialInstructions] [nvarchar]     NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Person].[vStateProvinceCountryRegion](
+[CountryRegionCode] [nvarchar]  (3)   NOT NULL,
+[CountryRegionName] [nvarchar]  (50)   NOT NULL,
+[IsOnlyStateProvinceFlag] [bit]     NOT NULL,
+[StateProvinceCode] [nchar]  (3)   NOT NULL,
+[StateProvinceID] [int]     NOT NULL,
+[StateProvinceName] [nvarchar]  (50)   NOT NULL,
 [TerritoryID] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
@@ -1326,6 +1561,59 @@ CREATE TABLE [Production].[UnitMeasure](
 ) ON[PRIMARY]
 GO
 
+CREATE TABLE [Production].[vProductAndDescription](
+[CultureID] [nchar]  (6)   NOT NULL,
+[Description] [nvarchar]  (400)   NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[ProductID] [int]     NOT NULL,
+[ProductModel] [nvarchar]  (50)   NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Production].[vProductModelCatalogDescription](
+[BikeFrame] [nvarchar]     NULL,
+[Color] [nvarchar]  (256)   NULL,
+[Copyright] [nvarchar]  (30)   NULL,
+[Crankset] [nvarchar]  (256)   NULL,
+[MaintenanceDescription] [nvarchar]  (256)   NULL,
+[Manufacturer] [nvarchar]     NULL,
+[Material] [nvarchar]  (256)   NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[NoOfYears] [nvarchar]  (256)   NULL,
+[Pedal] [nvarchar]  (256)   NULL,
+[PictureAngle] [nvarchar]  (256)   NULL,
+[PictureSize] [nvarchar]  (256)   NULL,
+[ProductLine] [nvarchar]  (256)   NULL,
+[ProductModelID] [int]     NOT NULL,
+[ProductPhotoID] [nvarchar]  (256)   NULL,
+[ProductURL] [nvarchar]  (256)   NULL,
+[RiderExperience] [nvarchar]  (1024)   NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[Saddle] [nvarchar]  (256)   NULL,
+[Style] [nvarchar]  (256)   NULL,
+[Summary] [nvarchar]     NULL,
+[WarrantyDescription] [nvarchar]  (256)   NULL,
+[WarrantyPeriod] [nvarchar]  (256)   NULL,
+[Wheel] [nvarchar]  (256)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Production].[vProductModelInstructions](
+[Instructions] [nvarchar]     NULL,
+[LaborHours] [decimal]     NULL,
+[LocationID] [int]     NULL,
+[LotSize] [int]     NULL,
+[MachineHours] [decimal]     NULL,
+[ModifiedDate] [datetime]     NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[ProductModelID] [int]     NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
+[SetupHours] [decimal]     NULL,
+[Step] [nvarchar]  (1024)   NULL,
+) ON[PRIMARY]
+GO
+
 CREATE TABLE [Production].[WorkOrder](
 [WorkOrderID] [int]   IDENTITY(1,1)  NOT NULL,
 [DueDate] [datetime]     NOT NULL,
@@ -1378,7 +1666,7 @@ CREATE TABLE [Purchasing].[PurchaseOrderDetail](
 [ModifiedDate] [datetime]     NOT NULL,
 [OrderQty] [smallint]     NOT NULL,
 [ProductID] [int]     NOT NULL,
-[PurchaseOrderDetailID] [int]     NOT NULL,
+[PurchaseOrderDetailID] [int]   IDENTITY(1,1)  NOT NULL,
 [ReceivedQty] [decimal]     NOT NULL,
 [RejectedQty] [decimal]     NOT NULL,
 [StockedQty] [decimal]     NOT NULL,
@@ -1422,6 +1710,35 @@ CREATE TABLE [Purchasing].[Vendor](
 [Name] [nvarchar]  (50)   NOT NULL,
 [PreferredVendorStatus] [bit]     NOT NULL,
 [PurchasingWebServiceURL] [nvarchar]  (1024)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Purchasing].[vVendorWithAddresses](
+[AddressLine1] [nvarchar]  (60)   NOT NULL,
+[AddressLine2] [nvarchar]  (60)   NULL,
+[AddressType] [nvarchar]  (50)   NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[City] [nvarchar]  (30)   NOT NULL,
+[CountryRegionName] [nvarchar]  (50)   NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[PostalCode] [nvarchar]  (15)   NOT NULL,
+[StateProvinceName] [nvarchar]  (50)   NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Purchasing].[vVendorWithContacts](
+[BusinessEntityID] [int]     NOT NULL,
+[ContactType] [nvarchar]  (50)   NOT NULL,
+[EmailAddress] [nvarchar]  (50)   NULL,
+[EmailPromotion] [int]     NOT NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[PhoneNumber] [nvarchar]  (25)   NULL,
+[PhoneNumberType] [nvarchar]  (50)   NULL,
+[Suffix] [nvarchar]  (10)   NULL,
+[Title] [nvarchar]  (8)   NULL,
 ) ON[PRIMARY]
 GO
 
@@ -1486,7 +1803,7 @@ CREATE TABLE [Sales].[SalesOrderDetail](
 [OrderQty] [smallint]     NOT NULL,
 [ProductID] [int]     NOT NULL,
 [rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
-[SalesOrderDetailID] [int]     NOT NULL,
+[SalesOrderDetailID] [int]   IDENTITY(1,1)  NOT NULL,
 [SpecialOfferID] [int]     NOT NULL,
 [UnitPrice] [money]     NOT NULL,
 [UnitPriceDiscount] [money]     NOT NULL,
@@ -1635,6 +1952,127 @@ CREATE TABLE [Sales].[Store](
 [Name] [nvarchar]  (50)   NOT NULL,
 [rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
 [SalesPersonID] [int]     NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Sales].[vIndividualCustomer](
+[AddressLine1] [nvarchar]  (60)   NOT NULL,
+[AddressLine2] [nvarchar]  (60)   NULL,
+[AddressType] [nvarchar]  (50)   NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[City] [nvarchar]  (30)   NOT NULL,
+[CountryRegionName] [nvarchar]  (50)   NOT NULL,
+[Demographics] [xml]     NULL,
+[EmailAddress] [nvarchar]  (50)   NULL,
+[EmailPromotion] [int]     NOT NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[PhoneNumber] [nvarchar]  (25)   NULL,
+[PhoneNumberType] [nvarchar]  (50)   NULL,
+[PostalCode] [nvarchar]  (15)   NOT NULL,
+[StateProvinceName] [nvarchar]  (50)   NOT NULL,
+[Suffix] [nvarchar]  (10)   NULL,
+[Title] [nvarchar]  (8)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Sales].[vPersonDemographics](
+[BirthDate] [datetime]     NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[DateFirstPurchase] [datetime]     NULL,
+[Education] [nvarchar]  (30)   NULL,
+[Gender] [nvarchar]  (1)   NULL,
+[HomeOwnerFlag] [bit]     NULL,
+[MaritalStatus] [nvarchar]  (1)   NULL,
+[NumberCarsOwned] [int]     NULL,
+[NumberChildrenAtHome] [int]     NULL,
+[Occupation] [nvarchar]  (30)   NULL,
+[TotalChildren] [int]     NULL,
+[TotalPurchaseYTD] [money]     NULL,
+[YearlyIncome] [nvarchar]  (30)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Sales].[vSalesPerson](
+[AddressLine1] [nvarchar]  (60)   NOT NULL,
+[AddressLine2] [nvarchar]  (60)   NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[City] [nvarchar]  (30)   NOT NULL,
+[CountryRegionName] [nvarchar]  (50)   NOT NULL,
+[EmailAddress] [nvarchar]  (50)   NULL,
+[EmailPromotion] [int]     NOT NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[JobTitle] [nvarchar]  (50)   NOT NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[PhoneNumber] [nvarchar]  (25)   NULL,
+[PhoneNumberType] [nvarchar]  (50)   NULL,
+[PostalCode] [nvarchar]  (15)   NOT NULL,
+[SalesLastYear] [money]     NOT NULL,
+[SalesQuota] [money]     NULL,
+[SalesYTD] [money]     NOT NULL,
+[StateProvinceName] [nvarchar]  (50)   NOT NULL,
+[Suffix] [nvarchar]  (10)   NULL,
+[TerritoryGroup] [nvarchar]  (50)   NULL,
+[TerritoryName] [nvarchar]  (50)   NULL,
+[Title] [nvarchar]  (8)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Sales].[vSalesPersonSalesByFiscalYears](
+[2002] [money]     NULL,
+[2003] [money]     NULL,
+[2004] [money]     NULL,
+[FullName] [nvarchar]  (152)   NULL,
+[JobTitle] [nvarchar]  (50)   NOT NULL,
+[SalesPersonID] [int]     NULL,
+[SalesTerritory] [nvarchar]  (50)   NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Sales].[vStoreWithAddresses](
+[AddressLine1] [nvarchar]  (60)   NOT NULL,
+[AddressLine2] [nvarchar]  (60)   NULL,
+[AddressType] [nvarchar]  (50)   NOT NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[City] [nvarchar]  (30)   NOT NULL,
+[CountryRegionName] [nvarchar]  (50)   NOT NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[PostalCode] [nvarchar]  (15)   NOT NULL,
+[StateProvinceName] [nvarchar]  (50)   NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Sales].[vStoreWithContacts](
+[BusinessEntityID] [int]     NOT NULL,
+[ContactType] [nvarchar]  (50)   NOT NULL,
+[EmailAddress] [nvarchar]  (50)   NULL,
+[EmailPromotion] [int]     NOT NULL,
+[FirstName] [nvarchar]  (50)   NOT NULL,
+[LastName] [nvarchar]  (50)   NOT NULL,
+[MiddleName] [nvarchar]  (50)   NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[PhoneNumber] [nvarchar]  (25)   NULL,
+[PhoneNumberType] [nvarchar]  (50)   NULL,
+[Suffix] [nvarchar]  (10)   NULL,
+[Title] [nvarchar]  (8)   NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [Sales].[vStoreWithDemographics](
+[AnnualRevenue] [money]     NULL,
+[AnnualSales] [money]     NULL,
+[BankName] [nvarchar]  (50)   NULL,
+[Brands] [nvarchar]  (30)   NULL,
+[BusinessEntityID] [int]     NOT NULL,
+[BusinessType] [nvarchar]  (5)   NULL,
+[Internet] [nvarchar]  (30)   NULL,
+[Name] [nvarchar]  (50)   NOT NULL,
+[NumberEmployees] [int]     NULL,
+[Specialty] [nvarchar]  (50)   NULL,
+[SquareFeet] [int]     NULL,
+[YearOpened] [int]     NULL,
 ) ON[PRIMARY]
 GO
 
@@ -1950,6 +2388,12 @@ CREATE UNIQUE NONCLUSTERED INDEX[AK_StateProvince_StateProvinceCode_CountryRegio
 [CountryRegionCode] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+CREATE UNIQUE CLUSTERED INDEX[IX_vStateProvinceCountryRegion] ON[Person].[vStateProvinceCountryRegion]
+(
+[StateProvinceID] ASC,
+[CountryRegionCode] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
 ALTER TABLE[Production].[BillOfMaterials]
 ADD CONSTRAINT[PK_BillOfMaterials_BillOfMaterialsID] PRIMARY KEY NONCLUSTERED
 (
@@ -1996,7 +2440,7 @@ CREATE UNIQUE NONCLUSTERED INDEX[AK_Document_rowguid] ON[Production].[Document]
 [rowguid] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-CREATE UNIQUE NONCLUSTERED INDEX[UQ__Document__F73921F793071A63] ON[Production].[Document]
+CREATE UNIQUE NONCLUSTERED INDEX[UQ__Document__F73921F7BAEE5BF6] ON[Production].[Document]
 (
 [rowguid] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
@@ -2228,6 +2672,12 @@ GO
 CREATE UNIQUE NONCLUSTERED INDEX[AK_UnitMeasure_Name] ON[Production].[UnitMeasure]
 (
 [Name] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE UNIQUE CLUSTERED INDEX[IX_vProductAndDescription] ON[Production].[vProductAndDescription]
+(
+[CultureID] ASC,
+[ProductID] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[Production].[WorkOrder]
@@ -3203,11 +3653,6 @@ REFERENCES[Person].[Person]([BusinessEntityID])
 GO
 ALTER TABLE[HumanResources].[Employee] CHECK CONSTRAINT[FK_Employee_Person_BusinessEntityID]
 GO
-ALTER TABLE[HumanResources].[EmployeeDepartmentHistory]  WITH CHECK ADD  CONSTRAINT[FK_EmployeeDepartmentHistory_Department_DepartmentID] FOREIGN KEY([DepartmentID])
-REFERENCES[HumanResources].[Department]([DepartmentID])
-GO
-ALTER TABLE[HumanResources].[EmployeeDepartmentHistory] CHECK CONSTRAINT[FK_EmployeeDepartmentHistory_Department_DepartmentID]
-GO
 ALTER TABLE[HumanResources].[EmployeeDepartmentHistory]  WITH CHECK ADD  CONSTRAINT[FK_EmployeeDepartmentHistory_Employee_BusinessEntityID] FOREIGN KEY([BusinessEntityID])
 REFERENCES[HumanResources].[Employee]([BusinessEntityID])
 GO
@@ -3217,6 +3662,11 @@ ALTER TABLE[HumanResources].[EmployeeDepartmentHistory]  WITH CHECK ADD  CONSTRA
 REFERENCES[HumanResources].[Shift]([ShiftID])
 GO
 ALTER TABLE[HumanResources].[EmployeeDepartmentHistory] CHECK CONSTRAINT[FK_EmployeeDepartmentHistory_Shift_ShiftID]
+GO
+ALTER TABLE[HumanResources].[EmployeeDepartmentHistory]  WITH CHECK ADD  CONSTRAINT[FK_EmployeeDepartmentHistory_Department_DepartmentID] FOREIGN KEY([DepartmentID])
+REFERENCES[HumanResources].[Department]([DepartmentID])
+GO
+ALTER TABLE[HumanResources].[EmployeeDepartmentHistory] CHECK CONSTRAINT[FK_EmployeeDepartmentHistory_Department_DepartmentID]
 GO
 ALTER TABLE[HumanResources].[EmployeePayHistory]  WITH CHECK ADD  CONSTRAINT[FK_EmployeePayHistory_Employee_BusinessEntityID] FOREIGN KEY([BusinessEntityID])
 REFERENCES[HumanResources].[Employee]([BusinessEntityID])
@@ -3300,15 +3750,15 @@ GO
 ALTER TABLE[Person].[StateProvince] CHECK CONSTRAINT[FK_StateProvince_SalesTerritory_TerritoryID]
 GO
 
-ALTER TABLE[Production].[BillOfMaterials]  WITH CHECK ADD  CONSTRAINT[FK_BillOfMaterials_Product_ComponentID] FOREIGN KEY([ComponentID])
-REFERENCES[Production].[Product]([ProductID])
-GO
-ALTER TABLE[Production].[BillOfMaterials] CHECK CONSTRAINT[FK_BillOfMaterials_Product_ComponentID]
-GO
 ALTER TABLE[Production].[BillOfMaterials]  WITH CHECK ADD  CONSTRAINT[FK_BillOfMaterials_Product_ProductAssemblyID] FOREIGN KEY([ProductAssemblyID])
 REFERENCES[Production].[Product]([ProductID])
 GO
 ALTER TABLE[Production].[BillOfMaterials] CHECK CONSTRAINT[FK_BillOfMaterials_Product_ProductAssemblyID]
+GO
+ALTER TABLE[Production].[BillOfMaterials]  WITH CHECK ADD  CONSTRAINT[FK_BillOfMaterials_Product_ComponentID] FOREIGN KEY([ComponentID])
+REFERENCES[Production].[Product]([ProductID])
+GO
+ALTER TABLE[Production].[BillOfMaterials] CHECK CONSTRAINT[FK_BillOfMaterials_Product_ComponentID]
 GO
 ALTER TABLE[Production].[BillOfMaterials]  WITH CHECK ADD  CONSTRAINT[FK_BillOfMaterials_UnitMeasure_UnitMeasureCode] FOREIGN KEY([UnitMeasureCode])
 REFERENCES[Production].[UnitMeasure]([UnitMeasureCode])
@@ -3385,15 +3835,15 @@ REFERENCES[Production].[Culture]([CultureID])
 GO
 ALTER TABLE[Production].[ProductModelProductDescriptionCulture] CHECK CONSTRAINT[FK_ProductModelProductDescriptionCulture_Culture_CultureID]
 GO
-ALTER TABLE[Production].[ProductModelProductDescriptionCulture]  WITH CHECK ADD  CONSTRAINT[FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID] FOREIGN KEY([ProductDescriptionID])
-REFERENCES[Production].[ProductDescription]([ProductDescriptionID])
-GO
-ALTER TABLE[Production].[ProductModelProductDescriptionCulture] CHECK CONSTRAINT[FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID]
-GO
 ALTER TABLE[Production].[ProductModelProductDescriptionCulture]  WITH CHECK ADD  CONSTRAINT[FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID] FOREIGN KEY([ProductModelID])
 REFERENCES[Production].[ProductModel]([ProductModelID])
 GO
 ALTER TABLE[Production].[ProductModelProductDescriptionCulture] CHECK CONSTRAINT[FK_ProductModelProductDescriptionCulture_ProductModel_ProductModelID]
+GO
+ALTER TABLE[Production].[ProductModelProductDescriptionCulture]  WITH CHECK ADD  CONSTRAINT[FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID] FOREIGN KEY([ProductDescriptionID])
+REFERENCES[Production].[ProductDescription]([ProductDescriptionID])
+GO
+ALTER TABLE[Production].[ProductModelProductDescriptionCulture] CHECK CONSTRAINT[FK_ProductModelProductDescriptionCulture_ProductDescription_ProductDescriptionID]
 GO
 ALTER TABLE[Production].[ProductProductPhoto]  WITH CHECK ADD  CONSTRAINT[FK_ProductProductPhoto_ProductPhoto_ProductPhotoID] FOREIGN KEY([ProductPhotoID])
 REFERENCES[Production].[ProductPhoto]([ProductPhotoID])
@@ -3441,35 +3891,30 @@ GO
 ALTER TABLE[Production].[WorkOrderRouting] CHECK CONSTRAINT[FK_WorkOrderRouting_Location_LocationID]
 GO
 
-ALTER TABLE[Purchasing].[ProductVendor]  WITH CHECK ADD  CONSTRAINT[FK_ProductVendor_Product_ProductID] FOREIGN KEY([ProductID])
-REFERENCES[Production].[Product]([ProductID])
+ALTER TABLE[Purchasing].[ProductVendor]  WITH CHECK ADD  CONSTRAINT[FK_ProductVendor_UnitMeasure_UnitMeasureCode] FOREIGN KEY([UnitMeasureCode])
+REFERENCES[Production].[UnitMeasure]([UnitMeasureCode])
 GO
-ALTER TABLE[Purchasing].[ProductVendor] CHECK CONSTRAINT[FK_ProductVendor_Product_ProductID]
+ALTER TABLE[Purchasing].[ProductVendor] CHECK CONSTRAINT[FK_ProductVendor_UnitMeasure_UnitMeasureCode]
 GO
 ALTER TABLE[Purchasing].[ProductVendor]  WITH CHECK ADD  CONSTRAINT[FK_ProductVendor_Vendor_BusinessEntityID] FOREIGN KEY([BusinessEntityID])
 REFERENCES[Purchasing].[Vendor]([BusinessEntityID])
 GO
 ALTER TABLE[Purchasing].[ProductVendor] CHECK CONSTRAINT[FK_ProductVendor_Vendor_BusinessEntityID]
 GO
-ALTER TABLE[Purchasing].[ProductVendor]  WITH CHECK ADD  CONSTRAINT[FK_ProductVendor_UnitMeasure_UnitMeasureCode] FOREIGN KEY([UnitMeasureCode])
-REFERENCES[Production].[UnitMeasure]([UnitMeasureCode])
+ALTER TABLE[Purchasing].[ProductVendor]  WITH CHECK ADD  CONSTRAINT[FK_ProductVendor_Product_ProductID] FOREIGN KEY([ProductID])
+REFERENCES[Production].[Product]([ProductID])
 GO
-ALTER TABLE[Purchasing].[ProductVendor] CHECK CONSTRAINT[FK_ProductVendor_UnitMeasure_UnitMeasureCode]
-GO
-ALTER TABLE[Purchasing].[PurchaseOrderDetail]  WITH CHECK ADD  CONSTRAINT[FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID] FOREIGN KEY([PurchaseOrderID])
-REFERENCES[Purchasing].[PurchaseOrderHeader]([PurchaseOrderID])
-GO
-ALTER TABLE[Purchasing].[PurchaseOrderDetail] CHECK CONSTRAINT[FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID]
+ALTER TABLE[Purchasing].[ProductVendor] CHECK CONSTRAINT[FK_ProductVendor_Product_ProductID]
 GO
 ALTER TABLE[Purchasing].[PurchaseOrderDetail]  WITH CHECK ADD  CONSTRAINT[FK_PurchaseOrderDetail_Product_ProductID] FOREIGN KEY([ProductID])
 REFERENCES[Production].[Product]([ProductID])
 GO
 ALTER TABLE[Purchasing].[PurchaseOrderDetail] CHECK CONSTRAINT[FK_PurchaseOrderDetail_Product_ProductID]
 GO
-ALTER TABLE[Purchasing].[PurchaseOrderHeader]  WITH CHECK ADD  CONSTRAINT[FK_PurchaseOrderHeader_Employee_EmployeeID] FOREIGN KEY([EmployeeID])
-REFERENCES[HumanResources].[Employee]([BusinessEntityID])
+ALTER TABLE[Purchasing].[PurchaseOrderDetail]  WITH CHECK ADD  CONSTRAINT[FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID] FOREIGN KEY([PurchaseOrderID])
+REFERENCES[Purchasing].[PurchaseOrderHeader]([PurchaseOrderID])
 GO
-ALTER TABLE[Purchasing].[PurchaseOrderHeader] CHECK CONSTRAINT[FK_PurchaseOrderHeader_Employee_EmployeeID]
+ALTER TABLE[Purchasing].[PurchaseOrderDetail] CHECK CONSTRAINT[FK_PurchaseOrderDetail_PurchaseOrderHeader_PurchaseOrderID]
 GO
 ALTER TABLE[Purchasing].[PurchaseOrderHeader]  WITH CHECK ADD  CONSTRAINT[FK_PurchaseOrderHeader_ShipMethod_ShipMethodID] FOREIGN KEY([ShipMethodID])
 REFERENCES[Purchasing].[ShipMethod]([ShipMethodID])
@@ -3480,6 +3925,11 @@ ALTER TABLE[Purchasing].[PurchaseOrderHeader]  WITH CHECK ADD  CONSTRAINT[FK_Pur
 REFERENCES[Purchasing].[Vendor]([BusinessEntityID])
 GO
 ALTER TABLE[Purchasing].[PurchaseOrderHeader] CHECK CONSTRAINT[FK_PurchaseOrderHeader_Vendor_VendorID]
+GO
+ALTER TABLE[Purchasing].[PurchaseOrderHeader]  WITH CHECK ADD  CONSTRAINT[FK_PurchaseOrderHeader_Employee_EmployeeID] FOREIGN KEY([EmployeeID])
+REFERENCES[HumanResources].[Employee]([BusinessEntityID])
+GO
+ALTER TABLE[Purchasing].[PurchaseOrderHeader] CHECK CONSTRAINT[FK_PurchaseOrderHeader_Employee_EmployeeID]
 GO
 ALTER TABLE[Purchasing].[Vendor]  WITH CHECK ADD  CONSTRAINT[FK_Vendor_BusinessEntity_BusinessEntityID] FOREIGN KEY([BusinessEntityID])
 REFERENCES[Person].[BusinessEntity]([BusinessEntityID])
@@ -3542,15 +3992,15 @@ REFERENCES[Sales].[SalesOrderHeader]([SalesOrderID])
 GO
 ALTER TABLE[Sales].[SalesOrderDetail] CHECK CONSTRAINT[FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID]
 GO
-ALTER TABLE[Sales].[SalesOrderHeader]  WITH CHECK ADD  CONSTRAINT[FK_SalesOrderHeader_SalesPerson_SalesPersonID] FOREIGN KEY([SalesPersonID])
-REFERENCES[Sales].[SalesPerson]([BusinessEntityID])
-GO
-ALTER TABLE[Sales].[SalesOrderHeader] CHECK CONSTRAINT[FK_SalesOrderHeader_SalesPerson_SalesPersonID]
-GO
 ALTER TABLE[Sales].[SalesOrderHeader]  WITH CHECK ADD  CONSTRAINT[FK_SalesOrderHeader_SalesTerritory_TerritoryID] FOREIGN KEY([TerritoryID])
 REFERENCES[Sales].[SalesTerritory]([TerritoryID])
 GO
 ALTER TABLE[Sales].[SalesOrderHeader] CHECK CONSTRAINT[FK_SalesOrderHeader_SalesTerritory_TerritoryID]
+GO
+ALTER TABLE[Sales].[SalesOrderHeader]  WITH CHECK ADD  CONSTRAINT[FK_SalesOrderHeader_SalesPerson_SalesPersonID] FOREIGN KEY([SalesPersonID])
+REFERENCES[Sales].[SalesPerson]([BusinessEntityID])
+GO
+ALTER TABLE[Sales].[SalesOrderHeader] CHECK CONSTRAINT[FK_SalesOrderHeader_SalesPerson_SalesPersonID]
 GO
 ALTER TABLE[Sales].[SalesOrderHeader]  WITH CHECK ADD  CONSTRAINT[FK_SalesOrderHeader_CreditCard_CreditCardID] FOREIGN KEY([CreditCardID])
 REFERENCES[Sales].[CreditCard]([CreditCardID])

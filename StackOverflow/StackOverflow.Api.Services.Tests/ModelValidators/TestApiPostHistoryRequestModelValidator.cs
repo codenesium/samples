@@ -25,6 +25,30 @@ namespace StackOverflowNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void RevisionGUID_Create_null()
+		{
+			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
+			postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
+
+			var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPostHistoryRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.RevisionGUID, null as string);
+		}
+
+		[Fact]
+		public async void RevisionGUID_Update_null()
+		{
+			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
+			postHistoryRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PostHistory()));
+
+			var validator = new ApiPostHistoryRequestModelValidator(postHistoryRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPostHistoryRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.RevisionGUID, null as string);
+		}
+
+		[Fact]
 		public async void RevisionGUID_Create_length()
 		{
 			Mock<IPostHistoryRepository> postHistoryRepository = new Mock<IPostHistoryRepository>();
@@ -75,5 +99,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>98a3c44d2614ad68a5d454fec446e4b0</Hash>
+    <Hash>c008ef0d908bf7fb358927c35a01fe28</Hash>
 </Codenesium>*/

@@ -20,7 +20,7 @@ namespace FileServiceNS.Api.DataAccess
 			DateTime expiration,
 			string extension,
 			Guid externalId,
-			decimal fileSizeInBytes,
+			double fileSizeInByte,
 			int fileTypeId,
 			int id,
 			string location,
@@ -33,7 +33,7 @@ namespace FileServiceNS.Api.DataAccess
 			this.Expiration = expiration;
 			this.Extension = extension;
 			this.ExternalId = externalId;
-			this.FileSizeInBytes = fileSizeInBytes;
+			this.FileSizeInByte = fileSizeInByte;
 			this.FileTypeId = fileTypeId;
 			this.Id = id;
 			this.Location = location;
@@ -62,12 +62,13 @@ namespace FileServiceNS.Api.DataAccess
 		public Guid ExternalId { get; private set; }
 
 		[Column("fileSizeInBytes")]
-		public decimal FileSizeInBytes { get; private set; }
+		public double FileSizeInByte { get; private set; }
 
 		[Column("fileTypeId")]
 		public int FileTypeId { get; private set; }
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -92,5 +93,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ec295d7a8bbc0b9cf1841715d7567954</Hash>
+    <Hash>44db8ba0ec517ea4c21fe1350637ad20</Hash>
 </Codenesium>*/

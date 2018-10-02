@@ -15,7 +15,7 @@ namespace StackOverflowNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+		public int TenantId { get; private set; } = 1;
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -42,29 +42,29 @@ namespace StackOverflowNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
-		public virtual DbSet<Badges> Badges { get; set; }
+		public virtual DbSet<Badge> Badges { get; set; }
 
-		public virtual DbSet<Comments> Comments { get; set; }
+		public virtual DbSet<Comment> Comments { get; set; }
 
-		public virtual DbSet<LinkTypes> LinkTypes { get; set; }
+		public virtual DbSet<LinkType> LinkTypes { get; set; }
 
 		public virtual DbSet<PostHistory> PostHistories { get; set; }
 
-		public virtual DbSet<PostHistoryTypes> PostHistoryTypes { get; set; }
+		public virtual DbSet<PostHistoryType> PostHistoryTypes { get; set; }
 
-		public virtual DbSet<PostLinks> PostLinks { get; set; }
+		public virtual DbSet<PostLink> PostLinks { get; set; }
 
-		public virtual DbSet<Posts> Posts { get; set; }
+		public virtual DbSet<Post> Posts { get; set; }
 
-		public virtual DbSet<PostTypes> PostTypes { get; set; }
+		public virtual DbSet<PostType> PostTypes { get; set; }
 
-		public virtual DbSet<Tags> Tags { get; set; }
+		public virtual DbSet<Tag> Tags { get; set; }
 
-		public virtual DbSet<Users> Users { get; set; }
+		public virtual DbSet<User> Users { get; set; }
 
-		public virtual DbSet<Votes> Votes { get; set; }
+		public virtual DbSet<Vote> Votes { get; set; }
 
-		public virtual DbSet<VoteTypes> VoteTypes { get; set; }
+		public virtual DbSet<VoteType> VoteTypes { get; set; }
 
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
@@ -72,6 +72,8 @@ namespace StackOverflowNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
+		/// <param name="acceptAllChangesOnSuccess"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -84,6 +86,12 @@ namespace StackOverflowNS.Api.DataAccess
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
+					}
+
+					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					if (tenantEntity != null)
+					{
+						tenantEntity.CurrentValue = this.TenantId;
 					}
 				}
 			}
@@ -112,7 +120,8 @@ namespace StackOverflowNS.Api.DataAccess
 
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -127,5 +136,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8e2992811cad66eb4b10e918ced89710</Hash>
+    <Hash>ccf5ad1fbc62a8f4b99bf2a48b803007</Hash>
 </Codenesium>*/

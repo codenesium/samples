@@ -37,15 +37,19 @@ namespace StackOverflowNS.Api.Contracts
 		[JsonProperty]
 		public string Comment { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public DateTime CreationDate { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int PostHistoryTypeId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int PostId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string RevisionGUID { get; private set; }
 
@@ -61,5 +65,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>026d8f14c0a58d6188cc0280ed470c26</Hash>
+    <Hash>a20ef1d7bfbd73b83276ed84d78813c4</Hash>
 </Codenesium>*/

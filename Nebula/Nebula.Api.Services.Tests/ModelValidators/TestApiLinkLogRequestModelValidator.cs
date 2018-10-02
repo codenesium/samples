@@ -73,9 +73,33 @@ namespace NebulaNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.LinkId, 1);
 		}
+
+		[Fact]
+		public async void Log_Create_null()
+		{
+			Mock<ILinkLogRepository> linkLogRepository = new Mock<ILinkLogRepository>();
+			linkLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkLog()));
+
+			var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLinkLogRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Log, null as string);
+		}
+
+		[Fact]
+		public async void Log_Update_null()
+		{
+			Mock<ILinkLogRepository> linkLogRepository = new Mock<ILinkLogRepository>();
+			linkLogRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new LinkLog()));
+
+			var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLinkLogRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Log, null as string);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e042f7507c319ee4b6fa2451c0b4c4c</Hash>
+    <Hash>b12730463de1b462be9dd29885f235ea</Hash>
 </Codenesium>*/

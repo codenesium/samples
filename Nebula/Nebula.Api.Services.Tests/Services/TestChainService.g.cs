@@ -155,6 +155,49 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ByExternalId_Exists()
+		{
+			var mock = new ServiceMockFacade<IChainRepository>();
+			var record = new Chain();
+			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+			var service = new ChainService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                               mock.DALMapperMockFactory.DALChainMapperMock,
+			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
+			                               mock.DALMapperMockFactory.DALClaspMapperMock,
+			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                               mock.DALMapperMockFactory.DALLinkMapperMock);
+
+			ApiChainResponseModel response = await service.ByExternalId(default(Guid));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
+		}
+
+		[Fact]
+		public async void ByExternalId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IChainRepository>();
+			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Chain>(null));
+			var service = new ChainService(mock.LoggerMock.Object,
+			                               mock.RepositoryMock.Object,
+			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
+			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                               mock.DALMapperMockFactory.DALChainMapperMock,
+			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
+			                               mock.DALMapperMockFactory.DALClaspMapperMock,
+			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                               mock.DALMapperMockFactory.DALLinkMapperMock);
+
+			ApiChainResponseModel response = await service.ByExternalId(default(Guid));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
+		}
+
+		[Fact]
 		public async void Clasps_Exists()
 		{
 			var mock = new ServiceMockFacade<IChainRepository>();
@@ -245,5 +288,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f07599e6803c6f2819bc5eb4369a0eee</Hash>
+    <Hash>bb8edad9097e6dbb9e1637e4f7b5e0e7</Hash>
 </Codenesium>*/

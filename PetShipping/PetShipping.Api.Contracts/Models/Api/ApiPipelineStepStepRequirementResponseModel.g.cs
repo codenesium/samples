@@ -10,39 +10,35 @@ namespace PetShippingNS.Api.Contracts
 	{
 		public virtual void SetProperties(
 			int id,
-			string details,
+			string detail,
 			int pipelineStepId,
 			bool requirementMet)
 		{
 			this.Id = id;
-			this.Details = details;
+			this.Detail = detail;
 			this.PipelineStepId = pipelineStepId;
 			this.RequirementMet = requirementMet;
 
 			this.PipelineStepIdEntity = nameof(ApiResponse.PipelineSteps);
 		}
 
-		[Required]
 		[JsonProperty]
-		public string Details { get; private set; }
+		public string Detail { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int PipelineStepId { get; private set; }
 
 		[JsonProperty]
 		public string PipelineStepIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public bool RequirementMet { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e821c13269929676d86b6bc53ec41cb</Hash>
+    <Hash>a45e99bf1a90ec1d0b0cbb58a8a63774</Hash>
 </Codenesium>*/

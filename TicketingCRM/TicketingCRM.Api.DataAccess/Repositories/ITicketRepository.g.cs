@@ -19,12 +19,12 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		Task<List<Ticket>> ByTicketStatusId(int ticketStatusId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<SaleTickets>> SaleTickets(int ticketId, int limit = int.MaxValue, int offset = 0);
+		Task<List<SaleTicket>> SaleTickets(int ticketId, int limit = int.MaxValue, int offset = 0);
 
-		Task<TicketStatus> GetTicketStatus(int ticketStatusId);
+		Task<TicketStatu> GetTicketStatu(int ticketStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4658f13f923494ce035397d40a0e0429</Hash>
+    <Hash>afa06fd287597cd49dc8de02f73d1bb1</Hash>
 </Codenesium>*/

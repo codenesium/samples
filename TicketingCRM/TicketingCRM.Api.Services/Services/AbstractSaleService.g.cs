@@ -22,9 +22,9 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IDALSaleMapper DalSaleMapper { get; private set; }
 
-		protected IBOLSaleTicketsMapper BolSaleTicketsMapper { get; private set; }
+		protected IBOLSaleTicketMapper BolSaleTicketMapper { get; private set; }
 
-		protected IDALSaleTicketsMapper DalSaleTicketsMapper { get; private set; }
+		protected IDALSaleTicketMapper DalSaleTicketMapper { get; private set; }
 
 		private ILogger logger;
 
@@ -34,16 +34,16 @@ namespace TicketingCRMNS.Api.Services
 			IApiSaleRequestModelValidator saleModelValidator,
 			IBOLSaleMapper bolSaleMapper,
 			IDALSaleMapper dalSaleMapper,
-			IBOLSaleTicketsMapper bolSaleTicketsMapper,
-			IDALSaleTicketsMapper dalSaleTicketsMapper)
+			IBOLSaleTicketMapper bolSaleTicketMapper,
+			IDALSaleTicketMapper dalSaleTicketMapper)
 			: base()
 		{
 			this.SaleRepository = saleRepository;
 			this.SaleModelValidator = saleModelValidator;
 			this.BolSaleMapper = bolSaleMapper;
 			this.DalSaleMapper = dalSaleMapper;
-			this.BolSaleTicketsMapper = bolSaleTicketsMapper;
-			this.DalSaleTicketsMapper = dalSaleTicketsMapper;
+			this.BolSaleTicketMapper = bolSaleTicketMapper;
+			this.DalSaleTicketMapper = dalSaleTicketMapper;
 			this.logger = logger;
 		}
 
@@ -123,15 +123,15 @@ namespace TicketingCRMNS.Api.Services
 			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSaleTicketsResponseModel>> SaleTickets(int saleId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSaleTicketResponseModel>> SaleTickets(int saleId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SaleTickets> records = await this.SaleRepository.SaleTickets(saleId, limit, offset);
+			List<SaleTicket> records = await this.SaleRepository.SaleTickets(saleId, limit, offset);
 
-			return this.BolSaleTicketsMapper.MapBOToModel(this.DalSaleTicketsMapper.MapEFToBO(records));
+			return this.BolSaleTicketMapper.MapBOToModel(this.DalSaleTicketMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>290efc3fac22c5b784cd3f57aa1054d8</Hash>
+    <Hash>5e160f91e86cb4bd0e7763491e96b856</Hash>
 </Codenesium>*/

@@ -28,15 +28,17 @@ namespace NebulaNS.Api.Services
 
 		public virtual void ChainStatusIdRules()
 		{
-			this.RuleFor(x => x.ChainStatusId).MustAsync(this.BeValidChainStatus).When(x => x?.ChainStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ChainStatusId).MustAsync(this.BeValidChainStatu).When(x => x?.ChainStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ExternalIdRules()
 		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => x?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiChainRequestModel.ExternalId));
 		}
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
@@ -45,9 +47,9 @@ namespace NebulaNS.Api.Services
 			this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeam).When(x => x?.TeamId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidChainStatus(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidChainStatu(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.chainRepository.GetChainStatus(id);
+			var record = await this.chainRepository.GetChainStatu(id);
 
 			return record != null;
 		}
@@ -58,9 +60,23 @@ namespace NebulaNS.Api.Services
 
 			return record != null;
 		}
+
+		private async Task<bool> BeUniqueByExternalId(ApiChainRequestModel model,  CancellationToken cancellationToken)
+		{
+			Chain record = await this.chainRepository.ByExternalId(model.ExternalId);
+
+			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>425caa62ccb4a6463da7e009217a89e5</Hash>
+    <Hash>6b89cd4e5d615582954cb5f135b0c84e</Hash>
 </Codenesium>*/

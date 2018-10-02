@@ -27,11 +27,11 @@ namespace PetShippingNS.Api.Contracts
 			from.OtherTransports.ForEach(x => this.AddOtherTransport(x));
 			from.Pets.ForEach(x => this.AddPet(x));
 			from.Pipelines.ForEach(x => this.AddPipeline(x));
-			from.PipelineStatus.ForEach(x => this.AddPipelineStatus(x));
+			from.PipelineStatus.ForEach(x => this.AddPipelineStatu(x));
 			from.PipelineSteps.ForEach(x => this.AddPipelineStep(x));
 			from.PipelineStepDestinations.ForEach(x => this.AddPipelineStepDestination(x));
 			from.PipelineStepNotes.ForEach(x => this.AddPipelineStepNote(x));
-			from.PipelineStepStatus.ForEach(x => this.AddPipelineStepStatus(x));
+			from.PipelineStepStatus.ForEach(x => this.AddPipelineStepStatu(x));
 			from.PipelineStepStepRequirements.ForEach(x => this.AddPipelineStepStepRequirement(x));
 			from.Sales.ForEach(x => this.AddSale(x));
 			from.Species.ForEach(x => this.AddSpecies(x));
@@ -65,7 +65,7 @@ namespace PetShippingNS.Api.Contracts
 
 		public List<ApiPipelineResponseModel> Pipelines { get; private set; } = new List<ApiPipelineResponseModel>();
 
-		public List<ApiPipelineStatusResponseModel> PipelineStatus { get; private set; } = new List<ApiPipelineStatusResponseModel>();
+		public List<ApiPipelineStatuResponseModel> PipelineStatus { get; private set; } = new List<ApiPipelineStatuResponseModel>();
 
 		public List<ApiPipelineStepResponseModel> PipelineSteps { get; private set; } = new List<ApiPipelineStepResponseModel>();
 
@@ -73,7 +73,7 @@ namespace PetShippingNS.Api.Contracts
 
 		public List<ApiPipelineStepNoteResponseModel> PipelineStepNotes { get; private set; } = new List<ApiPipelineStepNoteResponseModel>();
 
-		public List<ApiPipelineStepStatusResponseModel> PipelineStepStatus { get; private set; } = new List<ApiPipelineStepStatusResponseModel>();
+		public List<ApiPipelineStepStatuResponseModel> PipelineStepStatus { get; private set; } = new List<ApiPipelineStepStatuResponseModel>();
 
 		public List<ApiPipelineStepStepRequirementResponseModel> PipelineStepStepRequirements { get; private set; } = new List<ApiPipelineStepStepRequirementResponseModel>();
 
@@ -313,7 +313,7 @@ namespace PetShippingNS.Api.Contracts
 			return this.ShouldSerializePipelineStatusValue;
 		}
 
-		public void AddPipelineStatus(ApiPipelineStatusResponseModel item)
+		public void AddPipelineStatu(ApiPipelineStatuResponseModel item)
 		{
 			if (!this.PipelineStatus.Any(x => x.Id == item.Id))
 			{
@@ -377,7 +377,7 @@ namespace PetShippingNS.Api.Contracts
 			return this.ShouldSerializePipelineStepStatusValue;
 		}
 
-		public void AddPipelineStepStatus(ApiPipelineStepStatusResponseModel item)
+		public void AddPipelineStepStatu(ApiPipelineStepStatuResponseModel item)
 		{
 			if (!this.PipelineStepStatus.Any(x => x.Id == item.Id))
 			{
@@ -549,5 +549,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e53a4b07689eb5be29f7651b35064db5</Hash>
+    <Hash>f46a7d6f683e995ee44d925b8ed7a6f6</Hash>
 </Codenesium>*/

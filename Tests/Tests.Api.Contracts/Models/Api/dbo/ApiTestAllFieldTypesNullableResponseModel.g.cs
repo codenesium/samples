@@ -18,8 +18,8 @@ namespace TestsNS.Api.Contracts
 			DateTime? fieldDateTime,
 			DateTime? fieldDateTime2,
 			DateTimeOffset? fieldDateTimeOffset,
-			decimal? fieldDecimal,
-			decimal? fieldFloat,
+			double? fieldDecimal,
+			double? fieldFloat,
 			byte[] fieldImage,
 			decimal? fieldMoney,
 			string fieldNChar,
@@ -104,11 +104,11 @@ namespace TestsNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public decimal? FieldDecimal { get; private set; }
+		public double? FieldDecimal { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public decimal? FieldFloat { get; private set; }
+		public double? FieldFloat { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -188,5 +188,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c2973afabe2d09d57b80af5f6e9d77f8</Hash>
+    <Hash>9be83969caf9a74707b14dd5bdf2fb9e</Hash>
 </Codenesium>*/

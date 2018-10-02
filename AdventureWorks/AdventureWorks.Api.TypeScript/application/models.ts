@@ -888,6 +888,51 @@ this.territoryID = 0;
 		
 				}
 			}
+			export class ApiVStateProvinceCountryRegionRequestModel {
+				countryRegionCode:string;
+countryRegionName:string;
+isOnlyStateProvinceFlag:boolean;
+stateProvinceCode:string;
+stateProvinceID:number;
+stateProvinceName:string;
+territoryID:number;
+
+	
+				constructor() {
+					this.countryRegionCode = '';
+this.countryRegionName = '';
+this.isOnlyStateProvinceFlag = false;
+this.stateProvinceCode = '';
+this.stateProvinceID = 0;
+this.stateProvinceName = '';
+this.territoryID = 0;
+
+		
+				}
+			}
+
+			export class ApiVStateProvinceCountryRegionResponseModel {
+				countryRegionCode:string;
+countryRegionName:string;
+isOnlyStateProvinceFlag:boolean;
+stateProvinceCode:string;
+stateProvinceID:number;
+stateProvinceName:string;
+territoryID:number;
+
+	
+				constructor() {
+					this.countryRegionCode = '';
+this.countryRegionName = '';
+this.isOnlyStateProvinceFlag = false;
+this.stateProvinceCode = '';
+this.stateProvinceID = 0;
+this.stateProvinceName = '';
+this.territoryID = 0;
+
+		
+				}
+			}
 			export class ApiBillOfMaterialRequestModel {
 				billOfMaterialsID:number;
 bOMLevel:number;
@@ -1830,6 +1875,43 @@ unitMeasureCode:string;
 					this.modifiedDate = '';
 this.name = '';
 this.unitMeasureCode = '';
+
+		
+				}
+			}
+			export class ApiVProductAndDescriptionRequestModel {
+				cultureID:string;
+description:string;
+name:string;
+productID:number;
+productModel:string;
+
+	
+				constructor() {
+					this.cultureID = '';
+this.description = '';
+this.name = '';
+this.productID = 0;
+this.productModel = '';
+
+		
+				}
+			}
+
+			export class ApiVProductAndDescriptionResponseModel {
+				cultureID:string;
+description:string;
+name:string;
+productID:number;
+productModel:string;
+
+	
+				constructor() {
+					this.cultureID = '';
+this.description = '';
+this.name = '';
+this.productID = 0;
+this.productModel = '';
 
 		
 				}

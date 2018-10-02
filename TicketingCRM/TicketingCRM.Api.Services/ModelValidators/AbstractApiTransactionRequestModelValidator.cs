@@ -32,17 +32,18 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void GatewayConfirmationNumberRules()
 		{
+			this.RuleFor(x => x.GatewayConfirmationNumber).NotNull();
 			this.RuleFor(x => x.GatewayConfirmationNumber).Length(0, 1);
 		}
 
 		public virtual void TransactionStatusIdRules()
 		{
-			this.RuleFor(x => x.TransactionStatusId).MustAsync(this.BeValidTransactionStatus).When(x => x?.TransactionStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TransactionStatusId).MustAsync(this.BeValidTransactionStatu).When(x => x?.TransactionStatusId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidTransactionStatus(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTransactionStatu(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.transactionRepository.GetTransactionStatus(id);
+			var record = await this.transactionRepository.GetTransactionStatu(id);
 
 			return record != null;
 		}
@@ -50,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9905ea5869cbe6ac168e9c8745d2ed91</Hash>
+    <Hash>88ae4514bb958e618f9b61fa9c327ed7</Hash>
 </Codenesium>*/

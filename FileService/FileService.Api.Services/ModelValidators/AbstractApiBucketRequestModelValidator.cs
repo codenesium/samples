@@ -33,6 +33,7 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBucketRequestModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 255);
 		}
@@ -68,5 +69,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f4e074dbc88eab23124c8fdc06d7c259</Hash>
+    <Hash>0f2a1f4dad685b7bf947adbeaa32742b</Hash>
 </Codenesium>*/

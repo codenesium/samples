@@ -23,7 +23,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
 			response.Id.Should().Be(1);
 			response.IpAddress.Should().Be("A");
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TransactionId.Should().Be(1);
 		}
@@ -39,7 +39,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 
 			response.Id.Should().Be(1);
 			response.IpAddress.Should().Be("A");
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.SaleDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.TransactionId.Should().Be(1);
 		}
@@ -59,5 +59,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5d4033b257e1de19ce3128f7863eebf4</Hash>
+    <Hash>6d38169dde7fe95893c8aa8f414ca1cf</Hash>
 </Codenesium>*/

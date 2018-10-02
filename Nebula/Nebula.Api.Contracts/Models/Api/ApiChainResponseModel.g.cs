@@ -25,26 +25,21 @@ namespace NebulaNS.Api.Contracts
 			this.TeamIdEntity = nameof(ApiResponse.Teams);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int ChainStatusId { get; private set; }
 
 		[JsonProperty]
 		public string ChainStatusIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public Guid ExternalId { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int TeamId { get; private set; }
 
@@ -54,5 +49,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>ea3c3ae99ca288e887552944b1d4efb6</Hash>
+    <Hash>f7e0247a4ad0cc969d462f11f44196fc</Hash>
 </Codenesium>*/

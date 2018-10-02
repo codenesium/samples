@@ -15,7 +15,7 @@ namespace AdventureWorksNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+		public int TenantId { get; private set; } = 1;
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -86,6 +86,8 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual DbSet<StateProvince> StateProvinces { get; set; }
 
+		public virtual DbSet<VStateProvinceCountryRegion> VStateProvinceCountryRegions { get; set; }
+
 		public virtual DbSet<BillOfMaterial> BillOfMaterials { get; set; }
 
 		public virtual DbSet<Culture> Cultures { get; set; }
@@ -129,6 +131,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		public virtual DbSet<TransactionHistoryArchive> TransactionHistoryArchives { get; set; }
 
 		public virtual DbSet<UnitMeasure> UnitMeasures { get; set; }
+
+		public virtual DbSet<VProductAndDescription> VProductAndDescriptions { get; set; }
 
 		public virtual DbSet<WorkOrder> WorkOrders { get; set; }
 
@@ -188,6 +192,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
+		/// <param name="acceptAllChangesOnSuccess"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -200,6 +206,12 @@ namespace AdventureWorksNS.Api.DataAccess
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
+					}
+
+					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					if (tenantEntity != null)
+					{
+						tenantEntity.CurrentValue = this.TenantId;
 					}
 				}
 			}
@@ -228,7 +240,8 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -243,5 +256,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>963216388cc0112de1ab590d853bfb73</Hash>
+    <Hash>ffe2c47d958915ff3ea32000ed5ef5b1</Hash>
 </Codenesium>*/

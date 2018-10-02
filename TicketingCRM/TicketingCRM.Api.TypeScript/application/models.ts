@@ -233,7 +233,7 @@ this.name = '';
 			export class ApiSaleRequestModel {
 				id:number;
 ipAddress:string;
-notes:string;
+note:string;
 saleDate:string;
 transactionId:number;
 transactionIdEntity:number;
@@ -242,7 +242,7 @@ transactionIdEntity:number;
 				constructor() {
 					this.id = 0;
 this.ipAddress = '';
-this.notes = '';
+this.note = '';
 this.saleDate = '';
 this.transactionId = 0;
 
@@ -253,7 +253,7 @@ this.transactionId = 0;
 			export class ApiSaleResponseModel {
 				id:number;
 ipAddress:string;
-notes:string;
+note:string;
 saleDate:string;
 transactionId:number;
 transactionIdEntity:number;
@@ -262,14 +262,14 @@ transactionIdEntity:number;
 				constructor() {
 					this.id = 0;
 this.ipAddress = '';
-this.notes = '';
+this.note = '';
 this.saleDate = '';
 this.transactionId = 0;
 
 		
 				}
 			}
-			export class ApiSaleTicketsRequestModel {
+			export class ApiSaleTicketRequestModel {
 				id:number;
 saleId:number;
 saleIdEntity:number;
@@ -286,7 +286,7 @@ this.ticketId = 0;
 				}
 			}
 
-			export class ApiSaleTicketsResponseModel {
+			export class ApiSaleTicketResponseModel {
 				id:number;
 saleId:number;
 saleIdEntity:number;
@@ -333,7 +333,7 @@ this.ticketStatusId = 0;
 		
 				}
 			}
-			export class ApiTicketStatusRequestModel {
+			export class ApiTicketStatuRequestModel {
 				id:number;
 name:string;
 
@@ -346,7 +346,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiTicketStatusResponseModel {
+			export class ApiTicketStatuResponseModel {
 				id:number;
 name:string;
 
@@ -393,7 +393,7 @@ this.transactionStatusId = 0;
 		
 				}
 			}
-			export class ApiTransactionStatusRequestModel {
+			export class ApiTransactionStatuRequestModel {
 				id:number;
 name:string;
 
@@ -406,7 +406,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiTransactionStatusResponseModel {
+			export class ApiTransactionStatuResponseModel {
 				id:number;
 name:string;
 

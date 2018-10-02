@@ -52,6 +52,8 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IBOLStateProvinceMapper BOLStateProvinceMapperMock { get; set; } = new BOLStateProvinceMapper();
 
+		public IBOLVStateProvinceCountryRegionMapper BOLVStateProvinceCountryRegionMapperMock { get; set; } = new BOLVStateProvinceCountryRegionMapper();
+
 		public IBOLBillOfMaterialMapper BOLBillOfMaterialMapperMock { get; set; } = new BOLBillOfMaterialMapper();
 
 		public IBOLCultureMapper BOLCultureMapperMock { get; set; } = new BOLCultureMapper();
@@ -95,6 +97,8 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public IBOLTransactionHistoryArchiveMapper BOLTransactionHistoryArchiveMapperMock { get; set; } = new BOLTransactionHistoryArchiveMapper();
 
 		public IBOLUnitMeasureMapper BOLUnitMeasureMapperMock { get; set; } = new BOLUnitMeasureMapper();
+
+		public IBOLVProductAndDescriptionMapper BOLVProductAndDescriptionMapperMock { get; set; } = new BOLVProductAndDescriptionMapper();
 
 		public IBOLWorkOrderMapper BOLWorkOrderMapperMock { get; set; } = new BOLWorkOrderMapper();
 
@@ -155,5 +159,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1fdf4ea698a2f8df0042fac6cf551ab9</Hash>
+    <Hash>e0f88c2452f1cc49b0ed8e6b23c3d11f</Hash>
 </Codenesium>*/

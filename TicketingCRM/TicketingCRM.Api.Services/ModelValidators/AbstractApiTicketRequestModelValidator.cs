@@ -28,17 +28,18 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void PublicIdRules()
 		{
+			this.RuleFor(x => x.PublicId).NotNull();
 			this.RuleFor(x => x.PublicId).Length(0, 8);
 		}
 
 		public virtual void TicketStatusIdRules()
 		{
-			this.RuleFor(x => x.TicketStatusId).MustAsync(this.BeValidTicketStatus).When(x => x?.TicketStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TicketStatusId).MustAsync(this.BeValidTicketStatu).When(x => x?.TicketStatusId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidTicketStatus(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTicketStatu(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.ticketRepository.GetTicketStatus(id);
+			var record = await this.ticketRepository.GetTicketStatu(id);
 
 			return record != null;
 		}
@@ -46,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5904653fd7f86617625cefc2649bbaca</Hash>
+    <Hash>f0c3e3c665f08e47b557ac97db0921f0</Hash>
 </Codenesium>*/

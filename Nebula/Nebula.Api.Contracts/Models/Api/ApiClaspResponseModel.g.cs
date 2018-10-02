@@ -21,18 +21,15 @@ namespace NebulaNS.Api.Contracts
 			this.PreviousChainIdEntity = nameof(ApiResponse.Chains);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int NextChainId { get; private set; }
 
 		[JsonProperty]
 		public string NextChainIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public int PreviousChainId { get; private set; }
 
@@ -42,5 +39,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>903720bf2cb394142f96dbd92c9eb2ac</Hash>
+    <Hash>6286857241798712c699a5dbd5549c90</Hash>
 </Codenesium>*/

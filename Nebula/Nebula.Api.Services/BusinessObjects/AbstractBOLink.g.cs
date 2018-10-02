@@ -15,28 +15,28 @@ namespace NebulaNS.Api.Services
 		                                  int chainId,
 		                                  DateTime? dateCompleted,
 		                                  DateTime? dateStarted,
-		                                  string dynamicParameters,
+		                                  string dynamicParameter,
 		                                  Guid externalId,
 		                                  int linkStatusId,
 		                                  string name,
 		                                  int order,
 		                                  string response,
-		                                  string staticParameters,
-		                                  int timeoutInSeconds)
+		                                  string staticParameter,
+		                                  int timeoutInSecond)
 		{
 			this.AssignedMachineId = assignedMachineId;
 			this.ChainId = chainId;
 			this.DateCompleted = dateCompleted;
 			this.DateStarted = dateStarted;
-			this.DynamicParameters = dynamicParameters;
+			this.DynamicParameter = dynamicParameter;
 			this.ExternalId = externalId;
 			this.Id = id;
 			this.LinkStatusId = linkStatusId;
 			this.Name = name;
 			this.Order = order;
 			this.Response = response;
-			this.StaticParameters = staticParameters;
-			this.TimeoutInSeconds = timeoutInSeconds;
+			this.StaticParameter = staticParameter;
+			this.TimeoutInSecond = timeoutInSecond;
 		}
 
 		public int? AssignedMachineId { get; private set; }
@@ -47,7 +47,7 @@ namespace NebulaNS.Api.Services
 
 		public DateTime? DateStarted { get; private set; }
 
-		public string DynamicParameters { get; private set; }
+		public string DynamicParameter { get; private set; }
 
 		public Guid ExternalId { get; private set; }
 
@@ -61,12 +61,12 @@ namespace NebulaNS.Api.Services
 
 		public string Response { get; private set; }
 
-		public string StaticParameters { get; private set; }
+		public string StaticParameter { get; private set; }
 
-		public int TimeoutInSeconds { get; private set; }
+		public int TimeoutInSecond { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2484c09e9dda984267834779ecd8b3e7</Hash>
+    <Hash>8253254a20fab43b166b7f98d11fc7fa</Hash>
 </Codenesium>*/

@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Services
 		{
 			PipelineStepStepRequirement efPipelineStepStepRequirement = new PipelineStepStepRequirement();
 			efPipelineStepStepRequirement.SetProperties(
-				bo.Details,
+				bo.Detail,
 				bo.Id,
 				bo.PipelineStepId,
 				bo.RequirementMet);
@@ -27,7 +27,7 @@ namespace PetShippingNS.Api.Services
 
 			bo.SetProperties(
 				ef.Id,
-				ef.Details,
+				ef.Detail,
 				ef.PipelineStepId,
 				ef.RequirementMet);
 			return bo;
@@ -49,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f6bde33c299b73067fff3da1ca26e97a</Hash>
+    <Hash>3285b83b9652185785732e5682545993</Hash>
 </Codenesium>*/

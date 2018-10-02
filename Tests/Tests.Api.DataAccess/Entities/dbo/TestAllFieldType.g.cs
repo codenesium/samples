@@ -22,8 +22,8 @@ namespace TestsNS.Api.DataAccess
 			DateTime fieldDateTime,
 			DateTime fieldDateTime2,
 			DateTimeOffset fieldDateTimeOffset,
-			decimal fieldDecimal,
-			decimal fieldFloat,
+			double fieldDecimal,
+			double fieldFloat,
 			byte[] fieldImage,
 			decimal fieldMoney,
 			string fieldNChar,
@@ -102,10 +102,10 @@ namespace TestsNS.Api.DataAccess
 		public DateTimeOffset FieldDateTimeOffset { get; private set; }
 
 		[Column("fieldDecimal")]
-		public decimal FieldDecimal { get; private set; }
+		public double FieldDecimal { get; private set; }
 
 		[Column("fieldFloat")]
-		public decimal FieldFloat { get; private set; }
+		public double FieldFloat { get; private set; }
 
 		[Column("fieldImage")]
 		public byte[] FieldImage { get; private set; }
@@ -176,5 +176,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6d0c6eaad49655d97244e334b4977205</Hash>
+    <Hash>436ca8b0d85c18fcc2a174ac67501748</Hash>
 </Codenesium>*/

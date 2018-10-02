@@ -12,21 +12,21 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void SetProperties(int id,
 		                                  int countryId,
-		                                  string details)
+		                                  string detail)
 		{
 			this.CountryId = countryId;
-			this.Details = details;
+			this.Detail = detail;
 			this.Id = id;
 		}
 
 		public int CountryId { get; private set; }
 
-		public string Details { get; private set; }
+		public string Detail { get; private set; }
 
 		public int Id { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>ecd1ce7c3be50cd03c8ea0e5e4af9079</Hash>
+    <Hash>4be9fb61d0701e347f3f93195b85b39b</Hash>
 </Codenesium>*/

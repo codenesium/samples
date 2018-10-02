@@ -22,9 +22,9 @@ namespace NebulaNS.Api.DataAccess
 			chainItem1.SetProperties(1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1);
 			this.context.Chains.Add(chainItem1);
 
-			var chainStatusItem1 = new ChainStatus();
-			chainStatusItem1.SetProperties(1, "A");
-			this.context.ChainStatus.Add(chainStatusItem1);
+			var chainStatuItem1 = new ChainStatu();
+			chainStatuItem1.SetProperties(1, "A");
+			this.context.ChainStatus.Add(chainStatuItem1);
 
 			var claspItem1 = new Clasp();
 			claspItem1.SetProperties(1, 1, 1);
@@ -38,9 +38,9 @@ namespace NebulaNS.Api.DataAccess
 			linkLogItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, "A");
 			this.context.LinkLogs.Add(linkLogItem1);
 
-			var linkStatusItem1 = new LinkStatus();
-			linkStatusItem1.SetProperties(1, "A");
-			this.context.LinkStatus.Add(linkStatusItem1);
+			var linkStatuItem1 = new LinkStatu();
+			linkStatuItem1.SetProperties(1, "A");
+			this.context.LinkStatus.Add(linkStatuItem1);
 
 			var machineItem1 = new Machine();
 			machineItem1.SetProperties("A", 1, "A", "A", Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), "A");
@@ -53,6 +53,10 @@ namespace NebulaNS.Api.DataAccess
 			var organizationItem1 = new Organization();
 			organizationItem1.SetProperties(1, "A");
 			this.context.Organizations.Add(organizationItem1);
+
+			var sysdiagramItem1 = new Sysdiagram();
+			sysdiagramItem1.SetProperties(BitConverter.GetBytes(1), 1, "A", 1, 1);
+			this.context.Sysdiagrams.Add(sysdiagramItem1);
 
 			var teamItem1 = new Team();
 			teamItem1.SetProperties(1, "A", 1);
@@ -68,5 +72,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8ee327310649c3addea11ac644313bff</Hash>
+    <Hash>fa88db112ac8ee1586bd34ee7f13769f</Hash>
 </Codenesium>*/

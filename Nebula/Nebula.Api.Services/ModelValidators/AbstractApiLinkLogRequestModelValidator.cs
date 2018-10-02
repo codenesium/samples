@@ -37,6 +37,7 @@ namespace NebulaNS.Api.Services
 
 		public virtual void LogRules()
 		{
+			this.RuleFor(x => x.Log).NotNull();
 			this.RuleFor(x => x.Log).Length(0, 2147483647);
 		}
 
@@ -50,5 +51,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>75a31730fcb22ebc55583f88ebab6484</Hash>
+    <Hash>e7fc10eab169d69fa699d2b0498e0a50</Hash>
 </Codenesium>*/

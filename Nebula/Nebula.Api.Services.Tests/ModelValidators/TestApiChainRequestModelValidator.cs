@@ -28,7 +28,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainStatusId_Create_Valid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(new ChainStatus()));
+			chainRepository.Setup(x => x.GetChainStatu(It.IsAny<int>())).Returns(Task.FromResult<ChainStatu>(new ChainStatu()));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 			await validator.ValidateCreateAsync(new ApiChainRequestModel());
@@ -40,7 +40,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainStatusId_Create_Invalid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(null));
+			chainRepository.Setup(x => x.GetChainStatu(It.IsAny<int>())).Returns(Task.FromResult<ChainStatu>(null));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
@@ -53,7 +53,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainStatusId_Update_Valid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(new ChainStatus()));
+			chainRepository.Setup(x => x.GetChainStatu(It.IsAny<int>())).Returns(Task.FromResult<ChainStatu>(new ChainStatu()));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
@@ -65,13 +65,37 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainStatusId_Update_Invalid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetChainStatus(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(null));
+			chainRepository.Setup(x => x.GetChainStatu(It.IsAny<int>())).Returns(Task.FromResult<ChainStatu>(null));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
 			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.ChainStatusId, 1);
+		}
+
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Chain()));
+
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			await validator.ValidateCreateAsync(new ApiChainRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Chain()));
+
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
 		}
 
 		[Fact]
@@ -147,9 +171,57 @@ namespace NebulaNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.TeamId, 1);
 		}
+
+		[Fact]
+		private async void BeUniqueByExternalId_Create_Exists()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Chain>(new Chain()));
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiChainRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByExternalId_Create_Not_Exists()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Chain>(null));
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiChainRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByExternalId_Update_Exists()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Chain>(new Chain()));
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByExternalId_Update_Not_Exists()
+		{
+			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
+			chainRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Chain>(null));
+			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a8cfbdd4bb09d578e509587ee05d908</Hash>
+    <Hash>5b1f10cb96ae614018dac0023c904e01</Hash>
 </Codenesium>*/

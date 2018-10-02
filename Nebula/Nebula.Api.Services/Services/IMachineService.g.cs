@@ -21,6 +21,8 @@ namespace NebulaNS.Api.Services
 
 		Task<List<ApiMachineResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<ApiMachineResponseModel> ByMachineGuid(Guid machineGuid);
+
 		Task<List<ApiLinkResponseModel>> Links(int assignedMachineId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int machineId, int limit = int.MaxValue, int offset = 0);
@@ -28,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e3f451a196f8194374042693d19749f7</Hash>
+    <Hash>673cec6dc7e5698b2924e7d02c5b1af3</Hash>
 </Codenesium>*/

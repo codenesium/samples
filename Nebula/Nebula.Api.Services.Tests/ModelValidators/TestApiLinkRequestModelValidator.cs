@@ -128,7 +128,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkStatusId_Create_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetLinkStatus(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(new LinkStatus()));
+			linkRepository.Setup(x => x.GetLinkStatu(It.IsAny<int>())).Returns(Task.FromResult<LinkStatu>(new LinkStatu()));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 			await validator.ValidateCreateAsync(new ApiLinkRequestModel());
@@ -140,7 +140,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkStatusId_Create_Invalid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetLinkStatus(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(null));
+			linkRepository.Setup(x => x.GetLinkStatu(It.IsAny<int>())).Returns(Task.FromResult<LinkStatu>(null));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
@@ -153,7 +153,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkStatusId_Update_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetLinkStatus(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(new LinkStatus()));
+			linkRepository.Setup(x => x.GetLinkStatu(It.IsAny<int>())).Returns(Task.FromResult<LinkStatu>(new LinkStatu()));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
@@ -165,13 +165,37 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkStatusId_Update_Invalid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetLinkStatus(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(null));
+			linkRepository.Setup(x => x.GetLinkStatu(It.IsAny<int>())).Returns(Task.FromResult<LinkStatu>(null));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
 			await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.LinkStatusId, 1);
+		}
+
+		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
+
+			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
+			await validator.ValidateCreateAsync(new ApiLinkRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Link()));
+
+			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
 		}
 
 		[Fact]
@@ -197,9 +221,57 @@ namespace NebulaNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
 		}
+
+		[Fact]
+		private async void BeUniqueByExternalId_Create_Exists()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Link>(new Link()));
+			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiLinkRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByExternalId_Create_Not_Exists()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Link>(null));
+			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiLinkRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByExternalId_Update_Exists()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Link>(new Link()));
+			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
+
+		[Fact]
+		private async void BeUniqueByExternalId_Update_Not_Exists()
+		{
+			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
+			linkRepository.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Link>(null));
+			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.ExternalId, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ceb0b5adc6e3c109e90830d985ca0ac</Hash>
+    <Hash>2105018767372b9bd4cd94dcf551b4e5</Hash>
 </Codenesium>*/

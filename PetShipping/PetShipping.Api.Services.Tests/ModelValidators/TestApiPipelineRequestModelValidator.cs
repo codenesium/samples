@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStatusId_Create_Valid_Reference()
 		{
 			Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
-			pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(new PipelineStatus()));
+			pipelineRepository.Setup(x => x.GetPipelineStatu(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatu>(new PipelineStatu()));
 
 			var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPipelineRequestModel());
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStatusId_Create_Invalid_Reference()
 		{
 			Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
-			pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(null));
+			pipelineRepository.Setup(x => x.GetPipelineStatu(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatu>(null));
 
 			var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
 
@@ -53,7 +53,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStatusId_Update_Valid_Reference()
 		{
 			Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
-			pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(new PipelineStatus()));
+			pipelineRepository.Setup(x => x.GetPipelineStatu(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatu>(new PipelineStatu()));
 
 			var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPipelineRequestModel());
@@ -65,7 +65,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStatusId_Update_Invalid_Reference()
 		{
 			Mock<IPipelineRepository> pipelineRepository = new Mock<IPipelineRepository>();
-			pipelineRepository.Setup(x => x.GetPipelineStatus(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatus>(null));
+			pipelineRepository.Setup(x => x.GetPipelineStatu(It.IsAny<int>())).Returns(Task.FromResult<PipelineStatu>(null));
 
 			var validator = new ApiPipelineRequestModelValidator(pipelineRepository.Object);
 
@@ -77,5 +77,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0d3e42bb2a2a97090f3f5c285029db59</Hash>
+    <Hash>d027e152cab7c9342fc9138df52503d6</Hash>
 </Codenesium>*/

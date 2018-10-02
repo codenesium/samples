@@ -28,6 +28,8 @@ namespace NebulaNS.Api.Services
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByName).When(x => x?.Name != null).WithMessage("Violates unique constraint").WithName(nameof(ApiTeamRequestModel.Name));
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
@@ -42,9 +44,23 @@ namespace NebulaNS.Api.Services
 
 			return record != null;
 		}
+
+		private async Task<bool> BeUniqueByName(ApiTeamRequestModel model,  CancellationToken cancellationToken)
+		{
+			Team record = await this.teamRepository.ByName(model.Name);
+
+			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>415eec0b4d751e0d888c676a9b1b364f</Hash>
+    <Hash>f03df99421f0b3391e9269d9b4198cd6</Hash>
 </Codenesium>*/

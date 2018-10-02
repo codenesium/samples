@@ -10,7 +10,7 @@ namespace NebulaNS.Api.Services.Tests
 	{
 		public IBOLChainMapper BOLChainMapperMock { get; set; } = new BOLChainMapper();
 
-		public IBOLChainStatusMapper BOLChainStatusMapperMock { get; set; } = new BOLChainStatusMapper();
+		public IBOLChainStatuMapper BOLChainStatuMapperMock { get; set; } = new BOLChainStatuMapper();
 
 		public IBOLClaspMapper BOLClaspMapperMock { get; set; } = new BOLClaspMapper();
 
@@ -18,13 +18,15 @@ namespace NebulaNS.Api.Services.Tests
 
 		public IBOLLinkLogMapper BOLLinkLogMapperMock { get; set; } = new BOLLinkLogMapper();
 
-		public IBOLLinkStatusMapper BOLLinkStatusMapperMock { get; set; } = new BOLLinkStatusMapper();
+		public IBOLLinkStatuMapper BOLLinkStatuMapperMock { get; set; } = new BOLLinkStatuMapper();
 
 		public IBOLMachineMapper BOLMachineMapperMock { get; set; } = new BOLMachineMapper();
 
 		public IBOLMachineRefTeamMapper BOLMachineRefTeamMapperMock { get; set; } = new BOLMachineRefTeamMapper();
 
 		public IBOLOrganizationMapper BOLOrganizationMapperMock { get; set; } = new BOLOrganizationMapper();
+
+		public IBOLSysdiagramMapper BOLSysdiagramMapperMock { get; set; } = new BOLSysdiagramMapper();
 
 		public IBOLTeamMapper BOLTeamMapperMock { get; set; } = new BOLTeamMapper();
 
@@ -37,5 +39,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9ec58f289168fca3f878ee97fd36858c</Hash>
+    <Hash>9825fdcf498d3f4dfd13244257519fb9</Hash>
 </Codenesium>*/

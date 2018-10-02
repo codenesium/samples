@@ -17,16 +17,20 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<Link>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<Link> ByExternalId(Guid externalId);
+
+		Task<List<Link>> ByChainId(int chainId, int limit = int.MaxValue, int offset = 0);
+
 		Task<List<LinkLog>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0);
 
 		Task<Machine> GetMachine(int? assignedMachineId);
 
 		Task<Chain> GetChain(int chainId);
 
-		Task<LinkStatus> GetLinkStatus(int linkStatusId);
+		Task<LinkStatu> GetLinkStatu(int linkStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9dd2ddd292aba433c4a1fb188c0ef299</Hash>
+    <Hash>7cffa07fc80370d9d4a83ff4bc055322</Hash>
 </Codenesium>*/

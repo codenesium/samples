@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IBOLPipelineMapper BOLPipelineMapperMock { get; set; } = new BOLPipelineMapper();
 
-		public IBOLPipelineStatusMapper BOLPipelineStatusMapperMock { get; set; } = new BOLPipelineStatusMapper();
+		public IBOLPipelineStatuMapper BOLPipelineStatuMapperMock { get; set; } = new BOLPipelineStatuMapper();
 
 		public IBOLPipelineStepMapper BOLPipelineStepMapperMock { get; set; } = new BOLPipelineStepMapper();
 
@@ -44,7 +44,7 @@ namespace PetShippingNS.Api.Services.Tests
 
 		public IBOLPipelineStepNoteMapper BOLPipelineStepNoteMapperMock { get; set; } = new BOLPipelineStepNoteMapper();
 
-		public IBOLPipelineStepStatusMapper BOLPipelineStepStatusMapperMock { get; set; } = new BOLPipelineStepStatusMapper();
+		public IBOLPipelineStepStatuMapper BOLPipelineStepStatuMapperMock { get; set; } = new BOLPipelineStepStatuMapper();
 
 		public IBOLPipelineStepStepRequirementMapper BOLPipelineStepStepRequirementMapperMock { get; set; } = new BOLPipelineStepStepRequirementMapper();
 
@@ -59,5 +59,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>07e7aa05c3bfb8b00590fd46db1822cb</Hash>
+    <Hash>e18ac5fbf37bf58376f14d934bdf7dc9</Hash>
 </Codenesium>*/

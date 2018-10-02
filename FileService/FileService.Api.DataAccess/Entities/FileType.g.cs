@@ -22,6 +22,7 @@ namespace FileServiceNS.Api.DataAccess
 		}
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -32,5 +33,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fa1bef6cdc0b5673acd097ec5cef1920</Hash>
+    <Hash>e4955a92336f8cac326f32fae5a4121b</Hash>
 </Codenesium>*/

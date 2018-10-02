@@ -15,7 +15,7 @@ namespace TicketingCRMNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+		public int TenantId { get; private set; } = 1;
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -56,15 +56,15 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		public virtual DbSet<Sale> Sales { get; set; }
 
-		public virtual DbSet<SaleTickets> SaleTickets { get; set; }
+		public virtual DbSet<SaleTicket> SaleTickets { get; set; }
 
 		public virtual DbSet<Ticket> Tickets { get; set; }
 
-		public virtual DbSet<TicketStatus> TicketStatus { get; set; }
+		public virtual DbSet<TicketStatu> TicketStatus { get; set; }
 
 		public virtual DbSet<Transaction> Transactions { get; set; }
 
-		public virtual DbSet<TransactionStatus> TransactionStatus { get; set; }
+		public virtual DbSet<TransactionStatu> TransactionStatus { get; set; }
 
 		public virtual DbSet<Venue> Venues { get; set; }
 
@@ -74,6 +74,8 @@ namespace TicketingCRMNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
+		/// <param name="acceptAllChangesOnSuccess"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -86,6 +88,12 @@ namespace TicketingCRMNS.Api.DataAccess
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
+					}
+
+					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					if (tenantEntity != null)
+					{
+						tenantEntity.CurrentValue = this.TenantId;
 					}
 				}
 			}
@@ -114,7 +122,8 @@ namespace TicketingCRMNS.Api.DataAccess
 
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -129,5 +138,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a964fd81594db2de071e96b588c6162f</Hash>
+    <Hash>dfa0e3e2f928f92a88b946f5da75c5f7</Hash>
 </Codenesium>*/

@@ -20,15 +20,12 @@ namespace NebulaNS.Api.Contracts
 			this.OrganizationIdEntity = nameof(ApiResponse.Organizations);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int OrganizationId { get; private set; }
 
@@ -38,5 +35,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>87b93340b656e2e7d88ef2b452f0dceb</Hash>
+    <Hash>0dce511894068014380d3de5aced859d</Hash>
 </Codenesium>*/

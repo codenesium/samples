@@ -21,7 +21,7 @@ namespace PetShippingNS.Api.Contracts.Tests
 			ApiCountryRequirementResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.CountryId.Should().Be(1);
-			response.Details.Should().Be("A");
+			response.Detail.Should().Be("A");
 			response.Id.Should().Be(1);
 		}
 
@@ -34,7 +34,7 @@ namespace PetShippingNS.Api.Contracts.Tests
 			ApiCountryRequirementRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.CountryId.Should().Be(1);
-			response.Details.Should().Be("A");
+			response.Detail.Should().Be("A");
 		}
 
 		[Fact]
@@ -48,11 +48,11 @@ namespace PetShippingNS.Api.Contracts.Tests
 			var response = new ApiCountryRequirementRequestModel();
 			patch.ApplyTo(response);
 			response.CountryId.Should().Be(1);
-			response.Details.Should().Be("A");
+			response.Detail.Should().Be("A");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3db3f091bad8972dea12afeef961375f</Hash>
+    <Hash>648eb32cb93ed4c86e4218870bee4edf</Hash>
 </Codenesium>*/

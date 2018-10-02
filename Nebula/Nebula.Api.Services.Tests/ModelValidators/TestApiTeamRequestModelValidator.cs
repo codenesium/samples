@@ -25,6 +25,30 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
+
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTeamRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Team()));
+
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
 		public async void Name_Create_length()
 		{
 			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
@@ -97,9 +121,57 @@ namespace NebulaNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.OrganizationId, 1);
 		}
+
+		[Fact]
+		private async void BeUniqueByName_Create_Exists()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiTeamRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
+
+		[Fact]
+		private async void BeUniqueByName_Create_Not_Exists()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiTeamRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
+
+		[Fact]
+		private async void BeUniqueByName_Update_Exists()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(new Team()));
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, "A");
+		}
+
+		[Fact]
+		private async void BeUniqueByName_Update_Not_Exists()
+		{
+			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
+			teamRepository.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
+			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.Name, "A");
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fcdb98d255eace94c96b2475c0fb0f80</Hash>
+    <Hash>a35d8fb368b2d8bad23132a47f4b7c57</Hash>
 </Codenesium>*/

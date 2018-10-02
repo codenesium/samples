@@ -30,26 +30,32 @@ namespace PetShippingNS.Api.Contracts
 			this.TakeoffDate = takeoffDate;
 		}
 
+		[Required]
 		[JsonProperty]
 		public string FlightNumber { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int HandlerId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public DateTime LandDate { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int PipelineStepId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public DateTime TakeoffDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>00aab334bbab7bc605ffe2e50f6c22b8</Hash>
+    <Hash>ca10dfe413852ff520a5fa75e1aae54f</Hash>
 </Codenesium>*/

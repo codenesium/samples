@@ -207,6 +207,25 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byName/{name}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiOrganizationResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByName(string name)
+		{
+			ApiOrganizationResponseModel response = await this.OrganizationService.ByName(name);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{organizationId}/Teams")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTeamResponseModel>), 200)]
@@ -242,5 +261,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ad3724da61d600231cc6d5cecb943874</Hash>
+    <Hash>7bd673926207d6e766616e78a0f13d63</Hash>
 </Codenesium>*/

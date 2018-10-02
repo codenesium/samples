@@ -1,0 +1,71 @@
+using FluentAssertions;
+using StudioResourceManagerNS.Api.DataAccess;
+using StudioResourceManagerNS.Api.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
+
+namespace StudioResourceManagerNS.Api.Services.Tests
+{
+	[Trait("Type", "Unit")]
+	[Trait("Table", "Event")]
+	[Trait("Area", "DALMapper")]
+	public class TestDALEventMapper
+	{
+		[Fact]
+		public void MapBOToEF()
+		{
+			var mapper = new DALEventMapper();
+			var bo = new BOEvent();
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+
+			Event response = mapper.MapBOToEF(bo);
+
+			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.BillAmount.Should().Be(1m);
+			response.EventStatusId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.StudentNote.Should().Be("A");
+			response.TeacherNote.Should().Be("A");
+		}
+
+		[Fact]
+		public void MapEFToBO()
+		{
+			var mapper = new DALEventMapper();
+			Event entity = new Event();
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+
+			BOEvent response = mapper.MapEFToBO(entity);
+
+			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ActualStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.BillAmount.Should().Be(1m);
+			response.EventStatusId.Should().Be(1);
+			response.Id.Should().Be(1);
+			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.StudentNote.Should().Be("A");
+			response.TeacherNote.Should().Be("A");
+		}
+
+		[Fact]
+		public void MapEFToBOList()
+		{
+			var mapper = new DALEventMapper();
+			Event entity = new Event();
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+
+			List<BOEvent> response = mapper.MapEFToBO(new List<Event>() { entity });
+
+			response.Count.Should().Be(1);
+		}
+	}
+}
+
+/*<Codenesium>
+    <Hash>b9f87ae2c24b0047662fa6888657bfcf</Hash>
+</Codenesium>*/

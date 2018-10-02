@@ -36,14 +36,14 @@ GO
 --ALTER TABLE [dbo].[Pet] DROP CONSTRAINT [FK_Pet_speciesId_Species_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Sale_petId_Pet_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_petId_Pet_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_Sale_paymentTypeId_PaymentType_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_paymentTypeId_PaymentType_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Sale_petId_Pet_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_petId_Pet_id]
 --END
 --GO
 
@@ -177,15 +177,15 @@ REFERENCES[dbo].[Species]([id])
 GO
 ALTER TABLE[dbo].[Pet] CHECK CONSTRAINT[FK_Pet_speciesId_Species_id]
 GO
-ALTER TABLE[dbo].[Sale]  WITH CHECK ADD  CONSTRAINT[FK_Sale_petId_Pet_id] FOREIGN KEY([petId])
-REFERENCES[dbo].[Pet]([id])
-GO
-ALTER TABLE[dbo].[Sale] CHECK CONSTRAINT[FK_Sale_petId_Pet_id]
-GO
 ALTER TABLE[dbo].[Sale]  WITH CHECK ADD  CONSTRAINT[FK_Sale_paymentTypeId_PaymentType_id] FOREIGN KEY([paymentTypeId])
 REFERENCES[dbo].[PaymentType]([id])
 GO
 ALTER TABLE[dbo].[Sale] CHECK CONSTRAINT[FK_Sale_paymentTypeId_PaymentType_id]
+GO
+ALTER TABLE[dbo].[Sale]  WITH CHECK ADD  CONSTRAINT[FK_Sale_petId_Pet_id] FOREIGN KEY([petId])
+REFERENCES[dbo].[Pet]([id])
+GO
+ALTER TABLE[dbo].[Sale] CHECK CONSTRAINT[FK_Sale_petId_Pet_id]
 GO
 
 ");

@@ -15,7 +15,7 @@ namespace NebulaNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+		public int TenantId { get; private set; } = 1;
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -44,7 +44,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual DbSet<Chain> Chains { get; set; }
 
-		public virtual DbSet<ChainStatus> ChainStatus { get; set; }
+		public virtual DbSet<ChainStatu> ChainStatus { get; set; }
 
 		public virtual DbSet<Clasp> Clasps { get; set; }
 
@@ -52,13 +52,15 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual DbSet<LinkLog> LinkLogs { get; set; }
 
-		public virtual DbSet<LinkStatus> LinkStatus { get; set; }
+		public virtual DbSet<LinkStatu> LinkStatus { get; set; }
 
 		public virtual DbSet<Machine> Machines { get; set; }
 
 		public virtual DbSet<MachineRefTeam> MachineRefTeams { get; set; }
 
 		public virtual DbSet<Organization> Organizations { get; set; }
+
+		public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
 
 		public virtual DbSet<Team> Teams { get; set; }
 
@@ -70,6 +72,8 @@ namespace NebulaNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
+		/// <param name="acceptAllChangesOnSuccess"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -82,6 +86,12 @@ namespace NebulaNS.Api.DataAccess
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
+					}
+
+					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					if (tenantEntity != null)
+					{
+						tenantEntity.CurrentValue = this.TenantId;
 					}
 				}
 			}
@@ -110,7 +120,8 @@ namespace NebulaNS.Api.DataAccess
 
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -125,5 +136,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>089d2237c33731b1b40afb4e981bacf9</Hash>
+    <Hash>9550cc6eec94e051300bb05a07eabbab</Hash>
 </Codenesium>*/

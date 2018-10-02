@@ -76,6 +76,11 @@ namespace TestsNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<ColumnSameAsFKTable>> ColumnSameAsFKTables(int person, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<ColumnSameAsFKTable>().Where(x => x.Person == person).AsQueryable().Skip(offset).Take(limit).ToListAsync<ColumnSameAsFKTable>();
+		}
+
 		protected async Task<List<Person>> Where(
 			Expression<Func<Person, bool>> predicate,
 			int limit = int.MaxValue,
@@ -108,5 +113,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4ad19d0d0e194cb09a630194f77619db</Hash>
+    <Hash>4700caab6c4aa3f0d291014cd5bb2172</Hash>
 </Codenesium>*/

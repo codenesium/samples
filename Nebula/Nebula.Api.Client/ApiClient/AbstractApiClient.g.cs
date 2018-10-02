@@ -96,6 +96,13 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<ApiChainResponseModel> GetChainByExternalId(Guid externalId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/byExternalId/{externalId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiChainResponseModel>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiClaspResponseModel>> Clasps(int nextChainId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/Clasps/{nextChainId}").ConfigureAwait(false);
@@ -110,46 +117,53 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiChainStatusResponseModel>> ChainStatusCreateAsync(ApiChainStatusRequestModel item)
+		public virtual async Task<CreateResponse<ApiChainStatuResponseModel>> ChainStatuCreateAsync(ApiChainStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatus", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiChainStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiChainStatusResponseModel>> ChainStatusUpdateAsync(int id, ApiChainStatusRequestModel item)
+		public virtual async Task<UpdateResponse<ApiChainStatuResponseModel>> ChainStatuUpdateAsync(int id, ApiChainStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ChainStatus/{id}", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiChainStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> ChainStatusDeleteAsync(int id)
+		public virtual async Task<ActionResponse> ChainStatuDeleteAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/ChainStatus/{id}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiChainStatusResponseModel> ChainStatusGetAsync(int id)
+		public virtual async Task<ApiChainStatuResponseModel> ChainStatuGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus/{id}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiChainStatusResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiChainStatuResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiChainStatusResponseModel>> ChainStatusAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiChainStatuResponseModel>> ChainStatuAllAsync(int limit = 1000, int offset = 0)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus?limit={limit}&offset={offset}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiChainStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiChainStatusResponseModel>> ChainStatusBulkInsertAsync(List<ApiChainStatusRequestModel> items)
+		public virtual async Task<List<ApiChainStatuResponseModel>> ChainStatuBulkInsertAsync(List<ApiChainStatuRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ChainStatus/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiChainStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiChainStatuResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiChainStatuResponseModel> GetChainStatuByName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatus/byName/{name}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiChainStatuResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiChainResponseModel>> Chains(int chainStatusId)
@@ -243,6 +257,20 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<ApiLinkResponseModel> GetLinkByExternalId(Guid externalId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/byExternalId/{externalId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiLinkResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiLinkResponseModel>> GetLinkByChainId(int chainId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/byChainId/{chainId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiLinkLogResponseModel>> LinkLogs(int linkId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/LinkLogs/{linkId}").ConfigureAwait(false);
@@ -292,46 +320,53 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkLogResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiLinkStatusResponseModel>> LinkStatusCreateAsync(ApiLinkStatusRequestModel item)
+		public virtual async Task<CreateResponse<ApiLinkStatuResponseModel>> LinkStatuCreateAsync(ApiLinkStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatus", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiLinkStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiLinkStatusResponseModel>> LinkStatusUpdateAsync(int id, ApiLinkStatusRequestModel item)
+		public virtual async Task<UpdateResponse<ApiLinkStatuResponseModel>> LinkStatuUpdateAsync(int id, ApiLinkStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/LinkStatus/{id}", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiLinkStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> LinkStatusDeleteAsync(int id)
+		public virtual async Task<ActionResponse> LinkStatuDeleteAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/LinkStatus/{id}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiLinkStatusResponseModel> LinkStatusGetAsync(int id)
+		public virtual async Task<ApiLinkStatuResponseModel> LinkStatuGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus/{id}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiLinkStatusResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiLinkStatuResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkStatusResponseModel>> LinkStatusAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiLinkStatuResponseModel>> LinkStatuAllAsync(int limit = 1000, int offset = 0)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus?limit={limit}&offset={offset}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiLinkStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkStatusResponseModel>> LinkStatusBulkInsertAsync(List<ApiLinkStatusRequestModel> items)
+		public virtual async Task<List<ApiLinkStatuResponseModel>> LinkStatuBulkInsertAsync(List<ApiLinkStatuRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkStatus/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiLinkStatuResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiLinkStatuResponseModel> GetLinkStatuByName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatus/byName/{name}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiLinkStatuResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiMachineResponseModel>> MachineCreateAsync(ApiMachineRequestModel item)
@@ -374,6 +409,13 @@ namespace NebulaNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines/BulkInsert", items).ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiMachineResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiMachineResponseModel> GetMachineByMachineGuid(Guid machineGuid)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/byMachineGuid/{machineGuid}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiMachineResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int machineId)
@@ -467,11 +509,67 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiOrganizationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<ApiOrganizationResponseModel> GetOrganizationByName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/byName/{name}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiOrganizationResponseModel>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiTeamResponseModel>> Teams(int organizationId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/Teams/{organizationId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiSysdiagramResponseModel>> SysdiagramCreateAsync(ApiSysdiagramRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Sysdiagrams", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<CreateResponse<ApiSysdiagramResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiSysdiagramResponseModel>> SysdiagramUpdateAsync(int id, ApiSysdiagramRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Sysdiagrams/{id}", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiSysdiagramResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> SysdiagramDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Sysdiagrams/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiSysdiagramResponseModel> SysdiagramGetAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sysdiagrams/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiSysdiagramResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiSysdiagramResponseModel>> SysdiagramAllAsync(int limit = 1000, int offset = 0)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sysdiagrams?limit={limit}&offset={offset}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiSysdiagramResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiSysdiagramResponseModel>> SysdiagramBulkInsertAsync(List<ApiSysdiagramRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Sysdiagrams/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiSysdiagramResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiSysdiagramResponseModel> GetSysdiagramByPrincipalIdName(int principalId, string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sysdiagrams/byPrincipalIdName/{principalId}/{name}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiSysdiagramResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTeamResponseModel>> TeamCreateAsync(ApiTeamRequestModel item)
@@ -514,6 +612,13 @@ namespace NebulaNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Teams/BulkInsert", items).ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiTeamResponseModel> GetTeamByName(string name)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/byName/{name}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiTeamResponseModel>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> VersionInfoCreateAsync(ApiVersionInfoRequestModel item)
@@ -568,5 +673,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ca14645460b7156b69d2e4af6e7a3c3d</Hash>
+    <Hash>b66135181228d6336da6b1f869fb087b</Hash>
 </Codenesium>*/

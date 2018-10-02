@@ -26,9 +26,10 @@ namespace PetShippingNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
-		public virtual void DetailsRules()
+		public virtual void DetailRules()
 		{
-			this.RuleFor(x => x.Details).Length(0, 2147483647);
+			this.RuleFor(x => x.Detail).NotNull();
+			this.RuleFor(x => x.Detail).Length(0, 2147483647);
 		}
 
 		public virtual void PipelineStepIdRules()
@@ -50,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ae1f69622d4a8e3507844edd18bc50d9</Hash>
+    <Hash>2dfd21f81301d283665e31d60b6470b9</Hash>
 </Codenesium>*/

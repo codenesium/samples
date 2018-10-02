@@ -143,6 +143,45 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ByName_Exists()
+		{
+			var mock = new ServiceMockFacade<IOrganizationRepository>();
+			var record = new Organization();
+			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
+			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
+			                                      mock.DALMapperMockFactory.DALOrganizationMapperMock,
+			                                      mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeamMapperMock);
+
+			ApiOrganizationResponseModel response = await service.ByName(default(string));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
+		}
+
+		[Fact]
+		public async void ByName_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IOrganizationRepository>();
+			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Organization>(null));
+			var service = new OrganizationService(mock.LoggerMock.Object,
+			                                      mock.RepositoryMock.Object,
+			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
+			                                      mock.BOLMapperMockFactory.BOLOrganizationMapperMock,
+			                                      mock.DALMapperMockFactory.DALOrganizationMapperMock,
+			                                      mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                                      mock.DALMapperMockFactory.DALTeamMapperMock);
+
+			ApiOrganizationResponseModel response = await service.ByName(default(string));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
+		}
+
+		[Fact]
 		public async void Teams_Exists()
 		{
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
@@ -185,5 +224,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cf926a798aff9c674d46f066f71aa339</Hash>
+    <Hash>fd4cdcbd9f6a7fea62f3d5af21219ca7</Hash>
 </Codenesium>*/

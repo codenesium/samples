@@ -20,11 +20,12 @@ namespace NebulaNS.Api.Contracts
 			this.Name = name;
 		}
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5c1a9ec5f1addc863f206e38e3bda2f7</Hash>
+    <Hash>8aef6433e0c0b48fda1a168a538aa0da</Hash>
 </Codenesium>*/

@@ -33,6 +33,16 @@ WHERE name = N'SchemaB')
 EXEC('CREATE SCHEMA [SchemaB] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.FK_ColumnSameAsFKTable_PERSON', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[ColumnSameAsFKTable] DROP CONSTRAINT [FK_ColumnSameAsFKTable_PERSON]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_ColumnSameAsFKTable_PERSONId', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[ColumnSameAsFKTable] DROP CONSTRAINT [FK_ColumnSameAsFKTable_PERSONId]
+--END
+--GO
 --IF (OBJECT_ID('dbo.FK_selfReference_selfReference', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[selfReference] DROP CONSTRAINT [FK_selfReference_selfReference]
@@ -56,6 +66,21 @@ GO
 --END
 --GO
 
+--IF OBJECT_ID('dbo.ColumnSameAsFKTable', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[ColumnSameAsFKTable]
+--END
+--GO
+--IF OBJECT_ID('dbo.compositePrimaryKey', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[compositePrimaryKey]
+--END
+--GO
+--IF OBJECT_ID('dbo.IncludedColumnTest', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[IncludedColumnTest]
+--END
+--GO
 --IF OBJECT_ID('dbo.PERSON', 'U') IS NOT NULL 
 --BEGIN
 --DROP TABLE [dbo].[PERSON]
@@ -91,6 +116,11 @@ GO
 --DROP TABLE [dbo].[TimestampCheck]
 --END
 --GO
+--IF OBJECT_ID('dbo.vPerson', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[vPerson]
+--END
+--GO
 
 --IF OBJECT_ID('SchemaA.Person', 'U') IS NOT NULL 
 --BEGIN
@@ -108,6 +138,26 @@ GO
 --DROP TABLE [SchemaB].[PersonRef]
 --END
 --GO
+
+CREATE TABLE [dbo].[ColumnSameAsFKTable](
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[Person] [int]     NOT NULL,
+[PersonId] [int]     NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [dbo].[compositePrimaryKey](
+[id] [int]     NOT NULL,
+[id2] [int]     NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [dbo].[IncludedColumnTest](
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[name] [varchar]  (50)   NOT NULL,
+[name2] [varchar]  (50)   NOT NULL,
+) ON[PRIMARY]
+GO
 
 CREATE TABLE [dbo].[PERSON](
 [PERSON_ID] [int]   IDENTITY(1,1)  NOT NULL,
@@ -154,7 +204,7 @@ CREATE TABLE [dbo].[TestAllFieldTypes](
 [fieldMoney] [money]     NOT NULL,
 [fieldNChar] [nchar]  (10)   NOT NULL,
 [fieldNText] [ntext]     NOT NULL,
-[fieldNumeric] [decimal]     NOT NULL,
+[fieldNumeric] [numeric]     NOT NULL,
 [fieldNVarchar] [nvarchar]  (50)   NOT NULL,
 [fieldReal] [real]     NOT NULL,
 [fieldSmallDateTime] [smalldatetime]     NOT NULL,
@@ -191,7 +241,7 @@ CREATE TABLE [dbo].[TestAllFieldTypesNullable](
 [fieldMoney] [money]     NULL,
 [fieldNChar] [nchar]  (10)   NULL,
 [fieldNText] [ntext]     NULL,
-[fieldNumeric] [decimal]     NULL,
+[fieldNumeric] [numeric]     NULL,
 [fieldNVarchar] [nvarchar]  (50)   NULL,
 [fieldReal] [real]     NULL,
 [fieldSmallDateTime] [smalldatetime]     NULL,
@@ -216,6 +266,12 @@ CREATE TABLE [dbo].[TimestampCheck](
 ) ON[PRIMARY]
 GO
 
+CREATE TABLE [dbo].[vPerson](
+[PERSON_ID] [int]   IDENTITY(1,1)  NOT NULL,
+[PERSON_NAME] [varchar]  (50)   NOT NULL,
+) ON[PRIMARY]
+GO
+
 CREATE TABLE [SchemaA].[Person](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [name] [varchar]  (50)   NOT NULL,
@@ -235,6 +291,33 @@ CREATE TABLE [SchemaB].[PersonRef](
 ) ON[PRIMARY]
 GO
 
+ALTER TABLE[dbo].[ColumnSameAsFKTable]
+ADD CONSTRAINT[PK_ColumnSameAsFKTable] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+ALTER TABLE[dbo].[compositePrimaryKey]
+ADD CONSTRAINT[PK_compositePrimaryKey] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+,[id2] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+ALTER TABLE[dbo].[IncludedColumnTest]
+ADD CONSTRAINT[PK_IncludedColumnTest] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[NonClusteredIndex-20180824-155325] ON[dbo].[IncludedColumnTest]
+(
+[id] ASC)
+INCLUDE(
+[name],
+[name2])
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
 ALTER TABLE[dbo].[PERSON]
 ADD CONSTRAINT[PK_PERSON_2] PRIMARY KEY CLUSTERED
 (
@@ -277,6 +360,11 @@ ADD CONSTRAINT[PK_TimestampCheck] PRIMARY KEY CLUSTERED
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+CREATE UNIQUE CLUSTERED INDEX[vPerion_PK] ON[dbo].[vPerson]
+(
+[PERSON_ID] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
 ALTER TABLE[SchemaA].[Person]
 ADD CONSTRAINT[PK_Person] PRIMARY KEY CLUSTERED
 (
@@ -301,6 +389,16 @@ ADD CONSTRAINT[DF_RowVersionCheck_rowVersion]  DEFAULT(newid()) FOR[rowVersion]
 GO
 
 
+ALTER TABLE[dbo].[ColumnSameAsFKTable]  WITH CHECK ADD  CONSTRAINT[FK_ColumnSameAsFKTable_PERSON] FOREIGN KEY([Person])
+REFERENCES[dbo].[PERSON]([PERSON_ID])
+GO
+ALTER TABLE[dbo].[ColumnSameAsFKTable] CHECK CONSTRAINT[FK_ColumnSameAsFKTable_PERSON]
+GO
+ALTER TABLE[dbo].[ColumnSameAsFKTable]  WITH CHECK ADD  CONSTRAINT[FK_ColumnSameAsFKTable_PERSONId] FOREIGN KEY([PersonId])
+REFERENCES[dbo].[PERSON]([PERSON_ID])
+GO
+ALTER TABLE[dbo].[ColumnSameAsFKTable] CHECK CONSTRAINT[FK_ColumnSameAsFKTable_PERSONId]
+GO
 ALTER TABLE[dbo].[selfReference]  WITH CHECK ADD  CONSTRAINT[FK_selfReference_selfReference] FOREIGN KEY([selfReferenceId])
 REFERENCES[dbo].[selfReference]([id])
 GO

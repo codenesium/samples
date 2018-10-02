@@ -8,13 +8,25 @@ https://www.codenesium.com
 
 [![Build Status](https://travis-ci.org/codenesium/samples.svg?branch=master)](https://travis-ci.org/codenesium/samples)
 
-#### Getting Started Guide
-https://www.youtube.com/watch?v=tvScMDq_xGs
+#### StudioResourceManager
+CRM for a a music or dance studio.
+This project is multi-tenant.
+http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feStudioResourceManager/swagger/
 
+#### TicketingCRM
+CRM for a company that sells event tickets
+http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feTicketingCRM/swagger/
 
+#### Pet Store
+Sample database for a pet store.
+http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359fePetStore/swagger/
+
+#### Pet Shipping
+Sample database for a business that ships pets.
+http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359fePetShipping/swagger/
 
 #### Nebula
-Deployment orchestration service similar to Octupus Deploy. This runs the Codenesium deployment system.
+Deployment orchestration service similar to Octopus Deploy. This runs the Codenesium deployment system.
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feNebula/swagger/
 
 #### File Service
@@ -29,26 +41,10 @@ http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feESPIOT/swagge
 Microsoft's demo database
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feAdventureWorks/swagger/
 
-#### TicketingCRM
-CRM for a company that sells event tickets
-http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feTicketingCRM/swagger/
-
-#### Pet Store
-Sample database for a pet store.
-http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359fePetStore/swagger/
-
-#### Pet Shipping
-Sample database for a business that ships pets.
-http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359fePetShipping/swagger/
-
-#### FermataFish
-Sample database for a music studio CRM.
-http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feFermataFish/swagger/
-
-#### Octopus Deploy
-Octopus deploy database
-http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feOctopusDeploy/swagger/
-
 #### Stack Overflow
-Stack Overflow database
+Stack Overflow example
 http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feStackOverflow/swagger/
+
+#### Twitter
+Twitter example
+http://www.codenesium.com:8080/user7303b0f5161f4149bf2959a488d359feTwitter/swagger/

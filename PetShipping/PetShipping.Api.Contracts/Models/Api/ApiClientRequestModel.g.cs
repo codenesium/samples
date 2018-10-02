@@ -18,33 +18,37 @@ namespace PetShippingNS.Api.Contracts
 			string email,
 			string firstName,
 			string lastName,
-			string notes,
+			string note,
 			string phone)
 		{
 			this.Email = email;
 			this.FirstName = firstName;
 			this.LastName = lastName;
-			this.Notes = notes;
+			this.Note = note;
 			this.Phone = phone;
 		}
 
+		[Required]
 		[JsonProperty]
 		public string Email { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string FirstName { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string LastName { get; private set; }
 
 		[JsonProperty]
-		public string Notes { get; private set; }
+		public string Note { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Phone { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8d02b949890f68b6aaf8a8167835df87</Hash>
+    <Hash>377cd35759d5e29e4381fd6963ac3c0c</Hash>
 </Codenesium>*/

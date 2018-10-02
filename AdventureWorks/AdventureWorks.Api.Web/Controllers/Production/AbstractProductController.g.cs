@@ -245,10 +245,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{componentID}/BillOfMaterials")]
+		[Route("{productAssemblyID}/BillOfMaterials")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
-		public async virtual Task<IActionResult> BillOfMaterials(int componentID, int? limit, int? offset)
+		public async virtual Task<IActionResult> BillOfMaterials(int productAssemblyID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -256,7 +256,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBillOfMaterialResponseModel> response = await this.ProductService.BillOfMaterials(componentID, query.Limit, query.Offset);
+			List<ApiBillOfMaterialResponseModel> response = await this.ProductService.BillOfMaterials(productAssemblyID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -399,5 +399,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>760475595f60ce17b53f46c2aa04cb7b</Hash>
+    <Hash>9ebdb31ae6c2b820d6c7eb8b2195d23c</Hash>
 </Codenesium>*/

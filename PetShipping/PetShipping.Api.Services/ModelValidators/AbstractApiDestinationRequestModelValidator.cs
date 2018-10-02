@@ -33,6 +33,7 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
@@ -50,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0cfcb86e8b07e2d40a5789c3860ef8e6</Hash>
+    <Hash>2effcef11d5d927d86762e153dcff78a</Hash>
 </Codenesium>*/

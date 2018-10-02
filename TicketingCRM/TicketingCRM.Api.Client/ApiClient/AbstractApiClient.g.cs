@@ -404,60 +404,60 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleTicketsResponseModel>> SaleTickets(int saleId)
+		public virtual async Task<List<ApiSaleTicketResponseModel>> SaleTickets(int saleId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Sales/SaleTickets/{saleId}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiSaleTicketsResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiSaleTicketsResponseModel>> SaleTicketsCreateAsync(ApiSaleTicketsRequestModel item)
+		public virtual async Task<CreateResponse<ApiSaleTicketResponseModel>> SaleTicketCreateAsync(ApiSaleTicketRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SaleTickets", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiSaleTicketsResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiSaleTicketResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiSaleTicketsResponseModel>> SaleTicketsUpdateAsync(int id, ApiSaleTicketsRequestModel item)
+		public virtual async Task<UpdateResponse<ApiSaleTicketResponseModel>> SaleTicketUpdateAsync(int id, ApiSaleTicketRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/SaleTickets/{id}", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiSaleTicketsResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiSaleTicketResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> SaleTicketsDeleteAsync(int id)
+		public virtual async Task<ActionResponse> SaleTicketDeleteAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/SaleTickets/{id}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiSaleTicketsResponseModel> SaleTicketsGetAsync(int id)
+		public virtual async Task<ApiSaleTicketResponseModel> SaleTicketGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SaleTickets/{id}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiSaleTicketsResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiSaleTicketResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleTicketsResponseModel>> SaleTicketsAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiSaleTicketResponseModel>> SaleTicketAllAsync(int limit = 1000, int offset = 0)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SaleTickets?limit={limit}&offset={offset}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiSaleTicketsResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleTicketsResponseModel>> SaleTicketsBulkInsertAsync(List<ApiSaleTicketsRequestModel> items)
+		public virtual async Task<List<ApiSaleTicketResponseModel>> SaleTicketBulkInsertAsync(List<ApiSaleTicketRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SaleTickets/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiSaleTicketsResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleTicketsResponseModel>> GetSaleTicketsByTicketId(int ticketId)
+		public virtual async Task<List<ApiSaleTicketResponseModel>> GetSaleTicketByTicketId(int ticketId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SaleTickets/byTicketId/{ticketId}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiSaleTicketsResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSaleTicketResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTicketResponseModel>> TicketCreateAsync(ApiTicketRequestModel item)
@@ -509,46 +509,46 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTicketResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiTicketStatusResponseModel>> TicketStatusCreateAsync(ApiTicketStatusRequestModel item)
+		public virtual async Task<CreateResponse<ApiTicketStatuResponseModel>> TicketStatuCreateAsync(ApiTicketStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TicketStatus", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiTicketStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiTicketStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiTicketStatusResponseModel>> TicketStatusUpdateAsync(int id, ApiTicketStatusRequestModel item)
+		public virtual async Task<UpdateResponse<ApiTicketStatuResponseModel>> TicketStatuUpdateAsync(int id, ApiTicketStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/TicketStatus/{id}", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiTicketStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiTicketStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> TicketStatusDeleteAsync(int id)
+		public virtual async Task<ActionResponse> TicketStatuDeleteAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/TicketStatus/{id}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiTicketStatusResponseModel> TicketStatusGetAsync(int id)
+		public virtual async Task<ApiTicketStatuResponseModel> TicketStatuGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TicketStatus/{id}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiTicketStatusResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiTicketStatuResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTicketStatusResponseModel>> TicketStatusAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiTicketStatuResponseModel>> TicketStatuAllAsync(int limit = 1000, int offset = 0)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TicketStatus?limit={limit}&offset={offset}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTicketStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTicketStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTicketStatusResponseModel>> TicketStatusBulkInsertAsync(List<ApiTicketStatusRequestModel> items)
+		public virtual async Task<List<ApiTicketStatuResponseModel>> TicketStatuBulkInsertAsync(List<ApiTicketStatuRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TicketStatus/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTicketStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTicketStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiTicketResponseModel>> Tickets(int ticketStatusId)
@@ -614,46 +614,46 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiTransactionStatusResponseModel>> TransactionStatusCreateAsync(ApiTransactionStatusRequestModel item)
+		public virtual async Task<CreateResponse<ApiTransactionStatuResponseModel>> TransactionStatuCreateAsync(ApiTransactionStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TransactionStatus", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiTransactionStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<CreateResponse<ApiTransactionStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<UpdateResponse<ApiTransactionStatusResponseModel>> TransactionStatusUpdateAsync(int id, ApiTransactionStatusRequestModel item)
+		public virtual async Task<UpdateResponse<ApiTransactionStatuResponseModel>> TransactionStatuUpdateAsync(int id, ApiTransactionStatuRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/TransactionStatus/{id}", item).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiTransactionStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiTransactionStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ActionResponse> TransactionStatusDeleteAsync(int id)
+		public virtual async Task<ActionResponse> TransactionStatuDeleteAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/TransactionStatus/{id}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiTransactionStatusResponseModel> TransactionStatusGetAsync(int id)
+		public virtual async Task<ApiTransactionStatuResponseModel> TransactionStatuGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionStatus/{id}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<ApiTransactionStatusResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<ApiTransactionStatuResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTransactionStatusResponseModel>> TransactionStatusAllAsync(int limit = 1000, int offset = 0)
+		public virtual async Task<List<ApiTransactionStatuResponseModel>> TransactionStatuAllAsync(int limit = 1000, int offset = 0)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionStatus?limit={limit}&offset={offset}").ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTransactionStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTransactionStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTransactionStatusResponseModel>> TransactionStatusBulkInsertAsync(List<ApiTransactionStatusRequestModel> items)
+		public virtual async Task<List<ApiTransactionStatuResponseModel>> TransactionStatuBulkInsertAsync(List<ApiTransactionStatuRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TransactionStatus/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTransactionStatusResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTransactionStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiTransactionResponseModel>> Transactions(int transactionStatusId)
@@ -722,5 +722,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>31c2f644c4764feb1deb3ecc48bc5b6f</Hash>
+    <Hash>1ea5475b79152f9e0d795bf69aa88d14</Hash>
 </Codenesium>*/

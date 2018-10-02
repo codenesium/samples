@@ -31,14 +31,14 @@ GO
 --ALTER TABLE [dbo].[Breed] DROP CONSTRAINT [FK_Breed_speciesId_Species_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_ClientCommunication_clientId_Client_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[ClientCommunication] DROP CONSTRAINT [FK_ClientCommunication_clientId_Client_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_ClientCommunication_employeeId_Employee_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[ClientCommunication] DROP CONSTRAINT [FK_ClientCommunication_employeeId_Employee_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_ClientCommunication_clientId_Client_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[ClientCommunication] DROP CONSTRAINT [FK_ClientCommunication_clientId_Client_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_CountryRequirement_countryId_Country_id', 'F') IS NOT NULL)
@@ -560,15 +560,15 @@ REFERENCES[dbo].[Species]([id])
 GO
 ALTER TABLE[dbo].[Breed] CHECK CONSTRAINT[FK_Breed_speciesId_Species_id]
 GO
-ALTER TABLE[dbo].[ClientCommunication]  WITH CHECK ADD  CONSTRAINT[FK_ClientCommunication_clientId_Client_id] FOREIGN KEY([clientId])
-REFERENCES[dbo].[Client]([id])
-GO
-ALTER TABLE[dbo].[ClientCommunication] CHECK CONSTRAINT[FK_ClientCommunication_clientId_Client_id]
-GO
 ALTER TABLE[dbo].[ClientCommunication]  WITH CHECK ADD  CONSTRAINT[FK_ClientCommunication_employeeId_Employee_id] FOREIGN KEY([employeeId])
 REFERENCES[dbo].[Employee]([id])
 GO
 ALTER TABLE[dbo].[ClientCommunication] CHECK CONSTRAINT[FK_ClientCommunication_employeeId_Employee_id]
+GO
+ALTER TABLE[dbo].[ClientCommunication]  WITH CHECK ADD  CONSTRAINT[FK_ClientCommunication_clientId_Client_id] FOREIGN KEY([clientId])
+REFERENCES[dbo].[Client]([id])
+GO
+ALTER TABLE[dbo].[ClientCommunication] CHECK CONSTRAINT[FK_ClientCommunication_clientId_Client_id]
 GO
 ALTER TABLE[dbo].[CountryRequirement]  WITH CHECK ADD  CONSTRAINT[FK_CountryRequirement_countryId_Country_id] FOREIGN KEY([countryId])
 REFERENCES[dbo].[Country]([id])

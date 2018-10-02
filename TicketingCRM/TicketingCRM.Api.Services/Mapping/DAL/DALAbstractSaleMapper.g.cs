@@ -15,7 +15,7 @@ namespace TicketingCRMNS.Api.Services
 			efSale.SetProperties(
 				bo.Id,
 				bo.IpAddress,
-				bo.Notes,
+				bo.Note,
 				bo.SaleDate,
 				bo.TransactionId);
 			return efSale;
@@ -29,7 +29,7 @@ namespace TicketingCRMNS.Api.Services
 			bo.SetProperties(
 				ef.Id,
 				ef.IpAddress,
-				ef.Notes,
+				ef.Note,
 				ef.SaleDate,
 				ef.TransactionId);
 			return bo;
@@ -51,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8aa402c34b7d5754a6f97faeffc4852c</Hash>
+    <Hash>ae2efa39fa8fd375af4488bc30b93be6</Hash>
 </Codenesium>*/

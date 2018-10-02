@@ -16,7 +16,7 @@ namespace TicketingCRMNS.Api.Services
 			boSale.SetProperties(
 				id,
 				model.IpAddress,
-				model.Notes,
+				model.Note,
 				model.SaleDate,
 				model.TransactionId);
 			return boSale;
@@ -27,7 +27,7 @@ namespace TicketingCRMNS.Api.Services
 		{
 			var model = new ApiSaleResponseModel();
 
-			model.SetProperties(boSale.Id, boSale.IpAddress, boSale.Notes, boSale.SaleDate, boSale.TransactionId);
+			model.SetProperties(boSale.Id, boSale.IpAddress, boSale.Note, boSale.SaleDate, boSale.TransactionId);
 
 			return model;
 		}
@@ -48,5 +48,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4c7a2ce4b92b9e1b7a124a17ffe7029d</Hash>
+    <Hash>6e6729c6c19d09f6914b704c65b1fdff</Hash>
 </Codenesium>*/

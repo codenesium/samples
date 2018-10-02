@@ -25,6 +25,30 @@ namespace FileServiceNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IFileTypeRepository> fileTypeRepository = new Mock<IFileTypeRepository>();
+			fileTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new FileType()));
+
+			var validator = new ApiFileTypeRequestModelValidator(fileTypeRepository.Object);
+			await validator.ValidateCreateAsync(new ApiFileTypeRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IFileTypeRepository> fileTypeRepository = new Mock<IFileTypeRepository>();
+			fileTypeRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new FileType()));
+
+			var validator = new ApiFileTypeRequestModelValidator(fileTypeRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiFileTypeRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
 		public async void Name_Create_length()
 		{
 			Mock<IFileTypeRepository> fileTypeRepository = new Mock<IFileTypeRepository>();
@@ -51,5 +75,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3f5571fec2b0b161fe1207414dfd1a45</Hash>
+    <Hash>aba00d77c3dff93a63c0cbfd72aecdc5</Hash>
 </Codenesium>*/

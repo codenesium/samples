@@ -22,7 +22,7 @@ namespace PetShippingNS.Api.Services.Tests
 			CountryRequirement response = mapper.MapBOToEF(bo);
 
 			response.CountryId.Should().Be(1);
-			response.Details.Should().Be("A");
+			response.Detail.Should().Be("A");
 			response.Id.Should().Be(1);
 		}
 
@@ -36,7 +36,7 @@ namespace PetShippingNS.Api.Services.Tests
 			BOCountryRequirement response = mapper.MapEFToBO(entity);
 
 			response.CountryId.Should().Be(1);
-			response.Details.Should().Be("A");
+			response.Detail.Should().Be("A");
 			response.Id.Should().Be(1);
 		}
 
@@ -55,5 +55,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>76a4914ace1eee9c8219919ca5b92339</Hash>
+    <Hash>fc05670f2261316bcd606615e1f79823</Hash>
 </Codenesium>*/

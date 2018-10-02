@@ -20,15 +20,12 @@ namespace TicketingCRMNS.Api.Contracts
 			this.ProvinceIdEntity = nameof(ApiResponse.Provinces);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int ProvinceId { get; private set; }
 
@@ -38,5 +35,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>46fadbb290d77eb66179fc2475bbcd4b</Hash>
+    <Hash>1ff6ebacb3dc40a6ab721f68df0b639a</Hash>
 </Codenesium>*/

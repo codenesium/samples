@@ -75,6 +75,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
+			provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
+
+			var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
+			await validator.ValidateCreateAsync(new ApiProvinceRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
+			provinceRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Province()));
+
+			var validator = new ApiProvinceRequestModelValidator(provinceRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiProvinceRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
 		public async void Name_Create_length()
 		{
 			Mock<IProvinceRepository> provinceRepository = new Mock<IProvinceRepository>();
@@ -101,5 +125,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ba3ded13f80a4c5ee98cece1353af25c</Hash>
+    <Hash>f3dbd9bda25bbbc5a8721281da7a51f5</Hash>
 </Codenesium>*/

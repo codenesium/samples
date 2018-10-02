@@ -32,6 +32,7 @@ namespace PetShippingNS.Api.DataAccess
 		}
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("airlineId")]
 		public int AirlineId { get; private set; }
 
@@ -60,5 +61,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5a4cb7e8c5b1d60c4a06657e6d190042</Hash>
+    <Hash>ae2d67ee98c9d6a5b752c6e534e9a5e3</Hash>
 </Codenesium>*/

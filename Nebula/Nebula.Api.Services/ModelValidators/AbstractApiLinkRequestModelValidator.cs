@@ -44,22 +44,24 @@ namespace NebulaNS.Api.Services
 		{
 		}
 
-		public virtual void DynamicParametersRules()
+		public virtual void DynamicParameterRules()
 		{
-			this.RuleFor(x => x.DynamicParameters).Length(0, 2147483647);
+			this.RuleFor(x => x.DynamicParameter).Length(0, 2147483647);
 		}
 
 		public virtual void ExternalIdRules()
 		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByExternalId).When(x => x?.ExternalId != null).WithMessage("Violates unique constraint").WithName(nameof(ApiLinkRequestModel.ExternalId));
 		}
 
 		public virtual void LinkStatusIdRules()
 		{
-			this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatus).When(x => x?.LinkStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatu).When(x => x?.LinkStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
@@ -72,12 +74,12 @@ namespace NebulaNS.Api.Services
 			this.RuleFor(x => x.Response).Length(0, 2147483647);
 		}
 
-		public virtual void StaticParametersRules()
+		public virtual void StaticParameterRules()
 		{
-			this.RuleFor(x => x.StaticParameters).Length(0, 2147483647);
+			this.RuleFor(x => x.StaticParameter).Length(0, 2147483647);
 		}
 
-		public virtual void TimeoutInSecondsRules()
+		public virtual void TimeoutInSecondRules()
 		{
 		}
 
@@ -95,15 +97,29 @@ namespace NebulaNS.Api.Services
 			return record != null;
 		}
 
-		private async Task<bool> BeValidLinkStatus(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidLinkStatu(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.linkRepository.GetLinkStatus(id);
+			var record = await this.linkRepository.GetLinkStatu(id);
 
 			return record != null;
+		}
+
+		private async Task<bool> BeUniqueByExternalId(ApiLinkRequestModel model,  CancellationToken cancellationToken)
+		{
+			Link record = await this.linkRepository.ByExternalId(model.ExternalId);
+
+			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>244723a197216fce5458bd966024ccdd</Hash>
+    <Hash>875f859d7fd57c85ee9acfaaf52abd74</Hash>
 </Codenesium>*/

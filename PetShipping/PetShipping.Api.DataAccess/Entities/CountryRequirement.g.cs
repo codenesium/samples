@@ -15,11 +15,11 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int countryId,
-			string details,
+			string detail,
 			int id)
 		{
 			this.CountryId = countryId;
-			this.Details = details;
+			this.Detail = detail;
 			this.Id = id;
 		}
 
@@ -28,9 +28,10 @@ namespace PetShippingNS.Api.DataAccess
 
 		[MaxLength(2147483647)]
 		[Column("details")]
-		public string Details { get; private set; }
+		public string Detail { get; private set; }
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -40,5 +41,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5b5e23e6c2dd1e63652150acf9e01662</Hash>
+    <Hash>1f1c94900dfb5367247ecf4918e21ca9</Hash>
 </Codenesium>*/

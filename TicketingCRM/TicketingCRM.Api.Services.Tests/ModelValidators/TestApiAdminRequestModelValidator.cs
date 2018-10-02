@@ -25,6 +25,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Email_Create_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
+		}
+
+		[Fact]
+		public async void Email_Update_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
+		}
+
+		[Fact]
 		public async void Email_Create_length()
 		{
 			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
@@ -46,6 +70,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
+		}
+
+		[Fact]
+		public async void FirstName_Create_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
+		}
+
+		[Fact]
+		public async void FirstName_Update_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.FirstName, null as string);
 		}
 
 		[Fact]
@@ -73,6 +121,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void LastName_Create_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
+		}
+
+		[Fact]
+		public async void LastName_Update_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.LastName, null as string);
+		}
+
+		[Fact]
 		public async void LastName_Create_length()
 		{
 			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
@@ -94,6 +166,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.LastName, new string('A', 129));
+		}
+
+		[Fact]
+		public async void Password_Create_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Password, null as string);
+		}
+
+		[Fact]
+		public async void Password_Update_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Password, null as string);
 		}
 
 		[Fact]
@@ -121,6 +217,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Phone_Create_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
+		}
+
+		[Fact]
+		public async void Phone_Update_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Phone, null as string);
+		}
+
+		[Fact]
 		public async void Phone_Create_length()
 		{
 			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
@@ -142,6 +262,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
+		}
+
+		[Fact]
+		public async void Username_Create_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateCreateAsync(new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
+		}
+
+		[Fact]
+		public async void Username_Update_null()
+		{
+			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
+			adminRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Admin()));
+
+			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Username, null as string);
 		}
 
 		[Fact]
@@ -171,5 +315,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>35bf88707e9ff90a318b8d1366a168f8</Hash>
+    <Hash>902f0cee833a0088da4317a07bdd39ee</Hash>
 </Codenesium>*/

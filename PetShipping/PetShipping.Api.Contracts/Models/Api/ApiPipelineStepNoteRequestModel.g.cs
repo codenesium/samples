@@ -24,17 +24,20 @@ namespace PetShippingNS.Api.Contracts
 			this.PipelineStepId = pipelineStepId;
 		}
 
+		[Required]
 		[JsonProperty]
 		public int EmployeeId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Note { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int PipelineStepId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e4a3826df056f6c67b65263d7058d379</Hash>
+    <Hash>373248b95b6758e9b90d44a6ecb25f76</Hash>
 </Codenesium>*/

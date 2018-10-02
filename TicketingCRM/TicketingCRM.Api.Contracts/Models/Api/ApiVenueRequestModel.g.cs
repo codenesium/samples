@@ -36,35 +36,44 @@ namespace TicketingCRMNS.Api.Contracts
 			this.Website = website;
 		}
 
+		[Required]
 		[JsonProperty]
 		public string Address1 { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Address2 { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int AdminId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Email { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Facebook { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Phone { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int ProvinceId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Website { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c1a5e0de929d1ca8994f109be06fccd0</Hash>
+    <Hash>876aa030c01cdbf8a3d7717a99d03181</Hash>
 </Codenesium>*/

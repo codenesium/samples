@@ -54,6 +54,132 @@ namespace TestsNS.Api.Client
 			this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
+		public virtual async Task<CreateResponse<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTableCreateAsync(ApiColumnSameAsFKTableRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ColumnSameAsFKTables", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<CreateResponse<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTableUpdateAsync(int id, ApiColumnSameAsFKTableRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/ColumnSameAsFKTables/{id}", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> ColumnSameAsFKTableDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/ColumnSameAsFKTables/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiColumnSameAsFKTableResponseModel> ColumnSameAsFKTableGetAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ColumnSameAsFKTables/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiColumnSameAsFKTableResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTableAllAsync(int limit = 1000, int offset = 0)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ColumnSameAsFKTables?limit={limit}&offset={offset}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTableBulkInsertAsync(List<ApiColumnSameAsFKTableRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ColumnSameAsFKTables/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiCompositePrimaryKeyResponseModel>> CompositePrimaryKeyCreateAsync(ApiCompositePrimaryKeyRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/CompositePrimaryKeys", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<CreateResponse<ApiCompositePrimaryKeyResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiCompositePrimaryKeyResponseModel>> CompositePrimaryKeyUpdateAsync(int id, ApiCompositePrimaryKeyRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/CompositePrimaryKeys/{id}", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiCompositePrimaryKeyResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> CompositePrimaryKeyDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/CompositePrimaryKeys/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiCompositePrimaryKeyResponseModel> CompositePrimaryKeyGetAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CompositePrimaryKeys/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiCompositePrimaryKeyResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiCompositePrimaryKeyResponseModel>> CompositePrimaryKeyAllAsync(int limit = 1000, int offset = 0)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/CompositePrimaryKeys?limit={limit}&offset={offset}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiCompositePrimaryKeyResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiCompositePrimaryKeyResponseModel>> CompositePrimaryKeyBulkInsertAsync(List<ApiCompositePrimaryKeyRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/CompositePrimaryKeys/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiCompositePrimaryKeyResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiIncludedColumnTestResponseModel>> IncludedColumnTestCreateAsync(ApiIncludedColumnTestRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/IncludedColumnTests", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<CreateResponse<ApiIncludedColumnTestResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiIncludedColumnTestResponseModel>> IncludedColumnTestUpdateAsync(int id, ApiIncludedColumnTestRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/IncludedColumnTests/{id}", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiIncludedColumnTestResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> IncludedColumnTestDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/IncludedColumnTests/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiIncludedColumnTestResponseModel> IncludedColumnTestGetAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/IncludedColumnTests/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiIncludedColumnTestResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiIncludedColumnTestResponseModel>> IncludedColumnTestAllAsync(int limit = 1000, int offset = 0)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/IncludedColumnTests?limit={limit}&offset={offset}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiIncludedColumnTestResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiIncludedColumnTestResponseModel>> IncludedColumnTestBulkInsertAsync(List<ApiIncludedColumnTestRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/IncludedColumnTests/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiIncludedColumnTestResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiPersonResponseModel>> PersonCreateAsync(ApiPersonRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/People", item).ConfigureAwait(false);
@@ -94,6 +220,13 @@ namespace TestsNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/People/BulkInsert", items).ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTables(int person)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/ColumnSameAsFKTables/{person}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiRowVersionCheckResponseModel>> RowVersionCheckCreateAsync(ApiRowVersionCheckRequestModel item)
@@ -355,6 +488,55 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTimestampCheckResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<CreateResponse<ApiVPersonResponseModel>> VPersonCreateAsync(ApiVPersonRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VPersons", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<CreateResponse<ApiVPersonResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiVPersonResponseModel>> VPersonUpdateAsync(int id, ApiVPersonRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VPersons/{id}", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiVPersonResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> VPersonDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VPersons/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiVPersonResponseModel> VPersonGetAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VPersons/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiVPersonResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiVPersonResponseModel>> VPersonAllAsync(int limit = 1000, int offset = 0)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VPersons?limit={limit}&offset={offset}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiVPersonResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiVPersonResponseModel>> VPersonBulkInsertAsync(List<ApiVPersonRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VPersons/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiVPersonResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiVPersonResponseModel> GetVPersonByPersonId(int personId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VPersons/byPersonId/{personId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiVPersonResponseModel>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiSchemaAPersonResponseModel>> SchemaAPersonCreateAsync(ApiSchemaAPersonRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SchemaAPersons", item).ConfigureAwait(false);
@@ -491,5 +673,5 @@ namespace TestsNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>ef1a8808a311a189f1708680c7d855af</Hash>
+    <Hash>8596c697ded41f52ad5eeb59c89ed291</Hash>
 </Codenesium>*/

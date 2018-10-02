@@ -16,7 +16,7 @@ namespace PetShippingNS.Api.Contracts
 			                       request.ClientId,
 			                       request.DateCreated,
 			                       request.EmployeeId,
-			                       request.Notes);
+			                       request.Note);
 			return response;
 		}
 
@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Contracts
 				response.ClientId,
 				response.DateCreated,
 				response.EmployeeId,
-				response.Notes);
+				response.Note);
 			return request;
 		}
 
@@ -38,12 +38,12 @@ namespace PetShippingNS.Api.Contracts
 			patch.Replace(x => x.ClientId, model.ClientId);
 			patch.Replace(x => x.DateCreated, model.DateCreated);
 			patch.Replace(x => x.EmployeeId, model.EmployeeId);
-			patch.Replace(x => x.Notes, model.Notes);
+			patch.Replace(x => x.Note, model.Note);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f61f4fb9d6b539f17ede17e2cd69085</Hash>
+    <Hash>d80c57fa54b777b6f7684ccd697e0586</Hash>
 </Codenesium>*/

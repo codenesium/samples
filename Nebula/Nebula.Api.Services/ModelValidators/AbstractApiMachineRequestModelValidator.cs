@@ -28,30 +28,49 @@ namespace NebulaNS.Api.Services
 
 		public virtual void DescriptionRules()
 		{
+			this.RuleFor(x => x.Description).NotNull();
 			this.RuleFor(x => x.Description).Length(0, 2147483647);
 		}
 
 		public virtual void JwtKeyRules()
 		{
+			this.RuleFor(x => x.JwtKey).NotNull();
 			this.RuleFor(x => x.JwtKey).Length(0, 128);
 		}
 
 		public virtual void LastIpAddressRules()
 		{
+			this.RuleFor(x => x.LastIpAddress).NotNull();
 			this.RuleFor(x => x.LastIpAddress).Length(0, 128);
 		}
 
 		public virtual void MachineGuidRules()
 		{
+			this.RuleFor(x => x).MustAsync(this.BeUniqueByMachineGuid).When(x => x?.MachineGuid != null).WithMessage("Violates unique constraint").WithName(nameof(ApiMachineRequestModel.MachineGuid));
 		}
 
 		public virtual void NameRules()
 		{
+			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 128);
+		}
+
+		private async Task<bool> BeUniqueByMachineGuid(ApiMachineRequestModel model,  CancellationToken cancellationToken)
+		{
+			Machine record = await this.machineRepository.ByMachineGuid(model.MachineGuid);
+
+			if (record == null || (this.existingRecordId != default(int) && record.Id == this.existingRecordId))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>03d86d0d92651f6821a354b99d85ef1f</Hash>
+    <Hash>cdeda3ec2a67a2c42912ae59fdd76a72</Hash>
 </Codenesium>*/

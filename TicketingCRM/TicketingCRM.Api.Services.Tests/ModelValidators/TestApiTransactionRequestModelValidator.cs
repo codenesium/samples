@@ -25,6 +25,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void GatewayConfirmationNumber_Create_null()
+		{
+			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
+			transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
+
+			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
+			await validator.ValidateCreateAsync(new ApiTransactionRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, null as string);
+		}
+
+		[Fact]
+		public async void GatewayConfirmationNumber_Update_null()
+		{
+			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
+			transactionRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Transaction()));
+
+			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiTransactionRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, null as string);
+		}
+
+		[Fact]
 		public async void GatewayConfirmationNumber_Create_length()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
@@ -52,7 +76,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionStatusId_Create_Valid_Reference()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-			transactionRepository.Setup(x => x.GetTransactionStatus(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatus>(new TransactionStatus()));
+			transactionRepository.Setup(x => x.GetTransactionStatu(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(new TransactionStatu()));
 
 			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 			await validator.ValidateCreateAsync(new ApiTransactionRequestModel());
@@ -64,7 +88,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionStatusId_Create_Invalid_Reference()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-			transactionRepository.Setup(x => x.GetTransactionStatus(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatus>(null));
+			transactionRepository.Setup(x => x.GetTransactionStatu(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(null));
 
 			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 
@@ -77,7 +101,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionStatusId_Update_Valid_Reference()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-			transactionRepository.Setup(x => x.GetTransactionStatus(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatus>(new TransactionStatus()));
+			transactionRepository.Setup(x => x.GetTransactionStatu(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(new TransactionStatu()));
 
 			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiTransactionRequestModel());
@@ -89,7 +113,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionStatusId_Update_Invalid_Reference()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-			transactionRepository.Setup(x => x.GetTransactionStatus(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatus>(null));
+			transactionRepository.Setup(x => x.GetTransactionStatu(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(null));
 
 			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 
@@ -101,5 +125,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fadd5d45acd6028584d813a9d938dade</Hash>
+    <Hash>6b8f778724570f9fac05e07413eb9ef6</Hash>
 </Codenesium>*/

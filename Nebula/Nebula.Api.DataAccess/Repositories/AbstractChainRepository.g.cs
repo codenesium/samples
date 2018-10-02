@@ -76,6 +76,13 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		public async Task<Chain> ByExternalId(Guid externalId)
+		{
+			var records = await this.Where(x => x.ExternalId == externalId);
+
+			return records.FirstOrDefault();
+		}
+
 		public async virtual Task<List<Clasp>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Clasp>().Where(x => x.NextChainId == nextChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
@@ -86,9 +93,9 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Link>().Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
-		public async virtual Task<ChainStatus> GetChainStatus(int chainStatusId)
+		public async virtual Task<ChainStatu> GetChainStatu(int chainStatusId)
 		{
-			return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Id == chainStatusId);
+			return await this.Context.Set<ChainStatu>().SingleOrDefaultAsync(x => x.Id == chainStatusId);
 		}
 
 		public async virtual Task<Team> GetTeam(int teamId)
@@ -128,5 +135,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b881d4687adc2ebc2c06d2b0aa2c71c7</Hash>
+    <Hash>b50136e3a4b95051f4c63b4aeb5a4863</Hash>
 </Codenesium>*/

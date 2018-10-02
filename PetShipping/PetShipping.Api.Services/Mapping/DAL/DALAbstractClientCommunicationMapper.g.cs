@@ -17,7 +17,7 @@ namespace PetShippingNS.Api.Services
 				bo.DateCreated,
 				bo.EmployeeId,
 				bo.Id,
-				bo.Notes);
+				bo.Note);
 			return efClientCommunication;
 		}
 
@@ -31,7 +31,7 @@ namespace PetShippingNS.Api.Services
 				ef.ClientId,
 				ef.DateCreated,
 				ef.EmployeeId,
-				ef.Notes);
+				ef.Note);
 			return bo;
 		}
 
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c974a573e67d8fc30ae338361a8e1a21</Hash>
+    <Hash>4bea0f0055ea3fdec4977353db2c6510</Hash>
 </Codenesium>*/

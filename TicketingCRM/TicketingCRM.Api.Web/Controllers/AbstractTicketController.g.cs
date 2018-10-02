@@ -226,7 +226,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpGet]
 		[Route("{ticketId}/SaleTickets")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSaleTicketsResponseModel>), 200)]
+		[ProducesResponseType(typeof(List<ApiSaleTicketResponseModel>), 200)]
 		public async virtual Task<IActionResult> SaleTickets(int ticketId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
@@ -235,7 +235,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSaleTicketsResponseModel> response = await this.TicketService.SaleTickets(ticketId, query.Limit, query.Offset);
+			List<ApiSaleTicketResponseModel> response = await this.TicketService.SaleTickets(ticketId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -259,5 +259,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ab1ff15055a845ca01088957a0fcf11b</Hash>
+    <Hash>529eab38508d80b3d4fa8f3da632345d</Hash>
 </Codenesium>*/

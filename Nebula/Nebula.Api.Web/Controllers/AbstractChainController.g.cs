@@ -207,6 +207,25 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byExternalId/{externalId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiChainResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByExternalId(Guid externalId)
+		{
+			ApiChainResponseModel response = await this.ChainService.ByExternalId(externalId);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{nextChainId}/Clasps")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiClaspResponseModel>), 200)]
@@ -259,5 +278,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6a086d8aba840ae099c82872049d82cf</Hash>
+    <Hash>f777d401b8172f96af1edec632c88760</Hash>
 </Codenesium>*/

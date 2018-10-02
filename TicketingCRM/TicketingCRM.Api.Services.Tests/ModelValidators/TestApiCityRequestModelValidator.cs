@@ -25,6 +25,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Name_Create_null()
+		{
+			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
+			cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
+
+			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
+			await validator.ValidateCreateAsync(new ApiCityRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
+		public async void Name_Update_null()
+		{
+			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
+			cityRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new City()));
+
+			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+		}
+
+		[Fact]
 		public async void Name_Create_length()
 		{
 			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
@@ -101,5 +125,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>da9699bac4aae4906452191e03eae3c2</Hash>
+    <Hash>aa2fe5e513091aa24c6eed3b2f312ae6</Hash>
 </Codenesium>*/

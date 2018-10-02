@@ -116,6 +116,27 @@ namespace NebulaNS.Api.Services
 			return response;
 		}
 
+		public async Task<ApiLinkResponseModel> ByExternalId(Guid externalId)
+		{
+			Link record = await this.LinkRepository.ByExternalId(externalId);
+
+			if (record == null)
+			{
+				return null;
+			}
+			else
+			{
+				return this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(record));
+			}
+		}
+
+		public async Task<List<ApiLinkResponseModel>> ByChainId(int chainId, int limit = 0, int offset = int.MaxValue)
+		{
+			List<Link> records = await this.LinkRepository.ByChainId(chainId, limit, offset);
+
+			return this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiLinkLogResponseModel>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<LinkLog> records = await this.LinkRepository.LinkLogs(linkId, limit, offset);
@@ -126,5 +147,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3c65e8f374ce8bfce410015c8cb80aba</Hash>
+    <Hash>84ceb538c1718a6ca723f4ddef441211</Hash>
 </Codenesium>*/

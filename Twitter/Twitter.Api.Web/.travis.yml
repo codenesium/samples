@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 2.1
+script:
+   -  dotnet build Twitter.Api.Web.csproj
+   -  dotnet test Twitter.Api.DataAccess.csproj
+   -  dotnet test Twitter.Api.Servicea.csproj
+   -  dotnet test Twitter.Api.Client.csproj
+   -  dotnet test Twitter.Api.Web.csproj

@@ -16,7 +16,7 @@ namespace TicketingCRMNS.Api.Services
 		public async Task<ValidationResult> ValidateCreateAsync(ApiSaleRequestModel model)
 		{
 			this.IpAddressRules();
-			this.NotesRules();
+			this.NoteRules();
 			this.SaleDateRules();
 			this.TransactionIdRules();
 			return await this.ValidateAsync(model);
@@ -25,7 +25,7 @@ namespace TicketingCRMNS.Api.Services
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiSaleRequestModel model)
 		{
 			this.IpAddressRules();
-			this.NotesRules();
+			this.NoteRules();
 			this.SaleDateRules();
 			this.TransactionIdRules();
 			return await this.ValidateAsync(model, id);
@@ -39,5 +39,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dae0c1515a16da751095b454ffd9c8ab</Hash>
+    <Hash>9355ae3206a081fa98a2e2fe9c09b4f5</Hash>
 </Codenesium>*/

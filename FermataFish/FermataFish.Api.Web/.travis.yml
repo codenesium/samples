@@ -1,9 +1,0 @@
-language: csharp
-mono: none
-dotnet: 2.1
-script:
-   -  dotnet build FermataFish.Api.Web.csproj
-   -  dotnet test FermataFish.Api.DataAccess.csproj
-   -  dotnet test FermataFish.Api.Servicea.csproj
-   -  dotnet test FermataFish.Api.Client.csproj
-   -  dotnet test FermataFish.Api.Web.csproj

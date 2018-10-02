@@ -19,32 +19,33 @@ namespace NebulaNS.Api.Contracts
 			int chainId,
 			DateTime? dateCompleted,
 			DateTime? dateStarted,
-			string dynamicParameters,
+			string dynamicParameter,
 			Guid externalId,
 			int linkStatusId,
 			string name,
 			int order,
 			string response,
-			string staticParameters,
-			int timeoutInSeconds)
+			string staticParameter,
+			int timeoutInSecond)
 		{
 			this.AssignedMachineId = assignedMachineId;
 			this.ChainId = chainId;
 			this.DateCompleted = dateCompleted;
 			this.DateStarted = dateStarted;
-			this.DynamicParameters = dynamicParameters;
+			this.DynamicParameter = dynamicParameter;
 			this.ExternalId = externalId;
 			this.LinkStatusId = linkStatusId;
 			this.Name = name;
 			this.Order = order;
 			this.Response = response;
-			this.StaticParameters = staticParameters;
-			this.TimeoutInSeconds = timeoutInSeconds;
+			this.StaticParameter = staticParameter;
+			this.TimeoutInSecond = timeoutInSecond;
 		}
 
 		[JsonProperty]
 		public int? AssignedMachineId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int ChainId { get; private set; }
 
@@ -55,17 +56,21 @@ namespace NebulaNS.Api.Contracts
 		public DateTime? DateStarted { get; private set; }
 
 		[JsonProperty]
-		public string DynamicParameters { get; private set; }
+		public string DynamicParameter { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public Guid ExternalId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int LinkStatusId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int Order { get; private set; }
 
@@ -73,13 +78,14 @@ namespace NebulaNS.Api.Contracts
 		public string Response { get; private set; }
 
 		[JsonProperty]
-		public string StaticParameters { get; private set; }
+		public string StaticParameter { get; private set; }
 
+		[Required]
 		[JsonProperty]
-		public int TimeoutInSeconds { get; private set; }
+		public int TimeoutInSecond { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>b98b0940af9d5c21781216bbff8578f3</Hash>
+    <Hash>ffd508e7c13fde5d9007ed439ee72c43</Hash>
 </Codenesium>*/

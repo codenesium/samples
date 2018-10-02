@@ -15,7 +15,7 @@ namespace PetShippingNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+		public int TenantId { get; private set; } = 1;
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -70,7 +70,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual DbSet<Pipeline> Pipelines { get; set; }
 
-		public virtual DbSet<PipelineStatus> PipelineStatus { get; set; }
+		public virtual DbSet<PipelineStatu> PipelineStatus { get; set; }
 
 		public virtual DbSet<PipelineStep> PipelineSteps { get; set; }
 
@@ -78,7 +78,7 @@ namespace PetShippingNS.Api.DataAccess
 
 		public virtual DbSet<PipelineStepNote> PipelineStepNotes { get; set; }
 
-		public virtual DbSet<PipelineStepStatus> PipelineStepStatus { get; set; }
+		public virtual DbSet<PipelineStepStatu> PipelineStepStatus { get; set; }
 
 		public virtual DbSet<PipelineStepStepRequirement> PipelineStepStepRequirements { get; set; }
 
@@ -92,6 +92,8 @@ namespace PetShippingNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
+		/// <param name="acceptAllChangesOnSuccess"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -104,6 +106,12 @@ namespace PetShippingNS.Api.DataAccess
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
+					}
+
+					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					if (tenantEntity != null)
+					{
+						tenantEntity.CurrentValue = this.TenantId;
 					}
 				}
 			}
@@ -132,7 +140,8 @@ namespace PetShippingNS.Api.DataAccess
 
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -147,5 +156,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8ec3c56097ded221d7bd70bbb45c919f</Hash>
+    <Hash>3aeacd4c87b4832b9233ad0669706ede</Hash>
 </Codenesium>*/

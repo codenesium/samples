@@ -155,6 +155,49 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ByMachineGuid_Exists()
+		{
+			var mock = new ServiceMockFacade<IMachineRepository>();
+			var record = new Machine();
+			mock.RepositoryMock.Setup(x => x.ByMachineGuid(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+
+			ApiMachineResponseModel response = await service.ByMachineGuid(default(Guid));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByMachineGuid(It.IsAny<Guid>()));
+		}
+
+		[Fact]
+		public async void ByMachineGuid_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IMachineRepository>();
+			mock.RepositoryMock.Setup(x => x.ByMachineGuid(It.IsAny<Guid>())).Returns(Task.FromResult<Machine>(null));
+			var service = new MachineService(mock.LoggerMock.Object,
+			                                 mock.RepositoryMock.Object,
+			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
+			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
+			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
+			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+
+			ApiMachineResponseModel response = await service.ByMachineGuid(default(Guid));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByMachineGuid(It.IsAny<Guid>()));
+		}
+
+		[Fact]
 		public async void Links_Exists()
 		{
 			var mock = new ServiceMockFacade<IMachineRepository>();
@@ -245,5 +288,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cf0fb7a418292a2fe8bde7ee693e3454</Hash>
+    <Hash>33f11288a996227015a336b30b50d2d7</Hash>
 </Codenesium>*/

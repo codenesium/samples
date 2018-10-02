@@ -39,7 +39,7 @@ this.teamId = 0;
 		
 				}
 			}
-			export class ApiChainStatusRequestModel {
+			export class ApiChainStatuRequestModel {
 				id:number;
 name:string;
 
@@ -52,7 +52,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiChainStatusResponseModel {
+			export class ApiChainStatuResponseModel {
 				id:number;
 name:string;
 
@@ -104,7 +104,7 @@ chainId:number;
 chainIdEntity:number;
 dateCompleted:string;
 dateStarted:string;
-dynamicParameters:string;
+dynamicParameter:string;
 externalId:string;
 id:number;
 linkStatusId:number;
@@ -112,8 +112,8 @@ linkStatusIdEntity:number;
 name:string;
 order:number;
 response:string;
-staticParameters:string;
-timeoutInSeconds:number;
+staticParameter:string;
+timeoutInSecond:number;
 
 	
 				constructor() {
@@ -121,15 +121,15 @@ timeoutInSeconds:number;
 this.chainId = 0;
 this.dateCompleted = '';
 this.dateStarted = '';
-this.dynamicParameters = '';
+this.dynamicParameter = '';
 this.externalId = '';
 this.id = 0;
 this.linkStatusId = 0;
 this.name = '';
 this.order = 0;
 this.response = '';
-this.staticParameters = '';
-this.timeoutInSeconds = 0;
+this.staticParameter = '';
+this.timeoutInSecond = 0;
 
 		
 				}
@@ -142,7 +142,7 @@ chainId:number;
 chainIdEntity:number;
 dateCompleted:string;
 dateStarted:string;
-dynamicParameters:string;
+dynamicParameter:string;
 externalId:string;
 id:number;
 linkStatusId:number;
@@ -150,8 +150,8 @@ linkStatusIdEntity:number;
 name:string;
 order:number;
 response:string;
-staticParameters:string;
-timeoutInSeconds:number;
+staticParameter:string;
+timeoutInSecond:number;
 
 	
 				constructor() {
@@ -159,15 +159,15 @@ timeoutInSeconds:number;
 this.chainId = 0;
 this.dateCompleted = '';
 this.dateStarted = '';
-this.dynamicParameters = '';
+this.dynamicParameter = '';
 this.externalId = '';
 this.id = 0;
 this.linkStatusId = 0;
 this.name = '';
 this.order = 0;
 this.response = '';
-this.staticParameters = '';
-this.timeoutInSeconds = 0;
+this.staticParameter = '';
+this.timeoutInSecond = 0;
 
 		
 				}
@@ -207,7 +207,7 @@ this.log = '';
 		
 				}
 			}
-			export class ApiLinkStatusRequestModel {
+			export class ApiLinkStatuRequestModel {
 				id:number;
 name:string;
 
@@ -220,7 +220,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiLinkStatusResponseModel {
+			export class ApiLinkStatuResponseModel {
 				id:number;
 name:string;
 
@@ -327,6 +327,43 @@ name:string;
 				constructor() {
 					this.id = 0;
 this.name = '';
+
+		
+				}
+			}
+			export class ApiSysdiagramRequestModel {
+				definition:string;
+diagramId:number;
+name:string;
+principalId:number;
+version:number;
+
+	
+				constructor() {
+					this.definition = '';
+this.diagramId = 0;
+this.name = '';
+this.principalId = 0;
+this.version = 0;
+
+		
+				}
+			}
+
+			export class ApiSysdiagramResponseModel {
+				definition:string;
+diagramId:number;
+name:string;
+principalId:number;
+version:number;
+
+	
+				constructor() {
+					this.definition = '';
+this.diagramId = 0;
+this.name = '';
+this.principalId = 0;
+this.version = 0;
 
 		
 				}

@@ -53,6 +53,8 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public Mock<IApiStateProvinceRequestModelValidator> StateProvinceModelValidatorMock { get; set; } = new Mock<IApiStateProvinceRequestModelValidator>();
 
+		public Mock<IApiVStateProvinceCountryRegionRequestModelValidator> VStateProvinceCountryRegionModelValidatorMock { get; set; } = new Mock<IApiVStateProvinceCountryRegionRequestModelValidator>();
+
 		public Mock<IApiBillOfMaterialRequestModelValidator> BillOfMaterialModelValidatorMock { get; set; } = new Mock<IApiBillOfMaterialRequestModelValidator>();
 
 		public Mock<IApiCultureRequestModelValidator> CultureModelValidatorMock { get; set; } = new Mock<IApiCultureRequestModelValidator>();
@@ -96,6 +98,8 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public Mock<IApiTransactionHistoryArchiveRequestModelValidator> TransactionHistoryArchiveModelValidatorMock { get; set; } = new Mock<IApiTransactionHistoryArchiveRequestModelValidator>();
 
 		public Mock<IApiUnitMeasureRequestModelValidator> UnitMeasureModelValidatorMock { get; set; } = new Mock<IApiUnitMeasureRequestModelValidator>();
+
+		public Mock<IApiVProductAndDescriptionRequestModelValidator> VProductAndDescriptionModelValidatorMock { get; set; } = new Mock<IApiVProductAndDescriptionRequestModelValidator>();
 
 		public Mock<IApiWorkOrderRequestModelValidator> WorkOrderModelValidatorMock { get; set; } = new Mock<IApiWorkOrderRequestModelValidator>();
 
@@ -239,6 +243,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			this.StateProvinceModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStateProvinceRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.StateProvinceModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
+			this.VStateProvinceCountryRegionModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVStateProvinceCountryRegionRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VStateProvinceCountryRegionModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVStateProvinceCountryRegionRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VStateProvinceCountryRegionModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
 			this.BillOfMaterialModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.BillOfMaterialModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiBillOfMaterialRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.BillOfMaterialModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -326,6 +334,10 @@ namespace AdventureWorksNS.Api.Services.Tests
 			this.UnitMeasureModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUnitMeasureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UnitMeasureModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiUnitMeasureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UnitMeasureModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<string>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
+			this.VProductAndDescriptionModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVProductAndDescriptionRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VProductAndDescriptionModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiVProductAndDescriptionRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VProductAndDescriptionModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<string>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.WorkOrderModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiWorkOrderRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.WorkOrderModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiWorkOrderRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -435,5 +447,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>58090d0431906a2a3e4b7b53c98e06a9</Hash>
+    <Hash>0cdcefefbbebfffcdee1fe1f6cf91577</Hash>
 </Codenesium>*/

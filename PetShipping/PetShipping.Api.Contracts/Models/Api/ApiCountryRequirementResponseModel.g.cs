@@ -11,32 +11,29 @@ namespace PetShippingNS.Api.Contracts
 		public virtual void SetProperties(
 			int id,
 			int countryId,
-			string details)
+			string detail)
 		{
 			this.Id = id;
 			this.CountryId = countryId;
-			this.Details = details;
+			this.Detail = detail;
 
 			this.CountryIdEntity = nameof(ApiResponse.Countries);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int CountryId { get; private set; }
 
 		[JsonProperty]
 		public string CountryIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
-		public string Details { get; private set; }
+		public string Detail { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7f79b71779b5425027d2dc42b72da267</Hash>
+    <Hash>7a16670513299db763912a2bd6935d86</Hash>
 </Codenesium>*/

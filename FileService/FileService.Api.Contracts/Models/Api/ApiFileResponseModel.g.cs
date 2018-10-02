@@ -16,7 +16,7 @@ namespace FileServiceNS.Api.Contracts
 			DateTime expiration,
 			string extension,
 			Guid externalId,
-			decimal fileSizeInBytes,
+			double fileSizeInByte,
 			int fileTypeId,
 			string location,
 			string privateKey,
@@ -29,7 +29,7 @@ namespace FileServiceNS.Api.Contracts
 			this.Expiration = expiration;
 			this.Extension = extension;
 			this.ExternalId = externalId;
-			this.FileSizeInBytes = fileSizeInBytes;
+			this.FileSizeInByte = fileSizeInByte;
 			this.FileTypeId = fileTypeId;
 			this.Location = location;
 			this.PrivateKey = privateKey;
@@ -46,7 +46,6 @@ namespace FileServiceNS.Api.Contracts
 		[JsonProperty]
 		public string BucketIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public DateTime DateCreated { get; private set; }
 
@@ -54,47 +53,38 @@ namespace FileServiceNS.Api.Contracts
 		[JsonProperty]
 		public string Description { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public DateTime Expiration { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Extension { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public Guid ExternalId { get; private set; }
 
-		[Required]
 		[JsonProperty]
-		public decimal FileSizeInBytes { get; private set; }
+		public double FileSizeInByte { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public int FileTypeId { get; private set; }
 
 		[JsonProperty]
 		public string FileTypeIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Location { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string PrivateKey { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string PublicKey { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d55c5785e2429f6d2ad2f2af9797392c</Hash>
+    <Hash>82f0b336a40707414584c2f0d827d7a5</Hash>
 </Codenesium>*/

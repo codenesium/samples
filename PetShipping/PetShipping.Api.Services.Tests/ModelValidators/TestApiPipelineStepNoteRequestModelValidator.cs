@@ -75,6 +75,30 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void Note_Create_null()
+		{
+			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
+			pipelineStepNoteRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepNote()));
+
+			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
+			await validator.ValidateCreateAsync(new ApiPipelineStepNoteRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
+
+		[Fact]
+		public async void Note_Update_null()
+		{
+			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
+			pipelineStepNoteRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new PipelineStepNote()));
+
+			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepNoteRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
+
+		[Fact]
 		public async void PipelineStepId_Create_Valid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
@@ -127,5 +151,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>92078be125d13da20b0cfbd29943c8d1</Hash>
+    <Hash>75f70ac9796f7ecf86c20b41fdebe36c</Hash>
 </Codenesium>*/

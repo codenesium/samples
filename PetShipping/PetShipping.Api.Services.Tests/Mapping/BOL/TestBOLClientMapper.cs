@@ -24,7 +24,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Email.Should().Be("A");
 			response.FirstName.Should().Be("A");
 			response.LastName.Should().Be("A");
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.Phone.Should().Be("A");
 		}
 
@@ -40,7 +40,7 @@ namespace PetShippingNS.Api.Services.Tests
 			response.FirstName.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.LastName.Should().Be("A");
-			response.Notes.Should().Be("A");
+			response.Note.Should().Be("A");
 			response.Phone.Should().Be("A");
 		}
 
@@ -58,5 +58,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3397af4ab76e8fc7603e66970df784d8</Hash>
+    <Hash>de36f1987dd50140e089746161056e26</Hash>
 </Codenesium>*/

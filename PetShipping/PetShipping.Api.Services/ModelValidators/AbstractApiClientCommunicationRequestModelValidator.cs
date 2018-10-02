@@ -40,9 +40,10 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployee).When(x => x?.EmployeeId != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void NotesRules()
+		public virtual void NoteRules()
 		{
-			this.RuleFor(x => x.Notes).Length(0, 2147483647);
+			this.RuleFor(x => x.Note).NotNull();
+			this.RuleFor(x => x.Note).Length(0, 2147483647);
 		}
 
 		private async Task<bool> BeValidClient(int id,  CancellationToken cancellationToken)
@@ -62,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2d292c687e883925d1395acbb14d45df</Hash>
+    <Hash>145b63506b78a56fdecef3ee3a4576fb</Hash>
 </Codenesium>*/

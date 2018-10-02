@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Services
 				model.Email,
 				model.FirstName,
 				model.LastName,
-				model.Notes,
+				model.Note,
 				model.Phone);
 			return boClient;
 		}
@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Services
 		{
 			var model = new ApiClientResponseModel();
 
-			model.SetProperties(boClient.Id, boClient.Email, boClient.FirstName, boClient.LastName, boClient.Notes, boClient.Phone);
+			model.SetProperties(boClient.Id, boClient.Email, boClient.FirstName, boClient.LastName, boClient.Note, boClient.Phone);
 
 			return model;
 		}
@@ -49,5 +49,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e50f6848722658f6ddcaa0ae50ce4f82</Hash>
+    <Hash>4440aa2ea9690b807182afd0ec55a11c</Hash>
 </Codenesium>*/

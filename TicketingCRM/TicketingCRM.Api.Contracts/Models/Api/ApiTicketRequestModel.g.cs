@@ -22,14 +22,16 @@ namespace TicketingCRMNS.Api.Contracts
 			this.TicketStatusId = ticketStatusId;
 		}
 
+		[Required]
 		[JsonProperty]
 		public string PublicId { get; private set; }
 
+		[Required]
 		[JsonProperty]
 		public int TicketStatusId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>667a29269729654d092be3cec0cea95b</Hash>
+    <Hash>6add3b75052a6513de020871404d210e</Hash>
 </Codenesium>*/

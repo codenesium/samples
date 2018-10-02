@@ -26,12 +26,11 @@ namespace FileServiceNS.Api.Contracts
 		[JsonProperty]
 		public string Description { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public long Version { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d532aa35cf66d4fe90bb864aae3ad5f3</Hash>
+    <Hash>842a2ffa2b043b129a2b8d80fcbff71c</Hash>
 </Codenesium>*/

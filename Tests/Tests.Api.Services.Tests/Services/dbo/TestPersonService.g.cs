@@ -29,7 +29,9 @@ namespace TestsNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock);
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
+			                                mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			List<ApiPersonResponseModel> response = await service.All();
 
@@ -47,7 +49,9 @@ namespace TestsNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock);
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
+			                                mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			ApiPersonResponseModel response = await service.Get(default(int));
 
@@ -64,7 +68,9 @@ namespace TestsNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock);
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
+			                                mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			ApiPersonResponseModel response = await service.Get(default(int));
 
@@ -82,7 +88,9 @@ namespace TestsNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock);
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
+			                                mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			CreateResponse<ApiPersonResponseModel> response = await service.Create(model);
 
@@ -102,7 +110,9 @@ namespace TestsNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock);
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
+			                                mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			UpdateResponse<ApiPersonResponseModel> response = await service.Update(default(int), model);
 
@@ -121,7 +131,9 @@ namespace TestsNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
-			                                mock.DALMapperMockFactory.DALPersonMapperMock);
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
+			                                mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -129,9 +141,49 @@ namespace TestsNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PersonModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void ColumnSameAsFKTables_Exists()
+		{
+			var mock = new ServiceMockFacade<IPersonRepository>();
+			var records = new List<ColumnSameAsFKTable>();
+			records.Add(new ColumnSameAsFKTable());
+			mock.RepositoryMock.Setup(x => x.ColumnSameAsFKTables(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new PersonService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
+			                                mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
+
+			List<ApiColumnSameAsFKTableResponseModel> response = await service.ColumnSameAsFKTables(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ColumnSameAsFKTables(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ColumnSameAsFKTables_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IPersonRepository>();
+			mock.RepositoryMock.Setup(x => x.ColumnSameAsFKTables(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ColumnSameAsFKTable>>(new List<ColumnSameAsFKTable>()));
+			var service = new PersonService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.PersonModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLPersonMapperMock,
+			                                mock.DALMapperMockFactory.DALPersonMapperMock,
+			                                mock.BOLMapperMockFactory.BOLColumnSameAsFKTableMapperMock,
+			                                mock.DALMapperMockFactory.DALColumnSameAsFKTableMapperMock);
+
+			List<ApiColumnSameAsFKTableResponseModel> response = await service.ColumnSameAsFKTables(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ColumnSameAsFKTables(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>09105b26c99474bea5064d26fb581b7d</Hash>
+    <Hash>a8723619d286a81ac94ff069b2b5c9dd</Hash>
 </Codenesium>*/

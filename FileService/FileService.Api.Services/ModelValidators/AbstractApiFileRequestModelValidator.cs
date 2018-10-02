@@ -46,6 +46,7 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void ExtensionRules()
 		{
+			this.RuleFor(x => x.Extension).NotNull();
 			this.RuleFor(x => x.Extension).Length(0, 32);
 		}
 
@@ -53,7 +54,7 @@ namespace FileServiceNS.Api.Services
 		{
 		}
 
-		public virtual void FileSizeInBytesRules()
+		public virtual void FileSizeInByteRules()
 		{
 		}
 
@@ -64,16 +65,19 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void LocationRules()
 		{
+			this.RuleFor(x => x.Location).NotNull();
 			this.RuleFor(x => x.Location).Length(0, 255);
 		}
 
 		public virtual void PrivateKeyRules()
 		{
+			this.RuleFor(x => x.PrivateKey).NotNull();
 			this.RuleFor(x => x.PrivateKey).Length(0, 64);
 		}
 
 		public virtual void PublicKeyRules()
 		{
+			this.RuleFor(x => x.PublicKey).NotNull();
 			this.RuleFor(x => x.PublicKey).Length(0, 64);
 		}
 
@@ -94,5 +98,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>62d8a50a0df96c3e610ce31ff26a24d1</Hash>
+    <Hash>3aa43c197eb4f43b4c60abef4491ddfb</Hash>
 </Codenesium>*/

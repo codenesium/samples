@@ -76,6 +76,13 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
+		public async Task<Machine> ByMachineGuid(Guid machineGuid)
+		{
+			var records = await this.Where(x => x.MachineGuid == machineGuid);
+
+			return records.FirstOrDefault();
+		}
+
 		public async virtual Task<List<Link>> Links(int assignedMachineId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Link>().Where(x => x.AssignedMachineId == assignedMachineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
@@ -118,5 +125,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>58bb634efe8cd3ae4ee9564d15c1e4ab</Hash>
+    <Hash>d88afccaed0f48ca1eb62a2ade2019f9</Hash>
 </Codenesium>*/

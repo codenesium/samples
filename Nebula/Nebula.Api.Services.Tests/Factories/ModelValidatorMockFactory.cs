@@ -11,7 +11,7 @@ namespace NebulaNS.Api.Services.Tests
 	{
 		public Mock<IApiChainRequestModelValidator> ChainModelValidatorMock { get; set; } = new Mock<IApiChainRequestModelValidator>();
 
-		public Mock<IApiChainStatusRequestModelValidator> ChainStatusModelValidatorMock { get; set; } = new Mock<IApiChainStatusRequestModelValidator>();
+		public Mock<IApiChainStatuRequestModelValidator> ChainStatuModelValidatorMock { get; set; } = new Mock<IApiChainStatuRequestModelValidator>();
 
 		public Mock<IApiClaspRequestModelValidator> ClaspModelValidatorMock { get; set; } = new Mock<IApiClaspRequestModelValidator>();
 
@@ -19,13 +19,15 @@ namespace NebulaNS.Api.Services.Tests
 
 		public Mock<IApiLinkLogRequestModelValidator> LinkLogModelValidatorMock { get; set; } = new Mock<IApiLinkLogRequestModelValidator>();
 
-		public Mock<IApiLinkStatusRequestModelValidator> LinkStatusModelValidatorMock { get; set; } = new Mock<IApiLinkStatusRequestModelValidator>();
+		public Mock<IApiLinkStatuRequestModelValidator> LinkStatuModelValidatorMock { get; set; } = new Mock<IApiLinkStatuRequestModelValidator>();
 
 		public Mock<IApiMachineRequestModelValidator> MachineModelValidatorMock { get; set; } = new Mock<IApiMachineRequestModelValidator>();
 
 		public Mock<IApiMachineRefTeamRequestModelValidator> MachineRefTeamModelValidatorMock { get; set; } = new Mock<IApiMachineRefTeamRequestModelValidator>();
 
 		public Mock<IApiOrganizationRequestModelValidator> OrganizationModelValidatorMock { get; set; } = new Mock<IApiOrganizationRequestModelValidator>();
+
+		public Mock<IApiSysdiagramRequestModelValidator> SysdiagramModelValidatorMock { get; set; } = new Mock<IApiSysdiagramRequestModelValidator>();
 
 		public Mock<IApiTeamRequestModelValidator> TeamModelValidatorMock { get; set; } = new Mock<IApiTeamRequestModelValidator>();
 
@@ -37,9 +39,9 @@ namespace NebulaNS.Api.Services.Tests
 			this.ChainModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiChainRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.ChainModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.ChainStatusModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.ChainStatusModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiChainStatusRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.ChainStatusModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.ChainStatuModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiChainStatuRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.ChainStatuModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiChainStatuRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.ChainStatuModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.ClaspModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiClaspRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.ClaspModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiClaspRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -53,9 +55,9 @@ namespace NebulaNS.Api.Services.Tests
 			this.LinkLogModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkLogRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.LinkLogModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.LinkStatusModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLinkStatusRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.LinkStatusModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkStatusRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.LinkStatusModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.LinkStatuModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLinkStatuRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.LinkStatuModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLinkStatuRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.LinkStatuModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.MachineModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.MachineModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiMachineRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -69,6 +71,10 @@ namespace NebulaNS.Api.Services.Tests
 			this.OrganizationModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiOrganizationRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.OrganizationModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
+			this.SysdiagramModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSysdiagramRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.SysdiagramModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSysdiagramRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.SysdiagramModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
 			this.TeamModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TeamModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeamRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TeamModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -81,5 +87,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>f9fbc192ebe867472ba7f941ef60fbf9</Hash>
+    <Hash>e40cdd44b7ad990f70a3ca08393aa1c7</Hash>
 </Codenesium>*/

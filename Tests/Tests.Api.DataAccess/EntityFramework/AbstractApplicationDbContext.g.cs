@@ -15,7 +15,7 @@ namespace TestsNS.Api.DataAccess
 	{
 		public Guid UserId { get; private set; }
 
-		public int TenantId { get; private set; }
+		public int TenantId { get; private set; } = 1;
 
 		public AbstractApplicationDbContext(DbContextOptions options)
 			: base(options)
@@ -42,6 +42,12 @@ namespace TestsNS.Api.DataAccess
 			this.TenantId = tenantId;
 		}
 
+		public virtual DbSet<ColumnSameAsFKTable> ColumnSameAsFKTables { get; set; }
+
+		public virtual DbSet<CompositePrimaryKey> CompositePrimaryKeys { get; set; }
+
+		public virtual DbSet<IncludedColumnTest> IncludedColumnTests { get; set; }
+
 		public virtual DbSet<Person> People { get; set; }
 
 		public virtual DbSet<RowVersionCheck> RowVersionChecks { get; set; }
@@ -56,6 +62,8 @@ namespace TestsNS.Api.DataAccess
 
 		public virtual DbSet<TimestampCheck> TimestampChecks { get; set; }
 
+		public virtual DbSet<VPerson> VPersons { get; set; }
+
 		public virtual DbSet<SchemaAPerson> SchemaAPersons { get; set; }
 
 		public virtual DbSet<SchemaBPerson> SchemaBPersons { get; set; }
@@ -68,6 +76,8 @@ namespace TestsNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
+		/// <param name="acceptAllChangesOnSuccess"></param>
+		/// <param name="cancellationToken"></param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -80,6 +90,12 @@ namespace TestsNS.Api.DataAccess
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
+					}
+
+					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+					if (tenantEntity != null)
+					{
+						tenantEntity.CurrentValue = this.TenantId;
 					}
 				}
 			}
@@ -108,7 +124,8 @@ namespace TestsNS.Api.DataAccess
 
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 			                                   .SetBasePath(settingsDirectory)
-			                                   .AddJsonFile($"appsettings.{environment}.json")
+			                                   .AddJsonFile($"appSettings.{environment}.json")
+			                                   .AddEnvironmentVariables()
 			                                   .Build();
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -123,5 +140,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2355844f7b1e3f7f538a39d376d78f72</Hash>
+    <Hash>a933a384802093f0692c24b42b12b2b7</Hash>
 </Codenesium>*/

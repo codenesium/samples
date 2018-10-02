@@ -17,14 +17,14 @@ namespace NebulaNS.Api.Contracts
 			                       request.ChainId,
 			                       request.DateCompleted,
 			                       request.DateStarted,
-			                       request.DynamicParameters,
+			                       request.DynamicParameter,
 			                       request.ExternalId,
 			                       request.LinkStatusId,
 			                       request.Name,
 			                       request.Order,
 			                       request.Response,
-			                       request.StaticParameters,
-			                       request.TimeoutInSeconds);
+			                       request.StaticParameter,
+			                       request.TimeoutInSecond);
 			return response;
 		}
 
@@ -37,14 +37,14 @@ namespace NebulaNS.Api.Contracts
 				response.ChainId,
 				response.DateCompleted,
 				response.DateStarted,
-				response.DynamicParameters,
+				response.DynamicParameter,
 				response.ExternalId,
 				response.LinkStatusId,
 				response.Name,
 				response.Order,
 				response.Response,
-				response.StaticParameters,
-				response.TimeoutInSeconds);
+				response.StaticParameter,
+				response.TimeoutInSecond);
 			return request;
 		}
 
@@ -55,19 +55,19 @@ namespace NebulaNS.Api.Contracts
 			patch.Replace(x => x.ChainId, model.ChainId);
 			patch.Replace(x => x.DateCompleted, model.DateCompleted);
 			patch.Replace(x => x.DateStarted, model.DateStarted);
-			patch.Replace(x => x.DynamicParameters, model.DynamicParameters);
+			patch.Replace(x => x.DynamicParameter, model.DynamicParameter);
 			patch.Replace(x => x.ExternalId, model.ExternalId);
 			patch.Replace(x => x.LinkStatusId, model.LinkStatusId);
 			patch.Replace(x => x.Name, model.Name);
 			patch.Replace(x => x.Order, model.Order);
 			patch.Replace(x => x.Response, model.Response);
-			patch.Replace(x => x.StaticParameters, model.StaticParameters);
-			patch.Replace(x => x.TimeoutInSeconds, model.TimeoutInSeconds);
+			patch.Replace(x => x.StaticParameter, model.StaticParameter);
+			patch.Replace(x => x.TimeoutInSecond, model.TimeoutInSecond);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b5306f64bf7aeacca608e6824d309687</Hash>
+    <Hash>aafc8a138afe6ac07124c3a3ea3fac73</Hash>
 </Codenesium>*/

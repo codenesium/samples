@@ -25,6 +25,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void IpAddress_Create_null()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
+
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.IpAddress, null as string);
+		}
+
+		[Fact]
+		public async void IpAddress_Update_null()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
+
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.IpAddress, null as string);
+		}
+
+		[Fact]
 		public async void IpAddress_Create_length()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
@@ -46,6 +70,30 @@ namespace TicketingCRMNS.Api.Services.Tests
 			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
 
 			validator.ShouldHaveValidationErrorFor(x => x.IpAddress, new string('A', 129));
+		}
+
+		[Fact]
+		public async void Note_Create_null()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
+
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
+
+		[Fact]
+		public async void Note_Update_null()
+		{
+			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
+			saleRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new Sale()));
+
+			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
 		}
 
 		[Fact]
@@ -101,5 +149,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cdad6c198d7eb84c6139e79171211aa7</Hash>
+    <Hash>8cb3d52b66b38b7a001325a72843623e</Hash>
 </Codenesium>*/

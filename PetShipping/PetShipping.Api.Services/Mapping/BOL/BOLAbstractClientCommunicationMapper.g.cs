@@ -18,7 +18,7 @@ namespace PetShippingNS.Api.Services
 				model.ClientId,
 				model.DateCreated,
 				model.EmployeeId,
-				model.Notes);
+				model.Note);
 			return boClientCommunication;
 		}
 
@@ -27,7 +27,7 @@ namespace PetShippingNS.Api.Services
 		{
 			var model = new ApiClientCommunicationResponseModel();
 
-			model.SetProperties(boClientCommunication.Id, boClientCommunication.ClientId, boClientCommunication.DateCreated, boClientCommunication.EmployeeId, boClientCommunication.Notes);
+			model.SetProperties(boClientCommunication.Id, boClientCommunication.ClientId, boClientCommunication.DateCreated, boClientCommunication.EmployeeId, boClientCommunication.Note);
 
 			return model;
 		}
@@ -48,5 +48,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e4cc26fca1b078158e03bef65777776f</Hash>
+    <Hash>2230875dca47e0913ddc0c374812143a</Hash>
 </Codenesium>*/

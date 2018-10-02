@@ -1,4 +1,87 @@
-export class ApiPersonRequestModel {
+export class ApiColumnSameAsFKTableRequestModel {
+				id:number;
+person:number;
+personId:number;
+
+	
+				constructor() {
+					this.id = 0;
+this.person = 0;
+this.personId = 0;
+
+		
+				}
+			}
+
+			export class ApiColumnSameAsFKTableResponseModel {
+				id:number;
+person:number;
+personId:number;
+
+	
+				constructor() {
+					this.id = 0;
+this.person = 0;
+this.personId = 0;
+
+		
+				}
+			}
+			export class ApiCompositePrimaryKeyRequestModel {
+				id:number;
+id2:number;
+
+	
+				constructor() {
+					this.id = 0;
+this.id2 = 0;
+
+		
+				}
+			}
+
+			export class ApiCompositePrimaryKeyResponseModel {
+				id:number;
+id2:number;
+
+	
+				constructor() {
+					this.id = 0;
+this.id2 = 0;
+
+		
+				}
+			}
+			export class ApiIncludedColumnTestRequestModel {
+				id:number;
+name:string;
+name2:string;
+
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
+this.name2 = '';
+
+		
+				}
+			}
+
+			export class ApiIncludedColumnTestResponseModel {
+				id:number;
+name:string;
+name2:string;
+
+	
+				constructor() {
+					this.id = 0;
+this.name = '';
+this.name2 = '';
+
+		
+				}
+			}
+			export class ApiPersonRequestModel {
 				personId:number;
 personName:string;
 
@@ -397,6 +480,31 @@ timestamp:MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
 					this.id = 0;
 this.name = '';
 this.timestamp = UNKNOWN_FILE_TYPE_MAPPING_NOT_FOUND_MapContainer->GetMapping timestamp;
+
+		
+				}
+			}
+			export class ApiVPersonRequestModel {
+				personId:number;
+personName:string;
+
+	
+				constructor() {
+					this.personId = 0;
+this.personName = '';
+
+		
+				}
+			}
+
+			export class ApiVPersonResponseModel {
+				personId:number;
+personName:string;
+
+	
+				constructor() {
+					this.personId = 0;
+this.personName = '';
 
 		
 				}

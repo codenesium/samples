@@ -207,6 +207,25 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byName/{name}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiTeamResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByName(string name)
+		{
+			ApiTeamResponseModel response = await this.TeamService.ByName(name);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{teamId}/Chains")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
@@ -259,5 +278,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>54055087af006e0d4d80162ebd29d20e</Hash>
+    <Hash>7c6bcfc435199a82200ed878d37cc7ab</Hash>
 </Codenesium>*/

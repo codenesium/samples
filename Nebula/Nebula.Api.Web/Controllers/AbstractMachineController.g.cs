@@ -207,6 +207,25 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
+		[Route("byMachineGuid/{machineGuid}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(ApiMachineResponseModel), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		public async virtual Task<IActionResult> ByMachineGuid(Guid machineGuid)
+		{
+			ApiMachineResponseModel response = await this.MachineService.ByMachineGuid(machineGuid);
+
+			if (response == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				return this.Ok(response);
+			}
+		}
+
+		[HttpGet]
 		[Route("{assignedMachineId}/Links")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
@@ -259,5 +278,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f96e58c4640834fb2dde3a397a7be1b4</Hash>
+    <Hash>42e153f1bb92e7a04202aeaa1d78210f</Hash>
 </Codenesium>*/

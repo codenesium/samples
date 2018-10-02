@@ -20,23 +20,20 @@ namespace TicketingCRMNS.Api.Contracts
 			this.CountryIdEntity = nameof(ApiResponse.Countries);
 		}
 
-		[Required]
 		[JsonProperty]
 		public int CountryId { get; private set; }
 
 		[JsonProperty]
 		public string CountryIdEntity { get; set; }
 
-		[Required]
 		[JsonProperty]
 		public int Id { get; private set; }
 
-		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>97c970e56b43eb3ae5c8d0763db06812</Hash>
+    <Hash>e0236ab9e5030a6e89dc6a032dda5291</Hash>
 </Codenesium>*/

@@ -8,29 +8,29 @@ namespace StackOverflowNS.Api.Services.Tests
 {
 	public class DALMapperMockFactory
 	{
-		public IDALBadgesMapper DALBadgesMapperMock { get; set; } = new DALBadgesMapper();
+		public IDALBadgeMapper DALBadgeMapperMock { get; set; } = new DALBadgeMapper();
 
-		public IDALCommentsMapper DALCommentsMapperMock { get; set; } = new DALCommentsMapper();
+		public IDALCommentMapper DALCommentMapperMock { get; set; } = new DALCommentMapper();
 
-		public IDALLinkTypesMapper DALLinkTypesMapperMock { get; set; } = new DALLinkTypesMapper();
+		public IDALLinkTypeMapper DALLinkTypeMapperMock { get; set; } = new DALLinkTypeMapper();
 
 		public IDALPostHistoryMapper DALPostHistoryMapperMock { get; set; } = new DALPostHistoryMapper();
 
-		public IDALPostHistoryTypesMapper DALPostHistoryTypesMapperMock { get; set; } = new DALPostHistoryTypesMapper();
+		public IDALPostHistoryTypeMapper DALPostHistoryTypeMapperMock { get; set; } = new DALPostHistoryTypeMapper();
 
-		public IDALPostLinksMapper DALPostLinksMapperMock { get; set; } = new DALPostLinksMapper();
+		public IDALPostLinkMapper DALPostLinkMapperMock { get; set; } = new DALPostLinkMapper();
 
-		public IDALPostsMapper DALPostsMapperMock { get; set; } = new DALPostsMapper();
+		public IDALPostMapper DALPostMapperMock { get; set; } = new DALPostMapper();
 
-		public IDALPostTypesMapper DALPostTypesMapperMock { get; set; } = new DALPostTypesMapper();
+		public IDALPostTypeMapper DALPostTypeMapperMock { get; set; } = new DALPostTypeMapper();
 
-		public IDALTagsMapper DALTagsMapperMock { get; set; } = new DALTagsMapper();
+		public IDALTagMapper DALTagMapperMock { get; set; } = new DALTagMapper();
 
-		public IDALUsersMapper DALUsersMapperMock { get; set; } = new DALUsersMapper();
+		public IDALUserMapper DALUserMapperMock { get; set; } = new DALUserMapper();
 
-		public IDALVotesMapper DALVotesMapperMock { get; set; } = new DALVotesMapper();
+		public IDALVoteMapper DALVoteMapperMock { get; set; } = new DALVoteMapper();
 
-		public IDALVoteTypesMapper DALVoteTypesMapperMock { get; set; } = new DALVoteTypesMapper();
+		public IDALVoteTypeMapper DALVoteTypeMapperMock { get; set; } = new DALVoteTypeMapper();
 
 		public DALMapperMockFactory()
 		{
@@ -39,5 +39,5 @@ namespace StackOverflowNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4ab1131f2c593bbceff14befc7ca3731</Hash>
+    <Hash>eb66d8b2bc07d97eb8ed28930d61ac1a</Hash>
 </Codenesium>*/

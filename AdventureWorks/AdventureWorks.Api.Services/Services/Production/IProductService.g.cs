@@ -25,7 +25,7 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiProductResponseModel> ByProductNumber(string productNumber);
 
-		Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
 
@@ -44,5 +44,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3c38bb8208a0d3fd3572c2b48aa031ca</Hash>
+    <Hash>3859f0516a699c9d1ef21df00d32a9f1</Hash>
 </Codenesium>*/

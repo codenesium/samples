@@ -90,9 +90,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			return records.FirstOrDefault();
 		}
 
-		public async virtual Task<List<BillOfMaterial>> BillOfMaterials(int componentID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<BillOfMaterial>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<BillOfMaterial>().Where(x => x.ComponentID == componentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
+			return await this.Context.Set<BillOfMaterial>().Where(x => x.ProductAssemblyID == productAssemblyID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
 		public async virtual Task<List<ProductCostHistory>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0)
@@ -162,5 +162,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0058025a4b6c4839024a13458b10a0cf</Hash>
+    <Hash>be83d834c7004fd09af442e863813eba</Hash>
 </Codenesium>*/

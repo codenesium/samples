@@ -61,14 +61,14 @@ GO
 --ALTER TABLE [dbo].[Transaction] DROP CONSTRAINT [fk_transaction_transactionstatusid_transactionstatus_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.fk_venue_provinceid_province_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[Venue] DROP CONSTRAINT [fk_venue_provinceid_province_id]
---END
---GO
 --IF (OBJECT_ID('dbo.fk_venue_adminid_admin_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Venue] DROP CONSTRAINT [fk_venue_adminid_admin_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_venue_provinceid_province_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Venue] DROP CONSTRAINT [fk_venue_provinceid_province_id]
 --END
 --GO
 
@@ -420,15 +420,15 @@ REFERENCES[dbo].[TransactionStatus]([id])
 GO
 ALTER TABLE[dbo].[Transaction] CHECK CONSTRAINT[fk_transaction_transactionstatusid_transactionstatus_id]
 GO
-ALTER TABLE[dbo].[Venue]  WITH CHECK ADD  CONSTRAINT[fk_venue_provinceid_province_id] FOREIGN KEY([provinceId])
-REFERENCES[dbo].[Province]([id])
-GO
-ALTER TABLE[dbo].[Venue] CHECK CONSTRAINT[fk_venue_provinceid_province_id]
-GO
 ALTER TABLE[dbo].[Venue]  WITH CHECK ADD  CONSTRAINT[fk_venue_adminid_admin_id] FOREIGN KEY([adminId])
 REFERENCES[dbo].[Admin]([id])
 GO
 ALTER TABLE[dbo].[Venue] CHECK CONSTRAINT[fk_venue_adminid_admin_id]
+GO
+ALTER TABLE[dbo].[Venue]  WITH CHECK ADD  CONSTRAINT[fk_venue_provinceid_province_id] FOREIGN KEY([provinceId])
+REFERENCES[dbo].[Province]([id])
+GO
+ALTER TABLE[dbo].[Venue] CHECK CONSTRAINT[fk_venue_provinceid_province_id]
 GO
 
 ");

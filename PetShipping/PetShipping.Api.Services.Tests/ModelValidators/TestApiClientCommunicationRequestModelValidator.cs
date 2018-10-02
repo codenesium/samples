@@ -123,9 +123,33 @@ namespace PetShippingNS.Api.Services.Tests
 
 			validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, 1);
 		}
+
+		[Fact]
+		public async void Note_Create_null()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ClientCommunication()));
+
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
+
+		[Fact]
+		public async void Note_Update_null()
+		{
+			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
+			clientCommunicationRepository.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new ClientCommunication()));
+
+			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8003c0ecc73f78be034ee21f8995e789</Hash>
+    <Hash>e007b5aa72df4e8399d8db93d6683457</Hash>
 </Codenesium>*/

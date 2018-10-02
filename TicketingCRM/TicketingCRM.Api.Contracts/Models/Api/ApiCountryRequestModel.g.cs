@@ -20,11 +20,12 @@ namespace TicketingCRMNS.Api.Contracts
 			this.Name = name;
 		}
 
+		[Required]
 		[JsonProperty]
 		public string Name { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7282a95c51b7c779e8adb8ca61daaf5</Hash>
+    <Hash>30153bd8c9dfffa042436ed13a8c97ae</Hash>
 </Codenesium>*/

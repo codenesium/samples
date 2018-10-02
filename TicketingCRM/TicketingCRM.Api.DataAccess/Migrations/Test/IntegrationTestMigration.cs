@@ -46,25 +46,25 @@ namespace TicketingCRMNS.Api.DataAccess
 			saleItem1.SetProperties(1, "A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
 			this.context.Sales.Add(saleItem1);
 
-			var saleTicketsItem1 = new SaleTickets();
-			saleTicketsItem1.SetProperties(1, 1, 1);
-			this.context.SaleTickets.Add(saleTicketsItem1);
+			var saleTicketItem1 = new SaleTicket();
+			saleTicketItem1.SetProperties(1, 1, 1);
+			this.context.SaleTickets.Add(saleTicketItem1);
 
 			var ticketItem1 = new Ticket();
 			ticketItem1.SetProperties(1, "A", 1);
 			this.context.Tickets.Add(ticketItem1);
 
-			var ticketStatusItem1 = new TicketStatus();
-			ticketStatusItem1.SetProperties(1, "A");
-			this.context.TicketStatus.Add(ticketStatusItem1);
+			var ticketStatuItem1 = new TicketStatu();
+			ticketStatuItem1.SetProperties(1, "A");
+			this.context.TicketStatus.Add(ticketStatuItem1);
 
 			var transactionItem1 = new Transaction();
 			transactionItem1.SetProperties(1m, "A", 1, 1);
 			this.context.Transactions.Add(transactionItem1);
 
-			var transactionStatusItem1 = new TransactionStatus();
-			transactionStatusItem1.SetProperties(1, "A");
-			this.context.TransactionStatus.Add(transactionStatusItem1);
+			var transactionStatuItem1 = new TransactionStatu();
+			transactionStatuItem1.SetProperties(1, "A");
+			this.context.TransactionStatus.Add(transactionStatuItem1);
 
 			var venueItem1 = new Venue();
 			venueItem1.SetProperties("A", "A", 1, "A", "A", 1, "A", "A", 1, "A");
@@ -76,5 +76,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9da97066fd4c8cb0e94baefed1d8d05e</Hash>
+    <Hash>f23bc1d60ea3faf7f6246156fcac366f</Hash>
 </Codenesium>*/

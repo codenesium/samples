@@ -21,6 +21,8 @@ namespace NebulaNS.Api.Services
 
 		Task<List<ApiChainResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
+		Task<ApiChainResponseModel> ByExternalId(Guid externalId);
+
 		Task<List<ApiClaspResponseModel>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiLinkResponseModel>> Links(int chainId, int limit = int.MaxValue, int offset = 0);
@@ -28,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff49086747a5112d53ff4dcf938e7bf1</Hash>
+    <Hash>6426814f16f01cb29e89c28f231cc532</Hash>
 </Codenesium>*/

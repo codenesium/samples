@@ -24,6 +24,7 @@ namespace TicketingCRMNS.Api.DataAccess
 		}
 
 		[Key]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -35,10 +36,10 @@ namespace TicketingCRMNS.Api.DataAccess
 		public int TicketStatusId { get; private set; }
 
 		[ForeignKey("TicketStatusId")]
-		public virtual TicketStatus TicketStatusNavigation { get; private set; }
+		public virtual TicketStatu TicketStatuNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d20c9bc16b5c37d132fcd5f4852aff0d</Hash>
+    <Hash>fdcd474f3bb390c0c12d8a47fb9a2566</Hash>
 </Codenesium>*/

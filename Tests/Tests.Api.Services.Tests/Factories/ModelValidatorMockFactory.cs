@@ -9,6 +9,12 @@ namespace TestsNS.Api.Services.Tests
 {
 	public class ModelValidatorMockFactory
 	{
+		public Mock<IApiColumnSameAsFKTableRequestModelValidator> ColumnSameAsFKTableModelValidatorMock { get; set; } = new Mock<IApiColumnSameAsFKTableRequestModelValidator>();
+
+		public Mock<IApiCompositePrimaryKeyRequestModelValidator> CompositePrimaryKeyModelValidatorMock { get; set; } = new Mock<IApiCompositePrimaryKeyRequestModelValidator>();
+
+		public Mock<IApiIncludedColumnTestRequestModelValidator> IncludedColumnTestModelValidatorMock { get; set; } = new Mock<IApiIncludedColumnTestRequestModelValidator>();
+
 		public Mock<IApiPersonRequestModelValidator> PersonModelValidatorMock { get; set; } = new Mock<IApiPersonRequestModelValidator>();
 
 		public Mock<IApiRowVersionCheckRequestModelValidator> RowVersionCheckModelValidatorMock { get; set; } = new Mock<IApiRowVersionCheckRequestModelValidator>();
@@ -23,6 +29,8 @@ namespace TestsNS.Api.Services.Tests
 
 		public Mock<IApiTimestampCheckRequestModelValidator> TimestampCheckModelValidatorMock { get; set; } = new Mock<IApiTimestampCheckRequestModelValidator>();
 
+		public Mock<IApiVPersonRequestModelValidator> VPersonModelValidatorMock { get; set; } = new Mock<IApiVPersonRequestModelValidator>();
+
 		public Mock<IApiSchemaAPersonRequestModelValidator> SchemaAPersonModelValidatorMock { get; set; } = new Mock<IApiSchemaAPersonRequestModelValidator>();
 
 		public Mock<IApiSchemaBPersonRequestModelValidator> SchemaBPersonModelValidatorMock { get; set; } = new Mock<IApiSchemaBPersonRequestModelValidator>();
@@ -31,6 +39,18 @@ namespace TestsNS.Api.Services.Tests
 
 		public ModelValidatorMockFactory()
 		{
+			this.ColumnSameAsFKTableModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiColumnSameAsFKTableRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.ColumnSameAsFKTableModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiColumnSameAsFKTableRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.ColumnSameAsFKTableModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
+			this.CompositePrimaryKeyModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCompositePrimaryKeyRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.CompositePrimaryKeyModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCompositePrimaryKeyRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.CompositePrimaryKeyModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
+			this.IncludedColumnTestModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.IncludedColumnTestModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiIncludedColumnTestRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.IncludedColumnTestModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
 			this.PersonModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPersonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PersonModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.PersonModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -59,6 +79,10 @@ namespace TestsNS.Api.Services.Tests
 			this.TimestampCheckModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTimestampCheckRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TimestampCheckModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
+			this.VPersonModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVPersonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VPersonModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVPersonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VPersonModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
 			this.SchemaAPersonModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SchemaAPersonModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSchemaAPersonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SchemaAPersonModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -75,5 +99,5 @@ namespace TestsNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fed5c13f8205bc68892cee17ace8168c</Hash>
+    <Hash>5781cf209dc97abcebd2a295b2e6c025</Hash>
 </Codenesium>*/

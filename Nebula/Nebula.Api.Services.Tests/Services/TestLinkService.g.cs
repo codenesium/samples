@@ -143,6 +143,85 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ByExternalId_Exists()
+		{
+			var mock = new ServiceMockFacade<ILinkRepository>();
+			var record = new Link();
+			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult(record));
+			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkMapperMock,
+			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
+
+			ApiLinkResponseModel response = await service.ByExternalId(default(Guid));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
+		}
+
+		[Fact]
+		public async void ByExternalId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ILinkRepository>();
+			mock.RepositoryMock.Setup(x => x.ByExternalId(It.IsAny<Guid>())).Returns(Task.FromResult<Link>(null));
+			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkMapperMock,
+			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
+
+			ApiLinkResponseModel response = await service.ByExternalId(default(Guid));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
+		}
+
+		[Fact]
+		public async void ByChainId_Exists()
+		{
+			var mock = new ServiceMockFacade<ILinkRepository>();
+			var records = new List<Link>();
+			records.Add(new Link());
+			mock.RepositoryMock.Setup(x => x.ByChainId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkMapperMock,
+			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
+
+			List<ApiLinkResponseModel> response = await service.ByChainId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByChainId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void ByChainId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ILinkRepository>();
+			mock.RepositoryMock.Setup(x => x.ByChainId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Link>>(new List<Link>()));
+			var service = new LinkService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.LinkModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLLinkMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkMapperMock,
+			                              mock.BOLMapperMockFactory.BOLLinkLogMapperMock,
+			                              mock.DALMapperMockFactory.DALLinkLogMapperMock);
+
+			List<ApiLinkResponseModel> response = await service.ByChainId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.ByChainId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
 		public async void LinkLogs_Exists()
 		{
 			var mock = new ServiceMockFacade<ILinkRepository>();
@@ -185,5 +264,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0ca956fec7c5ab0658df489f72bbcd19</Hash>
+    <Hash>acdb5ea5903c4669005622754228573b</Hash>
 </Codenesium>*/

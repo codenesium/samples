@@ -155,6 +155,49 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
+		public async void ByName_Exists()
+		{
+			var mock = new ServiceMockFacade<ITeamRepository>();
+			var record = new Team();
+			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult(record));
+			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
+			                              mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+
+			ApiTeamResponseModel response = await service.ByName(default(string));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
+		}
+
+		[Fact]
+		public async void ByName_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ITeamRepository>();
+			mock.RepositoryMock.Setup(x => x.ByName(It.IsAny<string>())).Returns(Task.FromResult<Team>(null));
+			var service = new TeamService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLTeamMapperMock,
+			                              mock.DALMapperMockFactory.DALTeamMapperMock,
+			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
+			                              mock.DALMapperMockFactory.DALChainMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
+			                              mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+
+			ApiTeamResponseModel response = await service.ByName(default(string));
+
+			response.Should().BeNull();
+			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
+		}
+
+		[Fact]
 		public async void Chains_Exists()
 		{
 			var mock = new ServiceMockFacade<ITeamRepository>();
@@ -245,5 +288,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0c8bc14e3fa005447a3c1e7dc25addb9</Hash>
+    <Hash>e39c6f286e29c3c8f91e621ec847178f</Hash>
 </Codenesium>*/

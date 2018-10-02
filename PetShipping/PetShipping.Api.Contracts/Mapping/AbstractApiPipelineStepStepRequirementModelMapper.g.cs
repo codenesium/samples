@@ -13,7 +13,7 @@ namespace PetShippingNS.Api.Contracts
 		{
 			var response = new ApiPipelineStepStepRequirementResponseModel();
 			response.SetProperties(id,
-			                       request.Details,
+			                       request.Detail,
 			                       request.PipelineStepId,
 			                       request.RequirementMet);
 			return response;
@@ -24,7 +24,7 @@ namespace PetShippingNS.Api.Contracts
 		{
 			var request = new ApiPipelineStepStepRequirementRequestModel();
 			request.SetProperties(
-				response.Details,
+				response.Detail,
 				response.PipelineStepId,
 				response.RequirementMet);
 			return request;
@@ -33,7 +33,7 @@ namespace PetShippingNS.Api.Contracts
 		public JsonPatchDocument<ApiPipelineStepStepRequirementRequestModel> CreatePatch(ApiPipelineStepStepRequirementRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiPipelineStepStepRequirementRequestModel>();
-			patch.Replace(x => x.Details, model.Details);
+			patch.Replace(x => x.Detail, model.Detail);
 			patch.Replace(x => x.PipelineStepId, model.PipelineStepId);
 			patch.Replace(x => x.RequirementMet, model.RequirementMet);
 			return patch;
@@ -42,5 +42,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>0da2c8c0582262d91f3691302c22353b</Hash>
+    <Hash>52a4f37f52484a8e2371c914a9ef8f8d</Hash>
 </Codenesium>*/

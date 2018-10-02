@@ -19,7 +19,7 @@ namespace FileServiceNS.Api.Contracts
 			                       request.Expiration,
 			                       request.Extension,
 			                       request.ExternalId,
-			                       request.FileSizeInBytes,
+			                       request.FileSizeInByte,
 			                       request.FileTypeId,
 			                       request.Location,
 			                       request.PrivateKey,
@@ -38,7 +38,7 @@ namespace FileServiceNS.Api.Contracts
 				response.Expiration,
 				response.Extension,
 				response.ExternalId,
-				response.FileSizeInBytes,
+				response.FileSizeInByte,
 				response.FileTypeId,
 				response.Location,
 				response.PrivateKey,
@@ -55,7 +55,7 @@ namespace FileServiceNS.Api.Contracts
 			patch.Replace(x => x.Expiration, model.Expiration);
 			patch.Replace(x => x.Extension, model.Extension);
 			patch.Replace(x => x.ExternalId, model.ExternalId);
-			patch.Replace(x => x.FileSizeInBytes, model.FileSizeInBytes);
+			patch.Replace(x => x.FileSizeInByte, model.FileSizeInByte);
 			patch.Replace(x => x.FileTypeId, model.FileTypeId);
 			patch.Replace(x => x.Location, model.Location);
 			patch.Replace(x => x.PrivateKey, model.PrivateKey);
@@ -66,5 +66,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>4b6c8acadc22e8d2fe6e05db402f387a</Hash>
+    <Hash>b2bf3ad3801890e23449cf4600f894f7</Hash>
 </Codenesium>*/
