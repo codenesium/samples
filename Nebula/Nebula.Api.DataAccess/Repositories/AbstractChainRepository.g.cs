@@ -96,13 +96,12 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Id == teamId);
 		}
 
-		// Reference foreign key. Reference Table=Clasp. First table=chains. Second table=chains
-		public async virtual Task<List<Chain>> ByNextChainId(int nextChainId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Chain>> ByPreviousChainId(int previousChainId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.Clasps
 			              join chains in this.Context.Chains on
 			              refTable.NextChainId equals chains.Id
-			              where refTable.NextChainId == nextChainId
+			              where refTable.PreviousChainId == previousChainId
 			              select chains).Skip(offset).Take(limit).ToListAsync();
 		}
 
@@ -138,5 +137,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8dc39d924de7f1695e5685274f606ebe</Hash>
+    <Hash>f61341bcd0839b08fcdd398291b0080e</Hash>
 </Codenesium>*/

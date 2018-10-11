@@ -136,9 +136,16 @@ namespace NebulaNS.Api.Services
 
 			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiTeamResponseModel>> ByMachineId(int machineId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Team> records = await this.TeamRepository.ByMachineId(machineId, limit, offset);
+
+			return this.BolTeamMapper.MapBOToModel(this.DalTeamMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5f5034df7a46fd860f7d71d0dcb81a60</Hash>
+    <Hash>337c78f8ffd58a1179fc0beb7a082f21</Hash>
 </Codenesium>*/

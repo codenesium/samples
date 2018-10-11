@@ -81,7 +81,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<SpaceSpaceFeature>().Where(x => x.SpaceId == spaceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceSpaceFeature>();
 		}
 
-		// Reference foreign key. Reference Table=SpaceSpaceFeature. First table=spaces. Second table=spaceFeatures
 		public async virtual Task<List<Space>> BySpaceFeatureId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.SpaceSpaceFeatures
@@ -123,5 +122,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>80ae601a2b9079cd5bb529c6d4e76ea5</Hash>
+    <Hash>552c26e035931ce249d8c9d04c97cba1</Hash>
 </Codenesium>*/

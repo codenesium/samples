@@ -86,13 +86,12 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Link>().Where(x => x.AssignedMachineId == assignedMachineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
-		// Reference foreign key. Reference Table=MachineRefTeam. First table=machines. Second table=machines
-		public async virtual Task<List<Machine>> ByMachineId(int machineId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Machine>> ByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.MachineRefTeams
 			              join machines in this.Context.Machines on
 			              refTable.MachineId equals machines.Id
-			              where refTable.MachineId == machineId
+			              where refTable.TeamId == teamId
 			              select machines).Skip(offset).Take(limit).ToListAsync();
 		}
 
@@ -128,5 +127,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f4d22a5812f20cd97cd88d44419011fd</Hash>
+    <Hash>16f0c6c1812759f0d83f6acc0c27ef15</Hash>
 </Codenesium>*/

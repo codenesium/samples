@@ -243,10 +243,10 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byNextChainId/{nextChainId}")]
+		[Route("byPreviousChainId/{previousChainId}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByNextChainId(int nextChainId, int? limit, int? offset)
+		public async virtual Task<IActionResult> ByPreviousChainId(int previousChainId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -254,7 +254,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiChainResponseModel> response = await this.ChainService.ByNextChainId(nextChainId, query.Limit, query.Offset);
+			List<ApiChainResponseModel> response = await this.ChainService.ByPreviousChainId(previousChainId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -278,5 +278,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ce9c088afa97f7ef389ef9cd13a5fde3</Hash>
+    <Hash>5ee82c822dfc78af6d6dacde16c44f48</Hash>
 </Codenesium>*/

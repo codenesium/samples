@@ -91,7 +91,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<EventStatus>().SingleOrDefaultAsync(x => x.Id == eventStatusId);
 		}
 
-		// Reference foreign key. Reference Table=EventStudent. First table=events. Second table=students
 		public async virtual Task<List<Event>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.EventStudents
@@ -101,7 +100,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			              select events).Skip(offset).Take(limit).ToListAsync();
 		}
 
-		// Reference foreign key. Reference Table=EventTeacher. First table=events. Second table=teachers
 		public async virtual Task<List<Event>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.EventTeachers
@@ -143,5 +141,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2b4f6fbb199d43430324d2c89fed9953</Hash>
+    <Hash>dce839de4e3efb1af764a57837ddce29</Hash>
 </Codenesium>*/

@@ -25,10 +25,10 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Team> TeamByTeamId(int teamId);
 
-		Task<List<Chain>> ByNextChainId(int nextChainId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Chain>> ByPreviousChainId(int previousChainId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ad540f113ce6ab88a95aeb6ae7551fb</Hash>
+    <Hash>9597f3094627ea3718df7d307d6a6105</Hash>
 </Codenesium>*/

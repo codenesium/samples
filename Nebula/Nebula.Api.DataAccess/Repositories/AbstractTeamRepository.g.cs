@@ -91,6 +91,15 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Id == organizationId);
 		}
 
+		public async virtual Task<List<Team>> ByMachineId(int machineId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.MachineRefTeams
+			              join teams in this.Context.Teams on
+			              refTable.TeamId equals teams.Id
+			              where refTable.MachineId == machineId
+			              select teams).Skip(offset).Take(limit).ToListAsync();
+		}
+
 		protected async Task<List<Team>> Where(
 			Expression<Func<Team, bool>> predicate,
 			int limit = int.MaxValue,
@@ -123,5 +132,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a1adff1bfe6279bd13a16ed63f6d62e6</Hash>
+    <Hash>21ebe6766f966774b004b4955e228a4d</Hash>
 </Codenesium>*/
