@@ -36,53 +36,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.GetById(cultureID);
 		}
 
-		public async virtual Task<VProductAndDescription> Create(VProductAndDescription item)
-		{
-			this.Context.Set<VProductAndDescription>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task Update(VProductAndDescription item)
-		{
-			var entity = this.Context.Set<VProductAndDescription>().Local.FirstOrDefault(x => x.CultureID == item.CultureID);
-			if (entity == null)
-			{
-				this.Context.Set<VProductAndDescription>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
-
-			await this.Context.SaveChangesAsync();
-		}
-
-		public async virtual Task Delete(
-			string cultureID)
-		{
-			VProductAndDescription record = await this.GetById(cultureID);
-
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<VProductAndDescription>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
-
-		public async Task<VProductAndDescription> ByCultureIDProductID(string cultureID, int productID)
-		{
-			var records = await this.Where(x => x.CultureID == cultureID && x.ProductID == productID);
-
-			return records.FirstOrDefault();
-		}
-
 		protected async Task<List<VProductAndDescription>> Where(
 			Expression<Func<VProductAndDescription, bool>> predicate,
 			int limit = int.MaxValue,
@@ -115,5 +68,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>440d4ffbf03be9a54082559f59d29119</Hash>
+    <Hash>0d10906cd64fda12d0b3b2ac217030b7</Hash>
 </Codenesium>*/

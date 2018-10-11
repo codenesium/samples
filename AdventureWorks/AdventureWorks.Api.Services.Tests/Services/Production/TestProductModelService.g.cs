@@ -32,8 +32,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -56,8 +54,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -79,8 +75,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -103,8 +97,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -129,8 +121,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -154,8 +144,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -179,8 +167,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -202,8 +188,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -227,8 +211,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -250,8 +232,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -275,8 +255,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -298,8 +276,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -323,8 +299,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -346,8 +320,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -355,54 +327,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.Products(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ProductModelIllustrations_Exists()
-		{
-			var mock = new ServiceMockFacade<IProductModelRepository>();
-			var records = new List<ProductModelIllustration>();
-			records.Add(new ProductModelIllustration());
-			mock.RepositoryMock.Setup(x => x.ProductModelIllustrations(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new ProductModelService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.ProductModelModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLProductModelMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
-
-			List<ApiProductModelIllustrationResponseModel> response = await service.ProductModelIllustrations(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductModelIllustrations(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ProductModelIllustrations_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IProductModelRepository>();
-			mock.RepositoryMock.Setup(x => x.ProductModelIllustrations(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModelIllustration>>(new List<ProductModelIllustration>()));
-			var service = new ProductModelService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.ProductModelModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLProductModelMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
-
-			List<ApiProductModelIllustrationResponseModel> response = await service.ProductModelIllustrations(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductModelIllustrations(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -419,8 +343,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -442,8 +364,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.DALMapperMockFactory.DALProductModelMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                      mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
@@ -456,5 +376,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>09de930ad96c524dd2a7c4af3bdba5d2</Hash>
+    <Hash>5213eb93fde2b7a45238bfd54b60cad9</Hash>
 </Codenesium>*/

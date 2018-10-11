@@ -61,75 +61,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			record.Should().NotBeNull();
 		}
-
-		[Fact]
-		public async void Create()
-		{
-			Mock<ILogger<VProductAndDescriptionRepository>> loggerMoc = VProductAndDescriptionRepositoryMoc.GetLoggerMoc();
-			ApplicationDbContext context = VProductAndDescriptionRepositoryMoc.GetContext();
-			var repository = new VProductAndDescriptionRepository(loggerMoc.Object, context);
-
-			var entity = new VProductAndDescription();
-			await repository.Create(entity);
-
-			var record = await context.Set<VProductAndDescription>().FirstOrDefaultAsync();
-
-			record.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void Update_Entity_Is_Tracked()
-		{
-			Mock<ILogger<VProductAndDescriptionRepository>> loggerMoc = VProductAndDescriptionRepositoryMoc.GetLoggerMoc();
-			ApplicationDbContext context = VProductAndDescriptionRepositoryMoc.GetContext();
-			var repository = new VProductAndDescriptionRepository(loggerMoc.Object, context);
-			VProductAndDescription entity = new VProductAndDescription();
-			context.Set<VProductAndDescription>().Add(entity);
-			await context.SaveChangesAsync();
-
-			var record = await repository.Get(entity.CultureID);
-
-			await repository.Update(record);
-
-			var modifiedRecord = context.Set<VProductAndDescription>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void Update_Entity_Is_Not_Tracked()
-		{
-			Mock<ILogger<VProductAndDescriptionRepository>> loggerMoc = VProductAndDescriptionRepositoryMoc.GetLoggerMoc();
-			ApplicationDbContext context = VProductAndDescriptionRepositoryMoc.GetContext();
-			var repository = new VProductAndDescriptionRepository(loggerMoc.Object, context);
-			VProductAndDescription entity = new VProductAndDescription();
-			context.Set<VProductAndDescription>().Add(entity);
-			await context.SaveChangesAsync();
-
-			await repository.Update(new VProductAndDescription());
-
-			var modifiedRecord = context.Set<VProductAndDescription>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void Delete()
-		{
-			Mock<ILogger<VProductAndDescriptionRepository>> loggerMoc = VProductAndDescriptionRepositoryMoc.GetLoggerMoc();
-			ApplicationDbContext context = VProductAndDescriptionRepositoryMoc.GetContext();
-			var repository = new VProductAndDescriptionRepository(loggerMoc.Object, context);
-			VProductAndDescription entity = new VProductAndDescription();
-			context.Set<VProductAndDescription>().Add(entity);
-			await context.SaveChangesAsync();
-
-			await repository.Delete(entity.CultureID);
-
-			VProductAndDescription modifiedRecord = await context.Set<VProductAndDescription>().FirstOrDefaultAsync();
-
-			modifiedRecord.Should().BeNull();
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>31507cb5af64dc636c625a4ccee2abe5</Hash>
+    <Hash>cb7f373de583cca776a8a2fbbebe65f0</Hash>
 </Codenesium>*/

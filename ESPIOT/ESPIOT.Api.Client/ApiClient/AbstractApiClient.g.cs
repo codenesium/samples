@@ -54,6 +54,13 @@ namespace ESPIOTNS.Api.Client
 			this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
+		public virtual async Task<List<ApiDeviceResponseModel>> DeviceBulkInsertAsync(List<ApiDeviceRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiDeviceResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiDeviceResponseModel>> DeviceCreateAsync(ApiDeviceRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices", item).ConfigureAwait(false);
@@ -89,14 +96,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDeviceResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiDeviceResponseModel>> DeviceBulkInsertAsync(List<ApiDeviceRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Devices/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiDeviceResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiDeviceResponseModel> GetDeviceByPublicId(Guid publicId)
+		public virtual async Task<ApiDeviceResponseModel> ByDeviceByPublicId(Guid publicId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/byPublicId/{publicId}").ConfigureAwait(false);
 
@@ -106,6 +106,13 @@ namespace ESPIOTNS.Api.Client
 		public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActions(int deviceId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/DeviceActions/{deviceId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActionBulkInsertAsync(List<ApiDeviceActionRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions/BulkInsert", items).ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -145,14 +152,7 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActionBulkInsertAsync(List<ApiDeviceActionRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DeviceActions/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiDeviceActionResponseModel>> GetDeviceActionByDeviceId(int deviceId)
+		public virtual async Task<List<ApiDeviceActionResponseModel>> ByDeviceActionByDeviceId(int deviceId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DeviceActions/byDeviceId/{deviceId}").ConfigureAwait(false);
 
@@ -162,5 +162,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>809728231b2b6cc3aeb2d57b33aec548</Hash>
+    <Hash>9c305b4057cdd54f671d00618e6ae50a</Hash>
 </Codenesium>*/

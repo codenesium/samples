@@ -14,8 +14,6 @@ namespace FileServiceNS.Api.Services.Tests
 
 		public IBOLFileTypeMapper BOLFileTypeMapperMock { get; set; } = new BOLFileTypeMapper();
 
-		public IBOLVersionInfoMapper BOLVersionInfoMapperMock { get; set; } = new BOLVersionInfoMapper();
-
 		public BOLMapperMockFactory()
 		{
 		}
@@ -23,5 +21,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8676159e9252f005d42ccfd7ae586131</Hash>
+    <Hash>51713d25aebea0ac5fa9e490ec375150</Hash>
 </Codenesium>*/

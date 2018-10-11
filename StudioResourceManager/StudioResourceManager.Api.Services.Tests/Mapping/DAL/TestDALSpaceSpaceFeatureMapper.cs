@@ -17,11 +17,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceSpaceFeatureMapper();
 			var bo = new BOSpaceSpaceFeature();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1);
 
 			SpaceSpaceFeature response = mapper.MapBOToEF(bo);
 
-			response.Id.Should().Be(1);
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
 		}
@@ -31,11 +30,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceSpaceFeatureMapper();
 			SpaceSpaceFeature entity = new SpaceSpaceFeature();
-			entity.SetProperties(1, 1, 1);
+			entity.SetProperties(1, 1);
 
 			BOSpaceSpaceFeature response = mapper.MapEFToBO(entity);
 
-			response.Id.Should().Be(1);
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
 		}
@@ -45,7 +43,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceSpaceFeatureMapper();
 			SpaceSpaceFeature entity = new SpaceSpaceFeature();
-			entity.SetProperties(1, 1, 1);
+			entity.SetProperties(1, 1);
 
 			List<BOSpaceSpaceFeature> response = mapper.MapEFToBO(new List<SpaceSpaceFeature>() { entity });
 
@@ -55,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5be3a3b7d0b4d5ff432ad71ee9de01fe</Hash>
+    <Hash>1ac99750623b214e50bb1a151d0b1ab9</Hash>
 </Codenesium>*/

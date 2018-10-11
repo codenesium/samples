@@ -20,8 +20,7 @@ namespace PetStoreNS.Api.Services
 			IBOLPaymentTypeMapper bolpaymentTypeMapper,
 			IDALPaymentTypeMapper dalpaymentTypeMapper,
 			IBOLSaleMapper bolSaleMapper,
-			IDALSaleMapper dalSaleMapper
-			)
+			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       paymentTypeRepository,
 			       paymentTypeModelValidator,
@@ -35,5 +34,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2060c975472c83abaf969703c973f06a</Hash>
+    <Hash>70ae55409b75b5b935c3fc9d47d0f6c1</Hash>
 </Codenesium>*/

@@ -24,61 +24,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 		}
 
-		[Fact]
-		public async void TeacherId_Create_Valid_Reference()
-		{
-			Mock<ITeacherTeacherSkillRepository> teacherTeacherSkillRepository = new Mock<ITeacherTeacherSkillRepository>();
-			teacherTeacherSkillRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
-
-			var validator = new ApiTeacherTeacherSkillRequestModelValidator(teacherTeacherSkillRepository.Object);
-			await validator.ValidateCreateAsync(new ApiTeacherTeacherSkillRequestModel());
-
-			validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
-		}
-
-		[Fact]
-		public async void TeacherId_Create_Invalid_Reference()
-		{
-			Mock<ITeacherTeacherSkillRepository> teacherTeacherSkillRepository = new Mock<ITeacherTeacherSkillRepository>();
-			teacherTeacherSkillRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(null));
-
-			var validator = new ApiTeacherTeacherSkillRequestModelValidator(teacherTeacherSkillRepository.Object);
-
-			await validator.ValidateCreateAsync(new ApiTeacherTeacherSkillRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
-		}
-
-		[Fact]
-		public async void TeacherId_Update_Valid_Reference()
-		{
-			Mock<ITeacherTeacherSkillRepository> teacherTeacherSkillRepository = new Mock<ITeacherTeacherSkillRepository>();
-			teacherTeacherSkillRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
-
-			var validator = new ApiTeacherTeacherSkillRequestModelValidator(teacherTeacherSkillRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiTeacherTeacherSkillRequestModel());
-
-			validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
-		}
-
-		[Fact]
-		public async void TeacherId_Update_Invalid_Reference()
-		{
-			Mock<ITeacherTeacherSkillRepository> teacherTeacherSkillRepository = new Mock<ITeacherTeacherSkillRepository>();
-			teacherTeacherSkillRepository.Setup(x => x.GetTeacher(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(null));
-
-			var validator = new ApiTeacherTeacherSkillRequestModelValidator(teacherTeacherSkillRepository.Object);
-
-			await validator.ValidateUpdateAsync(default(int), new ApiTeacherTeacherSkillRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
-		}
-
+		// table.Columns[i].GetReferenceTable().AppTableName= TeacherSkill
 		[Fact]
 		public async void TeacherSkillId_Create_Valid_Reference()
 		{
 			Mock<ITeacherTeacherSkillRepository> teacherTeacherSkillRepository = new Mock<ITeacherTeacherSkillRepository>();
-			teacherTeacherSkillRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
+			teacherTeacherSkillRepository.Setup(x => x.TeacherSkillByTeacherSkillId(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
 
 			var validator = new ApiTeacherTeacherSkillRequestModelValidator(teacherTeacherSkillRepository.Object);
 			await validator.ValidateCreateAsync(new ApiTeacherTeacherSkillRequestModel());
@@ -90,7 +41,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void TeacherSkillId_Create_Invalid_Reference()
 		{
 			Mock<ITeacherTeacherSkillRepository> teacherTeacherSkillRepository = new Mock<ITeacherTeacherSkillRepository>();
-			teacherTeacherSkillRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(null));
+			teacherTeacherSkillRepository.Setup(x => x.TeacherSkillByTeacherSkillId(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(null));
 
 			var validator = new ApiTeacherTeacherSkillRequestModelValidator(teacherTeacherSkillRepository.Object);
 
@@ -103,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void TeacherSkillId_Update_Valid_Reference()
 		{
 			Mock<ITeacherTeacherSkillRepository> teacherTeacherSkillRepository = new Mock<ITeacherTeacherSkillRepository>();
-			teacherTeacherSkillRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
+			teacherTeacherSkillRepository.Setup(x => x.TeacherSkillByTeacherSkillId(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(new TeacherSkill()));
 
 			var validator = new ApiTeacherTeacherSkillRequestModelValidator(teacherTeacherSkillRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiTeacherTeacherSkillRequestModel());
@@ -115,7 +66,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void TeacherSkillId_Update_Invalid_Reference()
 		{
 			Mock<ITeacherTeacherSkillRepository> teacherTeacherSkillRepository = new Mock<ITeacherTeacherSkillRepository>();
-			teacherTeacherSkillRepository.Setup(x => x.GetTeacherSkill(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(null));
+			teacherTeacherSkillRepository.Setup(x => x.TeacherSkillByTeacherSkillId(It.IsAny<int>())).Returns(Task.FromResult<TeacherSkill>(null));
 
 			var validator = new ApiTeacherTeacherSkillRequestModelValidator(teacherTeacherSkillRepository.Object);
 
@@ -127,5 +78,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>82b206e7153915a382e35b7e766c6c03</Hash>
+    <Hash>c3bf97b50bcd2e7e88c75c90221931c2</Hash>
 </Codenesium>*/

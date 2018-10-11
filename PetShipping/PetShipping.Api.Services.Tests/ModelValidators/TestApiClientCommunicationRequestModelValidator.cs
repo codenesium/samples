@@ -24,11 +24,12 @@ namespace PetShippingNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Client
 		[Fact]
 		public async void ClientId_Create_Valid_Reference()
 		{
 			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-			clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
+			clientCommunicationRepository.Setup(x => x.ClientByClientId(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
 			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 			await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
@@ -40,7 +41,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void ClientId_Create_Invalid_Reference()
 		{
 			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-			clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
+			clientCommunicationRepository.Setup(x => x.ClientByClientId(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
 
 			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void ClientId_Update_Valid_Reference()
 		{
 			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-			clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
+			clientCommunicationRepository.Setup(x => x.ClientByClientId(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
 			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
@@ -65,7 +66,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void ClientId_Update_Invalid_Reference()
 		{
 			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-			clientCommunicationRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
+			clientCommunicationRepository.Setup(x => x.ClientByClientId(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
 
 			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
@@ -74,11 +75,12 @@ namespace PetShippingNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.ClientId, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Employee
 		[Fact]
 		public async void EmployeeId_Create_Valid_Reference()
 		{
 			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-			clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
+			clientCommunicationRepository.Setup(x => x.EmployeeByEmployeeId(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
 			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 			await validator.ValidateCreateAsync(new ApiClientCommunicationRequestModel());
@@ -90,7 +92,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void EmployeeId_Create_Invalid_Reference()
 		{
 			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-			clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
+			clientCommunicationRepository.Setup(x => x.EmployeeByEmployeeId(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
 
 			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
@@ -103,7 +105,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void EmployeeId_Update_Valid_Reference()
 		{
 			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-			clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
+			clientCommunicationRepository.Setup(x => x.EmployeeByEmployeeId(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
 			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiClientCommunicationRequestModel());
@@ -115,7 +117,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void EmployeeId_Update_Invalid_Reference()
 		{
 			Mock<IClientCommunicationRepository> clientCommunicationRepository = new Mock<IClientCommunicationRepository>();
-			clientCommunicationRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
+			clientCommunicationRepository.Setup(x => x.EmployeeByEmployeeId(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
 
 			var validator = new ApiClientCommunicationRequestModelValidator(clientCommunicationRepository.Object);
 
@@ -151,5 +153,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e007b5aa72df4e8399d8db93d6683457</Hash>
+    <Hash>385c2aead0129766fad7d488fe83b068</Hash>
 </Codenesium>*/

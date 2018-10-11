@@ -25,12 +25,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<Product>> Products(int productModelID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ProductModelIllustration>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ProductModel>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>57f200d323f9e43b87b55997836260ba</Hash>
+    <Hash>a12e3f977617fd375b6d619a07996b85</Hash>
 </Codenesium>*/

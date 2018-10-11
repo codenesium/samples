@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			IIncludedColumnTestRepository includedColumnTestRepository,
 			IApiIncludedColumnTestRequestModelValidator includedColumnTestModelValidator,
 			IBOLIncludedColumnTestMapper bolincludedColumnTestMapper,
-			IDALIncludedColumnTestMapper dalincludedColumnTestMapper
-			)
+			IDALIncludedColumnTestMapper dalincludedColumnTestMapper)
 			: base(logger,
 			       includedColumnTestRepository,
 			       includedColumnTestModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>45ac4b40c0ce59f1e0e9c982a9dfbb29</Hash>
+    <Hash>fc0c474b79433032552da4a5e0d7f56c</Hash>
 </Codenesium>*/

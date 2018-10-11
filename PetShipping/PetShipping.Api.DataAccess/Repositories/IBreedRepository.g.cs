@@ -19,10 +19,10 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<List<Pet>> Pets(int breedId, int limit = int.MaxValue, int offset = 0);
 
-		Task<Species> GetSpecies(int speciesId);
+		Task<Species> SpeciesBySpeciesId(int speciesId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b584060968ace8c36975e535bd0b8560</Hash>
+    <Hash>3205e8048913654181ae8ed6147a9a9a</Hash>
 </Codenesium>*/

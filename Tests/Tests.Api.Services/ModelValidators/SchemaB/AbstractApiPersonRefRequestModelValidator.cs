@@ -32,18 +32,10 @@ namespace TestsNS.Api.Services
 
 		public virtual void PersonBIdRules()
 		{
-			this.RuleFor(x => x.PersonBId).MustAsync(this.BeValidSchemaBPerson).When(x => x?.PersonBId != null).WithMessage("Invalid reference");
-		}
-
-		private async Task<bool> BeValidSchemaBPerson(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.personRefRepository.GetSchemaBPerson(id);
-
-			return record != null;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>13458ede78a5df6b823a94a97ad88c4a</Hash>
+    <Hash>af45ac550f4f2aa406a74aa32d017ca1</Hash>
 </Codenesium>*/

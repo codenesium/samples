@@ -38,28 +38,28 @@ namespace TwitterNS.Api.Services
 
 		public virtual void RetweeterUserIdRules()
 		{
-			this.RuleFor(x => x.RetweeterUserId).MustAsync(this.BeValidUser).When(x => x?.RetweeterUserId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.RetweeterUserId).MustAsync(this.BeValidUserByRetweeterUserId).When(x => x?.RetweeterUserId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void SourceTweetIdRules()
 		{
-			this.RuleFor(x => x.SourceTweetId).MustAsync(this.BeValidTweet).When(x => x?.SourceTweetId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SourceTweetId).MustAsync(this.BeValidTweetBySourceTweetId).When(x => x?.SourceTweetId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TimeRules()
 		{
 		}
 
-		private async Task<bool> BeValidUser(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidUserByRetweeterUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.quoteTweetRepository.GetUser(id);
+			var record = await this.quoteTweetRepository.UserByRetweeterUserId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidTweet(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTweetBySourceTweetId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.quoteTweetRepository.GetTweet(id);
+			var record = await this.quoteTweetRepository.TweetBySourceTweetId(id);
 
 			return record != null;
 		}
@@ -67,5 +67,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1ff156beaa9285516d998b74533f1bfe</Hash>
+    <Hash>76db74ac403ba1ae88a7f73102f420e4</Hash>
 </Codenesium>*/

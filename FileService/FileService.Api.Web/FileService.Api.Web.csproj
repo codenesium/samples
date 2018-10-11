@@ -6,6 +6,7 @@
     <OutputType>Exe</OutputType>
     <StartupObject />
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+	<RootNamespace>FileServiceNS.Api.Web</RootNamespace>
   </PropertyGroup> 
 
   <ItemGroup>
@@ -13,6 +14,7 @@
     <PackageReference Include="Codenesium.DataConversionExtensions" Version="2018.1.5" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.WindowsServices" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="2.2.0" />

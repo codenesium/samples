@@ -46,9 +46,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return this.BolEventTeacherMapper.MapBOToModel(this.DalEventTeacherMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiEventTeacherResponseModel> Get(int id)
+		public virtual async Task<ApiEventTeacherResponseModel> Get(int eventId)
 		{
-			var record = await this.EventTeacherRepository.Get(id);
+			var record = await this.EventTeacherRepository.Get(eventId);
 
 			if (record == null)
 			{
@@ -76,17 +76,17 @@ namespace StudioResourceManagerNS.Api.Services
 		}
 
 		public virtual async Task<UpdateResponse<ApiEventTeacherResponseModel>> Update(
-			int id,
+			int eventId,
 			ApiEventTeacherRequestModel model)
 		{
-			var validationResult = await this.EventTeacherModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.EventTeacherModelValidator.ValidateUpdateAsync(eventId, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolEventTeacherMapper.MapModelToBO(id, model);
+				var bo = this.BolEventTeacherMapper.MapModelToBO(eventId, model);
 				await this.EventTeacherRepository.Update(this.DalEventTeacherMapper.MapBOToEF(bo));
 
-				var record = await this.EventTeacherRepository.Get(id);
+				var record = await this.EventTeacherRepository.Get(eventId);
 
 				return new UpdateResponse<ApiEventTeacherResponseModel>(this.BolEventTeacherMapper.MapBOToModel(this.DalEventTeacherMapper.MapEFToBO(record)));
 			}
@@ -97,26 +97,19 @@ namespace StudioResourceManagerNS.Api.Services
 		}
 
 		public virtual async Task<ActionResponse> Delete(
-			int id)
+			int eventId)
 		{
-			ActionResponse response = new ActionResponse(await this.EventTeacherModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.EventTeacherModelValidator.ValidateDeleteAsync(eventId));
 			if (response.Success)
 			{
-				await this.EventTeacherRepository.Delete(id);
+				await this.EventTeacherRepository.Delete(eventId);
 			}
 
 			return response;
-		}
-
-		public async Task<List<ApiEventTeacherResponseModel>> ByEventId(int eventId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<EventTeacher> records = await this.EventTeacherRepository.ByEventId(eventId, limit, offset);
-
-			return this.BolEventTeacherMapper.MapBOToModel(this.DalEventTeacherMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>07ffe65727048462697e3e851c050435</Hash>
+    <Hash>1ee5f89605c04a74af8c1874ef440a46</Hash>
 </Codenesium>*/

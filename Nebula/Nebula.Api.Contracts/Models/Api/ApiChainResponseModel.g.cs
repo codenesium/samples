@@ -21,7 +21,7 @@ namespace NebulaNS.Api.Contracts
 			this.Name = name;
 			this.TeamId = teamId;
 
-			this.ChainStatusIdEntity = nameof(ApiResponse.ChainStatus);
+			this.ChainStatusIdEntity = nameof(ApiResponse.ChainStatuses);
 			this.TeamIdEntity = nameof(ApiResponse.Teams);
 		}
 
@@ -49,5 +49,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f7e0247a4ad0cc969d462f11f44196fc</Hash>
+    <Hash>2e283bd5674ae72045c56b785a6186b1</Hash>
 </Codenesium>*/

@@ -14,23 +14,18 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int id,
 			int nextChainId,
 			int previousChainId)
 		{
-			this.Id = id;
 			this.NextChainId = nextChainId;
 			this.PreviousChainId = previousChainId;
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id")]
-		public int Id { get; private set; }
-
 		[Column("nextChainId")]
 		public int NextChainId { get; private set; }
 
+		[Key]
 		[Column("previousChainId")]
 		public int PreviousChainId { get; private set; }
 
@@ -43,5 +38,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fabc91c776c5a2879e75171074ae8316</Hash>
+    <Hash>e195661f7380620028f79fd5f80a81ba</Hash>
 </Codenesium>*/

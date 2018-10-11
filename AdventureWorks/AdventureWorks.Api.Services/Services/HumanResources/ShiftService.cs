@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLShiftMapper bolshiftMapper,
 			IDALShiftMapper dalshiftMapper,
 			IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
-			)
+			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
 			: base(logger,
 			       shiftRepository,
 			       shiftModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8a6dafc2d92564e2a04a57fac1949945</Hash>
+    <Hash>737581c30a3f85b33bcb83580caf99cb</Hash>
 </Codenesium>*/

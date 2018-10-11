@@ -32,7 +32,7 @@ namespace NebulaNS.Api.Services
 
 		public virtual void LinkIdRules()
 		{
-			this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLink).When(x => x?.LinkId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LinkId).MustAsync(this.BeValidLinkByLinkId).When(x => x?.LinkId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LogRules()
@@ -41,9 +41,9 @@ namespace NebulaNS.Api.Services
 			this.RuleFor(x => x.Log).Length(0, 2147483647);
 		}
 
-		private async Task<bool> BeValidLink(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidLinkByLinkId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.linkLogRepository.GetLink(id);
+			var record = await this.linkLogRepository.LinkByLinkId(id);
 
 			return record != null;
 		}
@@ -51,5 +51,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e7fc10eab169d69fa699d2b0498e0a50</Hash>
+    <Hash>4816925ff8c5ad01f925e539edcd5659</Hash>
 </Codenesium>*/

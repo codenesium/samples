@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IProductCostHistoryRepository productCostHistoryRepository,
 			IApiProductCostHistoryRequestModelValidator productCostHistoryModelValidator,
 			IBOLProductCostHistoryMapper bolproductCostHistoryMapper,
-			IDALProductCostHistoryMapper dalproductCostHistoryMapper
-			)
+			IDALProductCostHistoryMapper dalproductCostHistoryMapper)
 			: base(logger,
 			       productCostHistoryRepository,
 			       productCostHistoryModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f6ae60c9616b1f2808eb2db14859c87b</Hash>
+    <Hash>cf9e37ae40a301ab5e73c2b2c5379399</Hash>
 </Codenesium>*/

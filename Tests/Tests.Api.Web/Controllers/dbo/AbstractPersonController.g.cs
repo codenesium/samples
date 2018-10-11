@@ -206,23 +206,6 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{person}/ColumnSameAsFKTables")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiColumnSameAsFKTableResponseModel>), 200)]
-		public async virtual Task<IActionResult> ColumnSameAsFKTables(int person, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiColumnSameAsFKTableResponseModel> response = await this.PersonService.ColumnSameAsFKTables(person, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiPersonRequestModel> PatchModel(int id, JsonPatchDocument<ApiPersonRequestModel> patch)
 		{
 			var record = await this.PersonService.Get(id);
@@ -242,5 +225,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>64ef58f8e079f2985d8f68a1d2d64cc0</Hash>
+    <Hash>82e36e7adbf1f589d83cdcfffdcc5caf</Hash>
 </Codenesium>*/

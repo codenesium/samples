@@ -18,8 +18,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IStudioRepository studioRepository,
 			IApiStudioRequestModelValidator studioModelValidator,
 			IBOLStudioMapper bolstudioMapper,
-			IDALStudioMapper dalstudioMapper
-			)
+			IDALStudioMapper dalstudioMapper)
 			: base(logger,
 			       studioRepository,
 			       studioModelValidator,
@@ -31,5 +30,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fd6566b86d822527e944d5066fc9edc2</Hash>
+    <Hash>8bc663c1fcae43494b416f28e20d9bf6</Hash>
 </Codenesium>*/

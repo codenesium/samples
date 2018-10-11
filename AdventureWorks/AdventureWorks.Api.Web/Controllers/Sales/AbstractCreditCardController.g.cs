@@ -226,23 +226,6 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{creditCardID}/PersonCreditCards")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPersonCreditCardResponseModel>), 200)]
-		public async virtual Task<IActionResult> PersonCreditCards(int creditCardID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiPersonCreditCardResponseModel> response = await this.CreditCardService.PersonCreditCards(creditCardID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{creditCardID}/SalesOrderHeaders")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
@@ -278,5 +261,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0ea4d16aca3e39b09a99e45d0d4dff36</Hash>
+    <Hash>1d16088b0e6030380294bef79981fe16</Hash>
 </Codenesium>*/

@@ -27,6 +27,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("BusinessEntityID")]
 		public int BusinessEntityID { get; private set; }
 
+		[Key]
 		[Column("CreditCardID")]
 		public int CreditCardID { get; private set; }
 
@@ -39,5 +40,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6c0e792df2704d17f1b9453d8a349ba2</Hash>
+    <Hash>e38a6496d4fa659da5b83e3cc6fff7e5</Hash>
 </Codenesium>*/

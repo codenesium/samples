@@ -31,9 +31,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			List<ApiSalesOrderHeaderResponseModel> response = await service.All();
 
@@ -53,9 +51,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			ApiSalesOrderHeaderResponseModel response = await service.Get(default(int));
 
@@ -74,9 +70,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			ApiSalesOrderHeaderResponseModel response = await service.Get(default(int));
 
@@ -96,9 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			CreateResponse<ApiSalesOrderHeaderResponseModel> response = await service.Create(model);
 
@@ -120,9 +112,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			UpdateResponse<ApiSalesOrderHeaderResponseModel> response = await service.Update(default(int), model);
 
@@ -143,9 +133,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -166,9 +154,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			ApiSalesOrderHeaderResponseModel response = await service.BySalesOrderNumber(default(string));
 
@@ -187,9 +173,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			ApiSalesOrderHeaderResponseModel response = await service.BySalesOrderNumber(default(string));
 
@@ -210,9 +194,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			List<ApiSalesOrderHeaderResponseModel> response = await service.ByCustomerID(default(int));
 
@@ -231,9 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			List<ApiSalesOrderHeaderResponseModel> response = await service.ByCustomerID(default(int));
 
@@ -254,9 +234,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			List<ApiSalesOrderHeaderResponseModel> response = await service.BySalesPersonID(default(int?));
 
@@ -275,9 +253,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			List<ApiSalesOrderHeaderResponseModel> response = await service.BySalesPersonID(default(int?));
 
@@ -298,9 +274,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			List<ApiSalesOrderDetailResponseModel> response = await service.SalesOrderDetails(default(int));
 
@@ -319,62 +293,16 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
+			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
 			List<ApiSalesOrderDetailResponseModel> response = await service.SalesOrderDetails(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.SalesOrderDetails(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void SalesOrderHeaderSalesReasons_Exists()
-		{
-			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
-			var records = new List<SalesOrderHeaderSalesReason>();
-			records.Add(new SalesOrderHeaderSalesReason());
-			mock.RepositoryMock.Setup(x => x.SalesOrderHeaderSalesReasons(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
-			                                          mock.RepositoryMock.Object,
-			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
-
-			List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await service.SalesOrderHeaderSalesReasons(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderHeaderSalesReasons(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void SalesOrderHeaderSalesReasons_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
-			mock.RepositoryMock.Setup(x => x.SalesOrderHeaderSalesReasons(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeaderSalesReason>>(new List<SalesOrderHeaderSalesReason>()));
-			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
-			                                          mock.RepositoryMock.Object,
-			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock,
-			                                          mock.BOLMapperMockFactory.BOLSalesOrderHeaderSalesReasonMapperMock,
-			                                          mock.DALMapperMockFactory.DALSalesOrderHeaderSalesReasonMapperMock);
-
-			List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await service.SalesOrderHeaderSalesReasons(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderHeaderSalesReasons(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e495820551034bb0d986dc3711c4bbd6</Hash>
+    <Hash>9618bc7b9de7159badc76674c454f738</Hash>
 </Codenesium>*/

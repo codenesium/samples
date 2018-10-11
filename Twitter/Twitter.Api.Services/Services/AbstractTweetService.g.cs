@@ -22,10 +22,6 @@ namespace TwitterNS.Api.Services
 
 		protected IDALTweetMapper DalTweetMapper { get; private set; }
 
-		protected IBOLLikeMapper BolLikeMapper { get; private set; }
-
-		protected IDALLikeMapper DalLikeMapper { get; private set; }
-
 		protected IBOLQuoteTweetMapper BolQuoteTweetMapper { get; private set; }
 
 		protected IDALQuoteTweetMapper DalQuoteTweetMapper { get; private set; }
@@ -42,8 +38,6 @@ namespace TwitterNS.Api.Services
 			IApiTweetRequestModelValidator tweetModelValidator,
 			IBOLTweetMapper bolTweetMapper,
 			IDALTweetMapper dalTweetMapper,
-			IBOLLikeMapper bolLikeMapper,
-			IDALLikeMapper dalLikeMapper,
 			IBOLQuoteTweetMapper bolQuoteTweetMapper,
 			IDALQuoteTweetMapper dalQuoteTweetMapper,
 			IBOLRetweetMapper bolRetweetMapper,
@@ -54,8 +48,6 @@ namespace TwitterNS.Api.Services
 			this.TweetModelValidator = tweetModelValidator;
 			this.BolTweetMapper = bolTweetMapper;
 			this.DalTweetMapper = dalTweetMapper;
-			this.BolLikeMapper = bolLikeMapper;
-			this.DalLikeMapper = dalLikeMapper;
 			this.BolQuoteTweetMapper = bolQuoteTweetMapper;
 			this.DalQuoteTweetMapper = dalQuoteTweetMapper;
 			this.BolRetweetMapper = bolRetweetMapper;
@@ -146,13 +138,6 @@ namespace TwitterNS.Api.Services
 			return this.BolTweetMapper.MapBOToModel(this.DalTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiLikeResponseModel>> Likes(int tweetId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Like> records = await this.TweetRepository.Likes(tweetId, limit, offset);
-
-			return this.BolLikeMapper.MapBOToModel(this.DalLikeMapper.MapEFToBO(records));
-		}
-
 		public async virtual Task<List<ApiQuoteTweetResponseModel>> QuoteTweets(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<QuoteTweet> records = await this.TweetRepository.QuoteTweets(sourceTweetId, limit, offset);
@@ -170,5 +155,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35a2a2b8f7991559e3ff8aa0ba2bdbdb</Hash>
+    <Hash>b178b7b91a72ef261051e17f3d9031d2</Hash>
 </Codenesium>*/

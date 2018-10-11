@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<UnitMeasure> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<UnitMeasure>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
@@ -125,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>deb642f4a7cb8427ee2949e148eeac42</Hash>
+    <Hash>3116062ab6f825b834c850b6f6f67943</Hash>
 </Codenesium>*/

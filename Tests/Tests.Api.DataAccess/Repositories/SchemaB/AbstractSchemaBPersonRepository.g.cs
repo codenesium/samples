@@ -76,11 +76,6 @@ namespace TestsNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<PersonRef>> PersonRefs(int personBId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<PersonRef>().Where(x => x.PersonBId == personBId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonRef>();
-		}
-
 		protected async Task<List<SchemaBPerson>> Where(
 			Expression<Func<SchemaBPerson, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +108,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1b44a0b131d32c7fdc17aa84e1194a06</Hash>
+    <Hash>1fb2747cb5dca699e2981f2c25754558</Hash>
 </Codenesium>*/

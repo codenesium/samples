@@ -20,8 +20,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLAdminMapper boladminMapper,
 			IDALAdminMapper daladminMapper,
 			IBOLVenueMapper bolVenueMapper,
-			IDALVenueMapper dalVenueMapper
-			)
+			IDALVenueMapper dalVenueMapper)
 			: base(logger,
 			       adminRepository,
 			       adminModelValidator,
@@ -35,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aacd99bce15fbdce2192d72a00e2f540</Hash>
+    <Hash>856504455587f76eae51bf48d0389f73</Hash>
 </Codenesium>*/

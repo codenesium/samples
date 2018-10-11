@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<Vendor> ByAccountNumber(string accountNumber)
 		{
-			var records = await this.Where(x => x.AccountNumber == accountNumber);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Vendor>().SingleOrDefaultAsync(x => x.AccountNumber == accountNumber);
 		}
 
 		public async virtual Task<List<ProductVendor>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0)
@@ -125,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>24437aef69c7743542541af6f41e71cb</Hash>
+    <Hash>a661d16b7aa0faa7e25620dd48d4eab7</Hash>
 </Codenesium>*/

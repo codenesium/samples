@@ -18,22 +18,17 @@ namespace PetShippingNS.Api.Services
 			IDestinationRepository destinationRepository,
 			IApiDestinationRequestModelValidator destinationModelValidator,
 			IBOLDestinationMapper boldestinationMapper,
-			IDALDestinationMapper daldestinationMapper,
-			IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
-			IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper
-			)
+			IDALDestinationMapper daldestinationMapper)
 			: base(logger,
 			       destinationRepository,
 			       destinationModelValidator,
 			       boldestinationMapper,
-			       daldestinationMapper,
-			       bolPipelineStepDestinationMapper,
-			       dalPipelineStepDestinationMapper)
+			       daldestinationMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>133752c572331404bb4577aecf963d40</Hash>
+    <Hash>f623caf330fb3894fbe00d3db04093d5</Hash>
 </Codenesium>*/

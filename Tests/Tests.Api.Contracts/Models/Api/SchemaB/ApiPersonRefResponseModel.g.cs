@@ -16,8 +16,6 @@ namespace TestsNS.Api.Contracts
 			this.Id = id;
 			this.PersonAId = personAId;
 			this.PersonBId = personBId;
-
-			this.PersonBIdEntity = nameof(ApiResponse.SchemaBPersons);
 		}
 
 		[JsonProperty]
@@ -28,12 +26,9 @@ namespace TestsNS.Api.Contracts
 
 		[JsonProperty]
 		public int PersonBId { get; private set; }
-
-		[JsonProperty]
-		public string PersonBIdEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>03a786896c7a9e5adb6de657f6797a04</Hash>
+    <Hash>b9de38c6501fa5847d6e126586650323</Hash>
 </Codenesium>*/

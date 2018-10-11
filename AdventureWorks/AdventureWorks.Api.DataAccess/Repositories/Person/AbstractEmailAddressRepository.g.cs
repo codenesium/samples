@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<EmailAddress>> ByEmailAddress(string emailAddress1, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.EmailAddress1 == emailAddress1, limit, offset);
-
-			return records;
+			return await this.Where(x => x.EmailAddress1 == emailAddress1, limit, offset);
 		}
 
 		protected async Task<List<EmailAddress>> Where(
@@ -115,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9996c7842c69236a21ea38a9000861ad</Hash>
+    <Hash>d6554796457836c0e374cc641cdf30f2</Hash>
 </Codenesium>*/

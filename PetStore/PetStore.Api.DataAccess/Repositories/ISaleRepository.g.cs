@@ -17,12 +17,12 @@ namespace PetStoreNS.Api.DataAccess
 
 		Task<List<Sale>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<PaymentType> GetPaymentType(int paymentTypeId);
+		Task<PaymentType> PaymentTypeByPaymentTypeId(int paymentTypeId);
 
-		Task<Pet> GetPet(int petId);
+		Task<Pet> PetByPetId(int petId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>38fd2cbc0a314708f29df726573dda18</Hash>
+    <Hash>d905fc59109eb364a3f9ead75ad61ad1</Hash>
 </Codenesium>*/

@@ -24,11 +24,12 @@ namespace NebulaNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= ChainStatus
 		[Fact]
 		public async void ChainStatusId_Create_Valid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetChainStatu(It.IsAny<int>())).Returns(Task.FromResult<ChainStatu>(new ChainStatu()));
+			chainRepository.Setup(x => x.ChainStatusByChainStatusId(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(new ChainStatus()));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 			await validator.ValidateCreateAsync(new ApiChainRequestModel());
@@ -40,7 +41,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainStatusId_Create_Invalid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetChainStatu(It.IsAny<int>())).Returns(Task.FromResult<ChainStatu>(null));
+			chainRepository.Setup(x => x.ChainStatusByChainStatusId(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(null));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainStatusId_Update_Valid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetChainStatu(It.IsAny<int>())).Returns(Task.FromResult<ChainStatu>(new ChainStatu()));
+			chainRepository.Setup(x => x.ChainStatusByChainStatusId(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(new ChainStatus()));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
@@ -65,7 +66,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainStatusId_Update_Invalid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetChainStatu(It.IsAny<int>())).Returns(Task.FromResult<ChainStatu>(null));
+			chainRepository.Setup(x => x.ChainStatusByChainStatusId(It.IsAny<int>())).Returns(Task.FromResult<ChainStatus>(null));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
@@ -122,11 +123,12 @@ namespace NebulaNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Team
 		[Fact]
 		public async void TeamId_Create_Valid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
+			chainRepository.Setup(x => x.TeamByTeamId(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 			await validator.ValidateCreateAsync(new ApiChainRequestModel());
@@ -138,7 +140,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void TeamId_Create_Invalid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
+			chainRepository.Setup(x => x.TeamByTeamId(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
@@ -151,7 +153,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void TeamId_Update_Valid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
+			chainRepository.Setup(x => x.TeamByTeamId(It.IsAny<int>())).Returns(Task.FromResult<Team>(new Team()));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiChainRequestModel());
@@ -163,7 +165,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void TeamId_Update_Invalid_Reference()
 		{
 			Mock<IChainRepository> chainRepository = new Mock<IChainRepository>();
-			chainRepository.Setup(x => x.GetTeam(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
+			chainRepository.Setup(x => x.TeamByTeamId(It.IsAny<int>())).Returns(Task.FromResult<Team>(null));
 
 			var validator = new ApiChainRequestModelValidator(chainRepository.Object);
 
@@ -223,5 +225,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5b1f10cb96ae614018dac0023c904e01</Hash>
+    <Hash>f717c8e1a7e8b1d7f98bc4ce264d7f1e</Hash>
 </Codenesium>*/

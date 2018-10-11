@@ -78,8 +78,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IBOLProductModelMapper BOLProductModelMapperMock { get; set; } = new BOLProductModelMapper();
 
-		public IBOLProductModelIllustrationMapper BOLProductModelIllustrationMapperMock { get; set; } = new BOLProductModelIllustrationMapper();
-
 		public IBOLProductModelProductDescriptionCultureMapper BOLProductModelProductDescriptionCultureMapperMock { get; set; } = new BOLProductModelProductDescriptionCultureMapper();
 
 		public IBOLProductPhotoMapper BOLProductPhotoMapperMock { get; set; } = new BOLProductPhotoMapper();
@@ -114,8 +112,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IBOLVendorMapper BOLVendorMapperMock { get; set; } = new BOLVendorMapper();
 
-		public IBOLCountryRegionCurrencyMapper BOLCountryRegionCurrencyMapperMock { get; set; } = new BOLCountryRegionCurrencyMapper();
-
 		public IBOLCreditCardMapper BOLCreditCardMapperMock { get; set; } = new BOLCreditCardMapper();
 
 		public IBOLCurrencyMapper BOLCurrencyMapperMock { get; set; } = new BOLCurrencyMapper();
@@ -124,13 +120,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public IBOLCustomerMapper BOLCustomerMapperMock { get; set; } = new BOLCustomerMapper();
 
-		public IBOLPersonCreditCardMapper BOLPersonCreditCardMapperMock { get; set; } = new BOLPersonCreditCardMapper();
-
 		public IBOLSalesOrderDetailMapper BOLSalesOrderDetailMapperMock { get; set; } = new BOLSalesOrderDetailMapper();
 
 		public IBOLSalesOrderHeaderMapper BOLSalesOrderHeaderMapperMock { get; set; } = new BOLSalesOrderHeaderMapper();
-
-		public IBOLSalesOrderHeaderSalesReasonMapper BOLSalesOrderHeaderSalesReasonMapperMock { get; set; } = new BOLSalesOrderHeaderSalesReasonMapper();
 
 		public IBOLSalesPersonMapper BOLSalesPersonMapperMock { get; set; } = new BOLSalesPersonMapper();
 
@@ -159,5 +151,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e0f88c2452f1cc49b0ed8e6b23c3d11f</Hash>
+    <Hash>e53486f81f56c1d34d04113d438cce94</Hash>
 </Codenesium>*/

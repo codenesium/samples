@@ -31,6 +31,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.TerritoryID = territoryID;
 		}
 
+		[Key]
 		[MaxLength(3)]
 		[Column("CountryRegionCode")]
 		public string CountryRegionCode { get; private set; }
@@ -60,5 +61,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>571f2ccf12e520dfb16537077cc7bda1</Hash>
+    <Hash>667ab2ef75a2fd7bfc6a786dbb2a52c4</Hash>
 </Codenesium>*/

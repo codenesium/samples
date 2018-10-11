@@ -14,8 +14,6 @@ namespace FileServiceNS.Api.Services.Tests
 
 		public IDALFileTypeMapper DALFileTypeMapperMock { get; set; } = new DALFileTypeMapper();
 
-		public IDALVersionInfoMapper DALVersionInfoMapperMock { get; set; } = new DALVersionInfoMapper();
-
 		public DALMapperMockFactory()
 		{
 		}
@@ -23,5 +21,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d7685d8aa6a9034f4c31c047769d9973</Hash>
+    <Hash>5fc6e0f39c14026b650bd35b284f5cbc</Hash>
 </Codenesium>*/

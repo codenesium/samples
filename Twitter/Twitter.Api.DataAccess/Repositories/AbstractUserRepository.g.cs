@@ -78,9 +78,7 @@ namespace TwitterNS.Api.DataAccess
 
 		public async Task<List<User>> ByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.LocationLocationId == locationLocationId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.LocationLocationId == locationLocationId, limit, offset);
 		}
 
 		public async virtual Task<List<DirectTweet>> DirectTweets(int taggedUserId, int limit = int.MaxValue, int offset = 0)
@@ -88,9 +86,9 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Context.Set<DirectTweet>().Where(x => x.TaggedUserId == taggedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DirectTweet>();
 		}
 
-		public async virtual Task<List<Like>> Likes(int likerUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Follower>> Followers(int followedUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<Like>().Where(x => x.LikerUserId == likerUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Like>();
+			return await this.Context.Set<Follower>().Where(x => x.FollowedUserId == followedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
 		public async virtual Task<List<Message>> Messages(int senderUserId, int limit = int.MaxValue, int offset = 0)
@@ -123,9 +121,19 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Context.Set<Tweet>().Where(x => x.UserUserId == userUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
 
-		public async virtual Task<Location> GetLocation(int locationLocationId)
+		public async virtual Task<Location> LocationByLocationLocationId(int locationLocationId)
 		{
 			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.LocationId == locationLocationId);
+		}
+
+		// Reference foreign key. Reference Table=Like. First table=users. Second table=users
+		public async virtual Task<List<User>> ByLikerUserId(int likerUserId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.Likes
+			              join users in this.Context.Users on
+			              refTable.LikerUserId equals users.UserId
+			              where refTable.LikerUserId == likerUserId
+			              select users).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<User>> Where(
@@ -160,5 +168,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3bd754af8d081df0028ea8b962825dd</Hash>
+    <Hash>891db7dea818222db60497d316144df7</Hash>
 </Codenesium>*/

@@ -32,24 +32,24 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void TeacherIdRules()
 		{
-			this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacher).When(x => x?.TeacherId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacherByTeacherId).When(x => x?.TeacherId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TeacherSkillIdRules()
 		{
-			this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkill).When(x => x?.TeacherSkillId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TeacherSkillId).MustAsync(this.BeValidTeacherSkillByTeacherSkillId).When(x => x?.TeacherSkillId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidTeacher(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTeacherByTeacherId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.rateRepository.GetTeacher(id);
+			var record = await this.rateRepository.TeacherByTeacherId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidTeacherSkill(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTeacherSkillByTeacherSkillId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.rateRepository.GetTeacherSkill(id);
+			var record = await this.rateRepository.TeacherSkillByTeacherSkillId(id);
 
 			return record != null;
 		}
@@ -57,5 +57,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>51ce292e388b66558ef090f79f2e0b4f</Hash>
+    <Hash>6128182f329411325dd5c6534b9b58a4</Hash>
 </Codenesium>*/

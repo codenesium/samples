@@ -14,8 +14,8 @@ namespace TwitterNS.Api.Contracts
 		public void Merge(ApiResponse from)
 		{
 			from.DirectTweets.ForEach(x => this.AddDirectTweet(x));
+			from.Followers.ForEach(x => this.AddFollower(x));
 			from.Followings.ForEach(x => this.AddFollowing(x));
-			from.Likes.ForEach(x => this.AddLike(x));
 			from.Locations.ForEach(x => this.AddLocation(x));
 			from.Messages.ForEach(x => this.AddMessage(x));
 			from.Messengers.ForEach(x => this.AddMessenger(x));
@@ -28,9 +28,9 @@ namespace TwitterNS.Api.Contracts
 
 		public List<ApiDirectTweetResponseModel> DirectTweets { get; private set; } = new List<ApiDirectTweetResponseModel>();
 
-		public List<ApiFollowingResponseModel> Followings { get; private set; } = new List<ApiFollowingResponseModel>();
+		public List<ApiFollowerResponseModel> Followers { get; private set; } = new List<ApiFollowerResponseModel>();
 
-		public List<ApiLikeResponseModel> Likes { get; private set; } = new List<ApiLikeResponseModel>();
+		public List<ApiFollowingResponseModel> Followings { get; private set; } = new List<ApiFollowingResponseModel>();
 
 		public List<ApiLocationResponseModel> Locations { get; private set; } = new List<ApiLocationResponseModel>();
 
@@ -65,6 +65,22 @@ namespace TwitterNS.Api.Contracts
 		}
 
 		[JsonIgnore]
+		public bool ShouldSerializeFollowersValue { get; private set; } = true;
+
+		public bool ShouldSerializeFollowers()
+		{
+			return this.ShouldSerializeFollowersValue;
+		}
+
+		public void AddFollower(ApiFollowerResponseModel item)
+		{
+			if (!this.Followers.Any(x => x.Id == item.Id))
+			{
+				this.Followers.Add(item);
+			}
+		}
+
+		[JsonIgnore]
 		public bool ShouldSerializeFollowingsValue { get; private set; } = true;
 
 		public bool ShouldSerializeFollowings()
@@ -77,22 +93,6 @@ namespace TwitterNS.Api.Contracts
 			if (!this.Followings.Any(x => x.UserId == item.UserId))
 			{
 				this.Followings.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeLikesValue { get; private set; } = true;
-
-		public bool ShouldSerializeLikes()
-		{
-			return this.ShouldSerializeLikesValue;
-		}
-
-		public void AddLike(ApiLikeResponseModel item)
-		{
-			if (!this.Likes.Any(x => x.LikeId == item.LikeId))
-			{
-				this.Likes.Add(item);
 			}
 		}
 
@@ -231,14 +231,14 @@ namespace TwitterNS.Api.Contracts
 				this.ShouldSerializeDirectTweetsValue = false;
 			}
 
+			if (this.Followers.Count == 0)
+			{
+				this.ShouldSerializeFollowersValue = false;
+			}
+
 			if (this.Followings.Count == 0)
 			{
 				this.ShouldSerializeFollowingsValue = false;
-			}
-
-			if (this.Likes.Count == 0)
-			{
-				this.ShouldSerializeLikesValue = false;
 			}
 
 			if (this.Locations.Count == 0)
@@ -285,5 +285,5 @@ namespace TwitterNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1774073b0e9b29b6258c997cd21cfa8e</Hash>
+    <Hash>4052217066fb19b1a6ec5dc0989ac815</Hash>
 </Codenesium>*/

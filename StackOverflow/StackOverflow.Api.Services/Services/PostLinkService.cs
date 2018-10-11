@@ -18,8 +18,7 @@ namespace StackOverflowNS.Api.Services
 			IPostLinkRepository postLinkRepository,
 			IApiPostLinkRequestModelValidator postLinkModelValidator,
 			IBOLPostLinkMapper bolpostLinkMapper,
-			IDALPostLinkMapper dalpostLinkMapper
-			)
+			IDALPostLinkMapper dalpostLinkMapper)
 			: base(logger,
 			       postLinkRepository,
 			       postLinkModelValidator,
@@ -31,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>80c6d9f35f5ef6715ad5a8e8a4f0fc21</Hash>
+    <Hash>17d7cd9072afca013650a2308e356a2c</Hash>
 </Codenesium>*/

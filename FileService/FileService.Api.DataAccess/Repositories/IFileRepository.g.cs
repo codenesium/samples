@@ -17,12 +17,12 @@ namespace FileServiceNS.Api.DataAccess
 
 		Task<List<File>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<Bucket> GetBucket(int? bucketId);
+		Task<Bucket> BucketByBucketId(int? bucketId);
 
-		Task<FileType> GetFileType(int fileTypeId);
+		Task<FileType> FileTypeByFileTypeId(int fileTypeId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5261b7ac366079c85673426ab4d2ce1b</Hash>
+    <Hash>257af16483c5bd384ac41ef43fb653d4</Hash>
 </Codenesium>*/

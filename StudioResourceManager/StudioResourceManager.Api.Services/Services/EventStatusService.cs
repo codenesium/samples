@@ -18,18 +18,21 @@ namespace StudioResourceManagerNS.Api.Services
 			IEventStatusRepository eventStatusRepository,
 			IApiEventStatusRequestModelValidator eventStatusModelValidator,
 			IBOLEventStatusMapper boleventStatusMapper,
-			IDALEventStatusMapper daleventStatusMapper
-			)
+			IDALEventStatusMapper daleventStatusMapper,
+			IBOLEventMapper bolEventMapper,
+			IDALEventMapper dalEventMapper)
 			: base(logger,
 			       eventStatusRepository,
 			       eventStatusModelValidator,
 			       boleventStatusMapper,
-			       daleventStatusMapper)
+			       daleventStatusMapper,
+			       bolEventMapper,
+			       dalEventMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4764f50187cffcd3d7f50e359e1e5c1</Hash>
+    <Hash>099167a2d03e29082930d7576680d0fe</Hash>
 </Codenesium>*/

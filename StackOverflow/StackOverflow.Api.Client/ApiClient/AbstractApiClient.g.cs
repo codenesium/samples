@@ -54,6 +54,13 @@ namespace StackOverflowNS.Api.Client
 			this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
+		public virtual async Task<List<ApiBadgeResponseModel>> BadgeBulkInsertAsync(List<ApiBadgeRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Badges/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiBadgeResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiBadgeResponseModel>> BadgeCreateAsync(ApiBadgeRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Badges", item).ConfigureAwait(false);
@@ -89,11 +96,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiBadgeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiBadgeResponseModel>> BadgeBulkInsertAsync(List<ApiBadgeRequestModel> items)
+		public virtual async Task<List<ApiCommentResponseModel>> CommentBulkInsertAsync(List<ApiCommentRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Badges/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Comments/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiBadgeResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiCommentResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCommentResponseModel>> CommentCreateAsync(ApiCommentRequestModel item)
@@ -131,11 +138,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCommentResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiCommentResponseModel>> CommentBulkInsertAsync(List<ApiCommentRequestModel> items)
+		public virtual async Task<List<ApiLinkTypeResponseModel>> LinkTypeBulkInsertAsync(List<ApiLinkTypeRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Comments/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkTypes/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiCommentResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiLinkTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiLinkTypeResponseModel>> LinkTypeCreateAsync(ApiLinkTypeRequestModel item)
@@ -173,11 +180,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkTypeResponseModel>> LinkTypeBulkInsertAsync(List<ApiLinkTypeRequestModel> items)
+		public virtual async Task<List<ApiPostHistoryResponseModel>> PostHistoryBulkInsertAsync(List<ApiPostHistoryRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/LinkTypes/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PostHistories/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiLinkTypeResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPostHistoryResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostHistoryResponseModel>> PostHistoryCreateAsync(ApiPostHistoryRequestModel item)
@@ -215,11 +222,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPostHistoryResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPostHistoryResponseModel>> PostHistoryBulkInsertAsync(List<ApiPostHistoryRequestModel> items)
+		public virtual async Task<List<ApiPostHistoryTypeResponseModel>> PostHistoryTypeBulkInsertAsync(List<ApiPostHistoryTypeRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PostHistories/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PostHistoryTypes/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPostHistoryResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPostHistoryTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostHistoryTypeResponseModel>> PostHistoryTypeCreateAsync(ApiPostHistoryTypeRequestModel item)
@@ -257,11 +264,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPostHistoryTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPostHistoryTypeResponseModel>> PostHistoryTypeBulkInsertAsync(List<ApiPostHistoryTypeRequestModel> items)
+		public virtual async Task<List<ApiPostLinkResponseModel>> PostLinkBulkInsertAsync(List<ApiPostLinkRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PostHistoryTypes/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PostLinks/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPostHistoryTypeResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPostLinkResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostLinkResponseModel>> PostLinkCreateAsync(ApiPostLinkRequestModel item)
@@ -299,11 +306,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPostLinkResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPostLinkResponseModel>> PostLinkBulkInsertAsync(List<ApiPostLinkRequestModel> items)
+		public virtual async Task<List<ApiPostResponseModel>> PostBulkInsertAsync(List<ApiPostRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PostLinks/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Posts/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPostLinkResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPostResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostResponseModel>> PostCreateAsync(ApiPostRequestModel item)
@@ -341,18 +348,18 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPostResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPostResponseModel>> PostBulkInsertAsync(List<ApiPostRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Posts/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiPostResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiPostResponseModel>> GetPostByOwnerUserId(int? ownerUserId)
+		public virtual async Task<List<ApiPostResponseModel>> ByPostByOwnerUserId(int? ownerUserId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Posts/byOwnerUserId/{ownerUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiPostResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiPostTypeResponseModel>> PostTypeBulkInsertAsync(List<ApiPostTypeRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PostTypes/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiPostTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPostTypeResponseModel>> PostTypeCreateAsync(ApiPostTypeRequestModel item)
@@ -390,11 +397,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPostTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPostTypeResponseModel>> PostTypeBulkInsertAsync(List<ApiPostTypeRequestModel> items)
+		public virtual async Task<List<ApiTagResponseModel>> TagBulkInsertAsync(List<ApiTagRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PostTypes/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Tags/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPostTypeResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTagResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTagResponseModel>> TagCreateAsync(ApiTagRequestModel item)
@@ -432,11 +439,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTagResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTagResponseModel>> TagBulkInsertAsync(List<ApiTagRequestModel> items)
+		public virtual async Task<List<ApiUserResponseModel>> UserBulkInsertAsync(List<ApiUserRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Tags/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Users/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTagResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiUserResponseModel>> UserCreateAsync(ApiUserRequestModel item)
@@ -474,11 +481,11 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiUserResponseModel>> UserBulkInsertAsync(List<ApiUserRequestModel> items)
+		public virtual async Task<List<ApiVoteResponseModel>> VoteBulkInsertAsync(List<ApiVoteRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Users/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Votes/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiVoteResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiVoteResponseModel>> VoteCreateAsync(ApiVoteRequestModel item)
@@ -516,18 +523,18 @@ namespace StackOverflowNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiVoteResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiVoteResponseModel>> VoteBulkInsertAsync(List<ApiVoteRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Votes/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiVoteResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiVoteResponseModel>> GetVoteByUserId(int? userId)
+		public virtual async Task<List<ApiVoteResponseModel>> ByVoteByUserId(int? userId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Votes/byUserId/{userId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiVoteResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiVoteTypeResponseModel>> VoteTypeBulkInsertAsync(List<ApiVoteTypeRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VoteTypes/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiVoteTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiVoteTypeResponseModel>> VoteTypeCreateAsync(ApiVoteTypeRequestModel item)
@@ -564,16 +571,9 @@ namespace StackOverflowNS.Api.Client
 
 			return JsonConvert.DeserializeObject<List<ApiVoteTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
-
-		public virtual async Task<List<ApiVoteTypeResponseModel>> VoteTypeBulkInsertAsync(List<ApiVoteTypeRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VoteTypes/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiVoteTypeResponseModel>>(httpResponse.Content.ContentToString());
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7751c40229c0a4efe85bb35c157ae802</Hash>
+    <Hash>739dc55b0467b65a51cdd313f9d91294</Hash>
 </Codenesium>*/

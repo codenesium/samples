@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IVProductAndDescriptionRepository vProductAndDescriptionRepository,
 			IApiVProductAndDescriptionRequestModelValidator vProductAndDescriptionModelValidator,
 			IBOLVProductAndDescriptionMapper bolvProductAndDescriptionMapper,
-			IDALVProductAndDescriptionMapper dalvProductAndDescriptionMapper
-			)
+			IDALVProductAndDescriptionMapper dalvProductAndDescriptionMapper)
 			: base(logger,
 			       vProductAndDescriptionRepository,
 			       vProductAndDescriptionModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f55d76a591929e8905f94069026d0786</Hash>
+    <Hash>dfe6858039eabc614452c09d7c026001</Hash>
 </Codenesium>*/

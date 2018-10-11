@@ -192,11 +192,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void UserId_Create_Valid_Reference()
 		{
 			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-			adminRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			adminRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
 			await validator.ValidateCreateAsync(new ApiAdminRequestModel());
@@ -208,7 +209,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Create_Invalid_Reference()
 		{
 			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-			adminRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			adminRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
 
@@ -221,7 +222,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Update_Valid_Reference()
 		{
 			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-			adminRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			adminRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiAdminRequestModel());
@@ -233,7 +234,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Update_Invalid_Reference()
 		{
 			Mock<IAdminRepository> adminRepository = new Mock<IAdminRepository>();
-			adminRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			adminRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiAdminRequestModelValidator(adminRepository.Object);
 
@@ -245,5 +246,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5d2d73bd03a3f0c9928ac2f621d931a7</Hash>
+    <Hash>d145c5f74bd6929ef3ab11565341ac43</Hash>
 </Codenesium>*/

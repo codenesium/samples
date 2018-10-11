@@ -10,23 +10,17 @@ namespace NebulaNS.Api.Services.Tests
 	{
 		public IDALChainMapper DALChainMapperMock { get; set; } = new DALChainMapper();
 
-		public IDALChainStatuMapper DALChainStatuMapperMock { get; set; } = new DALChainStatuMapper();
-
-		public IDALClaspMapper DALClaspMapperMock { get; set; } = new DALClaspMapper();
+		public IDALChainStatusMapper DALChainStatusMapperMock { get; set; } = new DALChainStatusMapper();
 
 		public IDALLinkMapper DALLinkMapperMock { get; set; } = new DALLinkMapper();
 
 		public IDALLinkLogMapper DALLinkLogMapperMock { get; set; } = new DALLinkLogMapper();
 
-		public IDALLinkStatuMapper DALLinkStatuMapperMock { get; set; } = new DALLinkStatuMapper();
+		public IDALLinkStatusMapper DALLinkStatusMapperMock { get; set; } = new DALLinkStatusMapper();
 
 		public IDALMachineMapper DALMachineMapperMock { get; set; } = new DALMachineMapper();
 
-		public IDALMachineRefTeamMapper DALMachineRefTeamMapperMock { get; set; } = new DALMachineRefTeamMapper();
-
 		public IDALOrganizationMapper DALOrganizationMapperMock { get; set; } = new DALOrganizationMapper();
-
-		public IDALSysdiagramMapper DALSysdiagramMapperMock { get; set; } = new DALSysdiagramMapper();
 
 		public IDALTeamMapper DALTeamMapperMock { get; set; } = new DALTeamMapper();
 
@@ -39,5 +33,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e4f046ce0e4a8e135a8295434a45954e</Hash>
+    <Hash>7b762bb216de63720d9705c3dcbbd9b1</Hash>
 </Codenesium>*/

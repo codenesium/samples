@@ -25,8 +25,6 @@ namespace TwitterNS.Api.Services
 
 		Task<List<ApiTweetResponseModel>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiLikeResponseModel>> Likes(int tweetId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<ApiQuoteTweetResponseModel>> QuoteTweets(int sourceTweetId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiRetweetResponseModel>> Retweets(int tweetTweetId, int limit = int.MaxValue, int offset = 0);
@@ -34,5 +32,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c06005c3a7c088b2358970ac6f255c07</Hash>
+    <Hash>5ad04ff152e5b51a130bc23d3ea151f4</Hash>
 </Codenesium>*/

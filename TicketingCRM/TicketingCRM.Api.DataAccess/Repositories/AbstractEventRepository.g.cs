@@ -78,12 +78,10 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		public async Task<List<Event>> ByCityId(int cityId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.CityId == cityId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.CityId == cityId, limit, offset);
 		}
 
-		public async virtual Task<City> GetCity(int cityId)
+		public async virtual Task<City> CityByCityId(int cityId)
 		{
 			return await this.Context.Set<City>().SingleOrDefaultAsync(x => x.Id == cityId);
 		}
@@ -120,5 +118,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>02de498831f9b69399a1b35cc780c80d</Hash>
+    <Hash>d96de63d171a3cf7c820594e7832ae1e</Hash>
 </Codenesium>*/

@@ -122,9 +122,16 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return this.BolSpaceSpaceFeatureMapper.MapBOToModel(this.DalSpaceSpaceFeatureMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiSpaceFeatureResponseModel>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<SpaceFeature> records = await this.SpaceFeatureRepository.BySpaceId(spaceId, limit, offset);
+
+			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>607727dc01507c97ab97099afd2f1183</Hash>
+    <Hash>f76489256b7c0c25e34f8a93c34e96e6</Hash>
 </Codenesium>*/

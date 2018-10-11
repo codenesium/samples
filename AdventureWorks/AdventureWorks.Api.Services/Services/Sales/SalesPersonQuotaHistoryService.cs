@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			ISalesPersonQuotaHistoryRepository salesPersonQuotaHistoryRepository,
 			IApiSalesPersonQuotaHistoryRequestModelValidator salesPersonQuotaHistoryModelValidator,
 			IBOLSalesPersonQuotaHistoryMapper bolsalesPersonQuotaHistoryMapper,
-			IDALSalesPersonQuotaHistoryMapper dalsalesPersonQuotaHistoryMapper
-			)
+			IDALSalesPersonQuotaHistoryMapper dalsalesPersonQuotaHistoryMapper)
 			: base(logger,
 			       salesPersonQuotaHistoryRepository,
 			       salesPersonQuotaHistoryModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>34afcd9dc9faa3a7262e49e539508ab4</Hash>
+    <Hash>e89605154fc81bad9c9fc23df8fa10bd</Hash>
 </Codenesium>*/

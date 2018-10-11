@@ -216,11 +216,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Interest, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Location
 		[Fact]
 		public async void LocationLocationId_Create_Valid_Reference()
 		{
 			Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-			userRepository.Setup(x => x.GetLocation(It.IsAny<int>())).Returns(Task.FromResult<Location>(new Location()));
+			userRepository.Setup(x => x.LocationByLocationLocationId(It.IsAny<int>())).Returns(Task.FromResult<Location>(new Location()));
 
 			var validator = new ApiUserRequestModelValidator(userRepository.Object);
 			await validator.ValidateCreateAsync(new ApiUserRequestModel());
@@ -232,7 +233,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void LocationLocationId_Create_Invalid_Reference()
 		{
 			Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-			userRepository.Setup(x => x.GetLocation(It.IsAny<int>())).Returns(Task.FromResult<Location>(null));
+			userRepository.Setup(x => x.LocationByLocationLocationId(It.IsAny<int>())).Returns(Task.FromResult<Location>(null));
 
 			var validator = new ApiUserRequestModelValidator(userRepository.Object);
 
@@ -245,7 +246,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void LocationLocationId_Update_Valid_Reference()
 		{
 			Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-			userRepository.Setup(x => x.GetLocation(It.IsAny<int>())).Returns(Task.FromResult<Location>(new Location()));
+			userRepository.Setup(x => x.LocationByLocationLocationId(It.IsAny<int>())).Returns(Task.FromResult<Location>(new Location()));
 
 			var validator = new ApiUserRequestModelValidator(userRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiUserRequestModel());
@@ -257,7 +258,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void LocationLocationId_Update_Invalid_Reference()
 		{
 			Mock<IUserRepository> userRepository = new Mock<IUserRepository>();
-			userRepository.Setup(x => x.GetLocation(It.IsAny<int>())).Returns(Task.FromResult<Location>(null));
+			userRepository.Setup(x => x.LocationByLocationLocationId(It.IsAny<int>())).Returns(Task.FromResult<Location>(null));
 
 			var validator = new ApiUserRequestModelValidator(userRepository.Object);
 
@@ -461,5 +462,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>29090593c0d81f9fcda6c99decdfd07c</Hash>
+    <Hash>f0065c1816f825422b517d12550cff95</Hash>
 </Codenesium>*/

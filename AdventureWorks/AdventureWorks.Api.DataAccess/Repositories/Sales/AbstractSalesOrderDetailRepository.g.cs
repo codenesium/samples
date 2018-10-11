@@ -78,19 +78,22 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<SalesOrderDetail>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ProductID == productID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
-		public async virtual Task<SpecialOfferProduct> GetSpecialOfferProduct(int productID)
+		public async virtual Task<SpecialOfferProduct> SpecialOfferProductByProductID(int productID)
 		{
 			return await this.Context.Set<SpecialOfferProduct>().SingleOrDefaultAsync(x => x.SpecialOfferID == productID);
 		}
 
-		public async virtual Task<SalesOrderHeader> GetSalesOrderHeader(int salesOrderID)
+		public async virtual Task<SalesOrderHeader> SalesOrderHeaderBySalesOrderID(int salesOrderID)
 		{
 			return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderID == salesOrderID);
+		}
+
+		public async virtual Task<SpecialOfferProduct> SpecialOfferProductBySpecialOfferID(int specialOfferID)
+		{
+			return await this.Context.Set<SpecialOfferProduct>().SingleOrDefaultAsync(x => x.SpecialOfferID == specialOfferID);
 		}
 
 		protected async Task<List<SalesOrderDetail>> Where(
@@ -125,5 +128,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70c88789eaaf8ea2a29cd9c86012b092</Hash>
+    <Hash>c20b1629c678647559479fe28238b853</Hash>
 </Codenesium>*/

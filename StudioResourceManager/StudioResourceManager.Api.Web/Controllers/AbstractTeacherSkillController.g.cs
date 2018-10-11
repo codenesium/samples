@@ -240,6 +240,23 @@ namespace StudioResourceManagerNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("byTeacherId/{teacherId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTeacherSkillResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByTeacherId(int teacherId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTeacherSkillResponseModel> response = await this.TeacherSkillService.ByTeacherId(teacherId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiTeacherSkillRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherSkillRequestModel> patch)
 		{
 			var record = await this.TeacherSkillService.Get(id);
@@ -259,5 +276,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>844ff9a302431362dce9dd88c4eccbd3</Hash>
+    <Hash>29c58f3069b51ce8519309f67d3fbb71</Hash>
 </Codenesium>*/

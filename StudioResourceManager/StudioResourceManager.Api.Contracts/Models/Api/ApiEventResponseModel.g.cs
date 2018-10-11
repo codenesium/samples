@@ -28,6 +28,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.ScheduledStartDate = scheduledStartDate;
 			this.StudentNote = studentNote;
 			this.TeacherNote = teacherNote;
+
+			this.EventStatusIdEntity = nameof(ApiResponse.EventStatuses);
 		}
 
 		[Required]
@@ -44,6 +46,9 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[JsonProperty]
 		public int EventStatusId { get; private set; }
+
+		[JsonProperty]
+		public string EventStatusIdEntity { get; set; }
 
 		[JsonProperty]
 		public int Id { get; private set; }
@@ -67,5 +72,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6a21f6fe9391e4d2665d1070c475f81a</Hash>
+    <Hash>f56863d4bf6533cb3911bc4ddd09cab9</Hash>
 </Codenesium>*/

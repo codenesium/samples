@@ -33,12 +33,9 @@ namespace TestsNS.Api.DataAccess
 
 		[Column("personBId")]
 		public int PersonBId { get; private set; }
-
-		[ForeignKey("PersonBId")]
-		public virtual SchemaBPerson SchemaBPersonNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3cf9c68cf536ca869e0ceb9d1b103cd</Hash>
+    <Hash>59ae129137f3fd197cb58644753f1e81</Hash>
 </Codenesium>*/

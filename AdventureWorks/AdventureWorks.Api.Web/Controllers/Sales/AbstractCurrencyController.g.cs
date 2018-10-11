@@ -226,23 +226,6 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{currencyCode}/CountryRegionCurrencies")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiCountryRegionCurrencyResponseModel>), 200)]
-		public async virtual Task<IActionResult> CountryRegionCurrencies(string currencyCode, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiCountryRegionCurrencyResponseModel> response = await this.CurrencyService.CountryRegionCurrencies(currencyCode, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{fromCurrencyCode}/CurrencyRates")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCurrencyRateResponseModel>), 200)]
@@ -278,5 +261,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8ddee440ae25ad9cb98f2fe3960ff6bb</Hash>
+    <Hash>bd282fb720d5023cf9232afa3f31cb6b</Hash>
 </Codenesium>*/

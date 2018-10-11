@@ -72,11 +72,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Email, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Family
 		[Fact]
 		public async void FamilyId_Create_Valid_Reference()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
-			studentRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
+			studentRepository.Setup(x => x.FamilyByFamilyId(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
 
 			var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 			await validator.ValidateCreateAsync(new ApiStudentRequestModel());
@@ -88,7 +89,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void FamilyId_Create_Invalid_Reference()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
-			studentRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
+			studentRepository.Setup(x => x.FamilyByFamilyId(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
 
 			var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 
@@ -101,7 +102,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void FamilyId_Update_Valid_Reference()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
-			studentRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
+			studentRepository.Setup(x => x.FamilyByFamilyId(It.IsAny<int>())).Returns(Task.FromResult<Family>(new Family()));
 
 			var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
@@ -113,7 +114,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void FamilyId_Update_Invalid_Reference()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
-			studentRepository.Setup(x => x.GetFamily(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
+			studentRepository.Setup(x => x.FamilyByFamilyId(It.IsAny<int>())).Returns(Task.FromResult<Family>(null));
 
 			var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 
@@ -266,11 +267,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void UserId_Create_Valid_Reference()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
-			studentRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			studentRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 			await validator.ValidateCreateAsync(new ApiStudentRequestModel());
@@ -282,7 +284,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Create_Invalid_Reference()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
-			studentRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			studentRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 
@@ -295,7 +297,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Update_Valid_Reference()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
-			studentRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			studentRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiStudentRequestModel());
@@ -307,7 +309,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Update_Invalid_Reference()
 		{
 			Mock<IStudentRepository> studentRepository = new Mock<IStudentRepository>();
-			studentRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			studentRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiStudentRequestModelValidator(studentRepository.Object);
 
@@ -319,5 +321,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2893834c51d85fd5f9a308eac5de90b9</Hash>
+    <Hash>068e8998308d26896a42bc4152eb3a4b</Hash>
 </Codenesium>*/

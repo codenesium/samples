@@ -31,9 +31,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return this.Where(x => true, limit, offset);
 		}
 
-		public async virtual Task<SpaceSpaceFeature> Get(int id)
+		public async virtual Task<SpaceSpaceFeature> Get(int spaceId)
 		{
-			return await this.GetById(id);
+			return await this.GetById(spaceId);
 		}
 
 		public async virtual Task<SpaceSpaceFeature> Create(SpaceSpaceFeature item)
@@ -47,7 +47,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public async virtual Task Update(SpaceSpaceFeature item)
 		{
-			var entity = this.Context.Set<SpaceSpaceFeature>().Local.FirstOrDefault(x => x.Id == item.Id);
+			var entity = this.Context.Set<SpaceSpaceFeature>().Local.FirstOrDefault(x => x.SpaceId == item.SpaceId);
 			if (entity == null)
 			{
 				this.Context.Set<SpaceSpaceFeature>().Attach(item);
@@ -61,9 +61,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public async virtual Task Delete(
-			int id)
+			int spaceId)
 		{
-			SpaceSpaceFeature record = await this.GetById(id);
+			SpaceSpaceFeature record = await this.GetById(spaceId);
 
 			if (record == null)
 			{
@@ -76,26 +76,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<SpaceSpaceFeature>> BySpaceFeatureId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.SpaceFeatureId == spaceFeatureId, limit, offset);
-
-			return records;
-		}
-
-		public async Task<List<SpaceSpaceFeature>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.SpaceId == spaceId, limit, offset);
-
-			return records;
-		}
-
-		public async virtual Task<SpaceFeature> GetSpaceFeature(int spaceFeatureId)
+		public async virtual Task<SpaceFeature> SpaceFeatureBySpaceFeatureId(int spaceFeatureId)
 		{
 			return await this.Context.Set<SpaceFeature>().SingleOrDefaultAsync(x => x.Id == spaceFeatureId);
 		}
 
-		public async virtual Task<Space> GetSpace(int spaceId)
+		public async virtual Task<Space> SpaceBySpaceId(int spaceId)
 		{
 			return await this.Context.Set<Space>().SingleOrDefaultAsync(x => x.Id == spaceId);
 		}
@@ -109,7 +95,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		{
 			if (orderBy == null)
 			{
-				orderBy = x => x.Id;
+				orderBy = x => x.SpaceId;
 			}
 
 			if (sortDirection == ListSortDirection.Ascending)
@@ -122,9 +108,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		private async Task<SpaceSpaceFeature> GetById(int id)
+		private async Task<SpaceSpaceFeature> GetById(int spaceId)
 		{
-			List<SpaceSpaceFeature> records = await this.Where(x => x.Id == id);
+			List<SpaceSpaceFeature> records = await this.Where(x => x.SpaceId == spaceId);
 
 			return records.FirstOrDefault();
 		}
@@ -132,5 +118,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ccb7f3a686419e4fb1b89ddccb84b74e</Hash>
+    <Hash>1061ce2cb82ecad7a9c56c2c95bdfbeb</Hash>
 </Codenesium>*/

@@ -12,17 +12,17 @@ namespace StudioResourceManagerNS.Api.Services
 		Task<CreateResponse<ApiEventStudentResponseModel>> Create(
 			ApiEventStudentRequestModel model);
 
-		Task<UpdateResponse<ApiEventStudentResponseModel>> Update(int id,
+		Task<UpdateResponse<ApiEventStudentResponseModel>> Update(int eventId,
 		                                                           ApiEventStudentRequestModel model);
 
-		Task<ActionResponse> Delete(int id);
+		Task<ActionResponse> Delete(int eventId);
 
-		Task<ApiEventStudentResponseModel> Get(int id);
+		Task<ApiEventStudentResponseModel> Get(int eventId);
 
 		Task<List<ApiEventStudentResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a20bbf439edbbbf56e42ca2724599d19</Hash>
+    <Hash>423d9042c2875409388ccdd4686ab483</Hash>
 </Codenesium>*/

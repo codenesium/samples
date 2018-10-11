@@ -22,8 +22,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLBillOfMaterialMapper bolBillOfMaterialMapper,
 			IDALBillOfMaterialMapper dalBillOfMaterialMapper,
 			IBOLProductMapper bolProductMapper,
-			IDALProductMapper dalProductMapper
-			)
+			IDALProductMapper dalProductMapper)
 			: base(logger,
 			       unitMeasureRepository,
 			       unitMeasureModelValidator,
@@ -39,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>acbea2c24412e94e320c60cde300fa37</Hash>
+    <Hash>b9f9c94118d02ee39246f57b12279a5a</Hash>
 </Codenesium>*/

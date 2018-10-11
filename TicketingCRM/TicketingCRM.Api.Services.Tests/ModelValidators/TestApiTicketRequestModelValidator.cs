@@ -72,11 +72,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.PublicId, new string('A', 9));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= TicketStatu
 		[Fact]
 		public async void TicketStatusId_Create_Valid_Reference()
 		{
 			Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
-			ticketRepository.Setup(x => x.GetTicketStatu(It.IsAny<int>())).Returns(Task.FromResult<TicketStatu>(new TicketStatu()));
+			ticketRepository.Setup(x => x.TicketStatuByTicketStatusId(It.IsAny<int>())).Returns(Task.FromResult<TicketStatu>(new TicketStatu()));
 
 			var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
 			await validator.ValidateCreateAsync(new ApiTicketRequestModel());
@@ -88,7 +89,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TicketStatusId_Create_Invalid_Reference()
 		{
 			Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
-			ticketRepository.Setup(x => x.GetTicketStatu(It.IsAny<int>())).Returns(Task.FromResult<TicketStatu>(null));
+			ticketRepository.Setup(x => x.TicketStatuByTicketStatusId(It.IsAny<int>())).Returns(Task.FromResult<TicketStatu>(null));
 
 			var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
 
@@ -101,7 +102,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TicketStatusId_Update_Valid_Reference()
 		{
 			Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
-			ticketRepository.Setup(x => x.GetTicketStatu(It.IsAny<int>())).Returns(Task.FromResult<TicketStatu>(new TicketStatu()));
+			ticketRepository.Setup(x => x.TicketStatuByTicketStatusId(It.IsAny<int>())).Returns(Task.FromResult<TicketStatu>(new TicketStatu()));
 
 			var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiTicketRequestModel());
@@ -113,7 +114,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TicketStatusId_Update_Invalid_Reference()
 		{
 			Mock<ITicketRepository> ticketRepository = new Mock<ITicketRepository>();
-			ticketRepository.Setup(x => x.GetTicketStatu(It.IsAny<int>())).Returns(Task.FromResult<TicketStatu>(null));
+			ticketRepository.Setup(x => x.TicketStatuByTicketStatusId(It.IsAny<int>())).Returns(Task.FromResult<TicketStatu>(null));
 
 			var validator = new ApiTicketRequestModelValidator(ticketRepository.Object);
 
@@ -125,5 +126,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>19793ff7ab411f58f5af80ac1b5c9a55</Hash>
+    <Hash>a491e435d159fa7b7a6b5bb9141630d4</Hash>
 </Codenesium>*/

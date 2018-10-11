@@ -26,9 +26,9 @@ namespace TwitterNS.Api.Services
 
 		protected IDALDirectTweetMapper DalDirectTweetMapper { get; private set; }
 
-		protected IBOLLikeMapper BolLikeMapper { get; private set; }
+		protected IBOLFollowerMapper BolFollowerMapper { get; private set; }
 
-		protected IDALLikeMapper DalLikeMapper { get; private set; }
+		protected IDALFollowerMapper DalFollowerMapper { get; private set; }
 
 		protected IBOLMessageMapper BolMessageMapper { get; private set; }
 
@@ -64,8 +64,8 @@ namespace TwitterNS.Api.Services
 			IDALUserMapper dalUserMapper,
 			IBOLDirectTweetMapper bolDirectTweetMapper,
 			IDALDirectTweetMapper dalDirectTweetMapper,
-			IBOLLikeMapper bolLikeMapper,
-			IDALLikeMapper dalLikeMapper,
+			IBOLFollowerMapper bolFollowerMapper,
+			IDALFollowerMapper dalFollowerMapper,
 			IBOLMessageMapper bolMessageMapper,
 			IDALMessageMapper dalMessageMapper,
 			IBOLMessengerMapper bolMessengerMapper,
@@ -86,8 +86,8 @@ namespace TwitterNS.Api.Services
 			this.DalUserMapper = dalUserMapper;
 			this.BolDirectTweetMapper = bolDirectTweetMapper;
 			this.DalDirectTweetMapper = dalDirectTweetMapper;
-			this.BolLikeMapper = bolLikeMapper;
-			this.DalLikeMapper = dalLikeMapper;
+			this.BolFollowerMapper = bolFollowerMapper;
+			this.DalFollowerMapper = dalFollowerMapper;
 			this.BolMessageMapper = bolMessageMapper;
 			this.DalMessageMapper = dalMessageMapper;
 			this.BolMessengerMapper = bolMessengerMapper;
@@ -186,11 +186,11 @@ namespace TwitterNS.Api.Services
 			return this.BolDirectTweetMapper.MapBOToModel(this.DalDirectTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiLikeResponseModel>> Likes(int likerUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiFollowerResponseModel>> Followers(int followedUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Like> records = await this.UserRepository.Likes(likerUserId, limit, offset);
+			List<Follower> records = await this.UserRepository.Followers(followedUserId, limit, offset);
 
-			return this.BolLikeMapper.MapBOToModel(this.DalLikeMapper.MapEFToBO(records));
+			return this.BolFollowerMapper.MapBOToModel(this.DalFollowerMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiMessageResponseModel>> Messages(int senderUserId, int limit = int.MaxValue, int offset = 0)
@@ -234,9 +234,16 @@ namespace TwitterNS.Api.Services
 
 			return this.BolTweetMapper.MapBOToModel(this.DalTweetMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiUserResponseModel>> ByLikerUserId(int likerUserId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<User> records = await this.UserRepository.ByLikerUserId(likerUserId, limit, offset);
+
+			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>23d260681faa3fb57dafc09884a4e50f</Hash>
+    <Hash>0876bdea6469d02e4da9eafcf5b8a47b</Hash>
 </Codenesium>*/

@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IProductReviewRepository productReviewRepository,
 			IApiProductReviewRequestModelValidator productReviewModelValidator,
 			IBOLProductReviewMapper bolproductReviewMapper,
-			IDALProductReviewMapper dalproductReviewMapper
-			)
+			IDALProductReviewMapper dalproductReviewMapper)
 			: base(logger,
 			       productReviewRepository,
 			       productReviewModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>360b28fa33947b8306aade505574f7b8</Hash>
+    <Hash>eb6dfb7206710b1f6c7b517a540baa7e</Hash>
 </Codenesium>*/

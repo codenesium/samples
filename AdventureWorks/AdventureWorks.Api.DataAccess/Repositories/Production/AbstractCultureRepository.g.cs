@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<Culture> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Culture>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0)
@@ -120,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3787f63208e19703c8368e4d9abc7fc</Hash>
+    <Hash>0f10f9ab6bbd4c14586e840e8f09c0f7</Hash>
 </Codenesium>*/

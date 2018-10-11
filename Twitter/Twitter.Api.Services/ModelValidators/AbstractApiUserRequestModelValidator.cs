@@ -64,7 +64,7 @@ namespace TwitterNS.Api.Services
 
 		public virtual void LocationLocationIdRules()
 		{
-			this.RuleFor(x => x.LocationLocationId).MustAsync(this.BeValidLocation).When(x => x?.LocationLocationId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LocationLocationId).MustAsync(this.BeValidLocationByLocationLocationId).When(x => x?.LocationLocationId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void PasswordRules()
@@ -95,9 +95,9 @@ namespace TwitterNS.Api.Services
 			this.RuleFor(x => x.Website).Length(0, 32);
 		}
 
-		private async Task<bool> BeValidLocation(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidLocationByLocationLocationId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.userRepository.GetLocation(id);
+			var record = await this.userRepository.LocationByLocationLocationId(id);
 
 			return record != null;
 		}
@@ -105,5 +105,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f03218186034cba2e1f368ea7a3744c0</Hash>
+    <Hash>610e1705eaa656fd93bedd81f80d855a</Hash>
 </Codenesium>*/

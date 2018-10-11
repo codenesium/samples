@@ -42,6 +42,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IDALUserMapper DALUserMapperMock { get; set; } = new DALUserMapper();
 
+		public IDALVEventMapper DALVEventMapperMock { get; set; } = new DALVEventMapper();
+
 		public DALMapperMockFactory()
 		{
 		}
@@ -49,5 +51,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0c0321087e50913ba1de4b98fea30eac</Hash>
+    <Hash>3ca4cba5a13a5af877603d22c146c424</Hash>
 </Codenesium>*/

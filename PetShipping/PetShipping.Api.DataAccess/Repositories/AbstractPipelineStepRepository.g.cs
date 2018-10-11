@@ -76,21 +76,6 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineSteps(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<HandlerPipelineStep>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
-		}
-
-		public async virtual Task<List<OtherTransport>> OtherTransports(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<OtherTransport>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
-		}
-
-		public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinations(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<PipelineStepDestination>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
-		}
-
 		public async virtual Task<List<PipelineStepNote>> PipelineStepNotes(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PipelineStepNote>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepNote>();
@@ -101,14 +86,24 @@ namespace PetShippingNS.Api.DataAccess
 			return await this.Context.Set<PipelineStepStepRequirement>().Where(x => x.PipelineStepId == pipelineStepId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepStepRequirement>();
 		}
 
-		public async virtual Task<PipelineStepStatu> GetPipelineStepStatu(int pipelineStepStatusId)
+		public async virtual Task<PipelineStepStatu> PipelineStepStatuByPipelineStepStatusId(int pipelineStepStatusId)
 		{
 			return await this.Context.Set<PipelineStepStatu>().SingleOrDefaultAsync(x => x.Id == pipelineStepStatusId);
 		}
 
-		public async virtual Task<Employee> GetEmployee(int shipperId)
+		public async virtual Task<Employee> EmployeeByShipperId(int shipperId)
 		{
 			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == shipperId);
+		}
+
+		// Reference foreign key. Reference Table=OtherTransport. First table=pipelineSteps. Second table=pipelineSteps
+		public async virtual Task<List<PipelineStep>> ByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.OtherTransports
+			              join pipelineSteps in this.Context.PipelineSteps on
+			              refTable.PipelineStepId equals pipelineSteps.Id
+			              where refTable.PipelineStepId == pipelineStepId
+			              select pipelineSteps).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<PipelineStep>> Where(
@@ -143,5 +138,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7cd2f9527ae2ad129e348b730490d2cb</Hash>
+    <Hash>c91e3a452bc65bd140105a0a3695b8a3</Hash>
 </Codenesium>*/

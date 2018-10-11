@@ -206,23 +206,6 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{personBId}/PersonRefs")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPersonRefResponseModel>), 200)]
-		public async virtual Task<IActionResult> PersonRefs(int personBId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiPersonRefResponseModel> response = await this.SchemaBPersonService.PersonRefs(personBId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiSchemaBPersonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSchemaBPersonRequestModel> patch)
 		{
 			var record = await this.SchemaBPersonService.Get(id);
@@ -242,5 +225,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>24970154d6b575bdad5b17a5f301abcd</Hash>
+    <Hash>42d611eb65b2da69dd70a85547d724ec</Hash>
 </Codenesium>*/

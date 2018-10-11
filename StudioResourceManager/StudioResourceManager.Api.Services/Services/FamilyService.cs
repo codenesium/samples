@@ -20,8 +20,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IBOLFamilyMapper bolfamilyMapper,
 			IDALFamilyMapper dalfamilyMapper,
 			IBOLStudentMapper bolStudentMapper,
-			IDALStudentMapper dalStudentMapper
-			)
+			IDALStudentMapper dalStudentMapper)
 			: base(logger,
 			       familyRepository,
 			       familyModelValidator,
@@ -35,5 +34,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2cb05468d75951e9273e613f4a0d3000</Hash>
+    <Hash>3948951bb8021cad1888b51056b83c0e</Hash>
 </Codenesium>*/

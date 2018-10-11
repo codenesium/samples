@@ -78,23 +78,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<ProductModel> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<ProductModel>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async Task<List<ProductModel>> ByCatalogDescription(string catalogDescription, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.CatalogDescription == catalogDescription, limit, offset);
-
-			return records;
+			return await this.Where(x => x.CatalogDescription == catalogDescription, limit, offset);
 		}
 
 		public async Task<List<ProductModel>> ByInstruction(string instruction, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.Instruction == instruction, limit, offset);
-
-			return records;
+			return await this.Where(x => x.Instruction == instruction, limit, offset);
 		}
 
 		public async virtual Task<List<Product>> Products(int productModelID, int limit = int.MaxValue, int offset = 0)
@@ -102,14 +96,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Product>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
-		public async virtual Task<List<ProductModelIllustration>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductModelIllustration>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelIllustration>();
-		}
-
 		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
+		}
+
+		// Reference foreign key. Reference Table=ProductModelIllustration. First table=productModels. Second table=productModels
+		public async virtual Task<List<ProductModel>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.ProductModelIllustrations
+			              join productModels in this.Context.ProductModels on
+			              refTable.ProductModelID equals productModels.ProductModelID
+			              where refTable.ProductModelID == productModelID
+			              select productModels).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<ProductModel>> Where(
@@ -144,5 +143,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3349de560713fdac7bae4146775bb6ae</Hash>
+    <Hash>b745a5141611361de2fb24e520aab417</Hash>
 </Codenesium>*/

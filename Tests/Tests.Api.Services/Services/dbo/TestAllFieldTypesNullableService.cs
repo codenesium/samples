@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			ITestAllFieldTypesNullableRepository testAllFieldTypesNullableRepository,
 			IApiTestAllFieldTypesNullableRequestModelValidator testAllFieldTypesNullableModelValidator,
 			IBOLTestAllFieldTypesNullableMapper boltestAllFieldTypesNullableMapper,
-			IDALTestAllFieldTypesNullableMapper daltestAllFieldTypesNullableMapper
-			)
+			IDALTestAllFieldTypesNullableMapper daltestAllFieldTypesNullableMapper)
 			: base(logger,
 			       testAllFieldTypesNullableRepository,
 			       testAllFieldTypesNullableModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>42b70ed6f878fa9d5eb1f92a9fc00c2e</Hash>
+    <Hash>32a658c09e8a890c24fbfe3a9b6e7ae7</Hash>
 </Codenesium>*/

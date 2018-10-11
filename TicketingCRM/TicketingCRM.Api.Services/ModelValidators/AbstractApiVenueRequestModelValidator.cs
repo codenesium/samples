@@ -40,7 +40,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void AdminIdRules()
 		{
-			this.RuleFor(x => x.AdminId).MustAsync(this.BeValidAdmin).When(x => x?.AdminId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.AdminId).MustAsync(this.BeValidAdminByAdminId).When(x => x?.AdminId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void EmailRules()
@@ -69,7 +69,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void ProvinceIdRules()
 		{
-			this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvince).When(x => x?.ProvinceId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvinceByProvinceId).When(x => x?.ProvinceId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void WebsiteRules()
@@ -78,16 +78,16 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.Website).Length(0, 128);
 		}
 
-		private async Task<bool> BeValidAdmin(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidAdminByAdminId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.venueRepository.GetAdmin(id);
+			var record = await this.venueRepository.AdminByAdminId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidProvince(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidProvinceByProvinceId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.venueRepository.GetProvince(id);
+			var record = await this.venueRepository.ProvinceByProvinceId(id);
 
 			return record != null;
 		}
@@ -95,5 +95,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3595f67dff2b19fead7b119099a469b9</Hash>
+    <Hash>40fdf566fea89ebcac54baf2e3556979</Hash>
 </Codenesium>*/

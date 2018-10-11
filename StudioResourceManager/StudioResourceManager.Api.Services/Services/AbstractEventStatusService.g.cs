@@ -22,6 +22,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALEventStatusMapper DalEventStatusMapper { get; private set; }
 
+		protected IBOLEventMapper BolEventMapper { get; private set; }
+
+		protected IDALEventMapper DalEventMapper { get; private set; }
+
 		private ILogger logger;
 
 		public AbstractEventStatusService(
@@ -29,13 +33,17 @@ namespace StudioResourceManagerNS.Api.Services
 			IEventStatusRepository eventStatusRepository,
 			IApiEventStatusRequestModelValidator eventStatusModelValidator,
 			IBOLEventStatusMapper bolEventStatusMapper,
-			IDALEventStatusMapper dalEventStatusMapper)
+			IDALEventStatusMapper dalEventStatusMapper,
+			IBOLEventMapper bolEventMapper,
+			IDALEventMapper dalEventMapper)
 			: base()
 		{
 			this.EventStatusRepository = eventStatusRepository;
 			this.EventStatusModelValidator = eventStatusModelValidator;
 			this.BolEventStatusMapper = bolEventStatusMapper;
 			this.DalEventStatusMapper = dalEventStatusMapper;
+			this.BolEventMapper = bolEventMapper;
+			this.DalEventMapper = dalEventMapper;
 			this.logger = logger;
 		}
 
@@ -107,9 +115,16 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiEventResponseModel>> Events(int eventStatusId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Event> records = await this.EventStatusRepository.Events(eventStatusId, limit, offset);
+
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1cf87b334086219867b305b4f0c4061d</Hash>
+    <Hash>3a0a47b2a5f837fd776bfed28612c1f5</Hash>
 </Codenesium>*/

@@ -34,24 +34,24 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void PipelineStepStatusIdRules()
 		{
-			this.RuleFor(x => x.PipelineStepStatusId).MustAsync(this.BeValidPipelineStepStatu).When(x => x?.PipelineStepStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PipelineStepStatusId).MustAsync(this.BeValidPipelineStepStatuByPipelineStepStatusId).When(x => x?.PipelineStepStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ShipperIdRules()
 		{
-			this.RuleFor(x => x.ShipperId).MustAsync(this.BeValidEmployee).When(x => x?.ShipperId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ShipperId).MustAsync(this.BeValidEmployeeByShipperId).When(x => x?.ShipperId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidPipelineStepStatu(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidPipelineStepStatuByPipelineStepStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.pipelineStepRepository.GetPipelineStepStatu(id);
+			var record = await this.pipelineStepRepository.PipelineStepStatuByPipelineStepStatusId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidEmployee(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidEmployeeByShipperId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.pipelineStepRepository.GetEmployee(id);
+			var record = await this.pipelineStepRepository.EmployeeByShipperId(id);
 
 			return record != null;
 		}
@@ -59,5 +59,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a8f8d935d3dddbd0c29e53ad85ce0a44</Hash>
+    <Hash>544010708f1062a67369f36a8f92b3a2</Hash>
 </Codenesium>*/

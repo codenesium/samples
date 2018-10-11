@@ -78,16 +78,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<BusinessEntityContact>> ByContactTypeID(int contactTypeID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ContactTypeID == contactTypeID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ContactTypeID == contactTypeID, limit, offset);
 		}
 
 		public async Task<List<BusinessEntityContact>> ByPersonID(int personID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.PersonID == personID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.PersonID == personID, limit, offset);
 		}
 
 		protected async Task<List<BusinessEntityContact>> Where(
@@ -122,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ca52366fe3f341de99ae0cb46d1791f8</Hash>
+    <Hash>7fb020538582465fc5f203445a47a53b</Hash>
 </Codenesium>*/

@@ -23,12 +23,12 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiChainResponseModel> ByExternalId(Guid externalId);
 
-		Task<List<ApiClaspResponseModel>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<ApiLinkResponseModel>> Links(int chainId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiChainResponseModel>> ByNextChainId(int nextChainId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6426814f16f01cb29e89c28f231cc532</Hash>
+    <Hash>7166381e3b5e9f1a66e0a83607f98ab0</Hash>
 </Codenesium>*/

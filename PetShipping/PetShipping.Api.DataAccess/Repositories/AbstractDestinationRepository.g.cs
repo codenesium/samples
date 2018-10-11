@@ -76,14 +76,19 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<PipelineStepDestination>> PipelineStepDestinations(int destinationId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<PipelineStepDestination>().Where(x => x.DestinationId == destinationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<PipelineStepDestination>();
-		}
-
-		public async virtual Task<Country> GetCountry(int countryId)
+		public async virtual Task<Country> CountryByCountryId(int countryId)
 		{
 			return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
+		}
+
+		// Reference foreign key. Reference Table=PipelineStepDestination. First table=destinations. Second table=destinations
+		public async virtual Task<List<Destination>> ByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.PipelineStepDestinations
+			              join destinations in this.Context.Destinations on
+			              refTable.DestinationId equals destinations.Id
+			              where refTable.DestinationId == destinationId
+			              select destinations).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Destination>> Where(
@@ -118,5 +123,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b52c76dbcec688090aebd80a81b608a7</Hash>
+    <Hash>0c9ad0b6a1da893422f1f9e7484054d0</Hash>
 </Codenesium>*/

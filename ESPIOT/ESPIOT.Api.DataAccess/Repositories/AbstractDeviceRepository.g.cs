@@ -78,9 +78,7 @@ namespace ESPIOTNS.Api.DataAccess
 
 		public async Task<Device> ByPublicId(Guid publicId)
 		{
-			var records = await this.Where(x => x.PublicId == publicId);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Device>().SingleOrDefaultAsync(x => x.PublicId == publicId);
 		}
 
 		public async virtual Task<List<DeviceAction>> DeviceActions(int deviceId, int limit = int.MaxValue, int offset = 0)
@@ -120,5 +118,5 @@ namespace ESPIOTNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1d82f0dc5ea1ecf78280e89972e762f7</Hash>
+    <Hash>f271d88d77dc4da7ff5c8cca89e93097</Hash>
 </Codenesium>*/

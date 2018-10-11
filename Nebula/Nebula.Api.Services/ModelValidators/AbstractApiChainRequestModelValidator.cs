@@ -28,7 +28,7 @@ namespace NebulaNS.Api.Services
 
 		public virtual void ChainStatusIdRules()
 		{
-			this.RuleFor(x => x.ChainStatusId).MustAsync(this.BeValidChainStatu).When(x => x?.ChainStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ChainStatusId).MustAsync(this.BeValidChainStatusByChainStatusId).When(x => x?.ChainStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ExternalIdRules()
@@ -44,19 +44,19 @@ namespace NebulaNS.Api.Services
 
 		public virtual void TeamIdRules()
 		{
-			this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeam).When(x => x?.TeamId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TeamId).MustAsync(this.BeValidTeamByTeamId).When(x => x?.TeamId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidChainStatu(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidChainStatusByChainStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.chainRepository.GetChainStatu(id);
+			var record = await this.chainRepository.ChainStatusByChainStatusId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidTeam(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTeamByTeamId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.chainRepository.GetTeam(id);
+			var record = await this.chainRepository.TeamByTeamId(id);
 
 			return record != null;
 		}
@@ -78,5 +78,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b89cd4e5d615582954cb5f135b0c84e</Hash>
+    <Hash>94c73e698600c5ad8af3a3e979090964</Hash>
 </Codenesium>*/

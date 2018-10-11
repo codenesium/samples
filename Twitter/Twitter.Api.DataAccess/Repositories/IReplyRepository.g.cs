@@ -19,10 +19,10 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<List<Reply>> ByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<User> GetUser(int replierUserId);
+		Task<User> UserByReplierUserId(int replierUserId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>99e10f01f77049644d8e0de4f13e4b97</Hash>
+    <Hash>87cea3be9bfb056c4477262d482525dd</Hash>
 </Codenesium>*/

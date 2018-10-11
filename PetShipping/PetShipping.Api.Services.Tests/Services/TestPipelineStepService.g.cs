@@ -30,12 +30,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -58,12 +52,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -85,12 +73,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -113,12 +95,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -143,12 +119,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -172,12 +142,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -188,174 +152,6 @@ namespace PetShippingNS.Api.Services.Tests
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void HandlerPipelineSteps_Exists()
-		{
-			var mock = new ServiceMockFacade<IPipelineStepRepository>();
-			var records = new List<HandlerPipelineStep>();
-			records.Add(new HandlerPipelineStep());
-			mock.RepositoryMock.Setup(x => x.HandlerPipelineSteps(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new PipelineStepService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
-
-			List<ApiHandlerPipelineStepResponseModel> response = await service.HandlerPipelineSteps(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.HandlerPipelineSteps(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void HandlerPipelineSteps_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IPipelineStepRepository>();
-			mock.RepositoryMock.Setup(x => x.HandlerPipelineSteps(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<HandlerPipelineStep>>(new List<HandlerPipelineStep>()));
-			var service = new PipelineStepService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
-
-			List<ApiHandlerPipelineStepResponseModel> response = await service.HandlerPipelineSteps(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.HandlerPipelineSteps(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void OtherTransports_Exists()
-		{
-			var mock = new ServiceMockFacade<IPipelineStepRepository>();
-			var records = new List<OtherTransport>();
-			records.Add(new OtherTransport());
-			mock.RepositoryMock.Setup(x => x.OtherTransports(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new PipelineStepService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
-
-			List<ApiOtherTransportResponseModel> response = await service.OtherTransports(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.OtherTransports(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void OtherTransports_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IPipelineStepRepository>();
-			mock.RepositoryMock.Setup(x => x.OtherTransports(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<OtherTransport>>(new List<OtherTransport>()));
-			var service = new PipelineStepService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
-
-			List<ApiOtherTransportResponseModel> response = await service.OtherTransports(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.OtherTransports(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void PipelineStepDestinations_Exists()
-		{
-			var mock = new ServiceMockFacade<IPipelineStepRepository>();
-			var records = new List<PipelineStepDestination>();
-			records.Add(new PipelineStepDestination());
-			mock.RepositoryMock.Setup(x => x.PipelineStepDestinations(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new PipelineStepService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
-
-			List<ApiPipelineStepDestinationResponseModel> response = await service.PipelineStepDestinations(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.PipelineStepDestinations(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void PipelineStepDestinations_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IPipelineStepRepository>();
-			mock.RepositoryMock.Setup(x => x.PipelineStepDestinations(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PipelineStepDestination>>(new List<PipelineStepDestination>()));
-			var service = new PipelineStepService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepStepRequirementMapperMock);
-
-			List<ApiPipelineStepDestinationResponseModel> response = await service.PipelineStepDestinations(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.PipelineStepDestinations(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -370,12 +166,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -397,12 +187,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -426,12 +210,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -453,12 +231,6 @@ namespace PetShippingNS.Api.Services.Tests
 			                                      mock.ModelValidatorMockFactory.PipelineStepModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLHandlerPipelineStepMapperMock,
-			                                      mock.DALMapperMockFactory.DALHandlerPipelineStepMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLOtherTransportMapperMock,
-			                                      mock.DALMapperMockFactory.DALOtherTransportMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLPipelineStepDestinationMapperMock,
-			                                      mock.DALMapperMockFactory.DALPipelineStepDestinationMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepNoteMapperMock,
 			                                      mock.DALMapperMockFactory.DALPipelineStepNoteMapperMock,
 			                                      mock.BOLMapperMockFactory.BOLPipelineStepStepRequirementMapperMock,
@@ -473,5 +245,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8009969939ea142392256b210874c2b6</Hash>
+    <Hash>c0ff531169bc8a0c2caedb6a568c4e28</Hash>
 </Codenesium>*/

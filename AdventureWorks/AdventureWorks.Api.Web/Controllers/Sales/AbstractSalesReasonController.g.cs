@@ -206,23 +206,6 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{salesReasonID}/SalesOrderHeaderSalesReasons")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderSalesReasonResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesOrderHeaderSalesReasons(int salesReasonID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await this.SalesReasonService.SalesOrderHeaderSalesReasons(salesReasonID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiSalesReasonRequestModel> PatchModel(int id, JsonPatchDocument<ApiSalesReasonRequestModel> patch)
 		{
 			var record = await this.SalesReasonService.Get(id);
@@ -242,5 +225,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>93c248a79c92fee50440a4484c1012ba</Hash>
+    <Hash>edbcf1f8ba6bd1357a2617a1b0f50258</Hash>
 </Codenesium>*/

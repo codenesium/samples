@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<SalesTerritory> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<Customer>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0)
@@ -135,5 +133,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5390a50c42957aaec1bc66d9bb4dff8e</Hash>
+    <Hash>244fdfe6e34b699bad33a87d79273a3d</Hash>
 </Codenesium>*/

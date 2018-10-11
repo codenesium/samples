@@ -76,11 +76,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<SalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasons(int salesReasonID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(x => x.SalesReasonID == salesReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
-		}
-
 		protected async Task<List<SalesReason>> Where(
 			Expression<Func<SalesReason, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f0590c401ba3bc84c7cc1bd026ceff27</Hash>
+    <Hash>57ce7b807a76b38eccf9e23ce7191e0d</Hash>
 </Codenesium>*/

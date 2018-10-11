@@ -22,8 +22,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLProductVendorMapper bolProductVendorMapper,
 			IDALProductVendorMapper dalProductVendorMapper,
 			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
-			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
-			)
+			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base(logger,
 			       vendorRepository,
 			       vendorModelValidator,
@@ -39,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>86891093bbadc6eea2f2a614b60699f1</Hash>
+    <Hash>4210067e04b025488504bf04bf0f1554</Hash>
 </Codenesium>*/

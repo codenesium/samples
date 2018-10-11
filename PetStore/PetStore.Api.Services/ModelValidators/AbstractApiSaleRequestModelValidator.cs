@@ -44,12 +44,12 @@ namespace PetStoreNS.Api.Services
 
 		public virtual void PaymentTypeIdRules()
 		{
-			this.RuleFor(x => x.PaymentTypeId).MustAsync(this.BeValidPaymentType).When(x => x?.PaymentTypeId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PaymentTypeId).MustAsync(this.BeValidPaymentTypeByPaymentTypeId).When(x => x?.PaymentTypeId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void PetIdRules()
 		{
-			this.RuleFor(x => x.PetId).MustAsync(this.BeValidPet).When(x => x?.PetId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PetId).MustAsync(this.BeValidPetByPetId).When(x => x?.PetId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void PhoneRules()
@@ -58,16 +58,16 @@ namespace PetStoreNS.Api.Services
 			this.RuleFor(x => x.Phone).Length(0, 10);
 		}
 
-		private async Task<bool> BeValidPaymentType(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidPaymentTypeByPaymentTypeId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.saleRepository.GetPaymentType(id);
+			var record = await this.saleRepository.PaymentTypeByPaymentTypeId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidPet(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidPetByPetId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.saleRepository.GetPet(id);
+			var record = await this.saleRepository.PetByPetId(id);
 
 			return record != null;
 		}
@@ -75,5 +75,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dc3c0fc31ea52a508b1e5c5d5595c7f1</Hash>
+    <Hash>d7c64ccbd653b0785c0e9c623a7b9a58</Hash>
 </Codenesium>*/

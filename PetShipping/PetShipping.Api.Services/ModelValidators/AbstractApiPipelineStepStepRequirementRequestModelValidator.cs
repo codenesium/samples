@@ -34,16 +34,16 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void PipelineStepIdRules()
 		{
-			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStep).When(x => x?.PipelineStepId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PipelineStepId).MustAsync(this.BeValidPipelineStepByPipelineStepId).When(x => x?.PipelineStepId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RequirementMetRules()
 		{
 		}
 
-		private async Task<bool> BeValidPipelineStep(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidPipelineStepByPipelineStepId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.pipelineStepStepRequirementRepository.GetPipelineStep(id);
+			var record = await this.pipelineStepStepRequirementRepository.PipelineStepByPipelineStepId(id);
 
 			return record != null;
 		}
@@ -51,5 +51,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2dfd21f81301d283665e31d60b6470b9</Hash>
+    <Hash>a71cff235f8d1cf1881644348aad2c92</Hash>
 </Codenesium>*/

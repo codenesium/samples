@@ -72,11 +72,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.GatewayConfirmationNumber, new string('A', 2));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= TransactionStatu
 		[Fact]
 		public async void TransactionStatusId_Create_Valid_Reference()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-			transactionRepository.Setup(x => x.GetTransactionStatu(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(new TransactionStatu()));
+			transactionRepository.Setup(x => x.TransactionStatuByTransactionStatusId(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(new TransactionStatu()));
 
 			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 			await validator.ValidateCreateAsync(new ApiTransactionRequestModel());
@@ -88,7 +89,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionStatusId_Create_Invalid_Reference()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-			transactionRepository.Setup(x => x.GetTransactionStatu(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(null));
+			transactionRepository.Setup(x => x.TransactionStatuByTransactionStatusId(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(null));
 
 			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 
@@ -101,7 +102,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionStatusId_Update_Valid_Reference()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-			transactionRepository.Setup(x => x.GetTransactionStatu(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(new TransactionStatu()));
+			transactionRepository.Setup(x => x.TransactionStatuByTransactionStatusId(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(new TransactionStatu()));
 
 			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiTransactionRequestModel());
@@ -113,7 +114,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionStatusId_Update_Invalid_Reference()
 		{
 			Mock<ITransactionRepository> transactionRepository = new Mock<ITransactionRepository>();
-			transactionRepository.Setup(x => x.GetTransactionStatu(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(null));
+			transactionRepository.Setup(x => x.TransactionStatuByTransactionStatusId(It.IsAny<int>())).Returns(Task.FromResult<TransactionStatu>(null));
 
 			var validator = new ApiTransactionRequestModelValidator(transactionRepository.Object);
 
@@ -125,5 +126,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6b8f778724570f9fac05e07413eb9ef6</Hash>
+    <Hash>bb69f42876e18d58bd336ab0f449b318</Hash>
 </Codenesium>*/

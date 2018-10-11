@@ -206,25 +206,6 @@ namespace NebulaNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("byVersion/{version}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiVersionInfoResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> ByVersion(long version)
-		{
-			ApiVersionInfoResponseModel response = await this.VersionInfoService.ByVersion(version);
-
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
-
 		private async Task<ApiVersionInfoRequestModel> PatchModel(long id, JsonPatchDocument<ApiVersionInfoRequestModel> patch)
 		{
 			var record = await this.VersionInfoService.Get(id);
@@ -244,5 +225,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0676750c867f14f43a6889cd6b0b1d3c</Hash>
+    <Hash>43e812207c64c98eb4f3dbcb2a1cf3a3</Hash>
 </Codenesium>*/

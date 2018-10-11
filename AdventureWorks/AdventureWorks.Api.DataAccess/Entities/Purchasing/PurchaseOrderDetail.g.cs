@@ -55,6 +55,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ProductID")]
 		public int ProductID { get; private set; }
 
+		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("PurchaseOrderDetailID")]
 		public int PurchaseOrderDetailID { get; private set; }
@@ -79,5 +80,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>75fcf19509b4782f89b1b93d41a34401</Hash>
+    <Hash>4ba43b494820e0eb4a6db13f52911c9c</Hash>
 </Codenesium>*/

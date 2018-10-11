@@ -21,12 +21,12 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<List<QuoteTweet>> BySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0);
 
-		Task<User> GetUser(int retweeterUserId);
+		Task<User> UserByRetweeterUserId(int retweeterUserId);
 
-		Task<Tweet> GetTweet(int sourceTweetId);
+		Task<Tweet> TweetBySourceTweetId(int sourceTweetId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>69b998648f5f0d8f8309342f5ea3362a</Hash>
+    <Hash>ea56e36ebce51ed4dcdfb6aa1f90b62c</Hash>
 </Codenesium>*/

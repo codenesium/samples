@@ -20,8 +20,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLTransactionMapper boltransactionMapper,
 			IDALTransactionMapper daltransactionMapper,
 			IBOLSaleMapper bolSaleMapper,
-			IDALSaleMapper dalSaleMapper
-			)
+			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       transactionRepository,
 			       transactionModelValidator,
@@ -35,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c4c1244f8bcc5fa276aa940bb4dcd247</Hash>
+    <Hash>63e7cd534df55db7465d87e14cbba263</Hash>
 </Codenesium>*/

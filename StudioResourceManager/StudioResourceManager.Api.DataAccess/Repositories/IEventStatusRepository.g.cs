@@ -16,9 +16,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		Task<EventStatus> Get(int id);
 
 		Task<List<EventStatus>> All(int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Event>> Events(int eventStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ddd702fe6cace1b174726c3ae21e4cb0</Hash>
+    <Hash>9ba3b2491762c7f886349dac4bf3f30e</Hash>
 </Codenesium>*/

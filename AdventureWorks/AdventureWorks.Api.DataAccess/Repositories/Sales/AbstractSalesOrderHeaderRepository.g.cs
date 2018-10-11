@@ -78,23 +78,17 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<SalesOrderHeader> BySalesOrderNumber(string salesOrderNumber)
 		{
-			var records = await this.Where(x => x.SalesOrderNumber == salesOrderNumber);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderNumber == salesOrderNumber);
 		}
 
 		public async Task<List<SalesOrderHeader>> ByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.CustomerID == customerID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.CustomerID == customerID, limit, offset);
 		}
 
 		public async Task<List<SalesOrderHeader>> BySalesPersonID(int? salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.SalesPersonID == salesPersonID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.SalesPersonID == salesPersonID, limit, offset);
 		}
 
 		public async virtual Task<List<SalesOrderDetail>> SalesOrderDetails(int salesOrderID, int limit = int.MaxValue, int offset = 0)
@@ -102,34 +96,39 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<SalesOrderDetail>().Where(x => x.SalesOrderID == salesOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
 		}
 
-		public async virtual Task<List<SalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasons(int salesOrderID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SalesOrderHeaderSalesReason>().Where(x => x.SalesOrderID == salesOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeaderSalesReason>();
-		}
-
-		public async virtual Task<CreditCard> GetCreditCard(int? creditCardID)
+		public async virtual Task<CreditCard> CreditCardByCreditCardID(int? creditCardID)
 		{
 			return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CreditCardID == creditCardID);
 		}
 
-		public async virtual Task<CurrencyRate> GetCurrencyRate(int? currencyRateID)
+		public async virtual Task<CurrencyRate> CurrencyRateByCurrencyRateID(int? currencyRateID)
 		{
 			return await this.Context.Set<CurrencyRate>().SingleOrDefaultAsync(x => x.CurrencyRateID == currencyRateID);
 		}
 
-		public async virtual Task<Customer> GetCustomer(int customerID)
+		public async virtual Task<Customer> CustomerByCustomerID(int customerID)
 		{
 			return await this.Context.Set<Customer>().SingleOrDefaultAsync(x => x.CustomerID == customerID);
 		}
 
-		public async virtual Task<SalesPerson> GetSalesPerson(int? salesPersonID)
+		public async virtual Task<SalesPerson> SalesPersonBySalesPersonID(int? salesPersonID)
 		{
 			return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == salesPersonID);
 		}
 
-		public async virtual Task<SalesTerritory> GetSalesTerritory(int? territoryID)
+		public async virtual Task<SalesTerritory> SalesTerritoryByTerritoryID(int? territoryID)
 		{
 			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
+		}
+
+		// Reference foreign key. Reference Table=SalesOrderHeaderSalesReason. First table=salesOrderHeaders. Second table=salesOrderHeaders
+		public async virtual Task<List<SalesOrderHeader>> BySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.SalesOrderHeaderSalesReasons
+			              join salesOrderHeaders in this.Context.SalesOrderHeaders on
+			              refTable.SalesOrderID equals salesOrderHeaders.SalesOrderID
+			              where refTable.SalesOrderID == salesOrderID
+			              select salesOrderHeaders).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<SalesOrderHeader>> Where(
@@ -164,5 +163,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ad0e900e91dff4d9901121ea36181245</Hash>
+    <Hash>4410dd6d93c52fc40e95c9b308e015c6</Hash>
 </Codenesium>*/

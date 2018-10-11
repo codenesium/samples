@@ -18,8 +18,7 @@ namespace PetShippingNS.Api.Services
 			IClientCommunicationRepository clientCommunicationRepository,
 			IApiClientCommunicationRequestModelValidator clientCommunicationModelValidator,
 			IBOLClientCommunicationMapper bolclientCommunicationMapper,
-			IDALClientCommunicationMapper dalclientCommunicationMapper
-			)
+			IDALClientCommunicationMapper dalclientCommunicationMapper)
 			: base(logger,
 			       clientCommunicationRepository,
 			       clientCommunicationModelValidator,
@@ -31,5 +30,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6f2024cda4ab7a58715ab8955cca7457</Hash>
+    <Hash>7e911874ae78f808ba0a904b4d97c19f</Hash>
 </Codenesium>*/

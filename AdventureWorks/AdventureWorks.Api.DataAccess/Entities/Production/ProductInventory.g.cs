@@ -34,6 +34,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Bin")]
 		public int Bin { get; private set; }
 
+		[Key]
 		[Column("LocationID")]
 		public short LocationID { get; private set; }
 
@@ -58,5 +59,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>51faaf42a9683f14f2e0585d1dff8db9</Hash>
+    <Hash>86131cffc6cd690054362142a1fcac56</Hash>
 </Codenesium>*/

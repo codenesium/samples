@@ -76,11 +76,6 @@ namespace TestsNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<SchemaBPerson> GetSchemaBPerson(int personBId)
-		{
-			return await this.Context.Set<SchemaBPerson>().SingleOrDefaultAsync(x => x.Id == personBId);
-		}
-
 		protected async Task<List<PersonRef>> Where(
 			Expression<Func<PersonRef, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +108,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bfb3b8a901105a151d99241171b26ea2</Hash>
+    <Hash>e5e0bff5ed7824036da92df0d75ed860</Hash>
 </Codenesium>*/

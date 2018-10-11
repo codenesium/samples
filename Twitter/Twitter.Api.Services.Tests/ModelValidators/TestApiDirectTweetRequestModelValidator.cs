@@ -72,11 +72,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Content, new string('A', 141));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void TaggedUserId_Create_Valid_Reference()
 		{
 			Mock<IDirectTweetRepository> directTweetRepository = new Mock<IDirectTweetRepository>();
-			directTweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			directTweetRepository.Setup(x => x.UserByTaggedUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiDirectTweetRequestModelValidator(directTweetRepository.Object);
 			await validator.ValidateCreateAsync(new ApiDirectTweetRequestModel());
@@ -88,7 +89,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void TaggedUserId_Create_Invalid_Reference()
 		{
 			Mock<IDirectTweetRepository> directTweetRepository = new Mock<IDirectTweetRepository>();
-			directTweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			directTweetRepository.Setup(x => x.UserByTaggedUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiDirectTweetRequestModelValidator(directTweetRepository.Object);
 
@@ -101,7 +102,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void TaggedUserId_Update_Valid_Reference()
 		{
 			Mock<IDirectTweetRepository> directTweetRepository = new Mock<IDirectTweetRepository>();
-			directTweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			directTweetRepository.Setup(x => x.UserByTaggedUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiDirectTweetRequestModelValidator(directTweetRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiDirectTweetRequestModel());
@@ -113,7 +114,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void TaggedUserId_Update_Invalid_Reference()
 		{
 			Mock<IDirectTweetRepository> directTweetRepository = new Mock<IDirectTweetRepository>();
-			directTweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			directTweetRepository.Setup(x => x.UserByTaggedUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiDirectTweetRequestModelValidator(directTweetRepository.Object);
 
@@ -125,5 +126,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b7f83def60812d8acf72c6e9c08781cc</Hash>
+    <Hash>928147dc7ab9945bbb218c21313d1fff</Hash>
 </Codenesium>*/

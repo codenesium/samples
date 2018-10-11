@@ -14,38 +14,29 @@ namespace NebulaNS.Api.Contracts
 		public void Merge(ApiResponse from)
 		{
 			from.Chains.ForEach(x => this.AddChain(x));
-			from.ChainStatus.ForEach(x => this.AddChainStatu(x));
-			from.Clasps.ForEach(x => this.AddClasp(x));
+			from.ChainStatuses.ForEach(x => this.AddChainStatus(x));
 			from.Links.ForEach(x => this.AddLink(x));
 			from.LinkLogs.ForEach(x => this.AddLinkLog(x));
-			from.LinkStatus.ForEach(x => this.AddLinkStatu(x));
+			from.LinkStatuses.ForEach(x => this.AddLinkStatus(x));
 			from.Machines.ForEach(x => this.AddMachine(x));
-			from.MachineRefTeams.ForEach(x => this.AddMachineRefTeam(x));
 			from.Organizations.ForEach(x => this.AddOrganization(x));
-			from.Sysdiagrams.ForEach(x => this.AddSysdiagram(x));
 			from.Teams.ForEach(x => this.AddTeam(x));
 			from.VersionInfoes.ForEach(x => this.AddVersionInfo(x));
 		}
 
 		public List<ApiChainResponseModel> Chains { get; private set; } = new List<ApiChainResponseModel>();
 
-		public List<ApiChainStatuResponseModel> ChainStatus { get; private set; } = new List<ApiChainStatuResponseModel>();
-
-		public List<ApiClaspResponseModel> Clasps { get; private set; } = new List<ApiClaspResponseModel>();
+		public List<ApiChainStatusResponseModel> ChainStatuses { get; private set; } = new List<ApiChainStatusResponseModel>();
 
 		public List<ApiLinkResponseModel> Links { get; private set; } = new List<ApiLinkResponseModel>();
 
 		public List<ApiLinkLogResponseModel> LinkLogs { get; private set; } = new List<ApiLinkLogResponseModel>();
 
-		public List<ApiLinkStatuResponseModel> LinkStatus { get; private set; } = new List<ApiLinkStatuResponseModel>();
+		public List<ApiLinkStatusResponseModel> LinkStatuses { get; private set; } = new List<ApiLinkStatusResponseModel>();
 
 		public List<ApiMachineResponseModel> Machines { get; private set; } = new List<ApiMachineResponseModel>();
 
-		public List<ApiMachineRefTeamResponseModel> MachineRefTeams { get; private set; } = new List<ApiMachineRefTeamResponseModel>();
-
 		public List<ApiOrganizationResponseModel> Organizations { get; private set; } = new List<ApiOrganizationResponseModel>();
-
-		public List<ApiSysdiagramResponseModel> Sysdiagrams { get; private set; } = new List<ApiSysdiagramResponseModel>();
 
 		public List<ApiTeamResponseModel> Teams { get; private set; } = new List<ApiTeamResponseModel>();
 
@@ -68,34 +59,18 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeChainStatusValue { get; private set; } = true;
+		public bool ShouldSerializeChainStatusesValue { get; private set; } = true;
 
-		public bool ShouldSerializeChainStatus()
+		public bool ShouldSerializeChainStatuses()
 		{
-			return this.ShouldSerializeChainStatusValue;
+			return this.ShouldSerializeChainStatusesValue;
 		}
 
-		public void AddChainStatu(ApiChainStatuResponseModel item)
+		public void AddChainStatus(ApiChainStatusResponseModel item)
 		{
-			if (!this.ChainStatus.Any(x => x.Id == item.Id))
+			if (!this.ChainStatuses.Any(x => x.Id == item.Id))
 			{
-				this.ChainStatus.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeClaspsValue { get; private set; } = true;
-
-		public bool ShouldSerializeClasps()
-		{
-			return this.ShouldSerializeClaspsValue;
-		}
-
-		public void AddClasp(ApiClaspResponseModel item)
-		{
-			if (!this.Clasps.Any(x => x.Id == item.Id))
-			{
-				this.Clasps.Add(item);
+				this.ChainStatuses.Add(item);
 			}
 		}
 
@@ -132,18 +107,18 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeLinkStatusValue { get; private set; } = true;
+		public bool ShouldSerializeLinkStatusesValue { get; private set; } = true;
 
-		public bool ShouldSerializeLinkStatus()
+		public bool ShouldSerializeLinkStatuses()
 		{
-			return this.ShouldSerializeLinkStatusValue;
+			return this.ShouldSerializeLinkStatusesValue;
 		}
 
-		public void AddLinkStatu(ApiLinkStatuResponseModel item)
+		public void AddLinkStatus(ApiLinkStatusResponseModel item)
 		{
-			if (!this.LinkStatus.Any(x => x.Id == item.Id))
+			if (!this.LinkStatuses.Any(x => x.Id == item.Id))
 			{
-				this.LinkStatus.Add(item);
+				this.LinkStatuses.Add(item);
 			}
 		}
 
@@ -164,22 +139,6 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeMachineRefTeamsValue { get; private set; } = true;
-
-		public bool ShouldSerializeMachineRefTeams()
-		{
-			return this.ShouldSerializeMachineRefTeamsValue;
-		}
-
-		public void AddMachineRefTeam(ApiMachineRefTeamResponseModel item)
-		{
-			if (!this.MachineRefTeams.Any(x => x.Id == item.Id))
-			{
-				this.MachineRefTeams.Add(item);
-			}
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeOrganizationsValue { get; private set; } = true;
 
 		public bool ShouldSerializeOrganizations()
@@ -192,22 +151,6 @@ namespace NebulaNS.Api.Contracts
 			if (!this.Organizations.Any(x => x.Id == item.Id))
 			{
 				this.Organizations.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeSysdiagramsValue { get; private set; } = true;
-
-		public bool ShouldSerializeSysdiagrams()
-		{
-			return this.ShouldSerializeSysdiagramsValue;
-		}
-
-		public void AddSysdiagram(ApiSysdiagramResponseModel item)
-		{
-			if (!this.Sysdiagrams.Any(x => x.DiagramId == item.DiagramId))
-			{
-				this.Sysdiagrams.Add(item);
 			}
 		}
 
@@ -250,14 +193,9 @@ namespace NebulaNS.Api.Contracts
 				this.ShouldSerializeChainsValue = false;
 			}
 
-			if (this.ChainStatus.Count == 0)
+			if (this.ChainStatuses.Count == 0)
 			{
-				this.ShouldSerializeChainStatusValue = false;
-			}
-
-			if (this.Clasps.Count == 0)
-			{
-				this.ShouldSerializeClaspsValue = false;
+				this.ShouldSerializeChainStatusesValue = false;
 			}
 
 			if (this.Links.Count == 0)
@@ -270,9 +208,9 @@ namespace NebulaNS.Api.Contracts
 				this.ShouldSerializeLinkLogsValue = false;
 			}
 
-			if (this.LinkStatus.Count == 0)
+			if (this.LinkStatuses.Count == 0)
 			{
-				this.ShouldSerializeLinkStatusValue = false;
+				this.ShouldSerializeLinkStatusesValue = false;
 			}
 
 			if (this.Machines.Count == 0)
@@ -280,19 +218,9 @@ namespace NebulaNS.Api.Contracts
 				this.ShouldSerializeMachinesValue = false;
 			}
 
-			if (this.MachineRefTeams.Count == 0)
-			{
-				this.ShouldSerializeMachineRefTeamsValue = false;
-			}
-
 			if (this.Organizations.Count == 0)
 			{
 				this.ShouldSerializeOrganizationsValue = false;
-			}
-
-			if (this.Sysdiagrams.Count == 0)
-			{
-				this.ShouldSerializeSysdiagramsValue = false;
 			}
 
 			if (this.Teams.Count == 0)
@@ -309,5 +237,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9646e18f6523d4edf332c899b59cae8a</Hash>
+    <Hash>463b71fbf9f8058af70180f1e018d807</Hash>
 </Codenesium>*/

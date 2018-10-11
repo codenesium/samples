@@ -39,7 +39,7 @@ this.teamId = 0;
 		
 				}
 			}
-			export class ApiChainStatuRequestModel {
+			export class ApiChainStatusRequestModel {
 				id:number;
 name:string;
 
@@ -52,7 +52,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiChainStatuResponseModel {
+			export class ApiChainStatusResponseModel {
 				id:number;
 name:string;
 
@@ -60,39 +60,6 @@ name:string;
 				constructor() {
 					this.id = 0;
 this.name = '';
-
-		
-				}
-			}
-			export class ApiClaspRequestModel {
-				id:number;
-nextChainId:number;
-nextChainIdEntity:number;
-previousChainId:number;
-previousChainIdEntity:number;
-
-	
-				constructor() {
-					this.id = 0;
-this.nextChainId = 0;
-this.previousChainId = 0;
-
-		
-				}
-			}
-
-			export class ApiClaspResponseModel {
-				id:number;
-nextChainId:number;
-nextChainIdEntity:number;
-previousChainId:number;
-previousChainIdEntity:number;
-
-	
-				constructor() {
-					this.id = 0;
-this.nextChainId = 0;
-this.previousChainId = 0;
 
 		
 				}
@@ -207,7 +174,7 @@ this.log = '';
 		
 				}
 			}
-			export class ApiLinkStatuRequestModel {
+			export class ApiLinkStatusRequestModel {
 				id:number;
 name:string;
 
@@ -220,7 +187,7 @@ this.name = '';
 				}
 			}
 
-			export class ApiLinkStatuResponseModel {
+			export class ApiLinkStatusResponseModel {
 				id:number;
 name:string;
 
@@ -273,39 +240,6 @@ this.name = '';
 		
 				}
 			}
-			export class ApiMachineRefTeamRequestModel {
-				id:number;
-machineId:number;
-machineIdEntity:number;
-teamId:number;
-teamIdEntity:number;
-
-	
-				constructor() {
-					this.id = 0;
-this.machineId = 0;
-this.teamId = 0;
-
-		
-				}
-			}
-
-			export class ApiMachineRefTeamResponseModel {
-				id:number;
-machineId:number;
-machineIdEntity:number;
-teamId:number;
-teamIdEntity:number;
-
-	
-				constructor() {
-					this.id = 0;
-this.machineId = 0;
-this.teamId = 0;
-
-		
-				}
-			}
 			export class ApiOrganizationRequestModel {
 				id:number;
 name:string;
@@ -327,43 +261,6 @@ name:string;
 				constructor() {
 					this.id = 0;
 this.name = '';
-
-		
-				}
-			}
-			export class ApiSysdiagramRequestModel {
-				definition:string;
-diagramId:number;
-name:string;
-principalId:number;
-version:number;
-
-	
-				constructor() {
-					this.definition = '';
-this.diagramId = 0;
-this.name = '';
-this.principalId = 0;
-this.version = 0;
-
-		
-				}
-			}
-
-			export class ApiSysdiagramResponseModel {
-				definition:string;
-diagramId:number;
-name:string;
-principalId:number;
-version:number;
-
-	
-				constructor() {
-					this.definition = '';
-this.diagramId = 0;
-this.name = '';
-this.principalId = 0;
-this.version = 0;
 
 		
 				}

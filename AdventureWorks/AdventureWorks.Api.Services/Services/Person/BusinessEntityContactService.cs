@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IBusinessEntityContactRepository businessEntityContactRepository,
 			IApiBusinessEntityContactRequestModelValidator businessEntityContactModelValidator,
 			IBOLBusinessEntityContactMapper bolbusinessEntityContactMapper,
-			IDALBusinessEntityContactMapper dalbusinessEntityContactMapper
-			)
+			IDALBusinessEntityContactMapper dalbusinessEntityContactMapper)
 			: base(logger,
 			       businessEntityContactRepository,
 			       businessEntityContactModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>471f5ceafce407c1acbe7cd67317df69</Hash>
+    <Hash>2245036f1b140f3fe9a2202c5791933d</Hash>
 </Codenesium>*/

@@ -119,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/EventStudents/{result.Record.Id}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/EventStudents/{result.Record.EventId}", result);
 			}
 			else
 			{
@@ -225,5 +225,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e237f725d6138ae7154e1994ff4a1c13</Hash>
+    <Hash>5639770807bdc45cef973c21073e1577</Hash>
 </Codenesium>*/

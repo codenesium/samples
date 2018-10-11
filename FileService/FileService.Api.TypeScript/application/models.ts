@@ -121,32 +121,3 @@ this.name = '';
 		
 				}
 			}
-			export class ApiVersionInfoRequestModel {
-				appliedOn:string;
-description:string;
-version:number;
-
-	
-				constructor() {
-					this.appliedOn = '';
-this.description = '';
-this.version = 0;
-
-		
-				}
-			}
-
-			export class ApiVersionInfoResponseModel {
-				appliedOn:string;
-description:string;
-version:number;
-
-	
-				constructor() {
-					this.appliedOn = '';
-this.description = '';
-this.version = 0;
-
-		
-				}
-			}

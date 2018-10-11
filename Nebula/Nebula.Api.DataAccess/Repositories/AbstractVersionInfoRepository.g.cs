@@ -76,13 +76,6 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async Task<VersionInfo> ByVersion(long version)
-		{
-			var records = await this.Where(x => x.Version == version);
-
-			return records.FirstOrDefault();
-		}
-
 		protected async Task<List<VersionInfo>> Where(
 			Expression<Func<VersionInfo, bool>> predicate,
 			int limit = int.MaxValue,
@@ -115,5 +108,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7120aebb2602e93f895c288e473bcb45</Hash>
+    <Hash>9070c768861d35658652c1947d396fef</Hash>
 </Codenesium>*/

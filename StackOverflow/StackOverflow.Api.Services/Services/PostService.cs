@@ -18,8 +18,7 @@ namespace StackOverflowNS.Api.Services
 			IPostRepository postRepository,
 			IApiPostRequestModelValidator postModelValidator,
 			IBOLPostMapper bolpostMapper,
-			IDALPostMapper dalpostMapper
-			)
+			IDALPostMapper dalpostMapper)
 			: base(logger,
 			       postRepository,
 			       postModelValidator,
@@ -31,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ea23008fe7c25dd8f4ea07d442a1adb6</Hash>
+    <Hash>a9cf68c5d420060ae28cadc39280feef</Hash>
 </Codenesium>*/

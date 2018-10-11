@@ -17,11 +17,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALTeacherTeacherSkillMapper();
 			var bo = new BOTeacherTeacherSkill();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1);
 
 			TeacherTeacherSkill response = mapper.MapBOToEF(bo);
 
-			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
@@ -31,11 +30,10 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALTeacherTeacherSkillMapper();
 			TeacherTeacherSkill entity = new TeacherTeacherSkill();
-			entity.SetProperties(1, 1, 1);
+			entity.SetProperties(1, 1);
 
 			BOTeacherTeacherSkill response = mapper.MapEFToBO(entity);
 
-			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
@@ -45,7 +43,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALTeacherTeacherSkillMapper();
 			TeacherTeacherSkill entity = new TeacherTeacherSkill();
-			entity.SetProperties(1, 1, 1);
+			entity.SetProperties(1, 1);
 
 			List<BOTeacherTeacherSkill> response = mapper.MapEFToBO(new List<TeacherTeacherSkill>() { entity });
 
@@ -55,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>1aae6b002366e76cf0a5093c51150867</Hash>
+    <Hash>6797681c1d314525661ae1d81fa3d730</Hash>
 </Codenesium>*/

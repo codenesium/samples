@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<PersonPhone>> ByPhoneNumber(string phoneNumber, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.PhoneNumber == phoneNumber, limit, offset);
-
-			return records;
+			return await this.Where(x => x.PhoneNumber == phoneNumber, limit, offset);
 		}
 
 		protected async Task<List<PersonPhone>> Where(
@@ -115,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be974cbfffea15c95e6ce80b336d64cc</Hash>
+    <Hash>4008712ae92bc7168dcb8022cbdeab59</Hash>
 </Codenesium>*/

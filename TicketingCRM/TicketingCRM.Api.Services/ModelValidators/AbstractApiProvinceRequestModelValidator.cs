@@ -28,7 +28,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void CountryIdRules()
 		{
-			this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountry).When(x => x?.CountryId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountryByCountryId).When(x => x?.CountryId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
@@ -37,9 +37,9 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
 
-		private async Task<bool> BeValidCountry(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidCountryByCountryId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.provinceRepository.GetCountry(id);
+			var record = await this.provinceRepository.CountryByCountryId(id);
 
 			return record != null;
 		}
@@ -47,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>85ce61d0a79b2c4976ec16b77557db50</Hash>
+    <Hash>24438b2dc11b46ab38f12ba451f9c5b7</Hash>
 </Codenesium>*/

@@ -78,16 +78,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<StateProvince> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<StateProvince>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async Task<StateProvince> ByStateProvinceCodeCountryRegionCode(string stateProvinceCode, string countryRegionCode)
 		{
-			var records = await this.Where(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<StateProvince>().SingleOrDefaultAsync(x => x.StateProvinceCode == stateProvinceCode && x.CountryRegionCode == countryRegionCode);
 		}
 
 		public async virtual Task<List<Address>> Addresses(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
@@ -127,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8d94c143c3678f1d4a9ae8a238af294a</Hash>
+    <Hash>27a1dedb667c7e4d5a13bb3a94ce6d2f</Hash>
 </Codenesium>*/

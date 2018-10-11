@@ -243,10 +243,10 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{machineId}/MachineRefTeams")]
+		[Route("byMachineId/{machineId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiMachineRefTeamResponseModel>), 200)]
-		public async virtual Task<IActionResult> MachineRefTeams(int machineId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiMachineResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByMachineId(int machineId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -254,7 +254,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiMachineRefTeamResponseModel> response = await this.MachineService.MachineRefTeams(machineId, query.Limit, query.Offset);
+			List<ApiMachineResponseModel> response = await this.MachineService.ByMachineId(machineId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -278,5 +278,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>42e153f1bb92e7a04202aeaa1d78210f</Hash>
+    <Hash>1d48c1be781ea39e8a6e81d765cf939c</Hash>
 </Codenesium>*/

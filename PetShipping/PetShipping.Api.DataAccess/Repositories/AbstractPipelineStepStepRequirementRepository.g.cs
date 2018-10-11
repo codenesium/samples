@@ -76,7 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<PipelineStep> GetPipelineStep(int pipelineStepId)
+		public async virtual Task<PipelineStep> PipelineStepByPipelineStepId(int pipelineStepId)
 		{
 			return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
 		}
@@ -113,5 +113,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>da790c5fe5b56ca263717068aa4ae751</Hash>
+    <Hash>b43f8751c8813dba41c70bf81c3fbfcd</Hash>
 </Codenesium>*/

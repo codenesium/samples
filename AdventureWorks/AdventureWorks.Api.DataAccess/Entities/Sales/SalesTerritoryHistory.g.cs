@@ -43,9 +43,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("rowguid")]
 		public Guid Rowguid { get; private set; }
 
+		[Key]
 		[Column("StartDate")]
 		public DateTime StartDate { get; private set; }
 
+		[Key]
 		[Column("TerritoryID")]
 		public int TerritoryID { get; private set; }
 
@@ -58,5 +60,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f86a7a40fc20a49e299d74990099cdf6</Hash>
+    <Hash>dd1b8a33fc9c22540bbbd5dace1bffaf</Hash>
 </Codenesium>*/

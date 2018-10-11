@@ -32,8 +32,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -66,8 +66,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -99,8 +99,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -133,8 +133,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -169,8 +169,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -204,8 +204,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -240,8 +240,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -273,8 +273,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -308,8 +308,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -341,8 +341,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -363,12 +363,12 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Likes_Exists()
+		public async void Followers_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			var records = new List<Like>();
-			records.Add(new Like());
-			mock.RepositoryMock.Setup(x => x.Likes(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var records = new List<Follower>();
+			records.Add(new Follower());
+			mock.RepositoryMock.Setup(x => x.Followers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -376,8 +376,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -391,17 +391,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiLikeResponseModel> response = await service.Likes(default(int));
+			List<ApiFollowerResponseModel> response = await service.Followers(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Likes(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.Followers(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Likes_Not_Exists()
+		public async void Followers_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.Likes(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Like>>(new List<Like>()));
+			mock.RepositoryMock.Setup(x => x.Followers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Follower>>(new List<Follower>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -409,8 +409,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -424,10 +424,10 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiLikeResponseModel> response = await service.Likes(default(int));
+			List<ApiFollowerResponseModel> response = await service.Followers(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Likes(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.Followers(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -444,8 +444,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -477,8 +477,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -512,8 +512,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -545,8 +545,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -580,8 +580,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -613,8 +613,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -648,8 +648,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -681,8 +681,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -716,8 +716,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -749,8 +749,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -784,8 +784,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -817,8 +817,8 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.DALMapperMockFactory.DALUserMapperMock,
 			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
-			                              mock.BOLMapperMockFactory.BOLLikeMapperMock,
-			                              mock.DALMapperMockFactory.DALLikeMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
 			                              mock.DALMapperMockFactory.DALMessageMapperMock,
 			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
@@ -841,5 +841,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>e002c4f82f85ac5d4e363158d8807672</Hash>
+    <Hash>8e5af9dfb977016525629b62b75cbcf6</Hash>
 </Codenesium>*/

@@ -18,8 +18,7 @@ namespace NebulaNS.Api.Services
 			IVersionInfoRepository versionInfoRepository,
 			IApiVersionInfoRequestModelValidator versionInfoModelValidator,
 			IBOLVersionInfoMapper bolversionInfoMapper,
-			IDALVersionInfoMapper dalversionInfoMapper
-			)
+			IDALVersionInfoMapper dalversionInfoMapper)
 			: base(logger,
 			       versionInfoRepository,
 			       versionInfoModelValidator,
@@ -31,5 +30,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7198c7b146d80ee2f453d1a742315ef3</Hash>
+    <Hash>6c9f0d3e8cc23ccf52e31fa8a6981972</Hash>
 </Codenesium>*/

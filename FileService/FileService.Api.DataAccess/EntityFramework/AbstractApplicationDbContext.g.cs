@@ -48,8 +48,6 @@ namespace FileServiceNS.Api.DataAccess
 
 		public virtual DbSet<FileType> FileTypes { get; set; }
 
-		public virtual DbSet<VersionInfo> VersionInfoes { get; set; }
-
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
 		/// ROWGUID is a very common type of column and it does not work with SQLite.
@@ -120,5 +118,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>766a26dcc7ef5c3c8fee175e3a873267</Hash>
+    <Hash>0deccba7069c3ef1ec2f26cddbe629e8</Hash>
 </Codenesium>*/

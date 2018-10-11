@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLPurchaseOrderHeaderMapper bolpurchaseOrderHeaderMapper,
 			IDALPurchaseOrderHeaderMapper dalpurchaseOrderHeaderMapper,
 			IBOLPurchaseOrderDetailMapper bolPurchaseOrderDetailMapper,
-			IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper
-			)
+			IDALPurchaseOrderDetailMapper dalPurchaseOrderDetailMapper)
 			: base(logger,
 			       purchaseOrderHeaderRepository,
 			       purchaseOrderHeaderModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>abb0ce2b589548ce1133d3e857abc3f6</Hash>
+    <Hash>2e5491de7e2a5c945a787a100eb47e6e</Hash>
 </Codenesium>*/

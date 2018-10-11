@@ -54,6 +54,13 @@ namespace FileServiceNS.Api.Client
 			this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
+		public virtual async Task<List<ApiBucketResponseModel>> BucketBulkInsertAsync(List<ApiBucketRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiBucketResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiBucketResponseModel>> BucketCreateAsync(ApiBucketRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets", item).ConfigureAwait(false);
@@ -89,21 +96,14 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiBucketResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiBucketResponseModel>> BucketBulkInsertAsync(List<ApiBucketRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Buckets/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiBucketResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiBucketResponseModel> GetBucketByExternalId(Guid externalId)
+		public virtual async Task<ApiBucketResponseModel> ByBucketByExternalId(Guid externalId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/byExternalId/{externalId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<ApiBucketResponseModel> GetBucketByName(string name)
+		public virtual async Task<ApiBucketResponseModel> ByBucketByName(string name)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/byName/{name}").ConfigureAwait(false);
 
@@ -113,6 +113,13 @@ namespace FileServiceNS.Api.Client
 		public virtual async Task<List<ApiFileResponseModel>> Files(int bucketId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/Files/{bucketId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiFileResponseModel>> FileBulkInsertAsync(List<ApiFileRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files/BulkInsert", items).ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -152,11 +159,11 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiFileResponseModel>> FileBulkInsertAsync(List<ApiFileRequestModel> items)
+		public virtual async Task<List<ApiFileTypeResponseModel>> FileTypeBulkInsertAsync(List<ApiFileTypeRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Files/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiFileTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiFileTypeResponseModel>> FileTypeCreateAsync(ApiFileTypeRequestModel item)
@@ -193,65 +200,9 @@ namespace FileServiceNS.Api.Client
 
 			return JsonConvert.DeserializeObject<List<ApiFileTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
-
-		public virtual async Task<List<ApiFileTypeResponseModel>> FileTypeBulkInsertAsync(List<ApiFileTypeRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/FileTypes/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiFileTypeResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiVersionInfoResponseModel>> VersionInfoCreateAsync(ApiVersionInfoRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<CreateResponse<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiVersionInfoResponseModel>> VersionInfoUpdateAsync(long id, ApiVersionInfoRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VersionInfoes/{id}", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> VersionInfoDeleteAsync(long id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VersionInfoes/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiVersionInfoResponseModel> VersionInfoGetAsync(long id)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoAllAsync(int limit = 1000, int offset = 0)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes?limit={limit}&offset={offset}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoBulkInsertAsync(List<ApiVersionInfoRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiVersionInfoResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiVersionInfoResponseModel> GetVersionInfoByVersion(long version)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VersionInfoes/byVersion/{version}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ApiVersionInfoResponseModel>(httpResponse.Content.ContentToString());
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e6646026049ba5be15128e36a79899f7</Hash>
+    <Hash>0d06a7ecd1dde064f51b4e427362e346</Hash>
 </Codenesium>*/

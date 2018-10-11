@@ -241,10 +241,10 @@ namespace TwitterNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{likerUserId}/Likes")]
+		[Route("{followedUserId}/Followers")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLikeResponseModel>), 200)]
-		public async virtual Task<IActionResult> Likes(int likerUserId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiFollowerResponseModel>), 200)]
+		public async virtual Task<IActionResult> Followers(int followedUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,7 +252,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLikeResponseModel> response = await this.UserService.Likes(likerUserId, query.Limit, query.Offset);
+			List<ApiFollowerResponseModel> response = await this.UserService.Followers(followedUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -359,6 +359,23 @@ namespace TwitterNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("byLikerUserId/{likerUserId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByLikerUserId(int likerUserId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiUserResponseModel> response = await this.UserService.ByLikerUserId(likerUserId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiUserRequestModel> PatchModel(int id, JsonPatchDocument<ApiUserRequestModel> patch)
 		{
 			var record = await this.UserService.Get(id);
@@ -378,5 +395,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3cb1e63b13c664d8b0f53ef17d05dcdd</Hash>
+    <Hash>ea977dce0fedb80325299248e54bd388</Hash>
 </Codenesium>*/

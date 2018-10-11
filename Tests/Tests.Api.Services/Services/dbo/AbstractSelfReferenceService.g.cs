@@ -107,16 +107,9 @@ namespace TestsNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiSelfReferenceResponseModel>> SelfReferences(int selfReferenceId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SelfReference> records = await this.SelfReferenceRepository.SelfReferences(selfReferenceId, limit, offset);
-
-			return this.BolSelfReferenceMapper.MapBOToModel(this.DalSelfReferenceMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>61554dd98c8c15feba5e9c5fe9b2de42</Hash>
+    <Hash>e5ffee21e975fa6b0d2156a0b7af69c9</Hash>
 </Codenesium>*/

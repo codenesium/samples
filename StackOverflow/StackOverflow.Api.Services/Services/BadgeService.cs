@@ -18,8 +18,7 @@ namespace StackOverflowNS.Api.Services
 			IBadgeRepository badgeRepository,
 			IApiBadgeRequestModelValidator badgeModelValidator,
 			IBOLBadgeMapper bolbadgeMapper,
-			IDALBadgeMapper dalbadgeMapper
-			)
+			IDALBadgeMapper dalbadgeMapper)
 			: base(logger,
 			       badgeRepository,
 			       badgeModelValidator,
@@ -31,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>54003196e882f54e40dcaac47aff4e3b</Hash>
+    <Hash>b9f2c40b42d6d4dd400aed72fcc09b90</Hash>
 </Codenesium>*/

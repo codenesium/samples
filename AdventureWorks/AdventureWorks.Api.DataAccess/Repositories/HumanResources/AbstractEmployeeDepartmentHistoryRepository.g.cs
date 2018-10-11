@@ -78,16 +78,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<EmployeeDepartmentHistory>> ByDepartmentID(short departmentID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.DepartmentID == departmentID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.DepartmentID == departmentID, limit, offset);
 		}
 
 		public async Task<List<EmployeeDepartmentHistory>> ByShiftID(int shiftID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ShiftID == shiftID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ShiftID == shiftID, limit, offset);
 		}
 
 		protected async Task<List<EmployeeDepartmentHistory>> Where(
@@ -122,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bd6d607110b30bcd6f3928284f4af9c0</Hash>
+    <Hash>0f304998b891dc905f737dbaac7384e7</Hash>
 </Codenesium>*/

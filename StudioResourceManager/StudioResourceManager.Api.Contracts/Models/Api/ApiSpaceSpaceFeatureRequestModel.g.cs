@@ -15,23 +15,17 @@ namespace StudioResourceManagerNS.Api.Contracts
 		}
 
 		public virtual void SetProperties(
-			int spaceFeatureId,
-			int spaceId)
+			int spaceFeatureId)
 		{
 			this.SpaceFeatureId = spaceFeatureId;
-			this.SpaceId = spaceId;
 		}
 
 		[Required]
 		[JsonProperty]
 		public int SpaceFeatureId { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public int SpaceId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>748e6048b2f760b8e8d6901cf5c79c67</Hash>
+    <Hash>18f27155dbe8d5a2583fafe9c5fa4fbe</Hash>
 </Codenesium>*/

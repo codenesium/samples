@@ -129,45 +129,9 @@ namespace TestsNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void SelfReferences_Exists()
-		{
-			var mock = new ServiceMockFacade<ISelfReferenceRepository>();
-			var records = new List<SelfReference>();
-			records.Add(new SelfReference());
-			mock.RepositoryMock.Setup(x => x.SelfReferences(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new SelfReferenceService(mock.LoggerMock.Object,
-			                                       mock.RepositoryMock.Object,
-			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
-			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
-
-			List<ApiSelfReferenceResponseModel> response = await service.SelfReferences(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SelfReferences(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void SelfReferences_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ISelfReferenceRepository>();
-			mock.RepositoryMock.Setup(x => x.SelfReferences(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SelfReference>>(new List<SelfReference>()));
-			var service = new SelfReferenceService(mock.LoggerMock.Object,
-			                                       mock.RepositoryMock.Object,
-			                                       mock.ModelValidatorMockFactory.SelfReferenceModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSelfReferenceMapperMock,
-			                                       mock.DALMapperMockFactory.DALSelfReferenceMapperMock);
-
-			List<ApiSelfReferenceResponseModel> response = await service.SelfReferences(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SelfReferences(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ce0f0dd02fcd9e802ce60cb36513fb4</Hash>
+    <Hash>69e93f0b1093d78a77454e6b0cad8293</Hash>
 </Codenesium>*/

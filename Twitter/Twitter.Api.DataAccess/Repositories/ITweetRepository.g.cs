@@ -21,18 +21,16 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<List<Tweet>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Like>> Likes(int tweetId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<QuoteTweet>> QuoteTweets(int sourceTweetId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Retweet>> Retweets(int tweetTweetId, int limit = int.MaxValue, int offset = 0);
 
-		Task<Location> GetLocation(int locationId);
+		Task<Location> LocationByLocationId(int locationId);
 
-		Task<User> GetUser(int userUserId);
+		Task<User> UserByUserUserId(int userUserId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1924119a38dc0e0da5e27c7ec856a93d</Hash>
+    <Hash>c777d33c887ad7585dc5b1dc4c2c2611</Hash>
 </Codenesium>*/

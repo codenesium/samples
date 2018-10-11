@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<ShipMethod> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<ShipMethod>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0)
@@ -120,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f62821fd61f2810916a7ed8451f462cd</Hash>
+    <Hash>7351b534a58890483074099e97643527</Hash>
 </Codenesium>*/

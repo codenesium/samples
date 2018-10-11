@@ -72,11 +72,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 51));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= SalesPerson
 		[Fact]
 		public async void SalesPersonID_Create_Valid_Reference()
 		{
 			Mock<IStoreRepository> storeRepository = new Mock<IStoreRepository>();
-			storeRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
+			storeRepository.Setup(x => x.SalesPersonBySalesPersonID(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
 
 			var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
 			await validator.ValidateCreateAsync(new ApiStoreRequestModel());
@@ -88,7 +89,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SalesPersonID_Create_Invalid_Reference()
 		{
 			Mock<IStoreRepository> storeRepository = new Mock<IStoreRepository>();
-			storeRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(null));
+			storeRepository.Setup(x => x.SalesPersonBySalesPersonID(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(null));
 
 			var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
 
@@ -101,7 +102,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SalesPersonID_Update_Valid_Reference()
 		{
 			Mock<IStoreRepository> storeRepository = new Mock<IStoreRepository>();
-			storeRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
+			storeRepository.Setup(x => x.SalesPersonBySalesPersonID(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
 
 			var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiStoreRequestModel());
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SalesPersonID_Update_Invalid_Reference()
 		{
 			Mock<IStoreRepository> storeRepository = new Mock<IStoreRepository>();
-			storeRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(null));
+			storeRepository.Setup(x => x.SalesPersonBySalesPersonID(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(null));
 
 			var validator = new ApiStoreRequestModelValidator(storeRepository.Object);
 
@@ -125,5 +126,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>090e0be4bc352aa644faeb73de973750</Hash>
+    <Hash>68df3ed4dafc474f962baf17640df551</Hash>
 </Codenesium>*/

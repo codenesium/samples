@@ -24,11 +24,12 @@ namespace TwitterNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Message
 		[Fact]
 		public async void MessageId_Create_Valid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetMessage(It.IsAny<int>())).Returns(Task.FromResult<Message>(new Message()));
+			messengerRepository.Setup(x => x.MessageByMessageId(It.IsAny<int>())).Returns(Task.FromResult<Message>(new Message()));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 			await validator.ValidateCreateAsync(new ApiMessengerRequestModel());
@@ -40,7 +41,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void MessageId_Create_Invalid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetMessage(It.IsAny<int>())).Returns(Task.FromResult<Message>(null));
+			messengerRepository.Setup(x => x.MessageByMessageId(It.IsAny<int>())).Returns(Task.FromResult<Message>(null));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 
@@ -53,7 +54,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void MessageId_Update_Valid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetMessage(It.IsAny<int>())).Returns(Task.FromResult<Message>(new Message()));
+			messengerRepository.Setup(x => x.MessageByMessageId(It.IsAny<int>())).Returns(Task.FromResult<Message>(new Message()));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiMessengerRequestModel());
@@ -65,7 +66,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void MessageId_Update_Invalid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetMessage(It.IsAny<int>())).Returns(Task.FromResult<Message>(null));
+			messengerRepository.Setup(x => x.MessageByMessageId(It.IsAny<int>())).Returns(Task.FromResult<Message>(null));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 
@@ -74,11 +75,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.MessageId, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void ToUserId_Create_Valid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			messengerRepository.Setup(x => x.UserByToUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 			await validator.ValidateCreateAsync(new ApiMessengerRequestModel());
@@ -90,7 +92,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void ToUserId_Create_Invalid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			messengerRepository.Setup(x => x.UserByToUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 
@@ -103,7 +105,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void ToUserId_Update_Valid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			messengerRepository.Setup(x => x.UserByToUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiMessengerRequestModel());
@@ -115,7 +117,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void ToUserId_Update_Invalid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			messengerRepository.Setup(x => x.UserByToUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 
@@ -124,11 +126,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.ToUserId, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void UserId_Create_Valid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			messengerRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 			await validator.ValidateCreateAsync(new ApiMessengerRequestModel());
@@ -140,7 +143,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void UserId_Create_Invalid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			messengerRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 
@@ -153,7 +156,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void UserId_Update_Valid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			messengerRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiMessengerRequestModel());
@@ -165,7 +168,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void UserId_Update_Invalid_Reference()
 		{
 			Mock<IMessengerRepository> messengerRepository = new Mock<IMessengerRepository>();
-			messengerRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			messengerRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiMessengerRequestModelValidator(messengerRepository.Object);
 
@@ -177,5 +180,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a5dfa9f409786d83212f707efc736845</Hash>
+    <Hash>07daeb7b606dc6ba52de3a68e4ed19bc</Hash>
 </Codenesium>*/

@@ -41,7 +41,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			ApiSpaceSpaceFeatureModelMapper mapper = new ApiSpaceSpaceFeatureModelMapper();
 
-			UpdateResponse<ApiSpaceSpaceFeatureResponseModel> updateResponse = await this.Client.SpaceSpaceFeatureUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSpaceSpaceFeatureResponseModel> updateResponse = await this.Client.SpaceSpaceFeatureUpdateAsync(model.SpaceId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		{
 			var model = await this.CreateRecord();
 
-			await this.Client.SpaceSpaceFeatureDeleteAsync(model.Id);
+			await this.Client.SpaceSpaceFeatureDeleteAsync(model.SpaceId);
 
 			await this.Cleanup();
 		}
@@ -78,7 +78,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiSpaceSpaceFeatureResponseModel> CreateRecord()
 		{
 			var model = new ApiSpaceSpaceFeatureRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1);
 			CreateResponse<ApiSpaceSpaceFeatureResponseModel> result = await this.Client.SpaceSpaceFeatureCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f675d919f6e58087a33c00a1b06c42f0</Hash>
+    <Hash>b8f9da3ba00c2b376f7abc2566d69b5a</Hash>
 </Codenesium>*/

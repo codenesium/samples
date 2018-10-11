@@ -19,10 +19,10 @@ namespace ESPIOTNS.Api.DataAccess
 
 		Task<List<DeviceAction>> ByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0);
 
-		Task<Device> GetDevice(int deviceId);
+		Task<Device> DeviceByDeviceId(int deviceId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e06a6bcc8997db3d8bbbfb424d39f0b4</Hash>
+    <Hash>e18d25271eaddc2f290b16f05b05d4b8</Hash>
 </Codenesium>*/

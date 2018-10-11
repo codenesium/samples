@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			ITimestampCheckRepository timestampCheckRepository,
 			IApiTimestampCheckRequestModelValidator timestampCheckModelValidator,
 			IBOLTimestampCheckMapper boltimestampCheckMapper,
-			IDALTimestampCheckMapper daltimestampCheckMapper
-			)
+			IDALTimestampCheckMapper daltimestampCheckMapper)
 			: base(logger,
 			       timestampCheckRepository,
 			       timestampCheckModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>51453fe9186744ca476d36d2366ef3e1</Hash>
+    <Hash>7d04f8601d559b10bcd6a0c4ddee3769</Hash>
 </Codenesium>*/

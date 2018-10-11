@@ -18,8 +18,7 @@ namespace StackOverflowNS.Api.Services
 			ITagRepository tagRepository,
 			IApiTagRequestModelValidator tagModelValidator,
 			IBOLTagMapper boltagMapper,
-			IDALTagMapper daltagMapper
-			)
+			IDALTagMapper daltagMapper)
 			: base(logger,
 			       tagRepository,
 			       tagModelValidator,
@@ -31,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>74eb13295d97c8c95460f74bbae08db2</Hash>
+    <Hash>129da4407ee6677d7b8c315bfa21762b</Hash>
 </Codenesium>*/

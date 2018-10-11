@@ -42,7 +42,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void FamilyIdRules()
 		{
-			this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamily).When(x => x?.FamilyId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.FamilyId).MustAsync(this.BeValidFamilyByFamilyId).When(x => x?.FamilyId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void FirstNameRules()
@@ -73,19 +73,19 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void UserIdRules()
 		{
-			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUser).When(x => x?.UserId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => x?.UserId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidFamily(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidFamilyByFamilyId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.studentRepository.GetFamily(id);
+			var record = await this.studentRepository.FamilyByFamilyId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUser(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.studentRepository.GetUser(id);
+			var record = await this.studentRepository.UserByUserId(id);
 
 			return record != null;
 		}
@@ -93,5 +93,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0103d2378584c63386020d409d82cc48</Hash>
+    <Hash>1080f1c27601e4aeb1ff4a6f7acba2cf</Hash>
 </Codenesium>*/

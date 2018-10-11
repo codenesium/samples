@@ -21,10 +21,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<SalesOrderHeader>> SalesOrderHeaders(int currencyRateID, int limit = int.MaxValue, int offset = 0);
 
-		Task<Currency> GetCurrency(string fromCurrencyCode);
+		Task<Currency> CurrencyByFromCurrencyCode(string fromCurrencyCode);
+
+		Task<Currency> CurrencyByToCurrencyCode(string toCurrencyCode);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ab80bd0f9f67bd8624ae7d32b699c1b</Hash>
+    <Hash>022af2a010a7bdb572c13589064597a2</Hash>
 </Codenesium>*/

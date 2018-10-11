@@ -57,7 +57,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<TeacherTeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.TeacherId);
 
 			record.Should().NotBeNull();
 		}
@@ -87,7 +87,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<TeacherTeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.TeacherId);
 
 			await repository.Update(record);
 
@@ -121,7 +121,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<TeacherTeacherSkill>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Delete(entity.Id);
+			await repository.Delete(entity.TeacherId);
 
 			TeacherTeacherSkill modifiedRecord = await context.Set<TeacherTeacherSkill>().FirstOrDefaultAsync();
 
@@ -131,5 +131,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>27b7438972e3b305b99d7973e16ca4ca</Hash>
+    <Hash>a906c195403e8c0f4c06f74ceb545dde</Hash>
 </Codenesium>*/

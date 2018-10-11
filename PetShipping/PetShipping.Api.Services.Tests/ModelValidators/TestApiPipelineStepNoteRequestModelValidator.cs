@@ -24,11 +24,12 @@ namespace PetShippingNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Employee
 		[Fact]
 		public async void EmployeeId_Create_Valid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
-			pipelineStepNoteRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
+			pipelineStepNoteRepository.Setup(x => x.EmployeeByEmployeeId(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
 			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPipelineStepNoteRequestModel());
@@ -40,7 +41,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void EmployeeId_Create_Invalid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
-			pipelineStepNoteRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
+			pipelineStepNoteRepository.Setup(x => x.EmployeeByEmployeeId(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
 
 			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
 
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void EmployeeId_Update_Valid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
-			pipelineStepNoteRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
+			pipelineStepNoteRepository.Setup(x => x.EmployeeByEmployeeId(It.IsAny<int>())).Returns(Task.FromResult<Employee>(new Employee()));
 
 			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepNoteRequestModel());
@@ -65,7 +66,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void EmployeeId_Update_Invalid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
-			pipelineStepNoteRepository.Setup(x => x.GetEmployee(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
+			pipelineStepNoteRepository.Setup(x => x.EmployeeByEmployeeId(It.IsAny<int>())).Returns(Task.FromResult<Employee>(null));
 
 			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
 
@@ -98,11 +99,12 @@ namespace PetShippingNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= PipelineStep
 		[Fact]
 		public async void PipelineStepId_Create_Valid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
-			pipelineStepNoteRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
+			pipelineStepNoteRepository.Setup(x => x.PipelineStepByPipelineStepId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
 
 			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
 			await validator.ValidateCreateAsync(new ApiPipelineStepNoteRequestModel());
@@ -114,7 +116,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStepId_Create_Invalid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
-			pipelineStepNoteRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(null));
+			pipelineStepNoteRepository.Setup(x => x.PipelineStepByPipelineStepId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(null));
 
 			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
 
@@ -127,7 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStepId_Update_Valid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
-			pipelineStepNoteRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
+			pipelineStepNoteRepository.Setup(x => x.PipelineStepByPipelineStepId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(new PipelineStep()));
 
 			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiPipelineStepNoteRequestModel());
@@ -139,7 +141,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PipelineStepId_Update_Invalid_Reference()
 		{
 			Mock<IPipelineStepNoteRepository> pipelineStepNoteRepository = new Mock<IPipelineStepNoteRepository>();
-			pipelineStepNoteRepository.Setup(x => x.GetPipelineStep(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(null));
+			pipelineStepNoteRepository.Setup(x => x.PipelineStepByPipelineStepId(It.IsAny<int>())).Returns(Task.FromResult<PipelineStep>(null));
 
 			var validator = new ApiPipelineStepNoteRequestModelValidator(pipelineStepNoteRepository.Object);
 
@@ -151,5 +153,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>75f70ac9796f7ecf86c20b41fdebe36c</Hash>
+    <Hash>920ca1ccdf0449a0f170e2af4b1aed43</Hash>
 </Codenesium>*/

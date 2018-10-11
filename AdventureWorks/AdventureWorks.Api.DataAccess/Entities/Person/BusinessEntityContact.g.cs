@@ -31,12 +31,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("BusinessEntityID")]
 		public int BusinessEntityID { get; private set; }
 
+		[Key]
 		[Column("ContactTypeID")]
 		public int ContactTypeID { get; private set; }
 
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[Key]
 		[Column("PersonID")]
 		public int PersonID { get; private set; }
 
@@ -47,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>377e1d724892be053210bb68a2baf68b</Hash>
+    <Hash>9c98be5579d87ec2a44d2596e31c6ce6</Hash>
 </Codenesium>*/

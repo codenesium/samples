@@ -23,13 +23,10 @@ namespace PetShippingNS.Api.Contracts
 			from.Destinations.ForEach(x => this.AddDestination(x));
 			from.Employees.ForEach(x => this.AddEmployee(x));
 			from.Handlers.ForEach(x => this.AddHandler(x));
-			from.HandlerPipelineSteps.ForEach(x => this.AddHandlerPipelineStep(x));
-			from.OtherTransports.ForEach(x => this.AddOtherTransport(x));
 			from.Pets.ForEach(x => this.AddPet(x));
 			from.Pipelines.ForEach(x => this.AddPipeline(x));
 			from.PipelineStatus.ForEach(x => this.AddPipelineStatu(x));
 			from.PipelineSteps.ForEach(x => this.AddPipelineStep(x));
-			from.PipelineStepDestinations.ForEach(x => this.AddPipelineStepDestination(x));
 			from.PipelineStepNotes.ForEach(x => this.AddPipelineStepNote(x));
 			from.PipelineStepStatus.ForEach(x => this.AddPipelineStepStatu(x));
 			from.PipelineStepStepRequirements.ForEach(x => this.AddPipelineStepStepRequirement(x));
@@ -57,10 +54,6 @@ namespace PetShippingNS.Api.Contracts
 
 		public List<ApiHandlerResponseModel> Handlers { get; private set; } = new List<ApiHandlerResponseModel>();
 
-		public List<ApiHandlerPipelineStepResponseModel> HandlerPipelineSteps { get; private set; } = new List<ApiHandlerPipelineStepResponseModel>();
-
-		public List<ApiOtherTransportResponseModel> OtherTransports { get; private set; } = new List<ApiOtherTransportResponseModel>();
-
 		public List<ApiPetResponseModel> Pets { get; private set; } = new List<ApiPetResponseModel>();
 
 		public List<ApiPipelineResponseModel> Pipelines { get; private set; } = new List<ApiPipelineResponseModel>();
@@ -68,8 +61,6 @@ namespace PetShippingNS.Api.Contracts
 		public List<ApiPipelineStatuResponseModel> PipelineStatus { get; private set; } = new List<ApiPipelineStatuResponseModel>();
 
 		public List<ApiPipelineStepResponseModel> PipelineSteps { get; private set; } = new List<ApiPipelineStepResponseModel>();
-
-		public List<ApiPipelineStepDestinationResponseModel> PipelineStepDestinations { get; private set; } = new List<ApiPipelineStepDestinationResponseModel>();
 
 		public List<ApiPipelineStepNoteResponseModel> PipelineStepNotes { get; private set; } = new List<ApiPipelineStepNoteResponseModel>();
 
@@ -242,38 +233,6 @@ namespace PetShippingNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeHandlerPipelineStepsValue { get; private set; } = true;
-
-		public bool ShouldSerializeHandlerPipelineSteps()
-		{
-			return this.ShouldSerializeHandlerPipelineStepsValue;
-		}
-
-		public void AddHandlerPipelineStep(ApiHandlerPipelineStepResponseModel item)
-		{
-			if (!this.HandlerPipelineSteps.Any(x => x.Id == item.Id))
-			{
-				this.HandlerPipelineSteps.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeOtherTransportsValue { get; private set; } = true;
-
-		public bool ShouldSerializeOtherTransports()
-		{
-			return this.ShouldSerializeOtherTransportsValue;
-		}
-
-		public void AddOtherTransport(ApiOtherTransportResponseModel item)
-		{
-			if (!this.OtherTransports.Any(x => x.Id == item.Id))
-			{
-				this.OtherTransports.Add(item);
-			}
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializePetsValue { get; private set; } = true;
 
 		public bool ShouldSerializePets()
@@ -334,22 +293,6 @@ namespace PetShippingNS.Api.Contracts
 			if (!this.PipelineSteps.Any(x => x.Id == item.Id))
 			{
 				this.PipelineSteps.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializePipelineStepDestinationsValue { get; private set; } = true;
-
-		public bool ShouldSerializePipelineStepDestinations()
-		{
-			return this.ShouldSerializePipelineStepDestinationsValue;
-		}
-
-		public void AddPipelineStepDestination(ApiPipelineStepDestinationResponseModel item)
-		{
-			if (!this.PipelineStepDestinations.Any(x => x.Id == item.Id))
-			{
-				this.PipelineStepDestinations.Add(item);
 			}
 		}
 
@@ -485,16 +428,6 @@ namespace PetShippingNS.Api.Contracts
 				this.ShouldSerializeHandlersValue = false;
 			}
 
-			if (this.HandlerPipelineSteps.Count == 0)
-			{
-				this.ShouldSerializeHandlerPipelineStepsValue = false;
-			}
-
-			if (this.OtherTransports.Count == 0)
-			{
-				this.ShouldSerializeOtherTransportsValue = false;
-			}
-
 			if (this.Pets.Count == 0)
 			{
 				this.ShouldSerializePetsValue = false;
@@ -513,11 +446,6 @@ namespace PetShippingNS.Api.Contracts
 			if (this.PipelineSteps.Count == 0)
 			{
 				this.ShouldSerializePipelineStepsValue = false;
-			}
-
-			if (this.PipelineStepDestinations.Count == 0)
-			{
-				this.ShouldSerializePipelineStepDestinationsValue = false;
 			}
 
 			if (this.PipelineStepNotes.Count == 0)
@@ -549,5 +477,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f46a7d6f683e995ee44d925b8ed7a6f6</Hash>
+    <Hash>f040fba485ede84f574abc023e308c35</Hash>
 </Codenesium>*/

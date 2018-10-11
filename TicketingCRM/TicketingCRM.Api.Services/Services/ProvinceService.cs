@@ -22,8 +22,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLCityMapper bolCityMapper,
 			IDALCityMapper dalCityMapper,
 			IBOLVenueMapper bolVenueMapper,
-			IDALVenueMapper dalVenueMapper
-			)
+			IDALVenueMapper dalVenueMapper)
 			: base(logger,
 			       provinceRepository,
 			       provinceModelValidator,
@@ -39,5 +38,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c654eee6701a0d23af24b4260a4aec55</Hash>
+    <Hash>061385c141d19265338f436853bfc898</Hash>
 </Codenesium>*/

@@ -207,10 +207,10 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{destinationId}/PipelineStepDestinations")]
+		[Route("byDestinationId/{destinationId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiPipelineStepDestinationResponseModel>), 200)]
-		public async virtual Task<IActionResult> PipelineStepDestinations(int destinationId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiDestinationResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByDestinationId(int destinationId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPipelineStepDestinationResponseModel> response = await this.DestinationService.PipelineStepDestinations(destinationId, query.Limit, query.Offset);
+			List<ApiDestinationResponseModel> response = await this.DestinationService.ByDestinationId(destinationId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +242,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d6205f2559f8bbd809683cb182e7cf91</Hash>
+    <Hash>471dcd057854bb830dcead072b98ff9f</Hash>
 </Codenesium>*/

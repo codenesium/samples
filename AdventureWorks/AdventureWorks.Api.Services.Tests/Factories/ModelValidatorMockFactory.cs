@@ -79,8 +79,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public Mock<IApiProductModelRequestModelValidator> ProductModelModelValidatorMock { get; set; } = new Mock<IApiProductModelRequestModelValidator>();
 
-		public Mock<IApiProductModelIllustrationRequestModelValidator> ProductModelIllustrationModelValidatorMock { get; set; } = new Mock<IApiProductModelIllustrationRequestModelValidator>();
-
 		public Mock<IApiProductModelProductDescriptionCultureRequestModelValidator> ProductModelProductDescriptionCultureModelValidatorMock { get; set; } = new Mock<IApiProductModelProductDescriptionCultureRequestModelValidator>();
 
 		public Mock<IApiProductPhotoRequestModelValidator> ProductPhotoModelValidatorMock { get; set; } = new Mock<IApiProductPhotoRequestModelValidator>();
@@ -115,8 +113,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public Mock<IApiVendorRequestModelValidator> VendorModelValidatorMock { get; set; } = new Mock<IApiVendorRequestModelValidator>();
 
-		public Mock<IApiCountryRegionCurrencyRequestModelValidator> CountryRegionCurrencyModelValidatorMock { get; set; } = new Mock<IApiCountryRegionCurrencyRequestModelValidator>();
-
 		public Mock<IApiCreditCardRequestModelValidator> CreditCardModelValidatorMock { get; set; } = new Mock<IApiCreditCardRequestModelValidator>();
 
 		public Mock<IApiCurrencyRequestModelValidator> CurrencyModelValidatorMock { get; set; } = new Mock<IApiCurrencyRequestModelValidator>();
@@ -125,13 +121,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 		public Mock<IApiCustomerRequestModelValidator> CustomerModelValidatorMock { get; set; } = new Mock<IApiCustomerRequestModelValidator>();
 
-		public Mock<IApiPersonCreditCardRequestModelValidator> PersonCreditCardModelValidatorMock { get; set; } = new Mock<IApiPersonCreditCardRequestModelValidator>();
-
 		public Mock<IApiSalesOrderDetailRequestModelValidator> SalesOrderDetailModelValidatorMock { get; set; } = new Mock<IApiSalesOrderDetailRequestModelValidator>();
 
 		public Mock<IApiSalesOrderHeaderRequestModelValidator> SalesOrderHeaderModelValidatorMock { get; set; } = new Mock<IApiSalesOrderHeaderRequestModelValidator>();
-
-		public Mock<IApiSalesOrderHeaderSalesReasonRequestModelValidator> SalesOrderHeaderSalesReasonModelValidatorMock { get; set; } = new Mock<IApiSalesOrderHeaderSalesReasonRequestModelValidator>();
 
 		public Mock<IApiSalesPersonRequestModelValidator> SalesPersonModelValidatorMock { get; set; } = new Mock<IApiSalesPersonRequestModelValidator>();
 
@@ -295,10 +287,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			this.ProductModelModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductModelRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.ProductModelModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.ProductModelIllustrationModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiProductModelIllustrationRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.ProductModelIllustrationModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductModelIllustrationRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.ProductModelIllustrationModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.ProductModelProductDescriptionCultureModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiProductModelProductDescriptionCultureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.ProductModelProductDescriptionCultureModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiProductModelProductDescriptionCultureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.ProductModelProductDescriptionCultureModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -367,10 +355,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			this.VendorModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVendorRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.VendorModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.CountryRegionCurrencyModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCountryRegionCurrencyRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.CountryRegionCurrencyModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiCountryRegionCurrencyRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.CountryRegionCurrencyModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<string>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.CreditCardModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiCreditCardRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.CreditCardModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCreditCardRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.CreditCardModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -387,10 +371,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			this.CustomerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiCustomerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.CustomerModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.PersonCreditCardModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiPersonCreditCardRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PersonCreditCardModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiPersonCreditCardRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.PersonCreditCardModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.SalesOrderDetailModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSalesOrderDetailRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SalesOrderDetailModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesOrderDetailRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SalesOrderDetailModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -398,10 +378,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			this.SalesOrderHeaderModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SalesOrderHeaderModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesOrderHeaderRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SalesOrderHeaderModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.SalesOrderHeaderSalesReasonModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSalesOrderHeaderSalesReasonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.SalesOrderHeaderSalesReasonModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesOrderHeaderSalesReasonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.SalesOrderHeaderSalesReasonModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.SalesPersonModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSalesPersonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SalesPersonModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSalesPersonRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -447,5 +423,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0cdcefefbbebfffcdee1fe1f6cf91577</Hash>
+    <Hash>02c0f5e1904713134e8a75fcec6839d3</Hash>
 </Codenesium>*/

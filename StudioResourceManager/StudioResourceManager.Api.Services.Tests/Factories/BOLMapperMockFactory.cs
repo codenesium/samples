@@ -42,6 +42,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IBOLUserMapper BOLUserMapperMock { get; set; } = new BOLUserMapper();
 
+		public IBOLVEventMapper BOLVEventMapperMock { get; set; } = new BOLVEventMapper();
+
 		public BOLMapperMockFactory()
 		{
 		}
@@ -49,5 +51,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>667f10a912dd91652e380d04aaa03db2</Hash>
+    <Hash>03674a5a249a867c31dcb2a54d435e33</Hash>
 </Codenesium>*/

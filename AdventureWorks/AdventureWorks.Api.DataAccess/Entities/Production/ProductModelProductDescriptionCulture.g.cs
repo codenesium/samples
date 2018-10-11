@@ -25,6 +25,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ProductModelID = productModelID;
 		}
 
+		[Key]
 		[MaxLength(6)]
 		[Column("CultureID")]
 		public string CultureID { get; private set; }
@@ -32,6 +33,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[Key]
 		[Column("ProductDescriptionID")]
 		public int ProductDescriptionID { get; private set; }
 
@@ -42,5 +44,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bae449d17c28c807e1f472b3147c4729</Hash>
+    <Hash>38b8fd58f54aecd7752c02873bd8aa05</Hash>
 </Codenesium>*/

@@ -78,7 +78,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiEventResponseModel> CreateRecord()
 		{
 			var model = new ApiEventRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			CreateResponse<ApiEventResponseModel> result = await this.Client.EventCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>941f0b5f4a0c8a444a345482e6d2039e</Hash>
+    <Hash>86f6bfaac0d365522ed08d6442d6e19d</Hash>
 </Codenesium>*/

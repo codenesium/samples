@@ -38,9 +38,9 @@ namespace AdventureWorksNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidSpecialOffer(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSpecialOfferBySpecialOfferID(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.specialOfferProductRepository.GetSpecialOffer(id);
+			var record = await this.specialOfferProductRepository.SpecialOfferBySpecialOfferID(id);
 
 			return record != null;
 		}
@@ -48,5 +48,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>01113d31bf81dfa7cd48628e2f56fa72</Hash>
+    <Hash>45c12855dbb764b777b9626b03ccae78</Hash>
 </Codenesium>*/

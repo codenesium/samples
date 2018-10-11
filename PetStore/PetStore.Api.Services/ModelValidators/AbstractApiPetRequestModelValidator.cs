@@ -32,7 +32,7 @@ namespace PetStoreNS.Api.Services
 
 		public virtual void BreedIdRules()
 		{
-			this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreed).When(x => x?.BreedId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreedByBreedId).When(x => x?.BreedId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void DescriptionRules()
@@ -43,7 +43,7 @@ namespace PetStoreNS.Api.Services
 
 		public virtual void PenIdRules()
 		{
-			this.RuleFor(x => x.PenId).MustAsync(this.BeValidPen).When(x => x?.PenId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.PenId).MustAsync(this.BeValidPenByPenId).When(x => x?.PenId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void PriceRules()
@@ -52,26 +52,26 @@ namespace PetStoreNS.Api.Services
 
 		public virtual void SpeciesIdRules()
 		{
-			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpecies).When(x => x?.SpeciesId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpeciesBySpeciesId).When(x => x?.SpeciesId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidBreed(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidBreedByBreedId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.petRepository.GetBreed(id);
+			var record = await this.petRepository.BreedByBreedId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidPen(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidPenByPenId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.petRepository.GetPen(id);
+			var record = await this.petRepository.PenByPenId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidSpecies(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSpeciesBySpeciesId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.petRepository.GetSpecies(id);
+			var record = await this.petRepository.SpeciesBySpeciesId(id);
 
 			return record != null;
 		}
@@ -79,5 +79,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>536323daee338c23489b874417e6d0a7</Hash>
+    <Hash>a5a5b9433d80e4a3e6fabb9693a50d6c</Hash>
 </Codenesium>*/

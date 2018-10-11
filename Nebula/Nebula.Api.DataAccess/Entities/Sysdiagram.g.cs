@@ -27,6 +27,7 @@ namespace NebulaNS.Api.DataAccess
 			this.Version = version;
 		}
 
+		[MaxLength(1)]
 		[Column("definition")]
 		public byte[] Definition { get; private set; }
 
@@ -48,5 +49,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a7ca36740384ad193e92cee35c0f718d</Hash>
+    <Hash>09dce609c0890f60ffd19f3d5bfaf61d</Hash>
 </Codenesium>*/

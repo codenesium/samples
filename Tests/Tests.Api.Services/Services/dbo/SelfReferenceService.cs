@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			ISelfReferenceRepository selfReferenceRepository,
 			IApiSelfReferenceRequestModelValidator selfReferenceModelValidator,
 			IBOLSelfReferenceMapper bolselfReferenceMapper,
-			IDALSelfReferenceMapper dalselfReferenceMapper
-			)
+			IDALSelfReferenceMapper dalselfReferenceMapper)
 			: base(logger,
 			       selfReferenceRepository,
 			       selfReferenceModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>747352465ddc4beb3c42a268139797e9</Hash>
+    <Hash>b35fa41df2683f34dcd96ec713c2b0a6</Hash>
 </Codenesium>*/

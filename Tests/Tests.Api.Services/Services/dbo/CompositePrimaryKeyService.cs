@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			ICompositePrimaryKeyRepository compositePrimaryKeyRepository,
 			IApiCompositePrimaryKeyRequestModelValidator compositePrimaryKeyModelValidator,
 			IBOLCompositePrimaryKeyMapper bolcompositePrimaryKeyMapper,
-			IDALCompositePrimaryKeyMapper dalcompositePrimaryKeyMapper
-			)
+			IDALCompositePrimaryKeyMapper dalcompositePrimaryKeyMapper)
 			: base(logger,
 			       compositePrimaryKeyRepository,
 			       compositePrimaryKeyModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d1301fae2bfdeef1f2e549b8db151652</Hash>
+    <Hash>e86e56d6f3884ceaa6fdd8f898be99b1</Hash>
 </Codenesium>*/

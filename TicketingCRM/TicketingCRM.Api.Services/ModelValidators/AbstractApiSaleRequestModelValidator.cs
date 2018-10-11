@@ -44,12 +44,12 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void TransactionIdRules()
 		{
-			this.RuleFor(x => x.TransactionId).MustAsync(this.BeValidTransaction).When(x => x?.TransactionId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TransactionId).MustAsync(this.BeValidTransactionByTransactionId).When(x => x?.TransactionId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidTransaction(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTransactionByTransactionId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.saleRepository.GetTransaction(id);
+			var record = await this.saleRepository.TransactionByTransactionId(id);
 
 			return record != null;
 		}
@@ -57,5 +57,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84e61bd1462a12b28aec482a66b62468</Hash>
+    <Hash>c79c1ef837119222d5766f1b1f545404</Hash>
 </Codenesium>*/

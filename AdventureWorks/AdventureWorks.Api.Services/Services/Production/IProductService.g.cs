@@ -40,9 +40,11 @@ namespace AdventureWorksNS.Api.Services
 		Task<List<ApiTransactionHistoryResponseModel>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiWorkOrderResponseModel>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiProductResponseModel>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3859f0516a699c9d1ef21df00d32a9f1</Hash>
+    <Hash>8e57b952a4b3a59a94def292b12a8c24</Hash>
 </Codenesium>*/

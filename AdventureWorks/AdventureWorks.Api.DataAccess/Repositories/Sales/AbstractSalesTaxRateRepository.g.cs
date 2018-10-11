@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<SalesTaxRate> ByStateProvinceIDTaxType(int stateProvinceID, int taxType)
 		{
-			var records = await this.Where(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<SalesTaxRate>().SingleOrDefaultAsync(x => x.StateProvinceID == stateProvinceID && x.TaxType == taxType);
 		}
 
 		protected async Task<List<SalesTaxRate>> Where(
@@ -115,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e3506ca84411855a01ed6c341834436a</Hash>
+    <Hash>f67f533d56f443f4f8da72519155ce18</Hash>
 </Codenesium>*/

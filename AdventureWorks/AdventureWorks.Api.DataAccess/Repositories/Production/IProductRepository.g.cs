@@ -36,9 +36,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<List<TransactionHistory>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<WorkOrder>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Product>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0b79fe16a16c1c8d83e8e2fbe36f90ca</Hash>
+    <Hash>f602f00d314b96da92ac973e124fc836</Hash>
 </Codenesium>*/

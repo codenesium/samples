@@ -18,8 +18,7 @@ namespace TwitterNS.Api.Services
 			IDirectTweetRepository directTweetRepository,
 			IApiDirectTweetRequestModelValidator directTweetModelValidator,
 			IBOLDirectTweetMapper boldirectTweetMapper,
-			IDALDirectTweetMapper daldirectTweetMapper
-			)
+			IDALDirectTweetMapper daldirectTweetMapper)
 			: base(logger,
 			       directTweetRepository,
 			       directTweetModelValidator,
@@ -31,5 +30,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d180c197e24062cbf576c0eb2e92bdc4</Hash>
+    <Hash>776579ca972faabcc3cad4ad43962c51</Hash>
 </Codenesium>*/

@@ -23,59 +23,9 @@ namespace TestsNS.Api.Services.Tests
 		public ApiPersonRefRequestModelValidatorTest()
 		{
 		}
-
-		[Fact]
-		public async void PersonBId_Create_Valid_Reference()
-		{
-			Mock<IPersonRefRepository> personRefRepository = new Mock<IPersonRefRepository>();
-			personRefRepository.Setup(x => x.GetSchemaBPerson(It.IsAny<int>())).Returns(Task.FromResult<SchemaBPerson>(new SchemaBPerson()));
-
-			var validator = new ApiPersonRefRequestModelValidator(personRefRepository.Object);
-			await validator.ValidateCreateAsync(new ApiPersonRefRequestModel());
-
-			validator.ShouldNotHaveValidationErrorFor(x => x.PersonBId, 1);
-		}
-
-		[Fact]
-		public async void PersonBId_Create_Invalid_Reference()
-		{
-			Mock<IPersonRefRepository> personRefRepository = new Mock<IPersonRefRepository>();
-			personRefRepository.Setup(x => x.GetSchemaBPerson(It.IsAny<int>())).Returns(Task.FromResult<SchemaBPerson>(null));
-
-			var validator = new ApiPersonRefRequestModelValidator(personRefRepository.Object);
-
-			await validator.ValidateCreateAsync(new ApiPersonRefRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.PersonBId, 1);
-		}
-
-		[Fact]
-		public async void PersonBId_Update_Valid_Reference()
-		{
-			Mock<IPersonRefRepository> personRefRepository = new Mock<IPersonRefRepository>();
-			personRefRepository.Setup(x => x.GetSchemaBPerson(It.IsAny<int>())).Returns(Task.FromResult<SchemaBPerson>(new SchemaBPerson()));
-
-			var validator = new ApiPersonRefRequestModelValidator(personRefRepository.Object);
-			await validator.ValidateUpdateAsync(default(int), new ApiPersonRefRequestModel());
-
-			validator.ShouldNotHaveValidationErrorFor(x => x.PersonBId, 1);
-		}
-
-		[Fact]
-		public async void PersonBId_Update_Invalid_Reference()
-		{
-			Mock<IPersonRefRepository> personRefRepository = new Mock<IPersonRefRepository>();
-			personRefRepository.Setup(x => x.GetSchemaBPerson(It.IsAny<int>())).Returns(Task.FromResult<SchemaBPerson>(null));
-
-			var validator = new ApiPersonRefRequestModelValidator(personRefRepository.Object);
-
-			await validator.ValidateUpdateAsync(default(int), new ApiPersonRefRequestModel());
-
-			validator.ShouldHaveValidationErrorFor(x => x.PersonBId, 1);
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3650adc5d69965db3b0c0cc6b1edcc50</Hash>
+    <Hash>830d831570cc7d334b573cb3484125da</Hash>
 </Codenesium>*/

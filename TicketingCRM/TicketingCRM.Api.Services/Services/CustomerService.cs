@@ -18,8 +18,7 @@ namespace TicketingCRMNS.Api.Services
 			ICustomerRepository customerRepository,
 			IApiCustomerRequestModelValidator customerModelValidator,
 			IBOLCustomerMapper bolcustomerMapper,
-			IDALCustomerMapper dalcustomerMapper
-			)
+			IDALCustomerMapper dalcustomerMapper)
 			: base(logger,
 			       customerRepository,
 			       customerModelValidator,
@@ -31,5 +30,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e3f4e5a9ee92a578151d9f3f910e4aa5</Hash>
+    <Hash>c9f424aea8c7eb3cfec7220e55736c3c</Hash>
 </Codenesium>*/

@@ -18,8 +18,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IRateRepository rateRepository,
 			IApiRateRequestModelValidator rateModelValidator,
 			IBOLRateMapper bolrateMapper,
-			IDALRateMapper dalrateMapper
-			)
+			IDALRateMapper dalrateMapper)
 			: base(logger,
 			       rateRepository,
 			       rateModelValidator,
@@ -31,5 +30,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>111d46a18523611e550694627fd4fbf8</Hash>
+    <Hash>0844a7e06ee27284ef7e8bf22d10d58c</Hash>
 </Codenesium>*/

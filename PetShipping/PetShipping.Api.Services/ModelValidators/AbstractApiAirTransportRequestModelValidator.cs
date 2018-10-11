@@ -34,7 +34,7 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void HandlerIdRules()
 		{
-			this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandler).When(x => x?.HandlerId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.HandlerId).MustAsync(this.BeValidHandlerByHandlerId).When(x => x?.HandlerId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void IdRules()
@@ -53,9 +53,9 @@ namespace PetShippingNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidHandler(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidHandlerByHandlerId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.airTransportRepository.GetHandler(id);
+			var record = await this.airTransportRepository.HandlerByHandlerId(id);
 
 			return record != null;
 		}
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9be256d29e27fe3f00e40f3ef81676b9</Hash>
+    <Hash>0348aa279dc84ce368c04bec78bfa34f</Hash>
 </Codenesium>*/

@@ -29,9 +29,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLSchemaBPersonMapperMock,
-			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
-			                                       mock.DALMapperMockFactory.DALPersonRefMapperMock);
+			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock);
 
 			List<ApiSchemaBPersonResponseModel> response = await service.All();
 
@@ -49,9 +47,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLSchemaBPersonMapperMock,
-			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
-			                                       mock.DALMapperMockFactory.DALPersonRefMapperMock);
+			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock);
 
 			ApiSchemaBPersonResponseModel response = await service.Get(default(int));
 
@@ -68,9 +64,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLSchemaBPersonMapperMock,
-			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
-			                                       mock.DALMapperMockFactory.DALPersonRefMapperMock);
+			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock);
 
 			ApiSchemaBPersonResponseModel response = await service.Get(default(int));
 
@@ -88,9 +82,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLSchemaBPersonMapperMock,
-			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
-			                                       mock.DALMapperMockFactory.DALPersonRefMapperMock);
+			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock);
 
 			CreateResponse<ApiSchemaBPersonResponseModel> response = await service.Create(model);
 
@@ -110,9 +102,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLSchemaBPersonMapperMock,
-			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
-			                                       mock.DALMapperMockFactory.DALPersonRefMapperMock);
+			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock);
 
 			UpdateResponse<ApiSchemaBPersonResponseModel> response = await service.Update(default(int), model);
 
@@ -131,9 +121,7 @@ namespace TestsNS.Api.Services.Tests
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Object,
 			                                       mock.BOLMapperMockFactory.BOLSchemaBPersonMapperMock,
-			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
-			                                       mock.DALMapperMockFactory.DALPersonRefMapperMock);
+			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -141,49 +129,9 @@ namespace TestsNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void PersonRefs_Exists()
-		{
-			var mock = new ServiceMockFacade<ISchemaBPersonRepository>();
-			var records = new List<PersonRef>();
-			records.Add(new PersonRef());
-			mock.RepositoryMock.Setup(x => x.PersonRefs(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new SchemaBPersonService(mock.LoggerMock.Object,
-			                                       mock.RepositoryMock.Object,
-			                                       mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSchemaBPersonMapperMock,
-			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
-			                                       mock.DALMapperMockFactory.DALPersonRefMapperMock);
-
-			List<ApiPersonRefResponseModel> response = await service.PersonRefs(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.PersonRefs(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void PersonRefs_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ISchemaBPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.PersonRefs(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PersonRef>>(new List<PersonRef>()));
-			var service = new SchemaBPersonService(mock.LoggerMock.Object,
-			                                       mock.RepositoryMock.Object,
-			                                       mock.ModelValidatorMockFactory.SchemaBPersonModelValidatorMock.Object,
-			                                       mock.BOLMapperMockFactory.BOLSchemaBPersonMapperMock,
-			                                       mock.DALMapperMockFactory.DALSchemaBPersonMapperMock,
-			                                       mock.BOLMapperMockFactory.BOLPersonRefMapperMock,
-			                                       mock.DALMapperMockFactory.DALPersonRefMapperMock);
-
-			List<ApiPersonRefResponseModel> response = await service.PersonRefs(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.PersonRefs(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>590914e6518a7fe78cb2eab4fe698f0c</Hash>
+    <Hash>9aade9f7fb1df6bf44f5251dfc196a77</Hash>
 </Codenesium>*/

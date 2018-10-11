@@ -48,11 +48,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.CarrierTrackingNumber, new string('A', 26));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= SpecialOfferProduct
 		[Fact]
 		public async void ProductID_Create_Valid_Reference()
 		{
 			Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-			salesOrderDetailRepository.Setup(x => x.GetSpecialOfferProduct(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(new SpecialOfferProduct()));
+			salesOrderDetailRepository.Setup(x => x.SpecialOfferProductByProductID(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(new SpecialOfferProduct()));
 
 			var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSalesOrderDetailRequestModel());
@@ -64,7 +65,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void ProductID_Create_Invalid_Reference()
 		{
 			Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-			salesOrderDetailRepository.Setup(x => x.GetSpecialOfferProduct(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(null));
+			salesOrderDetailRepository.Setup(x => x.SpecialOfferProductByProductID(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(null));
 
 			var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
 
@@ -77,7 +78,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void ProductID_Update_Valid_Reference()
 		{
 			Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-			salesOrderDetailRepository.Setup(x => x.GetSpecialOfferProduct(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(new SpecialOfferProduct()));
+			salesOrderDetailRepository.Setup(x => x.SpecialOfferProductByProductID(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(new SpecialOfferProduct()));
 
 			var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderDetailRequestModel());
@@ -89,7 +90,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void ProductID_Update_Invalid_Reference()
 		{
 			Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-			salesOrderDetailRepository.Setup(x => x.GetSpecialOfferProduct(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(null));
+			salesOrderDetailRepository.Setup(x => x.SpecialOfferProductByProductID(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(null));
 
 			var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
 
@@ -98,11 +99,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.ProductID, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= SpecialOfferProduct
 		[Fact]
 		public async void SpecialOfferID_Create_Valid_Reference()
 		{
 			Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-			salesOrderDetailRepository.Setup(x => x.GetSpecialOfferProduct(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(new SpecialOfferProduct()));
+			salesOrderDetailRepository.Setup(x => x.SpecialOfferProductBySpecialOfferID(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(new SpecialOfferProduct()));
 
 			var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSalesOrderDetailRequestModel());
@@ -114,7 +116,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SpecialOfferID_Create_Invalid_Reference()
 		{
 			Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-			salesOrderDetailRepository.Setup(x => x.GetSpecialOfferProduct(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(null));
+			salesOrderDetailRepository.Setup(x => x.SpecialOfferProductBySpecialOfferID(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(null));
 
 			var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
 
@@ -127,7 +129,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SpecialOfferID_Update_Valid_Reference()
 		{
 			Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-			salesOrderDetailRepository.Setup(x => x.GetSpecialOfferProduct(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(new SpecialOfferProduct()));
+			salesOrderDetailRepository.Setup(x => x.SpecialOfferProductBySpecialOfferID(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(new SpecialOfferProduct()));
 
 			var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderDetailRequestModel());
@@ -139,7 +141,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SpecialOfferID_Update_Invalid_Reference()
 		{
 			Mock<ISalesOrderDetailRepository> salesOrderDetailRepository = new Mock<ISalesOrderDetailRepository>();
-			salesOrderDetailRepository.Setup(x => x.GetSpecialOfferProduct(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(null));
+			salesOrderDetailRepository.Setup(x => x.SpecialOfferProductBySpecialOfferID(It.IsAny<int>())).Returns(Task.FromResult<SpecialOfferProduct>(null));
 
 			var validator = new ApiSalesOrderDetailRequestModelValidator(salesOrderDetailRepository.Object);
 
@@ -151,5 +153,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cf7b44e5c4162a7d19bd84e62bec5c3d</Hash>
+    <Hash>23eecff619370abd608115bfc713222d</Hash>
 </Codenesium>*/

@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IDocumentRepository documentRepository,
 			IApiDocumentRequestModelValidator documentModelValidator,
 			IBOLDocumentMapper boldocumentMapper,
-			IDALDocumentMapper daldocumentMapper
-			)
+			IDALDocumentMapper daldocumentMapper)
 			: base(logger,
 			       documentRepository,
 			       documentModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2a008b7ac34706c4c99b81ce2e0b23e3</Hash>
+    <Hash>43d66967da7d97c42c038fc5ba0ccd93</Hash>
 </Codenesium>*/

@@ -22,10 +22,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IDALIllustrationMapper DalIllustrationMapper { get; private set; }
 
-		protected IBOLProductModelIllustrationMapper BolProductModelIllustrationMapper { get; private set; }
-
-		protected IDALProductModelIllustrationMapper DalProductModelIllustrationMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractIllustrationService(
@@ -33,17 +29,13 @@ namespace AdventureWorksNS.Api.Services
 			IIllustrationRepository illustrationRepository,
 			IApiIllustrationRequestModelValidator illustrationModelValidator,
 			IBOLIllustrationMapper bolIllustrationMapper,
-			IDALIllustrationMapper dalIllustrationMapper,
-			IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
-			IDALProductModelIllustrationMapper dalProductModelIllustrationMapper)
+			IDALIllustrationMapper dalIllustrationMapper)
 			: base()
 		{
 			this.IllustrationRepository = illustrationRepository;
 			this.IllustrationModelValidator = illustrationModelValidator;
 			this.BolIllustrationMapper = bolIllustrationMapper;
 			this.DalIllustrationMapper = dalIllustrationMapper;
-			this.BolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
-			this.DalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
 			this.logger = logger;
 		}
 
@@ -115,16 +107,9 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<ProductModelIllustration> records = await this.IllustrationRepository.ProductModelIllustrations(illustrationID, limit, offset);
-
-			return this.BolProductModelIllustrationMapper.MapBOToModel(this.DalProductModelIllustrationMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ffe293a70577e6a53c0fbeef43472be6</Hash>
+    <Hash>81874d40c16f9348001fc86bfb1dd788</Hash>
 </Codenesium>*/

@@ -24,8 +24,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLEmployeePayHistoryMapper bolEmployeePayHistoryMapper,
 			IDALEmployeePayHistoryMapper dalEmployeePayHistoryMapper,
 			IBOLJobCandidateMapper bolJobCandidateMapper,
-			IDALJobCandidateMapper dalJobCandidateMapper
-			)
+			IDALJobCandidateMapper dalJobCandidateMapper)
 			: base(logger,
 			       employeeRepository,
 			       employeeModelValidator,
@@ -43,5 +42,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>448987967524441beebca4e0fa7f30f9</Hash>
+    <Hash>2514a38029f184b29a311d5a25553455</Hash>
 </Codenesium>*/

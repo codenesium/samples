@@ -20,11 +20,9 @@ namespace TestsNS.Api.Services
 		Task<ApiSelfReferenceResponseModel> Get(int id);
 
 		Task<List<ApiSelfReferenceResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiSelfReferenceResponseModel>> SelfReferences(int selfReferenceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b19cf9986faa4330ca4ea4f283417913</Hash>
+    <Hash>8b9aa190127aafc72f93953598caaa68</Hash>
 </Codenesium>*/

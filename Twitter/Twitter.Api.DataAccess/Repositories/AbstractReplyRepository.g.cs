@@ -78,12 +78,10 @@ namespace TwitterNS.Api.DataAccess
 
 		public async Task<List<Reply>> ByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ReplierUserId == replierUserId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ReplierUserId == replierUserId, limit, offset);
 		}
 
-		public async virtual Task<User> GetUser(int replierUserId)
+		public async virtual Task<User> UserByReplierUserId(int replierUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == replierUserId);
 		}
@@ -120,5 +118,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>80d060d739dd519a6c9f0aa42c670e6d</Hash>
+    <Hash>8b7a280c586f3d0ae1abe290cde36431</Hash>
 </Codenesium>*/

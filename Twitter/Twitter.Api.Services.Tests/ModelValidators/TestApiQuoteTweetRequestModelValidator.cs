@@ -72,11 +72,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Content, new string('A', 141));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void RetweeterUserId_Create_Valid_Reference()
 		{
 			Mock<IQuoteTweetRepository> quoteTweetRepository = new Mock<IQuoteTweetRepository>();
-			quoteTweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			quoteTweetRepository.Setup(x => x.UserByRetweeterUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiQuoteTweetRequestModelValidator(quoteTweetRepository.Object);
 			await validator.ValidateCreateAsync(new ApiQuoteTweetRequestModel());
@@ -88,7 +89,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void RetweeterUserId_Create_Invalid_Reference()
 		{
 			Mock<IQuoteTweetRepository> quoteTweetRepository = new Mock<IQuoteTweetRepository>();
-			quoteTweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			quoteTweetRepository.Setup(x => x.UserByRetweeterUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiQuoteTweetRequestModelValidator(quoteTweetRepository.Object);
 
@@ -101,7 +102,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void RetweeterUserId_Update_Valid_Reference()
 		{
 			Mock<IQuoteTweetRepository> quoteTweetRepository = new Mock<IQuoteTweetRepository>();
-			quoteTweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			quoteTweetRepository.Setup(x => x.UserByRetweeterUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiQuoteTweetRequestModelValidator(quoteTweetRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiQuoteTweetRequestModel());
@@ -113,7 +114,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void RetweeterUserId_Update_Invalid_Reference()
 		{
 			Mock<IQuoteTweetRepository> quoteTweetRepository = new Mock<IQuoteTweetRepository>();
-			quoteTweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			quoteTweetRepository.Setup(x => x.UserByRetweeterUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiQuoteTweetRequestModelValidator(quoteTweetRepository.Object);
 
@@ -122,11 +123,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.RetweeterUserId, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Tweet
 		[Fact]
 		public async void SourceTweetId_Create_Valid_Reference()
 		{
 			Mock<IQuoteTweetRepository> quoteTweetRepository = new Mock<IQuoteTweetRepository>();
-			quoteTweetRepository.Setup(x => x.GetTweet(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(new Tweet()));
+			quoteTweetRepository.Setup(x => x.TweetBySourceTweetId(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(new Tweet()));
 
 			var validator = new ApiQuoteTweetRequestModelValidator(quoteTweetRepository.Object);
 			await validator.ValidateCreateAsync(new ApiQuoteTweetRequestModel());
@@ -138,7 +140,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void SourceTweetId_Create_Invalid_Reference()
 		{
 			Mock<IQuoteTweetRepository> quoteTweetRepository = new Mock<IQuoteTweetRepository>();
-			quoteTweetRepository.Setup(x => x.GetTweet(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(null));
+			quoteTweetRepository.Setup(x => x.TweetBySourceTweetId(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(null));
 
 			var validator = new ApiQuoteTweetRequestModelValidator(quoteTweetRepository.Object);
 
@@ -151,7 +153,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void SourceTweetId_Update_Valid_Reference()
 		{
 			Mock<IQuoteTweetRepository> quoteTweetRepository = new Mock<IQuoteTweetRepository>();
-			quoteTweetRepository.Setup(x => x.GetTweet(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(new Tweet()));
+			quoteTweetRepository.Setup(x => x.TweetBySourceTweetId(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(new Tweet()));
 
 			var validator = new ApiQuoteTweetRequestModelValidator(quoteTweetRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiQuoteTweetRequestModel());
@@ -163,7 +165,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void SourceTweetId_Update_Invalid_Reference()
 		{
 			Mock<IQuoteTweetRepository> quoteTweetRepository = new Mock<IQuoteTweetRepository>();
-			quoteTweetRepository.Setup(x => x.GetTweet(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(null));
+			quoteTweetRepository.Setup(x => x.TweetBySourceTweetId(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(null));
 
 			var validator = new ApiQuoteTweetRequestModelValidator(quoteTweetRepository.Object);
 
@@ -175,5 +177,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2d4bc9779f64e976b02951d901e13d98</Hash>
+    <Hash>06b59a4f0bedcbddeb9bf4e117436ce6</Hash>
 </Codenesium>*/

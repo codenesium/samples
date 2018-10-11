@@ -78,14 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<Currency> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
-		}
-
-		public async virtual Task<List<CountryRegionCurrency>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<CountryRegionCurrency>().Where(x => x.CurrencyCode == currencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CountryRegionCurrency>();
+			return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<CurrencyRate>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
@@ -125,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cb04a0c3481659edde7ed7c26e59afcf</Hash>
+    <Hash>7a7390c6217bd0732c101c28e71fcf69</Hash>
 </Codenesium>*/

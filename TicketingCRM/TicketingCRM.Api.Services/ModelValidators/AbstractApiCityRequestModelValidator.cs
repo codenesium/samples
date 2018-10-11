@@ -34,12 +34,12 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void ProvinceIdRules()
 		{
-			this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvince).When(x => x?.ProvinceId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProvinceId).MustAsync(this.BeValidProvinceByProvinceId).When(x => x?.ProvinceId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidProvince(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidProvinceByProvinceId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.cityRepository.GetProvince(id);
+			var record = await this.cityRepository.ProvinceByProvinceId(id);
 
 			return record != null;
 		}
@@ -47,5 +47,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d907670e2f7a0aae8ddbafe0529f09b7</Hash>
+    <Hash>09bff14665f8dcb20b3bbaab0396dbe7</Hash>
 </Codenesium>*/

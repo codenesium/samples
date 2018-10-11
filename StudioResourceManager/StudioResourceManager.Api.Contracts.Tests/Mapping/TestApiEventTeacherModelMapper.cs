@@ -21,7 +21,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			ApiEventTeacherResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.EventId.Should().Be(1);
-			response.Id.Should().Be(1);
+			response.TeacherId.Should().Be(1);
 		}
 
 		[Fact]
@@ -32,7 +32,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			model.SetProperties(1, 1);
 			ApiEventTeacherRequestModel response = mapper.MapResponseToRequest(model);
 
-			response.EventId.Should().Be(1);
+			response.TeacherId.Should().Be(1);
 		}
 
 		[Fact]
@@ -45,11 +45,11 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			JsonPatchDocument<ApiEventTeacherRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiEventTeacherRequestModel();
 			patch.ApplyTo(response);
-			response.EventId.Should().Be(1);
+			response.TeacherId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b9b956140a641580d202552d347fcb9b</Hash>
+    <Hash>d3f89a24eade4fe5a85475b5c19d05d0</Hash>
 </Codenesium>*/

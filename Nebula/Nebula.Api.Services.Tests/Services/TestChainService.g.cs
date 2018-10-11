@@ -30,8 +30,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -52,8 +50,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -73,8 +69,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -95,8 +89,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -119,8 +111,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -142,8 +132,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -165,8 +153,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -186,8 +172,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -195,50 +179,6 @@ namespace NebulaNS.Api.Services.Tests
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByExternalId(It.IsAny<Guid>()));
-		}
-
-		[Fact]
-		public async void Clasps_Exists()
-		{
-			var mock = new ServiceMockFacade<IChainRepository>();
-			var records = new List<Clasp>();
-			records.Add(new Clasp());
-			mock.RepositoryMock.Setup(x => x.Clasps(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new ChainService(mock.LoggerMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
-			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
-			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                               mock.DALMapperMockFactory.DALLinkMapperMock);
-
-			List<ApiClaspResponseModel> response = await service.Clasps(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Clasps(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void Clasps_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IChainRepository>();
-			mock.RepositoryMock.Setup(x => x.Clasps(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Clasp>>(new List<Clasp>()));
-			var service = new ChainService(mock.LoggerMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
-			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
-			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                               mock.DALMapperMockFactory.DALLinkMapperMock);
-
-			List<ApiClaspResponseModel> response = await service.Clasps(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Clasps(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -253,8 +193,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -274,8 +212,6 @@ namespace NebulaNS.Api.Services.Tests
 			                               mock.ModelValidatorMockFactory.ChainModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                               mock.DALMapperMockFactory.DALChainMapperMock,
-			                               mock.BOLMapperMockFactory.BOLClaspMapperMock,
-			                               mock.DALMapperMockFactory.DALClaspMapperMock,
 			                               mock.BOLMapperMockFactory.BOLLinkMapperMock,
 			                               mock.DALMapperMockFactory.DALLinkMapperMock);
 
@@ -288,5 +224,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bb8edad9097e6dbb9e1637e4f7b5e0e7</Hash>
+    <Hash>4a3784e67a36f34b78999f2604e895af</Hash>
 </Codenesium>*/

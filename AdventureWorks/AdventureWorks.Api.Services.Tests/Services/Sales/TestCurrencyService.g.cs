@@ -30,8 +30,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -52,8 +50,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -73,8 +69,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -95,8 +89,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -119,8 +111,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -142,8 +132,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -165,8 +153,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -186,8 +172,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -195,50 +179,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByName(It.IsAny<string>()));
-		}
-
-		[Fact]
-		public async void CountryRegionCurrencies_Exists()
-		{
-			var mock = new ServiceMockFacade<ICurrencyRepository>();
-			var records = new List<CountryRegionCurrency>();
-			records.Add(new CountryRegionCurrency());
-			mock.RepositoryMock.Setup(x => x.CountryRegionCurrencies(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new CurrencyService(mock.LoggerMock.Object,
-			                                  mock.RepositoryMock.Object,
-			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
-			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
-
-			List<ApiCountryRegionCurrencyResponseModel> response = await service.CountryRegionCurrencies(default(string));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.CountryRegionCurrencies(default(string), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void CountryRegionCurrencies_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ICurrencyRepository>();
-			mock.RepositoryMock.Setup(x => x.CountryRegionCurrencies(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CountryRegionCurrency>>(new List<CountryRegionCurrency>()));
-			var service = new CurrencyService(mock.LoggerMock.Object,
-			                                  mock.RepositoryMock.Object,
-			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
-			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
-
-			List<ApiCountryRegionCurrencyResponseModel> response = await service.CountryRegionCurrencies(default(string));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.CountryRegionCurrencies(default(string), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -253,8 +193,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -274,8 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
-			                                  mock.BOLMapperMockFactory.BOLCountryRegionCurrencyMapperMock,
-			                                  mock.DALMapperMockFactory.DALCountryRegionCurrencyMapperMock,
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
@@ -288,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2b6e3daa5f1fac8a69aec9d244496b93</Hash>
+    <Hash>887725315e7308ad261872f2725156da</Hash>
 </Codenesium>*/

@@ -43,6 +43,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public Mock<IApiUserRequestModelValidator> UserModelValidatorMock { get; set; } = new Mock<IApiUserRequestModelValidator>();
 
+		public Mock<IApiVEventRequestModelValidator> VEventModelValidatorMock { get; set; } = new Mock<IApiVEventRequestModelValidator>();
+
 		public ModelValidatorMockFactory()
 		{
 			this.AdminModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiAdminRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -112,10 +114,14 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			this.UserModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UserModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiUserRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.UserModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
+			this.VEventModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVEventRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VEventModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVEventRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.VEventModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dce14bf6eb514aba11470ad4fe98dc83</Hash>
+    <Hash>ee5a82fe489820e2454ebf8d5e1a79f9</Hash>
 </Codenesium>*/

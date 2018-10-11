@@ -11,22 +11,18 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task Update(TeacherTeacherSkill item);
 
-		Task Delete(int id);
+		Task Delete(int teacherId);
 
-		Task<TeacherTeacherSkill> Get(int id);
+		Task<TeacherTeacherSkill> Get(int teacherId);
 
 		Task<List<TeacherTeacherSkill>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<TeacherTeacherSkill>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
+		Task<Teacher> TeacherByTeacherId(int teacherId);
 
-		Task<List<TeacherTeacherSkill>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
-
-		Task<Teacher> GetTeacher(int teacherId);
-
-		Task<TeacherSkill> GetTeacherSkill(int teacherSkillId);
+		Task<TeacherSkill> TeacherSkillByTeacherSkillId(int teacherSkillId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a16eda4f7a241e09923624d8e986509e</Hash>
+    <Hash>818e64cd9e4541a4747db2932cc42d37</Hash>
 </Codenesium>*/

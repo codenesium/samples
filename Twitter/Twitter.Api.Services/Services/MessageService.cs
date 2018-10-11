@@ -20,8 +20,7 @@ namespace TwitterNS.Api.Services
 			IBOLMessageMapper bolmessageMapper,
 			IDALMessageMapper dalmessageMapper,
 			IBOLMessengerMapper bolMessengerMapper,
-			IDALMessengerMapper dalMessengerMapper
-			)
+			IDALMessengerMapper dalMessengerMapper)
 			: base(logger,
 			       messageRepository,
 			       messageModelValidator,
@@ -35,5 +34,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>249314e7fcacfdd0fcdf50f9e210699c</Hash>
+    <Hash>1630a2d458ffcb23bc8059e462ed4de3</Hash>
 </Codenesium>*/

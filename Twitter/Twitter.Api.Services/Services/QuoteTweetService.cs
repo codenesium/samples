@@ -18,8 +18,7 @@ namespace TwitterNS.Api.Services
 			IQuoteTweetRepository quoteTweetRepository,
 			IApiQuoteTweetRequestModelValidator quoteTweetModelValidator,
 			IBOLQuoteTweetMapper bolquoteTweetMapper,
-			IDALQuoteTweetMapper dalquoteTweetMapper
-			)
+			IDALQuoteTweetMapper dalquoteTweetMapper)
 			: base(logger,
 			       quoteTweetRepository,
 			       quoteTweetModelValidator,
@@ -31,5 +30,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c2830fbb3716b6e6a67fcf3d13e2463c</Hash>
+    <Hash>e8ee0f4c41677dc30105adfad9dfaf42</Hash>
 </Codenesium>*/

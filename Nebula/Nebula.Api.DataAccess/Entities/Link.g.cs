@@ -95,10 +95,10 @@ namespace NebulaNS.Api.DataAccess
 		public virtual Chain ChainNavigation { get; private set; }
 
 		[ForeignKey("LinkStatusId")]
-		public virtual LinkStatu LinkStatuNavigation { get; private set; }
+		public virtual LinkStatus LinkStatusNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c81cf990d2de1895ae45bcd4f947cb6</Hash>
+    <Hash>d78eae991c5a77d1d88ba84417aa6bfa</Hash>
 </Codenesium>*/

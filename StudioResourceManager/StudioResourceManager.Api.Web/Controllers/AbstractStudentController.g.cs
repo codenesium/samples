@@ -207,40 +207,6 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byFamilyId/{familyId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByFamilyId(int familyId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiStudentResponseModel> response = await this.StudentService.ByFamilyId(familyId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("byUserId/{userId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByUserId(int userId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiStudentResponseModel> response = await this.StudentService.ByUserId(userId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{studentId}/EventStudents")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEventStudentResponseModel>), 200)]
@@ -253,6 +219,23 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 
 			List<ApiEventStudentResponseModel> response = await this.StudentService.EventStudents(studentId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("byEventId/{eventId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByEventId(int eventId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiStudentResponseModel> response = await this.StudentService.ByEventId(eventId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -276,5 +259,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>25c8eeb601bc2b0efbbe408789910ed1</Hash>
+    <Hash>23079c61d22ad105316444ca6f8322d1</Hash>
 </Codenesium>*/

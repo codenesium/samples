@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IPersonPhoneRepository personPhoneRepository,
 			IApiPersonPhoneRequestModelValidator personPhoneModelValidator,
 			IBOLPersonPhoneMapper bolpersonPhoneMapper,
-			IDALPersonPhoneMapper dalpersonPhoneMapper
-			)
+			IDALPersonPhoneMapper dalpersonPhoneMapper)
 			: base(logger,
 			       personPhoneRepository,
 			       personPhoneModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dedcf1793169636c3b2a924df9e11ce1</Hash>
+    <Hash>12d6054217a7124a1f5c33fa95f514c0</Hash>
 </Codenesium>*/

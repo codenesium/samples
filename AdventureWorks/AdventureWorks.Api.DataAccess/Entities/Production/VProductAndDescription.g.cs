@@ -40,6 +40,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Name")]
 		public string Name { get; private set; }
 
+		[Key]
 		[Column("ProductID")]
 		public int ProductID { get; private set; }
 
@@ -50,5 +51,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f9ecb8e34a7d254936e70e8f27479651</Hash>
+    <Hash>f1a824ae070cbefe3208bb0ad56b23b6</Hash>
 </Codenesium>*/

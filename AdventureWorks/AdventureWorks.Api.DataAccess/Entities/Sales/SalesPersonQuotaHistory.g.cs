@@ -34,6 +34,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[Key]
 		[Column("QuotaDate")]
 		public DateTime QuotaDate { get; private set; }
 
@@ -50,5 +51,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dabe2e2b4037b2462bfa27239eaa4b26</Hash>
+    <Hash>f67c150cb2cf412400763329a03d4f0c</Hash>
 </Codenesium>*/

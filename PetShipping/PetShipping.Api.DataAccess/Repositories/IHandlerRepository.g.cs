@@ -19,12 +19,10 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<List<AirTransport>> AirTransports(int handlerId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<HandlerPipelineStep>> HandlerPipelineSteps(int handlerId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<OtherTransport>> OtherTransports(int handlerId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Handler>> ByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fa7ff12229a026909551852b08a62bfd</Hash>
+    <Hash>852d6077c9799c0ed4397bdfc2d19f80</Hash>
 </Codenesium>*/

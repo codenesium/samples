@@ -24,8 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IBOLStudentMapper bolStudentMapper,
 			IDALStudentMapper dalStudentMapper,
 			IBOLTeacherMapper bolTeacherMapper,
-			IDALTeacherMapper dalTeacherMapper
-			)
+			IDALTeacherMapper dalTeacherMapper)
 			: base(logger,
 			       userRepository,
 			       userModelValidator,
@@ -43,5 +42,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>44a8086cfbd3557caf83237a8cb54fee</Hash>
+    <Hash>be7010d0307f9f22c3d08a630df6f2c9</Hash>
 </Codenesium>*/

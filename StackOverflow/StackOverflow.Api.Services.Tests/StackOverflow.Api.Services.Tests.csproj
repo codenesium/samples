@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+	<RootNamespace>StackOverflowNS.Api.Services.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

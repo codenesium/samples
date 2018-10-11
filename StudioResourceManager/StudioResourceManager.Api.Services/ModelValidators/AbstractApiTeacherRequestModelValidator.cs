@@ -55,12 +55,12 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void UserIdRules()
 		{
-			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUser).When(x => x?.UserId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => x?.UserId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidUser(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidUserByUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.teacherRepository.GetUser(id);
+			var record = await this.teacherRepository.UserByUserId(id);
 
 			return record != null;
 		}
@@ -68,5 +68,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>992287536066d76c97663ac99b01a6d2</Hash>
+    <Hash>d2ad527b8dad1483a50c916b33fad80f</Hash>
 </Codenesium>*/

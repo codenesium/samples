@@ -9,20 +9,15 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public partial class ApiTeacherTeacherSkillResponseModel : AbstractApiResponseModel
 	{
 		public virtual void SetProperties(
-			int id,
 			int teacherId,
 			int teacherSkillId)
 		{
-			this.Id = id;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
 
 			this.TeacherIdEntity = nameof(ApiResponse.Teachers);
 			this.TeacherSkillIdEntity = nameof(ApiResponse.TeacherSkills);
 		}
-
-		[JsonProperty]
-		public int Id { get; private set; }
 
 		[JsonProperty]
 		public int TeacherId { get; private set; }
@@ -39,5 +34,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>f6df00274aa1af2407ce107ba634a0c0</Hash>
+    <Hash>2bde5d39ced589c2cd9281ccbfde871f</Hash>
 </Codenesium>*/

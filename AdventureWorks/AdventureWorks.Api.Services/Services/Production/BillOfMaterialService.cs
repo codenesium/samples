@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IBillOfMaterialRepository billOfMaterialRepository,
 			IApiBillOfMaterialRequestModelValidator billOfMaterialModelValidator,
 			IBOLBillOfMaterialMapper bolbillOfMaterialMapper,
-			IDALBillOfMaterialMapper dalbillOfMaterialMapper
-			)
+			IDALBillOfMaterialMapper dalbillOfMaterialMapper)
 			: base(logger,
 			       billOfMaterialRepository,
 			       billOfMaterialModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2115f8164204772392e9260dbd22a972</Hash>
+    <Hash>a3b38265f1d5855745117a0e4490607c</Hash>
 </Codenesium>*/

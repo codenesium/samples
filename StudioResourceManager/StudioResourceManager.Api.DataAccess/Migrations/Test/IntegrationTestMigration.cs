@@ -31,7 +31,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.context.EventStatuses.Add(eventStatusItem1);
 
 			var eventStudentItem1 = new EventStudent();
-			eventStudentItem1.SetProperties(1, 1, 1);
+			eventStudentItem1.SetProperties(1, 1);
 			this.context.EventStudents.Add(eventStudentItem1);
 
 			var eventTeacherItem1 = new EventTeacher();
@@ -55,7 +55,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.context.SpaceFeatures.Add(spaceFeatureItem1);
 
 			var spaceSpaceFeatureItem1 = new SpaceSpaceFeature();
-			spaceSpaceFeatureItem1.SetProperties(1, 1, 1);
+			spaceSpaceFeatureItem1.SetProperties(1, 1);
 			this.context.SpaceSpaceFeatures.Add(spaceSpaceFeatureItem1);
 
 			var studentItem1 = new Student();
@@ -75,7 +75,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.context.TeacherSkills.Add(teacherSkillItem1);
 
 			var teacherTeacherSkillItem1 = new TeacherTeacherSkill();
-			teacherTeacherSkillItem1.SetProperties(1, 1, 1);
+			teacherTeacherSkillItem1.SetProperties(1, 1);
 			this.context.TeacherTeacherSkills.Add(teacherTeacherSkillItem1);
 
 			var tenantItem1 = new Tenant();
@@ -86,11 +86,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			userItem1.SetProperties(1, "A", "A");
 			this.context.Users.Add(userItem1);
 
+			var vEventItem1 = new VEvent();
+			vEventItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			this.context.VEvents.Add(vEventItem1);
+
 			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e268b9df2b65dfe3f1dfb5b00073047b</Hash>
+    <Hash>d1251dfb9d580729fa07f2b0a5c77a16</Hash>
 </Codenesium>*/

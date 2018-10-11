@@ -23,12 +23,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<SalesOrderHeader>> SalesOrderHeaders(int customerID, int limit = int.MaxValue, int offset = 0);
 
-		Task<Store> GetStore(int? storeID);
+		Task<Store> StoreByStoreID(int? storeID);
 
-		Task<SalesTerritory> GetSalesTerritory(int? territoryID);
+		Task<SalesTerritory> SalesTerritoryByTerritoryID(int? territoryID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d79c8792d9ecbe6d40accbf2cf314618</Hash>
+    <Hash>151d4e3c7079d1c54b58a4fcc755bcac</Hash>
 </Codenesium>*/

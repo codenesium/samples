@@ -35,12 +35,12 @@ namespace NebulaNS.Api.Services
 
 		public virtual void OrganizationIdRules()
 		{
-			this.RuleFor(x => x.OrganizationId).MustAsync(this.BeValidOrganization).When(x => x?.OrganizationId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.OrganizationId).MustAsync(this.BeValidOrganizationByOrganizationId).When(x => x?.OrganizationId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidOrganization(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidOrganizationByOrganizationId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.teamRepository.GetOrganization(id);
+			var record = await this.teamRepository.OrganizationByOrganizationId(id);
 
 			return record != null;
 		}
@@ -62,5 +62,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f03df99421f0b3391e9269d9b4198cd6</Hash>
+    <Hash>31aa7378f935ea3dc12134244b8919e5</Hash>
 </Codenesium>*/

@@ -206,23 +206,6 @@ namespace AdventureWorksNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{illustrationID}/ProductModelIllustrations")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductModelIllustrationResponseModel>), 200)]
-		public async virtual Task<IActionResult> ProductModelIllustrations(int illustrationID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiProductModelIllustrationResponseModel> response = await this.IllustrationService.ProductModelIllustrations(illustrationID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiIllustrationRequestModel> PatchModel(int id, JsonPatchDocument<ApiIllustrationRequestModel> patch)
 		{
 			var record = await this.IllustrationService.Get(id);
@@ -242,5 +225,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>91bcfcc6eef6d927007516a970d11980</Hash>
+    <Hash>da7a1e9559ecd235e2046b71c7a028b6</Hash>
 </Codenesium>*/

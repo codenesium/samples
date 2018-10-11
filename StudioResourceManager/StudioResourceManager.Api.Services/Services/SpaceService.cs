@@ -20,8 +20,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IBOLSpaceMapper bolspaceMapper,
 			IDALSpaceMapper dalspaceMapper,
 			IBOLSpaceSpaceFeatureMapper bolSpaceSpaceFeatureMapper,
-			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper
-			)
+			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper)
 			: base(logger,
 			       spaceRepository,
 			       spaceModelValidator,
@@ -35,5 +34,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a1738c8dab06a4df0228f8fad5546be0</Hash>
+    <Hash>8d594ff0c7669fa450fded0586fccc32</Hash>
 </Codenesium>*/

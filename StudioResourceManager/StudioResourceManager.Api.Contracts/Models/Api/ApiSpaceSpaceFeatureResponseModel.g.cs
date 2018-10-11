@@ -9,20 +9,15 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public partial class ApiSpaceSpaceFeatureResponseModel : AbstractApiResponseModel
 	{
 		public virtual void SetProperties(
-			int id,
-			int spaceFeatureId,
-			int spaceId)
+			int spaceId,
+			int spaceFeatureId)
 		{
-			this.Id = id;
-			this.SpaceFeatureId = spaceFeatureId;
 			this.SpaceId = spaceId;
+			this.SpaceFeatureId = spaceFeatureId;
 
 			this.SpaceFeatureIdEntity = nameof(ApiResponse.SpaceFeatures);
 			this.SpaceIdEntity = nameof(ApiResponse.Spaces);
 		}
-
-		[JsonProperty]
-		public int Id { get; private set; }
 
 		[JsonProperty]
 		public int SpaceFeatureId { get; private set; }
@@ -39,5 +34,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>5ecbbe360cb28611f752831a017f88c5</Hash>
+    <Hash>6f20126b28c5df9719f68c94cf90526e</Hash>
 </Codenesium>*/

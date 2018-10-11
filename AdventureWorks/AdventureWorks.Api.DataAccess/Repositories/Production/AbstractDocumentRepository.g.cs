@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<Document>> ByFileNameRevision(string fileName, string revision, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.FileName == fileName && x.Revision == revision, limit, offset);
-
-			return records;
+			return await this.Where(x => x.FileName == fileName && x.Revision == revision, limit, offset);
 		}
 
 		protected async Task<List<Document>> Where(
@@ -115,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4a14bcc5aea39e397c77ffaa2bc9a3fe</Hash>
+    <Hash>8374cdee9a12ffc10434e2842f75163e</Hash>
 </Codenesium>*/

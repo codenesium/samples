@@ -29,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
+			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
 			List<ApiIllustrationResponseModel> response = await service.All();
 
@@ -49,9 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
+			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
 			ApiIllustrationResponseModel response = await service.Get(default(int));
 
@@ -68,9 +64,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
+			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
 			ApiIllustrationResponseModel response = await service.Get(default(int));
 
@@ -88,9 +82,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
+			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
 			CreateResponse<ApiIllustrationResponseModel> response = await service.Create(model);
 
@@ -110,9 +102,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
+			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
 			UpdateResponse<ApiIllustrationResponseModel> response = await service.Update(default(int), model);
 
@@ -131,9 +121,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
+			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -141,49 +129,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void ProductModelIllustrations_Exists()
-		{
-			var mock = new ServiceMockFacade<IIllustrationRepository>();
-			var records = new List<ProductModelIllustration>();
-			records.Add(new ProductModelIllustration());
-			mock.RepositoryMock.Setup(x => x.ProductModelIllustrations(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new IllustrationService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
-
-			List<ApiProductModelIllustrationResponseModel> response = await service.ProductModelIllustrations(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductModelIllustrations(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ProductModelIllustrations_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IIllustrationRepository>();
-			mock.RepositoryMock.Setup(x => x.ProductModelIllustrations(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModelIllustration>>(new List<ProductModelIllustration>()));
-			var service = new IllustrationService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.IllustrationModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALIllustrationMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLProductModelIllustrationMapperMock,
-			                                      mock.DALMapperMockFactory.DALProductModelIllustrationMapperMock);
-
-			List<ApiProductModelIllustrationResponseModel> response = await service.ProductModelIllustrations(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductModelIllustrations(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>057e656d91ea1b5319e04da76f73682f</Hash>
+    <Hash>f682b7a50bc11372a4fa7bb14430d3c1</Hash>
 </Codenesium>*/

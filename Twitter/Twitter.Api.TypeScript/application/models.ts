@@ -37,6 +37,55 @@ this.tweetId = 0;
 		
 				}
 			}
+			export class ApiFollowerRequestModel {
+				blocked:string;
+dateFollowed:string;
+followRequestStatu:string;
+followedUserId:number;
+followedUserIdEntity:number;
+followingUserId:number;
+followingUserIdEntity:number;
+id:number;
+muted:string;
+
+	
+				constructor() {
+					this.blocked = '';
+this.dateFollowed = '';
+this.followRequestStatu = '';
+this.followedUserId = 0;
+this.followingUserId = 0;
+this.id = 0;
+this.muted = '';
+
+		
+				}
+			}
+
+			export class ApiFollowerResponseModel {
+				blocked:string;
+dateFollowed:string;
+followRequestStatu:string;
+followedUserId:number;
+followedUserIdEntity:number;
+followingUserId:number;
+followingUserIdEntity:number;
+id:number;
+muted:string;
+
+	
+				constructor() {
+					this.blocked = '';
+this.dateFollowed = '';
+this.followRequestStatu = '';
+this.followedUserId = 0;
+this.followingUserId = 0;
+this.id = 0;
+this.muted = '';
+
+		
+				}
+			}
 			export class ApiFollowingRequestModel {
 				dateFollowed:string;
 muted:string;
@@ -62,39 +111,6 @@ userId:string;
 					this.dateFollowed = '';
 this.muted = '';
 this.userId = '';
-
-		
-				}
-			}
-			export class ApiLikeRequestModel {
-				likeId:number;
-likerUserId:number;
-likerUserIdEntity:number;
-tweetId:number;
-tweetIdEntity:number;
-
-	
-				constructor() {
-					this.likeId = 0;
-this.likerUserId = 0;
-this.tweetId = 0;
-
-		
-				}
-			}
-
-			export class ApiLikeResponseModel {
-				likeId:number;
-likerUserId:number;
-likerUserIdEntity:number;
-tweetId:number;
-tweetIdEntity:number;
-
-	
-				constructor() {
-					this.likeId = 0;
-this.likerUserId = 0;
-this.tweetId = 0;
 
 		
 				}

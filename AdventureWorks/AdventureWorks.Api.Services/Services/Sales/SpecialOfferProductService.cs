@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLSpecialOfferProductMapper bolspecialOfferProductMapper,
 			IDALSpecialOfferProductMapper dalspecialOfferProductMapper,
 			IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
-			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper
-			)
+			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper)
 			: base(logger,
 			       specialOfferProductRepository,
 			       specialOfferProductModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d56112935a7d678db3ce4ee6efffc1d</Hash>
+    <Hash>f973b3f4856b1c7ceee2fb4f4ad6ad20</Hash>
 </Codenesium>*/

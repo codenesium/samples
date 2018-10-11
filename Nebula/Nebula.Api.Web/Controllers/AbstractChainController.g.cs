@@ -226,23 +226,6 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{nextChainId}/Clasps")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiClaspResponseModel>), 200)]
-		public async virtual Task<IActionResult> Clasps(int nextChainId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiClaspResponseModel> response = await this.ChainService.Clasps(nextChainId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{chainId}/Links")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
@@ -255,6 +238,23 @@ namespace NebulaNS.Api.Web
 			}
 
 			List<ApiLinkResponseModel> response = await this.ChainService.Links(chainId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("byNextChainId/{nextChainId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiChainResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByNextChainId(int nextChainId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiChainResponseModel> response = await this.ChainService.ByNextChainId(nextChainId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -278,5 +278,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f777d401b8172f96af1edec632c88760</Hash>
+    <Hash>ce9c088afa97f7ef389ef9cd13a5fde3</Hash>
 </Codenesium>*/

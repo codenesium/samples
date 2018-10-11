@@ -17,10 +17,10 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<LinkLog>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<Link> GetLink(int linkId);
+		Task<Link> LinkByLinkId(int linkId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a5bf44c82b3b970e5e3cc7b8800b0d78</Hash>
+    <Hash>a4ba2396398ed4ab0f7b4ce052d2fa21</Hash>
 </Codenesium>*/

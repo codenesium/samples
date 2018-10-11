@@ -78,16 +78,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<Shift> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Shift>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async Task<Shift> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime)
 		{
-			var records = await this.Where(x => x.StartTime == startTime && x.EndTime == endTime);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Shift>().SingleOrDefaultAsync(x => x.StartTime == startTime && x.EndTime == endTime);
 		}
 
 		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(int shiftID, int limit = int.MaxValue, int offset = 0)
@@ -127,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d2b0277cfe0267a0a23deb1b465cd107</Hash>
+    <Hash>e4a9a201fbf501ccc4b6a7f6908b8112</Hash>
 </Codenesium>*/

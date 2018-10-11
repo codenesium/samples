@@ -72,11 +72,12 @@ namespace NebulaNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Organization
 		[Fact]
 		public async void OrganizationId_Create_Valid_Reference()
 		{
 			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-			teamRepository.Setup(x => x.GetOrganization(It.IsAny<int>())).Returns(Task.FromResult<Organization>(new Organization()));
+			teamRepository.Setup(x => x.OrganizationByOrganizationId(It.IsAny<int>())).Returns(Task.FromResult<Organization>(new Organization()));
 
 			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 			await validator.ValidateCreateAsync(new ApiTeamRequestModel());
@@ -88,7 +89,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void OrganizationId_Create_Invalid_Reference()
 		{
 			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-			teamRepository.Setup(x => x.GetOrganization(It.IsAny<int>())).Returns(Task.FromResult<Organization>(null));
+			teamRepository.Setup(x => x.OrganizationByOrganizationId(It.IsAny<int>())).Returns(Task.FromResult<Organization>(null));
 
 			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
@@ -101,7 +102,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void OrganizationId_Update_Valid_Reference()
 		{
 			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-			teamRepository.Setup(x => x.GetOrganization(It.IsAny<int>())).Returns(Task.FromResult<Organization>(new Organization()));
+			teamRepository.Setup(x => x.OrganizationByOrganizationId(It.IsAny<int>())).Returns(Task.FromResult<Organization>(new Organization()));
 
 			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiTeamRequestModel());
@@ -113,7 +114,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void OrganizationId_Update_Invalid_Reference()
 		{
 			Mock<ITeamRepository> teamRepository = new Mock<ITeamRepository>();
-			teamRepository.Setup(x => x.GetOrganization(It.IsAny<int>())).Returns(Task.FromResult<Organization>(null));
+			teamRepository.Setup(x => x.OrganizationByOrganizationId(It.IsAny<int>())).Returns(Task.FromResult<Organization>(null));
 
 			var validator = new ApiTeamRequestModelValidator(teamRepository.Object);
 
@@ -173,5 +174,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a35d8fb368b2d8bad23132a47f4b7c57</Hash>
+    <Hash>960fc3cde021192b7109c9b31b25daf4</Hash>
 </Codenesium>*/

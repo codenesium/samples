@@ -50,6 +50,7 @@ this.userId = 0;
 actualStartDate:string;
 billAmount:number;
 eventStatusId:number;
+eventStatusIdEntity:number;
 id:number;
 scheduledEndDate:string;
 scheduledStartDate:string;
@@ -77,6 +78,7 @@ this.teacherNote = '';
 actualStartDate:string;
 billAmount:number;
 eventStatusId:number;
+eventStatusIdEntity:number;
 id:number;
 scheduledEndDate:string;
 scheduledStartDate:string;
@@ -126,14 +128,12 @@ this.name = '';
 			export class ApiEventStudentRequestModel {
 				eventId:number;
 eventIdEntity:number;
-id:number;
 studentId:number;
 studentIdEntity:number;
 
 	
 				constructor() {
 					this.eventId = 0;
-this.id = 0;
 this.studentId = 0;
 
 		
@@ -143,14 +143,12 @@ this.studentId = 0;
 			export class ApiEventStudentResponseModel {
 				eventId:number;
 eventIdEntity:number;
-id:number;
 studentId:number;
 studentIdEntity:number;
 
 	
 				constructor() {
 					this.eventId = 0;
-this.id = 0;
 this.studentId = 0;
 
 		
@@ -159,12 +157,13 @@ this.studentId = 0;
 			export class ApiEventTeacherRequestModel {
 				eventId:number;
 eventIdEntity:number;
-id:number;
+teacherId:number;
+teacherIdEntity:number;
 
 	
 				constructor() {
 					this.eventId = 0;
-this.id = 0;
+this.teacherId = 0;
 
 		
 				}
@@ -173,12 +172,13 @@ this.id = 0;
 			export class ApiEventTeacherResponseModel {
 				eventId:number;
 eventIdEntity:number;
-id:number;
+teacherId:number;
+teacherIdEntity:number;
 
 	
 				constructor() {
 					this.eventId = 0;
-this.id = 0;
+this.teacherId = 0;
 
 		
 				}
@@ -316,16 +316,14 @@ this.name = '';
 				}
 			}
 			export class ApiSpaceSpaceFeatureRequestModel {
-				id:number;
-spaceFeatureId:number;
+				spaceFeatureId:number;
 spaceFeatureIdEntity:number;
 spaceId:number;
 spaceIdEntity:number;
 
 	
 				constructor() {
-					this.id = 0;
-this.spaceFeatureId = 0;
+					this.spaceFeatureId = 0;
 this.spaceId = 0;
 
 		
@@ -333,16 +331,14 @@ this.spaceId = 0;
 			}
 
 			export class ApiSpaceSpaceFeatureResponseModel {
-				id:number;
-spaceFeatureId:number;
+				spaceFeatureId:number;
 spaceFeatureIdEntity:number;
 spaceId:number;
 spaceIdEntity:number;
 
 	
 				constructor() {
-					this.id = 0;
-this.spaceFeatureId = 0;
+					this.spaceFeatureId = 0;
 this.spaceId = 0;
 
 		
@@ -535,16 +531,14 @@ this.name = '';
 				}
 			}
 			export class ApiTeacherTeacherSkillRequestModel {
-				id:number;
-teacherId:number;
+				teacherId:number;
 teacherIdEntity:number;
 teacherSkillId:number;
 teacherSkillIdEntity:number;
 
 	
 				constructor() {
-					this.id = 0;
-this.teacherId = 0;
+					this.teacherId = 0;
 this.teacherSkillId = 0;
 
 		
@@ -552,16 +546,14 @@ this.teacherSkillId = 0;
 			}
 
 			export class ApiTeacherTeacherSkillResponseModel {
-				id:number;
-teacherId:number;
+				teacherId:number;
 teacherIdEntity:number;
 teacherSkillId:number;
 teacherSkillIdEntity:number;
 
 	
 				constructor() {
-					this.id = 0;
-this.teacherId = 0;
+					this.teacherId = 0;
 this.teacherSkillId = 0;
 
 		
@@ -617,6 +609,51 @@ username:string;
 					this.id = 0;
 this.password = '';
 this.username = '';
+
+		
+				}
+			}
+			export class ApiVEventRequestModel {
+				actualEndDate:string;
+actualStartDate:string;
+billAmount:number;
+eventStatusId:number;
+id:number;
+scheduledEndDate:string;
+scheduledStartDate:string;
+
+	
+				constructor() {
+					this.actualEndDate = '';
+this.actualStartDate = '';
+this.billAmount = 0;
+this.eventStatusId = 0;
+this.id = 0;
+this.scheduledEndDate = '';
+this.scheduledStartDate = '';
+
+		
+				}
+			}
+
+			export class ApiVEventResponseModel {
+				actualEndDate:string;
+actualStartDate:string;
+billAmount:number;
+eventStatusId:number;
+id:number;
+scheduledEndDate:string;
+scheduledStartDate:string;
+
+	
+				constructor() {
+					this.actualEndDate = '';
+this.actualStartDate = '';
+this.billAmount = 0;
+this.eventStatusId = 0;
+this.id = 0;
+this.scheduledEndDate = '';
+this.scheduledStartDate = '';
 
 		
 				}

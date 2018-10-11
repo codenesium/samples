@@ -207,25 +207,6 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byProductAssemblyIDComponentIDStartDate/{productAssemblyID}/{componentID}/{startDate}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(ApiBillOfMaterialResponseModel), 200)]
-		[ProducesResponseType(typeof(void), 404)]
-		public async virtual Task<IActionResult> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate)
-		{
-			ApiBillOfMaterialResponseModel response = await this.BillOfMaterialService.ByProductAssemblyIDComponentIDStartDate(productAssemblyID, componentID, startDate);
-
-			if (response == null)
-			{
-				return this.StatusCode(StatusCodes.Status404NotFound);
-			}
-			else
-			{
-				return this.Ok(response);
-			}
-		}
-
-		[HttpGet]
 		[Route("byUnitMeasureCode/{unitMeasureCode}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
@@ -261,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>79955445699ef144d1f6b04f93ebe54d</Hash>
+    <Hash>bdd2b74259cafeb63fec3406c2ef42fe</Hash>
 </Codenesium>*/

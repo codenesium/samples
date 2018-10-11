@@ -28,7 +28,7 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void BucketIdRules()
 		{
-			this.RuleFor(x => x.BucketId).MustAsync(this.BeValidBucket).When(x => x?.BucketId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.BucketId).MustAsync(this.BeValidBucketByBucketId).When(x => x?.BucketId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void DateCreatedRules()
@@ -60,7 +60,7 @@ namespace FileServiceNS.Api.Services
 
 		public virtual void FileTypeIdRules()
 		{
-			this.RuleFor(x => x.FileTypeId).MustAsync(this.BeValidFileType).When(x => x?.FileTypeId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.FileTypeId).MustAsync(this.BeValidFileTypeByFileTypeId).When(x => x?.FileTypeId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void LocationRules()
@@ -81,16 +81,16 @@ namespace FileServiceNS.Api.Services
 			this.RuleFor(x => x.PublicKey).Length(0, 64);
 		}
 
-		private async Task<bool> BeValidBucket(int? id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidBucketByBucketId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.fileRepository.GetBucket(id.GetValueOrDefault());
+			var record = await this.fileRepository.BucketByBucketId(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidFileType(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidFileTypeByFileTypeId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.fileRepository.GetFileType(id);
+			var record = await this.fileRepository.FileTypeByFileTypeId(id);
 
 			return record != null;
 		}
@@ -98,5 +98,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3aa43c197eb4f43b4c60abef4491ddfb</Hash>
+    <Hash>7d477c26eda7a59b491ab8075457c1e7</Hash>
 </Codenesium>*/

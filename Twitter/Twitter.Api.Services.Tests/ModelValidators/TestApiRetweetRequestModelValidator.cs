@@ -24,11 +24,12 @@ namespace TwitterNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void RetwitterUserId_Create_Valid_Reference()
 		{
 			Mock<IRetweetRepository> retweetRepository = new Mock<IRetweetRepository>();
-			retweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			retweetRepository.Setup(x => x.UserByRetwitterUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiRetweetRequestModelValidator(retweetRepository.Object);
 			await validator.ValidateCreateAsync(new ApiRetweetRequestModel());
@@ -40,7 +41,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void RetwitterUserId_Create_Invalid_Reference()
 		{
 			Mock<IRetweetRepository> retweetRepository = new Mock<IRetweetRepository>();
-			retweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			retweetRepository.Setup(x => x.UserByRetwitterUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiRetweetRequestModelValidator(retweetRepository.Object);
 
@@ -53,7 +54,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void RetwitterUserId_Update_Valid_Reference()
 		{
 			Mock<IRetweetRepository> retweetRepository = new Mock<IRetweetRepository>();
-			retweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			retweetRepository.Setup(x => x.UserByRetwitterUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiRetweetRequestModelValidator(retweetRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiRetweetRequestModel());
@@ -65,7 +66,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void RetwitterUserId_Update_Invalid_Reference()
 		{
 			Mock<IRetweetRepository> retweetRepository = new Mock<IRetweetRepository>();
-			retweetRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			retweetRepository.Setup(x => x.UserByRetwitterUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiRetweetRequestModelValidator(retweetRepository.Object);
 
@@ -74,11 +75,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.RetwitterUserId, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Tweet
 		[Fact]
 		public async void TweetTweetId_Create_Valid_Reference()
 		{
 			Mock<IRetweetRepository> retweetRepository = new Mock<IRetweetRepository>();
-			retweetRepository.Setup(x => x.GetTweet(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(new Tweet()));
+			retweetRepository.Setup(x => x.TweetByTweetTweetId(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(new Tweet()));
 
 			var validator = new ApiRetweetRequestModelValidator(retweetRepository.Object);
 			await validator.ValidateCreateAsync(new ApiRetweetRequestModel());
@@ -90,7 +92,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void TweetTweetId_Create_Invalid_Reference()
 		{
 			Mock<IRetweetRepository> retweetRepository = new Mock<IRetweetRepository>();
-			retweetRepository.Setup(x => x.GetTweet(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(null));
+			retweetRepository.Setup(x => x.TweetByTweetTweetId(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(null));
 
 			var validator = new ApiRetweetRequestModelValidator(retweetRepository.Object);
 
@@ -103,7 +105,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void TweetTweetId_Update_Valid_Reference()
 		{
 			Mock<IRetweetRepository> retweetRepository = new Mock<IRetweetRepository>();
-			retweetRepository.Setup(x => x.GetTweet(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(new Tweet()));
+			retweetRepository.Setup(x => x.TweetByTweetTweetId(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(new Tweet()));
 
 			var validator = new ApiRetweetRequestModelValidator(retweetRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiRetweetRequestModel());
@@ -115,7 +117,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void TweetTweetId_Update_Invalid_Reference()
 		{
 			Mock<IRetweetRepository> retweetRepository = new Mock<IRetweetRepository>();
-			retweetRepository.Setup(x => x.GetTweet(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(null));
+			retweetRepository.Setup(x => x.TweetByTweetTweetId(It.IsAny<int>())).Returns(Task.FromResult<Tweet>(null));
 
 			var validator = new ApiRetweetRequestModelValidator(retweetRepository.Object);
 
@@ -127,5 +129,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0d7733f0bd588ec9a854c07d4d05a3cb</Hash>
+    <Hash>36361067d08b1dfb390d878669aca736</Hash>
 </Codenesium>*/

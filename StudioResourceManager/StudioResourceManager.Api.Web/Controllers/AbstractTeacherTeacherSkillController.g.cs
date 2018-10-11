@@ -119,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/TeacherTeacherSkills/{result.Record.Id}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/TeacherTeacherSkills/{result.Record.TeacherId}", result);
 			}
 			else
 			{
@@ -206,40 +206,6 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("byTeacherId/{teacherId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeacherTeacherSkillResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByTeacherId(int teacherId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await this.TeacherTeacherSkillService.ByTeacherId(teacherId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("byTeacherSkillId/{teacherSkillId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeacherTeacherSkillResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByTeacherSkillId(int teacherSkillId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await this.TeacherTeacherSkillService.ByTeacherSkillId(teacherSkillId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiTeacherTeacherSkillRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherTeacherSkillRequestModel> patch)
 		{
 			var record = await this.TeacherTeacherSkillService.Get(id);
@@ -259,5 +225,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7dac20a764c506eea26fc866dc3a63b8</Hash>
+    <Hash>ef1167b115c0ad9f0cba3074de5731ab</Hash>
 </Codenesium>*/

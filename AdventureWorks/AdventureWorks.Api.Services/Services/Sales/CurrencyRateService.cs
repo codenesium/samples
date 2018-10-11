@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLCurrencyRateMapper bolcurrencyRateMapper,
 			IDALCurrencyRateMapper dalcurrencyRateMapper,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
-			)
+			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
 			       currencyRateRepository,
 			       currencyRateModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>35d84e936c480b1e15d21532a595ed19</Hash>
+    <Hash>1a89804e1e4c953ecab28a2f92e4af7d</Hash>
 </Codenesium>*/

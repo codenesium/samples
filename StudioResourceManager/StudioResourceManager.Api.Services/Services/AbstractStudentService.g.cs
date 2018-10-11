@@ -116,29 +116,22 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiStudentResponseModel>> ByFamilyId(int familyId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Student> records = await this.StudentRepository.ByFamilyId(familyId, limit, offset);
-
-			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
-		}
-
-		public async Task<List<ApiStudentResponseModel>> ByUserId(int userId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Student> records = await this.StudentRepository.ByUserId(userId, limit, offset);
-
-			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
-		}
-
 		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudents(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<EventStudent> records = await this.StudentRepository.EventStudents(studentId, limit, offset);
 
 			return this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiStudentResponseModel>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Student> records = await this.StudentRepository.ByEventId(eventId, limit, offset);
+
+			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>87e2ce5bc11dafbf7b8a019acbbb9310</Hash>
+    <Hash>642ec9c582101de1d83b1793530da095</Hash>
 </Codenesium>*/

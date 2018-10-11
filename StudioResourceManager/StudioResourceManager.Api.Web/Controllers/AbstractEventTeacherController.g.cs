@@ -119,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/EventTeachers/{result.Record.Id}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/EventTeachers/{result.Record.EventId}", result);
 			}
 			else
 			{
@@ -206,23 +206,6 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("byEventId/{eventId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByEventId(int eventId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEventTeacherResponseModel> response = await this.EventTeacherService.ByEventId(eventId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiEventTeacherRequestModel> PatchModel(int id, JsonPatchDocument<ApiEventTeacherRequestModel> patch)
 		{
 			var record = await this.EventTeacherService.Get(id);
@@ -242,5 +225,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5d6197e46c32118c80e94d72ff4b8247</Hash>
+    <Hash>a92417364f33ab858ffa8c70dbeef387</Hash>
 </Codenesium>*/

@@ -21,12 +21,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiBillOfMaterialResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<ApiBillOfMaterialResponseModel> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate);
-
 		Task<List<ApiBillOfMaterialResponseModel>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b06af8b08d3c1509819ca37482568cb2</Hash>
+    <Hash>182c382d6a996cadac49c58d52dd01fe</Hash>
 </Codenesium>*/

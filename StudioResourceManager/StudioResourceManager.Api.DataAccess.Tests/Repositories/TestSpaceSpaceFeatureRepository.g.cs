@@ -57,7 +57,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<SpaceSpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.SpaceId);
 
 			record.Should().NotBeNull();
 		}
@@ -87,7 +87,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<SpaceSpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.SpaceId);
 
 			await repository.Update(record);
 
@@ -121,7 +121,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<SpaceSpaceFeature>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Delete(entity.Id);
+			await repository.Delete(entity.SpaceId);
 
 			SpaceSpaceFeature modifiedRecord = await context.Set<SpaceSpaceFeature>().FirstOrDefaultAsync();
 
@@ -131,5 +131,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>edcfaf2801fe0145c306bd723494894d</Hash>
+    <Hash>b152c4b8cc7b8b153d8d5b85b8e21101</Hash>
 </Codenesium>*/

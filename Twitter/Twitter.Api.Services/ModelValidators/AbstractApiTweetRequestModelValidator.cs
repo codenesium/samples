@@ -38,7 +38,7 @@ namespace TwitterNS.Api.Services
 
 		public virtual void LocationIdRules()
 		{
-			this.RuleFor(x => x.LocationId).MustAsync(this.BeValidLocation).When(x => x?.LocationId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LocationId).MustAsync(this.BeValidLocationByLocationId).When(x => x?.LocationId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TimeRules()
@@ -47,19 +47,19 @@ namespace TwitterNS.Api.Services
 
 		public virtual void UserUserIdRules()
 		{
-			this.RuleFor(x => x.UserUserId).MustAsync(this.BeValidUser).When(x => x?.UserUserId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.UserUserId).MustAsync(this.BeValidUserByUserUserId).When(x => x?.UserUserId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidLocation(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidLocationByLocationId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.tweetRepository.GetLocation(id);
+			var record = await this.tweetRepository.LocationByLocationId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUser(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidUserByUserUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.tweetRepository.GetUser(id);
+			var record = await this.tweetRepository.UserByUserUserId(id);
 
 			return record != null;
 		}
@@ -67,5 +67,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>108212500fd33c74e77d0cea56818bb3</Hash>
+    <Hash>d0d143564ebe2a9923e1136308ce18b6</Hash>
 </Codenesium>*/

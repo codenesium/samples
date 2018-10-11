@@ -32,7 +32,7 @@ namespace TwitterNS.Api.Services
 
 		public virtual void RetwitterUserIdRules()
 		{
-			this.RuleFor(x => x.RetwitterUserId).MustAsync(this.BeValidUser).When(x => x?.RetwitterUserId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.RetwitterUserId).MustAsync(this.BeValidUserByRetwitterUserId).When(x => x?.RetwitterUserId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TimeRules()
@@ -41,19 +41,19 @@ namespace TwitterNS.Api.Services
 
 		public virtual void TweetTweetIdRules()
 		{
-			this.RuleFor(x => x.TweetTweetId).MustAsync(this.BeValidTweet).When(x => x?.TweetTweetId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TweetTweetId).MustAsync(this.BeValidTweetByTweetTweetId).When(x => x?.TweetTweetId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidUser(int? id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidUserByRetwitterUserId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.retweetRepository.GetUser(id.GetValueOrDefault());
+			var record = await this.retweetRepository.UserByRetwitterUserId(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidTweet(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTweetByTweetTweetId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.retweetRepository.GetTweet(id);
+			var record = await this.retweetRepository.TweetByTweetTweetId(id);
 
 			return record != null;
 		}
@@ -61,5 +61,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>307a09e63e576a904b7b59ee7b2a3d3d</Hash>
+    <Hash>c32d67b05198786aba24f14a5042e239</Hash>
 </Codenesium>*/

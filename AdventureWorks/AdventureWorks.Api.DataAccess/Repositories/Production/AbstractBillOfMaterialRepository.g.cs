@@ -76,18 +76,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async Task<BillOfMaterial> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate)
-		{
-			var records = await this.Where(x => x.ProductAssemblyID == productAssemblyID && x.ComponentID == componentID && x.StartDate == startDate);
-
-			return records.FirstOrDefault();
-		}
-
 		public async Task<List<BillOfMaterial>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.UnitMeasureCode == unitMeasureCode, limit, offset);
-
-			return records;
+			return await this.Where(x => x.UnitMeasureCode == unitMeasureCode, limit, offset);
 		}
 
 		protected async Task<List<BillOfMaterial>> Where(
@@ -122,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2942f00b6cddcdf3c9fadefa4f923a12</Hash>
+    <Hash>b6524f48340e1990e4ce668d952a2e10</Hash>
 </Codenesium>*/

@@ -20,28 +20,19 @@ namespace PetShippingNS.Api.Services
 			IBOLHandlerMapper bolhandlerMapper,
 			IDALHandlerMapper dalhandlerMapper,
 			IBOLAirTransportMapper bolAirTransportMapper,
-			IDALAirTransportMapper dalAirTransportMapper,
-			IBOLHandlerPipelineStepMapper bolHandlerPipelineStepMapper,
-			IDALHandlerPipelineStepMapper dalHandlerPipelineStepMapper,
-			IBOLOtherTransportMapper bolOtherTransportMapper,
-			IDALOtherTransportMapper dalOtherTransportMapper
-			)
+			IDALAirTransportMapper dalAirTransportMapper)
 			: base(logger,
 			       handlerRepository,
 			       handlerModelValidator,
 			       bolhandlerMapper,
 			       dalhandlerMapper,
 			       bolAirTransportMapper,
-			       dalAirTransportMapper,
-			       bolHandlerPipelineStepMapper,
-			       dalHandlerPipelineStepMapper,
-			       bolOtherTransportMapper,
-			       dalOtherTransportMapper)
+			       dalAirTransportMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c50714f4e52ab3727d9c314d4533ce7b</Hash>
+    <Hash>22898a4e540648cf104f89eb0d116b22</Hash>
 </Codenesium>*/

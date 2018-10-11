@@ -24,11 +24,12 @@ namespace NebulaNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Link
 		[Fact]
 		public async void LinkId_Create_Valid_Reference()
 		{
 			Mock<ILinkLogRepository> linkLogRepository = new Mock<ILinkLogRepository>();
-			linkLogRepository.Setup(x => x.GetLink(It.IsAny<int>())).Returns(Task.FromResult<Link>(new Link()));
+			linkLogRepository.Setup(x => x.LinkByLinkId(It.IsAny<int>())).Returns(Task.FromResult<Link>(new Link()));
 
 			var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
 			await validator.ValidateCreateAsync(new ApiLinkLogRequestModel());
@@ -40,7 +41,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkId_Create_Invalid_Reference()
 		{
 			Mock<ILinkLogRepository> linkLogRepository = new Mock<ILinkLogRepository>();
-			linkLogRepository.Setup(x => x.GetLink(It.IsAny<int>())).Returns(Task.FromResult<Link>(null));
+			linkLogRepository.Setup(x => x.LinkByLinkId(It.IsAny<int>())).Returns(Task.FromResult<Link>(null));
 
 			var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
 
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkId_Update_Valid_Reference()
 		{
 			Mock<ILinkLogRepository> linkLogRepository = new Mock<ILinkLogRepository>();
-			linkLogRepository.Setup(x => x.GetLink(It.IsAny<int>())).Returns(Task.FromResult<Link>(new Link()));
+			linkLogRepository.Setup(x => x.LinkByLinkId(It.IsAny<int>())).Returns(Task.FromResult<Link>(new Link()));
 
 			var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiLinkLogRequestModel());
@@ -65,7 +66,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkId_Update_Invalid_Reference()
 		{
 			Mock<ILinkLogRepository> linkLogRepository = new Mock<ILinkLogRepository>();
-			linkLogRepository.Setup(x => x.GetLink(It.IsAny<int>())).Returns(Task.FromResult<Link>(null));
+			linkLogRepository.Setup(x => x.LinkByLinkId(It.IsAny<int>())).Returns(Task.FromResult<Link>(null));
 
 			var validator = new ApiLinkLogRequestModelValidator(linkLogRepository.Object);
 
@@ -101,5 +102,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b12730463de1b462be9dd29885f235ea</Hash>
+    <Hash>3358b178f532910b8860cf455cedda15</Hash>
 </Codenesium>*/

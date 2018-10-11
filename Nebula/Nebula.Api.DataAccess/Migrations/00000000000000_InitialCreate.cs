@@ -154,9 +154,8 @@ CREATE TABLE [dbo].[ChainStatus](
 GO
 
 CREATE TABLE [dbo].[Clasp](
-[id] [int]   IDENTITY(1,1)  NOT NULL,
-[nextChainId] [int]     NOT NULL,
 [previousChainId] [int]     NOT NULL,
+[nextChainId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -202,7 +201,6 @@ CREATE TABLE [dbo].[Machine](
 GO
 
 CREATE TABLE [dbo].[MachineRefTeam](
-[id] [int]   IDENTITY(1,1)  NOT NULL,
 [machineId] [int]     NOT NULL,
 [teamId] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -216,7 +214,7 @@ GO
 
 CREATE TABLE [dbo].[sysdiagrams](
 [diagram_id] [int]   IDENTITY(1,1)  NOT NULL,
-[definition] [varbinary]     NULL,
+[definition] [varbinary]  (1)   NULL,
 [name] [nvarchar]  (128)   NOT NULL,
 [principal_id] [int]     NOT NULL,
 [version] [int]     NULL,
@@ -231,9 +229,9 @@ CREATE TABLE [dbo].[Team](
 GO
 
 CREATE TABLE [dbo].[VersionInfo](
+[Version] [bigint]     NOT NULL,
 [AppliedOn] [datetime]     NULL,
 [Description] [nvarchar]  (1024)   NULL,
-[Version] [bigint]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -262,7 +260,8 @@ GO
 ALTER TABLE[dbo].[Clasp]
 ADD CONSTRAINT[PK_Clasp] PRIMARY KEY CLUSTERED
 (
-[id] ASC
+[previousChainId] ASC
+,[nextChainId] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[Link]
@@ -310,9 +309,10 @@ CREATE UNIQUE NONCLUSTERED INDEX[AX_Machine_MachineGuid] ON[dbo].[Machine]
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[MachineRefTeam]
-ADD CONSTRAINT[PK_machineRefTeam] PRIMARY KEY CLUSTERED
+ADD CONSTRAINT[PK_MachineRefTeam] PRIMARY KEY CLUSTERED
 (
-[id] ASC
+[machineId] ASC
+,[teamId] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[Organization]
@@ -349,10 +349,11 @@ CREATE UNIQUE NONCLUSTERED INDEX[AX_Team_Name] ON[dbo].[Team]
 [name] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-CREATE UNIQUE CLUSTERED INDEX[UC_Version] ON[dbo].[VersionInfo]
+ALTER TABLE[dbo].[VersionInfo]
+ADD CONSTRAINT[UC_Version] PRIMARY KEY CLUSTERED
 (
-[Version] ASC)
-WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+[Version] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 
 

@@ -24,11 +24,12 @@ namespace PetShippingNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Country
 		[Fact]
 		public async void CountryId_Create_Valid_Reference()
 		{
 			Mock<IDestinationRepository> destinationRepository = new Mock<IDestinationRepository>();
-			destinationRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
+			destinationRepository.Setup(x => x.CountryByCountryId(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
 			var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
 			await validator.ValidateCreateAsync(new ApiDestinationRequestModel());
@@ -40,7 +41,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void CountryId_Create_Invalid_Reference()
 		{
 			Mock<IDestinationRepository> destinationRepository = new Mock<IDestinationRepository>();
-			destinationRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
+			destinationRepository.Setup(x => x.CountryByCountryId(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
 
 			var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
 
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void CountryId_Update_Valid_Reference()
 		{
 			Mock<IDestinationRepository> destinationRepository = new Mock<IDestinationRepository>();
-			destinationRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
+			destinationRepository.Setup(x => x.CountryByCountryId(It.IsAny<int>())).Returns(Task.FromResult<Country>(new Country()));
 
 			var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiDestinationRequestModel());
@@ -65,7 +66,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void CountryId_Update_Invalid_Reference()
 		{
 			Mock<IDestinationRepository> destinationRepository = new Mock<IDestinationRepository>();
-			destinationRepository.Setup(x => x.GetCountry(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
+			destinationRepository.Setup(x => x.CountryByCountryId(It.IsAny<int>())).Returns(Task.FromResult<Country>(null));
 
 			var validator = new ApiDestinationRequestModelValidator(destinationRepository.Object);
 
@@ -125,5 +126,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a1c9b0bd74ef84cd2b1595fcae2e1cf5</Hash>
+    <Hash>0bd6c93e6d267e0ef7efb00f3baf2261</Hash>
 </Codenesium>*/

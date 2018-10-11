@@ -22,8 +22,7 @@ namespace TwitterNS.Api.Services
 			IBOLTweetMapper bolTweetMapper,
 			IDALTweetMapper dalTweetMapper,
 			IBOLUserMapper bolUserMapper,
-			IDALUserMapper dalUserMapper
-			)
+			IDALUserMapper dalUserMapper)
 			: base(logger,
 			       locationRepository,
 			       locationModelValidator,
@@ -39,5 +38,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b7bd4cfc0e2cf78bf6ab6becf7b4590e</Hash>
+    <Hash>82513f9ca528f9a1b01069c77b5e52ba</Hash>
 </Codenesium>*/

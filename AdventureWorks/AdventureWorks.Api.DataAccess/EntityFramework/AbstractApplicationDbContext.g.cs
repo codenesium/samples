@@ -106,6 +106,8 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public virtual DbSet<ProductDescription> ProductDescriptions { get; set; }
 
+		public virtual DbSet<ProductDocument> ProductDocuments { get; set; }
+
 		public virtual DbSet<ProductInventory> ProductInventories { get; set; }
 
 		public virtual DbSet<ProductListPriceHistory> ProductListPriceHistories { get; set; }
@@ -226,6 +228,159 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<EmployeeDepartmentHistory>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.StartDate,
+				c.DepartmentID,
+				c.ShiftID,
+			});
+			modelBuilder.Entity<EmployeePayHistory>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.RateChangeDate,
+			});
+			modelBuilder.Entity<BusinessEntityAddress>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.AddressID,
+				c.AddressTypeID,
+			});
+			modelBuilder.Entity<BusinessEntityContact>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.PersonID,
+				c.ContactTypeID,
+			});
+			modelBuilder.Entity<EmailAddress>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.EmailAddressID,
+			});
+			modelBuilder.Entity<PersonPhone>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.PhoneNumber,
+				c.PhoneNumberTypeID,
+			});
+			modelBuilder.Entity<VStateProvinceCountryRegion>()
+			.HasKey(c => new
+			{
+				c.StateProvinceID,
+				c.CountryRegionCode,
+			});
+			modelBuilder.Entity<ProductCostHistory>()
+			.HasKey(c => new
+			{
+				c.ProductID,
+				c.StartDate,
+			});
+			modelBuilder.Entity<ProductInventory>()
+			.HasKey(c => new
+			{
+				c.ProductID,
+				c.LocationID,
+			});
+			modelBuilder.Entity<ProductListPriceHistory>()
+			.HasKey(c => new
+			{
+				c.ProductID,
+				c.StartDate,
+			});
+			modelBuilder.Entity<ProductModelIllustration>()
+			.HasKey(c => new
+			{
+				c.ProductModelID,
+				c.IllustrationID,
+			});
+			modelBuilder.Entity<ProductModelProductDescriptionCulture>()
+			.HasKey(c => new
+			{
+				c.ProductModelID,
+				c.ProductDescriptionID,
+				c.CultureID,
+			});
+			modelBuilder.Entity<ProductProductPhoto>()
+			.HasKey(c => new
+			{
+				c.ProductID,
+				c.ProductPhotoID,
+			});
+			modelBuilder.Entity<VProductAndDescription>()
+			.HasKey(c => new
+			{
+				c.CultureID,
+				c.ProductID,
+			});
+			modelBuilder.Entity<WorkOrderRouting>()
+			.HasKey(c => new
+			{
+				c.WorkOrderID,
+				c.ProductID,
+				c.OperationSequence,
+			});
+			modelBuilder.Entity<ProductVendor>()
+			.HasKey(c => new
+			{
+				c.ProductID,
+				c.BusinessEntityID,
+			});
+			modelBuilder.Entity<PurchaseOrderDetail>()
+			.HasKey(c => new
+			{
+				c.PurchaseOrderID,
+				c.PurchaseOrderDetailID,
+			});
+			modelBuilder.Entity<CountryRegionCurrency>()
+			.HasKey(c => new
+			{
+				c.CountryRegionCode,
+				c.CurrencyCode,
+			});
+			modelBuilder.Entity<PersonCreditCard>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.CreditCardID,
+			});
+			modelBuilder.Entity<SalesOrderDetail>()
+			.HasKey(c => new
+			{
+				c.SalesOrderID,
+				c.SalesOrderDetailID,
+			});
+			modelBuilder.Entity<SalesOrderHeaderSalesReason>()
+			.HasKey(c => new
+			{
+				c.SalesOrderID,
+				c.SalesReasonID,
+			});
+			modelBuilder.Entity<SalesPersonQuotaHistory>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.QuotaDate,
+			});
+			modelBuilder.Entity<SalesTerritoryHistory>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+				c.StartDate,
+				c.TerritoryID,
+			});
+			modelBuilder.Entity<SpecialOfferProduct>()
+			.HasKey(c => new
+			{
+				c.SpecialOfferID,
+				c.ProductID,
+			});
+
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
@@ -256,5 +411,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ffe2c47d958915ff3ea32000ed5ef5b1</Hash>
+    <Hash>5787a540168e8e641a3bdd719b8d5b87</Hash>
 </Codenesium>*/

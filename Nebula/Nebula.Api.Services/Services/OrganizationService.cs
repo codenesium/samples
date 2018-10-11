@@ -20,8 +20,7 @@ namespace NebulaNS.Api.Services
 			IBOLOrganizationMapper bolorganizationMapper,
 			IDALOrganizationMapper dalorganizationMapper,
 			IBOLTeamMapper bolTeamMapper,
-			IDALTeamMapper dalTeamMapper
-			)
+			IDALTeamMapper dalTeamMapper)
 			: base(logger,
 			       organizationRepository,
 			       organizationModelValidator,
@@ -35,5 +34,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>185b1bf46124e338f5285b47975b664c</Hash>
+    <Hash>ac0f21646725f6fb08ace4c9fee802f7</Hash>
 </Codenesium>*/

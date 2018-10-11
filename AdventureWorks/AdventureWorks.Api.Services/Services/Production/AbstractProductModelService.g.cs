@@ -26,10 +26,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IDALProductMapper DalProductMapper { get; private set; }
 
-		protected IBOLProductModelIllustrationMapper BolProductModelIllustrationMapper { get; private set; }
-
-		protected IDALProductModelIllustrationMapper DalProductModelIllustrationMapper { get; private set; }
-
 		protected IBOLProductModelProductDescriptionCultureMapper BolProductModelProductDescriptionCultureMapper { get; private set; }
 
 		protected IDALProductModelProductDescriptionCultureMapper DalProductModelProductDescriptionCultureMapper { get; private set; }
@@ -44,8 +40,6 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductModelMapper dalProductModelMapper,
 			IBOLProductMapper bolProductMapper,
 			IDALProductMapper dalProductMapper,
-			IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
-			IDALProductModelIllustrationMapper dalProductModelIllustrationMapper,
 			IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
 			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
 			: base()
@@ -56,8 +50,6 @@ namespace AdventureWorksNS.Api.Services
 			this.DalProductModelMapper = dalProductModelMapper;
 			this.BolProductMapper = bolProductMapper;
 			this.DalProductMapper = dalProductMapper;
-			this.BolProductModelIllustrationMapper = bolProductModelIllustrationMapper;
-			this.DalProductModelIllustrationMapper = dalProductModelIllustrationMapper;
 			this.BolProductModelProductDescriptionCultureMapper = bolProductModelProductDescriptionCultureMapper;
 			this.DalProductModelProductDescriptionCultureMapper = dalProductModelProductDescriptionCultureMapper;
 			this.logger = logger;
@@ -167,22 +159,22 @@ namespace AdventureWorksNS.Api.Services
 			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductModelIllustrationResponseModel>> ProductModelIllustrations(int productModelID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<ProductModelIllustration> records = await this.ProductModelRepository.ProductModelIllustrations(productModelID, limit, offset);
-
-			return this.BolProductModelIllustrationMapper.MapBOToModel(this.DalProductModelIllustrationMapper.MapEFToBO(records));
-		}
-
 		public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<ProductModelProductDescriptionCulture> records = await this.ProductModelRepository.ProductModelProductDescriptionCultures(productModelID, limit, offset);
 
 			return this.BolProductModelProductDescriptionCultureMapper.MapBOToModel(this.DalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiProductModelResponseModel>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<ProductModel> records = await this.ProductModelRepository.ByProductModelID(productModelID, limit, offset);
+
+			return this.BolProductModelMapper.MapBOToModel(this.DalProductModelMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d836ce2fc8d24820a3e300667cda9133</Hash>
+    <Hash>d94926df35d68dbcccd65001959a1f18</Hash>
 </Codenesium>*/

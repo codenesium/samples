@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void ClientIdRules()
 		{
-			this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x?.ClientId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClientByClientId).When(x => x?.ClientId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void DateCreatedRules()
@@ -37,7 +37,7 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void EmployeeIdRules()
 		{
-			this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployee).When(x => x?.EmployeeId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.EmployeeId).MustAsync(this.BeValidEmployeeByEmployeeId).When(x => x?.EmployeeId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NoteRules()
@@ -46,16 +46,16 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.Note).Length(0, 2147483647);
 		}
 
-		private async Task<bool> BeValidClient(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidClientByClientId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.clientCommunicationRepository.GetClient(id);
+			var record = await this.clientCommunicationRepository.ClientByClientId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidEmployee(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidEmployeeByEmployeeId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.clientCommunicationRepository.GetEmployee(id);
+			var record = await this.clientCommunicationRepository.EmployeeByEmployeeId(id);
 
 			return record != null;
 		}
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>145b63506b78a56fdecef3ee3a4576fb</Hash>
+    <Hash>c0fb472f20fc1638a9698aea3594606d</Hash>
 </Codenesium>*/

@@ -78,9 +78,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public async Task<Organization> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Organization>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<Team>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0)
@@ -120,5 +118,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>176608eb58183907d7ac5e2d12f880b9</Hash>
+    <Hash>67f402371d88a8e4c21dab09df2e697f</Hash>
 </Codenesium>*/

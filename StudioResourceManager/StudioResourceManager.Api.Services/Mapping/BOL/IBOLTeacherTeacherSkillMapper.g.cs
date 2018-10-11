@@ -8,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Services
 	public partial interface IBOLTeacherTeacherSkillMapper
 	{
 		BOTeacherTeacherSkill MapModelToBO(
-			int id,
+			int teacherId,
 			ApiTeacherTeacherSkillRequestModel model);
 
 		ApiTeacherTeacherSkillResponseModel MapBOToModel(
@@ -20,5 +20,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5208d03f42e6db628dda18bf477143a7</Hash>
+    <Hash>717604580b9e7ef97f7a9337ddaff70a</Hash>
 </Codenesium>*/

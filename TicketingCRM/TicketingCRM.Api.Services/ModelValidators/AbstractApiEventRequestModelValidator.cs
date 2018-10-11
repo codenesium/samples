@@ -40,7 +40,7 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void CityIdRules()
 		{
-			this.RuleFor(x => x.CityId).MustAsync(this.BeValidCity).When(x => x?.CityId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CityId).MustAsync(this.BeValidCityByCityId).When(x => x?.CityId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void DateRules()
@@ -79,9 +79,9 @@ namespace TicketingCRMNS.Api.Services
 			this.RuleFor(x => x.Website).Length(0, 128);
 		}
 
-		private async Task<bool> BeValidCity(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidCityByCityId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.eventRepository.GetCity(id);
+			var record = await this.eventRepository.CityByCityId(id);
 
 			return record != null;
 		}
@@ -89,5 +89,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>526099a0b9516a2acbe8e6fe0010611e</Hash>
+    <Hash>1b2bf14ccfa0249317dbc0d9205d0885</Hash>
 </Codenesium>*/

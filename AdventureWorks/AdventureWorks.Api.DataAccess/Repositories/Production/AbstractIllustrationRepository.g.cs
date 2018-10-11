@@ -76,11 +76,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<ProductModelIllustration>> ProductModelIllustrations(int illustrationID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<ProductModelIllustration>().Where(x => x.IllustrationID == illustrationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelIllustration>();
-		}
-
 		protected async Task<List<Illustration>> Where(
 			Expression<Func<Illustration, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>57e66535b846d8f5f8d6bd754c882f00</Hash>
+    <Hash>c505e0480ee5d17a1b39cb3269f83657</Hash>
 </Codenesium>*/

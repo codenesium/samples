@@ -18,8 +18,7 @@ namespace PetStoreNS.Api.Services
 			ISaleRepository saleRepository,
 			IApiSaleRequestModelValidator saleModelValidator,
 			IBOLSaleMapper bolsaleMapper,
-			IDALSaleMapper dalsaleMapper
-			)
+			IDALSaleMapper dalsaleMapper)
 			: base(logger,
 			       saleRepository,
 			       saleModelValidator,
@@ -31,5 +30,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e2e2238c31cfc146ddebdf4449b8b06d</Hash>
+    <Hash>f18a1ed6237250f7cf1e9789811efd38</Hash>
 </Codenesium>*/

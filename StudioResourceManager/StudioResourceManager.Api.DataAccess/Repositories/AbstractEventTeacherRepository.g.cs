@@ -31,9 +31,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return this.Where(x => true, limit, offset);
 		}
 
-		public async virtual Task<EventTeacher> Get(int id)
+		public async virtual Task<EventTeacher> Get(int eventId)
 		{
-			return await this.GetById(id);
+			return await this.GetById(eventId);
 		}
 
 		public async virtual Task<EventTeacher> Create(EventTeacher item)
@@ -47,7 +47,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public async virtual Task Update(EventTeacher item)
 		{
-			var entity = this.Context.Set<EventTeacher>().Local.FirstOrDefault(x => x.Id == item.Id);
+			var entity = this.Context.Set<EventTeacher>().Local.FirstOrDefault(x => x.EventId == item.EventId);
 			if (entity == null)
 			{
 				this.Context.Set<EventTeacher>().Attach(item);
@@ -61,9 +61,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public async virtual Task Delete(
-			int id)
+			int eventId)
 		{
-			EventTeacher record = await this.GetById(id);
+			EventTeacher record = await this.GetById(eventId);
 
 			if (record == null)
 			{
@@ -76,16 +76,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<EventTeacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.EventId == eventId, limit, offset);
-
-			return records;
-		}
-
-		public async virtual Task<Event> GetEvent(int eventId)
+		public async virtual Task<Event> EventByEventId(int eventId)
 		{
 			return await this.Context.Set<Event>().SingleOrDefaultAsync(x => x.Id == eventId);
+		}
+
+		public async virtual Task<Teacher> TeacherByTeacherId(int teacherId)
+		{
+			return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
 		}
 
 		protected async Task<List<EventTeacher>> Where(
@@ -97,7 +95,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		{
 			if (orderBy == null)
 			{
-				orderBy = x => x.Id;
+				orderBy = x => x.EventId;
 			}
 
 			if (sortDirection == ListSortDirection.Ascending)
@@ -110,9 +108,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		private async Task<EventTeacher> GetById(int id)
+		private async Task<EventTeacher> GetById(int eventId)
 		{
-			List<EventTeacher> records = await this.Where(x => x.Id == id);
+			List<EventTeacher> records = await this.Where(x => x.EventId == eventId);
 
 			return records.FirstOrDefault();
 		}
@@ -120,5 +118,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>19cba3f75a5696415d4842063ef8f751</Hash>
+    <Hash>b9586dc735fd3f53b00faee579c509f6</Hash>
 </Codenesium>*/

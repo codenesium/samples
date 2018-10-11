@@ -19,18 +19,13 @@ namespace AdventureWorksNS.Api.Services
 			IApiCreditCardRequestModelValidator creditCardModelValidator,
 			IBOLCreditCardMapper bolcreditCardMapper,
 			IDALCreditCardMapper dalcreditCardMapper,
-			IBOLPersonCreditCardMapper bolPersonCreditCardMapper,
-			IDALPersonCreditCardMapper dalPersonCreditCardMapper,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
-			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper
-			)
+			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base(logger,
 			       creditCardRepository,
 			       creditCardModelValidator,
 			       bolcreditCardMapper,
 			       dalcreditCardMapper,
-			       bolPersonCreditCardMapper,
-			       dalPersonCreditCardMapper,
 			       bolSalesOrderHeaderMapper,
 			       dalSalesOrderHeaderMapper)
 		{
@@ -39,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5ebac22b127cd96d45eeebd6b764f3d5</Hash>
+    <Hash>ba9c2852d04952439f44eaf5a564f0a7</Hash>
 </Codenesium>*/

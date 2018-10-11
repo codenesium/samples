@@ -20,8 +20,7 @@ namespace FileServiceNS.Api.Services
 			IBOLFileTypeMapper bolfileTypeMapper,
 			IDALFileTypeMapper dalfileTypeMapper,
 			IBOLFileMapper bolFileMapper,
-			IDALFileMapper dalFileMapper
-			)
+			IDALFileMapper dalFileMapper)
 			: base(logger,
 			       fileTypeRepository,
 			       fileTypeModelValidator,
@@ -35,5 +34,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b03ce26afa2ab7bed0fa5c29257e5f7</Hash>
+    <Hash>29507668f4014a463bd4eed65884af6d</Hash>
 </Codenesium>*/

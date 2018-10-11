@@ -143,86 +143,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void ByFamilyId_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			var records = new List<Student>();
-			records.Add(new Student());
-			mock.RepositoryMock.Setup(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
-
-			List<ApiStudentResponseModel> response = await service.ByFamilyId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByFamilyId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
-
-			List<ApiStudentResponseModel> response = await service.ByFamilyId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByFamilyId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByUserId_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			var records = new List<Student>();
-			records.Add(new Student());
-			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
-
-			List<ApiStudentResponseModel> response = await service.ByUserId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByUserId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			mock.RepositoryMock.Setup(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Student>>(new List<Student>()));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
-
-			List<ApiStudentResponseModel> response = await service.ByUserId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByUserId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
 		public async void EventStudents_Exists()
 		{
 			var mock = new ServiceMockFacade<IStudentRepository>();
@@ -265,5 +185,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8d5dcc996f9ae377c9438ea3257ac83d</Hash>
+    <Hash>1e851d5131bb98463c8c90bc97b148f8</Hash>
 </Codenesium>*/

@@ -76,7 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<PipelineStatu> GetPipelineStatu(int pipelineStatusId)
+		public async virtual Task<PipelineStatu> PipelineStatuByPipelineStatusId(int pipelineStatusId)
 		{
 			return await this.Context.Set<PipelineStatu>().SingleOrDefaultAsync(x => x.Id == pipelineStatusId);
 		}
@@ -113,5 +113,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f3c793661f62ab748ac20477a88354df</Hash>
+    <Hash>ce9764e1db7883ab85ee2d27ce81d8d7</Hash>
 </Codenesium>*/

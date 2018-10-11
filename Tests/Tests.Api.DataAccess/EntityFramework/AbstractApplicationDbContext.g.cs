@@ -110,6 +110,13 @@ namespace TestsNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<CompositePrimaryKey>()
+			.HasKey(c => new
+			{
+				c.Id,
+				c.Id2,
+			});
+
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
@@ -140,5 +147,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a933a384802093f0692c24b42b12b2b7</Hash>
+    <Hash>f43de1cc1c38637deceba9340329baf9</Hash>
 </Codenesium>*/

@@ -20,7 +20,6 @@ namespace TicketingCRMNS.Api.Contracts
 			from.Events.ForEach(x => this.AddEvent(x));
 			from.Provinces.ForEach(x => this.AddProvince(x));
 			from.Sales.ForEach(x => this.AddSale(x));
-			from.SaleTickets.ForEach(x => this.AddSaleTicket(x));
 			from.Tickets.ForEach(x => this.AddTicket(x));
 			from.TicketStatus.ForEach(x => this.AddTicketStatu(x));
 			from.Transactions.ForEach(x => this.AddTransaction(x));
@@ -41,8 +40,6 @@ namespace TicketingCRMNS.Api.Contracts
 		public List<ApiProvinceResponseModel> Provinces { get; private set; } = new List<ApiProvinceResponseModel>();
 
 		public List<ApiSaleResponseModel> Sales { get; private set; } = new List<ApiSaleResponseModel>();
-
-		public List<ApiSaleTicketResponseModel> SaleTickets { get; private set; } = new List<ApiSaleTicketResponseModel>();
 
 		public List<ApiTicketResponseModel> Tickets { get; private set; } = new List<ApiTicketResponseModel>();
 
@@ -167,22 +164,6 @@ namespace TicketingCRMNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSaleTicketsValue { get; private set; } = true;
-
-		public bool ShouldSerializeSaleTickets()
-		{
-			return this.ShouldSerializeSaleTicketsValue;
-		}
-
-		public void AddSaleTicket(ApiSaleTicketResponseModel item)
-		{
-			if (!this.SaleTickets.Any(x => x.Id == item.Id))
-			{
-				this.SaleTickets.Add(item);
-			}
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeTicketsValue { get; private set; } = true;
 
 		public bool ShouldSerializeTickets()
@@ -299,11 +280,6 @@ namespace TicketingCRMNS.Api.Contracts
 				this.ShouldSerializeSalesValue = false;
 			}
 
-			if (this.SaleTickets.Count == 0)
-			{
-				this.ShouldSerializeSaleTicketsValue = false;
-			}
-
 			if (this.Tickets.Count == 0)
 			{
 				this.ShouldSerializeTicketsValue = false;
@@ -333,5 +309,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9b76f70bad90b6c4f7cbddf64ddca0cc</Hash>
+    <Hash>dfa3a6d6a6c9ee519a9247071bc4d564</Hash>
 </Codenesium>*/

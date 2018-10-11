@@ -40,11 +40,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ProductID")]
 		public int ProductID { get; private set; }
 
+		[Key]
 		[Column("StartDate")]
 		public DateTime StartDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>f14883b390213c36f83f9269c37f3f8c</Hash>
+    <Hash>a9cea0417737be5ab78f5d135cc89796</Hash>
 </Codenesium>*/

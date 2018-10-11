@@ -16,7 +16,6 @@ namespace FileServiceNS.Api.Contracts
 			from.Buckets.ForEach(x => this.AddBucket(x));
 			from.Files.ForEach(x => this.AddFile(x));
 			from.FileTypes.ForEach(x => this.AddFileType(x));
-			from.VersionInfoes.ForEach(x => this.AddVersionInfo(x));
 		}
 
 		public List<ApiBucketResponseModel> Buckets { get; private set; } = new List<ApiBucketResponseModel>();
@@ -24,8 +23,6 @@ namespace FileServiceNS.Api.Contracts
 		public List<ApiFileResponseModel> Files { get; private set; } = new List<ApiFileResponseModel>();
 
 		public List<ApiFileTypeResponseModel> FileTypes { get; private set; } = new List<ApiFileTypeResponseModel>();
-
-		public List<ApiVersionInfoResponseModel> VersionInfoes { get; private set; } = new List<ApiVersionInfoResponseModel>();
 
 		[JsonIgnore]
 		public bool ShouldSerializeBucketsValue { get; private set; } = true;
@@ -75,22 +72,6 @@ namespace FileServiceNS.Api.Contracts
 			}
 		}
 
-		[JsonIgnore]
-		public bool ShouldSerializeVersionInfoesValue { get; private set; } = true;
-
-		public bool ShouldSerializeVersionInfoes()
-		{
-			return this.ShouldSerializeVersionInfoesValue;
-		}
-
-		public void AddVersionInfo(ApiVersionInfoResponseModel item)
-		{
-			if (!this.VersionInfoes.Any(x => x.Version == item.Version))
-			{
-				this.VersionInfoes.Add(item);
-			}
-		}
-
 		public void DisableSerializationOfEmptyFields()
 		{
 			if (this.Buckets.Count == 0)
@@ -107,15 +88,10 @@ namespace FileServiceNS.Api.Contracts
 			{
 				this.ShouldSerializeFileTypesValue = false;
 			}
-
-			if (this.VersionInfoes.Count == 0)
-			{
-				this.ShouldSerializeVersionInfoesValue = false;
-			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c11e6be9d19897478a7849c855a0eb3a</Hash>
+    <Hash>67514358cc4e25e6a5a9fd87af02ff00</Hash>
 </Codenesium>*/

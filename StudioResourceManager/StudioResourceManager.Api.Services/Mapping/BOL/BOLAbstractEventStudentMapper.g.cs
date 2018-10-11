@@ -8,14 +8,13 @@ namespace StudioResourceManagerNS.Api.Services
 	public abstract class BOLAbstractEventStudentMapper
 	{
 		public virtual BOEventStudent MapModelToBO(
-			int id,
+			int eventId,
 			ApiEventStudentRequestModel model
 			)
 		{
 			BOEventStudent boEventStudent = new BOEventStudent();
 			boEventStudent.SetProperties(
-				id,
-				model.EventId,
+				eventId,
 				model.StudentId);
 			return boEventStudent;
 		}
@@ -25,7 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiEventStudentResponseModel();
 
-			model.SetProperties(boEventStudent.Id, boEventStudent.EventId, boEventStudent.StudentId);
+			model.SetProperties(boEventStudent.EventId, boEventStudent.StudentId);
 
 			return model;
 		}
@@ -46,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>616d769b483807b8b38f06ed02f1727a</Hash>
+    <Hash>8913e59c24c406b561b5a28ac3ab2420</Hash>
 </Codenesium>*/

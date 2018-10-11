@@ -44,6 +44,8 @@ namespace TwitterNS.Api.DataAccess
 
 		public virtual DbSet<DirectTweet> DirectTweets { get; set; }
 
+		public virtual DbSet<Follower> Followers { get; set; }
+
 		public virtual DbSet<Following> Followings { get; set; }
 
 		public virtual DbSet<Like> Likes { get; set; }
@@ -104,6 +106,13 @@ namespace TwitterNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Like>()
+			.HasKey(c => new
+			{
+				c.LikerUserId,
+				c.TweetId,
+			});
+
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
@@ -134,5 +143,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fee4f2f11094e9845bb4135ec91ac368</Hash>
+    <Hash>cec9c0f2a85fdba25a95c692433f3199</Hash>
 </Codenesium>*/

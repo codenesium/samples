@@ -22,10 +22,6 @@ namespace NebulaNS.Api.Services
 
 		protected IDALChainMapper DalChainMapper { get; private set; }
 
-		protected IBOLClaspMapper BolClaspMapper { get; private set; }
-
-		protected IDALClaspMapper DalClaspMapper { get; private set; }
-
 		protected IBOLLinkMapper BolLinkMapper { get; private set; }
 
 		protected IDALLinkMapper DalLinkMapper { get; private set; }
@@ -38,8 +34,6 @@ namespace NebulaNS.Api.Services
 			IApiChainRequestModelValidator chainModelValidator,
 			IBOLChainMapper bolChainMapper,
 			IDALChainMapper dalChainMapper,
-			IBOLClaspMapper bolClaspMapper,
-			IDALClaspMapper dalClaspMapper,
 			IBOLLinkMapper bolLinkMapper,
 			IDALLinkMapper dalLinkMapper)
 			: base()
@@ -48,8 +42,6 @@ namespace NebulaNS.Api.Services
 			this.ChainModelValidator = chainModelValidator;
 			this.BolChainMapper = bolChainMapper;
 			this.DalChainMapper = dalChainMapper;
-			this.BolClaspMapper = bolClaspMapper;
-			this.DalClaspMapper = dalClaspMapper;
 			this.BolLinkMapper = bolLinkMapper;
 			this.DalLinkMapper = dalLinkMapper;
 			this.logger = logger;
@@ -138,22 +130,22 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiClaspResponseModel>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Clasp> records = await this.ChainRepository.Clasps(nextChainId, limit, offset);
-
-			return this.BolClaspMapper.MapBOToModel(this.DalClaspMapper.MapEFToBO(records));
-		}
-
 		public async virtual Task<List<ApiLinkResponseModel>> Links(int chainId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Link> records = await this.ChainRepository.Links(chainId, limit, offset);
 
 			return this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiChainResponseModel>> ByNextChainId(int nextChainId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Chain> records = await this.ChainRepository.ByNextChainId(nextChainId, limit, offset);
+
+			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2eab4495b6696b0e95a07db89db9b8e1</Hash>
+    <Hash>b9778b8eab97efd5ac55ea83aa1cdd05</Hash>
 </Codenesium>*/

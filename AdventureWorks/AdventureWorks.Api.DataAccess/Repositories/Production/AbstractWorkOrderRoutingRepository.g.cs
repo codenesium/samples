@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<WorkOrderRouting>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ProductID == productID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
 		protected async Task<List<WorkOrderRouting>> Where(
@@ -115,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>af9407d41353ed33587cf03ed58c7324</Hash>
+    <Hash>63046655f0e89b2d9d2ab3ced6f2ab60</Hash>
 </Codenesium>*/

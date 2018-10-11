@@ -18,10 +18,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLTeacherTeacherSkillMapper();
 			ApiTeacherTeacherSkillRequestModel model = new ApiTeacherTeacherSkillRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1);
 			BOTeacherTeacherSkill response = mapper.MapModelToBO(1, model);
 
-			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
 
@@ -30,10 +29,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLTeacherTeacherSkillMapper();
 			BOTeacherTeacherSkill bo = new BOTeacherTeacherSkill();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1);
 			ApiTeacherTeacherSkillResponseModel response = mapper.MapBOToModel(bo);
 
-			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
 		}
@@ -43,7 +41,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLTeacherTeacherSkillMapper();
 			BOTeacherTeacherSkill bo = new BOTeacherTeacherSkill();
-			bo.SetProperties(1, 1, 1);
+			bo.SetProperties(1, 1);
 			List<ApiTeacherTeacherSkillResponseModel> response = mapper.MapBOToModel(new List<BOTeacherTeacherSkill>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -52,5 +50,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>13b75d79718dffa6cd5212f611f341e3</Hash>
+    <Hash>d59ec5a25868e299c51a6fdc34073e90</Hash>
 </Codenesium>*/

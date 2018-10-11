@@ -8,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public partial interface IApiTeacherTeacherSkillModelMapper
 	{
 		ApiTeacherTeacherSkillResponseModel MapRequestToResponse(
-			int id,
+			int teacherId,
 			ApiTeacherTeacherSkillRequestModel request);
 
 		ApiTeacherTeacherSkillRequestModel MapResponseToRequest(
@@ -19,5 +19,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>fbe52826000a31bdbd001898465f6bb1</Hash>
+    <Hash>912fc6921d2a605840d0e9d8018751d3</Hash>
 </Codenesium>*/

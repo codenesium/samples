@@ -54,6 +54,13 @@ namespace PetShippingNS.Api.Client
 			this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
+		public virtual async Task<List<ApiAirlineResponseModel>> AirlineBulkInsertAsync(List<ApiAirlineRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Airlines/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiAirlineResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiAirlineResponseModel>> AirlineCreateAsync(ApiAirlineRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Airlines", item).ConfigureAwait(false);
@@ -89,11 +96,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiAirlineResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiAirlineResponseModel>> AirlineBulkInsertAsync(List<ApiAirlineRequestModel> items)
+		public virtual async Task<List<ApiAirTransportResponseModel>> AirTransportBulkInsertAsync(List<ApiAirTransportRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Airlines/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/AirTransports/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiAirlineResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiAirTransportResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiAirTransportResponseModel>> AirTransportCreateAsync(ApiAirTransportRequestModel item)
@@ -131,11 +138,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiAirTransportResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiAirTransportResponseModel>> AirTransportBulkInsertAsync(List<ApiAirTransportRequestModel> items)
+		public virtual async Task<List<ApiBreedResponseModel>> BreedBulkInsertAsync(List<ApiBreedRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/AirTransports/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Breeds/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiAirTransportResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiBreedResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiBreedResponseModel>> BreedCreateAsync(ApiBreedRequestModel item)
@@ -173,18 +180,18 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiBreedResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiBreedResponseModel>> BreedBulkInsertAsync(List<ApiBreedRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Breeds/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiBreedResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiPetResponseModel>> Pets(int breedId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds/Pets/{breedId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiClientResponseModel>> ClientBulkInsertAsync(List<ApiClientRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clients/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiClientResponseModel>> ClientCreateAsync(ApiClientRequestModel item)
@@ -222,13 +229,6 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiClientResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiClientResponseModel>> ClientBulkInsertAsync(List<ApiClientRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Clients/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiClientResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiClientCommunicationResponseModel>> ClientCommunications(int clientId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Clients/ClientCommunications/{clientId}").ConfigureAwait(false);
@@ -241,6 +241,13 @@ namespace PetShippingNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Clients/Sales/{clientId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiClientCommunicationResponseModel>> ClientCommunicationBulkInsertAsync(List<ApiClientCommunicationRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ClientCommunications/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiClientCommunicationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiClientCommunicationResponseModel>> ClientCommunicationCreateAsync(ApiClientCommunicationRequestModel item)
@@ -278,11 +285,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiClientCommunicationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiClientCommunicationResponseModel>> ClientCommunicationBulkInsertAsync(List<ApiClientCommunicationRequestModel> items)
+		public virtual async Task<List<ApiCountryResponseModel>> CountryBulkInsertAsync(List<ApiCountryRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ClientCommunications/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Countries/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiClientCommunicationResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiCountryResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryResponseModel>> CountryCreateAsync(ApiCountryRequestModel item)
@@ -320,13 +327,6 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCountryResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiCountryResponseModel>> CountryBulkInsertAsync(List<ApiCountryRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Countries/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiCountryResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiCountryRequirementResponseModel>> CountryRequirements(int countryId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Countries/CountryRequirements/{countryId}").ConfigureAwait(false);
@@ -339,6 +339,13 @@ namespace PetShippingNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Countries/Destinations/{countryId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiDestinationResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiCountryRequirementResponseModel>> CountryRequirementBulkInsertAsync(List<ApiCountryRequirementRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/CountryRequirements/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiCountryRequirementResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCountryRequirementResponseModel>> CountryRequirementCreateAsync(ApiCountryRequirementRequestModel item)
@@ -376,11 +383,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCountryRequirementResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiCountryRequirementResponseModel>> CountryRequirementBulkInsertAsync(List<ApiCountryRequirementRequestModel> items)
+		public virtual async Task<List<ApiDestinationResponseModel>> DestinationBulkInsertAsync(List<ApiDestinationRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/CountryRequirements/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Destinations/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiCountryRequirementResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiDestinationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiDestinationResponseModel>> DestinationCreateAsync(ApiDestinationRequestModel item)
@@ -418,18 +425,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDestinationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiDestinationResponseModel>> DestinationBulkInsertAsync(List<ApiDestinationRequestModel> items)
+		public virtual async Task<List<ApiEmployeeResponseModel>> EmployeeBulkInsertAsync(List<ApiEmployeeRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Destinations/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Employees/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiDestinationResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> PipelineStepDestinations(int destinationId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Destinations/PipelineStepDestinations/{destinationId}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepDestinationResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiEmployeeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiEmployeeResponseModel>> EmployeeCreateAsync(ApiEmployeeRequestModel item)
@@ -467,13 +467,6 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiEmployeeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiEmployeeResponseModel>> EmployeeBulkInsertAsync(List<ApiEmployeeRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Employees/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiEmployeeResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiPipelineStepResponseModel>> PipelineSteps(int shipperId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/PipelineSteps/{shipperId}").ConfigureAwait(false);
@@ -486,6 +479,13 @@ namespace PetShippingNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Employees/PipelineStepNotes/{employeeId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepNoteResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiHandlerResponseModel>> HandlerBulkInsertAsync(List<ApiHandlerRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Handlers/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiHandlerResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiHandlerResponseModel>> HandlerCreateAsync(ApiHandlerRequestModel item)
@@ -523,13 +523,6 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiHandlerResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiHandlerResponseModel>> HandlerBulkInsertAsync(List<ApiHandlerRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Handlers/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiHandlerResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiAirTransportResponseModel>> AirTransports(int handlerId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Handlers/AirTransports/{handlerId}").ConfigureAwait(false);
@@ -537,102 +530,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiAirTransportResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiHandlerPipelineStepResponseModel>> HandlerPipelineSteps(int handlerId)
+		public virtual async Task<List<ApiPetResponseModel>> PetBulkInsertAsync(List<ApiPetRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Handlers/HandlerPipelineSteps/{handlerId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pets/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiHandlerPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiOtherTransportResponseModel>> OtherTransports(int handlerId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Handlers/OtherTransports/{handlerId}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiOtherTransportResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiHandlerPipelineStepResponseModel>> HandlerPipelineStepCreateAsync(ApiHandlerPipelineStepRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/HandlerPipelineSteps", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<CreateResponse<ApiHandlerPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiHandlerPipelineStepResponseModel>> HandlerPipelineStepUpdateAsync(int id, ApiHandlerPipelineStepRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/HandlerPipelineSteps/{id}", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiHandlerPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> HandlerPipelineStepDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/HandlerPipelineSteps/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiHandlerPipelineStepResponseModel> HandlerPipelineStepGetAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/HandlerPipelineSteps/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ApiHandlerPipelineStepResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiHandlerPipelineStepResponseModel>> HandlerPipelineStepAllAsync(int limit = 1000, int offset = 0)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/HandlerPipelineSteps?limit={limit}&offset={offset}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiHandlerPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiHandlerPipelineStepResponseModel>> HandlerPipelineStepBulkInsertAsync(List<ApiHandlerPipelineStepRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/HandlerPipelineSteps/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiHandlerPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiOtherTransportResponseModel>> OtherTransportCreateAsync(ApiOtherTransportRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/OtherTransports", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<CreateResponse<ApiOtherTransportResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiOtherTransportResponseModel>> OtherTransportUpdateAsync(int id, ApiOtherTransportRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/OtherTransports/{id}", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiOtherTransportResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> OtherTransportDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/OtherTransports/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiOtherTransportResponseModel> OtherTransportGetAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/OtherTransports/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ApiOtherTransportResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiOtherTransportResponseModel>> OtherTransportAllAsync(int limit = 1000, int offset = 0)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/OtherTransports?limit={limit}&offset={offset}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiOtherTransportResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiOtherTransportResponseModel>> OtherTransportBulkInsertAsync(List<ApiOtherTransportRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/OtherTransports/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiOtherTransportResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPetResponseModel>> PetCreateAsync(ApiPetRequestModel item)
@@ -670,11 +572,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPetResponseModel>> PetBulkInsertAsync(List<ApiPetRequestModel> items)
+		public virtual async Task<List<ApiPipelineResponseModel>> PipelineBulkInsertAsync(List<ApiPipelineRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pets/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pipelines/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineResponseModel>> PipelineCreateAsync(ApiPipelineRequestModel item)
@@ -712,11 +614,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineResponseModel>> PipelineBulkInsertAsync(List<ApiPipelineRequestModel> items)
+		public virtual async Task<List<ApiPipelineStatuResponseModel>> PipelineStatuBulkInsertAsync(List<ApiPipelineStatuRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pipelines/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStatus/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPipelineResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStatuResponseModel>> PipelineStatuCreateAsync(ApiPipelineStatuRequestModel item)
@@ -754,18 +656,18 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStatuResponseModel>> PipelineStatuBulkInsertAsync(List<ApiPipelineStatuRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStatus/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiPipelineStatuResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiPipelineResponseModel>> Pipelines(int pipelineStatusId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineStatus/Pipelines/{pipelineStatusId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiPipelineResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiPipelineStepResponseModel>> PipelineStepBulkInsertAsync(List<ApiPipelineStepRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineSteps/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepResponseModel>> PipelineStepCreateAsync(ApiPipelineStepRequestModel item)
@@ -803,13 +705,6 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStepResponseModel>> PipelineStepBulkInsertAsync(List<ApiPipelineStepRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineSteps/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirements(int pipelineStepId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineSteps/PipelineStepStepRequirements/{pipelineStepId}").ConfigureAwait(false);
@@ -817,46 +712,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepStepRequirementResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<CreateResponse<ApiPipelineStepDestinationResponseModel>> PipelineStepDestinationCreateAsync(ApiPipelineStepDestinationRequestModel item)
+		public virtual async Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNoteBulkInsertAsync(List<ApiPipelineStepNoteRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepDestinations", item).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepNotes/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<CreateResponse<ApiPipelineStepDestinationResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiPipelineStepDestinationResponseModel>> PipelineStepDestinationUpdateAsync(int id, ApiPipelineStepDestinationRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/PipelineStepDestinations/{id}", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiPipelineStepDestinationResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> PipelineStepDestinationDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/PipelineStepDestinations/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiPipelineStepDestinationResponseModel> PipelineStepDestinationGetAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineStepDestinations/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ApiPipelineStepDestinationResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> PipelineStepDestinationAllAsync(int limit = 1000, int offset = 0)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PipelineStepDestinations?limit={limit}&offset={offset}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepDestinationResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiPipelineStepDestinationResponseModel>> PipelineStepDestinationBulkInsertAsync(List<ApiPipelineStepDestinationRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepDestinations/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepDestinationResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineStepNoteResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepNoteResponseModel>> PipelineStepNoteCreateAsync(ApiPipelineStepNoteRequestModel item)
@@ -894,11 +754,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepNoteResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNoteBulkInsertAsync(List<ApiPipelineStepNoteRequestModel> items)
+		public virtual async Task<List<ApiPipelineStepStatuResponseModel>> PipelineStepStatuBulkInsertAsync(List<ApiPipelineStepStatuRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepNotes/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepStatus/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepNoteResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineStepStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepStatuResponseModel>> PipelineStepStatuCreateAsync(ApiPipelineStepStatuRequestModel item)
@@ -936,11 +796,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStepStatuResponseModel>> PipelineStepStatuBulkInsertAsync(List<ApiPipelineStepStatuRequestModel> items)
+		public virtual async Task<List<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirementBulkInsertAsync(List<ApiPipelineStepStepRequirementRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepStatus/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepStepRequirements/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepStatuResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPipelineStepStepRequirementResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirementCreateAsync(ApiPipelineStepStepRequirementRequestModel item)
@@ -978,11 +838,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPipelineStepStepRequirementResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirementBulkInsertAsync(List<ApiPipelineStepStepRequirementRequestModel> items)
+		public virtual async Task<List<ApiSaleResponseModel>> SaleBulkInsertAsync(List<ApiSaleRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PipelineStepStepRequirements/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Sales/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPipelineStepStepRequirementResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSaleResponseModel>> SaleCreateAsync(ApiSaleRequestModel item)
@@ -1020,11 +880,11 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleResponseModel>> SaleBulkInsertAsync(List<ApiSaleRequestModel> items)
+		public virtual async Task<List<ApiSpeciesResponseModel>> SpeciesBulkInsertAsync(List<ApiSpeciesRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Sales/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Species/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSpeciesResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSpeciesResponseModel>> SpeciesCreateAsync(ApiSpeciesRequestModel item)
@@ -1062,13 +922,6 @@ namespace PetShippingNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSpeciesResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSpeciesResponseModel>> SpeciesBulkInsertAsync(List<ApiSpeciesRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Species/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiSpeciesResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiBreedResponseModel>> Breeds(int speciesId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Species/Breeds/{speciesId}").ConfigureAwait(false);
@@ -1079,5 +932,5 @@ namespace PetShippingNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>64d1e80622d29d67f5889cca5b0d2ba9</Hash>
+    <Hash>cd98cb702eeb69c85f4dcf55224baa1e</Hash>
 </Codenesium>*/

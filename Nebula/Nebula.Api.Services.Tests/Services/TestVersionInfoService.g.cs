@@ -129,44 +129,9 @@ namespace NebulaNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<long>()));
 			mock.ModelValidatorMockFactory.VersionInfoModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<long>()));
 		}
-
-		[Fact]
-		public async void ByVersion_Exists()
-		{
-			var mock = new ServiceMockFacade<IVersionInfoRepository>();
-			var record = new VersionInfo();
-			mock.RepositoryMock.Setup(x => x.ByVersion(It.IsAny<long>())).Returns(Task.FromResult(record));
-			var service = new VersionInfoService(mock.LoggerMock.Object,
-			                                     mock.RepositoryMock.Object,
-			                                     mock.ModelValidatorMockFactory.VersionInfoModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
-			                                     mock.DALMapperMockFactory.DALVersionInfoMapperMock);
-
-			ApiVersionInfoResponseModel response = await service.ByVersion(default(long));
-
-			response.Should().NotBeNull();
-			mock.RepositoryMock.Verify(x => x.ByVersion(It.IsAny<long>()));
-		}
-
-		[Fact]
-		public async void ByVersion_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IVersionInfoRepository>();
-			mock.RepositoryMock.Setup(x => x.ByVersion(It.IsAny<long>())).Returns(Task.FromResult<VersionInfo>(null));
-			var service = new VersionInfoService(mock.LoggerMock.Object,
-			                                     mock.RepositoryMock.Object,
-			                                     mock.ModelValidatorMockFactory.VersionInfoModelValidatorMock.Object,
-			                                     mock.BOLMapperMockFactory.BOLVersionInfoMapperMock,
-			                                     mock.DALMapperMockFactory.DALVersionInfoMapperMock);
-
-			ApiVersionInfoResponseModel response = await service.ByVersion(default(long));
-
-			response.Should().BeNull();
-			mock.RepositoryMock.Verify(x => x.ByVersion(It.IsAny<long>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7df97ad4192a941f578375178c16502b</Hash>
+    <Hash>d2f39b00619e745c4f9c058ff687f06d</Hash>
 </Codenesium>*/

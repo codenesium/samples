@@ -38,16 +38,16 @@ namespace TwitterNS.Api.Services
 
 		public virtual void ReplierUserIdRules()
 		{
-			this.RuleFor(x => x.ReplierUserId).MustAsync(this.BeValidUser).When(x => x?.ReplierUserId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ReplierUserId).MustAsync(this.BeValidUserByReplierUserId).When(x => x?.ReplierUserId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TimeRules()
 		{
 		}
 
-		private async Task<bool> BeValidUser(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidUserByReplierUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.replyRepository.GetUser(id);
+			var record = await this.replyRepository.UserByReplierUserId(id);
 
 			return record != null;
 		}
@@ -55,5 +55,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>317c2402ebd9d3265fa9e2de4f929493</Hash>
+    <Hash>acbda35a9ce1b0183e17096530a3d503</Hash>
 </Codenesium>*/

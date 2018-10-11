@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IProductInventoryRepository productInventoryRepository,
 			IApiProductInventoryRequestModelValidator productInventoryModelValidator,
 			IBOLProductInventoryMapper bolproductInventoryMapper,
-			IDALProductInventoryMapper dalproductInventoryMapper
-			)
+			IDALProductInventoryMapper dalproductInventoryMapper)
 			: base(logger,
 			       productInventoryRepository,
 			       productInventoryModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>87da0d6f1653d225a7193e6448afe4e4</Hash>
+    <Hash>dd90c1d61bdc30b6ca73de443b6403e6</Hash>
 </Codenesium>*/

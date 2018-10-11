@@ -76,26 +76,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Rate>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.TeacherId == teacherId, limit, offset);
-
-			return records;
-		}
-
-		public async Task<List<Rate>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.TeacherSkillId == teacherSkillId, limit, offset);
-
-			return records;
-		}
-
-		public async virtual Task<Teacher> GetTeacher(int teacherId)
+		public async virtual Task<Teacher> TeacherByTeacherId(int teacherId)
 		{
 			return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
 		}
 
-		public async virtual Task<TeacherSkill> GetTeacherSkill(int teacherSkillId)
+		public async virtual Task<TeacherSkill> TeacherSkillByTeacherSkillId(int teacherSkillId)
 		{
 			return await this.Context.Set<TeacherSkill>().SingleOrDefaultAsync(x => x.Id == teacherSkillId);
 		}
@@ -132,5 +118,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>142e4281344b9b82a936b590346970a5</Hash>
+    <Hash>aa49a14c568f1244e792c4b932c8ccf1</Hash>
 </Codenesium>*/

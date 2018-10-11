@@ -23,6 +23,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.ProductModelID = productModelID;
 		}
 
+		[Key]
 		[Column("IllustrationID")]
 		public int IllustrationID { get; private set; }
 
@@ -36,5 +37,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>169bc79596d1828f830ac9d2af7c43b0</Hash>
+    <Hash>8aee315d34440cb101a27d43709509c9</Hash>
 </Codenesium>*/

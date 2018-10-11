@@ -45,7 +45,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductIDRules()
 		{
-			this.RuleFor(x => x.ProductID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x?.ProductID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ProductID).MustAsync(this.BeValidSpecialOfferProductByProductID).When(x => x?.ProductID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void RowguidRules()
@@ -58,7 +58,7 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void SpecialOfferIDRules()
 		{
-			this.RuleFor(x => x.SpecialOfferID).MustAsync(this.BeValidSpecialOfferProduct).When(x => x?.SpecialOfferID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SpecialOfferID).MustAsync(this.BeValidSpecialOfferProductBySpecialOfferID).When(x => x?.SpecialOfferID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void UnitPriceRules()
@@ -69,16 +69,23 @@ namespace AdventureWorksNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidSpecialOfferProduct(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSpecialOfferProductByProductID(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesOrderDetailRepository.GetSpecialOfferProduct(id);
+			var record = await this.salesOrderDetailRepository.SpecialOfferProductByProductID(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidSalesOrderHeader(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSalesOrderHeaderBySalesOrderID(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesOrderDetailRepository.GetSalesOrderHeader(id);
+			var record = await this.salesOrderDetailRepository.SalesOrderHeaderBySalesOrderID(id);
+
+			return record != null;
+		}
+
+		private async Task<bool> BeValidSpecialOfferProductBySpecialOfferID(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.salesOrderDetailRepository.SpecialOfferProductBySpecialOfferID(id);
 
 			return record != null;
 		}
@@ -86,5 +93,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a4172056a92c1cf88d70ea39236a6544</Hash>
+    <Hash>2a7fbb67e4619091e343da7af09aceae</Hash>
 </Codenesium>*/

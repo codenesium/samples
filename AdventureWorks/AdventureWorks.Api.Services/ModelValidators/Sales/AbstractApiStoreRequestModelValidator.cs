@@ -46,12 +46,12 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void SalesPersonIDRules()
 		{
-			this.RuleFor(x => x.SalesPersonID).MustAsync(this.BeValidSalesPerson).When(x => x?.SalesPersonID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SalesPersonID).MustAsync(this.BeValidSalesPersonBySalesPersonID).When(x => x?.SalesPersonID != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidSalesPerson(int? id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSalesPersonBySalesPersonID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.storeRepository.GetSalesPerson(id.GetValueOrDefault());
+			var record = await this.storeRepository.SalesPersonBySalesPersonID(id.GetValueOrDefault());
 
 			return record != null;
 		}
@@ -59,5 +59,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>630c0306e255158e31d785cdcfcaf090</Hash>
+    <Hash>4970cd990ecebe406234381ee39c6861</Hash>
 </Codenesium>*/

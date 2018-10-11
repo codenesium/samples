@@ -563,7 +563,6 @@ this.name = '';
 				id:number;
 personAId:number;
 personBId:number;
-personBIdEntity:number;
 
 	
 				constructor() {
@@ -579,7 +578,6 @@ this.personBId = 0;
 				id:number;
 personAId:number;
 personBId:number;
-personBIdEntity:number;
 
 	
 				constructor() {

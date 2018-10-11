@@ -22,10 +22,6 @@ namespace PetShippingNS.Api.Services
 
 		protected IDALDestinationMapper DalDestinationMapper { get; private set; }
 
-		protected IBOLPipelineStepDestinationMapper BolPipelineStepDestinationMapper { get; private set; }
-
-		protected IDALPipelineStepDestinationMapper DalPipelineStepDestinationMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractDestinationService(
@@ -33,17 +29,13 @@ namespace PetShippingNS.Api.Services
 			IDestinationRepository destinationRepository,
 			IApiDestinationRequestModelValidator destinationModelValidator,
 			IBOLDestinationMapper bolDestinationMapper,
-			IDALDestinationMapper dalDestinationMapper,
-			IBOLPipelineStepDestinationMapper bolPipelineStepDestinationMapper,
-			IDALPipelineStepDestinationMapper dalPipelineStepDestinationMapper)
+			IDALDestinationMapper dalDestinationMapper)
 			: base()
 		{
 			this.DestinationRepository = destinationRepository;
 			this.DestinationModelValidator = destinationModelValidator;
 			this.BolDestinationMapper = bolDestinationMapper;
 			this.DalDestinationMapper = dalDestinationMapper;
-			this.BolPipelineStepDestinationMapper = bolPipelineStepDestinationMapper;
-			this.DalPipelineStepDestinationMapper = dalPipelineStepDestinationMapper;
 			this.logger = logger;
 		}
 
@@ -116,15 +108,15 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiPipelineStepDestinationResponseModel>> PipelineStepDestinations(int destinationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiDestinationResponseModel>> ByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PipelineStepDestination> records = await this.DestinationRepository.PipelineStepDestinations(destinationId, limit, offset);
+			List<Destination> records = await this.DestinationRepository.ByDestinationId(destinationId, limit, offset);
 
-			return this.BolPipelineStepDestinationMapper.MapBOToModel(this.DalPipelineStepDestinationMapper.MapEFToBO(records));
+			return this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d35f250b00bd3c6833b2cf9aeab71cf1</Hash>
+    <Hash>0e11d74679d8902bcfbe1c4d0812197a</Hash>
 </Codenesium>*/

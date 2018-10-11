@@ -22,13 +22,13 @@ namespace TwitterNS.Api.DataAccess
 			directTweetItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, TimeSpan.Parse("0"), 1);
 			this.context.DirectTweets.Add(directTweetItem1);
 
+			var followerItem1 = new Follower();
+			followerItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, 1, 1, "A");
+			this.context.Followers.Add(followerItem1);
+
 			var followingItem1 = new Following();
 			followingItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
 			this.context.Followings.Add(followingItem1);
-
-			var likeItem1 = new Like();
-			likeItem1.SetProperties(1, 1, 1);
-			this.context.Likes.Add(likeItem1);
 
 			var locationItem1 = new Location();
 			locationItem1.SetProperties(1, 1, 1, "A");
@@ -68,5 +68,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1686a25205deadd4d9c3b836a1f90dce</Hash>
+    <Hash>2114da6c7c8bea54738d717f4d6303ae</Hash>
 </Codenesium>*/

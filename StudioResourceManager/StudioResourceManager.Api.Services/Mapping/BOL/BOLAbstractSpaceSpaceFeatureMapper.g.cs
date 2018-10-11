@@ -8,15 +8,14 @@ namespace StudioResourceManagerNS.Api.Services
 	public abstract class BOLAbstractSpaceSpaceFeatureMapper
 	{
 		public virtual BOSpaceSpaceFeature MapModelToBO(
-			int id,
+			int spaceId,
 			ApiSpaceSpaceFeatureRequestModel model
 			)
 		{
 			BOSpaceSpaceFeature boSpaceSpaceFeature = new BOSpaceSpaceFeature();
 			boSpaceSpaceFeature.SetProperties(
-				id,
-				model.SpaceFeatureId,
-				model.SpaceId);
+				spaceId,
+				model.SpaceFeatureId);
 			return boSpaceSpaceFeature;
 		}
 
@@ -25,7 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiSpaceSpaceFeatureResponseModel();
 
-			model.SetProperties(boSpaceSpaceFeature.Id, boSpaceSpaceFeature.SpaceFeatureId, boSpaceSpaceFeature.SpaceId);
+			model.SetProperties(boSpaceSpaceFeature.SpaceId, boSpaceSpaceFeature.SpaceFeatureId);
 
 			return model;
 		}
@@ -46,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c4b12328f5c681b7c117e06346c2bd23</Hash>
+    <Hash>aae48df4f3de15004f3ed1d5f22d6b8f</Hash>
 </Codenesium>*/

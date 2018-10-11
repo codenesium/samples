@@ -26,26 +26,21 @@ namespace StudioResourceManagerNS.Api.Services
 			return await this.ValidateAsync(model);
 		}
 
-		public virtual void EventIdRules()
-		{
-			this.RuleFor(x => x.EventId).MustAsync(this.BeValidEvent).When(x => x?.EventId != null).WithMessage("Invalid reference");
-		}
-
 		public virtual void StudentIdRules()
 		{
-			this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudent).When(x => x?.StudentId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.StudentId).MustAsync(this.BeValidStudentByStudentId).When(x => x?.StudentId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidEvent(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidEventByEventId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.eventStudentRepository.GetEvent(id);
+			var record = await this.eventStudentRepository.EventByEventId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidStudent(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidStudentByStudentId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.eventStudentRepository.GetStudent(id);
+			var record = await this.eventStudentRepository.StudentByStudentId(id);
 
 			return record != null;
 		}
@@ -53,5 +48,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5782d622c8b3ef289674c8f0bdb0c0a4</Hash>
+    <Hash>240dfa83fd05a9b27fc57d41e8b3b39a</Hash>
 </Codenesium>*/

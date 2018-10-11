@@ -10,9 +10,9 @@ namespace TwitterNS.Api.Services.Tests
 	{
 		public IDALDirectTweetMapper DALDirectTweetMapperMock { get; set; } = new DALDirectTweetMapper();
 
-		public IDALFollowingMapper DALFollowingMapperMock { get; set; } = new DALFollowingMapper();
+		public IDALFollowerMapper DALFollowerMapperMock { get; set; } = new DALFollowerMapper();
 
-		public IDALLikeMapper DALLikeMapperMock { get; set; } = new DALLikeMapper();
+		public IDALFollowingMapper DALFollowingMapperMock { get; set; } = new DALFollowingMapper();
 
 		public IDALLocationMapper DALLocationMapperMock { get; set; } = new DALLocationMapper();
 
@@ -37,5 +37,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3e95f86e826c4156674ed296355f492f</Hash>
+    <Hash>6247638082312709fbe8c8cb30bbfbb9</Hash>
 </Codenesium>*/

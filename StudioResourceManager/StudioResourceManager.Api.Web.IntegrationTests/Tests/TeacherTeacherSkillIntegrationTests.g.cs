@@ -41,7 +41,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			ApiTeacherTeacherSkillModelMapper mapper = new ApiTeacherTeacherSkillModelMapper();
 
-			UpdateResponse<ApiTeacherTeacherSkillResponseModel> updateResponse = await this.Client.TeacherTeacherSkillUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTeacherTeacherSkillResponseModel> updateResponse = await this.Client.TeacherTeacherSkillUpdateAsync(model.TeacherId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		{
 			var model = await this.CreateRecord();
 
-			await this.Client.TeacherTeacherSkillDeleteAsync(model.Id);
+			await this.Client.TeacherTeacherSkillDeleteAsync(model.TeacherId);
 
 			await this.Cleanup();
 		}
@@ -78,7 +78,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiTeacherTeacherSkillResponseModel> CreateRecord()
 		{
 			var model = new ApiTeacherTeacherSkillRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1);
 			CreateResponse<ApiTeacherTeacherSkillResponseModel> result = await this.Client.TeacherTeacherSkillCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c51f003a3627f4b16dec77712e828f55</Hash>
+    <Hash>d0fcbba78048150197753936698d0ade</Hash>
 </Codenesium>*/

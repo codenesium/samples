@@ -44,19 +44,19 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void TerritoryIDRules()
 		{
-			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritoryByTerritoryID).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidSalesPerson(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSalesPersonByBusinessEntityID(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesTerritoryHistoryRepository.GetSalesPerson(id);
+			var record = await this.salesTerritoryHistoryRepository.SalesPersonByBusinessEntityID(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidSalesTerritory(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSalesTerritoryByTerritoryID(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesTerritoryHistoryRepository.GetSalesTerritory(id);
+			var record = await this.salesTerritoryHistoryRepository.SalesTerritoryByTerritoryID(id);
 
 			return record != null;
 		}
@@ -64,5 +64,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>732a28a3a4bc9e4b1ea65c48c7c440e2</Hash>
+    <Hash>ce0a713303aab35ad17fba419d37356e</Hash>
 </Codenesium>*/

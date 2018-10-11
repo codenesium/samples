@@ -78,33 +78,32 @@ namespace TwitterNS.Api.DataAccess
 
 		public async Task<List<Messenger>> ByMessageId(int? messageId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.MessageId == messageId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.MessageId == messageId, limit, offset);
 		}
 
 		public async Task<List<Messenger>> ByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ToUserId == toUserId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ToUserId == toUserId, limit, offset);
 		}
 
 		public async Task<List<Messenger>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.UserId == userId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
 
-		public async virtual Task<Message> GetMessage(int? messageId)
+		public async virtual Task<Message> MessageByMessageId(int? messageId)
 		{
 			return await this.Context.Set<Message>().SingleOrDefaultAsync(x => x.MessageId == messageId);
 		}
 
-		public async virtual Task<User> GetUser(int toUserId)
+		public async virtual Task<User> UserByToUserId(int toUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == toUserId);
+		}
+
+		public async virtual Task<User> UserByUserId(int? userId)
+		{
+			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == userId);
 		}
 
 		protected async Task<List<Messenger>> Where(
@@ -139,5 +138,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1d673f1853daaa158fc9080c493e2825</Hash>
+    <Hash>beb89881cd94db2f75795e2a83cab4d9</Hash>
 </Codenesium>*/

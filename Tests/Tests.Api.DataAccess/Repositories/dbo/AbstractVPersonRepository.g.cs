@@ -36,53 +36,6 @@ namespace TestsNS.Api.DataAccess
 			return await this.GetById(personId);
 		}
 
-		public async virtual Task<VPerson> Create(VPerson item)
-		{
-			this.Context.Set<VPerson>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task Update(VPerson item)
-		{
-			var entity = this.Context.Set<VPerson>().Local.FirstOrDefault(x => x.PersonId == item.PersonId);
-			if (entity == null)
-			{
-				this.Context.Set<VPerson>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
-
-			await this.Context.SaveChangesAsync();
-		}
-
-		public async virtual Task Delete(
-			int personId)
-		{
-			VPerson record = await this.GetById(personId);
-
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<VPerson>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
-
-		public async Task<VPerson> ByPersonId(int personId)
-		{
-			var records = await this.Where(x => x.PersonId == personId);
-
-			return records.FirstOrDefault();
-		}
-
 		protected async Task<List<VPerson>> Where(
 			Expression<Func<VPerson, bool>> predicate,
 			int limit = int.MaxValue,
@@ -115,5 +68,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb4f8aa7d1921d4fe79581d4ca39af76</Hash>
+    <Hash>ffbe13e7c219574f460c6a3083778c63</Hash>
 </Codenesium>*/

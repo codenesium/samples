@@ -24,11 +24,12 @@ namespace ESPIOTNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Device
 		[Fact]
 		public async void DeviceId_Create_Valid_Reference()
 		{
 			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-			deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
+			deviceActionRepository.Setup(x => x.DeviceByDeviceId(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
 
 			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
 			await validator.ValidateCreateAsync(new ApiDeviceActionRequestModel());
@@ -40,7 +41,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void DeviceId_Create_Invalid_Reference()
 		{
 			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-			deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
+			deviceActionRepository.Setup(x => x.DeviceByDeviceId(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
 
 			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
 
@@ -53,7 +54,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void DeviceId_Update_Valid_Reference()
 		{
 			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-			deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
+			deviceActionRepository.Setup(x => x.DeviceByDeviceId(It.IsAny<int>())).Returns(Task.FromResult<Device>(new Device()));
 
 			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiDeviceActionRequestModel());
@@ -65,7 +66,7 @@ namespace ESPIOTNS.Api.Services.Tests
 		public async void DeviceId_Update_Invalid_Reference()
 		{
 			Mock<IDeviceActionRepository> deviceActionRepository = new Mock<IDeviceActionRepository>();
-			deviceActionRepository.Setup(x => x.GetDevice(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
+			deviceActionRepository.Setup(x => x.DeviceByDeviceId(It.IsAny<int>())).Returns(Task.FromResult<Device>(null));
 
 			var validator = new ApiDeviceActionRequestModelValidator(deviceActionRepository.Object);
 
@@ -173,5 +174,5 @@ namespace ESPIOTNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>4712ecffb36829dbc45b26da4d527ff4</Hash>
+    <Hash>b066b99f73a96afd4892049e90a0d42f</Hash>
 </Codenesium>*/

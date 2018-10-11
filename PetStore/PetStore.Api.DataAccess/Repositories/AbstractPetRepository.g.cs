@@ -81,17 +81,17 @@ namespace PetStoreNS.Api.DataAccess
 			return await this.Context.Set<Sale>().Where(x => x.PetId == petId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
-		public async virtual Task<Breed> GetBreed(int breedId)
+		public async virtual Task<Breed> BreedByBreedId(int breedId)
 		{
 			return await this.Context.Set<Breed>().SingleOrDefaultAsync(x => x.Id == breedId);
 		}
 
-		public async virtual Task<Pen> GetPen(int penId)
+		public async virtual Task<Pen> PenByPenId(int penId)
 		{
 			return await this.Context.Set<Pen>().SingleOrDefaultAsync(x => x.Id == penId);
 		}
 
-		public async virtual Task<Species> GetSpecies(int speciesId)
+		public async virtual Task<Species> SpeciesBySpeciesId(int speciesId)
 		{
 			return await this.Context.Set<Species>().SingleOrDefaultAsync(x => x.Id == speciesId);
 		}
@@ -128,5 +128,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9e0dc02c793dc327da0ac6560e9d0a8c</Hash>
+    <Hash>1648b2f3a95cf6a80443cec7a187c763</Hash>
 </Codenesium>*/

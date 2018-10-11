@@ -17,16 +17,20 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<Teacher>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Teacher>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0);
+		Task<List<EventTeacher>> EventTeachers(int teacherId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Rate>> Rates(int teacherId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<TeacherTeacherSkill>> TeacherTeacherSkills(int teacherId, int limit = int.MaxValue, int offset = 0);
 
-		Task<User> GetUser(int userId);
+		Task<User> UserByUserId(int userId);
+
+		Task<List<Teacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Teacher>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ba7df42c1cfdfc7c25d0ba41dee825b</Hash>
+    <Hash>db5e457212beb6716256fdb1fa13d5fc</Hash>
 </Codenesium>*/

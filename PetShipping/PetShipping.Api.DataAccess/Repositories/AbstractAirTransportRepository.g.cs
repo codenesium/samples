@@ -76,7 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<Handler> GetHandler(int handlerId)
+		public async virtual Task<Handler> HandlerByHandlerId(int handlerId)
 		{
 			return await this.Context.Set<Handler>().SingleOrDefaultAsync(x => x.Id == handlerId);
 		}
@@ -113,5 +113,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4201981cc3475365eb8a1c62b00f0491</Hash>
+    <Hash>67ad04b98c344eab1b0cce05ed6c2960</Hash>
 </Codenesium>*/

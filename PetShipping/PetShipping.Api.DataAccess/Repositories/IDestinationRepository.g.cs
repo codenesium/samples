@@ -17,12 +17,12 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<List<Destination>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<PipelineStepDestination>> PipelineStepDestinations(int destinationId, int limit = int.MaxValue, int offset = 0);
+		Task<Country> CountryByCountryId(int countryId);
 
-		Task<Country> GetCountry(int countryId);
+		Task<List<Destination>> ByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e2e66dec997398255655cd1fa3dbcd14</Hash>
+    <Hash>60d38c7a41efa157c3f3a424d877c79e</Hash>
 </Codenesium>*/

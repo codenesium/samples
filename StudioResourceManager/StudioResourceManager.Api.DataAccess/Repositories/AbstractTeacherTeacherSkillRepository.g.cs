@@ -31,9 +31,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return this.Where(x => true, limit, offset);
 		}
 
-		public async virtual Task<TeacherTeacherSkill> Get(int id)
+		public async virtual Task<TeacherTeacherSkill> Get(int teacherId)
 		{
-			return await this.GetById(id);
+			return await this.GetById(teacherId);
 		}
 
 		public async virtual Task<TeacherTeacherSkill> Create(TeacherTeacherSkill item)
@@ -47,7 +47,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public async virtual Task Update(TeacherTeacherSkill item)
 		{
-			var entity = this.Context.Set<TeacherTeacherSkill>().Local.FirstOrDefault(x => x.Id == item.Id);
+			var entity = this.Context.Set<TeacherTeacherSkill>().Local.FirstOrDefault(x => x.TeacherId == item.TeacherId);
 			if (entity == null)
 			{
 				this.Context.Set<TeacherTeacherSkill>().Attach(item);
@@ -61,9 +61,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public async virtual Task Delete(
-			int id)
+			int teacherId)
 		{
-			TeacherTeacherSkill record = await this.GetById(id);
+			TeacherTeacherSkill record = await this.GetById(teacherId);
 
 			if (record == null)
 			{
@@ -76,26 +76,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<TeacherTeacherSkill>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.TeacherId == teacherId, limit, offset);
-
-			return records;
-		}
-
-		public async Task<List<TeacherTeacherSkill>> ByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.TeacherSkillId == teacherSkillId, limit, offset);
-
-			return records;
-		}
-
-		public async virtual Task<Teacher> GetTeacher(int teacherId)
+		public async virtual Task<Teacher> TeacherByTeacherId(int teacherId)
 		{
 			return await this.Context.Set<Teacher>().SingleOrDefaultAsync(x => x.Id == teacherId);
 		}
 
-		public async virtual Task<TeacherSkill> GetTeacherSkill(int teacherSkillId)
+		public async virtual Task<TeacherSkill> TeacherSkillByTeacherSkillId(int teacherSkillId)
 		{
 			return await this.Context.Set<TeacherSkill>().SingleOrDefaultAsync(x => x.Id == teacherSkillId);
 		}
@@ -109,7 +95,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		{
 			if (orderBy == null)
 			{
-				orderBy = x => x.Id;
+				orderBy = x => x.TeacherId;
 			}
 
 			if (sortDirection == ListSortDirection.Ascending)
@@ -122,9 +108,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		private async Task<TeacherTeacherSkill> GetById(int id)
+		private async Task<TeacherTeacherSkill> GetById(int teacherId)
 		{
-			List<TeacherTeacherSkill> records = await this.Where(x => x.Id == id);
+			List<TeacherTeacherSkill> records = await this.Where(x => x.TeacherId == teacherId);
 
 			return records.FirstOrDefault();
 		}
@@ -132,5 +118,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d872b1ac8566ee6f95e9b019491617d4</Hash>
+    <Hash>b60fe5881fde067055181e3d9bccd554</Hash>
 </Codenesium>*/

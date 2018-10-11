@@ -21,9 +21,19 @@ WHERE name = N'dbo')
 EXEC('CREATE SCHEMA [dbo] AUTHORIZATION [dbo]');
 GO
 
+--IF (OBJECT_ID('dbo.FK_Admin_tenantId_Tenant_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Admin] DROP CONSTRAINT [FK_Admin_tenantId_Tenant_id]
+--END
+--GO
 --IF (OBJECT_ID('dbo.FK_Admin_userId_User_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Admin] DROP CONSTRAINT [FK_Admin_userId_User_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_Event_tenantId_tenant_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Event] DROP CONSTRAINT [fk_Event_tenantId_tenant_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Event_eventStatusId_EventStatus_id', 'F') IS NOT NULL)
@@ -31,9 +41,9 @@ GO
 --ALTER TABLE [dbo].[Event] DROP CONSTRAINT [FK_Event_eventStatusId_EventStatus_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_EventStatus_tenantId_Tenant_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_EventStatus_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[EventStatus] DROP CONSTRAINT [FK_EventStatus_tenantId_Tenant_id]
+--ALTER TABLE [dbo].[EventStatus] DROP CONSTRAINT [fk_EventStatus_tenantId_tenant_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_EventStudent_eventId_Event_id', 'F') IS NOT NULL)
@@ -46,14 +56,29 @@ GO
 --ALTER TABLE [dbo].[EventStudent] DROP CONSTRAINT [FK_EventStudent_studentId_Student_id]
 --END
 --GO
+--IF (OBJECT_ID('dbo.fk_EventStudent_tenantId_tenant_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[EventStudent] DROP CONSTRAINT [fk_EventStudent_tenantId_tenant_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_EventTeacher_teacherId_Teacher_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[EventTeacher] DROP CONSTRAINT [FK_EventTeacher_teacherId_Teacher_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_EventTeacher_tenantId_tenant_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[EventTeacher] DROP CONSTRAINT [fk_EventTeacher_tenantId_tenant_id]
+--END
+--GO
 --IF (OBJECT_ID('dbo.FK_EventTeacher_eventId_Event_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[EventTeacher] DROP CONSTRAINT [FK_EventTeacher_eventId_Event_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Family_tenantId_Tenant_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_Family_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[Family] DROP CONSTRAINT [FK_Family_tenantId_Tenant_id]
+--ALTER TABLE [dbo].[Family] DROP CONSTRAINT [fk_Family_tenantId_tenant_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Rate_teacherSkillId_TeacherSkill_id', 'F') IS NOT NULL)
@@ -61,24 +86,29 @@ GO
 --ALTER TABLE [dbo].[Rate] DROP CONSTRAINT [FK_Rate_teacherSkillId_TeacherSkill_id]
 --END
 --GO
+--IF (OBJECT_ID('dbo.fk_Rate_tenantId_tenant_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Rate] DROP CONSTRAINT [fk_Rate_tenantId_tenant_id]
+--END
+--GO
 --IF (OBJECT_ID('dbo.FK_Rate_teacherId_Teacher_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Rate] DROP CONSTRAINT [FK_Rate_teacherId_Teacher_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Space_tenantId_Tenant_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_Space_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[Space] DROP CONSTRAINT [FK_Space_tenantId_Tenant_id]
+--ALTER TABLE [dbo].[Space] DROP CONSTRAINT [fk_Space_tenantId_tenant_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_SpaceFeature_tenantId_Tenant_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_SpaceFeature_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[SpaceFeature] DROP CONSTRAINT [FK_SpaceFeature_tenantId_Tenant_id]
+--ALTER TABLE [dbo].[SpaceFeature] DROP CONSTRAINT [fk_SpaceFeature_tenantId_tenant_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_SpaceSpaceFeature_spaceId_Space_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_SpaceSpaceFeature_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[SpaceSpaceFeature] DROP CONSTRAINT [FK_SpaceSpaceFeature_spaceId_Space_id]
+--ALTER TABLE [dbo].[SpaceSpaceFeature] DROP CONSTRAINT [fk_SpaceSpaceFeature_tenantId_tenant_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id', 'F') IS NOT NULL)
@@ -86,9 +116,19 @@ GO
 --ALTER TABLE [dbo].[SpaceSpaceFeature] DROP CONSTRAINT [FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id]
 --END
 --GO
+--IF (OBJECT_ID('dbo.FK_SpaceSpaceFeature_spaceId_Space_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[SpaceSpaceFeature] DROP CONSTRAINT [FK_SpaceSpaceFeature_spaceId_Space_id]
+--END
+--GO
 --IF (OBJECT_ID('dbo.FK_Student_familyId_Family_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Student] DROP CONSTRAINT [FK_Student_familyId_Family_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_Student_tenantId_tenant_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Student] DROP CONSTRAINT [fk_Student_tenantId_tenant_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Student_userId_User_id', 'F') IS NOT NULL)
@@ -96,9 +136,14 @@ GO
 --ALTER TABLE [dbo].[Student] DROP CONSTRAINT [FK_Student_userId_User_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Studio_tenantId_Tenant_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_Studio_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[Studio] DROP CONSTRAINT [FK_Studio_tenantId_Tenant_id]
+--ALTER TABLE [dbo].[Studio] DROP CONSTRAINT [fk_Studio_tenantId_tenant_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_Teacher_tenantId_tenant_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Teacher] DROP CONSTRAINT [fk_Teacher_tenantId_tenant_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Teacher_userId_User_id', 'F') IS NOT NULL)
@@ -106,9 +151,14 @@ GO
 --ALTER TABLE [dbo].[Teacher] DROP CONSTRAINT [FK_Teacher_userId_User_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_TeacherSkill_tenantId_Tenant_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_TeacherSkill_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[TeacherSkill] DROP CONSTRAINT [FK_TeacherSkill_tenantId_Tenant_id]
+--ALTER TABLE [dbo].[TeacherSkill] DROP CONSTRAINT [fk_TeacherSkill_tenantId_tenant_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.fk_TeacherTeacherSkill_tenantId_tenant_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[TeacherTeacherSkill] DROP CONSTRAINT [fk_TeacherTeacherSkill_tenantId_tenant_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_TeacherTeacherSkill_teacherSkillId_TeacherSkill_id', 'F') IS NOT NULL)
@@ -121,9 +171,9 @@ GO
 --ALTER TABLE [dbo].[TeacherTeacherSkill] DROP CONSTRAINT [FK_TeacherTeacherSkill_teacherId_Teacher_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_User_tenantId_Tenant_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_User_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[User] DROP CONSTRAINT [FK_User_tenantId_Tenant_id]
+--ALTER TABLE [dbo].[User] DROP CONSTRAINT [fk_User_tenantId_tenant_id]
 --END
 --GO
 
@@ -212,6 +262,11 @@ GO
 --DROP TABLE [dbo].[User]
 --END
 --GO
+--IF OBJECT_ID('dbo.vEvents', 'U') IS NOT NULL 
+--BEGIN
+--DROP TABLE [dbo].[vEvents]
+--END
+--GO
 
 CREATE TABLE [dbo].[Admin](
 [tenantId] [int]     NOT NULL,
@@ -249,7 +304,6 @@ GO
 CREATE TABLE [dbo].[EventStudent](
 [tenantId] [int]     NOT NULL,
 [eventId] [int]     NOT NULL,
-[id] [int]   IDENTITY(1,1)  NOT NULL,
 [studentId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
@@ -257,7 +311,7 @@ GO
 CREATE TABLE [dbo].[EventTeacher](
 [tenantId] [int]     NOT NULL,
 [eventId] [int]     NOT NULL,
-[id] [int]   IDENTITY(1,1)  NOT NULL,
+[teacherId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -298,7 +352,6 @@ GO
 
 CREATE TABLE [dbo].[SpaceSpaceFeature](
 [tenantId] [int]     NOT NULL,
-[id] [int]   IDENTITY(1,1)  NOT NULL,
 [spaceFeatureId] [int]     NOT NULL,
 [spaceId] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -354,7 +407,6 @@ GO
 
 CREATE TABLE [dbo].[TeacherTeacherSkill](
 [tenantId] [int]     NOT NULL,
-[id] [int]   IDENTITY(1,1)  NOT NULL,
 [teacherId] [int]     NOT NULL,
 [teacherSkillId] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -371,6 +423,18 @@ CREATE TABLE [dbo].[User](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [password] [varchar]  (128)   NOT NULL,
 [username] [varchar]  (128)   NOT NULL,
+) ON[PRIMARY]
+GO
+
+CREATE TABLE [dbo].[vEvents](
+[tenantId] [int]     NOT NULL,
+[actualEndDate] [datetime]     NULL,
+[actualStartDate] [datetime]     NULL,
+[billAmount] [money]     NULL,
+[eventStatusId] [int]     NOT NULL,
+[id] [int]   IDENTITY(1,1)  NOT NULL,
+[scheduledEndDate] [datetime]     NULL,
+[scheduledStartDate] [datetime]     NULL,
 ) ON[PRIMARY]
 GO
 
@@ -396,6 +460,7 @@ ADD CONSTRAINT[PK_Event] PRIMARY KEY CLUSTERED
 GO
 CREATE  NONCLUSTERED INDEX[IX_Event_eventStatusId] ON[dbo].[Event]
 (
+[tenantId] ASC,
 [eventStatusId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
@@ -410,7 +475,8 @@ ALTER TABLE[dbo].[EventStudent]
 ADD CONSTRAINT[PK_EventStudent] PRIMARY KEY CLUSTERED
 (
 [tenantId] ASC
-,[id] ASC
+,[eventId] ASC
+,[studentId] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_EventStudent_eventId] ON[dbo].[EventStudent]
@@ -429,12 +495,20 @@ ALTER TABLE[dbo].[EventTeacher]
 ADD CONSTRAINT[PK_EventTeacher] PRIMARY KEY CLUSTERED
 (
 [tenantId] ASC
-,[id] ASC
+,[eventId] ASC
+,[teacherId] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_EventTeacher_eventId] ON[dbo].[EventTeacher]
 (
+[tenantId] ASC,
 [eventId] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[IX_EventTeacher_teacherId] ON[dbo].[EventTeacher]
+(
+[tenantId] ASC,
+[teacherId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[Family]
@@ -453,11 +527,13 @@ ADD CONSTRAINT[PK_Rate] PRIMARY KEY CLUSTERED
 GO
 CREATE  NONCLUSTERED INDEX[IX_Rate_teacherId] ON[dbo].[Rate]
 (
+[tenantId] ASC,
 [teacherId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_Rate_teacherSkillId] ON[dbo].[Rate]
 (
+[tenantId] ASC,
 [teacherSkillId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
@@ -479,16 +555,19 @@ ALTER TABLE[dbo].[SpaceSpaceFeature]
 ADD CONSTRAINT[PK_SpaceSpaceFeature] PRIMARY KEY CLUSTERED
 (
 [tenantId] ASC
-,[id] ASC
+,[spaceId] ASC
+,[spaceFeatureId] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_SpaceSpaceFeature_spaceFeatureId] ON[dbo].[SpaceSpaceFeature]
 (
+[tenantId] ASC,
 [spaceFeatureId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_SpaceSpaceFeature_spaceId] ON[dbo].[SpaceSpaceFeature]
 (
+[tenantId] ASC,
 [spaceId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
@@ -501,11 +580,13 @@ ADD CONSTRAINT[PK_Student] PRIMARY KEY CLUSTERED
 GO
 CREATE  NONCLUSTERED INDEX[IX_Student_familyId] ON[dbo].[Student]
 (
+[tenantId] ASC,
 [familyId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_Student_userId] ON[dbo].[Student]
 (
+[tenantId] ASC,
 [userId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
@@ -525,6 +606,7 @@ ADD CONSTRAINT[PK_Teacher] PRIMARY KEY CLUSTERED
 GO
 CREATE  NONCLUSTERED INDEX[IX_Teacher_userId] ON[dbo].[Teacher]
 (
+[tenantId] ASC,
 [userId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
@@ -539,16 +621,19 @@ ALTER TABLE[dbo].[TeacherTeacherSkill]
 ADD CONSTRAINT[PK_TeacherTeacherSkill] PRIMARY KEY CLUSTERED
 (
 [tenantId] ASC
-,[id] ASC
+,[teacherId] ASC
+,[teacherSkillId] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_TeacherTeacherSkill_teacherId] ON[dbo].[TeacherTeacherSkill]
 (
+[tenantId] ASC,
 [teacherId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_TeacherTeacherSkill_teacherSkillId] ON[dbo].[TeacherTeacherSkill]
 (
+[tenantId] ASC,
 [teacherSkillId] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
@@ -565,22 +650,39 @@ ADD CONSTRAINT[PK_User] PRIMARY KEY CLUSTERED
 ,[id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+ALTER TABLE[dbo].[vEvents]
+ADD CONSTRAINT[pk_VEvents] PRIMARY KEY CLUSTERED
+(
+[tenantId] ASC
+,[id] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
 
 
+ALTER TABLE[dbo].[Admin]  WITH CHECK ADD  CONSTRAINT[FK_Admin_tenantId_Tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
+GO
+ALTER TABLE[dbo].[Admin] CHECK CONSTRAINT[FK_Admin_tenantId_Tenant_id]
+GO
 ALTER TABLE[dbo].[Admin]  WITH CHECK ADD  CONSTRAINT[FK_Admin_userId_User_id] FOREIGN KEY([tenantId],[userId])
 REFERENCES[dbo].[User]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[Admin] CHECK CONSTRAINT[FK_Admin_userId_User_id]
+GO
+ALTER TABLE[dbo].[Event]  WITH CHECK ADD  CONSTRAINT[fk_Event_tenantId_tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
+GO
+ALTER TABLE[dbo].[Event] CHECK CONSTRAINT[fk_Event_tenantId_tenant_id]
 GO
 ALTER TABLE[dbo].[Event]  WITH CHECK ADD  CONSTRAINT[FK_Event_eventStatusId_EventStatus_id] FOREIGN KEY([tenantId],[eventStatusId])
 REFERENCES[dbo].[EventStatus]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[Event] CHECK CONSTRAINT[FK_Event_eventStatusId_EventStatus_id]
 GO
-ALTER TABLE[dbo].[EventStatus]  WITH CHECK ADD  CONSTRAINT[FK_EventStatus_tenantId_Tenant_id] FOREIGN KEY([tenantId])
+ALTER TABLE[dbo].[EventStatus]  WITH CHECK ADD  CONSTRAINT[fk_EventStatus_tenantId_tenant_id] FOREIGN KEY([tenantId])
 REFERENCES[dbo].[Tenant]([id])
 GO
-ALTER TABLE[dbo].[EventStatus] CHECK CONSTRAINT[FK_EventStatus_tenantId_Tenant_id]
+ALTER TABLE[dbo].[EventStatus] CHECK CONSTRAINT[fk_EventStatus_tenantId_tenant_id]
 GO
 ALTER TABLE[dbo].[EventStudent]  WITH CHECK ADD  CONSTRAINT[FK_EventStudent_eventId_Event_id] FOREIGN KEY([tenantId],[eventId])
 REFERENCES[dbo].[Event]([tenantId],[id])
@@ -592,70 +694,110 @@ REFERENCES[dbo].[Student]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[EventStudent] CHECK CONSTRAINT[FK_EventStudent_studentId_Student_id]
 GO
+ALTER TABLE[dbo].[EventStudent]  WITH CHECK ADD  CONSTRAINT[fk_EventStudent_tenantId_tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
+GO
+ALTER TABLE[dbo].[EventStudent] CHECK CONSTRAINT[fk_EventStudent_tenantId_tenant_id]
+GO
+ALTER TABLE[dbo].[EventTeacher]  WITH CHECK ADD  CONSTRAINT[FK_EventTeacher_teacherId_Teacher_id] FOREIGN KEY([tenantId],[teacherId])
+REFERENCES[dbo].[Teacher]([tenantId],[id])
+GO
+ALTER TABLE[dbo].[EventTeacher] CHECK CONSTRAINT[FK_EventTeacher_teacherId_Teacher_id]
+GO
+ALTER TABLE[dbo].[EventTeacher]  WITH CHECK ADD  CONSTRAINT[fk_EventTeacher_tenantId_tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
+GO
+ALTER TABLE[dbo].[EventTeacher] CHECK CONSTRAINT[fk_EventTeacher_tenantId_tenant_id]
+GO
 ALTER TABLE[dbo].[EventTeacher]  WITH CHECK ADD  CONSTRAINT[FK_EventTeacher_eventId_Event_id] FOREIGN KEY([tenantId],[eventId])
 REFERENCES[dbo].[Event]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[EventTeacher] CHECK CONSTRAINT[FK_EventTeacher_eventId_Event_id]
 GO
-ALTER TABLE[dbo].[Family]  WITH CHECK ADD  CONSTRAINT[FK_Family_tenantId_Tenant_id] FOREIGN KEY([tenantId])
+ALTER TABLE[dbo].[Family]  WITH CHECK ADD  CONSTRAINT[fk_Family_tenantId_tenant_id] FOREIGN KEY([tenantId])
 REFERENCES[dbo].[Tenant]([id])
 GO
-ALTER TABLE[dbo].[Family] CHECK CONSTRAINT[FK_Family_tenantId_Tenant_id]
+ALTER TABLE[dbo].[Family] CHECK CONSTRAINT[fk_Family_tenantId_tenant_id]
 GO
 ALTER TABLE[dbo].[Rate]  WITH CHECK ADD  CONSTRAINT[FK_Rate_teacherSkillId_TeacherSkill_id] FOREIGN KEY([tenantId],[teacherSkillId])
 REFERENCES[dbo].[TeacherSkill]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[Rate] CHECK CONSTRAINT[FK_Rate_teacherSkillId_TeacherSkill_id]
 GO
+ALTER TABLE[dbo].[Rate]  WITH CHECK ADD  CONSTRAINT[fk_Rate_tenantId_tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
+GO
+ALTER TABLE[dbo].[Rate] CHECK CONSTRAINT[fk_Rate_tenantId_tenant_id]
+GO
 ALTER TABLE[dbo].[Rate]  WITH CHECK ADD  CONSTRAINT[FK_Rate_teacherId_Teacher_id] FOREIGN KEY([tenantId],[teacherId])
 REFERENCES[dbo].[Teacher]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[Rate] CHECK CONSTRAINT[FK_Rate_teacherId_Teacher_id]
 GO
-ALTER TABLE[dbo].[Space]  WITH CHECK ADD  CONSTRAINT[FK_Space_tenantId_Tenant_id] FOREIGN KEY([tenantId])
+ALTER TABLE[dbo].[Space]  WITH CHECK ADD  CONSTRAINT[fk_Space_tenantId_tenant_id] FOREIGN KEY([tenantId])
 REFERENCES[dbo].[Tenant]([id])
 GO
-ALTER TABLE[dbo].[Space] CHECK CONSTRAINT[FK_Space_tenantId_Tenant_id]
+ALTER TABLE[dbo].[Space] CHECK CONSTRAINT[fk_Space_tenantId_tenant_id]
 GO
-ALTER TABLE[dbo].[SpaceFeature]  WITH CHECK ADD  CONSTRAINT[FK_SpaceFeature_tenantId_Tenant_id] FOREIGN KEY([tenantId])
+ALTER TABLE[dbo].[SpaceFeature]  WITH CHECK ADD  CONSTRAINT[fk_SpaceFeature_tenantId_tenant_id] FOREIGN KEY([tenantId])
 REFERENCES[dbo].[Tenant]([id])
 GO
-ALTER TABLE[dbo].[SpaceFeature] CHECK CONSTRAINT[FK_SpaceFeature_tenantId_Tenant_id]
+ALTER TABLE[dbo].[SpaceFeature] CHECK CONSTRAINT[fk_SpaceFeature_tenantId_tenant_id]
 GO
-ALTER TABLE[dbo].[SpaceSpaceFeature]  WITH CHECK ADD  CONSTRAINT[FK_SpaceSpaceFeature_spaceId_Space_id] FOREIGN KEY([tenantId],[spaceId])
-REFERENCES[dbo].[Space]([tenantId],[id])
+ALTER TABLE[dbo].[SpaceSpaceFeature]  WITH CHECK ADD  CONSTRAINT[fk_SpaceSpaceFeature_tenantId_tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
 GO
-ALTER TABLE[dbo].[SpaceSpaceFeature] CHECK CONSTRAINT[FK_SpaceSpaceFeature_spaceId_Space_id]
+ALTER TABLE[dbo].[SpaceSpaceFeature] CHECK CONSTRAINT[fk_SpaceSpaceFeature_tenantId_tenant_id]
 GO
 ALTER TABLE[dbo].[SpaceSpaceFeature]  WITH CHECK ADD  CONSTRAINT[FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id] FOREIGN KEY([tenantId],[spaceFeatureId])
 REFERENCES[dbo].[SpaceFeature]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[SpaceSpaceFeature] CHECK CONSTRAINT[FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id]
 GO
+ALTER TABLE[dbo].[SpaceSpaceFeature]  WITH CHECK ADD  CONSTRAINT[FK_SpaceSpaceFeature_spaceId_Space_id] FOREIGN KEY([tenantId],[spaceId])
+REFERENCES[dbo].[Space]([tenantId],[id])
+GO
+ALTER TABLE[dbo].[SpaceSpaceFeature] CHECK CONSTRAINT[FK_SpaceSpaceFeature_spaceId_Space_id]
+GO
 ALTER TABLE[dbo].[Student]  WITH CHECK ADD  CONSTRAINT[FK_Student_familyId_Family_id] FOREIGN KEY([tenantId],[familyId])
 REFERENCES[dbo].[Family]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[Student] CHECK CONSTRAINT[FK_Student_familyId_Family_id]
+GO
+ALTER TABLE[dbo].[Student]  WITH CHECK ADD  CONSTRAINT[fk_Student_tenantId_tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
+GO
+ALTER TABLE[dbo].[Student] CHECK CONSTRAINT[fk_Student_tenantId_tenant_id]
 GO
 ALTER TABLE[dbo].[Student]  WITH CHECK ADD  CONSTRAINT[FK_Student_userId_User_id] FOREIGN KEY([tenantId],[userId])
 REFERENCES[dbo].[User]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[Student] CHECK CONSTRAINT[FK_Student_userId_User_id]
 GO
-ALTER TABLE[dbo].[Studio]  WITH CHECK ADD  CONSTRAINT[FK_Studio_tenantId_Tenant_id] FOREIGN KEY([tenantId])
+ALTER TABLE[dbo].[Studio]  WITH CHECK ADD  CONSTRAINT[fk_Studio_tenantId_tenant_id] FOREIGN KEY([tenantId])
 REFERENCES[dbo].[Tenant]([id])
 GO
-ALTER TABLE[dbo].[Studio] CHECK CONSTRAINT[FK_Studio_tenantId_Tenant_id]
+ALTER TABLE[dbo].[Studio] CHECK CONSTRAINT[fk_Studio_tenantId_tenant_id]
+GO
+ALTER TABLE[dbo].[Teacher]  WITH CHECK ADD  CONSTRAINT[fk_Teacher_tenantId_tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
+GO
+ALTER TABLE[dbo].[Teacher] CHECK CONSTRAINT[fk_Teacher_tenantId_tenant_id]
 GO
 ALTER TABLE[dbo].[Teacher]  WITH CHECK ADD  CONSTRAINT[FK_Teacher_userId_User_id] FOREIGN KEY([tenantId],[userId])
 REFERENCES[dbo].[User]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[Teacher] CHECK CONSTRAINT[FK_Teacher_userId_User_id]
 GO
-ALTER TABLE[dbo].[TeacherSkill]  WITH CHECK ADD  CONSTRAINT[FK_TeacherSkill_tenantId_Tenant_id] FOREIGN KEY([tenantId])
+ALTER TABLE[dbo].[TeacherSkill]  WITH CHECK ADD  CONSTRAINT[fk_TeacherSkill_tenantId_tenant_id] FOREIGN KEY([tenantId])
 REFERENCES[dbo].[Tenant]([id])
 GO
-ALTER TABLE[dbo].[TeacherSkill] CHECK CONSTRAINT[FK_TeacherSkill_tenantId_Tenant_id]
+ALTER TABLE[dbo].[TeacherSkill] CHECK CONSTRAINT[fk_TeacherSkill_tenantId_tenant_id]
+GO
+ALTER TABLE[dbo].[TeacherTeacherSkill]  WITH CHECK ADD  CONSTRAINT[fk_TeacherTeacherSkill_tenantId_tenant_id] FOREIGN KEY([tenantId])
+REFERENCES[dbo].[Tenant]([id])
+GO
+ALTER TABLE[dbo].[TeacherTeacherSkill] CHECK CONSTRAINT[fk_TeacherTeacherSkill_tenantId_tenant_id]
 GO
 ALTER TABLE[dbo].[TeacherTeacherSkill]  WITH CHECK ADD  CONSTRAINT[FK_TeacherTeacherSkill_teacherSkillId_TeacherSkill_id] FOREIGN KEY([tenantId],[teacherSkillId])
 REFERENCES[dbo].[TeacherSkill]([tenantId],[id])
@@ -667,10 +809,10 @@ REFERENCES[dbo].[Teacher]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[TeacherTeacherSkill] CHECK CONSTRAINT[FK_TeacherTeacherSkill_teacherId_Teacher_id]
 GO
-ALTER TABLE[dbo].[User]  WITH CHECK ADD  CONSTRAINT[FK_User_tenantId_Tenant_id] FOREIGN KEY([tenantId])
+ALTER TABLE[dbo].[User]  WITH CHECK ADD  CONSTRAINT[fk_User_tenantId_tenant_id] FOREIGN KEY([tenantId])
 REFERENCES[dbo].[Tenant]([id])
 GO
-ALTER TABLE[dbo].[User] CHECK CONSTRAINT[FK_User_tenantId_Tenant_id]
+ALTER TABLE[dbo].[User] CHECK CONSTRAINT[fk_User_tenantId_tenant_id]
 GO
 
 ");

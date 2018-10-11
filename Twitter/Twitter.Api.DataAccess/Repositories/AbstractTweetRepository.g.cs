@@ -78,21 +78,12 @@ namespace TwitterNS.Api.DataAccess
 
 		public async Task<List<Tweet>> ByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.LocationId == locationId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.LocationId == locationId, limit, offset);
 		}
 
 		public async Task<List<Tweet>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.UserUserId == userUserId, limit, offset);
-
-			return records;
-		}
-
-		public async virtual Task<List<Like>> Likes(int tweetId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<Like>().Where(x => x.TweetId == tweetId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Like>();
+			return await this.Where(x => x.UserUserId == userUserId, limit, offset);
 		}
 
 		public async virtual Task<List<QuoteTweet>> QuoteTweets(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
@@ -105,12 +96,12 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Context.Set<Retweet>().Where(x => x.TweetTweetId == tweetTweetId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
-		public async virtual Task<Location> GetLocation(int locationId)
+		public async virtual Task<Location> LocationByLocationId(int locationId)
 		{
 			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.LocationId == locationId);
 		}
 
-		public async virtual Task<User> GetUser(int userUserId)
+		public async virtual Task<User> UserByUserUserId(int userUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == userUserId);
 		}
@@ -147,5 +138,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e55d1a2d798ebe39792c79ad2c4b97bc</Hash>
+    <Hash>7e6b63b72b410882b2e3550ec4de30d7</Hash>
 </Codenesium>*/

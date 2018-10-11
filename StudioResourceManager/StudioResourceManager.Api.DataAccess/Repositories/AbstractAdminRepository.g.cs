@@ -76,7 +76,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<User> GetUser(int userId)
+		public async virtual Task<User> UserByUserId(int userId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
 		}
@@ -113,5 +113,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2953e8ee26ec94b14c0106edf9232f76</Hash>
+    <Hash>f61c3187cfb4c4a5285bb7929947ac28</Hash>
 </Codenesium>*/

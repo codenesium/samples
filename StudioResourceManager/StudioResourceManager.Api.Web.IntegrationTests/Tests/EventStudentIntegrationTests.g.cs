@@ -41,7 +41,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			ApiEventStudentModelMapper mapper = new ApiEventStudentModelMapper();
 
-			UpdateResponse<ApiEventStudentResponseModel> updateResponse = await this.Client.EventStudentUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiEventStudentResponseModel> updateResponse = await this.Client.EventStudentUpdateAsync(model.EventId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		{
 			var model = await this.CreateRecord();
 
-			await this.Client.EventStudentDeleteAsync(model.Id);
+			await this.Client.EventStudentDeleteAsync(model.EventId);
 
 			await this.Cleanup();
 		}
@@ -78,7 +78,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiEventStudentResponseModel> CreateRecord()
 		{
 			var model = new ApiEventStudentRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1);
 			CreateResponse<ApiEventStudentResponseModel> result = await this.Client.EventStudentCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>a6c4397d6165bf4d1d9f213830233cae</Hash>
+    <Hash>619a6c676e5e3df3149fad58e3fb1f7d</Hash>
 </Codenesium>*/

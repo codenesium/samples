@@ -8,14 +8,13 @@ namespace StudioResourceManagerNS.Api.Services
 	public abstract class BOLAbstractTeacherTeacherSkillMapper
 	{
 		public virtual BOTeacherTeacherSkill MapModelToBO(
-			int id,
+			int teacherId,
 			ApiTeacherTeacherSkillRequestModel model
 			)
 		{
 			BOTeacherTeacherSkill boTeacherTeacherSkill = new BOTeacherTeacherSkill();
 			boTeacherTeacherSkill.SetProperties(
-				id,
-				model.TeacherId,
+				teacherId,
 				model.TeacherSkillId);
 			return boTeacherTeacherSkill;
 		}
@@ -25,7 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiTeacherTeacherSkillResponseModel();
 
-			model.SetProperties(boTeacherTeacherSkill.Id, boTeacherTeacherSkill.TeacherId, boTeacherTeacherSkill.TeacherSkillId);
+			model.SetProperties(boTeacherTeacherSkill.TeacherId, boTeacherTeacherSkill.TeacherSkillId);
 
 			return model;
 		}
@@ -46,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>519ccb83e5cffe0dcd23ef52e418ae65</Hash>
+    <Hash>47682f525dd5c99efd1699258401ad3f</Hash>
 </Codenesium>*/

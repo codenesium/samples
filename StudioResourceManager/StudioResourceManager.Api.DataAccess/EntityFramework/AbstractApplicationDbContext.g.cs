@@ -76,6 +76,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual DbSet<User> Users { get; set; }
 
+		public virtual DbSet<VEvent> VEvents { get; set; }
+
 		/// <summary>
 		/// We're overriding SaveChanges because SQLite does not support database computed columns.
 		/// ROWGUID is a very common type of column and it does not work with SQLite.
@@ -116,6 +118,31 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<EventStudent>()
+			.HasKey(c => new
+			{
+				c.EventId,
+				c.StudentId,
+			});
+			modelBuilder.Entity<EventTeacher>()
+			.HasKey(c => new
+			{
+				c.EventId,
+				c.TeacherId,
+			});
+			modelBuilder.Entity<SpaceSpaceFeature>()
+			.HasKey(c => new
+			{
+				c.SpaceId,
+				c.SpaceFeatureId,
+			});
+			modelBuilder.Entity<TeacherTeacherSkill>()
+			.HasKey(c => new
+			{
+				c.TeacherId,
+				c.TeacherSkillId,
+			});
+
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
@@ -146,5 +173,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d5ab4fcbe35e0e30a8b690f14ff2291e</Hash>
+    <Hash>94ff0bc437667071838b4625f5c0d274</Hash>
 </Codenesium>*/

@@ -36,7 +36,7 @@ namespace TwitterNS.Api.Services
 
 		public virtual void MessageIdRules()
 		{
-			this.RuleFor(x => x.MessageId).MustAsync(this.BeValidMessage).When(x => x?.MessageId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.MessageId).MustAsync(this.BeValidMessageByMessageId).When(x => x?.MessageId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TimeRules()
@@ -45,31 +45,31 @@ namespace TwitterNS.Api.Services
 
 		public virtual void ToUserIdRules()
 		{
-			this.RuleFor(x => x.ToUserId).MustAsync(this.BeValidUser).When(x => x?.ToUserId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ToUserId).MustAsync(this.BeValidUserByToUserId).When(x => x?.ToUserId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void UserIdRules()
 		{
-			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUser).When(x => x?.UserId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => x?.UserId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidMessage(int? id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidMessageByMessageId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.messengerRepository.GetMessage(id.GetValueOrDefault());
+			var record = await this.messengerRepository.MessageByMessageId(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUser(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidUserByToUserId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.messengerRepository.GetUser(id);
+			var record = await this.messengerRepository.UserByToUserId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidUser(int? id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidUserByUserId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.messengerRepository.GetUser(id.GetValueOrDefault());
+			var record = await this.messengerRepository.UserByUserId(id.GetValueOrDefault());
 
 			return record != null;
 		}
@@ -77,5 +77,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>333c3c6866ea7290a5ff6032ce0ebd4e</Hash>
+    <Hash>bd4d413b60fa417d244bf1e17ee64a4c</Hash>
 </Codenesium>*/

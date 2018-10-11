@@ -11,9 +11,9 @@ namespace TwitterNS.Api.Services.Tests
 	{
 		public Mock<IApiDirectTweetRequestModelValidator> DirectTweetModelValidatorMock { get; set; } = new Mock<IApiDirectTweetRequestModelValidator>();
 
-		public Mock<IApiFollowingRequestModelValidator> FollowingModelValidatorMock { get; set; } = new Mock<IApiFollowingRequestModelValidator>();
+		public Mock<IApiFollowerRequestModelValidator> FollowerModelValidatorMock { get; set; } = new Mock<IApiFollowerRequestModelValidator>();
 
-		public Mock<IApiLikeRequestModelValidator> LikeModelValidatorMock { get; set; } = new Mock<IApiLikeRequestModelValidator>();
+		public Mock<IApiFollowingRequestModelValidator> FollowingModelValidatorMock { get; set; } = new Mock<IApiFollowingRequestModelValidator>();
 
 		public Mock<IApiLocationRequestModelValidator> LocationModelValidatorMock { get; set; } = new Mock<IApiLocationRequestModelValidator>();
 
@@ -37,13 +37,13 @@ namespace TwitterNS.Api.Services.Tests
 			this.DirectTweetModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiDirectTweetRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.DirectTweetModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
+			this.FollowerModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.FollowerModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFollowerRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+			this.FollowerModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
+
 			this.FollowingModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFollowingRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.FollowingModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<string>(), It.IsAny<ApiFollowingRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.FollowingModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<string>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.LikeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLikeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.LikeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLikeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.LikeModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.LocationModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.LocationModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiLocationRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -81,5 +81,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>fa2a7a0ec5af704f4ecdbbce02df9352</Hash>
+    <Hash>d06656b353e87b9ad1c7edbcd845308a</Hash>
 </Codenesium>*/

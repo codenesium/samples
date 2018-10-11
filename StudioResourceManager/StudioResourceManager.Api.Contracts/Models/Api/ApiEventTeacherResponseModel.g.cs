@@ -9,13 +9,14 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public partial class ApiEventTeacherResponseModel : AbstractApiResponseModel
 	{
 		public virtual void SetProperties(
-			int id,
-			int eventId)
+			int eventId,
+			int teacherId)
 		{
-			this.Id = id;
 			this.EventId = eventId;
+			this.TeacherId = teacherId;
 
 			this.EventIdEntity = nameof(ApiResponse.Events);
+			this.TeacherIdEntity = nameof(ApiResponse.Teachers);
 		}
 
 		[JsonProperty]
@@ -25,10 +26,13 @@ namespace StudioResourceManagerNS.Api.Contracts
 		public string EventIdEntity { get; set; }
 
 		[JsonProperty]
-		public int Id { get; private set; }
+		public int TeacherId { get; private set; }
+
+		[JsonProperty]
+		public string TeacherIdEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f00ccc0b903a4983a4a7d688f584ea0</Hash>
+    <Hash>3b748760c6ee8019c4c9ee98694df4b0</Hash>
 </Codenesium>*/

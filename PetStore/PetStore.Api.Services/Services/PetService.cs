@@ -20,8 +20,7 @@ namespace PetStoreNS.Api.Services
 			IBOLPetMapper bolpetMapper,
 			IDALPetMapper dalpetMapper,
 			IBOLSaleMapper bolSaleMapper,
-			IDALSaleMapper dalSaleMapper
-			)
+			IDALSaleMapper dalSaleMapper)
 			: base(logger,
 			       petRepository,
 			       petModelValidator,
@@ -35,5 +34,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>654852b9211f67f9d0b3ba59c6fa0e92</Hash>
+    <Hash>cd0ddbcd5573e959179b2cf2b2dac52b</Hash>
 </Codenesium>*/

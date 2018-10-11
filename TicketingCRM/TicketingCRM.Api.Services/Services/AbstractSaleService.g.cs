@@ -22,10 +22,6 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IDALSaleMapper DalSaleMapper { get; private set; }
 
-		protected IBOLSaleTicketMapper BolSaleTicketMapper { get; private set; }
-
-		protected IDALSaleTicketMapper DalSaleTicketMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractSaleService(
@@ -33,17 +29,13 @@ namespace TicketingCRMNS.Api.Services
 			ISaleRepository saleRepository,
 			IApiSaleRequestModelValidator saleModelValidator,
 			IBOLSaleMapper bolSaleMapper,
-			IDALSaleMapper dalSaleMapper,
-			IBOLSaleTicketMapper bolSaleTicketMapper,
-			IDALSaleTicketMapper dalSaleTicketMapper)
+			IDALSaleMapper dalSaleMapper)
 			: base()
 		{
 			this.SaleRepository = saleRepository;
 			this.SaleModelValidator = saleModelValidator;
 			this.BolSaleMapper = bolSaleMapper;
 			this.DalSaleMapper = dalSaleMapper;
-			this.BolSaleTicketMapper = bolSaleTicketMapper;
-			this.DalSaleTicketMapper = dalSaleTicketMapper;
 			this.logger = logger;
 		}
 
@@ -123,15 +115,15 @@ namespace TicketingCRMNS.Api.Services
 			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSaleTicketResponseModel>> SaleTickets(int saleId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSaleResponseModel>> BySaleId(int saleId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SaleTicket> records = await this.SaleRepository.SaleTickets(saleId, limit, offset);
+			List<Sale> records = await this.SaleRepository.BySaleId(saleId, limit, offset);
 
-			return this.BolSaleTicketMapper.MapBOToModel(this.DalSaleTicketMapper.MapEFToBO(records));
+			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e160f91e86cb4bd0e7763491e96b856</Hash>
+    <Hash>574fe2b6cfead9cf911aeb7b27e5388a</Hash>
 </Codenesium>*/

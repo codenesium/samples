@@ -18,8 +18,7 @@ namespace StackOverflowNS.Api.Services
 			IPostHistoryTypeRepository postHistoryTypeRepository,
 			IApiPostHistoryTypeRequestModelValidator postHistoryTypeModelValidator,
 			IBOLPostHistoryTypeMapper bolpostHistoryTypeMapper,
-			IDALPostHistoryTypeMapper dalpostHistoryTypeMapper
-			)
+			IDALPostHistoryTypeMapper dalpostHistoryTypeMapper)
 			: base(logger,
 			       postHistoryTypeRepository,
 			       postHistoryTypeModelValidator,
@@ -31,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ff450f4847d096cf403f1e9f4bd378b6</Hash>
+    <Hash>4a0dbe727a6f726a124c8ff45fce04af</Hash>
 </Codenesium>*/

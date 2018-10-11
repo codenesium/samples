@@ -120,11 +120,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Admin
 		[Fact]
 		public async void AdminId_Create_Valid_Reference()
 		{
 			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-			venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(new Admin()));
+			venueRepository.Setup(x => x.AdminByAdminId(It.IsAny<int>())).Returns(Task.FromResult<Admin>(new Admin()));
 
 			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
@@ -136,7 +137,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void AdminId_Create_Invalid_Reference()
 		{
 			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-			venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(null));
+			venueRepository.Setup(x => x.AdminByAdminId(It.IsAny<int>())).Returns(Task.FromResult<Admin>(null));
 
 			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 
@@ -149,7 +150,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void AdminId_Update_Valid_Reference()
 		{
 			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-			venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(new Admin()));
+			venueRepository.Setup(x => x.AdminByAdminId(It.IsAny<int>())).Returns(Task.FromResult<Admin>(new Admin()));
 
 			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
@@ -161,7 +162,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void AdminId_Update_Invalid_Reference()
 		{
 			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-			venueRepository.Setup(x => x.GetAdmin(It.IsAny<int>())).Returns(Task.FromResult<Admin>(null));
+			venueRepository.Setup(x => x.AdminByAdminId(It.IsAny<int>())).Returns(Task.FromResult<Admin>(null));
 
 			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 
@@ -362,11 +363,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Province
 		[Fact]
 		public async void ProvinceId_Create_Valid_Reference()
 		{
 			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-			venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
+			venueRepository.Setup(x => x.ProvinceByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
 			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 			await validator.ValidateCreateAsync(new ApiVenueRequestModel());
@@ -378,7 +380,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void ProvinceId_Create_Invalid_Reference()
 		{
 			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-			venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
+			venueRepository.Setup(x => x.ProvinceByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
 
 			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 
@@ -391,7 +393,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void ProvinceId_Update_Valid_Reference()
 		{
 			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-			venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
+			venueRepository.Setup(x => x.ProvinceByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
 			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiVenueRequestModel());
@@ -403,7 +405,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void ProvinceId_Update_Invalid_Reference()
 		{
 			Mock<IVenueRepository> venueRepository = new Mock<IVenueRepository>();
-			venueRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
+			venueRepository.Setup(x => x.ProvinceByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
 
 			var validator = new ApiVenueRequestModelValidator(venueRepository.Object);
 
@@ -463,5 +465,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8abd3802283bada47cd04a5803caf06e</Hash>
+    <Hash>39e17de1d02fa8866699072d10b3fe8a</Hash>
 </Codenesium>*/

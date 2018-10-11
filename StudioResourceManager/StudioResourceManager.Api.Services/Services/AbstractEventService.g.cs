@@ -124,13 +124,6 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async Task<List<ApiEventResponseModel>> ByEventStatusId(int eventStatusId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Event> records = await this.EventRepository.ByEventStatusId(eventStatusId, limit, offset);
-
-			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
-		}
-
 		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudents(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<EventStudent> records = await this.EventRepository.EventStudents(eventId, limit, offset);
@@ -144,9 +137,23 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return this.BolEventTeacherMapper.MapBOToModel(this.DalEventTeacherMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiEventResponseModel>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Event> records = await this.EventRepository.ByStudentId(studentId, limit, offset);
+
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiEventResponseModel>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Event> records = await this.EventRepository.ByTeacherId(teacherId, limit, offset);
+
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>60a8f14008cfa9fe0d8465d2528a17bc</Hash>
+    <Hash>22106950cc06634d1cfbd91e74f1e700</Hash>
 </Codenesium>*/

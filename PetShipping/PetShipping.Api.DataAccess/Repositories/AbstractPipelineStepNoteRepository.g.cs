@@ -76,12 +76,12 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<Employee> GetEmployee(int employeeId)
+		public async virtual Task<Employee> EmployeeByEmployeeId(int employeeId)
 		{
 			return await this.Context.Set<Employee>().SingleOrDefaultAsync(x => x.Id == employeeId);
 		}
 
-		public async virtual Task<PipelineStep> GetPipelineStep(int pipelineStepId)
+		public async virtual Task<PipelineStep> PipelineStepByPipelineStepId(int pipelineStepId)
 		{
 			return await this.Context.Set<PipelineStep>().SingleOrDefaultAsync(x => x.Id == pipelineStepId);
 		}
@@ -118,5 +118,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f43a793d1e5409ee5f41b3c49c409cc7</Hash>
+    <Hash>ddecd5d967e120f6135c397361f50ee6</Hash>
 </Codenesium>*/

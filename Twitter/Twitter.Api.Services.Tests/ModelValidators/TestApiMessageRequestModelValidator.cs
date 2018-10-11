@@ -48,11 +48,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Content, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void SenderUserId_Create_Valid_Reference()
 		{
 			Mock<IMessageRepository> messageRepository = new Mock<IMessageRepository>();
-			messageRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			messageRepository.Setup(x => x.UserBySenderUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiMessageRequestModelValidator(messageRepository.Object);
 			await validator.ValidateCreateAsync(new ApiMessageRequestModel());
@@ -64,7 +65,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void SenderUserId_Create_Invalid_Reference()
 		{
 			Mock<IMessageRepository> messageRepository = new Mock<IMessageRepository>();
-			messageRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			messageRepository.Setup(x => x.UserBySenderUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiMessageRequestModelValidator(messageRepository.Object);
 
@@ -77,7 +78,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void SenderUserId_Update_Valid_Reference()
 		{
 			Mock<IMessageRepository> messageRepository = new Mock<IMessageRepository>();
-			messageRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			messageRepository.Setup(x => x.UserBySenderUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiMessageRequestModelValidator(messageRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiMessageRequestModel());
@@ -89,7 +90,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void SenderUserId_Update_Invalid_Reference()
 		{
 			Mock<IMessageRepository> messageRepository = new Mock<IMessageRepository>();
-			messageRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			messageRepository.Setup(x => x.UserBySenderUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiMessageRequestModelValidator(messageRepository.Object);
 
@@ -101,5 +102,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>804104c147d9f4b0949b5827992ca565</Hash>
+    <Hash>179312fc3474e7e1105ba7ca25e22645</Hash>
 </Codenesium>*/

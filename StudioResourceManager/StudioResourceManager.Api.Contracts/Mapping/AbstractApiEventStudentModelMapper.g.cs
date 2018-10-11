@@ -8,12 +8,11 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public abstract class AbstractApiEventStudentModelMapper
 	{
 		public virtual ApiEventStudentResponseModel MapRequestToResponse(
-			int id,
+			int eventId,
 			ApiEventStudentRequestModel request)
 		{
 			var response = new ApiEventStudentResponseModel();
-			response.SetProperties(id,
-			                       request.EventId,
+			response.SetProperties(eventId,
 			                       request.StudentId);
 			return response;
 		}
@@ -23,7 +22,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var request = new ApiEventStudentRequestModel();
 			request.SetProperties(
-				response.EventId,
 				response.StudentId);
 			return request;
 		}
@@ -31,7 +29,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 		public JsonPatchDocument<ApiEventStudentRequestModel> CreatePatch(ApiEventStudentRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiEventStudentRequestModel>();
-			patch.Replace(x => x.EventId, model.EventId);
 			patch.Replace(x => x.StudentId, model.StudentId);
 			return patch;
 		}
@@ -39,5 +36,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7e88de4e39ce22fb78452b97c116db22</Hash>
+    <Hash>7ee5d419bd8d948499cbe3da6e8c7ed8</Hash>
 </Codenesium>*/

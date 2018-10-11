@@ -23,12 +23,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiCurrencyResponseModel> ByName(string name);
 
-		Task<List<ApiCountryRegionCurrencyResponseModel>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<ApiCurrencyRateResponseModel>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ef2c909adb565b99a75afbca8c7483e</Hash>
+    <Hash>46ae914150fdee1b91dd7b03603c10a7</Hash>
 </Codenesium>*/

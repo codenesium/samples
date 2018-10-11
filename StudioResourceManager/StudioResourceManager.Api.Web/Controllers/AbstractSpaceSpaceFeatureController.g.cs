@@ -119,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.Created($"{this.Settings.ExternalBaseUrl}/api/SpaceSpaceFeatures/{result.Record.Id}", result);
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/SpaceSpaceFeatures/{result.Record.SpaceId}", result);
 			}
 			else
 			{
@@ -206,40 +206,6 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("bySpaceFeatureId/{spaceFeatureId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceSpaceFeatureResponseModel>), 200)]
-		public async virtual Task<IActionResult> BySpaceFeatureId(int spaceFeatureId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSpaceSpaceFeatureResponseModel> response = await this.SpaceSpaceFeatureService.BySpaceFeatureId(spaceFeatureId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("bySpaceId/{spaceId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceSpaceFeatureResponseModel>), 200)]
-		public async virtual Task<IActionResult> BySpaceId(int spaceId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSpaceSpaceFeatureResponseModel> response = await this.SpaceSpaceFeatureService.BySpaceId(spaceId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiSpaceSpaceFeatureRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpaceSpaceFeatureRequestModel> patch)
 		{
 			var record = await this.SpaceSpaceFeatureService.Get(id);
@@ -259,5 +225,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>2ac6eb806d85a2d7b46f25548a53dee5</Hash>
+    <Hash>fae346a717d03b82a7ff4d55b0649fd2</Hash>
 </Codenesium>*/

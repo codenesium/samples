@@ -22,8 +22,7 @@ namespace PetShippingNS.Api.Services
 			IBOLCountryRequirementMapper bolCountryRequirementMapper,
 			IDALCountryRequirementMapper dalCountryRequirementMapper,
 			IBOLDestinationMapper bolDestinationMapper,
-			IDALDestinationMapper dalDestinationMapper
-			)
+			IDALDestinationMapper dalDestinationMapper)
 			: base(logger,
 			       countryRepository,
 			       countryModelValidator,
@@ -39,5 +38,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3dfc4d17159945cc68a894dfd7561682</Hash>
+    <Hash>446a6f552e30e7fc823e0a6d59c95b4c</Hash>
 </Codenesium>*/

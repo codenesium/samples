@@ -42,9 +42,9 @@ namespace AdventureWorksNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidSalesPerson(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSalesPersonByBusinessEntityID(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.salesPersonQuotaHistoryRepository.GetSalesPerson(id);
+			var record = await this.salesPersonQuotaHistoryRepository.SalesPersonByBusinessEntityID(id);
 
 			return record != null;
 		}
@@ -52,5 +52,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>224e7214cd9aa4c360e6233c6cc13985</Hash>
+    <Hash>faed6c5dadf15273a1b731a94df512cd</Hash>
 </Codenesium>*/

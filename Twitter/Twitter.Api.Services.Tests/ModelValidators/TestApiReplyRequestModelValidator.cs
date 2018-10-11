@@ -72,11 +72,12 @@ namespace TwitterNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Content, new string('A', 141));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void ReplierUserId_Create_Valid_Reference()
 		{
 			Mock<IReplyRepository> replyRepository = new Mock<IReplyRepository>();
-			replyRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			replyRepository.Setup(x => x.UserByReplierUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiReplyRequestModelValidator(replyRepository.Object);
 			await validator.ValidateCreateAsync(new ApiReplyRequestModel());
@@ -88,7 +89,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void ReplierUserId_Create_Invalid_Reference()
 		{
 			Mock<IReplyRepository> replyRepository = new Mock<IReplyRepository>();
-			replyRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			replyRepository.Setup(x => x.UserByReplierUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiReplyRequestModelValidator(replyRepository.Object);
 
@@ -101,7 +102,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void ReplierUserId_Update_Valid_Reference()
 		{
 			Mock<IReplyRepository> replyRepository = new Mock<IReplyRepository>();
-			replyRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			replyRepository.Setup(x => x.UserByReplierUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiReplyRequestModelValidator(replyRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiReplyRequestModel());
@@ -113,7 +114,7 @@ namespace TwitterNS.Api.Services.Tests
 		public async void ReplierUserId_Update_Invalid_Reference()
 		{
 			Mock<IReplyRepository> replyRepository = new Mock<IReplyRepository>();
-			replyRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			replyRepository.Setup(x => x.UserByReplierUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiReplyRequestModelValidator(replyRepository.Object);
 
@@ -125,5 +126,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c92db163d2f2bf5a3562cb97e7e6042c</Hash>
+    <Hash>7dd30dcb193c11740ba4b71120a0725f</Hash>
 </Codenesium>*/

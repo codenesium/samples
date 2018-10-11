@@ -72,11 +72,12 @@ namespace PetShippingNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Species
 		[Fact]
 		public async void SpeciesId_Create_Valid_Reference()
 		{
 			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-			breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
+			breedRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
 
 			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
 			await validator.ValidateCreateAsync(new ApiBreedRequestModel());
@@ -88,7 +89,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void SpeciesId_Create_Invalid_Reference()
 		{
 			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-			breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
+			breedRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
 
 			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
 
@@ -101,7 +102,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void SpeciesId_Update_Valid_Reference()
 		{
 			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-			breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
+			breedRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(new Species()));
 
 			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiBreedRequestModel());
@@ -113,7 +114,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void SpeciesId_Update_Invalid_Reference()
 		{
 			Mock<IBreedRepository> breedRepository = new Mock<IBreedRepository>();
-			breedRepository.Setup(x => x.GetSpecies(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
+			breedRepository.Setup(x => x.SpeciesBySpeciesId(It.IsAny<int>())).Returns(Task.FromResult<Species>(null));
 
 			var validator = new ApiBreedRequestModelValidator(breedRepository.Object);
 
@@ -125,5 +126,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>05293a23db93fa4189bf957efc4e9756</Hash>
+    <Hash>2773b28f23c3e29ccd682ceb877d0fae</Hash>
 </Codenesium>*/

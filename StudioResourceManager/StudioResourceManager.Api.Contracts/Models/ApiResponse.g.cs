@@ -30,6 +30,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			from.TeacherTeacherSkills.ForEach(x => this.AddTeacherTeacherSkill(x));
 			from.Tenants.ForEach(x => this.AddTenant(x));
 			from.Users.ForEach(x => this.AddUser(x));
+			from.VEvents.ForEach(x => this.AddVEvent(x));
 		}
 
 		public List<ApiAdminResponseModel> Admins { get; private set; } = new List<ApiAdminResponseModel>();
@@ -65,6 +66,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		public List<ApiTenantResponseModel> Tenants { get; private set; } = new List<ApiTenantResponseModel>();
 
 		public List<ApiUserResponseModel> Users { get; private set; } = new List<ApiUserResponseModel>();
+
+		public List<ApiVEventResponseModel> VEvents { get; private set; } = new List<ApiVEventResponseModel>();
 
 		[JsonIgnore]
 		public bool ShouldSerializeAdminsValue { get; private set; } = true;
@@ -124,7 +127,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		public void AddEventStudent(ApiEventStudentResponseModel item)
 		{
-			if (!this.EventStudents.Any(x => x.Id == item.Id))
+			if (!this.EventStudents.Any(x => x.EventId == item.EventId))
 			{
 				this.EventStudents.Add(item);
 			}
@@ -140,7 +143,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		public void AddEventTeacher(ApiEventTeacherResponseModel item)
 		{
-			if (!this.EventTeachers.Any(x => x.Id == item.Id))
+			if (!this.EventTeachers.Any(x => x.EventId == item.EventId))
 			{
 				this.EventTeachers.Add(item);
 			}
@@ -220,7 +223,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		public void AddSpaceSpaceFeature(ApiSpaceSpaceFeatureResponseModel item)
 		{
-			if (!this.SpaceSpaceFeatures.Any(x => x.Id == item.Id))
+			if (!this.SpaceSpaceFeatures.Any(x => x.SpaceId == item.SpaceId))
 			{
 				this.SpaceSpaceFeatures.Add(item);
 			}
@@ -300,7 +303,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		public void AddTeacherTeacherSkill(ApiTeacherTeacherSkillResponseModel item)
 		{
-			if (!this.TeacherTeacherSkills.Any(x => x.Id == item.Id))
+			if (!this.TeacherTeacherSkills.Any(x => x.TeacherId == item.TeacherId))
 			{
 				this.TeacherTeacherSkills.Add(item);
 			}
@@ -335,6 +338,22 @@ namespace StudioResourceManagerNS.Api.Contracts
 			if (!this.Users.Any(x => x.Id == item.Id))
 			{
 				this.Users.Add(item);
+			}
+		}
+
+		[JsonIgnore]
+		public bool ShouldSerializeVEventsValue { get; private set; } = true;
+
+		public bool ShouldSerializeVEvents()
+		{
+			return this.ShouldSerializeVEventsValue;
+		}
+
+		public void AddVEvent(ApiVEventResponseModel item)
+		{
+			if (!this.VEvents.Any(x => x.Id == item.Id))
+			{
+				this.VEvents.Add(item);
 			}
 		}
 
@@ -424,10 +443,15 @@ namespace StudioResourceManagerNS.Api.Contracts
 			{
 				this.ShouldSerializeUsersValue = false;
 			}
+
+			if (this.VEvents.Count == 0)
+			{
+				this.ShouldSerializeVEventsValue = false;
+			}
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>42f891083a2ee79b48e73a736e7f88e4</Hash>
+    <Hash>2e4daa1f03407deae1c10077087010c6</Hash>
 </Codenesium>*/

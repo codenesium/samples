@@ -191,7 +191,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 			mockResult.SetupGet(x => x.Success).Returns(true);
 			mock.ServiceMock.Setup(x => x.Update(It.IsAny<int>(), It.IsAny<ApiEventTeacherRequestModel>()))
 			.Callback<int, ApiEventTeacherRequestModel>(
-				(id, model) => model.EventId.Should().Be(1)
+				(id, model) => model.TeacherId.Should().Be(1)
 				)
 			.Returns(Task.FromResult<UpdateResponse<ApiEventTeacherResponseModel>>(mockResult.Object));
 			mock.ServiceMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult<ApiEventTeacherResponseModel>(new ApiEventTeacherResponseModel()));
@@ -200,7 +200,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiEventTeacherRequestModel>();
-			patch.Replace(x => x.EventId, 1);
+			patch.Replace(x => x.TeacherId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -220,7 +220,7 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 			controller.ControllerContext.HttpContext = new DefaultHttpContext();
 
 			var patch = new JsonPatchDocument<ApiEventTeacherRequestModel>();
-			patch.Replace(x => x.EventId, 1);
+			patch.Replace(x => x.TeacherId, 1);
 
 			IActionResult response = await controller.Patch(default(int), patch);
 
@@ -338,5 +338,5 @@ namespace StudioResourceManagerNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>c187b15aab7a17c8d3e4dee9aaee8934</Hash>
+    <Hash>e77ae9aba75e4165eb498bad39ee0a38</Hash>
 </Codenesium>*/

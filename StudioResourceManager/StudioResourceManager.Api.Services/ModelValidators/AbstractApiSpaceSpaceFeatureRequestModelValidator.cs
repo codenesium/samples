@@ -28,24 +28,19 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void SpaceFeatureIdRules()
 		{
-			this.RuleFor(x => x.SpaceFeatureId).MustAsync(this.BeValidSpaceFeature).When(x => x?.SpaceFeatureId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SpaceFeatureId).MustAsync(this.BeValidSpaceFeatureBySpaceFeatureId).When(x => x?.SpaceFeatureId != null).WithMessage("Invalid reference");
 		}
 
-		public virtual void SpaceIdRules()
+		private async Task<bool> BeValidSpaceFeatureBySpaceFeatureId(int id,  CancellationToken cancellationToken)
 		{
-			this.RuleFor(x => x.SpaceId).MustAsync(this.BeValidSpace).When(x => x?.SpaceId != null).WithMessage("Invalid reference");
-		}
-
-		private async Task<bool> BeValidSpaceFeature(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.spaceSpaceFeatureRepository.GetSpaceFeature(id);
+			var record = await this.spaceSpaceFeatureRepository.SpaceFeatureBySpaceFeatureId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidSpace(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSpaceBySpaceId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.spaceSpaceFeatureRepository.GetSpace(id);
+			var record = await this.spaceSpaceFeatureRepository.SpaceBySpaceId(id);
 
 			return record != null;
 		}
@@ -53,5 +48,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6b8dacdda108ddf8f8a150ee0bfb95a</Hash>
+    <Hash>f86f29df179b2c7d46c2d0a8fd4dba88</Hash>
 </Codenesium>*/

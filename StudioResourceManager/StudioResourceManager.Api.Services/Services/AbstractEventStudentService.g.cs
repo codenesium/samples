@@ -46,9 +46,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiEventStudentResponseModel> Get(int id)
+		public virtual async Task<ApiEventStudentResponseModel> Get(int eventId)
 		{
-			var record = await this.EventStudentRepository.Get(id);
+			var record = await this.EventStudentRepository.Get(eventId);
 
 			if (record == null)
 			{
@@ -76,17 +76,17 @@ namespace StudioResourceManagerNS.Api.Services
 		}
 
 		public virtual async Task<UpdateResponse<ApiEventStudentResponseModel>> Update(
-			int id,
+			int eventId,
 			ApiEventStudentRequestModel model)
 		{
-			var validationResult = await this.EventStudentModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.EventStudentModelValidator.ValidateUpdateAsync(eventId, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolEventStudentMapper.MapModelToBO(id, model);
+				var bo = this.BolEventStudentMapper.MapModelToBO(eventId, model);
 				await this.EventStudentRepository.Update(this.DalEventStudentMapper.MapBOToEF(bo));
 
-				var record = await this.EventStudentRepository.Get(id);
+				var record = await this.EventStudentRepository.Get(eventId);
 
 				return new UpdateResponse<ApiEventStudentResponseModel>(this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(record)));
 			}
@@ -97,12 +97,12 @@ namespace StudioResourceManagerNS.Api.Services
 		}
 
 		public virtual async Task<ActionResponse> Delete(
-			int id)
+			int eventId)
 		{
-			ActionResponse response = new ActionResponse(await this.EventStudentModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.EventStudentModelValidator.ValidateDeleteAsync(eventId));
 			if (response.Success)
 			{
-				await this.EventStudentRepository.Delete(id);
+				await this.EventStudentRepository.Delete(eventId);
 			}
 
 			return response;
@@ -111,5 +111,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5e98cd6b3646b0ccbc724530e62efb29</Hash>
+    <Hash>7b9fda4e626401614cfbf5117c558aa1</Hash>
 </Codenesium>*/

@@ -78,16 +78,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<Address> ByAddressLine1AddressLine2CityStateProvinceIDPostalCode(string addressLine1, string addressLine2, string city, int stateProvinceID, string postalCode)
 		{
-			var records = await this.Where(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Address>().SingleOrDefaultAsync(x => x.AddressLine1 == addressLine1 && x.AddressLine2 == addressLine2 && x.City == city && x.StateProvinceID == stateProvinceID && x.PostalCode == postalCode);
 		}
 
 		public async Task<List<Address>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.StateProvinceID == stateProvinceID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.StateProvinceID == stateProvinceID, limit, offset);
 		}
 
 		public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0)
@@ -127,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7e88a8cdf2d1a807a433e0672e0ec870</Hash>
+    <Hash>7a02d7ea6fbe7977105a5588db7748e0</Hash>
 </Codenesium>*/

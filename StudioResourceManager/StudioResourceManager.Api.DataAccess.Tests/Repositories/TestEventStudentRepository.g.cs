@@ -57,7 +57,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<EventStudent>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.EventId);
 
 			record.Should().NotBeNull();
 		}
@@ -87,7 +87,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<EventStudent>().Add(entity);
 			await context.SaveChangesAsync();
 
-			var record = await repository.Get(entity.Id);
+			var record = await repository.Get(entity.EventId);
 
 			await repository.Update(record);
 
@@ -121,7 +121,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			context.Set<EventStudent>().Add(entity);
 			await context.SaveChangesAsync();
 
-			await repository.Delete(entity.Id);
+			await repository.Delete(entity.EventId);
 
 			EventStudent modifiedRecord = await context.Set<EventStudent>().FirstOrDefaultAsync();
 
@@ -131,5 +131,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1d7c7010ac7d4f9751c1b4559ff62d91</Hash>
+    <Hash>9dc3eacfd37c3026fa6819fb7cfd0cf8</Hash>
 </Codenesium>*/

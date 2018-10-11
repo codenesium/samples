@@ -18,8 +18,7 @@ namespace StackOverflowNS.Api.Services
 			ILinkTypeRepository linkTypeRepository,
 			IApiLinkTypeRequestModelValidator linkTypeModelValidator,
 			IBOLLinkTypeMapper bollinkTypeMapper,
-			IDALLinkTypeMapper dallinkTypeMapper
-			)
+			IDALLinkTypeMapper dallinkTypeMapper)
 			: base(logger,
 			       linkTypeRepository,
 			       linkTypeModelValidator,
@@ -31,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>84e3ff27659984086843347c5f833ab9</Hash>
+    <Hash>384f2dcd885142b09ceb5996fd901951</Hash>
 </Codenesium>*/

@@ -20,8 +20,7 @@ namespace FileServiceNS.Api.Services
 			IBOLBucketMapper bolbucketMapper,
 			IDALBucketMapper dalbucketMapper,
 			IBOLFileMapper bolFileMapper,
-			IDALFileMapper dalFileMapper
-			)
+			IDALFileMapper dalFileMapper)
 			: base(logger,
 			       bucketRepository,
 			       bucketModelValidator,
@@ -35,5 +34,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fa2ea889020bd73ca84122404b13d3f0</Hash>
+    <Hash>b43609b71f3d83ac30a71b034989cad4</Hash>
 </Codenesium>*/

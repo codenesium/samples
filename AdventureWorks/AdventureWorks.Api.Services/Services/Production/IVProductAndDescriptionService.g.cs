@@ -9,22 +9,12 @@ namespace AdventureWorksNS.Api.Services
 {
 	public partial interface IVProductAndDescriptionService
 	{
-		Task<CreateResponse<ApiVProductAndDescriptionResponseModel>> Create(
-			ApiVProductAndDescriptionRequestModel model);
-
-		Task<UpdateResponse<ApiVProductAndDescriptionResponseModel>> Update(string cultureID,
-		                                                                     ApiVProductAndDescriptionRequestModel model);
-
-		Task<ActionResponse> Delete(string cultureID);
-
 		Task<ApiVProductAndDescriptionResponseModel> Get(string cultureID);
 
 		Task<List<ApiVProductAndDescriptionResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<ApiVProductAndDescriptionResponseModel> ByCultureIDProductID(string cultureID, int productID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ce60c79679961a0f97f6df3030655c8</Hash>
+    <Hash>6f8c9a7ebe1acca090f965b9a2f6e0f4</Hash>
 </Codenesium>*/

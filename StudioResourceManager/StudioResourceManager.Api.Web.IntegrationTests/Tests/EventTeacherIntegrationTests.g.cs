@@ -41,7 +41,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			ApiEventTeacherModelMapper mapper = new ApiEventTeacherModelMapper();
 
-			UpdateResponse<ApiEventTeacherResponseModel> updateResponse = await this.Client.EventTeacherUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiEventTeacherResponseModel> updateResponse = await this.Client.EventTeacherUpdateAsync(model.EventId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
@@ -54,7 +54,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		{
 			var model = await this.CreateRecord();
 
-			await this.Client.EventTeacherDeleteAsync(model.Id);
+			await this.Client.EventTeacherDeleteAsync(model.EventId);
 
 			await this.Cleanup();
 		}
@@ -93,5 +93,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>df833e370f6c3629b1fbadbcc31bbd3a</Hash>
+    <Hash>e0a1430dbfb8f7cbee8cefd449714477</Hash>
 </Codenesium>*/

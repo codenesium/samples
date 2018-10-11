@@ -96,11 +96,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.CreditCardApprovalCode, new string('A', 16));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= CreditCard
 		[Fact]
 		public async void CreditCardID_Create_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
+			salesOrderHeaderRepository.Setup(x => x.CreditCardByCreditCardID(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
@@ -112,7 +113,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CreditCardID_Create_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
+			salesOrderHeaderRepository.Setup(x => x.CreditCardByCreditCardID(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -125,7 +126,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CreditCardID_Update_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
+			salesOrderHeaderRepository.Setup(x => x.CreditCardByCreditCardID(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(new CreditCard()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
@@ -137,7 +138,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CreditCardID_Update_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCreditCard(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
+			salesOrderHeaderRepository.Setup(x => x.CreditCardByCreditCardID(It.IsAny<int>())).Returns(Task.FromResult<CreditCard>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -146,11 +147,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.CreditCardID, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= CurrencyRate
 		[Fact]
 		public async void CurrencyRateID_Create_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCurrencyRate(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(new CurrencyRate()));
+			salesOrderHeaderRepository.Setup(x => x.CurrencyRateByCurrencyRateID(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(new CurrencyRate()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
@@ -162,7 +164,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CurrencyRateID_Create_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCurrencyRate(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(null));
+			salesOrderHeaderRepository.Setup(x => x.CurrencyRateByCurrencyRateID(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -175,7 +177,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CurrencyRateID_Update_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCurrencyRate(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(new CurrencyRate()));
+			salesOrderHeaderRepository.Setup(x => x.CurrencyRateByCurrencyRateID(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(new CurrencyRate()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
@@ -187,7 +189,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CurrencyRateID_Update_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCurrencyRate(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(null));
+			salesOrderHeaderRepository.Setup(x => x.CurrencyRateByCurrencyRateID(It.IsAny<int>())).Returns(Task.FromResult<CurrencyRate>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -196,11 +198,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.CurrencyRateID, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Customer
 		[Fact]
 		public async void CustomerID_Create_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCustomer(It.IsAny<int>())).Returns(Task.FromResult<Customer>(new Customer()));
+			salesOrderHeaderRepository.Setup(x => x.CustomerByCustomerID(It.IsAny<int>())).Returns(Task.FromResult<Customer>(new Customer()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
@@ -212,7 +215,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CustomerID_Create_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCustomer(It.IsAny<int>())).Returns(Task.FromResult<Customer>(null));
+			salesOrderHeaderRepository.Setup(x => x.CustomerByCustomerID(It.IsAny<int>())).Returns(Task.FromResult<Customer>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -225,7 +228,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CustomerID_Update_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCustomer(It.IsAny<int>())).Returns(Task.FromResult<Customer>(new Customer()));
+			salesOrderHeaderRepository.Setup(x => x.CustomerByCustomerID(It.IsAny<int>())).Returns(Task.FromResult<Customer>(new Customer()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
@@ -237,7 +240,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void CustomerID_Update_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetCustomer(It.IsAny<int>())).Returns(Task.FromResult<Customer>(null));
+			salesOrderHeaderRepository.Setup(x => x.CustomerByCustomerID(It.IsAny<int>())).Returns(Task.FromResult<Customer>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -318,11 +321,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.SalesOrderNumber, new string('A', 26));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= SalesPerson
 		[Fact]
 		public async void SalesPersonID_Create_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
+			salesOrderHeaderRepository.Setup(x => x.SalesPersonBySalesPersonID(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
@@ -334,7 +338,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SalesPersonID_Create_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(null));
+			salesOrderHeaderRepository.Setup(x => x.SalesPersonBySalesPersonID(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -347,7 +351,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SalesPersonID_Update_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
+			salesOrderHeaderRepository.Setup(x => x.SalesPersonBySalesPersonID(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(new SalesPerson()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
@@ -359,7 +363,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void SalesPersonID_Update_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetSalesPerson(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(null));
+			salesOrderHeaderRepository.Setup(x => x.SalesPersonBySalesPersonID(It.IsAny<int>())).Returns(Task.FromResult<SalesPerson>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -368,11 +372,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.SalesPersonID, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= SalesTerritory
 		[Fact]
 		public async void TerritoryID_Create_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+			salesOrderHeaderRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSalesOrderHeaderRequestModel());
@@ -384,7 +389,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Create_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+			salesOrderHeaderRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -397,7 +402,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Update_Valid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+			salesOrderHeaderRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSalesOrderHeaderRequestModel());
@@ -409,7 +414,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Update_Invalid_Reference()
 		{
 			Mock<ISalesOrderHeaderRepository> salesOrderHeaderRepository = new Mock<ISalesOrderHeaderRepository>();
-			salesOrderHeaderRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+			salesOrderHeaderRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
 			var validator = new ApiSalesOrderHeaderRequestModelValidator(salesOrderHeaderRepository.Object);
 
@@ -469,5 +474,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bed745e49f6e1319e39ce8a876d16c6b</Hash>
+    <Hash>0877d9e7bdda5855fb89f86e2d0d5d8d</Hash>
 </Codenesium>*/

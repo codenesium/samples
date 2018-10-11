@@ -76,11 +76,6 @@ namespace TestsNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<SelfReference>> SelfReferences(int selfReferenceId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SelfReference>().Where(x => x.SelfReferenceId == selfReferenceId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SelfReference>();
-		}
-
 		protected async Task<List<SelfReference>> Where(
 			Expression<Func<SelfReference, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +108,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c00b8eec77c5b5ab66b6aac6730cf9d9</Hash>
+    <Hash>a4d52fdf492389f58645fe6ddbed8e27</Hash>
 </Codenesium>*/

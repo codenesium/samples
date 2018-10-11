@@ -224,10 +224,10 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{handlerId}/HandlerPipelineSteps")]
+		[Route("byHandlerId/{handlerId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiHandlerPipelineStepResponseModel>), 200)]
-		public async virtual Task<IActionResult> HandlerPipelineSteps(int handlerId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiHandlerResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByHandlerId(int handlerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,24 +235,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiHandlerPipelineStepResponseModel> response = await this.HandlerService.HandlerPipelineSteps(handlerId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("{handlerId}/OtherTransports")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiOtherTransportResponseModel>), 200)]
-		public async virtual Task<IActionResult> OtherTransports(int handlerId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiOtherTransportResponseModel> response = await this.HandlerService.OtherTransports(handlerId, query.Limit, query.Offset);
+			List<ApiHandlerResponseModel> response = await this.HandlerService.ByHandlerId(handlerId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -276,5 +259,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d46a01b544ec42c7f8b74fe0c6cac0da</Hash>
+    <Hash>14856be9a1146a8cf88d3929e943a68d</Hash>
 </Codenesium>*/

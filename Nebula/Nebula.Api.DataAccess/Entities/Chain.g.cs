@@ -46,7 +46,7 @@ namespace NebulaNS.Api.DataAccess
 		public int TeamId { get; private set; }
 
 		[ForeignKey("ChainStatusId")]
-		public virtual ChainStatu ChainStatuNavigation { get; private set; }
+		public virtual ChainStatus ChainStatusNavigation { get; private set; }
 
 		[ForeignKey("TeamId")]
 		public virtual Team TeamNavigation { get; private set; }
@@ -54,5 +54,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e7ba61f6f85a68c0352e4ba9413703c3</Hash>
+    <Hash>1f960561cedb818427182d230264fd56</Hash>
 </Codenesium>*/

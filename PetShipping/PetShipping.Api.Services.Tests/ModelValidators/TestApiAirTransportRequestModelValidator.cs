@@ -72,11 +72,12 @@ namespace PetShippingNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.FlightNumber, new string('A', 13));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Handler
 		[Fact]
 		public async void HandlerId_Create_Valid_Reference()
 		{
 			Mock<IAirTransportRepository> airTransportRepository = new Mock<IAirTransportRepository>();
-			airTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
+			airTransportRepository.Setup(x => x.HandlerByHandlerId(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
 
 			var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
 			await validator.ValidateCreateAsync(new ApiAirTransportRequestModel());
@@ -88,7 +89,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void HandlerId_Create_Invalid_Reference()
 		{
 			Mock<IAirTransportRepository> airTransportRepository = new Mock<IAirTransportRepository>();
-			airTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(null));
+			airTransportRepository.Setup(x => x.HandlerByHandlerId(It.IsAny<int>())).Returns(Task.FromResult<Handler>(null));
 
 			var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
 
@@ -101,7 +102,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void HandlerId_Update_Valid_Reference()
 		{
 			Mock<IAirTransportRepository> airTransportRepository = new Mock<IAirTransportRepository>();
-			airTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
+			airTransportRepository.Setup(x => x.HandlerByHandlerId(It.IsAny<int>())).Returns(Task.FromResult<Handler>(new Handler()));
 
 			var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiAirTransportRequestModel());
@@ -113,7 +114,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void HandlerId_Update_Invalid_Reference()
 		{
 			Mock<IAirTransportRepository> airTransportRepository = new Mock<IAirTransportRepository>();
-			airTransportRepository.Setup(x => x.GetHandler(It.IsAny<int>())).Returns(Task.FromResult<Handler>(null));
+			airTransportRepository.Setup(x => x.HandlerByHandlerId(It.IsAny<int>())).Returns(Task.FromResult<Handler>(null));
 
 			var validator = new ApiAirTransportRequestModelValidator(airTransportRepository.Object);
 
@@ -125,5 +126,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>573397c8093759947583da7d697ce6e8</Hash>
+    <Hash>30ba8a9e01556589657b40a157ed790e</Hash>
 </Codenesium>*/

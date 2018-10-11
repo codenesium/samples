@@ -54,6 +54,13 @@ namespace TwitterNS.Api.Client
 			this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
+		public virtual async Task<List<ApiDirectTweetResponseModel>> DirectTweetBulkInsertAsync(List<ApiDirectTweetRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DirectTweets/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiDirectTweetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiDirectTweetResponseModel>> DirectTweetCreateAsync(ApiDirectTweetRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DirectTweets", item).ConfigureAwait(false);
@@ -89,18 +96,74 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiDirectTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiDirectTweetResponseModel>> DirectTweetBulkInsertAsync(List<ApiDirectTweetRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/DirectTweets/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiDirectTweetResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiDirectTweetResponseModel>> GetDirectTweetByTaggedUserId(int taggedUserId)
+		public virtual async Task<List<ApiDirectTweetResponseModel>> ByDirectTweetByTaggedUserId(int taggedUserId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/DirectTweets/byTaggedUserId/{taggedUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiDirectTweetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiFollowerResponseModel>> FollowerBulkInsertAsync(List<ApiFollowerRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Followers/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<CreateResponse<ApiFollowerResponseModel>> FollowerCreateAsync(ApiFollowerRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Followers", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<CreateResponse<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<UpdateResponse<ApiFollowerResponseModel>> FollowerUpdateAsync(int id, ApiFollowerRequestModel item)
+		{
+			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Followers/{id}", item).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<UpdateResponse<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ActionResponse> FollowerDeleteAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Followers/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<ApiFollowerResponseModel> FollowerGetAsync(int id)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Followers/{id}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<ApiFollowerResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiFollowerResponseModel>> FollowerAllAsync(int limit = 1000, int offset = 0)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Followers?limit={limit}&offset={offset}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiFollowerResponseModel>> ByFollowerByFollowedUserId(int followedUserId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Followers/byFollowedUserId/{followedUserId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiFollowerResponseModel>> ByFollowerByFollowingUserId(int followingUserId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Followers/byFollowingUserId/{followingUserId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiFollowingResponseModel>> FollowingBulkInsertAsync(List<ApiFollowingRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Followings/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFollowingResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiFollowingResponseModel>> FollowingCreateAsync(ApiFollowingRequestModel item)
@@ -138,67 +201,11 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiFollowingResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiFollowingResponseModel>> FollowingBulkInsertAsync(List<ApiFollowingRequestModel> items)
+		public virtual async Task<List<ApiLocationResponseModel>> LocationBulkInsertAsync(List<ApiLocationRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Followings/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Locations/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiFollowingResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiLikeResponseModel>> LikeCreateAsync(ApiLikeRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Likes", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<CreateResponse<ApiLikeResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiLikeResponseModel>> LikeUpdateAsync(int id, ApiLikeRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/Likes/{id}", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiLikeResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> LikeDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/Likes/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiLikeResponseModel> LikeGetAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Likes/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ApiLikeResponseModel>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiLikeResponseModel>> LikeAllAsync(int limit = 1000, int offset = 0)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Likes?limit={limit}&offset={offset}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiLikeResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiLikeResponseModel>> LikeBulkInsertAsync(List<ApiLikeRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Likes/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiLikeResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiLikeResponseModel>> GetLikeByLikerUserId(int likerUserId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Likes/byLikerUserId/{likerUserId}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiLikeResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiLikeResponseModel>> GetLikeByTweetId(int tweetId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Likes/byTweetId/{tweetId}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiLikeResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiLocationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiLocationResponseModel>> LocationCreateAsync(ApiLocationRequestModel item)
@@ -236,13 +243,6 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLocationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLocationResponseModel>> LocationBulkInsertAsync(List<ApiLocationRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Locations/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiLocationResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<List<ApiTweetResponseModel>> Tweets(int locationId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/Tweets/{locationId}").ConfigureAwait(false);
@@ -255,6 +255,13 @@ namespace TwitterNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/Users/{locationLocationId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiMessageResponseModel>> MessageBulkInsertAsync(List<ApiMessageRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Messages/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiMessageResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiMessageResponseModel>> MessageCreateAsync(ApiMessageRequestModel item)
@@ -292,14 +299,7 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiMessageResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMessageResponseModel>> MessageBulkInsertAsync(List<ApiMessageRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Messages/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiMessageResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiMessageResponseModel>> GetMessageBySenderUserId(int? senderUserId)
+		public virtual async Task<List<ApiMessageResponseModel>> ByMessageBySenderUserId(int? senderUserId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Messages/bySenderUserId/{senderUserId}").ConfigureAwait(false);
 
@@ -309,6 +309,13 @@ namespace TwitterNS.Api.Client
 		public virtual async Task<List<ApiMessengerResponseModel>> Messengers(int messageId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Messages/Messengers/{messageId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiMessengerResponseModel>> MessengerBulkInsertAsync(List<ApiMessengerRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Messengers/BulkInsert", items).ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -348,32 +355,32 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMessengerResponseModel>> MessengerBulkInsertAsync(List<ApiMessengerRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Messengers/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiMessengerResponseModel>> GetMessengerByMessageId(int? messageId)
+		public virtual async Task<List<ApiMessengerResponseModel>> ByMessengerByMessageId(int? messageId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Messengers/byMessageId/{messageId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMessengerResponseModel>> GetMessengerByToUserId(int toUserId)
+		public virtual async Task<List<ApiMessengerResponseModel>> ByMessengerByToUserId(int toUserId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Messengers/byToUserId/{toUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMessengerResponseModel>> GetMessengerByUserId(int? userId)
+		public virtual async Task<List<ApiMessengerResponseModel>> ByMessengerByUserId(int? userId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Messengers/byUserId/{userId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiQuoteTweetResponseModel>> QuoteTweetBulkInsertAsync(List<ApiQuoteTweetRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/QuoteTweets/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiQuoteTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiQuoteTweetResponseModel>> QuoteTweetCreateAsync(ApiQuoteTweetRequestModel item)
@@ -411,25 +418,25 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiQuoteTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiQuoteTweetResponseModel>> QuoteTweetBulkInsertAsync(List<ApiQuoteTweetRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/QuoteTweets/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiQuoteTweetResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiQuoteTweetResponseModel>> GetQuoteTweetByRetweeterUserId(int retweeterUserId)
+		public virtual async Task<List<ApiQuoteTweetResponseModel>> ByQuoteTweetByRetweeterUserId(int retweeterUserId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/QuoteTweets/byRetweeterUserId/{retweeterUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiQuoteTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiQuoteTweetResponseModel>> GetQuoteTweetBySourceTweetId(int sourceTweetId)
+		public virtual async Task<List<ApiQuoteTweetResponseModel>> ByQuoteTweetBySourceTweetId(int sourceTweetId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/QuoteTweets/bySourceTweetId/{sourceTweetId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiQuoteTweetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiReplyResponseModel>> ReplyBulkInsertAsync(List<ApiReplyRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Replies/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiReplyResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiReplyResponseModel>> ReplyCreateAsync(ApiReplyRequestModel item)
@@ -467,18 +474,18 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiReplyResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiReplyResponseModel>> ReplyBulkInsertAsync(List<ApiReplyRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Replies/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiReplyResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiReplyResponseModel>> GetReplyByReplierUserId(int replierUserId)
+		public virtual async Task<List<ApiReplyResponseModel>> ByReplyByReplierUserId(int replierUserId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Replies/byReplierUserId/{replierUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiReplyResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiRetweetResponseModel>> RetweetBulkInsertAsync(List<ApiRetweetRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Retweets/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiRetweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiRetweetResponseModel>> RetweetCreateAsync(ApiRetweetRequestModel item)
@@ -516,25 +523,25 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiRetweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiRetweetResponseModel>> RetweetBulkInsertAsync(List<ApiRetweetRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Retweets/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiRetweetResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiRetweetResponseModel>> GetRetweetByRetwitterUserId(int? retwitterUserId)
+		public virtual async Task<List<ApiRetweetResponseModel>> ByRetweetByRetwitterUserId(int? retwitterUserId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Retweets/byRetwitterUserId/{retwitterUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiRetweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiRetweetResponseModel>> GetRetweetByTweetTweetId(int tweetTweetId)
+		public virtual async Task<List<ApiRetweetResponseModel>> ByRetweetByTweetTweetId(int tweetTweetId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Retweets/byTweetTweetId/{tweetTweetId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiRetweetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiTweetResponseModel>> TweetBulkInsertAsync(List<ApiTweetRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Tweets/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTweetResponseModel>> TweetCreateAsync(ApiTweetRequestModel item)
@@ -572,32 +579,18 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTweetResponseModel>> TweetBulkInsertAsync(List<ApiTweetRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Tweets/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiTweetResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiTweetResponseModel>> GetTweetByLocationId(int locationId)
+		public virtual async Task<List<ApiTweetResponseModel>> ByTweetByLocationId(int locationId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tweets/byLocationId/{locationId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTweetResponseModel>> GetTweetByUserUserId(int userUserId)
+		public virtual async Task<List<ApiTweetResponseModel>> ByTweetByUserUserId(int userUserId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tweets/byUserUserId/{userUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTweetResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiLikeResponseModel>> Likes(int tweetId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tweets/Likes/{tweetId}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiLikeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiQuoteTweetResponseModel>> QuoteTweets(int sourceTweetId)
@@ -612,6 +605,13 @@ namespace TwitterNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tweets/Retweets/{tweetTweetId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiRetweetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiUserResponseModel>> UserBulkInsertAsync(List<ApiUserRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Users/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiUserResponseModel>> UserCreateAsync(ApiUserRequestModel item)
@@ -649,14 +649,7 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiUserResponseModel>> UserBulkInsertAsync(List<ApiUserRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Users/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiUserResponseModel>> GetUserByLocationLocationId(int locationLocationId)
+		public virtual async Task<List<ApiUserResponseModel>> ByUserByLocationLocationId(int locationLocationId)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/byLocationLocationId/{locationLocationId}").ConfigureAwait(false);
 
@@ -668,6 +661,13 @@ namespace TwitterNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/DirectTweets/{taggedUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiDirectTweetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiFollowerResponseModel>> Followers(int followedUserId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/Followers/{followedUserId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiMessageResponseModel>> Messages(int senderUserId)
@@ -687,5 +687,5 @@ namespace TwitterNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>8dd82ed623c6c67a38a10dd0aff5252a</Hash>
+    <Hash>f5e65564cfbf73feb6f33da89867d704</Hash>
 </Codenesium>*/

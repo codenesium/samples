@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			ITestAllFieldTypeRepository testAllFieldTypeRepository,
 			IApiTestAllFieldTypeRequestModelValidator testAllFieldTypeModelValidator,
 			IBOLTestAllFieldTypeMapper boltestAllFieldTypeMapper,
-			IDALTestAllFieldTypeMapper daltestAllFieldTypeMapper
-			)
+			IDALTestAllFieldTypeMapper daltestAllFieldTypeMapper)
 			: base(logger,
 			       testAllFieldTypeRepository,
 			       testAllFieldTypeModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1468ae1e2842a97ada2a558fd4a413d9</Hash>
+    <Hash>1bffc979e7305ac80ead3e11cb688247</Hash>
 </Codenesium>*/

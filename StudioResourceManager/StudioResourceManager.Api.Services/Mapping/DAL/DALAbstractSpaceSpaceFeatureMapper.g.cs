@@ -13,7 +13,6 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			SpaceSpaceFeature efSpaceSpaceFeature = new SpaceSpaceFeature();
 			efSpaceSpaceFeature.SetProperties(
-				bo.Id,
 				bo.SpaceFeatureId,
 				bo.SpaceId);
 			return efSpaceSpaceFeature;
@@ -25,9 +24,8 @@ namespace StudioResourceManagerNS.Api.Services
 			var bo = new BOSpaceSpaceFeature();
 
 			bo.SetProperties(
-				ef.Id,
-				ef.SpaceFeatureId,
-				ef.SpaceId);
+				ef.SpaceId,
+				ef.SpaceFeatureId);
 			return bo;
 		}
 
@@ -47,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>513425462bf9ab8b0fb581a391cb776b</Hash>
+    <Hash>b0f5d123b6e4d45499dc6645c899df61</Hash>
 </Codenesium>*/

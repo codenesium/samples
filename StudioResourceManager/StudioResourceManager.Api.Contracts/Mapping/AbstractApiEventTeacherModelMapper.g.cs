@@ -8,12 +8,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public abstract class AbstractApiEventTeacherModelMapper
 	{
 		public virtual ApiEventTeacherResponseModel MapRequestToResponse(
-			int id,
+			int eventId,
 			ApiEventTeacherRequestModel request)
 		{
 			var response = new ApiEventTeacherResponseModel();
-			response.SetProperties(id,
-			                       request.EventId);
+			response.SetProperties(eventId,
+			                       request.TeacherId);
 			return response;
 		}
 
@@ -22,19 +22,19 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var request = new ApiEventTeacherRequestModel();
 			request.SetProperties(
-				response.EventId);
+				response.TeacherId);
 			return request;
 		}
 
 		public JsonPatchDocument<ApiEventTeacherRequestModel> CreatePatch(ApiEventTeacherRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiEventTeacherRequestModel>();
-			patch.Replace(x => x.EventId, model.EventId);
+			patch.Replace(x => x.TeacherId, model.TeacherId);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9fd1e8cec7eca5ed7400d7de41569bda</Hash>
+    <Hash>b3f61ce81a69a4bbf1eaf75eefdc1733</Hash>
 </Codenesium>*/

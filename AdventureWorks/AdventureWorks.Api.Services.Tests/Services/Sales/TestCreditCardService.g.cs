@@ -30,8 +30,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -52,8 +50,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -73,8 +69,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -95,8 +89,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -119,8 +111,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -142,8 +132,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -165,8 +153,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -186,8 +172,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -195,50 +179,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.ByCardNumber(It.IsAny<string>()));
-		}
-
-		[Fact]
-		public async void PersonCreditCards_Exists()
-		{
-			var mock = new ServiceMockFacade<ICreditCardRepository>();
-			var records = new List<PersonCreditCard>();
-			records.Add(new PersonCreditCard());
-			mock.RepositoryMock.Setup(x => x.PersonCreditCards(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new CreditCardService(mock.LoggerMock.Object,
-			                                    mock.RepositoryMock.Object,
-			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
-			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
-
-			List<ApiPersonCreditCardResponseModel> response = await service.PersonCreditCards(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.PersonCreditCards(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void PersonCreditCards_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ICreditCardRepository>();
-			mock.RepositoryMock.Setup(x => x.PersonCreditCards(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PersonCreditCard>>(new List<PersonCreditCard>()));
-			var service = new CreditCardService(mock.LoggerMock.Object,
-			                                    mock.RepositoryMock.Object,
-			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
-			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
-			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
-
-			List<ApiPersonCreditCardResponseModel> response = await service.PersonCreditCards(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.PersonCreditCards(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -253,8 +193,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -274,8 +212,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
 			                                    mock.BOLMapperMockFactory.BOLCreditCardMapperMock,
 			                                    mock.DALMapperMockFactory.DALCreditCardMapperMock,
-			                                    mock.BOLMapperMockFactory.BOLPersonCreditCardMapperMock,
-			                                    mock.DALMapperMockFactory.DALPersonCreditCardMapperMock,
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
@@ -288,5 +224,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>0d0bd812b8f7680b524bbf562dbbacce</Hash>
+    <Hash>ffbee268207db96723bdf59e9ebf6661</Hash>
 </Codenesium>*/

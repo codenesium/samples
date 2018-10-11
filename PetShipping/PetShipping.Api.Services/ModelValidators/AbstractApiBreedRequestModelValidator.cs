@@ -34,12 +34,12 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void SpeciesIdRules()
 		{
-			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpecies).When(x => x?.SpeciesId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.SpeciesId).MustAsync(this.BeValidSpeciesBySpeciesId).When(x => x?.SpeciesId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidSpecies(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSpeciesBySpeciesId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.breedRepository.GetSpecies(id);
+			var record = await this.breedRepository.SpeciesBySpeciesId(id);
 
 			return record != null;
 		}
@@ -47,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c0c42326531cd00b11c99a2221210391</Hash>
+    <Hash>40e5444d1645142ae4c1c1c900c5f6f0</Hash>
 </Codenesium>*/

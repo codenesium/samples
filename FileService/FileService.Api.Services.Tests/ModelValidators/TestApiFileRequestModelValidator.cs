@@ -24,11 +24,12 @@ namespace FileServiceNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Bucket
 		[Fact]
 		public async void BucketId_Create_Valid_Reference()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-			fileRepository.Setup(x => x.GetBucket(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(new Bucket()));
+			fileRepository.Setup(x => x.BucketByBucketId(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(new Bucket()));
 
 			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 			await validator.ValidateCreateAsync(new ApiFileRequestModel());
@@ -40,7 +41,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void BucketId_Create_Invalid_Reference()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-			fileRepository.Setup(x => x.GetBucket(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(null));
+			fileRepository.Setup(x => x.BucketByBucketId(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(null));
 
 			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 
@@ -53,7 +54,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void BucketId_Update_Valid_Reference()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-			fileRepository.Setup(x => x.GetBucket(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(new Bucket()));
+			fileRepository.Setup(x => x.BucketByBucketId(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(new Bucket()));
 
 			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
@@ -65,7 +66,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void BucketId_Update_Invalid_Reference()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-			fileRepository.Setup(x => x.GetBucket(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(null));
+			fileRepository.Setup(x => x.BucketByBucketId(It.IsAny<int>())).Returns(Task.FromResult<Bucket>(null));
 
 			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 
@@ -146,11 +147,12 @@ namespace FileServiceNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Extension, new string('A', 33));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= FileType
 		[Fact]
 		public async void FileTypeId_Create_Valid_Reference()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-			fileRepository.Setup(x => x.GetFileType(It.IsAny<int>())).Returns(Task.FromResult<FileType>(new FileType()));
+			fileRepository.Setup(x => x.FileTypeByFileTypeId(It.IsAny<int>())).Returns(Task.FromResult<FileType>(new FileType()));
 
 			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 			await validator.ValidateCreateAsync(new ApiFileRequestModel());
@@ -162,7 +164,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void FileTypeId_Create_Invalid_Reference()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-			fileRepository.Setup(x => x.GetFileType(It.IsAny<int>())).Returns(Task.FromResult<FileType>(null));
+			fileRepository.Setup(x => x.FileTypeByFileTypeId(It.IsAny<int>())).Returns(Task.FromResult<FileType>(null));
 
 			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 
@@ -175,7 +177,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void FileTypeId_Update_Valid_Reference()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-			fileRepository.Setup(x => x.GetFileType(It.IsAny<int>())).Returns(Task.FromResult<FileType>(new FileType()));
+			fileRepository.Setup(x => x.FileTypeByFileTypeId(It.IsAny<int>())).Returns(Task.FromResult<FileType>(new FileType()));
 
 			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiFileRequestModel());
@@ -187,7 +189,7 @@ namespace FileServiceNS.Api.Services.Tests
 		public async void FileTypeId_Update_Invalid_Reference()
 		{
 			Mock<IFileRepository> fileRepository = new Mock<IFileRepository>();
-			fileRepository.Setup(x => x.GetFileType(It.IsAny<int>())).Returns(Task.FromResult<FileType>(null));
+			fileRepository.Setup(x => x.FileTypeByFileTypeId(It.IsAny<int>())).Returns(Task.FromResult<FileType>(null));
 
 			var validator = new ApiFileRequestModelValidator(fileRepository.Object);
 
@@ -343,5 +345,5 @@ namespace FileServiceNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>25d9b5498455d99d95d599c0a2fe262e</Hash>
+    <Hash>d959d87a987779bf88434b1a51ae0740</Hash>
 </Codenesium>*/

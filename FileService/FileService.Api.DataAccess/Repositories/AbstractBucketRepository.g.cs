@@ -78,16 +78,12 @@ namespace FileServiceNS.Api.DataAccess
 
 		public async Task<Bucket> ByExternalId(Guid externalId)
 		{
-			var records = await this.Where(x => x.ExternalId == externalId);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
 		public async Task<Bucket> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<File>> Files(int bucketId, int limit = int.MaxValue, int offset = 0)
@@ -127,5 +123,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>64da0b8a155b4962f01969910a821b89</Hash>
+    <Hash>69de9cbce88b86644bbf6a24828b9dda</Hash>
 </Codenesium>*/

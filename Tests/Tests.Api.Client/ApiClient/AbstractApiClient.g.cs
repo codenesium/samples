@@ -54,6 +54,13 @@ namespace TestsNS.Api.Client
 			this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 		}
 
+		public virtual async Task<List<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTableBulkInsertAsync(List<ApiColumnSameAsFKTableRequestModel> items)
+		{
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ColumnSameAsFKTables/BulkInsert", items).ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<CreateResponse<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTableCreateAsync(ApiColumnSameAsFKTableRequestModel item)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ColumnSameAsFKTables", item).ConfigureAwait(false);
@@ -89,11 +96,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTableBulkInsertAsync(List<ApiColumnSameAsFKTableRequestModel> items)
+		public virtual async Task<List<ApiCompositePrimaryKeyResponseModel>> CompositePrimaryKeyBulkInsertAsync(List<ApiCompositePrimaryKeyRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/ColumnSameAsFKTables/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/CompositePrimaryKeys/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiCompositePrimaryKeyResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiCompositePrimaryKeyResponseModel>> CompositePrimaryKeyCreateAsync(ApiCompositePrimaryKeyRequestModel item)
@@ -131,11 +138,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCompositePrimaryKeyResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiCompositePrimaryKeyResponseModel>> CompositePrimaryKeyBulkInsertAsync(List<ApiCompositePrimaryKeyRequestModel> items)
+		public virtual async Task<List<ApiIncludedColumnTestResponseModel>> IncludedColumnTestBulkInsertAsync(List<ApiIncludedColumnTestRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/CompositePrimaryKeys/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/IncludedColumnTests/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiCompositePrimaryKeyResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiIncludedColumnTestResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiIncludedColumnTestResponseModel>> IncludedColumnTestCreateAsync(ApiIncludedColumnTestRequestModel item)
@@ -173,11 +180,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiIncludedColumnTestResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiIncludedColumnTestResponseModel>> IncludedColumnTestBulkInsertAsync(List<ApiIncludedColumnTestRequestModel> items)
+		public virtual async Task<List<ApiPersonResponseModel>> PersonBulkInsertAsync(List<ApiPersonRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/IncludedColumnTests/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/People/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiIncludedColumnTestResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiPersonResponseModel>> PersonCreateAsync(ApiPersonRequestModel item)
@@ -215,18 +222,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPersonResponseModel>> PersonBulkInsertAsync(List<ApiPersonRequestModel> items)
+		public virtual async Task<List<ApiRowVersionCheckResponseModel>> RowVersionCheckBulkInsertAsync(List<ApiRowVersionCheckRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/People/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/RowVersionChecks/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiPersonResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiColumnSameAsFKTableResponseModel>> ColumnSameAsFKTables(int person)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/People/ColumnSameAsFKTables/{person}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiColumnSameAsFKTableResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiRowVersionCheckResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiRowVersionCheckResponseModel>> RowVersionCheckCreateAsync(ApiRowVersionCheckRequestModel item)
@@ -264,11 +264,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiRowVersionCheckResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiRowVersionCheckResponseModel>> RowVersionCheckBulkInsertAsync(List<ApiRowVersionCheckRequestModel> items)
+		public virtual async Task<List<ApiSelfReferenceResponseModel>> SelfReferenceBulkInsertAsync(List<ApiSelfReferenceRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/RowVersionChecks/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SelfReferences/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiRowVersionCheckResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSelfReferenceResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSelfReferenceResponseModel>> SelfReferenceCreateAsync(ApiSelfReferenceRequestModel item)
@@ -306,18 +306,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSelfReferenceResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSelfReferenceResponseModel>> SelfReferenceBulkInsertAsync(List<ApiSelfReferenceRequestModel> items)
+		public virtual async Task<List<ApiTableResponseModel>> TableBulkInsertAsync(List<ApiTableRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SelfReferences/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Tables/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiSelfReferenceResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiSelfReferenceResponseModel>> SelfReferences(int selfReferenceId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SelfReferences/SelfReferences/{selfReferenceId}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiSelfReferenceResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTableResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTableResponseModel>> TableCreateAsync(ApiTableRequestModel item)
@@ -355,11 +348,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTableResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTableResponseModel>> TableBulkInsertAsync(List<ApiTableRequestModel> items)
+		public virtual async Task<List<ApiTestAllFieldTypeResponseModel>> TestAllFieldTypeBulkInsertAsync(List<ApiTestAllFieldTypeRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Tables/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TestAllFieldTypes/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTableResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTestAllFieldTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTestAllFieldTypeResponseModel>> TestAllFieldTypeCreateAsync(ApiTestAllFieldTypeRequestModel item)
@@ -397,11 +390,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTestAllFieldTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTestAllFieldTypeResponseModel>> TestAllFieldTypeBulkInsertAsync(List<ApiTestAllFieldTypeRequestModel> items)
+		public virtual async Task<List<ApiTestAllFieldTypesNullableResponseModel>> TestAllFieldTypesNullableBulkInsertAsync(List<ApiTestAllFieldTypesNullableRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TestAllFieldTypes/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TestAllFieldTypesNullables/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTestAllFieldTypeResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTestAllFieldTypesNullableResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTestAllFieldTypesNullableResponseModel>> TestAllFieldTypesNullableCreateAsync(ApiTestAllFieldTypesNullableRequestModel item)
@@ -439,11 +432,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTestAllFieldTypesNullableResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTestAllFieldTypesNullableResponseModel>> TestAllFieldTypesNullableBulkInsertAsync(List<ApiTestAllFieldTypesNullableRequestModel> items)
+		public virtual async Task<List<ApiTimestampCheckResponseModel>> TimestampCheckBulkInsertAsync(List<ApiTimestampCheckRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TestAllFieldTypesNullables/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TimestampChecks/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiTestAllFieldTypesNullableResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiTimestampCheckResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiTimestampCheckResponseModel>> TimestampCheckCreateAsync(ApiTimestampCheckRequestModel item)
@@ -481,34 +474,6 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTimestampCheckResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTimestampCheckResponseModel>> TimestampCheckBulkInsertAsync(List<ApiTimestampCheckRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/TimestampChecks/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiTimestampCheckResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<CreateResponse<ApiVPersonResponseModel>> VPersonCreateAsync(ApiVPersonRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VPersons", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<CreateResponse<ApiVPersonResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<UpdateResponse<ApiVPersonResponseModel>> VPersonUpdateAsync(int id, ApiVPersonRequestModel item)
-		{
-			HttpResponseMessage httpResponse = await this.client.PutAsJsonAsync($"api/VPersons/{id}", item).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<UpdateResponse<ApiVPersonResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ActionResponse> VPersonDeleteAsync(int id)
-		{
-			HttpResponseMessage httpResponse = await this.client.DeleteAsync($"api/VPersons/{id}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ActionResponse>(httpResponse.Content.ContentToString());
-		}
-
 		public virtual async Task<ApiVPersonResponseModel> VPersonGetAsync(int id)
 		{
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VPersons/{id}").ConfigureAwait(false);
@@ -523,18 +488,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiVPersonResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiVPersonResponseModel>> VPersonBulkInsertAsync(List<ApiVPersonRequestModel> items)
+		public virtual async Task<List<ApiSchemaAPersonResponseModel>> SchemaAPersonBulkInsertAsync(List<ApiSchemaAPersonRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VPersons/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SchemaAPersons/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiVPersonResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<ApiVPersonResponseModel> GetVPersonByPersonId(int personId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/VPersons/byPersonId/{personId}").ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<ApiVPersonResponseModel>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSchemaAPersonResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSchemaAPersonResponseModel>> SchemaAPersonCreateAsync(ApiSchemaAPersonRequestModel item)
@@ -572,11 +530,11 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSchemaAPersonResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSchemaAPersonResponseModel>> SchemaAPersonBulkInsertAsync(List<ApiSchemaAPersonRequestModel> items)
+		public virtual async Task<List<ApiSchemaBPersonResponseModel>> SchemaBPersonBulkInsertAsync(List<ApiSchemaBPersonRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SchemaAPersons/BulkInsert", items).ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SchemaBPersons/BulkInsert", items).ConfigureAwait(false);
 
-			return JsonConvert.DeserializeObject<List<ApiSchemaAPersonResponseModel>>(httpResponse.Content.ContentToString());
+			return JsonConvert.DeserializeObject<List<ApiSchemaBPersonResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<CreateResponse<ApiSchemaBPersonResponseModel>> SchemaBPersonCreateAsync(ApiSchemaBPersonRequestModel item)
@@ -614,16 +572,9 @@ namespace TestsNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSchemaBPersonResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSchemaBPersonResponseModel>> SchemaBPersonBulkInsertAsync(List<ApiSchemaBPersonRequestModel> items)
+		public virtual async Task<List<ApiPersonRefResponseModel>> PersonRefBulkInsertAsync(List<ApiPersonRefRequestModel> items)
 		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/SchemaBPersons/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiSchemaBPersonResponseModel>>(httpResponse.Content.ContentToString());
-		}
-
-		public virtual async Task<List<ApiPersonRefResponseModel>> PersonRefs(int personBId)
-		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SchemaBPersons/PersonRefs/{personBId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PersonRefs/BulkInsert", items).ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiPersonRefResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -662,16 +613,9 @@ namespace TestsNS.Api.Client
 
 			return JsonConvert.DeserializeObject<List<ApiPersonRefResponseModel>>(httpResponse.Content.ContentToString());
 		}
-
-		public virtual async Task<List<ApiPersonRefResponseModel>> PersonRefBulkInsertAsync(List<ApiPersonRefRequestModel> items)
-		{
-			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/PersonRefs/BulkInsert", items).ConfigureAwait(false);
-
-			return JsonConvert.DeserializeObject<List<ApiPersonRefResponseModel>>(httpResponse.Content.ContentToString());
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8596c697ded41f52ad5eeb59c89ed291</Hash>
+    <Hash>cfd0e3d4b13556ecfaada28042008665</Hash>
 </Codenesium>*/

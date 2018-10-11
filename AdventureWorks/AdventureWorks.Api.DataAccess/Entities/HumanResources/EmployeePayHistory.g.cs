@@ -40,11 +40,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Rate")]
 		public decimal Rate { get; private set; }
 
+		[Key]
 		[Column("RateChangeDate")]
 		public DateTime RateChangeDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b9ffbe18a2423d3d955a880e68d59ad</Hash>
+    <Hash>8f8e3af02df02cc15f6c70c9626e7225</Hash>
 </Codenesium>*/

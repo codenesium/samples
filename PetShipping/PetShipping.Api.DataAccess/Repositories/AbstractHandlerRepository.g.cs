@@ -81,14 +81,14 @@ namespace PetShippingNS.Api.DataAccess
 			return await this.Context.Set<AirTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<AirTransport>();
 		}
 
-		public async virtual Task<List<HandlerPipelineStep>> HandlerPipelineSteps(int handlerId, int limit = int.MaxValue, int offset = 0)
+		// Reference foreign key. Reference Table=HandlerPipelineStep. First table=handlers. Second table=handlers
+		public async virtual Task<List<Handler>> ByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<HandlerPipelineStep>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<HandlerPipelineStep>();
-		}
-
-		public async virtual Task<List<OtherTransport>> OtherTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<OtherTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<OtherTransport>();
+			return await (from refTable in this.Context.HandlerPipelineSteps
+			              join handlers in this.Context.Handlers on
+			              refTable.HandlerId equals handlers.Id
+			              where refTable.HandlerId == handlerId
+			              select handlers).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Handler>> Where(
@@ -123,5 +123,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e0b4f3fd801205084b891b39eabdf0ab</Hash>
+    <Hash>16d325a967139ac2f9f5b98ca0425eac</Hash>
 </Codenesium>*/

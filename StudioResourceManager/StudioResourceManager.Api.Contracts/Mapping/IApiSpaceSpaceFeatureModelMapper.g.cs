@@ -8,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public partial interface IApiSpaceSpaceFeatureModelMapper
 	{
 		ApiSpaceSpaceFeatureResponseModel MapRequestToResponse(
-			int id,
+			int spaceId,
 			ApiSpaceSpaceFeatureRequestModel request);
 
 		ApiSpaceSpaceFeatureRequestModel MapResponseToRequest(
@@ -19,5 +19,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>c6b6209e36c41cfca1c919f49da696cc</Hash>
+    <Hash>3005d7eb0665de7f1956b18a4a66f027</Hash>
 </Codenesium>*/

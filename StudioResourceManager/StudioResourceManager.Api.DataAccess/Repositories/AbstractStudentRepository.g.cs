@@ -76,33 +76,29 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Student>> ByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.FamilyId == familyId, limit, offset);
-
-			return records;
-		}
-
-		public async Task<List<Student>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.UserId == userId, limit, offset);
-
-			return records;
-		}
-
 		public async virtual Task<List<EventStudent>> EventStudents(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EventStudent>().Where(x => x.StudentId == studentId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
 		}
 
-		public async virtual Task<Family> GetFamily(int familyId)
+		public async virtual Task<Family> FamilyByFamilyId(int familyId)
 		{
 			return await this.Context.Set<Family>().SingleOrDefaultAsync(x => x.Id == familyId);
 		}
 
-		public async virtual Task<User> GetUser(int userId)
+		public async virtual Task<User> UserByUserId(int userId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.Id == userId);
+		}
+
+		// Reference foreign key. Reference Table=EventStudent. First table=students. Second table=events
+		public async virtual Task<List<Student>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.EventStudents
+			              join students in this.Context.Students on
+			              refTable.StudentId equals students.Id
+			              where refTable.EventId == eventId
+			              select students).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Student>> Where(
@@ -137,5 +133,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5ab0f480d1dcb29309595fb7bb007713</Hash>
+    <Hash>8b887b0c44c31dffa8b6d08de2c01921</Hash>
 </Codenesium>*/

@@ -20,8 +20,7 @@ namespace TicketingCRMNS.Api.Services
 			IBOLTicketStatuMapper bolticketStatuMapper,
 			IDALTicketStatuMapper dalticketStatuMapper,
 			IBOLTicketMapper bolTicketMapper,
-			IDALTicketMapper dalTicketMapper
-			)
+			IDALTicketMapper dalTicketMapper)
 			: base(logger,
 			       ticketStatuRepository,
 			       ticketStatuModelValidator,
@@ -35,5 +34,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c62d1ed13f4a7d96e66d8a8372c8209f</Hash>
+    <Hash>196667d94f85bed740d7a02b69711749</Hash>
 </Codenesium>*/

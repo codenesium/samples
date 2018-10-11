@@ -22,10 +22,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IDALCreditCardMapper DalCreditCardMapper { get; private set; }
 
-		protected IBOLPersonCreditCardMapper BolPersonCreditCardMapper { get; private set; }
-
-		protected IDALPersonCreditCardMapper DalPersonCreditCardMapper { get; private set; }
-
 		protected IBOLSalesOrderHeaderMapper BolSalesOrderHeaderMapper { get; private set; }
 
 		protected IDALSalesOrderHeaderMapper DalSalesOrderHeaderMapper { get; private set; }
@@ -38,8 +34,6 @@ namespace AdventureWorksNS.Api.Services
 			IApiCreditCardRequestModelValidator creditCardModelValidator,
 			IBOLCreditCardMapper bolCreditCardMapper,
 			IDALCreditCardMapper dalCreditCardMapper,
-			IBOLPersonCreditCardMapper bolPersonCreditCardMapper,
-			IDALPersonCreditCardMapper dalPersonCreditCardMapper,
 			IBOLSalesOrderHeaderMapper bolSalesOrderHeaderMapper,
 			IDALSalesOrderHeaderMapper dalSalesOrderHeaderMapper)
 			: base()
@@ -48,8 +42,6 @@ namespace AdventureWorksNS.Api.Services
 			this.CreditCardModelValidator = creditCardModelValidator;
 			this.BolCreditCardMapper = bolCreditCardMapper;
 			this.DalCreditCardMapper = dalCreditCardMapper;
-			this.BolPersonCreditCardMapper = bolPersonCreditCardMapper;
-			this.DalPersonCreditCardMapper = dalPersonCreditCardMapper;
 			this.BolSalesOrderHeaderMapper = bolSalesOrderHeaderMapper;
 			this.DalSalesOrderHeaderMapper = dalSalesOrderHeaderMapper;
 			this.logger = logger;
@@ -138,13 +130,6 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiPersonCreditCardResponseModel>> PersonCreditCards(int creditCardID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<PersonCreditCard> records = await this.CreditCardRepository.PersonCreditCards(creditCardID, limit, offset);
-
-			return this.BolPersonCreditCardMapper.MapBOToModel(this.DalPersonCreditCardMapper.MapEFToBO(records));
-		}
-
 		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
 			List<SalesOrderHeader> records = await this.CreditCardRepository.SalesOrderHeaders(creditCardID, limit, offset);
@@ -155,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef6fadc16d8e66aed717899a248a9114</Hash>
+    <Hash>9ecf43d2e559368a48a4d5d26ab9c2a3</Hash>
 </Codenesium>*/

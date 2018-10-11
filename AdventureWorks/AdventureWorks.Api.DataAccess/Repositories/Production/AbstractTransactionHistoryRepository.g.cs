@@ -78,16 +78,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<TransactionHistory>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ProductID == productID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
 		public async Task<List<TransactionHistory>> ByReferenceOrderIDReferenceOrderLineID(int referenceOrderID, int referenceOrderLineID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ReferenceOrderID == referenceOrderID && x.ReferenceOrderLineID == referenceOrderLineID, limit, offset);
 		}
 
 		protected async Task<List<TransactionHistory>> Where(
@@ -122,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>055cb3fd581c8bf382c397d9f907c29b</Hash>
+    <Hash>fc0dd93c33942c5619f6fc3dc3f88fa7</Hash>
 </Codenesium>*/

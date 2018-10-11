@@ -76,12 +76,12 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<PaymentType> GetPaymentType(int paymentTypeId)
+		public async virtual Task<PaymentType> PaymentTypeByPaymentTypeId(int paymentTypeId)
 		{
 			return await this.Context.Set<PaymentType>().SingleOrDefaultAsync(x => x.Id == paymentTypeId);
 		}
 
-		public async virtual Task<Pet> GetPet(int petId)
+		public async virtual Task<Pet> PetByPetId(int petId)
 		{
 			return await this.Context.Set<Pet>().SingleOrDefaultAsync(x => x.Id == petId);
 		}
@@ -118,5 +118,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>26c1edec15858c03554cfc5b638e8e2e</Hash>
+    <Hash>061a5b5f26abc1061552ec35e11bc583</Hash>
 </Codenesium>*/

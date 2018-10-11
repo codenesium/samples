@@ -17,12 +17,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<BillOfMaterial>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<BillOfMaterial> ByProductAssemblyIDComponentIDStartDate(int? productAssemblyID, int componentID, DateTime startDate);
-
 		Task<List<BillOfMaterial>> ByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d3010eaa48d75e117cd4586009e11dd</Hash>
+    <Hash>41bb65c55086fcf4aa44d51455692996</Hash>
 </Codenesium>*/

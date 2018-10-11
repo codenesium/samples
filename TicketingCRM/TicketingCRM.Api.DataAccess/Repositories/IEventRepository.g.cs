@@ -19,10 +19,10 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		Task<List<Event>> ByCityId(int cityId, int limit = int.MaxValue, int offset = 0);
 
-		Task<City> GetCity(int cityId);
+		Task<City> CityByCityId(int cityId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6b6924a0202f8e6cea324aebcd224c7d</Hash>
+    <Hash>5abaab5d7022614c8e0c6ace25844f99</Hash>
 </Codenesium>*/

@@ -380,6 +380,23 @@ namespace AdventureWorksNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("byProductID/{productID}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiProductResponseModel> response = await this.ProductService.ByProductID(productID, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiProductRequestModel> PatchModel(int id, JsonPatchDocument<ApiProductRequestModel> patch)
 		{
 			var record = await this.ProductService.Get(id);
@@ -399,5 +416,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9ebdb31ae6c2b820d6c7eb8b2195d23c</Hash>
+    <Hash>9b023bd1dbaacd01c4f93ba8f09913fe</Hash>
 </Codenesium>*/

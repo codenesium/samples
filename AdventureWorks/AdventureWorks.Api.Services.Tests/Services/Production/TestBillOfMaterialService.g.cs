@@ -131,41 +131,6 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void ByProductAssemblyIDComponentIDStartDate_Exists()
-		{
-			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
-			var record = new BillOfMaterial();
-			mock.RepositoryMock.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult(record));
-			var service = new BillOfMaterialService(mock.LoggerMock.Object,
-			                                        mock.RepositoryMock.Object,
-			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
-			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
-
-			ApiBillOfMaterialResponseModel response = await service.ByProductAssemblyIDComponentIDStartDate(default(int?), default(int), default(DateTime));
-
-			response.Should().NotBeNull();
-			mock.RepositoryMock.Verify(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>()));
-		}
-
-		[Fact]
-		public async void ByProductAssemblyIDComponentIDStartDate_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
-			mock.RepositoryMock.Setup(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>())).Returns(Task.FromResult<BillOfMaterial>(null));
-			var service = new BillOfMaterialService(mock.LoggerMock.Object,
-			                                        mock.RepositoryMock.Object,
-			                                        mock.ModelValidatorMockFactory.BillOfMaterialModelValidatorMock.Object,
-			                                        mock.BOLMapperMockFactory.BOLBillOfMaterialMapperMock,
-			                                        mock.DALMapperMockFactory.DALBillOfMaterialMapperMock);
-
-			ApiBillOfMaterialResponseModel response = await service.ByProductAssemblyIDComponentIDStartDate(default(int?), default(int), default(DateTime));
-
-			response.Should().BeNull();
-			mock.RepositoryMock.Verify(x => x.ByProductAssemblyIDComponentIDStartDate(It.IsAny<int?>(), It.IsAny<int>(), It.IsAny<DateTime>()));
-		}
-
-		[Fact]
 		public async void ByUnitMeasureCode_Exists()
 		{
 			var mock = new ServiceMockFacade<IBillOfMaterialRepository>();
@@ -204,5 +169,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>62438f6b6d15b0c00b0f072b786c57e3</Hash>
+    <Hash>b1225bc02134bed20f9161393e608360</Hash>
 </Codenesium>*/

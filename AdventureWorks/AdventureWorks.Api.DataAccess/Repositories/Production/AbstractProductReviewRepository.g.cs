@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<ProductReview>> ByProductIDReviewerName(int productID, string reviewerName, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ProductID == productID && x.ReviewerName == reviewerName, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ProductID == productID && x.ReviewerName == reviewerName, limit, offset);
 		}
 
 		protected async Task<List<ProductReview>> Where(
@@ -115,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d005999019b6e25ed418fb362ca96d32</Hash>
+    <Hash>ca37e529631be1c9c19fa26b9bb22453</Hash>
 </Codenesium>*/

@@ -23,14 +23,14 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<LinkLog>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0);
 
-		Task<Machine> GetMachine(int? assignedMachineId);
+		Task<Machine> MachineByAssignedMachineId(int? assignedMachineId);
 
-		Task<Chain> GetChain(int chainId);
+		Task<Chain> ChainByChainId(int chainId);
 
-		Task<LinkStatu> GetLinkStatu(int linkStatusId);
+		Task<LinkStatus> LinkStatusByLinkStatusId(int linkStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7cffa07fc80370d9d4a83ff4bc055322</Hash>
+    <Hash>c2254ba101ca96cac12c76d87d9c4997</Hash>
 </Codenesium>*/

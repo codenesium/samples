@@ -38,12 +38,12 @@ namespace TicketingCRMNS.Api.Services
 
 		public virtual void TransactionStatusIdRules()
 		{
-			this.RuleFor(x => x.TransactionStatusId).MustAsync(this.BeValidTransactionStatu).When(x => x?.TransactionStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TransactionStatusId).MustAsync(this.BeValidTransactionStatuByTransactionStatusId).When(x => x?.TransactionStatusId != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidTransactionStatu(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidTransactionStatuByTransactionStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.transactionRepository.GetTransactionStatu(id);
+			var record = await this.transactionRepository.TransactionStatuByTransactionStatusId(id);
 
 			return record != null;
 		}
@@ -51,5 +51,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88ae4514bb958e618f9b61fa9c327ed7</Hash>
+    <Hash>a89c4ae24525edf77f765826af3c4dde</Hash>
 </Codenesium>*/

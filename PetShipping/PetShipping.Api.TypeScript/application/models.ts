@@ -352,72 +352,6 @@ this.phone = '';
 		
 				}
 			}
-			export class ApiHandlerPipelineStepRequestModel {
-				handlerId:number;
-handlerIdEntity:number;
-id:number;
-pipelineStepId:number;
-pipelineStepIdEntity:number;
-
-	
-				constructor() {
-					this.handlerId = 0;
-this.id = 0;
-this.pipelineStepId = 0;
-
-		
-				}
-			}
-
-			export class ApiHandlerPipelineStepResponseModel {
-				handlerId:number;
-handlerIdEntity:number;
-id:number;
-pipelineStepId:number;
-pipelineStepIdEntity:number;
-
-	
-				constructor() {
-					this.handlerId = 0;
-this.id = 0;
-this.pipelineStepId = 0;
-
-		
-				}
-			}
-			export class ApiOtherTransportRequestModel {
-				handlerId:number;
-handlerIdEntity:number;
-id:number;
-pipelineStepId:number;
-pipelineStepIdEntity:number;
-
-	
-				constructor() {
-					this.handlerId = 0;
-this.id = 0;
-this.pipelineStepId = 0;
-
-		
-				}
-			}
-
-			export class ApiOtherTransportResponseModel {
-				handlerId:number;
-handlerIdEntity:number;
-id:number;
-pipelineStepId:number;
-pipelineStepIdEntity:number;
-
-	
-				constructor() {
-					this.handlerId = 0;
-this.id = 0;
-this.pipelineStepId = 0;
-
-		
-				}
-			}
 			export class ApiPetRequestModel {
 				breedId:number;
 breedIdEntity:number;
@@ -548,39 +482,6 @@ shipperIdEntity:number;
 this.name = '';
 this.pipelineStepStatusId = 0;
 this.shipperId = 0;
-
-		
-				}
-			}
-			export class ApiPipelineStepDestinationRequestModel {
-				destinationId:number;
-destinationIdEntity:number;
-id:number;
-pipelineStepId:number;
-pipelineStepIdEntity:number;
-
-	
-				constructor() {
-					this.destinationId = 0;
-this.id = 0;
-this.pipelineStepId = 0;
-
-		
-				}
-			}
-
-			export class ApiPipelineStepDestinationResponseModel {
-				destinationId:number;
-destinationIdEntity:number;
-id:number;
-pipelineStepId:number;
-pipelineStepIdEntity:number;
-
-	
-				constructor() {
-					this.destinationId = 0;
-this.id = 0;
-this.pipelineStepId = 0;
 
 		
 				}

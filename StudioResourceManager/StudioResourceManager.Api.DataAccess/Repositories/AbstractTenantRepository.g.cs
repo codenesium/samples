@@ -76,14 +76,39 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<Admin>> Admins(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Admin>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
+		}
+
+		public async virtual Task<List<Event>> Events(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Event>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
+		}
+
 		public async virtual Task<List<EventStatus>> EventStatuses(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EventStatus>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStatus>();
 		}
 
+		public async virtual Task<List<EventStudent>> EventStudents(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<EventStudent>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
+		}
+
+		public async virtual Task<List<EventTeacher>> EventTeachers(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<EventTeacher>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
+		}
+
 		public async virtual Task<List<Family>> Families(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Family>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Family>();
+		}
+
+		public async virtual Task<List<Rate>> Rates(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Rate>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
 		public async virtual Task<List<Space>> Spaces(int tenantId, int limit = int.MaxValue, int offset = 0)
@@ -96,14 +121,34 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<SpaceFeature>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceFeature>();
 		}
 
+		public async virtual Task<List<SpaceSpaceFeature>> SpaceSpaceFeatures(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<SpaceSpaceFeature>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceSpaceFeature>();
+		}
+
+		public async virtual Task<List<Student>> Students(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Student>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
+		}
+
 		public async virtual Task<List<Studio>> Studios(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Studio>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Studio>();
 		}
 
+		public async virtual Task<List<Teacher>> Teachers(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Teacher>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
+		}
+
 		public async virtual Task<List<TeacherSkill>> TeacherSkills(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<TeacherSkill>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
+		}
+
+		public async virtual Task<List<TeacherTeacherSkill>> TeacherTeacherSkills(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<TeacherTeacherSkill>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherTeacherSkill>();
 		}
 
 		public async virtual Task<List<User>> Users(int tenantId, int limit = int.MaxValue, int offset = 0)
@@ -143,5 +188,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>af19b23bd60adfbcd982bc579decdc87</Hash>
+    <Hash>871966d7abd57b209525d143085733c3</Hash>
 </Codenesium>*/

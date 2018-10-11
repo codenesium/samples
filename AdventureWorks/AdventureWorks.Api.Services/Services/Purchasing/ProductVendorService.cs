@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IProductVendorRepository productVendorRepository,
 			IApiProductVendorRequestModelValidator productVendorModelValidator,
 			IBOLProductVendorMapper bolproductVendorMapper,
-			IDALProductVendorMapper dalproductVendorMapper
-			)
+			IDALProductVendorMapper dalproductVendorMapper)
 			: base(logger,
 			       productVendorRepository,
 			       productVendorModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d912eb42573fccb2bceb8149b2c50e20</Hash>
+    <Hash>dcf97c9a9ad7baee809944f806587e36</Hash>
 </Codenesium>*/

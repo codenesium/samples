@@ -58,14 +58,6 @@ namespace PetShippingNS.Api.DataAccess
 			handlerItem1.SetProperties(1, "A", "A", 1, "A", "A");
 			this.context.Handlers.Add(handlerItem1);
 
-			var handlerPipelineStepItem1 = new HandlerPipelineStep();
-			handlerPipelineStepItem1.SetProperties(1, 1, 1);
-			this.context.HandlerPipelineSteps.Add(handlerPipelineStepItem1);
-
-			var otherTransportItem1 = new OtherTransport();
-			otherTransportItem1.SetProperties(1, 1, 1);
-			this.context.OtherTransports.Add(otherTransportItem1);
-
 			var petItem1 = new Pet();
 			petItem1.SetProperties(1, 1, 1, "A", 1);
 			this.context.Pets.Add(petItem1);
@@ -81,10 +73,6 @@ namespace PetShippingNS.Api.DataAccess
 			var pipelineStepItem1 = new PipelineStep();
 			pipelineStepItem1.SetProperties(1, "A", 1, 1);
 			this.context.PipelineSteps.Add(pipelineStepItem1);
-
-			var pipelineStepDestinationItem1 = new PipelineStepDestination();
-			pipelineStepDestinationItem1.SetProperties(1, 1, 1);
-			this.context.PipelineStepDestinations.Add(pipelineStepDestinationItem1);
 
 			var pipelineStepNoteItem1 = new PipelineStepNote();
 			pipelineStepNoteItem1.SetProperties(1, 1, "A", 1);
@@ -112,5 +100,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b82551c6a4987b76d5d8e640c3ca2666</Hash>
+    <Hash>fcdcec68fda7eaffa9248d853f573265</Hash>
 </Codenesium>*/

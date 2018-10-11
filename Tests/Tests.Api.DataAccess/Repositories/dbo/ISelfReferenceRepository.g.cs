@@ -16,11 +16,9 @@ namespace TestsNS.Api.DataAccess
 		Task<SelfReference> Get(int id);
 
 		Task<List<SelfReference>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<List<SelfReference>> SelfReferences(int selfReferenceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>919818952598eeb626aff3bcc7017d76</Hash>
+    <Hash>f4d4ad86191bb8996cfce8c8fe5a6288</Hash>
 </Codenesium>*/

@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			IPersonRefRepository personRefRepository,
 			IApiPersonRefRequestModelValidator personRefModelValidator,
 			IBOLPersonRefMapper bolpersonRefMapper,
-			IDALPersonRefMapper dalpersonRefMapper
-			)
+			IDALPersonRefMapper dalpersonRefMapper)
 			: base(logger,
 			       personRefRepository,
 			       personRefModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>39e5a3a0d4e2bceebf9cd0f4aae01af1</Hash>
+    <Hash>8411a4e70a25a0a46c9187971b8eeb54</Hash>
 </Codenesium>*/

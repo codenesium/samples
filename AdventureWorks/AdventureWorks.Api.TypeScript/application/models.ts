@@ -1493,35 +1493,6 @@ this.rowguid = '';
 		
 				}
 			}
-			export class ApiProductModelIllustrationRequestModel {
-				illustrationID:number;
-modifiedDate:string;
-productModelID:number;
-
-	
-				constructor() {
-					this.illustrationID = 0;
-this.modifiedDate = '';
-this.productModelID = 0;
-
-		
-				}
-			}
-
-			export class ApiProductModelIllustrationResponseModel {
-				illustrationID:number;
-modifiedDate:string;
-productModelID:number;
-
-	
-				constructor() {
-					this.illustrationID = 0;
-this.modifiedDate = '';
-this.productModelID = 0;
-
-		
-				}
-			}
 			export class ApiProductModelProductDescriptionCultureRequestModel {
 				cultureID:string;
 modifiedDate:string;
@@ -2319,37 +2290,6 @@ this.purchasingWebServiceURL = '';
 		
 				}
 			}
-			export class ApiCountryRegionCurrencyRequestModel {
-				countryRegionCode:string;
-currencyCode:string;
-currencyCodeEntity:string;
-modifiedDate:string;
-
-	
-				constructor() {
-					this.countryRegionCode = '';
-this.currencyCode = '';
-this.modifiedDate = '';
-
-		
-				}
-			}
-
-			export class ApiCountryRegionCurrencyResponseModel {
-				countryRegionCode:string;
-currencyCode:string;
-currencyCodeEntity:string;
-modifiedDate:string;
-
-	
-				constructor() {
-					this.countryRegionCode = '';
-this.currencyCode = '';
-this.modifiedDate = '';
-
-		
-				}
-			}
 			export class ApiCreditCardRequestModel {
 				cardNumber:string;
 cardType:string;
@@ -2514,37 +2454,6 @@ this.personID = 0;
 this.rowguid = '';
 this.storeID = 0;
 this.territoryID = 0;
-
-		
-				}
-			}
-			export class ApiPersonCreditCardRequestModel {
-				businessEntityID:number;
-creditCardID:number;
-creditCardIDEntity:number;
-modifiedDate:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.creditCardID = 0;
-this.modifiedDate = '';
-
-		
-				}
-			}
-
-			export class ApiPersonCreditCardResponseModel {
-				businessEntityID:number;
-creditCardID:number;
-creditCardIDEntity:number;
-modifiedDate:string;
-
-	
-				constructor() {
-					this.businessEntityID = 0;
-this.creditCardID = 0;
-this.modifiedDate = '';
 
 		
 				}
@@ -2743,39 +2652,6 @@ this.subTotal = 0;
 this.taxAmt = 0;
 this.territoryID = 0;
 this.totalDue = 0;
-
-		
-				}
-			}
-			export class ApiSalesOrderHeaderSalesReasonRequestModel {
-				modifiedDate:string;
-salesOrderID:number;
-salesOrderIDEntity:number;
-salesReasonID:number;
-salesReasonIDEntity:number;
-
-	
-				constructor() {
-					this.modifiedDate = '';
-this.salesOrderID = 0;
-this.salesReasonID = 0;
-
-		
-				}
-			}
-
-			export class ApiSalesOrderHeaderSalesReasonResponseModel {
-				modifiedDate:string;
-salesOrderID:number;
-salesOrderIDEntity:number;
-salesReasonID:number;
-salesReasonIDEntity:number;
-
-	
-				constructor() {
-					this.modifiedDate = '';
-this.salesOrderID = 0;
-this.salesReasonID = 0;
 
 		
 				}

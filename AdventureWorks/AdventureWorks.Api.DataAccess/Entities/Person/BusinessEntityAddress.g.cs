@@ -27,9 +27,11 @@ namespace AdventureWorksNS.Api.DataAccess
 			this.Rowguid = rowguid;
 		}
 
+		[Key]
 		[Column("AddressID")]
 		public int AddressID { get; private set; }
 
+		[Key]
 		[Column("AddressTypeID")]
 		public int AddressTypeID { get; private set; }
 
@@ -47,5 +49,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>813f96e404e2acbf5dbfbb8bab7086aa</Hash>
+    <Hash>8878f677fe1b8728a9e88963cd59cc6d</Hash>
 </Codenesium>*/

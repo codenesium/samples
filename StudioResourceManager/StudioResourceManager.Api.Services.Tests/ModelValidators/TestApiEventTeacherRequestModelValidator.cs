@@ -24,58 +24,59 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Teacher
 		[Fact]
-		public async void EventId_Create_Valid_Reference()
+		public async void TeacherId_Create_Valid_Reference()
 		{
 			Mock<IEventTeacherRepository> eventTeacherRepository = new Mock<IEventTeacherRepository>();
-			eventTeacherRepository.Setup(x => x.GetEvent(It.IsAny<int>())).Returns(Task.FromResult<Event>(new Event()));
+			eventTeacherRepository.Setup(x => x.TeacherByTeacherId(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
 
 			var validator = new ApiEventTeacherRequestModelValidator(eventTeacherRepository.Object);
 			await validator.ValidateCreateAsync(new ApiEventTeacherRequestModel());
 
-			validator.ShouldNotHaveValidationErrorFor(x => x.EventId, 1);
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
 		}
 
 		[Fact]
-		public async void EventId_Create_Invalid_Reference()
+		public async void TeacherId_Create_Invalid_Reference()
 		{
 			Mock<IEventTeacherRepository> eventTeacherRepository = new Mock<IEventTeacherRepository>();
-			eventTeacherRepository.Setup(x => x.GetEvent(It.IsAny<int>())).Returns(Task.FromResult<Event>(null));
+			eventTeacherRepository.Setup(x => x.TeacherByTeacherId(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(null));
 
 			var validator = new ApiEventTeacherRequestModelValidator(eventTeacherRepository.Object);
 
 			await validator.ValidateCreateAsync(new ApiEventTeacherRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.EventId, 1);
+			validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
 		}
 
 		[Fact]
-		public async void EventId_Update_Valid_Reference()
+		public async void TeacherId_Update_Valid_Reference()
 		{
 			Mock<IEventTeacherRepository> eventTeacherRepository = new Mock<IEventTeacherRepository>();
-			eventTeacherRepository.Setup(x => x.GetEvent(It.IsAny<int>())).Returns(Task.FromResult<Event>(new Event()));
+			eventTeacherRepository.Setup(x => x.TeacherByTeacherId(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(new Teacher()));
 
 			var validator = new ApiEventTeacherRequestModelValidator(eventTeacherRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiEventTeacherRequestModel());
 
-			validator.ShouldNotHaveValidationErrorFor(x => x.EventId, 1);
+			validator.ShouldNotHaveValidationErrorFor(x => x.TeacherId, 1);
 		}
 
 		[Fact]
-		public async void EventId_Update_Invalid_Reference()
+		public async void TeacherId_Update_Invalid_Reference()
 		{
 			Mock<IEventTeacherRepository> eventTeacherRepository = new Mock<IEventTeacherRepository>();
-			eventTeacherRepository.Setup(x => x.GetEvent(It.IsAny<int>())).Returns(Task.FromResult<Event>(null));
+			eventTeacherRepository.Setup(x => x.TeacherByTeacherId(It.IsAny<int>())).Returns(Task.FromResult<Teacher>(null));
 
 			var validator = new ApiEventTeacherRequestModelValidator(eventTeacherRepository.Object);
 
 			await validator.ValidateUpdateAsync(default(int), new ApiEventTeacherRequestModel());
 
-			validator.ShouldHaveValidationErrorFor(x => x.EventId, 1);
+			validator.ShouldHaveValidationErrorFor(x => x.TeacherId, 1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8b0dbc8cd401cda0c3db6c6a5fb8040b</Hash>
+    <Hash>2b6839bb755488cd73e3502c73d75456</Hash>
 </Codenesium>*/

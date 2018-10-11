@@ -96,7 +96,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Store>().Where(x => x.SalesPersonID == salesPersonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Store>();
 		}
 
-		public async virtual Task<SalesTerritory> GetSalesTerritory(int? territoryID)
+		public async virtual Task<SalesTerritory> SalesTerritoryByTerritoryID(int? territoryID)
 		{
 			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
 		}
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e963ee503ea30cae2106ffed4a133bf5</Hash>
+    <Hash>0a2fae6fade90ace3d1a803ef2574124</Hash>
 </Codenesium>*/

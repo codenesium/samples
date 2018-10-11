@@ -223,6 +223,23 @@ namespace StudioResourceManagerNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("bySpaceFeatureId/{spaceFeatureId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
+		public async virtual Task<IActionResult> BySpaceFeatureId(int spaceFeatureId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiSpaceResponseModel> response = await this.SpaceService.BySpaceFeatureId(spaceFeatureId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiSpaceRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpaceRequestModel> patch)
 		{
 			var record = await this.SpaceService.Get(id);
@@ -242,5 +259,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>48b4e83d4d27a8419d9c7c3f366e4112</Hash>
+    <Hash>3b03bc60475480bb9f25b9c81867aaa5</Hash>
 </Codenesium>*/

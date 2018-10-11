@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<ShoppingCartItem>> ByShoppingCartIDProductID(string shoppingCartID, int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.ShoppingCartID == shoppingCartID && x.ProductID == productID, limit, offset);
 		}
 
 		protected async Task<List<ShoppingCartItem>> Where(
@@ -115,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f57e21306f7a73f7361a238d92364604</Hash>
+    <Hash>18d7fd6a63a89b1c6ad38f28cabf168a</Hash>
 </Codenesium>*/

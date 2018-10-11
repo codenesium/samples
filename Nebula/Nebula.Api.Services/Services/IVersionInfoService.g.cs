@@ -20,11 +20,9 @@ namespace NebulaNS.Api.Services
 		Task<ApiVersionInfoResponseModel> Get(long version);
 
 		Task<List<ApiVersionInfoResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<ApiVersionInfoResponseModel> ByVersion(long version);
 	}
 }
 
 /*<Codenesium>
-    <Hash>07031953dfe2dbf144353a483e731f8e</Hash>
+    <Hash>bbe983cff62fcbd1177f13406f68cfef</Hash>
 </Codenesium>*/

@@ -120,11 +120,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Address2, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= City
 		[Fact]
 		public async void CityId_Create_Valid_Reference()
 		{
 			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-			eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
+			eventRepository.Setup(x => x.CityByCityId(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
 
 			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
 			await validator.ValidateCreateAsync(new ApiEventRequestModel());
@@ -136,7 +137,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void CityId_Create_Invalid_Reference()
 		{
 			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-			eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
+			eventRepository.Setup(x => x.CityByCityId(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
 
 			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
 
@@ -149,7 +150,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void CityId_Update_Valid_Reference()
 		{
 			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-			eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
+			eventRepository.Setup(x => x.CityByCityId(It.IsAny<int>())).Returns(Task.FromResult<City>(new City()));
 
 			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
@@ -161,7 +162,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void CityId_Update_Invalid_Reference()
 		{
 			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
-			eventRepository.Setup(x => x.GetCity(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
+			eventRepository.Setup(x => x.CityByCityId(It.IsAny<int>())).Returns(Task.FromResult<City>(null));
 
 			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
 
@@ -341,5 +342,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b574845406f2776fc87989e4f31f7274</Hash>
+    <Hash>67fe11aa4c737a4079c1dcbb85b8d7a1</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<List<DirectTweet>> ByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<User> GetUser(int taggedUserId);
+		Task<User> UserByTaggedUserId(int taggedUserId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0aa1db840951bb6a1fd95f4200c1e189</Hash>
+    <Hash>3293f8bd1ed7ed42d42106b30f1e0ed9</Hash>
 </Codenesium>*/

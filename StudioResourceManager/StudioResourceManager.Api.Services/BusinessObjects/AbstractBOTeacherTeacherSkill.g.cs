@@ -10,16 +10,12 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 		}
 
-		public virtual void SetProperties(int id,
-		                                  int teacherId,
+		public virtual void SetProperties(int teacherId,
 		                                  int teacherSkillId)
 		{
-			this.Id = id;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
 		}
-
-		public int Id { get; private set; }
 
 		public int TeacherId { get; private set; }
 
@@ -28,5 +24,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>13a49d2871660566ad833e29eb114fb9</Hash>
+    <Hash>da7353aff6f9f11b1b9c5620f8129137</Hash>
 </Codenesium>*/

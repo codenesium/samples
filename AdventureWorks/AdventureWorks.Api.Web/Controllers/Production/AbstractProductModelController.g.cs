@@ -277,23 +277,6 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{productModelID}/ProductModelIllustrations")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiProductModelIllustrationResponseModel>), 200)]
-		public async virtual Task<IActionResult> ProductModelIllustrations(int productModelID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiProductModelIllustrationResponseModel> response = await this.ProductModelService.ProductModelIllustrations(productModelID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{productModelID}/ProductModelProductDescriptionCultures")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProductModelProductDescriptionCultureResponseModel>), 200)]
@@ -306,6 +289,23 @@ namespace AdventureWorksNS.Api.Web
 			}
 
 			List<ApiProductModelProductDescriptionCultureResponseModel> response = await this.ProductModelService.ProductModelProductDescriptionCultures(productModelID, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("byProductModelID/{productModelID}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiProductModelResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByProductModelID(int productModelID, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiProductModelResponseModel> response = await this.ProductModelService.ByProductModelID(productModelID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -329,5 +329,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>a643f291f8db62785940f9f03a52a984</Hash>
+    <Hash>e05029e5e27696bf0ae3be5b76aca0a2</Hash>
 </Codenesium>*/

@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			ISchemaAPersonRepository schemaAPersonRepository,
 			IApiSchemaAPersonRequestModelValidator schemaAPersonModelValidator,
 			IBOLSchemaAPersonMapper bolschemaAPersonMapper,
-			IDALSchemaAPersonMapper dalschemaAPersonMapper
-			)
+			IDALSchemaAPersonMapper dalschemaAPersonMapper)
 			: base(logger,
 			       schemaAPersonRepository,
 			       schemaAPersonModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4e8705d628c296be48169fc17c94bf82</Hash>
+    <Hash>de955e80fa64cd3e4c5308bb4c08a367</Hash>
 </Codenesium>*/

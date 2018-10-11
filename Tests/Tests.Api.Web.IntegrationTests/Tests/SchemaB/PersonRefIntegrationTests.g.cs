@@ -78,7 +78,7 @@ namespace TestsNS.Api.Web.IntegrationTests
 		private async Task<ApiPersonRefResponseModel> CreateRecord()
 		{
 			var model = new ApiPersonRefRequestModel();
-			model.SetProperties(2, 1);
+			model.SetProperties(2, 2);
 			CreateResponse<ApiPersonRefResponseModel> result = await this.Client.PersonRefCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -93,5 +93,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f1e157f9448e6fe2f837a27eff8a5188</Hash>
+    <Hash>0fd71d4c6ba786dc14f29612ae6662bb</Hash>
 </Codenesium>*/

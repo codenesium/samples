@@ -15,16 +15,10 @@ namespace StudioResourceManagerNS.Api.Contracts
 		}
 
 		public virtual void SetProperties(
-			int teacherId,
 			int teacherSkillId)
 		{
-			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
 		}
-
-		[Required]
-		[JsonProperty]
-		public int TeacherId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -33,5 +27,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>163be8c1f85e7b66b891994a5d8a5693</Hash>
+    <Hash>2a0192e86a4ad749af087c0167893c79</Hash>
 </Codenesium>*/

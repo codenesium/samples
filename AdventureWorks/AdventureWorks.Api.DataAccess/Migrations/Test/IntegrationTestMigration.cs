@@ -164,10 +164,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			productModelItem1.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"));
 			this.context.ProductModels.Add(productModelItem1);
 
-			var productModelIllustrationItem1 = new ProductModelIllustration();
-			productModelIllustrationItem1.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1);
-			this.context.ProductModelIllustrations.Add(productModelIllustrationItem1);
-
 			var productModelProductDescriptionCultureItem1 = new ProductModelProductDescriptionCulture();
 			productModelProductDescriptionCultureItem1.SetProperties("A", DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
 			this.context.ProductModelProductDescriptionCultures.Add(productModelProductDescriptionCultureItem1);
@@ -240,10 +236,6 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			await this.context.SaveChangesAsync();
 
-			var countryRegionCurrencyItem1 = new CountryRegionCurrency();
-			countryRegionCurrencyItem1.SetProperties("A", "A", DateTime.Parse("1/1/1987 12:00:00 AM"));
-			this.context.CountryRegionCurrencies.Add(countryRegionCurrencyItem1);
-
 			var creditCardItem1 = new CreditCard();
 			creditCardItem1.SetProperties("A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
 			this.context.CreditCards.Add(creditCardItem1);
@@ -260,10 +252,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			customerItem1.SetProperties("A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1);
 			this.context.Customers.Add(customerItem1);
 
-			var personCreditCardItem1 = new PersonCreditCard();
-			personCreditCardItem1.SetProperties(1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"));
-			this.context.PersonCreditCards.Add(personCreditCardItem1);
-
 			var salesOrderDetailItem1 = new SalesOrderDetail();
 			salesOrderDetailItem1.SetProperties("A", 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, 1, 1, 1m, 1m);
 			this.context.SalesOrderDetails.Add(salesOrderDetailItem1);
@@ -271,10 +259,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			var salesOrderHeaderItem1 = new SalesOrderHeader();
 			salesOrderHeaderItem1.SetProperties("A", 1, "A", "A", 1, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), true, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1, Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1, "A", 1, DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1, 1, 1m, 1m, 1, 1m);
 			this.context.SalesOrderHeaders.Add(salesOrderHeaderItem1);
-
-			var salesOrderHeaderSalesReasonItem1 = new SalesOrderHeaderSalesReason();
-			salesOrderHeaderSalesReasonItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), 1, 1);
-			this.context.SalesOrderHeaderSalesReasons.Add(salesOrderHeaderSalesReasonItem1);
 
 			var salesPersonItem1 = new SalesPerson();
 			salesPersonItem1.SetProperties(1m, 1, 1m, DateTime.Parse("1/1/1987 12:00:00 AM"), Guid.Parse("8420cdcf-d595-ef65-66e7-dff9f98764da"), 1m, 1m, 1m, 1);
@@ -322,5 +306,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2ebd63d06a74d3f0249d3aeaeeb395e3</Hash>
+    <Hash>44193f74c42610cf996b22a943b8b91d</Hash>
 </Codenesium>*/

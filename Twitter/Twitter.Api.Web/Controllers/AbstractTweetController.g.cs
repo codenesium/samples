@@ -241,23 +241,6 @@ namespace TwitterNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{tweetId}/Likes")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiLikeResponseModel>), 200)]
-		public async virtual Task<IActionResult> Likes(int tweetId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiLikeResponseModel> response = await this.TweetService.Likes(tweetId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{sourceTweetId}/QuoteTweets")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiQuoteTweetResponseModel>), 200)]
@@ -310,5 +293,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8823ab11a74b1eb57168a45d5ad2b99a</Hash>
+    <Hash>d59945fe906db764ab2dadfb0d7b9bea</Hash>
 </Codenesium>*/

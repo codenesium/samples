@@ -24,11 +24,12 @@ namespace PetShippingNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Client
 		[Fact]
 		public async void ClientId_Create_Valid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
+			saleRepository.Setup(x => x.ClientByClientId(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
@@ -40,7 +41,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void ClientId_Create_Invalid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
+			saleRepository.Setup(x => x.ClientByClientId(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
@@ -53,7 +54,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void ClientId_Update_Valid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
+			saleRepository.Setup(x => x.ClientByClientId(It.IsAny<int>())).Returns(Task.FromResult<Client>(new Client()));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
@@ -65,7 +66,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void ClientId_Update_Invalid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetClient(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
+			saleRepository.Setup(x => x.ClientByClientId(It.IsAny<int>())).Returns(Task.FromResult<Client>(null));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
@@ -98,11 +99,12 @@ namespace PetShippingNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Pet
 		[Fact]
 		public async void PetId_Create_Valid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetPet(It.IsAny<int>())).Returns(Task.FromResult<Pet>(new Pet()));
+			saleRepository.Setup(x => x.PetByPetId(It.IsAny<int>())).Returns(Task.FromResult<Pet>(new Pet()));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
@@ -114,7 +116,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PetId_Create_Invalid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetPet(It.IsAny<int>())).Returns(Task.FromResult<Pet>(null));
+			saleRepository.Setup(x => x.PetByPetId(It.IsAny<int>())).Returns(Task.FromResult<Pet>(null));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
@@ -127,7 +129,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PetId_Update_Valid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetPet(It.IsAny<int>())).Returns(Task.FromResult<Pet>(new Pet()));
+			saleRepository.Setup(x => x.PetByPetId(It.IsAny<int>())).Returns(Task.FromResult<Pet>(new Pet()));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
@@ -139,7 +141,7 @@ namespace PetShippingNS.Api.Services.Tests
 		public async void PetId_Update_Invalid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetPet(It.IsAny<int>())).Returns(Task.FromResult<Pet>(null));
+			saleRepository.Setup(x => x.PetByPetId(It.IsAny<int>())).Returns(Task.FromResult<Pet>(null));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
@@ -151,5 +153,5 @@ namespace PetShippingNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2b3f7c66c276a025456c6dfee1b05c78</Hash>
+    <Hash>1858ad9cf5074e9d3e29a540d9bd396f</Hash>
 </Codenesium>*/

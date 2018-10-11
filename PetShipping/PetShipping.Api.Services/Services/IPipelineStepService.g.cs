@@ -21,18 +21,14 @@ namespace PetShippingNS.Api.Services
 
 		Task<List<ApiPipelineStepResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiHandlerPipelineStepResponseModel>> HandlerPipelineSteps(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiOtherTransportResponseModel>> OtherTransports(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiPipelineStepDestinationResponseModel>> PipelineStepDestinations(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotes(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirements(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiPipelineStepResponseModel>> ByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a400336bd110f40833f815804b59775</Hash>
+    <Hash>bd41fb4ec321052e9b275c4188f60c4e</Hash>
 </Codenesium>*/

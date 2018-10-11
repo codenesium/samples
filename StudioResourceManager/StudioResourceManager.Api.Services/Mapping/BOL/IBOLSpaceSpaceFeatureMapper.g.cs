@@ -8,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Services
 	public partial interface IBOLSpaceSpaceFeatureMapper
 	{
 		BOSpaceSpaceFeature MapModelToBO(
-			int id,
+			int spaceId,
 			ApiSpaceSpaceFeatureRequestModel model);
 
 		ApiSpaceSpaceFeatureResponseModel MapBOToModel(
@@ -20,5 +20,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0fa650b7ad62e78318d8cdba9e732e34</Hash>
+    <Hash>396a71b06c38ad5b653afa77d2600d6c</Hash>
 </Codenesium>*/

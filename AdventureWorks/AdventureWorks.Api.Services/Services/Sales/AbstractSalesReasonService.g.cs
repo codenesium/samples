@@ -22,10 +22,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IDALSalesReasonMapper DalSalesReasonMapper { get; private set; }
 
-		protected IBOLSalesOrderHeaderSalesReasonMapper BolSalesOrderHeaderSalesReasonMapper { get; private set; }
-
-		protected IDALSalesOrderHeaderSalesReasonMapper DalSalesOrderHeaderSalesReasonMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractSalesReasonService(
@@ -33,17 +29,13 @@ namespace AdventureWorksNS.Api.Services
 			ISalesReasonRepository salesReasonRepository,
 			IApiSalesReasonRequestModelValidator salesReasonModelValidator,
 			IBOLSalesReasonMapper bolSalesReasonMapper,
-			IDALSalesReasonMapper dalSalesReasonMapper,
-			IBOLSalesOrderHeaderSalesReasonMapper bolSalesOrderHeaderSalesReasonMapper,
-			IDALSalesOrderHeaderSalesReasonMapper dalSalesOrderHeaderSalesReasonMapper)
+			IDALSalesReasonMapper dalSalesReasonMapper)
 			: base()
 		{
 			this.SalesReasonRepository = salesReasonRepository;
 			this.SalesReasonModelValidator = salesReasonModelValidator;
 			this.BolSalesReasonMapper = bolSalesReasonMapper;
 			this.DalSalesReasonMapper = dalSalesReasonMapper;
-			this.BolSalesOrderHeaderSalesReasonMapper = bolSalesOrderHeaderSalesReasonMapper;
-			this.DalSalesOrderHeaderSalesReasonMapper = dalSalesOrderHeaderSalesReasonMapper;
 			this.logger = logger;
 		}
 
@@ -115,16 +107,9 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiSalesOrderHeaderSalesReasonResponseModel>> SalesOrderHeaderSalesReasons(int salesReasonID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SalesOrderHeaderSalesReason> records = await this.SalesReasonRepository.SalesOrderHeaderSalesReasons(salesReasonID, limit, offset);
-
-			return this.BolSalesOrderHeaderSalesReasonMapper.MapBOToModel(this.DalSalesOrderHeaderSalesReasonMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>178dbe42b96e4acd67b9a5cc6eca8982</Hash>
+    <Hash>04bab2b11627b731a65d4755b7aaa38e</Hash>
 </Codenesium>*/

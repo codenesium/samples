@@ -78,19 +78,22 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		public async Task<List<Sale>> ByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.TransactionId == transactionId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.TransactionId == transactionId, limit, offset);
 		}
 
-		public async virtual Task<List<SaleTicket>> SaleTickets(int saleId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SaleTicket>().Where(x => x.SaleId == saleId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTicket>();
-		}
-
-		public async virtual Task<Transaction> GetTransaction(int transactionId)
+		public async virtual Task<Transaction> TransactionByTransactionId(int transactionId)
 		{
 			return await this.Context.Set<Transaction>().SingleOrDefaultAsync(x => x.Id == transactionId);
+		}
+
+		// Reference foreign key. Reference Table=SaleTicket. First table=sales. Second table=sales
+		public async virtual Task<List<Sale>> BySaleId(int saleId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.SaleTickets
+			              join sales in this.Context.Sales on
+			              refTable.SaleId equals sales.Id
+			              where refTable.SaleId == saleId
+			              select sales).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Sale>> Where(
@@ -125,5 +128,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5896a2c20c620f0bb29c91884225b9d1</Hash>
+    <Hash>1ad2ce18e041a2a6346a964d2ff0fc1f</Hash>
 </Codenesium>*/

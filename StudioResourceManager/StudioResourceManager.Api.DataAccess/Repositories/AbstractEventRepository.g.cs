@@ -76,13 +76,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async Task<List<Event>> ByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0)
-		{
-			var records = await this.Where(x => x.EventStatusId == eventStatusId, limit, offset);
-
-			return records;
-		}
-
 		public async virtual Task<List<EventStudent>> EventStudents(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EventStudent>().Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
@@ -91,6 +84,31 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public async virtual Task<List<EventTeacher>> EventTeachers(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EventTeacher>().Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
+		}
+
+		public async virtual Task<EventStatus> EventStatusByEventStatusId(int eventStatusId)
+		{
+			return await this.Context.Set<EventStatus>().SingleOrDefaultAsync(x => x.Id == eventStatusId);
+		}
+
+		// Reference foreign key. Reference Table=EventStudent. First table=events. Second table=students
+		public async virtual Task<List<Event>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.EventStudents
+			              join events in this.Context.Events on
+			              refTable.EventId equals events.Id
+			              where refTable.StudentId == studentId
+			              select events).Skip(offset).Take(limit).ToListAsync();
+		}
+
+		// Reference foreign key. Reference Table=EventTeacher. First table=events. Second table=teachers
+		public async virtual Task<List<Event>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.EventTeachers
+			              join events in this.Context.Events on
+			              refTable.EventId equals events.Id
+			              where refTable.TeacherId == teacherId
+			              select events).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Event>> Where(
@@ -125,5 +143,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a2507503704a6c4a5aff77f36beeebc4</Hash>
+    <Hash>2b4f6fbb199d43430324d2c89fed9953</Hash>
 </Codenesium>*/

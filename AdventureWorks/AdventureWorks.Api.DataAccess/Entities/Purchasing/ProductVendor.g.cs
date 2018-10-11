@@ -42,6 +42,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("AverageLeadTime")]
 		public int AverageLeadTime { get; private set; }
 
+		[Key]
 		[Column("BusinessEntityID")]
 		public int BusinessEntityID { get; private set; }
 
@@ -77,5 +78,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2af4a1efbc52cc0799e320818eb5e66b</Hash>
+    <Hash>a66c912fc449122941b82314cf571533</Hash>
 </Codenesium>*/

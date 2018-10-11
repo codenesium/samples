@@ -78,17 +78,10 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		public async Task<List<Ticket>> ByTicketStatusId(int ticketStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.TicketStatusId == ticketStatusId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.TicketStatusId == ticketStatusId, limit, offset);
 		}
 
-		public async virtual Task<List<SaleTicket>> SaleTickets(int ticketId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SaleTicket>().Where(x => x.TicketId == ticketId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SaleTicket>();
-		}
-
-		public async virtual Task<TicketStatu> GetTicketStatu(int ticketStatusId)
+		public async virtual Task<TicketStatu> TicketStatuByTicketStatusId(int ticketStatusId)
 		{
 			return await this.Context.Set<TicketStatu>().SingleOrDefaultAsync(x => x.Id == ticketStatusId);
 		}
@@ -125,5 +118,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1a3d49f2a5fa16c78d59a24d8310c81e</Hash>
+    <Hash>b1e5127ea42a585771fa62c1933b5be1</Hash>
 </Codenesium>*/

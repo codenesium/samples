@@ -26,10 +26,6 @@ namespace NebulaNS.Api.Services
 
 		protected IDALLinkMapper DalLinkMapper { get; private set; }
 
-		protected IBOLMachineRefTeamMapper BolMachineRefTeamMapper { get; private set; }
-
-		protected IDALMachineRefTeamMapper DalMachineRefTeamMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractMachineService(
@@ -39,9 +35,7 @@ namespace NebulaNS.Api.Services
 			IBOLMachineMapper bolMachineMapper,
 			IDALMachineMapper dalMachineMapper,
 			IBOLLinkMapper bolLinkMapper,
-			IDALLinkMapper dalLinkMapper,
-			IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
-			IDALMachineRefTeamMapper dalMachineRefTeamMapper)
+			IDALLinkMapper dalLinkMapper)
 			: base()
 		{
 			this.MachineRepository = machineRepository;
@@ -50,8 +44,6 @@ namespace NebulaNS.Api.Services
 			this.DalMachineMapper = dalMachineMapper;
 			this.BolLinkMapper = bolLinkMapper;
 			this.DalLinkMapper = dalLinkMapper;
-			this.BolMachineRefTeamMapper = bolMachineRefTeamMapper;
-			this.DalMachineRefTeamMapper = dalMachineRefTeamMapper;
 			this.logger = logger;
 		}
 
@@ -145,15 +137,15 @@ namespace NebulaNS.Api.Services
 			return this.BolLinkMapper.MapBOToModel(this.DalLinkMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int machineId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiMachineResponseModel>> ByMachineId(int machineId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<MachineRefTeam> records = await this.MachineRepository.MachineRefTeams(machineId, limit, offset);
+			List<Machine> records = await this.MachineRepository.ByMachineId(machineId, limit, offset);
 
-			return this.BolMachineRefTeamMapper.MapBOToModel(this.DalMachineRefTeamMapper.MapEFToBO(records));
+			return this.BolMachineMapper.MapBOToModel(this.DalMachineMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e0c94854c039b2f224932428eece26b</Hash>
+    <Hash>9492ab42e63214edc74c6e3f9ea128dd</Hash>
 </Codenesium>*/

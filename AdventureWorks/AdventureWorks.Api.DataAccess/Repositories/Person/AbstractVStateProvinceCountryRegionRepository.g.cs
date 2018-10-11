@@ -36,53 +36,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.GetById(stateProvinceID);
 		}
 
-		public async virtual Task<VStateProvinceCountryRegion> Create(VStateProvinceCountryRegion item)
-		{
-			this.Context.Set<VStateProvinceCountryRegion>().Add(item);
-			await this.Context.SaveChangesAsync();
-
-			this.Context.Entry(item).State = EntityState.Detached;
-			return item;
-		}
-
-		public async virtual Task Update(VStateProvinceCountryRegion item)
-		{
-			var entity = this.Context.Set<VStateProvinceCountryRegion>().Local.FirstOrDefault(x => x.StateProvinceID == item.StateProvinceID);
-			if (entity == null)
-			{
-				this.Context.Set<VStateProvinceCountryRegion>().Attach(item);
-			}
-			else
-			{
-				this.Context.Entry(entity).CurrentValues.SetValues(item);
-			}
-
-			await this.Context.SaveChangesAsync();
-		}
-
-		public async virtual Task Delete(
-			int stateProvinceID)
-		{
-			VStateProvinceCountryRegion record = await this.GetById(stateProvinceID);
-
-			if (record == null)
-			{
-				return;
-			}
-			else
-			{
-				this.Context.Set<VStateProvinceCountryRegion>().Remove(record);
-				await this.Context.SaveChangesAsync();
-			}
-		}
-
-		public async Task<VStateProvinceCountryRegion> ByStateProvinceIDCountryRegionCode(int stateProvinceID, string countryRegionCode)
-		{
-			var records = await this.Where(x => x.StateProvinceID == stateProvinceID && x.CountryRegionCode == countryRegionCode);
-
-			return records.FirstOrDefault();
-		}
-
 		protected async Task<List<VStateProvinceCountryRegion>> Where(
 			Expression<Func<VStateProvinceCountryRegion, bool>> predicate,
 			int limit = int.MaxValue,
@@ -115,5 +68,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>88c9d3a058212328760b6d9bbbe40f4e</Hash>
+    <Hash>e75889118cdfdae38e58ebe7b6dba068</Hash>
 </Codenesium>*/

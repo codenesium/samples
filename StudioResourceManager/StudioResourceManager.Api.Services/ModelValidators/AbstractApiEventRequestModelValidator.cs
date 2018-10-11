@@ -40,6 +40,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void EventStatusIdRules()
 		{
+			this.RuleFor(x => x.EventStatusId).MustAsync(this.BeValidEventStatusByEventStatusId).When(x => x?.EventStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ScheduledEndDateRules()
@@ -59,9 +60,16 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647);
 		}
+
+		private async Task<bool> BeValidEventStatusByEventStatusId(int id,  CancellationToken cancellationToken)
+		{
+			var record = await this.eventRepository.EventStatusByEventStatusId(id);
+
+			return record != null;
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fa26a41e224e234fa9aaffdfe60f033f</Hash>
+    <Hash>92cca29bc9e95af6c7aecbb8a24eada3</Hash>
 </Codenesium>*/

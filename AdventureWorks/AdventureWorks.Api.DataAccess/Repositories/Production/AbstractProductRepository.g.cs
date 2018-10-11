@@ -78,16 +78,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<Product> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async Task<Product> ByProductNumber(string productNumber)
 		{
-			var records = await this.Where(x => x.ProductNumber == productNumber);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.ProductNumber == productNumber);
 		}
 
 		public async virtual Task<List<BillOfMaterial>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
@@ -130,6 +126,16 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<WorkOrder>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
 
+		// Reference foreign key. Reference Table=ProductDocument. First table=products. Second table=products
+		public async virtual Task<List<Product>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.ProductDocuments
+			              join products in this.Context.Products on
+			              refTable.ProductID equals products.ProductID
+			              where refTable.ProductID == productID
+			              select products).Skip(offset).Take(limit).ToListAsync();
+		}
+
 		protected async Task<List<Product>> Where(
 			Expression<Func<Product, bool>> predicate,
 			int limit = int.MaxValue,
@@ -162,5 +168,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>be83d834c7004fd09af442e863813eba</Hash>
+    <Hash>fe9447faa10a3ec152150a19cf1df8eb</Hash>
 </Codenesium>*/

@@ -59,12 +59,14 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("ModifiedDate")]
 		public DateTime ModifiedDate { get; private set; }
 
+		[Key]
 		[Column("OperationSequence")]
 		public short OperationSequence { get; private set; }
 
 		[Column("PlannedCost")]
 		public decimal PlannedCost { get; private set; }
 
+		[Key]
 		[Column("ProductID")]
 		public int ProductID { get; private set; }
 
@@ -81,5 +83,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e34464ed7179e156cf8ee34c3b79bb6f</Hash>
+    <Hash>8247cacce4b877af6496e09d5e06c924</Hash>
 </Codenesium>*/

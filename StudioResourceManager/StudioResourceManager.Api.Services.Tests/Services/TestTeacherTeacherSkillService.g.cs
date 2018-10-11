@@ -129,81 +129,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TeacherTeacherSkillModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void ByTeacherId_Exists()
-		{
-			var mock = new ServiceMockFacade<ITeacherTeacherSkillRepository>();
-			var records = new List<TeacherTeacherSkill>();
-			records.Add(new TeacherTeacherSkill());
-			mock.RepositoryMock.Setup(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TeacherTeacherSkillService(mock.LoggerMock.Object,
-			                                             mock.RepositoryMock.Object,
-			                                             mock.ModelValidatorMockFactory.TeacherTeacherSkillModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                             mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await service.ByTeacherId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByTeacherId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITeacherTeacherSkillRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TeacherTeacherSkill>>(new List<TeacherTeacherSkill>()));
-			var service = new TeacherTeacherSkillService(mock.LoggerMock.Object,
-			                                             mock.RepositoryMock.Object,
-			                                             mock.ModelValidatorMockFactory.TeacherTeacherSkillModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                             mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await service.ByTeacherId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTeacherId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByTeacherSkillId_Exists()
-		{
-			var mock = new ServiceMockFacade<ITeacherTeacherSkillRepository>();
-			var records = new List<TeacherTeacherSkill>();
-			records.Add(new TeacherTeacherSkill());
-			mock.RepositoryMock.Setup(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TeacherTeacherSkillService(mock.LoggerMock.Object,
-			                                             mock.RepositoryMock.Object,
-			                                             mock.ModelValidatorMockFactory.TeacherTeacherSkillModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                             mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await service.ByTeacherSkillId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void ByTeacherSkillId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITeacherTeacherSkillRepository>();
-			mock.RepositoryMock.Setup(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TeacherTeacherSkill>>(new List<TeacherTeacherSkill>()));
-			var service = new TeacherTeacherSkillService(mock.LoggerMock.Object,
-			                                             mock.RepositoryMock.Object,
-			                                             mock.ModelValidatorMockFactory.TeacherTeacherSkillModelValidatorMock.Object,
-			                                             mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                             mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await service.ByTeacherSkillId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ByTeacherSkillId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7e5403c959de08a6e0900edfcf70f0fd</Hash>
+    <Hash>c9856ca355bb8757cd42561b354cdf7a</Hash>
 </Codenesium>*/

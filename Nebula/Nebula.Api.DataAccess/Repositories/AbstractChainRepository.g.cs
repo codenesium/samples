@@ -78,14 +78,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public async Task<Chain> ByExternalId(Guid externalId)
 		{
-			var records = await this.Where(x => x.ExternalId == externalId);
-
-			return records.FirstOrDefault();
-		}
-
-		public async virtual Task<List<Clasp>> Clasps(int nextChainId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<Clasp>().Where(x => x.NextChainId == nextChainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Clasp>();
+			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
 		public async virtual Task<List<Link>> Links(int chainId, int limit = int.MaxValue, int offset = 0)
@@ -93,14 +86,24 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Link>().Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
-		public async virtual Task<ChainStatu> GetChainStatu(int chainStatusId)
+		public async virtual Task<ChainStatus> ChainStatusByChainStatusId(int chainStatusId)
 		{
-			return await this.Context.Set<ChainStatu>().SingleOrDefaultAsync(x => x.Id == chainStatusId);
+			return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Id == chainStatusId);
 		}
 
-		public async virtual Task<Team> GetTeam(int teamId)
+		public async virtual Task<Team> TeamByTeamId(int teamId)
 		{
 			return await this.Context.Set<Team>().SingleOrDefaultAsync(x => x.Id == teamId);
+		}
+
+		// Reference foreign key. Reference Table=Clasp. First table=chains. Second table=chains
+		public async virtual Task<List<Chain>> ByNextChainId(int nextChainId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.Clasps
+			              join chains in this.Context.Chains on
+			              refTable.NextChainId equals chains.Id
+			              where refTable.NextChainId == nextChainId
+			              select chains).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Chain>> Where(
@@ -135,5 +138,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b50136e3a4b95051f4c63b4aeb5a4863</Hash>
+    <Hash>8dc39d924de7f1695e5685274f606ebe</Hash>
 </Codenesium>*/

@@ -8,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public partial interface IApiEventStudentModelMapper
 	{
 		ApiEventStudentResponseModel MapRequestToResponse(
-			int id,
+			int eventId,
 			ApiEventStudentRequestModel request);
 
 		ApiEventStudentRequestModel MapResponseToRequest(
@@ -19,5 +19,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>49738993c962dc5f7a453b334cdab18b</Hash>
+    <Hash>f16ace8dfc19f95fadf49869612dacf2</Hash>
 </Codenesium>*/

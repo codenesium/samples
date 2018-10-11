@@ -8,12 +8,11 @@ namespace StudioResourceManagerNS.Api.Contracts
 	public abstract class AbstractApiTeacherTeacherSkillModelMapper
 	{
 		public virtual ApiTeacherTeacherSkillResponseModel MapRequestToResponse(
-			int id,
+			int teacherId,
 			ApiTeacherTeacherSkillRequestModel request)
 		{
 			var response = new ApiTeacherTeacherSkillResponseModel();
-			response.SetProperties(id,
-			                       request.TeacherId,
+			response.SetProperties(teacherId,
 			                       request.TeacherSkillId);
 			return response;
 		}
@@ -23,7 +22,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var request = new ApiTeacherTeacherSkillRequestModel();
 			request.SetProperties(
-				response.TeacherId,
 				response.TeacherSkillId);
 			return request;
 		}
@@ -31,7 +29,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 		public JsonPatchDocument<ApiTeacherTeacherSkillRequestModel> CreatePatch(ApiTeacherTeacherSkillRequestModel model)
 		{
 			var patch = new JsonPatchDocument<ApiTeacherTeacherSkillRequestModel>();
-			patch.Replace(x => x.TeacherId, model.TeacherId);
 			patch.Replace(x => x.TeacherSkillId, model.TeacherSkillId);
 			return patch;
 		}
@@ -39,5 +36,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8787733424166539b8afd066c1163fd8</Hash>
+    <Hash>3a287dc3213c528046ea7d48785ec7ba</Hash>
 </Codenesium>*/

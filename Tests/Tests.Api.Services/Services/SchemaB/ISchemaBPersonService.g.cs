@@ -20,11 +20,9 @@ namespace TestsNS.Api.Services
 		Task<ApiSchemaBPersonResponseModel> Get(int id);
 
 		Task<List<ApiSchemaBPersonResponseModel>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiPersonRefResponseModel>> PersonRefs(int personBId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>726bfb490834701f729e3f5efe6304c6</Hash>
+    <Hash>ece2ec712c63f1b173efa3cfe2a8e59a</Hash>
 </Codenesium>*/

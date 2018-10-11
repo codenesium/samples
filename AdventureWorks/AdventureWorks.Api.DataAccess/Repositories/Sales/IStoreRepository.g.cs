@@ -23,10 +23,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<Customer>> Customers(int storeID, int limit = int.MaxValue, int offset = 0);
 
-		Task<SalesPerson> GetSalesPerson(int? salesPersonID);
+		Task<SalesPerson> SalesPersonBySalesPersonID(int? salesPersonID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6e394e934a3c72fe9ed5d0f6bbab153</Hash>
+    <Hash>621231c6d7a57c46dfbd8cc39b33606c</Hash>
 </Codenesium>*/

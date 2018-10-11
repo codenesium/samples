@@ -15,8 +15,6 @@ namespace FileServiceNS.Api.Services.Tests
 
 		public Mock<IApiFileTypeRequestModelValidator> FileTypeModelValidatorMock { get; set; } = new Mock<IApiFileTypeRequestModelValidator>();
 
-		public Mock<IApiVersionInfoRequestModelValidator> VersionInfoModelValidatorMock { get; set; } = new Mock<IApiVersionInfoRequestModelValidator>();
-
 		public ModelValidatorMockFactory()
 		{
 			this.BucketModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiBucketRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -30,14 +28,10 @@ namespace FileServiceNS.Api.Services.Tests
 			this.FileTypeModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFileTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.FileTypeModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFileTypeRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.FileTypeModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.VersionInfoModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VersionInfoModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<long>(), It.IsAny<ApiVersionInfoRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.VersionInfoModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<long>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1ce69b0356fc1fa753cb283f0b7ffe0b</Hash>
+    <Hash>285659e4ea79cafa68f149c092359dd7</Hash>
 </Codenesium>*/

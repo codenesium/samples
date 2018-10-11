@@ -78,24 +78,20 @@ namespace TwitterNS.Api.DataAccess
 
 		public async Task<List<Retweet>> ByRetwitterUserId(int? retwitterUserId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.RetwitterUserId == retwitterUserId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.RetwitterUserId == retwitterUserId, limit, offset);
 		}
 
 		public async Task<List<Retweet>> ByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.TweetTweetId == tweetTweetId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.TweetTweetId == tweetTweetId, limit, offset);
 		}
 
-		public async virtual Task<User> GetUser(int? retwitterUserId)
+		public async virtual Task<User> UserByRetwitterUserId(int? retwitterUserId)
 		{
 			return await this.Context.Set<User>().SingleOrDefaultAsync(x => x.UserId == retwitterUserId);
 		}
 
-		public async virtual Task<Tweet> GetTweet(int tweetTweetId)
+		public async virtual Task<Tweet> TweetByTweetTweetId(int tweetTweetId)
 		{
 			return await this.Context.Set<Tweet>().SingleOrDefaultAsync(x => x.TweetId == tweetTweetId);
 		}
@@ -132,5 +128,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ef67a961c84798dd9277c0461e9c9da3</Hash>
+    <Hash>34a746a58e924fa5ca42d036a3bce633</Hash>
 </Codenesium>*/

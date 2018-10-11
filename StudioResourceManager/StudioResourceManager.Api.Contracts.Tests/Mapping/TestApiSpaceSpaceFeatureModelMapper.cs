@@ -17,10 +17,9 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceSpaceFeatureModelMapper();
 			var model = new ApiSpaceSpaceFeatureRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1);
 			ApiSpaceSpaceFeatureResponseModel response = mapper.MapRequestToResponse(1, model);
 
-			response.Id.Should().Be(1);
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
 		}
@@ -30,11 +29,10 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceSpaceFeatureModelMapper();
 			var model = new ApiSpaceSpaceFeatureResponseModel();
-			model.SetProperties(1, 1, 1);
+			model.SetProperties(1, 1);
 			ApiSpaceSpaceFeatureRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.SpaceFeatureId.Should().Be(1);
-			response.SpaceId.Should().Be(1);
 		}
 
 		[Fact]
@@ -42,17 +40,16 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceSpaceFeatureModelMapper();
 			var model = new ApiSpaceSpaceFeatureRequestModel();
-			model.SetProperties(1, 1);
+			model.SetProperties(1);
 
 			JsonPatchDocument<ApiSpaceSpaceFeatureRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiSpaceSpaceFeatureRequestModel();
 			patch.ApplyTo(response);
 			response.SpaceFeatureId.Should().Be(1);
-			response.SpaceId.Should().Be(1);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ddbdd21aa956165cb7523faad74c0f2</Hash>
+    <Hash>1989512d5ff38cbeca2177afcd59e4b7</Hash>
 </Codenesium>*/

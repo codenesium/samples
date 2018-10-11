@@ -23,9 +23,60 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public ApiEventRequestModelValidatorTest()
 		{
 		}
+
+		// table.Columns[i].GetReferenceTable().AppTableName= EventStatus
+		[Fact]
+		public async void EventStatusId_Create_Valid_Reference()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.EventStatusByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatus>(new EventStatus()));
+
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.EventStatusId, 1);
+		}
+
+		[Fact]
+		public async void EventStatusId_Create_Invalid_Reference()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.EventStatusByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatus>(null));
+
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+
+			await validator.ValidateCreateAsync(new ApiEventRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.EventStatusId, 1);
+		}
+
+		[Fact]
+		public async void EventStatusId_Update_Valid_Reference()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.EventStatusByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatus>(new EventStatus()));
+
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+
+			validator.ShouldNotHaveValidationErrorFor(x => x.EventStatusId, 1);
+		}
+
+		[Fact]
+		public async void EventStatusId_Update_Invalid_Reference()
+		{
+			Mock<IEventRepository> eventRepository = new Mock<IEventRepository>();
+			eventRepository.Setup(x => x.EventStatusByEventStatusId(It.IsAny<int>())).Returns(Task.FromResult<EventStatus>(null));
+
+			var validator = new ApiEventRequestModelValidator(eventRepository.Object);
+
+			await validator.ValidateUpdateAsync(default(int), new ApiEventRequestModel());
+
+			validator.ShouldHaveValidationErrorFor(x => x.EventStatusId, 1);
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4c316bc08861bdfb942f1919a35118e1</Hash>
+    <Hash>09a2d05a6a3c632fec6172d4c82374ba</Hash>
 </Codenesium>*/

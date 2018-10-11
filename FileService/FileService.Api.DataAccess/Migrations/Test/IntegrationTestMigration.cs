@@ -30,15 +30,11 @@ namespace FileServiceNS.Api.DataAccess
 			fileTypeItem1.SetProperties(1, "A");
 			this.context.FileTypes.Add(fileTypeItem1);
 
-			var versionInfoItem1 = new VersionInfo();
-			versionInfoItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", 1);
-			this.context.VersionInfoes.Add(versionInfoItem1);
-
 			await this.context.SaveChangesAsync();
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0a92b358588308e0c6a6c8ac1ada7df9</Hash>
+    <Hash>a9ff3d9e754e6937252e5266eeda81f4</Hash>
 </Codenesium>*/

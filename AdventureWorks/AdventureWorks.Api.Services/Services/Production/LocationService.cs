@@ -22,8 +22,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLProductInventoryMapper bolProductInventoryMapper,
 			IDALProductInventoryMapper dalProductInventoryMapper,
 			IBOLWorkOrderRoutingMapper bolWorkOrderRoutingMapper,
-			IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper
-			)
+			IDALWorkOrderRoutingMapper dalWorkOrderRoutingMapper)
 			: base(logger,
 			       locationRepository,
 			       locationModelValidator,
@@ -39,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0a2c01f99d17cc4712687c1daa34b6e9</Hash>
+    <Hash>0290729a861733194e937cb3e69f3647</Hash>
 </Codenesium>*/

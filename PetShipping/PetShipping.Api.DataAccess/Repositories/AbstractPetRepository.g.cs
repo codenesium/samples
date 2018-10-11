@@ -81,12 +81,12 @@ namespace PetShippingNS.Api.DataAccess
 			return await this.Context.Set<Sale>().Where(x => x.PetId == petId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
 
-		public async virtual Task<Breed> GetBreed(int breedId)
+		public async virtual Task<Breed> BreedByBreedId(int breedId)
 		{
 			return await this.Context.Set<Breed>().SingleOrDefaultAsync(x => x.Id == breedId);
 		}
 
-		public async virtual Task<Client> GetClient(int clientId)
+		public async virtual Task<Client> ClientByClientId(int clientId)
 		{
 			return await this.Context.Set<Client>().SingleOrDefaultAsync(x => x.Id == clientId);
 		}
@@ -123,5 +123,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e6e73ac57d95501bf5bbd7a0da4a6d9c</Hash>
+    <Hash>109c5f2995ccf1e948b8e20367b4466e</Hash>
 </Codenesium>*/

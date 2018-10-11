@@ -18,8 +18,7 @@ namespace TwitterNS.Api.Services
 			IRetweetRepository retweetRepository,
 			IApiRetweetRequestModelValidator retweetModelValidator,
 			IBOLRetweetMapper bolretweetMapper,
-			IDALRetweetMapper dalretweetMapper
-			)
+			IDALRetweetMapper dalretweetMapper)
 			: base(logger,
 			       retweetRepository,
 			       retweetModelValidator,
@@ -31,5 +30,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6206f055ff5c52e55217b739cdcd7c3</Hash>
+    <Hash>03623360635ada38f003acbc6550a7ee</Hash>
 </Codenesium>*/

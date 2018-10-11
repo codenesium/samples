@@ -17,10 +17,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<Admin>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<User> GetUser(int userId);
+		Task<User> UserByUserId(int userId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>80cfd11855f6d4d2b0e37beead9e1f62</Hash>
+    <Hash>7eed177aa646d82cb38aa3560446d8db</Hash>
 </Codenesium>*/

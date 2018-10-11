@@ -31,9 +31,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return this.Where(x => true, limit, offset);
 		}
 
-		public async virtual Task<EventStudent> Get(int id)
+		public async virtual Task<EventStudent> Get(int eventId)
 		{
-			return await this.GetById(id);
+			return await this.GetById(eventId);
 		}
 
 		public async virtual Task<EventStudent> Create(EventStudent item)
@@ -47,7 +47,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public async virtual Task Update(EventStudent item)
 		{
-			var entity = this.Context.Set<EventStudent>().Local.FirstOrDefault(x => x.Id == item.Id);
+			var entity = this.Context.Set<EventStudent>().Local.FirstOrDefault(x => x.EventId == item.EventId);
 			if (entity == null)
 			{
 				this.Context.Set<EventStudent>().Attach(item);
@@ -61,9 +61,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		public async virtual Task Delete(
-			int id)
+			int eventId)
 		{
-			EventStudent record = await this.GetById(id);
+			EventStudent record = await this.GetById(eventId);
 
 			if (record == null)
 			{
@@ -76,12 +76,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<Event> GetEvent(int eventId)
+		public async virtual Task<Event> EventByEventId(int eventId)
 		{
 			return await this.Context.Set<Event>().SingleOrDefaultAsync(x => x.Id == eventId);
 		}
 
-		public async virtual Task<Student> GetStudent(int studentId)
+		public async virtual Task<Student> StudentByStudentId(int studentId)
 		{
 			return await this.Context.Set<Student>().SingleOrDefaultAsync(x => x.Id == studentId);
 		}
@@ -95,7 +95,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		{
 			if (orderBy == null)
 			{
-				orderBy = x => x.Id;
+				orderBy = x => x.EventId;
 			}
 
 			if (sortDirection == ListSortDirection.Ascending)
@@ -108,9 +108,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		private async Task<EventStudent> GetById(int id)
+		private async Task<EventStudent> GetById(int eventId)
 		{
-			List<EventStudent> records = await this.Where(x => x.Id == id);
+			List<EventStudent> records = await this.Where(x => x.EventId == eventId);
 
 			return records.FirstOrDefault();
 		}
@@ -118,5 +118,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cc6aa8fcd2da4ed98a7d94dacb28ea35</Hash>
+    <Hash>ddd3c9c48855bc42da3ab458ba6f3b19</Hash>
 </Codenesium>*/

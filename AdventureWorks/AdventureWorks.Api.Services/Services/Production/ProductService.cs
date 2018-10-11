@@ -34,8 +34,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLTransactionHistoryMapper bolTransactionHistoryMapper,
 			IDALTransactionHistoryMapper dalTransactionHistoryMapper,
 			IBOLWorkOrderMapper bolWorkOrderMapper,
-			IDALWorkOrderMapper dalWorkOrderMapper
-			)
+			IDALWorkOrderMapper dalWorkOrderMapper)
 			: base(logger,
 			       productRepository,
 			       productModelValidator,
@@ -63,5 +62,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e26d96bc8eefe44db4b22f4484d1ee4f</Hash>
+    <Hash>bc026fe0d3e1466d1d0faa2ca844eb8c</Hash>
 </Codenesium>*/

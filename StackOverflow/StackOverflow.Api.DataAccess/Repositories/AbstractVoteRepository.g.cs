@@ -78,9 +78,7 @@ namespace StackOverflowNS.Api.DataAccess
 
 		public async Task<List<Vote>> ByUserId(int? userId, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.UserId == userId, limit, offset);
-
-			return records;
+			return await this.Where(x => x.UserId == userId, limit, offset);
 		}
 
 		protected async Task<List<Vote>> Where(
@@ -115,5 +113,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>23e1b1bdc22069683099073c5d006306</Hash>
+    <Hash>bfd4350e9c27c155296a0fd441b8d32e</Hash>
 </Codenesium>*/

@@ -72,11 +72,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.FromCurrencyCode, new string('A', 4));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Currency
 		[Fact]
 		public async void FromCurrencyCode_Create_Valid_Reference()
 		{
 			Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-			currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
+			currencyRateRepository.Setup(x => x.CurrencyByFromCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
 			var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 			await validator.ValidateCreateAsync(new ApiCurrencyRateRequestModel());
@@ -88,7 +89,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void FromCurrencyCode_Create_Invalid_Reference()
 		{
 			Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-			currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(null));
+			currencyRateRepository.Setup(x => x.CurrencyByFromCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<Currency>(null));
 
 			var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 
@@ -101,7 +102,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void FromCurrencyCode_Update_Valid_Reference()
 		{
 			Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-			currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
+			currencyRateRepository.Setup(x => x.CurrencyByFromCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
 			var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void FromCurrencyCode_Update_Invalid_Reference()
 		{
 			Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-			currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(null));
+			currencyRateRepository.Setup(x => x.CurrencyByFromCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<Currency>(null));
 
 			var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 
@@ -170,11 +171,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.ToCurrencyCode, new string('A', 4));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Currency
 		[Fact]
 		public async void ToCurrencyCode_Create_Valid_Reference()
 		{
 			Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-			currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
+			currencyRateRepository.Setup(x => x.CurrencyByToCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
 			var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 			await validator.ValidateCreateAsync(new ApiCurrencyRateRequestModel());
@@ -186,7 +188,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void ToCurrencyCode_Create_Invalid_Reference()
 		{
 			Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-			currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(null));
+			currencyRateRepository.Setup(x => x.CurrencyByToCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<Currency>(null));
 
 			var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 
@@ -199,7 +201,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void ToCurrencyCode_Update_Valid_Reference()
 		{
 			Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-			currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
+			currencyRateRepository.Setup(x => x.CurrencyByToCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<Currency>(new Currency()));
 
 			var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiCurrencyRateRequestModel());
@@ -211,7 +213,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void ToCurrencyCode_Update_Invalid_Reference()
 		{
 			Mock<ICurrencyRateRepository> currencyRateRepository = new Mock<ICurrencyRateRepository>();
-			currencyRateRepository.Setup(x => x.GetCurrency(It.IsAny<string>())).Returns(Task.FromResult<Currency>(null));
+			currencyRateRepository.Setup(x => x.CurrencyByToCurrencyCode(It.IsAny<string>())).Returns(Task.FromResult<Currency>(null));
 
 			var validator = new ApiCurrencyRateRequestModelValidator(currencyRateRepository.Object);
 
@@ -271,5 +273,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aabf3a662b3516f87aba5d0dfa005b85</Hash>
+    <Hash>dedc52aee3796c97f0a0ea1cba9230b6</Hash>
 </Codenesium>*/

@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLProductSubcategoryMapper bolproductSubcategoryMapper,
 			IDALProductSubcategoryMapper dalproductSubcategoryMapper,
 			IBOLProductMapper bolProductMapper,
-			IDALProductMapper dalProductMapper
-			)
+			IDALProductMapper dalProductMapper)
 			: base(logger,
 			       productSubcategoryRepository,
 			       productSubcategoryModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d6f2aed6d7bbc5389643c10df918eb5d</Hash>
+    <Hash>f9b325f1b6e3579ac2bfb578389e9ff5</Hash>
 </Codenesium>*/

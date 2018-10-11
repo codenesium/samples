@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<Department> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Department>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
@@ -120,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5633befb9124352fd07c0b17e45be73f</Hash>
+    <Hash>f8d143f8315de9c0b212909f3fe2816d</Hash>
 </Codenesium>*/

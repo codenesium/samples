@@ -19,20 +19,15 @@ namespace TwitterNS.Api.Services
 			IApiTweetRequestModelValidator tweetModelValidator,
 			IBOLTweetMapper boltweetMapper,
 			IDALTweetMapper daltweetMapper,
-			IBOLLikeMapper bolLikeMapper,
-			IDALLikeMapper dalLikeMapper,
 			IBOLQuoteTweetMapper bolQuoteTweetMapper,
 			IDALQuoteTweetMapper dalQuoteTweetMapper,
 			IBOLRetweetMapper bolRetweetMapper,
-			IDALRetweetMapper dalRetweetMapper
-			)
+			IDALRetweetMapper dalRetweetMapper)
 			: base(logger,
 			       tweetRepository,
 			       tweetModelValidator,
 			       boltweetMapper,
 			       daltweetMapper,
-			       bolLikeMapper,
-			       dalLikeMapper,
 			       bolQuoteTweetMapper,
 			       dalQuoteTweetMapper,
 			       bolRetweetMapper,
@@ -43,5 +38,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>93a3dcffa1a8e643226eb43fd44daf16</Hash>
+    <Hash>ef5c1e93b5300ce3b0c703c48c787ddd</Hash>
 </Codenesium>*/

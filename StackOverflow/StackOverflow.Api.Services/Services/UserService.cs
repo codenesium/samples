@@ -18,8 +18,7 @@ namespace StackOverflowNS.Api.Services
 			IUserRepository userRepository,
 			IApiUserRequestModelValidator userModelValidator,
 			IBOLUserMapper boluserMapper,
-			IDALUserMapper daluserMapper
-			)
+			IDALUserMapper daluserMapper)
 			: base(logger,
 			       userRepository,
 			       userModelValidator,
@@ -31,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a98630e07b491454620ac1adc9c9d4a7</Hash>
+    <Hash>856c7a55e14a5292f1781824e90c172d</Hash>
 </Codenesium>*/

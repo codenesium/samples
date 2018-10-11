@@ -14,7 +14,6 @@ namespace StudioResourceManagerNS.Api.Services
 			EventStudent efEventStudent = new EventStudent();
 			efEventStudent.SetProperties(
 				bo.EventId,
-				bo.Id,
 				bo.StudentId);
 			return efEventStudent;
 		}
@@ -25,7 +24,6 @@ namespace StudioResourceManagerNS.Api.Services
 			var bo = new BOEventStudent();
 
 			bo.SetProperties(
-				ef.Id,
 				ef.EventId,
 				ef.StudentId);
 			return bo;
@@ -47,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>057fd96ea1423e7ca3af9b4b4df7dc48</Hash>
+    <Hash>fe38412f25b5f8da07c2206e4f619818</Hash>
 </Codenesium>*/

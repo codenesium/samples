@@ -31,9 +31,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			List<ApiMachineResponseModel> response = await service.All();
 
@@ -53,9 +51,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			ApiMachineResponseModel response = await service.Get(default(int));
 
@@ -74,9 +70,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			ApiMachineResponseModel response = await service.Get(default(int));
 
@@ -96,9 +90,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			CreateResponse<ApiMachineResponseModel> response = await service.Create(model);
 
@@ -120,9 +112,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			UpdateResponse<ApiMachineResponseModel> response = await service.Update(default(int), model);
 
@@ -143,9 +133,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -166,9 +154,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			ApiMachineResponseModel response = await service.ByMachineGuid(default(Guid));
 
@@ -187,9 +173,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			ApiMachineResponseModel response = await service.ByMachineGuid(default(Guid));
 
@@ -210,9 +194,7 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			List<ApiLinkResponseModel> response = await service.Links(default(int));
 
@@ -231,62 +213,16 @@ namespace NebulaNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
 			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
+			                                 mock.DALMapperMockFactory.DALLinkMapperMock);
 
 			List<ApiLinkResponseModel> response = await service.Links(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.Links(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void MachineRefTeams_Exists()
-		{
-			var mock = new ServiceMockFacade<IMachineRepository>();
-			var records = new List<MachineRefTeam>();
-			records.Add(new MachineRefTeam());
-			mock.RepositoryMock.Setup(x => x.MachineRefTeams(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new MachineService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
-
-			List<ApiMachineRefTeamResponseModel> response = await service.MachineRefTeams(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.MachineRefTeams(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void MachineRefTeams_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IMachineRepository>();
-			mock.RepositoryMock.Setup(x => x.MachineRefTeams(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<MachineRefTeam>>(new List<MachineRefTeam>()));
-			var service = new MachineService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.MachineModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLMachineMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLLinkMapperMock,
-			                                 mock.DALMapperMockFactory.DALLinkMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLMachineRefTeamMapperMock,
-			                                 mock.DALMapperMockFactory.DALMachineRefTeamMapperMock);
-
-			List<ApiMachineRefTeamResponseModel> response = await service.MachineRefTeams(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.MachineRefTeams(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>33f11288a996227015a336b30b50d2d7</Hash>
+    <Hash>eed2b09e89cc2f04aab463dde1d9886b</Hash>
 </Codenesium>*/

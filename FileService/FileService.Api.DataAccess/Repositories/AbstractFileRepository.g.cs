@@ -76,12 +76,12 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<Bucket> GetBucket(int? bucketId)
+		public async virtual Task<Bucket> BucketByBucketId(int? bucketId)
 		{
 			return await this.Context.Set<Bucket>().SingleOrDefaultAsync(x => x.Id == bucketId);
 		}
 
-		public async virtual Task<FileType> GetFileType(int fileTypeId)
+		public async virtual Task<FileType> FileTypeByFileTypeId(int fileTypeId)
 		{
 			return await this.Context.Set<FileType>().SingleOrDefaultAsync(x => x.Id == fileTypeId);
 		}
@@ -118,5 +118,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>90f1276f7964fa256f1f425fe773bdad</Hash>
+    <Hash>8f6084f359aa7bc59fe1a0f44c36e577</Hash>
 </Codenesium>*/

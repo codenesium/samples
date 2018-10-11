@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IVStateProvinceCountryRegionRepository vStateProvinceCountryRegionRepository,
 			IApiVStateProvinceCountryRegionRequestModelValidator vStateProvinceCountryRegionModelValidator,
 			IBOLVStateProvinceCountryRegionMapper bolvStateProvinceCountryRegionMapper,
-			IDALVStateProvinceCountryRegionMapper dalvStateProvinceCountryRegionMapper
-			)
+			IDALVStateProvinceCountryRegionMapper dalvStateProvinceCountryRegionMapper)
 			: base(logger,
 			       vStateProvinceCountryRegionRepository,
 			       vStateProvinceCountryRegionModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>193b1458aeb602ad6fdc5366464eb098</Hash>
+    <Hash>98b35297c985495584cb576ec681d4f5</Hash>
 </Codenesium>*/

@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			ITableRepository tableRepository,
 			IApiTableRequestModelValidator tableModelValidator,
 			IBOLTableMapper boltableMapper,
-			IDALTableMapper daltableMapper
-			)
+			IDALTableMapper daltableMapper)
 			: base(logger,
 			       tableRepository,
 			       tableModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>20485cd5425a99635b484d1a617d41da</Hash>
+    <Hash>a2dbc72ed7620ff7896bc292d639be81</Hash>
 </Codenesium>*/

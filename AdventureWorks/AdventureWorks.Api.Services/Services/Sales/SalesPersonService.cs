@@ -26,8 +26,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLSalesTerritoryHistoryMapper bolSalesTerritoryHistoryMapper,
 			IDALSalesTerritoryHistoryMapper dalSalesTerritoryHistoryMapper,
 			IBOLStoreMapper bolStoreMapper,
-			IDALStoreMapper dalStoreMapper
-			)
+			IDALStoreMapper dalStoreMapper)
 			: base(logger,
 			       salesPersonRepository,
 			       salesPersonModelValidator,
@@ -47,5 +46,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>98e7cea5cafa63bd368a1e754bb7c8b1</Hash>
+    <Hash>e0f54d26f6a14045ec10b4e6009cb056</Hash>
 </Codenesium>*/

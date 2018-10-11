@@ -17,12 +17,12 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<List<PipelineStepNote>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<Employee> GetEmployee(int employeeId);
+		Task<Employee> EmployeeByEmployeeId(int employeeId);
 
-		Task<PipelineStep> GetPipelineStep(int pipelineStepId);
+		Task<PipelineStep> PipelineStepByPipelineStepId(int pipelineStepId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c2bdc9db266c5ad6761322134a4cf6b1</Hash>
+    <Hash>170fbe0221e6aa8e27840070abe6275b</Hash>
 </Codenesium>*/

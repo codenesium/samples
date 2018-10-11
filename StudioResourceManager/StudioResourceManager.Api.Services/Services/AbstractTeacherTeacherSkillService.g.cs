@@ -46,9 +46,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(records));
 		}
 
-		public virtual async Task<ApiTeacherTeacherSkillResponseModel> Get(int id)
+		public virtual async Task<ApiTeacherTeacherSkillResponseModel> Get(int teacherId)
 		{
-			var record = await this.TeacherTeacherSkillRepository.Get(id);
+			var record = await this.TeacherTeacherSkillRepository.Get(teacherId);
 
 			if (record == null)
 			{
@@ -76,17 +76,17 @@ namespace StudioResourceManagerNS.Api.Services
 		}
 
 		public virtual async Task<UpdateResponse<ApiTeacherTeacherSkillResponseModel>> Update(
-			int id,
+			int teacherId,
 			ApiTeacherTeacherSkillRequestModel model)
 		{
-			var validationResult = await this.TeacherTeacherSkillModelValidator.ValidateUpdateAsync(id, model);
+			var validationResult = await this.TeacherTeacherSkillModelValidator.ValidateUpdateAsync(teacherId, model);
 
 			if (validationResult.IsValid)
 			{
-				var bo = this.BolTeacherTeacherSkillMapper.MapModelToBO(id, model);
+				var bo = this.BolTeacherTeacherSkillMapper.MapModelToBO(teacherId, model);
 				await this.TeacherTeacherSkillRepository.Update(this.DalTeacherTeacherSkillMapper.MapBOToEF(bo));
 
-				var record = await this.TeacherTeacherSkillRepository.Get(id);
+				var record = await this.TeacherTeacherSkillRepository.Get(teacherId);
 
 				return new UpdateResponse<ApiTeacherTeacherSkillResponseModel>(this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(record)));
 			}
@@ -97,33 +97,19 @@ namespace StudioResourceManagerNS.Api.Services
 		}
 
 		public virtual async Task<ActionResponse> Delete(
-			int id)
+			int teacherId)
 		{
-			ActionResponse response = new ActionResponse(await this.TeacherTeacherSkillModelValidator.ValidateDeleteAsync(id));
+			ActionResponse response = new ActionResponse(await this.TeacherTeacherSkillModelValidator.ValidateDeleteAsync(teacherId));
 			if (response.Success)
 			{
-				await this.TeacherTeacherSkillRepository.Delete(id);
+				await this.TeacherTeacherSkillRepository.Delete(teacherId);
 			}
 
 			return response;
-		}
-
-		public async Task<List<ApiTeacherTeacherSkillResponseModel>> ByTeacherId(int teacherId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<TeacherTeacherSkill> records = await this.TeacherTeacherSkillRepository.ByTeacherId(teacherId, limit, offset);
-
-			return this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(records));
-		}
-
-		public async Task<List<ApiTeacherTeacherSkillResponseModel>> ByTeacherSkillId(int teacherSkillId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<TeacherTeacherSkill> records = await this.TeacherTeacherSkillRepository.ByTeacherSkillId(teacherSkillId, limit, offset);
-
-			return this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ca84c34bd3e89c946f85f7e243fe8943</Hash>
+    <Hash>137ef2f17ac1523f6d03913b9c20fd90</Hash>
 </Codenesium>*/

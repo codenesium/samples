@@ -51,11 +51,6 @@ GO
 --ALTER TABLE [dbo].[Message] DROP CONSTRAINT [FK_Message_sender_user_id_User_user_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Messenger_message_id_Message_message_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[Messenger] DROP CONSTRAINT [FK_Messenger_message_id_Message_message_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_Messenger_to_user_id_User_user_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Messenger] DROP CONSTRAINT [FK_Messenger_to_user_id_User_user_id]
@@ -66,14 +61,19 @@ GO
 --ALTER TABLE [dbo].[Messenger] DROP CONSTRAINT [FK_Messenger_user_id_User_user_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Quote_Tweet_retweeter_user_id_User_user_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.FK_Messenger_message_id_Message_message_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[Quote_Tweet] DROP CONSTRAINT [FK_Quote_Tweet_retweeter_user_id_User_user_id]
+--ALTER TABLE [dbo].[Messenger] DROP CONSTRAINT [FK_Messenger_message_id_Message_message_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Quote_Tweet_source_tweet_id_Tweet_tweet_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Quote_Tweet] DROP CONSTRAINT [FK_Quote_Tweet_source_tweet_id_Tweet_tweet_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_Quote_Tweet_retweeter_user_id_User_user_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[Quote_Tweet] DROP CONSTRAINT [FK_Quote_Tweet_retweeter_user_id_User_user_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Reply_replier_user_id_User_user_id', 'F') IS NOT NULL)
@@ -178,12 +178,12 @@ CREATE TABLE [dbo].[Direct_Tweets](
 GO
 
 CREATE TABLE [dbo].[Follower](
+[id] [int]     NOT NULL,
 [blocked] [char]  (1)   NOT NULL,
 [date_followed] [date]     NOT NULL,
 [follow_request_status] [char]  (1)   NOT NULL,
 [followed_user_id] [int]     NOT NULL,
 [following_user_id] [int]     NOT NULL,
-[id] [int]     NOT NULL,
 [muted] [char]  (1)   NOT NULL,
 ) ON[PRIMARY]
 GO
@@ -196,7 +196,6 @@ CREATE TABLE [dbo].[Following](
 GO
 
 CREATE TABLE [dbo].[Like](
-[like_id] [int]     NOT NULL,
 [liker_user_id] [int]     NOT NULL,
 [tweet_id] [int]     NOT NULL,
 ) ON[PRIMARY]
@@ -295,6 +294,12 @@ CREATE  NONCLUSTERED INDEX[IX_Direct_Tweets_tagged_user_id] ON[dbo].[Direct_Twee
 [tagged_user_id] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
+ALTER TABLE[dbo].[Follower]
+ADD CONSTRAINT[PK_Follower] PRIMARY KEY CLUSTERED
+(
+[id] ASC
+)WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
 CREATE  NONCLUSTERED INDEX[IX_Follower_followed_user_id] ON[dbo].[Follower]
 (
 [followed_user_id] ASC)
@@ -319,7 +324,8 @@ GO
 ALTER TABLE[dbo].[Like]
 ADD CONSTRAINT[PK_Like] PRIMARY KEY CLUSTERED
 (
-[like_id] ASC
+[liker_user_id] ASC
+,[tweet_id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 CREATE  NONCLUSTERED INDEX[IX_Like_liker_user_id] ON[dbo].[Like]
@@ -472,11 +478,6 @@ REFERENCES[dbo].[User]([user_id])
 GO
 ALTER TABLE[dbo].[Message] CHECK CONSTRAINT[FK_Message_sender_user_id_User_user_id]
 GO
-ALTER TABLE[dbo].[Messenger]  WITH CHECK ADD  CONSTRAINT[FK_Messenger_message_id_Message_message_id] FOREIGN KEY([message_id])
-REFERENCES[dbo].[Message]([message_id])
-GO
-ALTER TABLE[dbo].[Messenger] CHECK CONSTRAINT[FK_Messenger_message_id_Message_message_id]
-GO
 ALTER TABLE[dbo].[Messenger]  WITH CHECK ADD  CONSTRAINT[FK_Messenger_to_user_id_User_user_id] FOREIGN KEY([to_user_id])
 REFERENCES[dbo].[User]([user_id])
 GO
@@ -487,15 +488,20 @@ REFERENCES[dbo].[User]([user_id])
 GO
 ALTER TABLE[dbo].[Messenger] CHECK CONSTRAINT[FK_Messenger_user_id_User_user_id]
 GO
-ALTER TABLE[dbo].[Quote_Tweet]  WITH CHECK ADD  CONSTRAINT[FK_Quote_Tweet_retweeter_user_id_User_user_id] FOREIGN KEY([retweeter_user_id])
-REFERENCES[dbo].[User]([user_id])
+ALTER TABLE[dbo].[Messenger]  WITH CHECK ADD  CONSTRAINT[FK_Messenger_message_id_Message_message_id] FOREIGN KEY([message_id])
+REFERENCES[dbo].[Message]([message_id])
 GO
-ALTER TABLE[dbo].[Quote_Tweet] CHECK CONSTRAINT[FK_Quote_Tweet_retweeter_user_id_User_user_id]
+ALTER TABLE[dbo].[Messenger] CHECK CONSTRAINT[FK_Messenger_message_id_Message_message_id]
 GO
 ALTER TABLE[dbo].[Quote_Tweet]  WITH CHECK ADD  CONSTRAINT[FK_Quote_Tweet_source_tweet_id_Tweet_tweet_id] FOREIGN KEY([source_tweet_id])
 REFERENCES[dbo].[Tweet]([tweet_id])
 GO
 ALTER TABLE[dbo].[Quote_Tweet] CHECK CONSTRAINT[FK_Quote_Tweet_source_tweet_id_Tweet_tweet_id]
+GO
+ALTER TABLE[dbo].[Quote_Tweet]  WITH CHECK ADD  CONSTRAINT[FK_Quote_Tweet_retweeter_user_id_User_user_id] FOREIGN KEY([retweeter_user_id])
+REFERENCES[dbo].[User]([user_id])
+GO
+ALTER TABLE[dbo].[Quote_Tweet] CHECK CONSTRAINT[FK_Quote_Tweet_retweeter_user_id_User_user_id]
 GO
 ALTER TABLE[dbo].[Reply]  WITH CHECK ADD  CONSTRAINT[FK_Reply_replier_user_id_User_user_id] FOREIGN KEY([replier_user_id])
 REFERENCES[dbo].[User]([user_id])

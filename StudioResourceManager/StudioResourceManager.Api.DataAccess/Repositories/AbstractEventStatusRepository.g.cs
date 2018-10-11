@@ -76,6 +76,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<Event>> Events(int eventStatusId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Event>().Where(x => x.EventStatusId == eventStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Event>();
+		}
+
 		protected async Task<List<EventStatus>> Where(
 			Expression<Func<EventStatus, bool>> predicate,
 			int limit = int.MaxValue,
@@ -108,5 +113,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9d49982f37c1b6512acf080194ca737d</Hash>
+    <Hash>e023374dff5bbe50a9418993597ff2ab</Hash>
 </Codenesium>*/

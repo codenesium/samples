@@ -10,19 +10,19 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 		}
 
-		public virtual void SetProperties(int id,
-		                                  int eventId)
+		public virtual void SetProperties(int eventId,
+		                                  int teacherId)
 		{
 			this.EventId = eventId;
-			this.Id = id;
+			this.TeacherId = teacherId;
 		}
 
 		public int EventId { get; private set; }
 
-		public int Id { get; private set; }
+		public int TeacherId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>26e68698b158c167c7c27e5d3664faf2</Hash>
+    <Hash>388c6c822287e625c35440d752028403</Hash>
 </Codenesium>*/

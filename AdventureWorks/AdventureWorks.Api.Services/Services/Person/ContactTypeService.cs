@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLContactTypeMapper bolcontactTypeMapper,
 			IDALContactTypeMapper dalcontactTypeMapper,
 			IBOLBusinessEntityContactMapper bolBusinessEntityContactMapper,
-			IDALBusinessEntityContactMapper dalBusinessEntityContactMapper
-			)
+			IDALBusinessEntityContactMapper dalBusinessEntityContactMapper)
 			: base(logger,
 			       contactTypeRepository,
 			       contactTypeModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6511e83d40d45f69b09ec44945752115</Hash>
+    <Hash>34f5d7d9f24fdb3ecaef020b3a0d5ff3</Hash>
 </Codenesium>*/

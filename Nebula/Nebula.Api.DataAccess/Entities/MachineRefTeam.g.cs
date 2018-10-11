@@ -14,23 +14,18 @@ namespace NebulaNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int id,
 			int machineId,
 			int teamId)
 		{
-			this.Id = id;
 			this.MachineId = machineId;
 			this.TeamId = teamId;
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		[Column("id")]
-		public int Id { get; private set; }
-
 		[Column("machineId")]
 		public int MachineId { get; private set; }
 
+		[Key]
 		[Column("teamId")]
 		public int TeamId { get; private set; }
 
@@ -43,5 +38,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6aa15e6c2c754af28f35501343adb92d</Hash>
+    <Hash>6fdd852f9eac1a5f78001901b7b8a87d</Hash>
 </Codenesium>*/

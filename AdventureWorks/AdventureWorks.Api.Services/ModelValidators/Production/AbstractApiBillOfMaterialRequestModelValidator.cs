@@ -32,7 +32,6 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ComponentIDRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByProductAssemblyIDComponentIDStartDate).When(x => x?.ComponentID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialRequestModel.ComponentID));
 		}
 
 		public virtual void EndDateRules()
@@ -49,12 +48,10 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void ProductAssemblyIDRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByProductAssemblyIDComponentIDStartDate).When(x => x?.ProductAssemblyID != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialRequestModel.ProductAssemblyID));
 		}
 
 		public virtual void StartDateRules()
 		{
-			this.RuleFor(x => x).MustAsync(this.BeUniqueByProductAssemblyIDComponentIDStartDate).When(x => x?.StartDate != null).WithMessage("Violates unique constraint").WithName(nameof(ApiBillOfMaterialRequestModel.StartDate));
 		}
 
 		public virtual void UnitMeasureCodeRules()
@@ -62,23 +59,9 @@ namespace AdventureWorksNS.Api.Services
 			this.RuleFor(x => x.UnitMeasureCode).NotNull();
 			this.RuleFor(x => x.UnitMeasureCode).Length(0, 3);
 		}
-
-		private async Task<bool> BeUniqueByProductAssemblyIDComponentIDStartDate(ApiBillOfMaterialRequestModel model,  CancellationToken cancellationToken)
-		{
-			BillOfMaterial record = await this.billOfMaterialRepository.ByProductAssemblyIDComponentIDStartDate(model.ProductAssemblyID, model.ComponentID, model.StartDate);
-
-			if (record == null || (this.existingRecordId != default(int) && record.BillOfMaterialsID == this.existingRecordId))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f343ddc41253b9174c2d5f74924451be</Hash>
+    <Hash>a4330639be2f458f360e18de04658d74</Hash>
 </Codenesium>*/

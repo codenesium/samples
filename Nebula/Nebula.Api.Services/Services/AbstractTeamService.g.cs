@@ -26,10 +26,6 @@ namespace NebulaNS.Api.Services
 
 		protected IDALChainMapper DalChainMapper { get; private set; }
 
-		protected IBOLMachineRefTeamMapper BolMachineRefTeamMapper { get; private set; }
-
-		protected IDALMachineRefTeamMapper DalMachineRefTeamMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractTeamService(
@@ -39,9 +35,7 @@ namespace NebulaNS.Api.Services
 			IBOLTeamMapper bolTeamMapper,
 			IDALTeamMapper dalTeamMapper,
 			IBOLChainMapper bolChainMapper,
-			IDALChainMapper dalChainMapper,
-			IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
-			IDALMachineRefTeamMapper dalMachineRefTeamMapper)
+			IDALChainMapper dalChainMapper)
 			: base()
 		{
 			this.TeamRepository = teamRepository;
@@ -50,8 +44,6 @@ namespace NebulaNS.Api.Services
 			this.DalTeamMapper = dalTeamMapper;
 			this.BolChainMapper = bolChainMapper;
 			this.DalChainMapper = dalChainMapper;
-			this.BolMachineRefTeamMapper = bolMachineRefTeamMapper;
-			this.DalMachineRefTeamMapper = dalMachineRefTeamMapper;
 			this.logger = logger;
 		}
 
@@ -144,16 +136,9 @@ namespace NebulaNS.Api.Services
 
 			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiMachineRefTeamResponseModel>> MachineRefTeams(int teamId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<MachineRefTeam> records = await this.TeamRepository.MachineRefTeams(teamId, limit, offset);
-
-			return this.BolMachineRefTeamMapper.MapBOToModel(this.DalMachineRefTeamMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>82a0cf12606509c34bab236168258c57</Hash>
+    <Hash>5f5034df7a46fd860f7d71d0dcb81a60</Hash>
 </Codenesium>*/

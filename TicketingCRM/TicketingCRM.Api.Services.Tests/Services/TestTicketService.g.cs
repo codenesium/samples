@@ -29,9 +29,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock);
 
 			List<ApiTicketResponseModel> response = await service.All();
 
@@ -49,9 +47,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock);
 
 			ApiTicketResponseModel response = await service.Get(default(int));
 
@@ -68,9 +64,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock);
 
 			ApiTicketResponseModel response = await service.Get(default(int));
 
@@ -88,9 +82,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock);
 
 			CreateResponse<ApiTicketResponseModel> response = await service.Create(model);
 
@@ -110,9 +102,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock);
 
 			UpdateResponse<ApiTicketResponseModel> response = await service.Update(default(int), model);
 
@@ -131,9 +121,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -153,9 +141,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock);
 
 			List<ApiTicketResponseModel> response = await service.ByTicketStatusId(default(int));
 
@@ -172,58 +158,16 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
 			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
+			                                mock.DALMapperMockFactory.DALTicketMapperMock);
 
 			List<ApiTicketResponseModel> response = await service.ByTicketStatusId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.ByTicketStatusId(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void SaleTickets_Exists()
-		{
-			var mock = new ServiceMockFacade<ITicketRepository>();
-			var records = new List<SaleTicket>();
-			records.Add(new SaleTicket());
-			mock.RepositoryMock.Setup(x => x.SaleTickets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TicketService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
-
-			List<ApiSaleTicketResponseModel> response = await service.SaleTickets(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SaleTickets(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void SaleTickets_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITicketRepository>();
-			mock.RepositoryMock.Setup(x => x.SaleTickets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SaleTicket>>(new List<SaleTicket>()));
-			var service = new TicketService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TicketModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALTicketMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSaleTicketMapperMock,
-			                                mock.DALMapperMockFactory.DALSaleTicketMapperMock);
-
-			List<ApiSaleTicketResponseModel> response = await service.SaleTickets(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SaleTickets(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>29bb84c3eff783e7931c1c77024a1ae6</Hash>
+    <Hash>0f13c35e1d5061ac634af028623a2450</Hash>
 </Codenesium>*/

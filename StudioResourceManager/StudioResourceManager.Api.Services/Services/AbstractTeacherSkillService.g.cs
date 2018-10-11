@@ -137,9 +137,16 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiTeacherSkillResponseModel>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<TeacherSkill> records = await this.TeacherSkillRepository.ByTeacherId(teacherId, limit, offset);
+
+			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>222e7c344c72ee6313ef0e7d602b3e91</Hash>
+    <Hash>44ca87f39fd195bf38195e8c682fddb5</Hash>
 </Codenesium>*/

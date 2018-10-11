@@ -76,7 +76,7 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<Country> GetCountry(int countryId)
+		public async virtual Task<Country> CountryByCountryId(int countryId)
 		{
 			return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
 		}
@@ -113,5 +113,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e08153c5f7eb967ad036584ff62297ee</Hash>
+    <Hash>62f38181cad8cb909e5b38f49d8e2514</Hash>
 </Codenesium>*/

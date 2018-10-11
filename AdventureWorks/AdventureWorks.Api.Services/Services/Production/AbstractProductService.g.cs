@@ -255,9 +255,16 @@ namespace AdventureWorksNS.Api.Services
 
 			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
+
+		public async virtual Task<List<ApiProductResponseModel>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Product> records = await this.ProductRepository.ByProductID(productID, limit, offset);
+
+			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>57897916234b6b459c70574363d5f323</Hash>
+    <Hash>e55004d559f5221ea2ed9709c6ec4dbc</Hash>
 </Codenesium>*/

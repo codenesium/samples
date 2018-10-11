@@ -24,11 +24,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= SalesTerritory
 		[Fact]
 		public async void TerritoryID_Create_Valid_Reference()
 		{
 			Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
-			salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+			salesPersonRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
 			var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSalesPersonRequestModel());
@@ -40,7 +41,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Create_Invalid_Reference()
 		{
 			Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
-			salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+			salesPersonRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
 			var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
 
@@ -53,7 +54,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Update_Valid_Reference()
 		{
 			Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
-			salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+			salesPersonRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
 			var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSalesPersonRequestModel());
@@ -65,7 +66,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Update_Invalid_Reference()
 		{
 			Mock<ISalesPersonRepository> salesPersonRepository = new Mock<ISalesPersonRepository>();
-			salesPersonRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+			salesPersonRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
 			var validator = new ApiSalesPersonRequestModelValidator(salesPersonRepository.Object);
 
@@ -77,5 +78,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>bb61586174e25b2b1ade5fbef46f48dd</Hash>
+    <Hash>d68155f89578cbb3a4c5109e4e07485a</Hash>
 </Codenesium>*/

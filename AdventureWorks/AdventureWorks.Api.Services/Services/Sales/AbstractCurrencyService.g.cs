@@ -22,10 +22,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IDALCurrencyMapper DalCurrencyMapper { get; private set; }
 
-		protected IBOLCountryRegionCurrencyMapper BolCountryRegionCurrencyMapper { get; private set; }
-
-		protected IDALCountryRegionCurrencyMapper DalCountryRegionCurrencyMapper { get; private set; }
-
 		protected IBOLCurrencyRateMapper BolCurrencyRateMapper { get; private set; }
 
 		protected IDALCurrencyRateMapper DalCurrencyRateMapper { get; private set; }
@@ -38,8 +34,6 @@ namespace AdventureWorksNS.Api.Services
 			IApiCurrencyRequestModelValidator currencyModelValidator,
 			IBOLCurrencyMapper bolCurrencyMapper,
 			IDALCurrencyMapper dalCurrencyMapper,
-			IBOLCountryRegionCurrencyMapper bolCountryRegionCurrencyMapper,
-			IDALCountryRegionCurrencyMapper dalCountryRegionCurrencyMapper,
 			IBOLCurrencyRateMapper bolCurrencyRateMapper,
 			IDALCurrencyRateMapper dalCurrencyRateMapper)
 			: base()
@@ -48,8 +42,6 @@ namespace AdventureWorksNS.Api.Services
 			this.CurrencyModelValidator = currencyModelValidator;
 			this.BolCurrencyMapper = bolCurrencyMapper;
 			this.DalCurrencyMapper = dalCurrencyMapper;
-			this.BolCountryRegionCurrencyMapper = bolCountryRegionCurrencyMapper;
-			this.DalCountryRegionCurrencyMapper = dalCountryRegionCurrencyMapper;
 			this.BolCurrencyRateMapper = bolCurrencyRateMapper;
 			this.DalCurrencyRateMapper = dalCurrencyRateMapper;
 			this.logger = logger;
@@ -138,13 +130,6 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiCountryRegionCurrencyResponseModel>> CountryRegionCurrencies(string currencyCode, int limit = int.MaxValue, int offset = 0)
-		{
-			List<CountryRegionCurrency> records = await this.CurrencyRepository.CountryRegionCurrencies(currencyCode, limit, offset);
-
-			return this.BolCountryRegionCurrencyMapper.MapBOToModel(this.DalCountryRegionCurrencyMapper.MapEFToBO(records));
-		}
-
 		public async virtual Task<List<ApiCurrencyRateResponseModel>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
 			List<CurrencyRate> records = await this.CurrencyRepository.CurrencyRates(fromCurrencyCode, limit, offset);
@@ -155,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a5e480078940040ce07d93669277a4ba</Hash>
+    <Hash>f82a80e8e95eeedf0f9eb57f5b080c11</Hash>
 </Codenesium>*/

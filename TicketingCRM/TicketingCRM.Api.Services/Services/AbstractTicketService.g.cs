@@ -22,10 +22,6 @@ namespace TicketingCRMNS.Api.Services
 
 		protected IDALTicketMapper DalTicketMapper { get; private set; }
 
-		protected IBOLSaleTicketMapper BolSaleTicketMapper { get; private set; }
-
-		protected IDALSaleTicketMapper DalSaleTicketMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractTicketService(
@@ -33,17 +29,13 @@ namespace TicketingCRMNS.Api.Services
 			ITicketRepository ticketRepository,
 			IApiTicketRequestModelValidator ticketModelValidator,
 			IBOLTicketMapper bolTicketMapper,
-			IDALTicketMapper dalTicketMapper,
-			IBOLSaleTicketMapper bolSaleTicketMapper,
-			IDALSaleTicketMapper dalSaleTicketMapper)
+			IDALTicketMapper dalTicketMapper)
 			: base()
 		{
 			this.TicketRepository = ticketRepository;
 			this.TicketModelValidator = ticketModelValidator;
 			this.BolTicketMapper = bolTicketMapper;
 			this.DalTicketMapper = dalTicketMapper;
-			this.BolSaleTicketMapper = bolSaleTicketMapper;
-			this.DalSaleTicketMapper = dalSaleTicketMapper;
 			this.logger = logger;
 		}
 
@@ -122,16 +114,9 @@ namespace TicketingCRMNS.Api.Services
 
 			return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(records));
 		}
-
-		public async virtual Task<List<ApiSaleTicketResponseModel>> SaleTickets(int ticketId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SaleTicket> records = await this.TicketRepository.SaleTickets(ticketId, limit, offset);
-
-			return this.BolSaleTicketMapper.MapBOToModel(this.DalSaleTicketMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c1f809c80e43722980fb78b883a9736d</Hash>
+    <Hash>884bfa2aa436f9366911a11d6aca2e24</Hash>
 </Codenesium>*/

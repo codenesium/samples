@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLAddressMapper boladdressMapper,
 			IDALAddressMapper daladdressMapper,
 			IBOLBusinessEntityAddressMapper bolBusinessEntityAddressMapper,
-			IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper
-			)
+			IDALBusinessEntityAddressMapper dalBusinessEntityAddressMapper)
 			: base(logger,
 			       addressRepository,
 			       addressModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>83a908bee9ecba3b71e1a01742d1d087</Hash>
+    <Hash>9b26d805907fb4e53b1cc50d2174ebda</Hash>
 </Codenesium>*/

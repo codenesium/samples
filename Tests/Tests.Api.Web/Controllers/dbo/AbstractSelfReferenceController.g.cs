@@ -206,23 +206,6 @@ namespace TestsNS.Api.Web
 			}
 		}
 
-		[HttpGet]
-		[Route("{selfReferenceId}/SelfReferences")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSelfReferenceResponseModel>), 200)]
-		public async virtual Task<IActionResult> SelfReferences(int selfReferenceId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSelfReferenceResponseModel> response = await this.SelfReferenceService.SelfReferences(selfReferenceId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
 		private async Task<ApiSelfReferenceRequestModel> PatchModel(int id, JsonPatchDocument<ApiSelfReferenceRequestModel> patch)
 		{
 			var record = await this.SelfReferenceService.Get(id);
@@ -242,5 +225,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c4977faa84d7a5b9dfd0e914478d83f4</Hash>
+    <Hash>ef9535ad1e760d211f4c9aacb1433e50</Hash>
 </Codenesium>*/

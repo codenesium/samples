@@ -21,7 +21,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			model.SetProperties(1);
 			BOEventTeacher response = mapper.MapModelToBO(1, model);
 
-			response.EventId.Should().Be(1);
+			response.TeacherId.Should().Be(1);
 		}
 
 		[Fact]
@@ -33,7 +33,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			ApiEventTeacherResponseModel response = mapper.MapBOToModel(bo);
 
 			response.EventId.Should().Be(1);
-			response.Id.Should().Be(1);
+			response.TeacherId.Should().Be(1);
 		}
 
 		[Fact]
@@ -50,5 +50,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>87a4cebe89806651468ed43131444dff</Hash>
+    <Hash>69ba588d12e01cf9eeeba26ed3b03462</Hash>
 </Codenesium>*/

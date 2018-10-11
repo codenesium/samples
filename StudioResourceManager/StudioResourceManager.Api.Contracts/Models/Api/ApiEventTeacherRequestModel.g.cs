@@ -15,17 +15,17 @@ namespace StudioResourceManagerNS.Api.Contracts
 		}
 
 		public virtual void SetProperties(
-			int eventId)
+			int teacherId)
 		{
-			this.EventId = eventId;
+			this.TeacherId = teacherId;
 		}
 
 		[Required]
 		[JsonProperty]
-		public int EventId { get; private set; }
+		public int TeacherId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>df37ece4e91864999bd39d2f150bcd4c</Hash>
+    <Hash>1ff9a0b7ac07f4de436f11c90a92abaa</Hash>
 </Codenesium>*/

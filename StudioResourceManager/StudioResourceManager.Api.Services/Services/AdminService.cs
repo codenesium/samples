@@ -18,8 +18,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IAdminRepository adminRepository,
 			IApiAdminRequestModelValidator adminModelValidator,
 			IBOLAdminMapper boladminMapper,
-			IDALAdminMapper daladminMapper
-			)
+			IDALAdminMapper daladminMapper)
 			: base(logger,
 			       adminRepository,
 			       adminModelValidator,
@@ -31,5 +30,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69aeb519a55e43a3ef586408dee89444</Hash>
+    <Hash>00b239f23773fbaf53d99a781ba5bd84</Hash>
 </Codenesium>*/

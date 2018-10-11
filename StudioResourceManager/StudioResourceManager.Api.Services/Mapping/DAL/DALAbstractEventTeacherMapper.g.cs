@@ -14,7 +14,7 @@ namespace StudioResourceManagerNS.Api.Services
 			EventTeacher efEventTeacher = new EventTeacher();
 			efEventTeacher.SetProperties(
 				bo.EventId,
-				bo.Id);
+				bo.TeacherId);
 			return efEventTeacher;
 		}
 
@@ -24,8 +24,8 @@ namespace StudioResourceManagerNS.Api.Services
 			var bo = new BOEventTeacher();
 
 			bo.SetProperties(
-				ef.Id,
-				ef.EventId);
+				ef.EventId,
+				ef.TeacherId);
 			return bo;
 		}
 
@@ -45,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>170613ed9e0b4026bf1a786568d0b290</Hash>
+    <Hash>7ec889baca6b24b8a10ebcaefd090f54</Hash>
 </Codenesium>*/

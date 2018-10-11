@@ -192,11 +192,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Phone, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= User
 		[Fact]
 		public async void UserId_Create_Valid_Reference()
 		{
 			Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-			teacherRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			teacherRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
 			await validator.ValidateCreateAsync(new ApiTeacherRequestModel());
@@ -208,7 +209,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Create_Invalid_Reference()
 		{
 			Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-			teacherRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			teacherRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
 
@@ -221,7 +222,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Update_Valid_Reference()
 		{
 			Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-			teacherRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
+			teacherRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(new User()));
 
 			var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiTeacherRequestModel());
@@ -233,7 +234,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public async void UserId_Update_Invalid_Reference()
 		{
 			Mock<ITeacherRepository> teacherRepository = new Mock<ITeacherRepository>();
-			teacherRepository.Setup(x => x.GetUser(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
+			teacherRepository.Setup(x => x.UserByUserId(It.IsAny<int>())).Returns(Task.FromResult<User>(null));
 
 			var validator = new ApiTeacherRequestModelValidator(teacherRepository.Object);
 
@@ -245,5 +246,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>24392b28eeab80a651f79bd699539702</Hash>
+    <Hash>3394914ff4db24593758814c36a0d07c</Hash>
 </Codenesium>*/

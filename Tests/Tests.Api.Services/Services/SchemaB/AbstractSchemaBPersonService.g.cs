@@ -22,10 +22,6 @@ namespace TestsNS.Api.Services
 
 		protected IDALSchemaBPersonMapper DalSchemaBPersonMapper { get; private set; }
 
-		protected IBOLPersonRefMapper BolPersonRefMapper { get; private set; }
-
-		protected IDALPersonRefMapper DalPersonRefMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractSchemaBPersonService(
@@ -33,17 +29,13 @@ namespace TestsNS.Api.Services
 			ISchemaBPersonRepository schemaBPersonRepository,
 			IApiSchemaBPersonRequestModelValidator schemaBPersonModelValidator,
 			IBOLSchemaBPersonMapper bolSchemaBPersonMapper,
-			IDALSchemaBPersonMapper dalSchemaBPersonMapper,
-			IBOLPersonRefMapper bolPersonRefMapper,
-			IDALPersonRefMapper dalPersonRefMapper)
+			IDALSchemaBPersonMapper dalSchemaBPersonMapper)
 			: base()
 		{
 			this.SchemaBPersonRepository = schemaBPersonRepository;
 			this.SchemaBPersonModelValidator = schemaBPersonModelValidator;
 			this.BolSchemaBPersonMapper = bolSchemaBPersonMapper;
 			this.DalSchemaBPersonMapper = dalSchemaBPersonMapper;
-			this.BolPersonRefMapper = bolPersonRefMapper;
-			this.DalPersonRefMapper = dalPersonRefMapper;
 			this.logger = logger;
 		}
 
@@ -115,16 +107,9 @@ namespace TestsNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiPersonRefResponseModel>> PersonRefs(int personBId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<PersonRef> records = await this.SchemaBPersonRepository.PersonRefs(personBId, limit, offset);
-
-			return this.BolPersonRefMapper.MapBOToModel(this.DalPersonRefMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>be7001629a1b75ee14a5aec49bf56961</Hash>
+    <Hash>7cc980ca54fea6e837a925fa66ff53b2</Hash>
 </Codenesium>*/

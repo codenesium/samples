@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+	<RootNamespace>FileServiceNS.Api.DataAccess.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

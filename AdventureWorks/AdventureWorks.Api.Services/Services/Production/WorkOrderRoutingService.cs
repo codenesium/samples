@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			IWorkOrderRoutingRepository workOrderRoutingRepository,
 			IApiWorkOrderRoutingRequestModelValidator workOrderRoutingModelValidator,
 			IBOLWorkOrderRoutingMapper bolworkOrderRoutingMapper,
-			IDALWorkOrderRoutingMapper dalworkOrderRoutingMapper
-			)
+			IDALWorkOrderRoutingMapper dalworkOrderRoutingMapper)
 			: base(logger,
 			       workOrderRoutingRepository,
 			       workOrderRoutingModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b858304db7359dfebab361242be264ad</Hash>
+    <Hash>bc7642abed1cae2790a7bd63edc0291d</Hash>
 </Codenesium>*/

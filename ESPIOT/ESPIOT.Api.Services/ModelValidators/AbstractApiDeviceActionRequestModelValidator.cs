@@ -28,7 +28,7 @@ namespace ESPIOTNS.Api.Services
 
 		public virtual void DeviceIdRules()
 		{
-			this.RuleFor(x => x.DeviceId).MustAsync(this.BeValidDevice).When(x => x?.DeviceId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.DeviceId).MustAsync(this.BeValidDeviceByDeviceId).When(x => x?.DeviceId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
@@ -43,9 +43,9 @@ namespace ESPIOTNS.Api.Services
 			this.RuleFor(x => x.@Value).Length(0, 4000);
 		}
 
-		private async Task<bool> BeValidDevice(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidDeviceByDeviceId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.deviceActionRepository.GetDevice(id);
+			var record = await this.deviceActionRepository.DeviceByDeviceId(id);
 
 			return record != null;
 		}
@@ -53,5 +53,5 @@ namespace ESPIOTNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d66d6d8f336d328ea6401084175c031e</Hash>
+    <Hash>a9a9c33ac17f67152d08996d776e4240</Hash>
 </Codenesium>*/

@@ -16,11 +16,9 @@ namespace TestsNS.Api.DataAccess
 		Task<PersonRef> Get(int id);
 
 		Task<List<PersonRef>> All(int limit = int.MaxValue, int offset = 0);
-
-		Task<SchemaBPerson> GetSchemaBPerson(int personBId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>07ed50aa00bdb75c2228fc2ac05e7e04</Hash>
+    <Hash>4e66d72bc0ba479078e3998dcae0d4e1</Hash>
 </Codenesium>*/

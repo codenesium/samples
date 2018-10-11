@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<JobCandidate>> ByBusinessEntityID(int? businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.BusinessEntityID == businessEntityID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.BusinessEntityID == businessEntityID, limit, offset);
 		}
 
 		protected async Task<List<JobCandidate>> Where(
@@ -115,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7bf8b7f01394087ad40de8a74f7c8dc5</Hash>
+    <Hash>ae17cc07876d074b9207dbf52213faa9</Hash>
 </Codenesium>*/

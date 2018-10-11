@@ -22,13 +22,33 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALTenantMapper DalTenantMapper { get; private set; }
 
+		protected IBOLAdminMapper BolAdminMapper { get; private set; }
+
+		protected IDALAdminMapper DalAdminMapper { get; private set; }
+
+		protected IBOLEventMapper BolEventMapper { get; private set; }
+
+		protected IDALEventMapper DalEventMapper { get; private set; }
+
 		protected IBOLEventStatusMapper BolEventStatusMapper { get; private set; }
 
 		protected IDALEventStatusMapper DalEventStatusMapper { get; private set; }
 
+		protected IBOLEventStudentMapper BolEventStudentMapper { get; private set; }
+
+		protected IDALEventStudentMapper DalEventStudentMapper { get; private set; }
+
+		protected IBOLEventTeacherMapper BolEventTeacherMapper { get; private set; }
+
+		protected IDALEventTeacherMapper DalEventTeacherMapper { get; private set; }
+
 		protected IBOLFamilyMapper BolFamilyMapper { get; private set; }
 
 		protected IDALFamilyMapper DalFamilyMapper { get; private set; }
+
+		protected IBOLRateMapper BolRateMapper { get; private set; }
+
+		protected IDALRateMapper DalRateMapper { get; private set; }
 
 		protected IBOLSpaceMapper BolSpaceMapper { get; private set; }
 
@@ -38,13 +58,29 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALSpaceFeatureMapper DalSpaceFeatureMapper { get; private set; }
 
+		protected IBOLSpaceSpaceFeatureMapper BolSpaceSpaceFeatureMapper { get; private set; }
+
+		protected IDALSpaceSpaceFeatureMapper DalSpaceSpaceFeatureMapper { get; private set; }
+
+		protected IBOLStudentMapper BolStudentMapper { get; private set; }
+
+		protected IDALStudentMapper DalStudentMapper { get; private set; }
+
 		protected IBOLStudioMapper BolStudioMapper { get; private set; }
 
 		protected IDALStudioMapper DalStudioMapper { get; private set; }
 
+		protected IBOLTeacherMapper BolTeacherMapper { get; private set; }
+
+		protected IDALTeacherMapper DalTeacherMapper { get; private set; }
+
 		protected IBOLTeacherSkillMapper BolTeacherSkillMapper { get; private set; }
 
 		protected IDALTeacherSkillMapper DalTeacherSkillMapper { get; private set; }
+
+		protected IBOLTeacherTeacherSkillMapper BolTeacherTeacherSkillMapper { get; private set; }
+
+		protected IDALTeacherTeacherSkillMapper DalTeacherTeacherSkillMapper { get; private set; }
 
 		protected IBOLUserMapper BolUserMapper { get; private set; }
 
@@ -58,18 +94,36 @@ namespace StudioResourceManagerNS.Api.Services
 			IApiTenantRequestModelValidator tenantModelValidator,
 			IBOLTenantMapper bolTenantMapper,
 			IDALTenantMapper dalTenantMapper,
+			IBOLAdminMapper bolAdminMapper,
+			IDALAdminMapper dalAdminMapper,
+			IBOLEventMapper bolEventMapper,
+			IDALEventMapper dalEventMapper,
 			IBOLEventStatusMapper bolEventStatusMapper,
 			IDALEventStatusMapper dalEventStatusMapper,
+			IBOLEventStudentMapper bolEventStudentMapper,
+			IDALEventStudentMapper dalEventStudentMapper,
+			IBOLEventTeacherMapper bolEventTeacherMapper,
+			IDALEventTeacherMapper dalEventTeacherMapper,
 			IBOLFamilyMapper bolFamilyMapper,
 			IDALFamilyMapper dalFamilyMapper,
+			IBOLRateMapper bolRateMapper,
+			IDALRateMapper dalRateMapper,
 			IBOLSpaceMapper bolSpaceMapper,
 			IDALSpaceMapper dalSpaceMapper,
 			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
 			IDALSpaceFeatureMapper dalSpaceFeatureMapper,
+			IBOLSpaceSpaceFeatureMapper bolSpaceSpaceFeatureMapper,
+			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper,
+			IBOLStudentMapper bolStudentMapper,
+			IDALStudentMapper dalStudentMapper,
 			IBOLStudioMapper bolStudioMapper,
 			IDALStudioMapper dalStudioMapper,
+			IBOLTeacherMapper bolTeacherMapper,
+			IDALTeacherMapper dalTeacherMapper,
 			IBOLTeacherSkillMapper bolTeacherSkillMapper,
 			IDALTeacherSkillMapper dalTeacherSkillMapper,
+			IBOLTeacherTeacherSkillMapper bolTeacherTeacherSkillMapper,
+			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper,
 			IBOLUserMapper bolUserMapper,
 			IDALUserMapper dalUserMapper)
 			: base()
@@ -78,18 +132,36 @@ namespace StudioResourceManagerNS.Api.Services
 			this.TenantModelValidator = tenantModelValidator;
 			this.BolTenantMapper = bolTenantMapper;
 			this.DalTenantMapper = dalTenantMapper;
+			this.BolAdminMapper = bolAdminMapper;
+			this.DalAdminMapper = dalAdminMapper;
+			this.BolEventMapper = bolEventMapper;
+			this.DalEventMapper = dalEventMapper;
 			this.BolEventStatusMapper = bolEventStatusMapper;
 			this.DalEventStatusMapper = dalEventStatusMapper;
+			this.BolEventStudentMapper = bolEventStudentMapper;
+			this.DalEventStudentMapper = dalEventStudentMapper;
+			this.BolEventTeacherMapper = bolEventTeacherMapper;
+			this.DalEventTeacherMapper = dalEventTeacherMapper;
 			this.BolFamilyMapper = bolFamilyMapper;
 			this.DalFamilyMapper = dalFamilyMapper;
+			this.BolRateMapper = bolRateMapper;
+			this.DalRateMapper = dalRateMapper;
 			this.BolSpaceMapper = bolSpaceMapper;
 			this.DalSpaceMapper = dalSpaceMapper;
 			this.BolSpaceFeatureMapper = bolSpaceFeatureMapper;
 			this.DalSpaceFeatureMapper = dalSpaceFeatureMapper;
+			this.BolSpaceSpaceFeatureMapper = bolSpaceSpaceFeatureMapper;
+			this.DalSpaceSpaceFeatureMapper = dalSpaceSpaceFeatureMapper;
+			this.BolStudentMapper = bolStudentMapper;
+			this.DalStudentMapper = dalStudentMapper;
 			this.BolStudioMapper = bolStudioMapper;
 			this.DalStudioMapper = dalStudioMapper;
+			this.BolTeacherMapper = bolTeacherMapper;
+			this.DalTeacherMapper = dalTeacherMapper;
 			this.BolTeacherSkillMapper = bolTeacherSkillMapper;
 			this.DalTeacherSkillMapper = dalTeacherSkillMapper;
+			this.BolTeacherTeacherSkillMapper = bolTeacherTeacherSkillMapper;
+			this.DalTeacherTeacherSkillMapper = dalTeacherTeacherSkillMapper;
 			this.BolUserMapper = bolUserMapper;
 			this.DalUserMapper = dalUserMapper;
 			this.logger = logger;
@@ -164,6 +236,20 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
+		public async virtual Task<List<ApiAdminResponseModel>> Admins(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Admin> records = await this.TenantRepository.Admins(tenantId, limit, offset);
+
+			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiEventResponseModel>> Events(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Event> records = await this.TenantRepository.Events(tenantId, limit, offset);
+
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiEventStatusResponseModel>> EventStatuses(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<EventStatus> records = await this.TenantRepository.EventStatuses(tenantId, limit, offset);
@@ -171,11 +257,32 @@ namespace StudioResourceManagerNS.Api.Services
 			return this.BolEventStatusMapper.MapBOToModel(this.DalEventStatusMapper.MapEFToBO(records));
 		}
 
+		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudents(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EventStudent> records = await this.TenantRepository.EventStudents(tenantId, limit, offset);
+
+			return this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiEventTeacherResponseModel>> EventTeachers(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<EventTeacher> records = await this.TenantRepository.EventTeachers(tenantId, limit, offset);
+
+			return this.BolEventTeacherMapper.MapBOToModel(this.DalEventTeacherMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiFamilyResponseModel>> Families(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Family> records = await this.TenantRepository.Families(tenantId, limit, offset);
 
 			return this.BolFamilyMapper.MapBOToModel(this.DalFamilyMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiRateResponseModel>> Rates(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Rate> records = await this.TenantRepository.Rates(tenantId, limit, offset);
+
+			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiSpaceResponseModel>> Spaces(int tenantId, int limit = int.MaxValue, int offset = 0)
@@ -192,6 +299,20 @@ namespace StudioResourceManagerNS.Api.Services
 			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
 		}
 
+		public async virtual Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeatures(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<SpaceSpaceFeature> records = await this.TenantRepository.SpaceSpaceFeatures(tenantId, limit, offset);
+
+			return this.BolSpaceSpaceFeatureMapper.MapBOToModel(this.DalSpaceSpaceFeatureMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiStudentResponseModel>> Students(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Student> records = await this.TenantRepository.Students(tenantId, limit, offset);
+
+			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiStudioResponseModel>> Studios(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<Studio> records = await this.TenantRepository.Studios(tenantId, limit, offset);
@@ -199,11 +320,25 @@ namespace StudioResourceManagerNS.Api.Services
 			return this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(records));
 		}
 
+		public async virtual Task<List<ApiTeacherResponseModel>> Teachers(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Teacher> records = await this.TenantRepository.Teachers(tenantId, limit, offset);
+
+			return this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(records));
+		}
+
 		public async virtual Task<List<ApiTeacherSkillResponseModel>> TeacherSkills(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			List<TeacherSkill> records = await this.TenantRepository.TeacherSkills(tenantId, limit, offset);
 
 			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkills(int tenantId, int limit = int.MaxValue, int offset = 0)
+		{
+			List<TeacherTeacherSkill> records = await this.TenantRepository.TeacherTeacherSkills(tenantId, limit, offset);
+
+			return this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(records));
 		}
 
 		public async virtual Task<List<ApiUserResponseModel>> Users(int tenantId, int limit = int.MaxValue, int offset = 0)
@@ -216,5 +351,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>96aafc6659cbd164d28f1540efabfe15</Hash>
+    <Hash>6ff691d79c86edf2cdf571e49c8e482d</Hash>
 </Codenesium>*/

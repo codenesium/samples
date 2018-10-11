@@ -18,8 +18,7 @@ namespace StackOverflowNS.Api.Services
 			ICommentRepository commentRepository,
 			IApiCommentRequestModelValidator commentModelValidator,
 			IBOLCommentMapper bolcommentMapper,
-			IDALCommentMapper dalcommentMapper
-			)
+			IDALCommentMapper dalcommentMapper)
 			: base(logger,
 			       commentRepository,
 			       commentModelValidator,
@@ -31,5 +30,5 @@ namespace StackOverflowNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7fcbfff4ccf780891400277c3926cdd8</Hash>
+    <Hash>88f3d207faaf072e6397ca3dabae2c82</Hash>
 </Codenesium>*/

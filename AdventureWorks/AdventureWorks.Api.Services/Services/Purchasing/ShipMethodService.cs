@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLShipMethodMapper bolshipMethodMapper,
 			IDALShipMethodMapper dalshipMethodMapper,
 			IBOLPurchaseOrderHeaderMapper bolPurchaseOrderHeaderMapper,
-			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper
-			)
+			IDALPurchaseOrderHeaderMapper dalPurchaseOrderHeaderMapper)
 			: base(logger,
 			       shipMethodRepository,
 			       shipMethodModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>17e64b71efc5d32ef9c7d7d25d912cc6</Hash>
+    <Hash>751cf97fc11062450bd80bedb91426c3</Hash>
 </Codenesium>*/

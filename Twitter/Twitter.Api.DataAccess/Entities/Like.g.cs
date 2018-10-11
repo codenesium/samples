@@ -14,22 +14,18 @@ namespace TwitterNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			int likeId,
 			int likerUserId,
 			int tweetId)
 		{
-			this.LikeId = likeId;
 			this.LikerUserId = likerUserId;
 			this.TweetId = tweetId;
 		}
 
 		[Key]
-		[Column("like_id")]
-		public int LikeId { get; private set; }
-
 		[Column("liker_user_id")]
 		public int LikerUserId { get; private set; }
 
+		[Key]
 		[Column("tweet_id")]
 		public int TweetId { get; private set; }
 
@@ -42,5 +38,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>745ebfc2f96fef6ef345cfefa625c8e9</Hash>
+    <Hash>ef8c5ea4e35bb3bbeaa87a52c7b72ad5</Hash>
 </Codenesium>*/

@@ -22,8 +22,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IBOLEventStudentMapper bolEventStudentMapper,
 			IDALEventStudentMapper dalEventStudentMapper,
 			IBOLEventTeacherMapper bolEventTeacherMapper,
-			IDALEventTeacherMapper dalEventTeacherMapper
-			)
+			IDALEventTeacherMapper dalEventTeacherMapper)
 			: base(logger,
 			       eventRepository,
 			       eventModelValidator,
@@ -39,5 +38,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d3d786a40ac34946b0c9e7aa451de202</Hash>
+    <Hash>88149ba6b842336388771535e0d922cd</Hash>
 </Codenesium>*/

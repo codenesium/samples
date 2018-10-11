@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLDepartmentMapper boldepartmentMapper,
 			IDALDepartmentMapper daldepartmentMapper,
 			IBOLEmployeeDepartmentHistoryMapper bolEmployeeDepartmentHistoryMapper,
-			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper
-			)
+			IDALEmployeeDepartmentHistoryMapper dalEmployeeDepartmentHistoryMapper)
 			: base(logger,
 			       departmentRepository,
 			       departmentModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>33859c31d6e1eb2b065b3fa594a7ca46</Hash>
+    <Hash>c9623836e0189419fe435d58e66a80b2</Hash>
 </Codenesium>*/

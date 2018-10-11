@@ -78,16 +78,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<List<PurchaseOrderHeader>> ByEmployeeID(int employeeID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.EmployeeID == employeeID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.EmployeeID == employeeID, limit, offset);
 		}
 
 		public async Task<List<PurchaseOrderHeader>> ByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
-			var records = await this.Where(x => x.VendorID == vendorID, limit, offset);
-
-			return records;
+			return await this.Where(x => x.VendorID == vendorID, limit, offset);
 		}
 
 		public async virtual Task<List<PurchaseOrderDetail>> PurchaseOrderDetails(int purchaseOrderID, int limit = int.MaxValue, int offset = 0)
@@ -127,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>027dd611acc9acc35f8dfd0a2f952f02</Hash>
+    <Hash>e85e8094fc5efe0fc1cec8d1d4ab428b</Hash>
 </Codenesium>*/

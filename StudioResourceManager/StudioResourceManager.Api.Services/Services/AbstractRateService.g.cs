@@ -107,23 +107,9 @@ namespace StudioResourceManagerNS.Api.Services
 
 			return response;
 		}
-
-		public async Task<List<ApiRateResponseModel>> ByTeacherId(int teacherId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Rate> records = await this.RateRepository.ByTeacherId(teacherId, limit, offset);
-
-			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
-		}
-
-		public async Task<List<ApiRateResponseModel>> ByTeacherSkillId(int teacherSkillId, int limit = 0, int offset = int.MaxValue)
-		{
-			List<Rate> records = await this.RateRepository.ByTeacherSkillId(teacherSkillId, limit, offset);
-
-			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f389b944126f3e3d4338f7b4bb95f30f</Hash>
+    <Hash>486b8947a5ba132614bbf46ec2f40f43</Hash>
 </Codenesium>*/

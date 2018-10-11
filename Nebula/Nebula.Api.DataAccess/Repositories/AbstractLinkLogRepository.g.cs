@@ -76,7 +76,7 @@ namespace NebulaNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<Link> GetLink(int linkId)
+		public async virtual Task<Link> LinkByLinkId(int linkId)
 		{
 			return await this.Context.Set<Link>().SingleOrDefaultAsync(x => x.Id == linkId);
 		}
@@ -113,5 +113,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>70713b3e383b10adc924022202a10679</Hash>
+    <Hash>3d382fce3dd71fe453cba292ac96bcb8</Hash>
 </Codenesium>*/

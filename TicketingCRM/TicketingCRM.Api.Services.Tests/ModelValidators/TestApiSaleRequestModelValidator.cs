@@ -96,11 +96,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Note, null as string);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Transaction
 		[Fact]
 		public async void TransactionId_Create_Valid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(new Transaction()));
+			saleRepository.Setup(x => x.TransactionByTransactionId(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(new Transaction()));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 			await validator.ValidateCreateAsync(new ApiSaleRequestModel());
@@ -112,7 +113,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionId_Create_Invalid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
+			saleRepository.Setup(x => x.TransactionByTransactionId(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
@@ -125,7 +126,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionId_Update_Valid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(new Transaction()));
+			saleRepository.Setup(x => x.TransactionByTransactionId(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(new Transaction()));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiSaleRequestModel());
@@ -137,7 +138,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void TransactionId_Update_Invalid_Reference()
 		{
 			Mock<ISaleRepository> saleRepository = new Mock<ISaleRepository>();
-			saleRepository.Setup(x => x.GetTransaction(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
+			saleRepository.Setup(x => x.TransactionByTransactionId(It.IsAny<int>())).Returns(Task.FromResult<Transaction>(null));
 
 			var validator = new ApiSaleRequestModelValidator(saleRepository.Object);
 
@@ -149,5 +150,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8cb3d52b66b38b7a001325a72843623e</Hash>
+    <Hash>d40941597af1966dc3aa491a619d331b</Hash>
 </Codenesium>*/

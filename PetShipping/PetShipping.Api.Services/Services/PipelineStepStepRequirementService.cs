@@ -18,8 +18,7 @@ namespace PetShippingNS.Api.Services
 			IPipelineStepStepRequirementRepository pipelineStepStepRequirementRepository,
 			IApiPipelineStepStepRequirementRequestModelValidator pipelineStepStepRequirementModelValidator,
 			IBOLPipelineStepStepRequirementMapper bolpipelineStepStepRequirementMapper,
-			IDALPipelineStepStepRequirementMapper dalpipelineStepStepRequirementMapper
-			)
+			IDALPipelineStepStepRequirementMapper dalpipelineStepStepRequirementMapper)
 			: base(logger,
 			       pipelineStepStepRequirementRepository,
 			       pipelineStepStepRequirementModelValidator,
@@ -31,5 +30,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7b88948dfd154829c0a5ebc765798431</Hash>
+    <Hash>07a4e33d6ba68777b8c57c5718eab1f7</Hash>
 </Codenesium>*/

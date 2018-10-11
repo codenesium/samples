@@ -86,6 +86,16 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<TeacherTeacherSkill>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherTeacherSkill>();
 		}
 
+		// Reference foreign key. Reference Table=TeacherTeacherSkill. First table=teacherSkills. Second table=teachers
+		public async virtual Task<List<TeacherSkill>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.TeacherTeacherSkills
+			              join teacherSkills in this.Context.TeacherSkills on
+			              refTable.TeacherSkillId equals teacherSkills.Id
+			              where refTable.TeacherId == teacherId
+			              select teacherSkills).Skip(offset).Take(limit).ToListAsync();
+		}
+
 		protected async Task<List<TeacherSkill>> Where(
 			Expression<Func<TeacherSkill, bool>> predicate,
 			int limit = int.MaxValue,
@@ -118,5 +128,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>de6f08c3d56a834100e68c4f369cca20</Hash>
+    <Hash>e8e5a8379f57dd5751ed73e0e63babb6</Hash>
 </Codenesium>*/

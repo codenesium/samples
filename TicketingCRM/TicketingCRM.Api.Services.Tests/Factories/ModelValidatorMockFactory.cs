@@ -23,8 +23,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 
 		public Mock<IApiSaleRequestModelValidator> SaleModelValidatorMock { get; set; } = new Mock<IApiSaleRequestModelValidator>();
 
-		public Mock<IApiSaleTicketRequestModelValidator> SaleTicketModelValidatorMock { get; set; } = new Mock<IApiSaleTicketRequestModelValidator>();
-
 		public Mock<IApiTicketRequestModelValidator> TicketModelValidatorMock { get; set; } = new Mock<IApiTicketRequestModelValidator>();
 
 		public Mock<IApiTicketStatuRequestModelValidator> TicketStatuModelValidatorMock { get; set; } = new Mock<IApiTicketStatuRequestModelValidator>();
@@ -65,10 +63,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 			this.SaleModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSaleRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SaleModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.SaleTicketModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSaleTicketRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.SaleTicketModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSaleTicketRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.SaleTicketModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.TicketModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTicketRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TicketModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTicketRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TicketModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -93,5 +87,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ea6b6ce5f58f4d43edbc1de61f6db5ad</Hash>
+    <Hash>923233e8194f6ee1853de34b4138d528</Hash>
 </Codenesium>*/

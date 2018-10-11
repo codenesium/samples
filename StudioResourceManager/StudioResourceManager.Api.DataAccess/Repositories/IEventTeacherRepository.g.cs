@@ -11,18 +11,18 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task Update(EventTeacher item);
 
-		Task Delete(int id);
+		Task Delete(int eventId);
 
-		Task<EventTeacher> Get(int id);
+		Task<EventTeacher> Get(int eventId);
 
 		Task<List<EventTeacher>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<EventTeacher>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0);
+		Task<Event> EventByEventId(int eventId);
 
-		Task<Event> GetEvent(int eventId);
+		Task<Teacher> TeacherByTeacherId(int teacherId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>db27b5bd44755630afc6a5170e793e0e</Hash>
+    <Hash>9a10dee93b091de459a30be488fa36d2</Hash>
 </Codenesium>*/

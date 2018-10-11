@@ -39,7 +39,7 @@ namespace NebulaNS.Api.Contracts
 
 			this.AssignedMachineIdEntity = nameof(ApiResponse.Machines);
 			this.ChainIdEntity = nameof(ApiResponse.Chains);
-			this.LinkStatusIdEntity = nameof(ApiResponse.LinkStatus);
+			this.LinkStatusIdEntity = nameof(ApiResponse.LinkStatuses);
 		}
 
 		[Required]
@@ -99,5 +99,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>384effc5f150989bc66754d974c71357</Hash>
+    <Hash>f6943f28f3f6ba1bf2d2d95a9e11fbf1</Hash>
 </Codenesium>*/

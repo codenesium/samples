@@ -18,8 +18,7 @@ namespace TwitterNS.Api.Services
 			IMessengerRepository messengerRepository,
 			IApiMessengerRequestModelValidator messengerModelValidator,
 			IBOLMessengerMapper bolmessengerMapper,
-			IDALMessengerMapper dalmessengerMapper
-			)
+			IDALMessengerMapper dalmessengerMapper)
 			: base(logger,
 			       messengerRepository,
 			       messengerModelValidator,
@@ -31,5 +30,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>eaac9dd72f24164ad01faf328e82ffbf</Hash>
+    <Hash>8dec06ba59a0be376b90111c46eadb65</Hash>
 </Codenesium>*/

@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<SalesPerson> GetSalesPerson(int businessEntityID)
+		public async virtual Task<SalesPerson> SalesPersonByBusinessEntityID(int businessEntityID)
 		{
 			return await this.Context.Set<SalesPerson>().SingleOrDefaultAsync(x => x.BusinessEntityID == businessEntityID);
 		}
@@ -113,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>39403966b6734ac4c1b56e275797c043</Hash>
+    <Hash>844a1a0aa14c197d490ce4334ba302b1</Hash>
 </Codenesium>*/

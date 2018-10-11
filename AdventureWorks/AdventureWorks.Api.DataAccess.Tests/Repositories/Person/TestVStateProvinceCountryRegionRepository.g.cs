@@ -61,75 +61,9 @@ namespace AdventureWorksNS.Api.DataAccess
 
 			record.Should().NotBeNull();
 		}
-
-		[Fact]
-		public async void Create()
-		{
-			Mock<ILogger<VStateProvinceCountryRegionRepository>> loggerMoc = VStateProvinceCountryRegionRepositoryMoc.GetLoggerMoc();
-			ApplicationDbContext context = VStateProvinceCountryRegionRepositoryMoc.GetContext();
-			var repository = new VStateProvinceCountryRegionRepository(loggerMoc.Object, context);
-
-			var entity = new VStateProvinceCountryRegion();
-			await repository.Create(entity);
-
-			var record = await context.Set<VStateProvinceCountryRegion>().FirstOrDefaultAsync();
-
-			record.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void Update_Entity_Is_Tracked()
-		{
-			Mock<ILogger<VStateProvinceCountryRegionRepository>> loggerMoc = VStateProvinceCountryRegionRepositoryMoc.GetLoggerMoc();
-			ApplicationDbContext context = VStateProvinceCountryRegionRepositoryMoc.GetContext();
-			var repository = new VStateProvinceCountryRegionRepository(loggerMoc.Object, context);
-			VStateProvinceCountryRegion entity = new VStateProvinceCountryRegion();
-			context.Set<VStateProvinceCountryRegion>().Add(entity);
-			await context.SaveChangesAsync();
-
-			var record = await repository.Get(entity.StateProvinceID);
-
-			await repository.Update(record);
-
-			var modifiedRecord = context.Set<VStateProvinceCountryRegion>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void Update_Entity_Is_Not_Tracked()
-		{
-			Mock<ILogger<VStateProvinceCountryRegionRepository>> loggerMoc = VStateProvinceCountryRegionRepositoryMoc.GetLoggerMoc();
-			ApplicationDbContext context = VStateProvinceCountryRegionRepositoryMoc.GetContext();
-			var repository = new VStateProvinceCountryRegionRepository(loggerMoc.Object, context);
-			VStateProvinceCountryRegion entity = new VStateProvinceCountryRegion();
-			context.Set<VStateProvinceCountryRegion>().Add(entity);
-			await context.SaveChangesAsync();
-
-			await repository.Update(new VStateProvinceCountryRegion());
-
-			var modifiedRecord = context.Set<VStateProvinceCountryRegion>().FirstOrDefaultAsync();
-			modifiedRecord.Should().NotBeNull();
-		}
-
-		[Fact]
-		public async void Delete()
-		{
-			Mock<ILogger<VStateProvinceCountryRegionRepository>> loggerMoc = VStateProvinceCountryRegionRepositoryMoc.GetLoggerMoc();
-			ApplicationDbContext context = VStateProvinceCountryRegionRepositoryMoc.GetContext();
-			var repository = new VStateProvinceCountryRegionRepository(loggerMoc.Object, context);
-			VStateProvinceCountryRegion entity = new VStateProvinceCountryRegion();
-			context.Set<VStateProvinceCountryRegion>().Add(entity);
-			await context.SaveChangesAsync();
-
-			await repository.Delete(entity.StateProvinceID);
-
-			VStateProvinceCountryRegion modifiedRecord = await context.Set<VStateProvinceCountryRegion>().FirstOrDefaultAsync();
-
-			modifiedRecord.Should().BeNull();
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3abb80b3fb056f44ffc0fd1661b77132</Hash>
+    <Hash>cebabafd7beea64288eeca56d7dd5b98</Hash>
 </Codenesium>*/

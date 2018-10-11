@@ -8,7 +8,7 @@ namespace StudioResourceManagerNS.Api.Services
 	public partial interface IBOLEventTeacherMapper
 	{
 		BOEventTeacher MapModelToBO(
-			int id,
+			int eventId,
 			ApiEventTeacherRequestModel model);
 
 		ApiEventTeacherResponseModel MapBOToModel(
@@ -20,5 +20,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f89da3e774fe12402a6f822a9546ca7b</Hash>
+    <Hash>15c708935852ed47d0a5bc63108e4e22</Hash>
 </Codenesium>*/

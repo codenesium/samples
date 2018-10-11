@@ -207,10 +207,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byUserId/{userId}")]
+		[Route("{teacherId}/EventTeachers")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByUserId(int userId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiEventTeacherResponseModel>), 200)]
+		public async virtual Task<IActionResult> EventTeachers(int teacherId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTeacherResponseModel> response = await this.TeacherService.ByUserId(userId, query.Limit, query.Offset);
+			List<ApiEventTeacherResponseModel> response = await this.TeacherService.EventTeachers(teacherId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -257,6 +257,23 @@ namespace StudioResourceManagerNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("byEventId/{eventId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByEventId(int eventId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiTeacherResponseModel> response = await this.TeacherService.ByEventId(eventId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiTeacherRequestModel> PatchModel(int id, JsonPatchDocument<ApiTeacherRequestModel> patch)
 		{
 			var record = await this.TeacherService.Get(id);
@@ -276,5 +293,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>454446c1bea10e8775f97a6d95b022a7</Hash>
+    <Hash>6b234f813502669d67ecefe066d0abea</Hash>
 </Codenesium>*/

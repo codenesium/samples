@@ -47,24 +47,24 @@ namespace AdventureWorksNS.Api.Services
 
 		public virtual void StoreIDRules()
 		{
-			this.RuleFor(x => x.StoreID).MustAsync(this.BeValidStore).When(x => x?.StoreID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.StoreID).MustAsync(this.BeValidStoreByStoreID).When(x => x?.StoreID != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void TerritoryIDRules()
 		{
-			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritory).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.TerritoryID).MustAsync(this.BeValidSalesTerritoryByTerritoryID).When(x => x?.TerritoryID != null).WithMessage("Invalid reference");
 		}
 
-		private async Task<bool> BeValidStore(int? id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidStoreByStoreID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.customerRepository.GetStore(id.GetValueOrDefault());
+			var record = await this.customerRepository.StoreByStoreID(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidSalesTerritory(int? id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidSalesTerritoryByTerritoryID(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.customerRepository.GetSalesTerritory(id.GetValueOrDefault());
+			var record = await this.customerRepository.SalesTerritoryByTerritoryID(id.GetValueOrDefault());
 
 			return record != null;
 		}
@@ -86,5 +86,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e6cf57e5fe9718f4ab3a0cd9017403f2</Hash>
+    <Hash>5df290afdcf5cc96e82cf735b6531ca8</Hash>
 </Codenesium>*/

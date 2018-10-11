@@ -107,23 +107,9 @@ namespace NebulaNS.Api.Services
 
 			return response;
 		}
-
-		public async Task<ApiVersionInfoResponseModel> ByVersion(long version)
-		{
-			VersionInfo record = await this.VersionInfoRepository.ByVersion(version);
-
-			if (record == null)
-			{
-				return null;
-			}
-			else
-			{
-				return this.BolVersionInfoMapper.MapBOToModel(this.DalVersionInfoMapper.MapEFToBO(record));
-			}
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>08c594a200a706d282c4a6a12db23ce1</Hash>
+    <Hash>fd1489ce5581ff05e19b915deaaf8a42</Hash>
 </Codenesium>*/

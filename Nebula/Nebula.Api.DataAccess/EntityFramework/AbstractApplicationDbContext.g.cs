@@ -44,7 +44,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual DbSet<Chain> Chains { get; set; }
 
-		public virtual DbSet<ChainStatu> ChainStatus { get; set; }
+		public virtual DbSet<ChainStatus> ChainStatuses { get; set; }
 
 		public virtual DbSet<Clasp> Clasps { get; set; }
 
@@ -52,15 +52,13 @@ namespace NebulaNS.Api.DataAccess
 
 		public virtual DbSet<LinkLog> LinkLogs { get; set; }
 
-		public virtual DbSet<LinkStatu> LinkStatus { get; set; }
+		public virtual DbSet<LinkStatus> LinkStatuses { get; set; }
 
 		public virtual DbSet<Machine> Machines { get; set; }
 
 		public virtual DbSet<MachineRefTeam> MachineRefTeams { get; set; }
 
 		public virtual DbSet<Organization> Organizations { get; set; }
-
-		public virtual DbSet<Sysdiagram> Sysdiagrams { get; set; }
 
 		public virtual DbSet<Team> Teams { get; set; }
 
@@ -106,6 +104,19 @@ namespace NebulaNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Clasp>()
+			.HasKey(c => new
+			{
+				c.PreviousChainId,
+				c.NextChainId,
+			});
+			modelBuilder.Entity<MachineRefTeam>()
+			.HasKey(c => new
+			{
+				c.MachineId,
+				c.TeamId,
+			});
+
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
@@ -136,5 +147,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9550cc6eec94e051300bb05a07eabbab</Hash>
+    <Hash>45757cdff7d1dea1fa828b09ed305853</Hash>
 </Codenesium>*/

@@ -28,6 +28,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("CountryRegionCode")]
 		public string CountryRegionCode { get; private set; }
 
+		[Key]
 		[MaxLength(3)]
 		[Column("CurrencyCode")]
 		public string CurrencyCode { get; private set; }
@@ -41,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67a40bcdd803a3f9b712ea709ed50d45</Hash>
+    <Hash>d1c6750cecad1500b39a63badfdd1495</Hash>
 </Codenesium>*/

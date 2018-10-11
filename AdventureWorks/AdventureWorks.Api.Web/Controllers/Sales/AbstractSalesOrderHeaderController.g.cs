@@ -277,10 +277,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{salesOrderID}/SalesOrderHeaderSalesReasons")]
+		[Route("bySalesOrderID/{salesOrderID}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderSalesReasonResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesOrderHeaderSalesReasons(int salesOrderID, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
+		public async virtual Task<IActionResult> BySalesOrderID(int salesOrderID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -288,7 +288,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderSalesReasonResponseModel> response = await this.SalesOrderHeaderService.SalesOrderHeaderSalesReasons(salesOrderID, query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.BySalesOrderID(salesOrderID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -312,5 +312,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fa50e3889d039273c2f8da07f08357e2</Hash>
+    <Hash>f0b4f73a971d41ceed804fd59fd6169c</Hash>
 </Codenesium>*/

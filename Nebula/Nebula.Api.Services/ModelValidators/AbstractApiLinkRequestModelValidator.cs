@@ -28,12 +28,12 @@ namespace NebulaNS.Api.Services
 
 		public virtual void AssignedMachineIdRules()
 		{
-			this.RuleFor(x => x.AssignedMachineId).MustAsync(this.BeValidMachine).When(x => x?.AssignedMachineId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.AssignedMachineId).MustAsync(this.BeValidMachineByAssignedMachineId).When(x => x?.AssignedMachineId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ChainIdRules()
 		{
-			this.RuleFor(x => x.ChainId).MustAsync(this.BeValidChain).When(x => x?.ChainId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ChainId).MustAsync(this.BeValidChainByChainId).When(x => x?.ChainId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void DateCompletedRules()
@@ -56,7 +56,7 @@ namespace NebulaNS.Api.Services
 
 		public virtual void LinkStatusIdRules()
 		{
-			this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatu).When(x => x?.LinkStatusId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.LinkStatusId).MustAsync(this.BeValidLinkStatusByLinkStatusId).When(x => x?.LinkStatusId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
@@ -83,23 +83,23 @@ namespace NebulaNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidMachine(int? id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidMachineByAssignedMachineId(int? id,  CancellationToken cancellationToken)
 		{
-			var record = await this.linkRepository.GetMachine(id.GetValueOrDefault());
+			var record = await this.linkRepository.MachineByAssignedMachineId(id.GetValueOrDefault());
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidChain(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidChainByChainId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.linkRepository.GetChain(id);
+			var record = await this.linkRepository.ChainByChainId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidLinkStatu(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidLinkStatusByLinkStatusId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.linkRepository.GetLinkStatu(id);
+			var record = await this.linkRepository.LinkStatusByLinkStatusId(id);
 
 			return record != null;
 		}
@@ -121,5 +121,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>875f859d7fd57c85ee9acfaaf52abd74</Hash>
+    <Hash>e6863848dcd1c3336d600ce6dde2c1dd</Hash>
 </Codenesium>*/

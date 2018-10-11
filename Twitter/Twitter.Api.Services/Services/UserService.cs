@@ -21,8 +21,8 @@ namespace TwitterNS.Api.Services
 			IDALUserMapper daluserMapper,
 			IBOLDirectTweetMapper bolDirectTweetMapper,
 			IDALDirectTweetMapper dalDirectTweetMapper,
-			IBOLLikeMapper bolLikeMapper,
-			IDALLikeMapper dalLikeMapper,
+			IBOLFollowerMapper bolFollowerMapper,
+			IDALFollowerMapper dalFollowerMapper,
 			IBOLMessageMapper bolMessageMapper,
 			IDALMessageMapper dalMessageMapper,
 			IBOLMessengerMapper bolMessengerMapper,
@@ -34,8 +34,7 @@ namespace TwitterNS.Api.Services
 			IBOLRetweetMapper bolRetweetMapper,
 			IDALRetweetMapper dalRetweetMapper,
 			IBOLTweetMapper bolTweetMapper,
-			IDALTweetMapper dalTweetMapper
-			)
+			IDALTweetMapper dalTweetMapper)
 			: base(logger,
 			       userRepository,
 			       userModelValidator,
@@ -43,8 +42,8 @@ namespace TwitterNS.Api.Services
 			       daluserMapper,
 			       bolDirectTweetMapper,
 			       dalDirectTweetMapper,
-			       bolLikeMapper,
-			       dalLikeMapper,
+			       bolFollowerMapper,
+			       dalFollowerMapper,
 			       bolMessageMapper,
 			       dalMessageMapper,
 			       bolMessengerMapper,
@@ -63,5 +62,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>390f6514543ec75a4bc5c9594dd57143</Hash>
+    <Hash>5e3b33e4b8d62db3e806d7371af0136e</Hash>
 </Codenesium>*/

@@ -35,6 +35,7 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("EmailAddress")]
 		public string EmailAddress1 { get; private set; }
 
+		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("EmailAddressID")]
 		public int EmailAddressID { get; private set; }
@@ -49,5 +50,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>66df5f2e35be62b322d8a4037f2598d1</Hash>
+    <Hash>db6251114df7da4fea3b22ae71d11e60</Hash>
 </Codenesium>*/

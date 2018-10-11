@@ -22,8 +22,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IBOLRateMapper bolRateMapper,
 			IDALRateMapper dalRateMapper,
 			IBOLTeacherTeacherSkillMapper bolTeacherTeacherSkillMapper,
-			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper
-			)
+			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper)
 			: base(logger,
 			       teacherSkillRepository,
 			       teacherSkillModelValidator,
@@ -39,5 +38,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b1d34e55893c6654e9cbfb90e7d72deb</Hash>
+    <Hash>52ffe59ac8d0adcd373c9ac5a66e1c54</Hash>
 </Codenesium>*/

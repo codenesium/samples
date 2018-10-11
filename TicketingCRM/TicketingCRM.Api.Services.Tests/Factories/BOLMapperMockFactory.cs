@@ -22,8 +22,6 @@ namespace TicketingCRMNS.Api.Services.Tests
 
 		public IBOLSaleMapper BOLSaleMapperMock { get; set; } = new BOLSaleMapper();
 
-		public IBOLSaleTicketMapper BOLSaleTicketMapperMock { get; set; } = new BOLSaleTicketMapper();
-
 		public IBOLTicketMapper BOLTicketMapperMock { get; set; } = new BOLTicketMapper();
 
 		public IBOLTicketStatuMapper BOLTicketStatuMapperMock { get; set; } = new BOLTicketStatuMapper();
@@ -41,5 +39,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>852f445ddb14135f41ad71c3b823bb00</Hash>
+    <Hash>b0402f340e32dd0d9417b743c283683c</Hash>
 </Codenesium>*/

@@ -10,9 +10,9 @@ namespace TwitterNS.Api.Services.Tests
 	{
 		public IBOLDirectTweetMapper BOLDirectTweetMapperMock { get; set; } = new BOLDirectTweetMapper();
 
-		public IBOLFollowingMapper BOLFollowingMapperMock { get; set; } = new BOLFollowingMapper();
+		public IBOLFollowerMapper BOLFollowerMapperMock { get; set; } = new BOLFollowerMapper();
 
-		public IBOLLikeMapper BOLLikeMapperMock { get; set; } = new BOLLikeMapper();
+		public IBOLFollowingMapper BOLFollowingMapperMock { get; set; } = new BOLFollowingMapper();
 
 		public IBOLLocationMapper BOLLocationMapperMock { get; set; } = new BOLLocationMapper();
 
@@ -37,5 +37,5 @@ namespace TwitterNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>85fc9b516c58c5422f83f6e4f8a32f05</Hash>
+    <Hash>45846f11fe65cbe269faf7af50ccfd63</Hash>
 </Codenesium>*/

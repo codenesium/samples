@@ -20,8 +20,7 @@ namespace AdventureWorksNS.Api.Services
 			IBOLScrapReasonMapper bolscrapReasonMapper,
 			IDALScrapReasonMapper dalscrapReasonMapper,
 			IBOLWorkOrderMapper bolWorkOrderMapper,
-			IDALWorkOrderMapper dalWorkOrderMapper
-			)
+			IDALWorkOrderMapper dalWorkOrderMapper)
 			: base(logger,
 			       scrapReasonRepository,
 			       scrapReasonModelValidator,
@@ -35,5 +34,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b4bc14159247af095ee1c5caf639357b</Hash>
+    <Hash>7cd4c0e2dcfaac2787354ab993d51fb2</Hash>
 </Codenesium>*/

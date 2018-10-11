@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			IRowVersionCheckRepository rowVersionCheckRepository,
 			IApiRowVersionCheckRequestModelValidator rowVersionCheckModelValidator,
 			IBOLRowVersionCheckMapper bolrowVersionCheckMapper,
-			IDALRowVersionCheckMapper dalrowVersionCheckMapper
-			)
+			IDALRowVersionCheckMapper dalrowVersionCheckMapper)
 			: base(logger,
 			       rowVersionCheckRepository,
 			       rowVersionCheckModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>643f8397712ddb7bf00f8a373959cadb</Hash>
+    <Hash>b7d934a8c0556d2022ab378b03eabc6c</Hash>
 </Codenesium>*/

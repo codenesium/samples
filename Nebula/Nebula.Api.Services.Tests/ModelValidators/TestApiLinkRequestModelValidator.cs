@@ -24,11 +24,12 @@ namespace NebulaNS.Api.Services.Tests
 		{
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Machine
 		[Fact]
 		public async void AssignedMachineId_Create_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
+			linkRepository.Setup(x => x.MachineByAssignedMachineId(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 			await validator.ValidateCreateAsync(new ApiLinkRequestModel());
@@ -40,7 +41,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void AssignedMachineId_Create_Invalid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
+			linkRepository.Setup(x => x.MachineByAssignedMachineId(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
@@ -53,7 +54,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void AssignedMachineId_Update_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
+			linkRepository.Setup(x => x.MachineByAssignedMachineId(It.IsAny<int>())).Returns(Task.FromResult<Machine>(new Machine()));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
@@ -65,7 +66,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void AssignedMachineId_Update_Invalid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetMachine(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
+			linkRepository.Setup(x => x.MachineByAssignedMachineId(It.IsAny<int>())).Returns(Task.FromResult<Machine>(null));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
@@ -74,11 +75,12 @@ namespace NebulaNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.AssignedMachineId, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Chain
 		[Fact]
 		public async void ChainId_Create_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
+			linkRepository.Setup(x => x.ChainByChainId(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 			await validator.ValidateCreateAsync(new ApiLinkRequestModel());
@@ -90,7 +92,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainId_Create_Invalid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
+			linkRepository.Setup(x => x.ChainByChainId(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
@@ -103,7 +105,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainId_Update_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
+			linkRepository.Setup(x => x.ChainByChainId(It.IsAny<int>())).Returns(Task.FromResult<Chain>(new Chain()));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
@@ -115,7 +117,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void ChainId_Update_Invalid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetChain(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
+			linkRepository.Setup(x => x.ChainByChainId(It.IsAny<int>())).Returns(Task.FromResult<Chain>(null));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
@@ -124,11 +126,12 @@ namespace NebulaNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.ChainId, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= LinkStatus
 		[Fact]
 		public async void LinkStatusId_Create_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetLinkStatu(It.IsAny<int>())).Returns(Task.FromResult<LinkStatu>(new LinkStatu()));
+			linkRepository.Setup(x => x.LinkStatusByLinkStatusId(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(new LinkStatus()));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 			await validator.ValidateCreateAsync(new ApiLinkRequestModel());
@@ -140,7 +143,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkStatusId_Create_Invalid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetLinkStatu(It.IsAny<int>())).Returns(Task.FromResult<LinkStatu>(null));
+			linkRepository.Setup(x => x.LinkStatusByLinkStatusId(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(null));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
@@ -153,7 +156,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkStatusId_Update_Valid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetLinkStatu(It.IsAny<int>())).Returns(Task.FromResult<LinkStatu>(new LinkStatu()));
+			linkRepository.Setup(x => x.LinkStatusByLinkStatusId(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(new LinkStatus()));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiLinkRequestModel());
@@ -165,7 +168,7 @@ namespace NebulaNS.Api.Services.Tests
 		public async void LinkStatusId_Update_Invalid_Reference()
 		{
 			Mock<ILinkRepository> linkRepository = new Mock<ILinkRepository>();
-			linkRepository.Setup(x => x.GetLinkStatu(It.IsAny<int>())).Returns(Task.FromResult<LinkStatu>(null));
+			linkRepository.Setup(x => x.LinkStatusByLinkStatusId(It.IsAny<int>())).Returns(Task.FromResult<LinkStatus>(null));
 
 			var validator = new ApiLinkRequestModelValidator(linkRepository.Object);
 
@@ -273,5 +276,5 @@ namespace NebulaNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2105018767372b9bd4cd94dcf551b4e5</Hash>
+    <Hash>eb8b41aab06f6a12769c00230c308961</Hash>
 </Codenesium>*/

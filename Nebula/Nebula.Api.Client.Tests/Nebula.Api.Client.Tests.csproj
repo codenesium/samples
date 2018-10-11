@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+	<RootNamespace>NebulaNS.Api.Client.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -20,8 +20,7 @@ namespace PetShippingNS.Api.Services
 			IBOLPipelineStepStatuMapper bolpipelineStepStatuMapper,
 			IDALPipelineStepStatuMapper dalpipelineStepStatuMapper,
 			IBOLPipelineStepMapper bolPipelineStepMapper,
-			IDALPipelineStepMapper dalPipelineStepMapper
-			)
+			IDALPipelineStepMapper dalPipelineStepMapper)
 			: base(logger,
 			       pipelineStepStatuRepository,
 			       pipelineStepStatuModelValidator,
@@ -35,5 +34,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>de9ba29712aaaece0502969fb6bbaa25</Hash>
+    <Hash>8189004efc36f0a3c7873478a22bad61</Hash>
 </Codenesium>*/

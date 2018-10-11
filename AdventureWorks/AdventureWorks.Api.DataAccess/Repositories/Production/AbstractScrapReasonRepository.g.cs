@@ -78,9 +78,7 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		public async Task<ScrapReason> ByName(string name)
 		{
-			var records = await this.Where(x => x.Name == name);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<ScrapReason>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
 		public async virtual Task<List<WorkOrder>> WorkOrders(short scrapReasonID, int limit = int.MaxValue, int offset = 0)
@@ -120,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>96faa56a6dbd4a7e5cd805a1edf1fe62</Hash>
+    <Hash>6f25b5ce792561592f56f936869c332a</Hash>
 </Codenesium>*/

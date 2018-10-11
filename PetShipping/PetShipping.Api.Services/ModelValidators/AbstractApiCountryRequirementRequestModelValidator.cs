@@ -28,7 +28,7 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void CountryIdRules()
 		{
-			this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountry).When(x => x?.CountryId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.CountryId).MustAsync(this.BeValidCountryByCountryId).When(x => x?.CountryId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void DetailRules()
@@ -37,9 +37,9 @@ namespace PetShippingNS.Api.Services
 			this.RuleFor(x => x.Detail).Length(0, 2147483647);
 		}
 
-		private async Task<bool> BeValidCountry(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidCountryByCountryId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.countryRequirementRepository.GetCountry(id);
+			var record = await this.countryRequirementRepository.CountryByCountryId(id);
 
 			return record != null;
 		}
@@ -47,5 +47,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>678992dc83aa818b625cd6990a4c121f</Hash>
+    <Hash>2d26f73ff2317138a0d11ce7ad854cf2</Hash>
 </Codenesium>*/

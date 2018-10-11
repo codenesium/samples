@@ -65,9 +65,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[MaxLength(2147483647)]
 		[Column("teacherNotes")]
 		public string TeacherNote { get; private set; }
+
+		[ForeignKey("EventStatusId")]
+		public virtual EventStatus EventStatusNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>139809cb095318c4d86532e880636215</Hash>
+    <Hash>12a7195f9dd6f66b9b71fad8b2ee0a6b</Hash>
 </Codenesium>*/

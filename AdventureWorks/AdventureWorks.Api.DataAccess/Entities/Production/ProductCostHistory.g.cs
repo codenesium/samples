@@ -40,11 +40,12 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("StandardCost")]
 		public decimal StandardCost { get; private set; }
 
+		[Key]
 		[Column("StartDate")]
 		public DateTime StartDate { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>1dc535e1eb6ac7611f204b6ebc6789a0</Hash>
+    <Hash>f5e53d80c3eccbcb964dc334416e2081</Hash>
 </Codenesium>*/

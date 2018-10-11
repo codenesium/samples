@@ -22,7 +22,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			EventTeacher response = mapper.MapBOToEF(bo);
 
 			response.EventId.Should().Be(1);
-			response.Id.Should().Be(1);
+			response.TeacherId.Should().Be(1);
 		}
 
 		[Fact]
@@ -35,7 +35,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			BOEventTeacher response = mapper.MapEFToBO(entity);
 
 			response.EventId.Should().Be(1);
-			response.Id.Should().Be(1);
+			response.TeacherId.Should().Be(1);
 		}
 
 		[Fact]
@@ -53,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b40eda7a8888a0605691557c06bf7057</Hash>
+    <Hash>9049774eba8abf08684cfcec5a240e84</Hash>
 </Codenesium>*/

@@ -78,9 +78,7 @@ namespace NebulaNS.Api.DataAccess
 
 		public async Task<Machine> ByMachineGuid(Guid machineGuid)
 		{
-			var records = await this.Where(x => x.MachineGuid == machineGuid);
-
-			return records.FirstOrDefault();
+			return await this.Context.Set<Machine>().SingleOrDefaultAsync(x => x.MachineGuid == machineGuid);
 		}
 
 		public async virtual Task<List<Link>> Links(int assignedMachineId, int limit = int.MaxValue, int offset = 0)
@@ -88,9 +86,14 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Link>().Where(x => x.AssignedMachineId == assignedMachineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
 
-		public async virtual Task<List<MachineRefTeam>> MachineRefTeams(int machineId, int limit = int.MaxValue, int offset = 0)
+		// Reference foreign key. Reference Table=MachineRefTeam. First table=machines. Second table=machines
+		public async virtual Task<List<Machine>> ByMachineId(int machineId, int limit = int.MaxValue, int offset = 0)
 		{
-			return await this.Context.Set<MachineRefTeam>().Where(x => x.MachineId == machineId).AsQueryable().Skip(offset).Take(limit).ToListAsync<MachineRefTeam>();
+			return await (from refTable in this.Context.MachineRefTeams
+			              join machines in this.Context.Machines on
+			              refTable.MachineId equals machines.Id
+			              where refTable.MachineId == machineId
+			              select machines).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Machine>> Where(
@@ -125,5 +128,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d88afccaed0f48ca1eb62a2ade2019f9</Hash>
+    <Hash>f4d22a5812f20cd97cd88d44419011fd</Hash>
 </Codenesium>*/

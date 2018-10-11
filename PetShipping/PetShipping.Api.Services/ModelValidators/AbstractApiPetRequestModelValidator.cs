@@ -28,12 +28,12 @@ namespace PetShippingNS.Api.Services
 
 		public virtual void BreedIdRules()
 		{
-			this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreed).When(x => x?.BreedId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.BreedId).MustAsync(this.BeValidBreedByBreedId).When(x => x?.BreedId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void ClientIdRules()
 		{
-			this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClient).When(x => x?.ClientId != null).WithMessage("Invalid reference");
+			this.RuleFor(x => x.ClientId).MustAsync(this.BeValidClientByClientId).When(x => x?.ClientId != null).WithMessage("Invalid reference");
 		}
 
 		public virtual void NameRules()
@@ -46,16 +46,16 @@ namespace PetShippingNS.Api.Services
 		{
 		}
 
-		private async Task<bool> BeValidBreed(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidBreedByBreedId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.petRepository.GetBreed(id);
+			var record = await this.petRepository.BreedByBreedId(id);
 
 			return record != null;
 		}
 
-		private async Task<bool> BeValidClient(int id,  CancellationToken cancellationToken)
+		private async Task<bool> BeValidClientByClientId(int id,  CancellationToken cancellationToken)
 		{
-			var record = await this.petRepository.GetClient(id);
+			var record = await this.petRepository.ClientByClientId(id);
 
 			return record != null;
 		}
@@ -63,5 +63,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55a43ab88f9c5e47c0dcb5bfe18dc805</Hash>
+    <Hash>581300c275005dc1ad3b16b405343651</Hash>
 </Codenesium>*/

@@ -48,7 +48,6 @@ namespace AdventureWorksNS.Api.Contracts
 			from.ProductInventories.ForEach(x => this.AddProductInventory(x));
 			from.ProductListPriceHistories.ForEach(x => this.AddProductListPriceHistory(x));
 			from.ProductModels.ForEach(x => this.AddProductModel(x));
-			from.ProductModelIllustrations.ForEach(x => this.AddProductModelIllustration(x));
 			from.ProductModelProductDescriptionCultures.ForEach(x => this.AddProductModelProductDescriptionCulture(x));
 			from.ProductPhotoes.ForEach(x => this.AddProductPhoto(x));
 			from.ProductProductPhotoes.ForEach(x => this.AddProductProductPhoto(x));
@@ -66,15 +65,12 @@ namespace AdventureWorksNS.Api.Contracts
 			from.PurchaseOrderHeaders.ForEach(x => this.AddPurchaseOrderHeader(x));
 			from.ShipMethods.ForEach(x => this.AddShipMethod(x));
 			from.Vendors.ForEach(x => this.AddVendor(x));
-			from.CountryRegionCurrencies.ForEach(x => this.AddCountryRegionCurrency(x));
 			from.CreditCards.ForEach(x => this.AddCreditCard(x));
 			from.Currencies.ForEach(x => this.AddCurrency(x));
 			from.CurrencyRates.ForEach(x => this.AddCurrencyRate(x));
 			from.Customers.ForEach(x => this.AddCustomer(x));
-			from.PersonCreditCards.ForEach(x => this.AddPersonCreditCard(x));
 			from.SalesOrderDetails.ForEach(x => this.AddSalesOrderDetail(x));
 			from.SalesOrderHeaders.ForEach(x => this.AddSalesOrderHeader(x));
-			from.SalesOrderHeaderSalesReasons.ForEach(x => this.AddSalesOrderHeaderSalesReason(x));
 			from.SalesPersons.ForEach(x => this.AddSalesPerson(x));
 			from.SalesPersonQuotaHistories.ForEach(x => this.AddSalesPersonQuotaHistory(x));
 			from.SalesReasons.ForEach(x => this.AddSalesReason(x));
@@ -157,8 +153,6 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public List<ApiProductModelResponseModel> ProductModels { get; private set; } = new List<ApiProductModelResponseModel>();
 
-		public List<ApiProductModelIllustrationResponseModel> ProductModelIllustrations { get; private set; } = new List<ApiProductModelIllustrationResponseModel>();
-
 		public List<ApiProductModelProductDescriptionCultureResponseModel> ProductModelProductDescriptionCultures { get; private set; } = new List<ApiProductModelProductDescriptionCultureResponseModel>();
 
 		public List<ApiProductPhotoResponseModel> ProductPhotoes { get; private set; } = new List<ApiProductPhotoResponseModel>();
@@ -193,8 +187,6 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public List<ApiVendorResponseModel> Vendors { get; private set; } = new List<ApiVendorResponseModel>();
 
-		public List<ApiCountryRegionCurrencyResponseModel> CountryRegionCurrencies { get; private set; } = new List<ApiCountryRegionCurrencyResponseModel>();
-
 		public List<ApiCreditCardResponseModel> CreditCards { get; private set; } = new List<ApiCreditCardResponseModel>();
 
 		public List<ApiCurrencyResponseModel> Currencies { get; private set; } = new List<ApiCurrencyResponseModel>();
@@ -203,13 +195,9 @@ namespace AdventureWorksNS.Api.Contracts
 
 		public List<ApiCustomerResponseModel> Customers { get; private set; } = new List<ApiCustomerResponseModel>();
 
-		public List<ApiPersonCreditCardResponseModel> PersonCreditCards { get; private set; } = new List<ApiPersonCreditCardResponseModel>();
-
 		public List<ApiSalesOrderDetailResponseModel> SalesOrderDetails { get; private set; } = new List<ApiSalesOrderDetailResponseModel>();
 
 		public List<ApiSalesOrderHeaderResponseModel> SalesOrderHeaders { get; private set; } = new List<ApiSalesOrderHeaderResponseModel>();
-
-		public List<ApiSalesOrderHeaderSalesReasonResponseModel> SalesOrderHeaderSalesReasons { get; private set; } = new List<ApiSalesOrderHeaderSalesReasonResponseModel>();
 
 		public List<ApiSalesPersonResponseModel> SalesPersons { get; private set; } = new List<ApiSalesPersonResponseModel>();
 
@@ -792,22 +780,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeProductModelIllustrationsValue { get; private set; } = true;
-
-		public bool ShouldSerializeProductModelIllustrations()
-		{
-			return this.ShouldSerializeProductModelIllustrationsValue;
-		}
-
-		public void AddProductModelIllustration(ApiProductModelIllustrationResponseModel item)
-		{
-			if (!this.ProductModelIllustrations.Any(x => x.ProductModelID == item.ProductModelID))
-			{
-				this.ProductModelIllustrations.Add(item);
-			}
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeProductModelProductDescriptionCulturesValue { get; private set; } = true;
 
 		public bool ShouldSerializeProductModelProductDescriptionCultures()
@@ -1080,22 +1052,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeCountryRegionCurrenciesValue { get; private set; } = true;
-
-		public bool ShouldSerializeCountryRegionCurrencies()
-		{
-			return this.ShouldSerializeCountryRegionCurrenciesValue;
-		}
-
-		public void AddCountryRegionCurrency(ApiCountryRegionCurrencyResponseModel item)
-		{
-			if (!this.CountryRegionCurrencies.Any(x => x.CountryRegionCode == item.CountryRegionCode))
-			{
-				this.CountryRegionCurrencies.Add(item);
-			}
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeCreditCardsValue { get; private set; } = true;
 
 		public bool ShouldSerializeCreditCards()
@@ -1160,22 +1116,6 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializePersonCreditCardsValue { get; private set; } = true;
-
-		public bool ShouldSerializePersonCreditCards()
-		{
-			return this.ShouldSerializePersonCreditCardsValue;
-		}
-
-		public void AddPersonCreditCard(ApiPersonCreditCardResponseModel item)
-		{
-			if (!this.PersonCreditCards.Any(x => x.BusinessEntityID == item.BusinessEntityID))
-			{
-				this.PersonCreditCards.Add(item);
-			}
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeSalesOrderDetailsValue { get; private set; } = true;
 
 		public bool ShouldSerializeSalesOrderDetails()
@@ -1204,22 +1144,6 @@ namespace AdventureWorksNS.Api.Contracts
 			if (!this.SalesOrderHeaders.Any(x => x.SalesOrderID == item.SalesOrderID))
 			{
 				this.SalesOrderHeaders.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeSalesOrderHeaderSalesReasonsValue { get; private set; } = true;
-
-		public bool ShouldSerializeSalesOrderHeaderSalesReasons()
-		{
-			return this.ShouldSerializeSalesOrderHeaderSalesReasonsValue;
-		}
-
-		public void AddSalesOrderHeaderSalesReason(ApiSalesOrderHeaderSalesReasonResponseModel item)
-		{
-			if (!this.SalesOrderHeaderSalesReasons.Any(x => x.SalesOrderID == item.SalesOrderID))
-			{
-				this.SalesOrderHeaderSalesReasons.Add(item);
 			}
 		}
 
@@ -1560,11 +1484,6 @@ namespace AdventureWorksNS.Api.Contracts
 				this.ShouldSerializeProductModelsValue = false;
 			}
 
-			if (this.ProductModelIllustrations.Count == 0)
-			{
-				this.ShouldSerializeProductModelIllustrationsValue = false;
-			}
-
 			if (this.ProductModelProductDescriptionCultures.Count == 0)
 			{
 				this.ShouldSerializeProductModelProductDescriptionCulturesValue = false;
@@ -1650,11 +1569,6 @@ namespace AdventureWorksNS.Api.Contracts
 				this.ShouldSerializeVendorsValue = false;
 			}
 
-			if (this.CountryRegionCurrencies.Count == 0)
-			{
-				this.ShouldSerializeCountryRegionCurrenciesValue = false;
-			}
-
 			if (this.CreditCards.Count == 0)
 			{
 				this.ShouldSerializeCreditCardsValue = false;
@@ -1675,11 +1589,6 @@ namespace AdventureWorksNS.Api.Contracts
 				this.ShouldSerializeCustomersValue = false;
 			}
 
-			if (this.PersonCreditCards.Count == 0)
-			{
-				this.ShouldSerializePersonCreditCardsValue = false;
-			}
-
 			if (this.SalesOrderDetails.Count == 0)
 			{
 				this.ShouldSerializeSalesOrderDetailsValue = false;
@@ -1688,11 +1597,6 @@ namespace AdventureWorksNS.Api.Contracts
 			if (this.SalesOrderHeaders.Count == 0)
 			{
 				this.ShouldSerializeSalesOrderHeadersValue = false;
-			}
-
-			if (this.SalesOrderHeaderSalesReasons.Count == 0)
-			{
-				this.ShouldSerializeSalesOrderHeaderSalesReasonsValue = false;
 			}
 
 			if (this.SalesPersons.Count == 0)
@@ -1749,5 +1653,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2d13c6ab9e52d91c2721d41cc08c403a</Hash>
+    <Hash>5b50c72da3ef38351174398d3f6c680c</Hash>
 </Codenesium>*/

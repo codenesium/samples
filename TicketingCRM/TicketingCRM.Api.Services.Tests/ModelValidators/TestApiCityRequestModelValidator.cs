@@ -72,11 +72,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.Name, new string('A', 129));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Province
 		[Fact]
 		public async void ProvinceId_Create_Valid_Reference()
 		{
 			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-			cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
+			cityRepository.Setup(x => x.ProvinceByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
 			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
 			await validator.ValidateCreateAsync(new ApiCityRequestModel());
@@ -88,7 +89,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void ProvinceId_Create_Invalid_Reference()
 		{
 			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-			cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
+			cityRepository.Setup(x => x.ProvinceByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
 
 			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
 
@@ -101,7 +102,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void ProvinceId_Update_Valid_Reference()
 		{
 			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-			cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
+			cityRepository.Setup(x => x.ProvinceByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<Province>(new Province()));
 
 			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiCityRequestModel());
@@ -113,7 +114,7 @@ namespace TicketingCRMNS.Api.Services.Tests
 		public async void ProvinceId_Update_Invalid_Reference()
 		{
 			Mock<ICityRepository> cityRepository = new Mock<ICityRepository>();
-			cityRepository.Setup(x => x.GetProvince(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
+			cityRepository.Setup(x => x.ProvinceByProvinceId(It.IsAny<int>())).Returns(Task.FromResult<Province>(null));
 
 			var validator = new ApiCityRequestModelValidator(cityRepository.Object);
 
@@ -125,5 +126,5 @@ namespace TicketingCRMNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>aa2fe5e513091aa24c6eed3b2f312ae6</Hash>
+    <Hash>b1d31f9a67102832ba7fb1a638c04867</Hash>
 </Codenesium>*/

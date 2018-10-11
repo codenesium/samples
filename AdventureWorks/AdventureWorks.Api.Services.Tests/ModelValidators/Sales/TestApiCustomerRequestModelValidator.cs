@@ -72,11 +72,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.AccountNumber, new string('A', 11));
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= Store
 		[Fact]
 		public async void StoreID_Create_Valid_Reference()
 		{
 			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-			customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(new Store()));
+			customerRepository.Setup(x => x.StoreByStoreID(It.IsAny<int>())).Returns(Task.FromResult<Store>(new Store()));
 
 			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
@@ -88,7 +89,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void StoreID_Create_Invalid_Reference()
 		{
 			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-			customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(null));
+			customerRepository.Setup(x => x.StoreByStoreID(It.IsAny<int>())).Returns(Task.FromResult<Store>(null));
 
 			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
@@ -101,7 +102,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void StoreID_Update_Valid_Reference()
 		{
 			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-			customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(new Store()));
+			customerRepository.Setup(x => x.StoreByStoreID(It.IsAny<int>())).Returns(Task.FromResult<Store>(new Store()));
 
 			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
@@ -113,7 +114,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void StoreID_Update_Invalid_Reference()
 		{
 			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-			customerRepository.Setup(x => x.GetStore(It.IsAny<int>())).Returns(Task.FromResult<Store>(null));
+			customerRepository.Setup(x => x.StoreByStoreID(It.IsAny<int>())).Returns(Task.FromResult<Store>(null));
 
 			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
@@ -122,11 +123,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 			validator.ShouldHaveValidationErrorFor(x => x.StoreID, 1);
 		}
 
+		// table.Columns[i].GetReferenceTable().AppTableName= SalesTerritory
 		[Fact]
 		public async void TerritoryID_Create_Valid_Reference()
 		{
 			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-			customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+			customerRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
 			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 			await validator.ValidateCreateAsync(new ApiCustomerRequestModel());
@@ -138,7 +140,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Create_Invalid_Reference()
 		{
 			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-			customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+			customerRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
 			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
@@ -151,7 +153,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Update_Valid_Reference()
 		{
 			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-			customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
+			customerRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(new SalesTerritory()));
 
 			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 			await validator.ValidateUpdateAsync(default(int), new ApiCustomerRequestModel());
@@ -163,7 +165,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 		public async void TerritoryID_Update_Invalid_Reference()
 		{
 			Mock<ICustomerRepository> customerRepository = new Mock<ICustomerRepository>();
-			customerRepository.Setup(x => x.GetSalesTerritory(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
+			customerRepository.Setup(x => x.SalesTerritoryByTerritoryID(It.IsAny<int>())).Returns(Task.FromResult<SalesTerritory>(null));
 
 			var validator = new ApiCustomerRequestModelValidator(customerRepository.Object);
 
@@ -223,5 +225,5 @@ namespace AdventureWorksNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>d11b35e6e015a30e7e81e19ae19e2944</Hash>
+    <Hash>f2c9aa7de7bb95f31d00fe90def367ac</Hash>
 </Codenesium>*/

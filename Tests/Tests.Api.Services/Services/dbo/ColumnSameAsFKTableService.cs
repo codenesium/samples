@@ -18,8 +18,7 @@ namespace TestsNS.Api.Services
 			IColumnSameAsFKTableRepository columnSameAsFKTableRepository,
 			IApiColumnSameAsFKTableRequestModelValidator columnSameAsFKTableModelValidator,
 			IBOLColumnSameAsFKTableMapper bolcolumnSameAsFKTableMapper,
-			IDALColumnSameAsFKTableMapper dalcolumnSameAsFKTableMapper
-			)
+			IDALColumnSameAsFKTableMapper dalcolumnSameAsFKTableMapper)
 			: base(logger,
 			       columnSameAsFKTableRepository,
 			       columnSameAsFKTableModelValidator,
@@ -31,5 +30,5 @@ namespace TestsNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>239c91367ee472999f985a78c99c55f1</Hash>
+    <Hash>05b1c102ed51854b969476d7273a335b</Hash>
 </Codenesium>*/

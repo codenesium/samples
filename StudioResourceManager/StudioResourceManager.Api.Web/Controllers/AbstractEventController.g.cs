@@ -207,23 +207,6 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("byEventStatusId/{eventStatusId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByEventStatusId(int eventStatusId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEventResponseModel> response = await this.EventService.ByEventStatusId(eventStatusId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{eventId}/EventStudents")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEventStudentResponseModel>), 200)]
@@ -257,6 +240,23 @@ namespace StudioResourceManagerNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("byStudentId/{studentId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByStudentId(int studentId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiEventResponseModel> response = await this.EventService.ByStudentId(studentId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiEventRequestModel> PatchModel(int id, JsonPatchDocument<ApiEventRequestModel> patch)
 		{
 			var record = await this.EventService.Get(id);
@@ -276,5 +276,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f3d3840af69f52d1052272d8c6f49220</Hash>
+    <Hash>f41519d867983bf02a8223604ddde4db</Hash>
 </Codenesium>*/

@@ -20,8 +20,7 @@ namespace PetStoreNS.Api.Services
 			IBOLBreedMapper bolbreedMapper,
 			IDALBreedMapper dalbreedMapper,
 			IBOLPetMapper bolPetMapper,
-			IDALPetMapper dalPetMapper
-			)
+			IDALPetMapper dalPetMapper)
 			: base(logger,
 			       breedRepository,
 			       breedModelValidator,
@@ -35,5 +34,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>5f8770c6955a4f4525797d028e37a5fa</Hash>
+    <Hash>6dda68f99a2917eb818694f0236c7222</Hash>
 </Codenesium>*/

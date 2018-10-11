@@ -18,8 +18,7 @@ namespace AdventureWorksNS.Api.Services
 			ISalesTaxRateRepository salesTaxRateRepository,
 			IApiSalesTaxRateRequestModelValidator salesTaxRateModelValidator,
 			IBOLSalesTaxRateMapper bolsalesTaxRateMapper,
-			IDALSalesTaxRateMapper dalsalesTaxRateMapper
-			)
+			IDALSalesTaxRateMapper dalsalesTaxRateMapper)
 			: base(logger,
 			       salesTaxRateRepository,
 			       salesTaxRateModelValidator,
@@ -31,5 +30,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>15000b236c289b627a14ef312fd1eff2</Hash>
+    <Hash>80975c687ac72110836c545aba0b0414</Hash>
 </Codenesium>*/

@@ -20,24 +20,19 @@ namespace NebulaNS.Api.Services
 			IBOLMachineMapper bolmachineMapper,
 			IDALMachineMapper dalmachineMapper,
 			IBOLLinkMapper bolLinkMapper,
-			IDALLinkMapper dalLinkMapper,
-			IBOLMachineRefTeamMapper bolMachineRefTeamMapper,
-			IDALMachineRefTeamMapper dalMachineRefTeamMapper
-			)
+			IDALLinkMapper dalLinkMapper)
 			: base(logger,
 			       machineRepository,
 			       machineModelValidator,
 			       bolmachineMapper,
 			       dalmachineMapper,
 			       bolLinkMapper,
-			       dalLinkMapper,
-			       bolMachineRefTeamMapper,
-			       dalMachineRefTeamMapper)
+			       dalLinkMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>53d28bd7f97173fa2754f50ebf4bdae5</Hash>
+    <Hash>40ec6ece32dca852b6e869d3b8218955</Hash>
 </Codenesium>*/

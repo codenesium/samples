@@ -21,11 +21,8 @@ namespace AdventureWorksNS.Api.Services
 			IDALProductModelMapper dalproductModelMapper,
 			IBOLProductMapper bolProductMapper,
 			IDALProductMapper dalProductMapper,
-			IBOLProductModelIllustrationMapper bolProductModelIllustrationMapper,
-			IDALProductModelIllustrationMapper dalProductModelIllustrationMapper,
 			IBOLProductModelProductDescriptionCultureMapper bolProductModelProductDescriptionCultureMapper,
-			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper
-			)
+			IDALProductModelProductDescriptionCultureMapper dalProductModelProductDescriptionCultureMapper)
 			: base(logger,
 			       productModelRepository,
 			       productModelModelValidator,
@@ -33,8 +30,6 @@ namespace AdventureWorksNS.Api.Services
 			       dalproductModelMapper,
 			       bolProductMapper,
 			       dalProductMapper,
-			       bolProductModelIllustrationMapper,
-			       dalProductModelIllustrationMapper,
 			       bolProductModelProductDescriptionCultureMapper,
 			       dalProductModelProductDescriptionCultureMapper)
 		{
@@ -43,5 +38,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>06edf6f77f7023824055a5cff7557073</Hash>
+    <Hash>c676e354f532cbf71fd5eff3b261196f</Hash>
 </Codenesium>*/

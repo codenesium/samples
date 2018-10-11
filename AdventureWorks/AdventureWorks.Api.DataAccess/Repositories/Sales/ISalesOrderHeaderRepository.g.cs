@@ -25,20 +25,20 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<SalesOrderDetail>> SalesOrderDetails(int salesOrderID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<SalesOrderHeaderSalesReason>> SalesOrderHeaderSalesReasons(int salesOrderID, int limit = int.MaxValue, int offset = 0);
+		Task<CreditCard> CreditCardByCreditCardID(int? creditCardID);
 
-		Task<CreditCard> GetCreditCard(int? creditCardID);
+		Task<CurrencyRate> CurrencyRateByCurrencyRateID(int? currencyRateID);
 
-		Task<CurrencyRate> GetCurrencyRate(int? currencyRateID);
+		Task<Customer> CustomerByCustomerID(int customerID);
 
-		Task<Customer> GetCustomer(int customerID);
+		Task<SalesPerson> SalesPersonBySalesPersonID(int? salesPersonID);
 
-		Task<SalesPerson> GetSalesPerson(int? salesPersonID);
+		Task<SalesTerritory> SalesTerritoryByTerritoryID(int? territoryID);
 
-		Task<SalesTerritory> GetSalesTerritory(int? territoryID);
+		Task<List<SalesOrderHeader>> BySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7aba8a230793ec735433822ce8be8543</Hash>
+    <Hash>fbd5295530c447c5773d81799d5afece</Hash>
 </Codenesium>*/

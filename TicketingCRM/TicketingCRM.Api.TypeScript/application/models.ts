@@ -269,39 +269,6 @@ this.transactionId = 0;
 		
 				}
 			}
-			export class ApiSaleTicketRequestModel {
-				id:number;
-saleId:number;
-saleIdEntity:number;
-ticketId:number;
-ticketIdEntity:number;
-
-	
-				constructor() {
-					this.id = 0;
-this.saleId = 0;
-this.ticketId = 0;
-
-		
-				}
-			}
-
-			export class ApiSaleTicketResponseModel {
-				id:number;
-saleId:number;
-saleIdEntity:number;
-ticketId:number;
-ticketIdEntity:number;
-
-	
-				constructor() {
-					this.id = 0;
-this.saleId = 0;
-this.ticketId = 0;
-
-		
-				}
-			}
 			export class ApiTicketRequestModel {
 				id:number;
 publicId:string;
