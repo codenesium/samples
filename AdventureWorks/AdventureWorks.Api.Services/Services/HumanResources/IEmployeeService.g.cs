@@ -25,14 +25,14 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiEmployeeResponseModel> ByNationalIDNumber(string nationalIDNumber);
 
-		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiJobCandidateResponseModel>> JobCandidates(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiJobCandidateResponseModel>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e11de61f56dbf17ed8d869d3a93dab11</Hash>
+    <Hash>0f02848079282a3cd526599feea30b4c</Hash>
 </Codenesium>*/

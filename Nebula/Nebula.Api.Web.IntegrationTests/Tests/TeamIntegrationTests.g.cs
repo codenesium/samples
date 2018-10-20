@@ -15,54 +15,82 @@ namespace NebulaNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Team")]
 	[Trait("Area", "Integration")]
-	public class TeamIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TeamIntegrationTests
 	{
-		public TeamIntegrationTests(TestWebApplicationFactory fixture)
+		public TeamIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TeamDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTeamResponseModel model = await client.TeamGetAsync(1);
 
 			ApiTeamModelMapper mapper = new ApiTeamModelMapper();
 
-			UpdateResponse<ApiTeamResponseModel> updateResponse = await this.Client.TeamUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTeamResponseModel> updateResponse = await client.TeamUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TeamDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTeamResponseModel response = await client.TeamGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TeamDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TeamGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTeamResponseModel response = await this.Client.TeamGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTeamResponseModel response = await client.TeamGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace NebulaNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTeamResponseModel> response = await this.Client.TeamAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTeamResponseModel> response = await client.TeamAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTeamResponseModel> CreateRecord()
+		private async Task<ApiTeamResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTeamRequestModel();
 			model.SetProperties("B", 1);
-			CreateResponse<ApiTeamResponseModel> result = await this.Client.TeamCreateAsync(model);
+			CreateResponse<ApiTeamResponseModel> result = await client.TeamCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TeamDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a496c4aa2dfb0319d100594616d773b1</Hash>
+    <Hash>6d34023baba26292c2145e7ed18fbbfb</Hash>
 </Codenesium>*/

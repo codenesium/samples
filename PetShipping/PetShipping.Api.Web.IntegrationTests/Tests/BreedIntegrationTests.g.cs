@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Breed")]
 	[Trait("Area", "Integration")]
-	public class BreedIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class BreedIntegrationTests
 	{
-		public BreedIntegrationTests(TestWebApplicationFactory fixture)
+		public BreedIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.BreedDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiBreedResponseModel model = await client.BreedGetAsync(1);
 
 			ApiBreedModelMapper mapper = new ApiBreedModelMapper();
 
-			UpdateResponse<ApiBreedResponseModel> updateResponse = await this.Client.BreedUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiBreedResponseModel> updateResponse = await client.BreedUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.BreedDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiBreedResponseModel response = await client.BreedGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.BreedDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.BreedGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiBreedResponseModel response = await this.Client.BreedGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiBreedResponseModel response = await client.BreedGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiBreedResponseModel> response = await this.Client.BreedAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiBreedResponseModel> response = await client.BreedAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiBreedResponseModel> CreateRecord()
+		private async Task<ApiBreedResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiBreedRequestModel();
 			model.SetProperties("B", 1);
-			CreateResponse<ApiBreedResponseModel> result = await this.Client.BreedCreateAsync(model);
+			CreateResponse<ApiBreedResponseModel> result = await client.BreedCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.BreedDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c41de5ab6be2a422c4586cda0be4f009</Hash>
+    <Hash>a28ec9ab81c09c35bb37a385a718b72f</Hash>
 </Codenesium>*/

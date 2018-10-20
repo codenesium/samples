@@ -143,12 +143,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void SpaceSpaceFeatures_Exists()
+		public async void SpaceSpaceFeaturesBySpaceId_Exists()
 		{
 			var mock = new ServiceMockFacade<ISpaceRepository>();
 			var records = new List<SpaceSpaceFeature>();
 			records.Add(new SpaceSpaceFeature());
-			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeaturesBySpaceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SpaceService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
@@ -157,17 +157,17 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
-			List<ApiSpaceSpaceFeatureResponseModel> response = await service.SpaceSpaceFeatures(default(int));
+			List<ApiSpaceSpaceFeatureResponseModel> response = await service.SpaceSpaceFeaturesBySpaceId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeaturesBySpaceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SpaceSpaceFeatures_Not_Exists()
+		public async void SpaceSpaceFeaturesBySpaceId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISpaceRepository>();
-			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SpaceSpaceFeature>>(new List<SpaceSpaceFeature>()));
+			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeaturesBySpaceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SpaceSpaceFeature>>(new List<SpaceSpaceFeature>()));
 			var service = new SpaceService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
@@ -176,14 +176,14 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
 			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
 
-			List<ApiSpaceSpaceFeatureResponseModel> response = await service.SpaceSpaceFeatures(default(int));
+			List<ApiSpaceSpaceFeatureResponseModel> response = await service.SpaceSpaceFeaturesBySpaceId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeatures(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeaturesBySpaceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>39cbed1900b185317725100d77dc29c3</Hash>
+    <Hash>05d30e51b14fbcb3a03912a5f89c2b21</Hash>
 </Codenesium>*/

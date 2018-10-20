@@ -26,18 +26,18 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime DateEntered { get; private set; }
+		public DateTime DateEntered { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int LinkId { get; private set; }
+		public int LinkId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Log { get; private set; }
+		public string Log { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>03a3c7fd42db5c0d59ac33914a170dae</Hash>
+    <Hash>af0f90212ca6f747f1790ded3efad5f3</Hash>
 </Codenesium>*/

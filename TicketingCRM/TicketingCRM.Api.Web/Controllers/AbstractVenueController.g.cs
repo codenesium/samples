@@ -190,7 +190,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace TicketingCRMNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -259,5 +259,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>32aedabf30f4cb954a6ef2f8f0b11f92</Hash>
+    <Hash>1185300cc03202ed28074001efdb3856</Hash>
 </Codenesium>*/

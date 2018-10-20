@@ -27,20 +27,20 @@ namespace TwitterNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? Date { get; private set; }
+		public DateTime? Date { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public int? RetwitterUserId { get; private set; }
+		public int? RetwitterUserId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public TimeSpan? Time { get; private set; }
+		public TimeSpan? Time { get; private set; } = default(TimeSpan);
 
 		[Required]
 		[JsonProperty]
-		public int TweetTweetId { get; private set; }
+		public int TweetTweetId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8148a09c4916340ddf84035a53c942ff</Hash>
+    <Hash>2b92c7ab6d95e454c908fd91cc1c347f</Hash>
 </Codenesium>*/

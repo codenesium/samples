@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -260,10 +260,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{salesOrderID}/SalesOrderDetails")]
+		[Route("{salesOrderID}/SalesOrderDetailsBySalesOrderID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSalesOrderDetailResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesOrderDetails(int salesOrderID, int? limit, int? offset)
+		public async virtual Task<IActionResult> SalesOrderDetailsBySalesOrderID(int salesOrderID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -271,16 +271,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderDetailResponseModel> response = await this.SalesOrderHeaderService.SalesOrderDetails(salesOrderID, query.Limit, query.Offset);
+			List<ApiSalesOrderDetailResponseModel> response = await this.SalesOrderHeaderService.SalesOrderDetailsBySalesOrderID(salesOrderID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("bySalesOrderID/{salesOrderID}")]
+		[Route("bySalesReasonID/{salesReasonID}")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
-		public async virtual Task<IActionResult> BySalesOrderID(int salesOrderID, int? limit, int? offset)
+		public async virtual Task<IActionResult> BySalesReasonID(int salesReasonID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -288,7 +288,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.BySalesOrderID(salesOrderID, query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesOrderHeaderService.BySalesReasonID(salesReasonID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -312,5 +312,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f0b4f73a971d41ceed804fd59fd6169c</Hash>
+    <Hash>874e8450d1be507ec3cba125e9ae9983</Hash>
 </Codenesium>*/

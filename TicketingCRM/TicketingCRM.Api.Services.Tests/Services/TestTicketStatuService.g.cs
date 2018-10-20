@@ -143,12 +143,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Tickets_Exists()
+		public async void TicketsByTicketStatusId_Exists()
 		{
 			var mock = new ServiceMockFacade<ITicketStatuRepository>();
 			var records = new List<Ticket>();
 			records.Add(new Ticket());
-			mock.RepositoryMock.Setup(x => x.Tickets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.TicketsByTicketStatusId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TicketStatuService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Object,
@@ -157,17 +157,17 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			List<ApiTicketResponseModel> response = await service.Tickets(default(int));
+			List<ApiTicketResponseModel> response = await service.TicketsByTicketStatusId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Tickets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.TicketsByTicketStatusId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Tickets_Not_Exists()
+		public async void TicketsByTicketStatusId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITicketStatuRepository>();
-			mock.RepositoryMock.Setup(x => x.Tickets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Ticket>>(new List<Ticket>()));
+			mock.RepositoryMock.Setup(x => x.TicketsByTicketStatusId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Ticket>>(new List<Ticket>()));
 			var service = new TicketStatuService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TicketStatuModelValidatorMock.Object,
@@ -176,14 +176,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLTicketMapperMock,
 			                                     mock.DALMapperMockFactory.DALTicketMapperMock);
 
-			List<ApiTicketResponseModel> response = await service.Tickets(default(int));
+			List<ApiTicketResponseModel> response = await service.TicketsByTicketStatusId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Tickets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.TicketsByTicketStatusId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>02ef7e0f3b8165dae5bdcb6c300869ad</Hash>
+    <Hash>724dd5b6809c88cafc999a89600d9db2</Hash>
 </Codenesium>*/

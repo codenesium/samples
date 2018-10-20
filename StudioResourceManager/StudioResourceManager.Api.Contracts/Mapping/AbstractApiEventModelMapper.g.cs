@@ -20,7 +20,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			                       request.ScheduledEndDate,
 			                       request.ScheduledStartDate,
 			                       request.StudentNote,
-			                       request.TeacherNote);
+			                       request.TeacherNote,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -36,7 +37,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 				response.ScheduledEndDate,
 				response.ScheduledStartDate,
 				response.StudentNote,
-				response.TeacherNote);
+				response.TeacherNote,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -51,11 +53,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 			patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
 			patch.Replace(x => x.StudentNote, model.StudentNote);
 			patch.Replace(x => x.TeacherNote, model.TeacherNote);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8129103ee86a8921edb7590caf3dd28</Hash>
+    <Hash>445c33f79b89f1ce09f49b84204d4325</Hash>
 </Codenesium>*/

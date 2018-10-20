@@ -14,17 +14,17 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		public virtual void SetProperties(
-			decimal? @_2002,
-			decimal? @_2003,
-			decimal? @_2004,
+			decimal? @a2002,
+			decimal? @a2003,
+			decimal? @a2004,
 			string fullName,
 			string jobTitle,
 			int? salesPersonID,
 			string salesTerritory)
 		{
-			this.@_2002 = @_2002;
-			this.@_2003 = @_2003;
-			this.@_2004 = @_2004;
+			this.@A2002 = @a2002;
+			this.@A2003 = @a2003;
+			this.@A2004 = @a2004;
 			this.FullName = fullName;
 			this.JobTitle = jobTitle;
 			this.SalesPersonID = salesPersonID;
@@ -32,13 +32,13 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Column("2002")]
-		public decimal? @_2002 { get; private set; }
+		public decimal? @A2002 { get; private set; }
 
 		[Column("2003")]
-		public decimal? @_2003 { get; private set; }
+		public decimal? @A2003 { get; private set; }
 
 		[Column("2004")]
-		public decimal? @_2004 { get; private set; }
+		public decimal? @A2004 { get; private set; }
 
 		[MaxLength(152)]
 		[Column("FullName")]
@@ -58,5 +58,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8ceff0dc92c93886a8e5affd77611f26</Hash>
+    <Hash>7c0aae742c9caf5c0d9467170548abc6</Hash>
 </Codenesium>*/

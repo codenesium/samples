@@ -22,10 +22,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IDALSpecialOfferProductMapper DalSpecialOfferProductMapper { get; private set; }
 
-		protected IBOLSalesOrderDetailMapper BolSalesOrderDetailMapper { get; private set; }
-
-		protected IDALSalesOrderDetailMapper DalSalesOrderDetailMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractSpecialOfferProductService(
@@ -33,17 +29,13 @@ namespace AdventureWorksNS.Api.Services
 			ISpecialOfferProductRepository specialOfferProductRepository,
 			IApiSpecialOfferProductRequestModelValidator specialOfferProductModelValidator,
 			IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper,
-			IDALSpecialOfferProductMapper dalSpecialOfferProductMapper,
-			IBOLSalesOrderDetailMapper bolSalesOrderDetailMapper,
-			IDALSalesOrderDetailMapper dalSalesOrderDetailMapper)
+			IDALSpecialOfferProductMapper dalSpecialOfferProductMapper)
 			: base()
 		{
 			this.SpecialOfferProductRepository = specialOfferProductRepository;
 			this.SpecialOfferProductModelValidator = specialOfferProductModelValidator;
 			this.BolSpecialOfferProductMapper = bolSpecialOfferProductMapper;
 			this.DalSpecialOfferProductMapper = dalSpecialOfferProductMapper;
-			this.BolSalesOrderDetailMapper = bolSalesOrderDetailMapper;
-			this.DalSalesOrderDetailMapper = dalSalesOrderDetailMapper;
 			this.logger = logger;
 		}
 
@@ -115,23 +107,9 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
-
-		public async Task<List<ApiSpecialOfferProductResponseModel>> ByProductID(int productID, int limit = 0, int offset = int.MaxValue)
-		{
-			List<SpecialOfferProduct> records = await this.SpecialOfferProductRepository.ByProductID(productID, limit, offset);
-
-			return this.BolSpecialOfferProductMapper.MapBOToModel(this.DalSpecialOfferProductMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetails(int specialOfferID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SalesOrderDetail> records = await this.SpecialOfferProductRepository.SalesOrderDetails(specialOfferID, limit, offset);
-
-			return this.BolSalesOrderDetailMapper.MapBOToModel(this.DalSalesOrderDetailMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d9ce4a9e2dd35b23a3dcfd1a3d953079</Hash>
+    <Hash>c33e2e442ec22044f9127bbd5f153ea4</Hash>
 </Codenesium>*/

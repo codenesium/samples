@@ -10,10 +10,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 	{
 		public virtual void SetProperties(
 			int spaceId,
-			int spaceFeatureId)
+			int spaceFeatureId,
+			bool isDeleted)
 		{
 			this.SpaceId = spaceId;
 			this.SpaceFeatureId = spaceFeatureId;
+			this.IsDeleted = isDeleted;
 
 			this.SpaceFeatureIdEntity = nameof(ApiResponse.SpaceFeatures);
 			this.SpaceIdEntity = nameof(ApiResponse.Spaces);
@@ -30,9 +32,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[JsonProperty]
 		public string SpaceIdEntity { get; set; }
+
+		[JsonProperty]
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>6f20126b28c5df9719f68c94cf90526e</Hash>
+    <Hash>ab066b556a55e8555b58610f0116a598</Hash>
 </Codenesium>*/

@@ -34,33 +34,33 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string AddressLine1 { get; private set; }
+		public string AddressLine1 { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string AddressLine2 { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public string City { get; private set; }
+		public string AddressLine2 { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public string City { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string PostalCode { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public string PostalCode { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int StateProvinceID { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
+
+		[Required]
+		[JsonProperty]
+		public int StateProvinceID { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>915833713bc4ede05fa78931c819243e</Hash>
+    <Hash>5d93693b94124e614a972271392b27ee</Hash>
 </Codenesium>*/

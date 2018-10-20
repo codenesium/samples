@@ -299,8 +299,8 @@ namespace StackOverflowNS.Api.Web.Tests
 
 			IActionResult response = await controller.Delete(default(int));
 
-			response.Should().BeOfType<NoContentResult>();
-			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
 		}
 
@@ -338,5 +338,5 @@ namespace StackOverflowNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>0b08530683a22bba5040646a672f3a40</Hash>
+    <Hash>955eec0510388c0975830f54c00d07ee</Hash>
 </Codenesium>*/

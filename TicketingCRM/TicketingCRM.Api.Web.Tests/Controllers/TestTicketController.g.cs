@@ -299,8 +299,8 @@ namespace TicketingCRMNS.Api.Web.Tests
 
 			IActionResult response = await controller.Delete(default(int));
 
-			response.Should().BeOfType<NoContentResult>();
-			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
 		}
 
@@ -338,5 +338,5 @@ namespace TicketingCRMNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>56bf42a9638364f5a3aaa3270d362b76</Hash>
+    <Hash>1d52ca8f9810a9652bf835c2136191c1</Hash>
 </Codenesium>*/

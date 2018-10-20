@@ -44,51 +44,51 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int ChangeNumber { get; private set; }
+		public int ChangeNumber { get; private set; } = default(int);
 
 		[JsonProperty]
-		public byte[] Document1 { get; private set; }
+		public byte[] Document1 { get; private set; } = default(byte[]);
 
 		[JsonProperty]
-		public short? DocumentLevel { get; private set; }
+		public short? DocumentLevel { get; private set; } = default(short);
 
 		[JsonProperty]
-		public string DocumentSummary { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public string FileExtension { get; private set; }
+		public string DocumentSummary { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string FileName { get; private set; }
+		public string FileExtension { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool FolderFlag { get; private set; }
+		public string FileName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public bool FolderFlag { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public int Owner { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string Revision { get; private set; }
+		public int Owner { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int Status { get; private set; }
+		public string Revision { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Title { get; private set; }
+		public int Status { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public string Title { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d2516c247d1ed9d59f02873e55b502d2</Hash>
+    <Hash>fdd52cbb9d83b0d0959fec0dfedd488d</Hash>
 </Codenesium>*/

@@ -299,8 +299,8 @@ namespace AdventureWorksNS.Api.Web.Tests
 
 			IActionResult response = await controller.Delete(default(int));
 
-			response.Should().BeOfType<NoContentResult>();
-			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
 		}
 
@@ -338,5 +338,5 @@ namespace AdventureWorksNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>512feba0dac07eb01176d6529a7a920a</Hash>
+    <Hash>8e6ae6bcdb688e1f0b08e049b9868215</Hash>
 </Codenesium>*/

@@ -33,7 +33,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public string Name { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ProductCategoryID")]
 		public int ProductCategoryID { get; private set; }
 
@@ -44,5 +43,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f9ef99b8c12ee1af6cc4bef7651c0571</Hash>
+    <Hash>39c8889e001d2e5548d652380b18aea6</Hash>
 </Codenesium>*/

@@ -15,7 +15,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string firstName,
 			string lastName,
 			string phone,
-			int userId)
+			int userId,
+			bool isDeleted)
 		{
 			this.Id = id;
 			this.Birthday = birthday;
@@ -24,6 +25,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.UserId = userId;
+			this.IsDeleted = isDeleted;
 
 			this.UserIdEntity = nameof(ApiResponse.Users);
 		}
@@ -52,9 +54,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[JsonProperty]
 		public string UserIdEntity { get; set; }
+
+		[JsonProperty]
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c87c98744ced59aee238d4b174f12500</Hash>
+    <Hash>c72d53c5e7f61856d3754ca33eec3524</Hash>
 </Codenesium>*/

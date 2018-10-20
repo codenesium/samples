@@ -160,23 +160,23 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EmployeeDepartmentHistory> records = await this.EmployeeRepository.EmployeeDepartmentHistories(businessEntityID, limit, offset);
+			List<EmployeeDepartmentHistory> records = await this.EmployeeRepository.EmployeeDepartmentHistoriesByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEmployeePayHistoryResponseModel>> EmployeePayHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EmployeePayHistory> records = await this.EmployeeRepository.EmployeePayHistories(businessEntityID, limit, offset);
+			List<EmployeePayHistory> records = await this.EmployeeRepository.EmployeePayHistoriesByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolEmployeePayHistoryMapper.MapBOToModel(this.DalEmployeePayHistoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiJobCandidateResponseModel>> JobCandidates(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiJobCandidateResponseModel>> JobCandidatesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<JobCandidate> records = await this.EmployeeRepository.JobCandidates(businessEntityID, limit, offset);
+			List<JobCandidate> records = await this.EmployeeRepository.JobCandidatesByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolJobCandidateMapper.MapBOToModel(this.DalJobCandidateMapper.MapEFToBO(records));
 		}
@@ -184,5 +184,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1d17fd19e2117bc39d17786cf664ae3a</Hash>
+    <Hash>a55142ed90231c12f6e07343d7676eff</Hash>
 </Codenesium>*/

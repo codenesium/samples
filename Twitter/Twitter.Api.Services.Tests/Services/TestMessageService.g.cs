@@ -183,12 +183,12 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Messengers_Exists()
+		public async void MessengersByMessageId_Exists()
 		{
 			var mock = new ServiceMockFacade<IMessageRepository>();
 			var records = new List<Messenger>();
 			records.Add(new Messenger());
-			mock.RepositoryMock.Setup(x => x.Messengers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.MessengersByMessageId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new MessageService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
@@ -197,17 +197,17 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			List<ApiMessengerResponseModel> response = await service.Messengers(default(int));
+			List<ApiMessengerResponseModel> response = await service.MessengersByMessageId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Messengers(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.MessengersByMessageId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Messengers_Not_Exists()
+		public async void MessengersByMessageId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IMessageRepository>();
-			mock.RepositoryMock.Setup(x => x.Messengers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Messenger>>(new List<Messenger>()));
+			mock.RepositoryMock.Setup(x => x.MessengersByMessageId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Messenger>>(new List<Messenger>()));
 			var service = new MessageService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.MessageModelValidatorMock.Object,
@@ -216,14 +216,14 @@ namespace TwitterNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLMessengerMapperMock,
 			                                 mock.DALMapperMockFactory.DALMessengerMapperMock);
 
-			List<ApiMessengerResponseModel> response = await service.Messengers(default(int));
+			List<ApiMessengerResponseModel> response = await service.MessengersByMessageId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Messengers(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.MessengersByMessageId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8a55559450cc74d4c7b86144cc12cd0a</Hash>
+    <Hash>55de5caf2ab6858bd2dc9618c0262cd8</Hash>
 </Codenesium>*/

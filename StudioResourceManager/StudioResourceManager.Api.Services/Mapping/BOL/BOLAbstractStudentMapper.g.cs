@@ -24,7 +24,8 @@ namespace StudioResourceManagerNS.Api.Services
 				model.LastName,
 				model.Phone,
 				model.SmsRemindersEnabled,
-				model.UserId);
+				model.UserId,
+				model.IsDeleted);
 			return boStudent;
 		}
 
@@ -33,7 +34,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiStudentResponseModel();
 
-			model.SetProperties(boStudent.Id, boStudent.Birthday, boStudent.Email, boStudent.EmailRemindersEnabled, boStudent.FamilyId, boStudent.FirstName, boStudent.IsAdult, boStudent.LastName, boStudent.Phone, boStudent.SmsRemindersEnabled, boStudent.UserId);
+			model.SetProperties(boStudent.Id, boStudent.Birthday, boStudent.Email, boStudent.EmailRemindersEnabled, boStudent.FamilyId, boStudent.FirstName, boStudent.IsAdult, boStudent.LastName, boStudent.Phone, boStudent.SmsRemindersEnabled, boStudent.UserId, boStudent.IsDeleted);
 
 			return model;
 		}
@@ -54,5 +55,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>087324b509fd51e02aaa50d22bf3a5ce</Hash>
+    <Hash>423e2220503d2340641d1d0ffdfd96e3</Hash>
 </Codenesium>*/

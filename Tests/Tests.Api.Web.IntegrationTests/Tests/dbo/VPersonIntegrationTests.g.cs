@@ -15,19 +15,22 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "VPerson")]
 	[Trait("Area", "Integration")]
-	public class VPersonIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class VPersonIntegrationTests
 	{
-		public VPersonIntegrationTests(TestWebApplicationFactory fixture)
+		public VPersonIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiVPersonResponseModel response = await this.Client.VPersonGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiVPersonResponseModel response = await client.VPersonGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -35,7 +38,14 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiVPersonResponseModel> response = await this.Client.VPersonAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiVPersonResponseModel> response = await client.VPersonAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
@@ -43,5 +53,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f948a092ad67b2ba6f096bde6b53f6ec</Hash>
+    <Hash>90fbc6b3e0aaf9df5197bca0e5dc9ae1</Hash>
 </Codenesium>*/

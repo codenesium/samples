@@ -16,9 +16,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		Task<Illustration> Get(int illustrationID);
 
 		Task<List<Illustration>> All(int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Illustration>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0ff11c0f147dd40564a4473bf5ae4d65</Hash>
+    <Hash>e9f5a3dd2f3c06095e7c12e6af11438a</Hash>
 </Codenesium>*/

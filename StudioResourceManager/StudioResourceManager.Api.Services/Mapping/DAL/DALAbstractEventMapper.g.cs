@@ -21,7 +21,8 @@ namespace StudioResourceManagerNS.Api.Services
 				bo.ScheduledEndDate,
 				bo.ScheduledStartDate,
 				bo.StudentNote,
-				bo.TeacherNote);
+				bo.TeacherNote,
+				bo.IsDeleted);
 			return efEvent;
 		}
 
@@ -39,7 +40,8 @@ namespace StudioResourceManagerNS.Api.Services
 				ef.ScheduledEndDate,
 				ef.ScheduledStartDate,
 				ef.StudentNote,
-				ef.TeacherNote);
+				ef.TeacherNote,
+				ef.IsDeleted);
 			return bo;
 		}
 
@@ -59,5 +61,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>57eca1abdf46b0ade4200c4bf4a3f756</Hash>
+    <Hash>9148c1c52f063e0903bff005c0552f80</Hash>
 </Codenesium>*/

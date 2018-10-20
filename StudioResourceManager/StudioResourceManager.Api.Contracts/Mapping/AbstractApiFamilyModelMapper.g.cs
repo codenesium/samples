@@ -17,7 +17,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			                       request.PrimaryContactEmail,
 			                       request.PrimaryContactFirstName,
 			                       request.PrimaryContactLastName,
-			                       request.PrimaryContactPhone);
+			                       request.PrimaryContactPhone,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -30,7 +31,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 				response.PrimaryContactEmail,
 				response.PrimaryContactFirstName,
 				response.PrimaryContactLastName,
-				response.PrimaryContactPhone);
+				response.PrimaryContactPhone,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -42,11 +44,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 			patch.Replace(x => x.PrimaryContactFirstName, model.PrimaryContactFirstName);
 			patch.Replace(x => x.PrimaryContactLastName, model.PrimaryContactLastName);
 			patch.Replace(x => x.PrimaryContactPhone, model.PrimaryContactPhone);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7ad97521a0e4fc6155beb9bec187f926</Hash>
+    <Hash>8a81b44f7e10ca4ee1a43108821460de</Hash>
 </Codenesium>*/

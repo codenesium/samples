@@ -190,7 +190,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace StudioResourceManagerNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{teacherId}/EventTeachers")]
+		[Route("{teacherId}/EventTeachersByTeacherId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEventTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> EventTeachers(int teacherId, int? limit, int? offset)
+		public async virtual Task<IActionResult> EventTeachersByTeacherId(int teacherId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,16 +218,16 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEventTeacherResponseModel> response = await this.TeacherService.EventTeachers(teacherId, query.Limit, query.Offset);
+			List<ApiEventTeacherResponseModel> response = await this.TeacherService.EventTeachersByTeacherId(teacherId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{teacherId}/Rates")]
+		[Route("{teacherId}/RatesByTeacherId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiRateResponseModel>), 200)]
-		public async virtual Task<IActionResult> Rates(int teacherId, int? limit, int? offset)
+		public async virtual Task<IActionResult> RatesByTeacherId(int teacherId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,16 +235,16 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiRateResponseModel> response = await this.TeacherService.Rates(teacherId, query.Limit, query.Offset);
+			List<ApiRateResponseModel> response = await this.TeacherService.RatesByTeacherId(teacherId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{teacherId}/TeacherTeacherSkills")]
+		[Route("{teacherId}/TeacherTeacherSkillsByTeacherId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTeacherTeacherSkillResponseModel>), 200)]
-		public async virtual Task<IActionResult> TeacherTeacherSkills(int teacherId, int? limit, int? offset)
+		public async virtual Task<IActionResult> TeacherTeacherSkillsByTeacherId(int teacherId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,24 +252,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTeacherTeacherSkillResponseModel> response = await this.TeacherService.TeacherTeacherSkills(teacherId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("byEventId/{eventId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByEventId(int eventId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiTeacherResponseModel> response = await this.TeacherService.ByEventId(eventId, query.Limit, query.Offset);
+			List<ApiTeacherTeacherSkillResponseModel> response = await this.TeacherService.TeacherTeacherSkillsByTeacherId(teacherId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -293,5 +276,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>6b234f813502669d67ecefe066d0abea</Hash>
+    <Hash>08714bdbb3318461df33a3af48fe6d11</Hash>
 </Codenesium>*/

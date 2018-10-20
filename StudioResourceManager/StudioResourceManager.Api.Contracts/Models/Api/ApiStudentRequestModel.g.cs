@@ -24,7 +24,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string lastName,
 			string phone,
 			bool smsRemindersEnabled,
-			int userId)
+			int userId,
+			bool isDeleted)
 		{
 			this.Birthday = birthday;
 			this.Email = email;
@@ -36,50 +37,55 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled;
 			this.UserId = userId;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
 		[JsonProperty]
-		public DateTime Birthday { get; private set; }
+		public DateTime Birthday { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string Email { get; private set; }
+		public string Email { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool EmailRemindersEnabled { get; private set; }
+		public bool EmailRemindersEnabled { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public int FamilyId { get; private set; }
+		public int FamilyId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string FirstName { get; private set; }
+		public string FirstName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool IsAdult { get; private set; }
+		public bool IsAdult { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public string LastName { get; private set; }
+		public string LastName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Phone { get; private set; }
+		public string Phone { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool SmsRemindersEnabled { get; private set; }
+		public bool SmsRemindersEnabled { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public int UserId { get; private set; }
+		public int UserId { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a58f6409641a439d16a0048a45ea4ab</Hash>
+    <Hash>392a284f4da62d2ffcf4c6021d2ea80b</Hash>
 </Codenesium>*/

@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -226,10 +226,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{productSubcategoryID}/Products")]
+		[Route("{productSubcategoryID}/ProductsByProductSubcategoryID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
-		public async virtual Task<IActionResult> Products(int productSubcategoryID, int? limit, int? offset)
+		public async virtual Task<IActionResult> ProductsByProductSubcategoryID(int productSubcategoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -237,7 +237,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductResponseModel> response = await this.ProductSubcategoryService.Products(productSubcategoryID, query.Limit, query.Offset);
+			List<ApiProductResponseModel> response = await this.ProductSubcategoryService.ProductsByProductSubcategoryID(productSubcategoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -261,5 +261,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>8ea0ab24ebc72c7af45ebe829930fc02</Hash>
+    <Hash>c8b2a3fc730a3710219b73607a887d5d</Hash>
 </Codenesium>*/

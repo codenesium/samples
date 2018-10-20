@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int contactTypeID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContactsByContactTypeID(int contactTypeID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<BusinessEntityContact> records = await this.ContactTypeRepository.BusinessEntityContacts(contactTypeID, limit, offset);
+			List<BusinessEntityContact> records = await this.ContactTypeRepository.BusinessEntityContactsByContactTypeID(contactTypeID, limit, offset);
 
 			return this.BolBusinessEntityContactMapper.MapBOToModel(this.DalBusinessEntityContactMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6b34439ca0c3e7bc58ad100017aaf9ab</Hash>
+    <Hash>079461011ac6e050b6a2c6ac60ade2a4</Hash>
 </Codenesium>*/

@@ -190,7 +190,7 @@ namespace PetShippingNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace PetShippingNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{handlerId}/AirTransports")]
+		[Route("{handlerId}/AirTransportsByHandlerId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiAirTransportResponseModel>), 200)]
-		public async virtual Task<IActionResult> AirTransports(int handlerId, int? limit, int? offset)
+		public async virtual Task<IActionResult> AirTransportsByHandlerId(int handlerId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiAirTransportResponseModel> response = await this.HandlerService.AirTransports(handlerId, query.Limit, query.Offset);
+			List<ApiAirTransportResponseModel> response = await this.HandlerService.AirTransportsByHandlerId(handlerId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -259,5 +259,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>14856be9a1146a8cf88d3929e943a68d</Hash>
+    <Hash>36ac356c5ccfa2dfe38470b167410817</Hash>
 </Codenesium>*/

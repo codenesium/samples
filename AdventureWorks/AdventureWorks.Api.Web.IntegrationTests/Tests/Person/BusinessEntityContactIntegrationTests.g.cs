@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "BusinessEntityContact")]
 	[Trait("Area", "Integration")]
-	public class BusinessEntityContactIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class BusinessEntityContactIntegrationTests
 	{
-		public BusinessEntityContactIntegrationTests(TestWebApplicationFactory fixture)
+		public BusinessEntityContactIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.BusinessEntityContactDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiBusinessEntityContactResponseModel model = await client.BusinessEntityContactGetAsync(1);
 
 			ApiBusinessEntityContactModelMapper mapper = new ApiBusinessEntityContactModelMapper();
 
-			UpdateResponse<ApiBusinessEntityContactResponseModel> updateResponse = await this.Client.BusinessEntityContactUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiBusinessEntityContactResponseModel> updateResponse = await client.BusinessEntityContactUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.BusinessEntityContactDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiBusinessEntityContactResponseModel response = await client.BusinessEntityContactGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.BusinessEntityContactDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.BusinessEntityContactGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiBusinessEntityContactResponseModel response = await this.Client.BusinessEntityContactGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiBusinessEntityContactResponseModel response = await client.BusinessEntityContactGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiBusinessEntityContactResponseModel> response = await this.Client.BusinessEntityContactAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiBusinessEntityContactResponseModel> response = await client.BusinessEntityContactAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiBusinessEntityContactResponseModel> CreateRecord()
+		private async Task<ApiBusinessEntityContactResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiBusinessEntityContactRequestModel();
 			model.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiBusinessEntityContactResponseModel> result = await this.Client.BusinessEntityContactCreateAsync(model);
+			CreateResponse<ApiBusinessEntityContactResponseModel> result = await client.BusinessEntityContactCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.BusinessEntityContactDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4cd54b45419346f410a126cbdbd203df</Hash>
+    <Hash>5dc26feb067b4f7d364a501c0c987053</Hash>
 </Codenesium>*/

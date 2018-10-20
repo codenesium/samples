@@ -22,10 +22,10 @@ namespace PetShippingNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc1896096a14d6c7e8e2a22c99fa2c3d</Hash>
+    <Hash>8120a7dafaaadcd3ccfe4249d0b500e6</Hash>
 </Codenesium>*/

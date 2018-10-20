@@ -17,18 +17,18 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<SalesPerson>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<SalesOrderHeader>> SalesOrderHeaders(int salesPersonID, int limit = int.MaxValue, int offset = 0);
+		Task<List<SalesOrderHeader>> SalesOrderHeadersBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<SalesPersonQuotaHistory>> SalesPersonQuotaHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<SalesPersonQuotaHistory>> SalesPersonQuotaHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<SalesTerritoryHistory>> SalesTerritoryHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<SalesTerritoryHistory>> SalesTerritoryHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Store>> Stores(int salesPersonID, int limit = int.MaxValue, int offset = 0);
+		Task<List<Store>> StoresBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0);
 
 		Task<SalesTerritory> SalesTerritoryByTerritoryID(int? territoryID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ef2425acd76d1d4ef4debd76206913ab</Hash>
+    <Hash>a97e87b9a267451ca7449b35341d20a6</Hash>
 </Codenesium>*/

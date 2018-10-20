@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "WorkOrderRouting")]
 	[Trait("Area", "Integration")]
-	public class WorkOrderRoutingIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class WorkOrderRoutingIntegrationTests
 	{
-		public WorkOrderRoutingIntegrationTests(TestWebApplicationFactory fixture)
+		public WorkOrderRoutingIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.WorkOrderRoutingDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiWorkOrderRoutingResponseModel model = await client.WorkOrderRoutingGetAsync(1);
 
 			ApiWorkOrderRoutingModelMapper mapper = new ApiWorkOrderRoutingModelMapper();
 
-			UpdateResponse<ApiWorkOrderRoutingResponseModel> updateResponse = await this.Client.WorkOrderRoutingUpdateAsync(model.WorkOrderID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiWorkOrderRoutingResponseModel> updateResponse = await client.WorkOrderRoutingUpdateAsync(model.WorkOrderID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.WorkOrderRoutingDeleteAsync(model.WorkOrderID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiWorkOrderRoutingResponseModel response = await client.WorkOrderRoutingGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.WorkOrderRoutingDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.WorkOrderRoutingGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiWorkOrderRoutingResponseModel response = await this.Client.WorkOrderRoutingGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiWorkOrderRoutingResponseModel response = await client.WorkOrderRoutingGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiWorkOrderRoutingResponseModel> response = await this.Client.WorkOrderRoutingAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiWorkOrderRoutingResponseModel> response = await client.WorkOrderRoutingAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiWorkOrderRoutingResponseModel> CreateRecord()
+		private async Task<ApiWorkOrderRoutingResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiWorkOrderRoutingRequestModel();
 			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
-			CreateResponse<ApiWorkOrderRoutingResponseModel> result = await this.Client.WorkOrderRoutingCreateAsync(model);
+			CreateResponse<ApiWorkOrderRoutingResponseModel> result = await client.WorkOrderRoutingCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.WorkOrderRoutingDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d30ba6da9c312ebdbad8abf42dcde896</Hash>
+    <Hash>350d74eb699392e4520b1994e45348ee</Hash>
 </Codenesium>*/

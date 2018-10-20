@@ -40,46 +40,46 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime DueDate { get; private set; }
+		public DateTime DueDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public decimal LineTotal { get; private set; }
+		public decimal LineTotal { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public short OrderQty { get; private set; }
+		public short OrderQty { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; }
+		public int ProductID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int PurchaseOrderDetailID { get; private set; }
+		public int PurchaseOrderDetailID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public double ReceivedQty { get; private set; }
+		public double ReceivedQty { get; private set; } = default(double);
 
 		[Required]
 		[JsonProperty]
-		public double RejectedQty { get; private set; }
+		public double RejectedQty { get; private set; } = default(double);
 
 		[Required]
 		[JsonProperty]
-		public double StockedQty { get; private set; }
+		public double StockedQty { get; private set; } = default(double);
 
 		[Required]
 		[JsonProperty]
-		public decimal UnitPrice { get; private set; }
+		public decimal UnitPrice { get; private set; } = default(decimal);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e9370e50f0b506842a21c14f57db243</Hash>
+    <Hash>75403d2407b4ba7b35ff6bdeacfc89f3</Hash>
 </Codenesium>*/

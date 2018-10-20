@@ -26,18 +26,18 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public decimal Amount { get; private set; }
+		public decimal Amount { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public string GatewayConfirmationNumber { get; private set; }
+		public string GatewayConfirmationNumber { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int TransactionStatusId { get; private set; }
+		public int TransactionStatusId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d0d8143a2fbe6c1a37829623ce48ec40</Hash>
+    <Hash>bfb1216e90ea7cbde8b5e2fa7bcb9609</Hash>
 </Codenesium>*/

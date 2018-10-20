@@ -22,7 +22,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -33,5 +32,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>22b20c48b26d714bd8e010ec5f40ab73</Hash>
+    <Hash>c65a529aa72eae6a6cd45e4d56c797a2</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PhoneNumberType")]
 	[Trait("Area", "Integration")]
-	public class PhoneNumberTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PhoneNumberTypeIntegrationTests
 	{
-		public PhoneNumberTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public PhoneNumberTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PhoneNumberTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPhoneNumberTypeResponseModel model = await client.PhoneNumberTypeGetAsync(1);
 
 			ApiPhoneNumberTypeModelMapper mapper = new ApiPhoneNumberTypeModelMapper();
 
-			UpdateResponse<ApiPhoneNumberTypeResponseModel> updateResponse = await this.Client.PhoneNumberTypeUpdateAsync(model.PhoneNumberTypeID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPhoneNumberTypeResponseModel> updateResponse = await client.PhoneNumberTypeUpdateAsync(model.PhoneNumberTypeID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PhoneNumberTypeDeleteAsync(model.PhoneNumberTypeID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPhoneNumberTypeResponseModel response = await client.PhoneNumberTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PhoneNumberTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PhoneNumberTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPhoneNumberTypeResponseModel response = await this.Client.PhoneNumberTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPhoneNumberTypeResponseModel response = await client.PhoneNumberTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPhoneNumberTypeResponseModel> response = await this.Client.PhoneNumberTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPhoneNumberTypeResponseModel> response = await client.PhoneNumberTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPhoneNumberTypeResponseModel> CreateRecord()
+		private async Task<ApiPhoneNumberTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPhoneNumberTypeRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiPhoneNumberTypeResponseModel> result = await this.Client.PhoneNumberTypeCreateAsync(model);
+			CreateResponse<ApiPhoneNumberTypeResponseModel> result = await client.PhoneNumberTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PhoneNumberTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b363f3e6cc67a1b04d795d322bfff080</Hash>
+    <Hash>3dad9adb8526e8689a8b2022fb392c46</Hash>
 </Codenesium>*/

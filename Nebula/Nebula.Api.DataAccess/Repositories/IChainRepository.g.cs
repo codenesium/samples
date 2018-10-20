@@ -19,7 +19,7 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Chain> ByExternalId(Guid externalId);
 
-		Task<List<Link>> Links(int chainId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Link>> LinksByChainId(int chainId, int limit = int.MaxValue, int offset = 0);
 
 		Task<ChainStatus> ChainStatusByChainStatusId(int chainStatusId);
 
@@ -30,5 +30,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9597f3094627ea3718df7d307d6a6105</Hash>
+    <Hash>d89763db35fbe836781fe5dae1401782</Hash>
 </Codenesium>*/

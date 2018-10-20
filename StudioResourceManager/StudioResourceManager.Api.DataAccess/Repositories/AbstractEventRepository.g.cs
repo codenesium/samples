@@ -76,12 +76,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<EventStudent>> EventStudents(int eventId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<EventStudent>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EventStudent>().Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
 		}
 
-		public async virtual Task<List<EventTeacher>> EventTeachers(int eventId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<EventTeacher>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EventTeacher>().Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
 		}
@@ -89,24 +89,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public async virtual Task<EventStatus> EventStatusByEventStatusId(int eventStatusId)
 		{
 			return await this.Context.Set<EventStatus>().SingleOrDefaultAsync(x => x.Id == eventStatusId);
-		}
-
-		public async virtual Task<List<Event>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.EventStudents
-			              join events in this.Context.Events on
-			              refTable.EventId equals events.Id
-			              where refTable.StudentId == studentId
-			              select events).Skip(offset).Take(limit).ToListAsync();
-		}
-
-		public async virtual Task<List<Event>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.EventTeachers
-			              join events in this.Context.Events on
-			              refTable.EventId equals events.Id
-			              where refTable.TeacherId == teacherId
-			              select events).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Event>> Where(
@@ -141,5 +123,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>dce839de4e3efb1af764a57837ddce29</Hash>
+    <Hash>c736e6770c1c6a079c628440d2af462e</Hash>
 </Codenesium>*/

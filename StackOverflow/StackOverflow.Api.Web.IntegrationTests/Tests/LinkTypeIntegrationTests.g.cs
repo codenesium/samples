@@ -15,54 +15,82 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "LinkType")]
 	[Trait("Area", "Integration")]
-	public class LinkTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class LinkTypeIntegrationTests
 	{
-		public LinkTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public LinkTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.LinkTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiLinkTypeResponseModel model = await client.LinkTypeGetAsync(1);
 
 			ApiLinkTypeModelMapper mapper = new ApiLinkTypeModelMapper();
 
-			UpdateResponse<ApiLinkTypeResponseModel> updateResponse = await this.Client.LinkTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiLinkTypeResponseModel> updateResponse = await client.LinkTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.LinkTypeDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiLinkTypeResponseModel response = await client.LinkTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.LinkTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.LinkTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiLinkTypeResponseModel response = await this.Client.LinkTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiLinkTypeResponseModel response = await client.LinkTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiLinkTypeResponseModel> response = await this.Client.LinkTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiLinkTypeResponseModel> response = await client.LinkTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiLinkTypeResponseModel> CreateRecord()
+		private async Task<ApiLinkTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiLinkTypeRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiLinkTypeResponseModel> result = await this.Client.LinkTypeCreateAsync(model);
+			CreateResponse<ApiLinkTypeResponseModel> result = await client.LinkTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.LinkTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>31b6da68c7f01a94adde93ae8b53ebaf</Hash>
+    <Hash>9e32203661a9fb3bb3d787ffcdd23772</Hash>
 </Codenesium>*/

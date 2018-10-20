@@ -21,10 +21,10 @@ namespace FileServiceNS.Api.DataAccess
 
 		Task<Bucket> ByName(string name);
 
-		Task<List<File>> Files(int bucketId, int limit = int.MaxValue, int offset = 0);
+		Task<List<File>> FilesByBucketId(int bucketId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>571273340a6360852b377e7f0d495b4b</Hash>
+    <Hash>49c1b991f1d80a48a3555a4d23b39fed</Hash>
 </Codenesium>*/

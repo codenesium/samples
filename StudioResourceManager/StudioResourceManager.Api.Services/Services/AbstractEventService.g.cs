@@ -124,36 +124,22 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudents(int eventId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EventStudent> records = await this.EventRepository.EventStudents(eventId, limit, offset);
+			List<EventStudent> records = await this.EventRepository.EventStudentsByEventId(eventId, limit, offset);
 
 			return this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEventTeacherResponseModel>> EventTeachers(int eventId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventTeacherResponseModel>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EventTeacher> records = await this.EventRepository.EventTeachers(eventId, limit, offset);
+			List<EventTeacher> records = await this.EventRepository.EventTeachersByEventId(eventId, limit, offset);
 
 			return this.BolEventTeacherMapper.MapBOToModel(this.DalEventTeacherMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiEventResponseModel>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Event> records = await this.EventRepository.ByStudentId(studentId, limit, offset);
-
-			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiEventResponseModel>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Event> records = await this.EventRepository.ByTeacherId(teacherId, limit, offset);
-
-			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>22106950cc06634d1cfbd91e74f1e700</Hash>
+    <Hash>b4d28a6dbb20b346aa12a57ed5994bc3</Hash>
 </Codenesium>*/

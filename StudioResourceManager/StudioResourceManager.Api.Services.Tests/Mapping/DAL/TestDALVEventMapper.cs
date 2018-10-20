@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALVEventMapper();
 			var bo = new BOVEvent();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 
 			VEvent response = mapper.MapBOToEF(bo);
 
@@ -28,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Id.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -35,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALVEventMapper();
 			VEvent entity = new VEvent();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 
 			BOVEvent response = mapper.MapEFToBO(entity);
 
@@ -46,6 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Id.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -53,7 +55,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALVEventMapper();
 			VEvent entity = new VEvent();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 
 			List<BOVEvent> response = mapper.MapEFToBO(new List<VEvent>() { entity });
 
@@ -63,5 +65,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>5d029951564c277c566aeed151a46b1e</Hash>
+    <Hash>11ec88acba00ff73177b2ec8cf106252</Hash>
 </Codenesium>*/

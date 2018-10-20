@@ -130,15 +130,29 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiCurrencyRateResponseModel>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiCurrencyRateResponseModel>> CurrencyRatesByFromCurrencyCode(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
-			List<CurrencyRate> records = await this.CurrencyRepository.CurrencyRates(fromCurrencyCode, limit, offset);
+			List<CurrencyRate> records = await this.CurrencyRepository.CurrencyRatesByFromCurrencyCode(fromCurrencyCode, limit, offset);
 
 			return this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiCurrencyRateResponseModel>> CurrencyRatesByToCurrencyCode(string toCurrencyCode, int limit = int.MaxValue, int offset = 0)
+		{
+			List<CurrencyRate> records = await this.CurrencyRepository.CurrencyRatesByToCurrencyCode(toCurrencyCode, limit, offset);
+
+			return this.BolCurrencyRateMapper.MapBOToModel(this.DalCurrencyRateMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiCurrencyResponseModel>> ByCountryRegionCode(int countryRegionCode, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Currency> records = await this.CurrencyRepository.ByCountryRegionCode(countryRegionCode, limit, offset);
+
+			return this.BolCurrencyMapper.MapBOToModel(this.DalCurrencyMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f82a80e8e95eeedf0f9eb57f5b080c11</Hash>
+    <Hash>81848a86174470661cc4975a900cfc8a</Hash>
 </Codenesium>*/

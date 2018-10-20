@@ -15,17 +15,23 @@ namespace StudioResourceManagerNS.Api.Contracts
 		}
 
 		public virtual void SetProperties(
-			int teacherSkillId)
+			int teacherSkillId,
+			bool isDeleted)
 		{
 			this.TeacherSkillId = teacherSkillId;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
 		[JsonProperty]
-		public int TeacherSkillId { get; private set; }
+		public int TeacherSkillId { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a0192e86a4ad749af087c0167893c79</Hash>
+    <Hash>2dda5da67a2589975aad2ab51dd47621</Hash>
 </Codenesium>*/

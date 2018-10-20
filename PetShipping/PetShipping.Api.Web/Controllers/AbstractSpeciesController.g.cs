@@ -190,7 +190,7 @@ namespace PetShippingNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace PetShippingNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{speciesId}/Breeds")]
+		[Route("{speciesId}/BreedsBySpeciesId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBreedResponseModel>), 200)]
-		public async virtual Task<IActionResult> Breeds(int speciesId, int? limit, int? offset)
+		public async virtual Task<IActionResult> BreedsBySpeciesId(int speciesId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBreedResponseModel> response = await this.SpeciesService.Breeds(speciesId, query.Limit, query.Offset);
+			List<ApiBreedResponseModel> response = await this.SpeciesService.BreedsBySpeciesId(speciesId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +242,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7f1a739a948ddf01742b912379ee2522</Hash>
+    <Hash>448515e5f60a318b139d6655dbe8780f</Hash>
 </Codenesium>*/

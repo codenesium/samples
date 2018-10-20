@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ClientCommunication")]
 	[Trait("Area", "Integration")]
-	public class ClientCommunicationIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ClientCommunicationIntegrationTests
 	{
-		public ClientCommunicationIntegrationTests(TestWebApplicationFactory fixture)
+		public ClientCommunicationIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ClientCommunicationDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiClientCommunicationResponseModel model = await client.ClientCommunicationGetAsync(1);
 
 			ApiClientCommunicationModelMapper mapper = new ApiClientCommunicationModelMapper();
 
-			UpdateResponse<ApiClientCommunicationResponseModel> updateResponse = await this.Client.ClientCommunicationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiClientCommunicationResponseModel> updateResponse = await client.ClientCommunicationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ClientCommunicationDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiClientCommunicationResponseModel response = await client.ClientCommunicationGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ClientCommunicationDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ClientCommunicationGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiClientCommunicationResponseModel response = await this.Client.ClientCommunicationGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiClientCommunicationResponseModel response = await client.ClientCommunicationGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiClientCommunicationResponseModel> response = await this.Client.ClientCommunicationAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiClientCommunicationResponseModel> response = await client.ClientCommunicationAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiClientCommunicationResponseModel> CreateRecord()
+		private async Task<ApiClientCommunicationResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiClientCommunicationRequestModel();
 			model.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
-			CreateResponse<ApiClientCommunicationResponseModel> result = await this.Client.ClientCommunicationCreateAsync(model);
+			CreateResponse<ApiClientCommunicationResponseModel> result = await client.ClientCommunicationCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ClientCommunicationDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a32a2edee753dd1e80c7994202829c52</Hash>
+    <Hash>005ce6312d0667df033ae201f7e5a53e</Hash>
 </Codenesium>*/

@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,12 +198,29 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
+		}
+
+		[HttpGet]
+		[Route("byProductModelID/{productModelID}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiIllustrationResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByProductModelID(int productModelID, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiIllustrationResponseModel> response = await this.IllustrationService.ByProductModelID(productModelID, query.Limit, query.Offset);
+
+			return this.Ok(response);
 		}
 
 		private async Task<ApiIllustrationRequestModel> PatchModel(int id, JsonPatchDocument<ApiIllustrationRequestModel> patch)
@@ -225,5 +242,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>da7a1e9559ecd235e2046b71c7a028b6</Hash>
+    <Hash>569469d4bf50089f2c16d01b28d2bc0c</Hash>
 </Codenesium>*/

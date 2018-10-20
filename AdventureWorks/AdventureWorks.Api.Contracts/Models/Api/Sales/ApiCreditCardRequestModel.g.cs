@@ -30,26 +30,26 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string CardNumber { get; private set; }
+		public string CardNumber { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string CardType { get; private set; }
+		public string CardType { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int ExpMonth { get; private set; }
+		public int ExpMonth { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public short ExpYear { get; private set; }
+		public short ExpYear { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5a5ec1b5fa84b507cb605d48301f41b0</Hash>
+    <Hash>830730433c0822a42b1bf6a040a488a3</Hash>
 </Codenesium>*/

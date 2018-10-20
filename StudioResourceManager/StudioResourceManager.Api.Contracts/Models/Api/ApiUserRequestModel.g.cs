@@ -16,22 +16,28 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		public virtual void SetProperties(
 			string password,
-			string username)
+			string username,
+			bool isDeleted)
 		{
 			this.Password = password;
 			this.Username = username;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
 		[JsonProperty]
-		public string Password { get; private set; }
+		public string Password { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Username { get; private set; }
+		public string Username { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e1e9119fdb13c61dab67c2c895cdbcf</Hash>
+    <Hash>1d805be2085aa35edb06de153687d01b</Hash>
 </Codenesium>*/

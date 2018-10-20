@@ -72,8 +72,8 @@ namespace StackOverflowNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
-		/// <param name="acceptAllChangesOnSuccess"></param>
-		/// <param name="cancellationToken"></param>
+		/// <param name="acceptAllChangesOnSuccess">Commit all changes on success</param>
+		/// <param name="cancellationToken">Token that can be passed to hault execution</param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -106,6 +106,138 @@ namespace StackOverflowNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Badge>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Badge>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Comment>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Comment>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<LinkType>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<LinkType>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<PostHistory>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<PostHistory>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<PostHistoryType>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<PostHistoryType>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<PostLink>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<PostLink>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Post>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Post>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<PostType>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<PostType>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Tag>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Tag>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<User>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<User>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Vote>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Vote>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<VoteType>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<VoteType>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
 	}
@@ -136,5 +268,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ccf5ad1fbc62a8f4b99bf2a48b803007</Hash>
+    <Hash>b24745d1875b430a081ce8416607f337</Hash>
 </Codenesium>*/

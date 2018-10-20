@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<PersonPhone>> PersonPhones(int phoneNumberTypeID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<PersonPhone>> PersonPhonesByPhoneNumberTypeID(int phoneNumberTypeID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PersonPhone>().Where(x => x.PhoneNumberTypeID == phoneNumberTypeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonPhone>();
 		}
@@ -113,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cce2246302d29911627881659086d33e</Hash>
+    <Hash>b560a69602a29fbcfc46b829235e413c</Hash>
 </Codenesium>*/

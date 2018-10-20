@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "TestAllFieldTypesNullable")]
 	[Trait("Area", "Integration")]
-	public class TestAllFieldTypesNullableIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TestAllFieldTypesNullableIntegrationTests
 	{
-		public TestAllFieldTypesNullableIntegrationTests(TestWebApplicationFactory fixture)
+		public TestAllFieldTypesNullableIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TestAllFieldTypesNullableDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTestAllFieldTypesNullableResponseModel model = await client.TestAllFieldTypesNullableGetAsync(1);
 
 			ApiTestAllFieldTypesNullableModelMapper mapper = new ApiTestAllFieldTypesNullableModelMapper();
 
-			UpdateResponse<ApiTestAllFieldTypesNullableResponseModel> updateResponse = await this.Client.TestAllFieldTypesNullableUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTestAllFieldTypesNullableResponseModel> updateResponse = await client.TestAllFieldTypesNullableUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TestAllFieldTypesNullableDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTestAllFieldTypesNullableResponseModel response = await client.TestAllFieldTypesNullableGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TestAllFieldTypesNullableDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TestAllFieldTypesNullableGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTestAllFieldTypesNullableResponseModel response = await this.Client.TestAllFieldTypesNullableGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTestAllFieldTypesNullableResponseModel response = await client.TestAllFieldTypesNullableGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTestAllFieldTypesNullableResponseModel> response = await this.Client.TestAllFieldTypesNullableAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTestAllFieldTypesNullableResponseModel> response = await client.TestAllFieldTypesNullableAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTestAllFieldTypesNullableResponseModel> CreateRecord()
+		private async Task<ApiTestAllFieldTypesNullableResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTestAllFieldTypesNullableRequestModel();
 			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("1"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
-			CreateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await this.Client.TestAllFieldTypesNullableCreateAsync(model);
+			CreateResponse<ApiTestAllFieldTypesNullableResponseModel> result = await client.TestAllFieldTypesNullableCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TestAllFieldTypesNullableDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4b5af7a53843982dc49bafb4b6f06105</Hash>
+    <Hash>aed629deb0fb3d44b392243b34c22d96</Hash>
 </Codenesium>*/

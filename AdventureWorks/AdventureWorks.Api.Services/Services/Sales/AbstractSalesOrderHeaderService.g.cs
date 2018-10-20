@@ -144,16 +144,16 @@ namespace AdventureWorksNS.Api.Services
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetails(int salesOrderID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesOrderDetailResponseModel>> SalesOrderDetailsBySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesOrderDetail> records = await this.SalesOrderHeaderRepository.SalesOrderDetails(salesOrderID, limit, offset);
+			List<SalesOrderDetail> records = await this.SalesOrderHeaderRepository.SalesOrderDetailsBySalesOrderID(salesOrderID, limit, offset);
 
 			return this.BolSalesOrderDetailMapper.MapBOToModel(this.DalSalesOrderDetailMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> BySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> BySalesReasonID(int salesReasonID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.BySalesOrderID(salesOrderID, limit, offset);
+			List<SalesOrderHeader> records = await this.SalesOrderHeaderRepository.BySalesReasonID(salesReasonID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
@@ -161,5 +161,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e706f49f17139963a4d7f11321a180af</Hash>
+    <Hash>2185c20ae7211b064d8599bc66ec720d</Hash>
 </Codenesium>*/

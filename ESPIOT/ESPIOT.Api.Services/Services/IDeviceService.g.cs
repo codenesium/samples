@@ -23,10 +23,10 @@ namespace ESPIOTNS.Api.Services
 
 		Task<ApiDeviceResponseModel> ByPublicId(Guid publicId);
 
-		Task<List<ApiDeviceActionResponseModel>> DeviceActions(int deviceId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiDeviceActionResponseModel>> DeviceActionsByDeviceId(int deviceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5bbefbf687dc6733ea33c04844d2e555</Hash>
+    <Hash>a6ce6003760f8e9ffd71acda8406fb60</Hash>
 </Codenesium>*/

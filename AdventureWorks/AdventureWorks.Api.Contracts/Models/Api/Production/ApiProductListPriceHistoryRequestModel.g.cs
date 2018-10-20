@@ -27,22 +27,22 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? EndDate { get; private set; }
+		public DateTime? EndDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public decimal ListPrice { get; private set; }
+		public decimal ListPrice { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime StartDate { get; private set; }
+		public DateTime StartDate { get; private set; } = default(DateTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4071d94fb7c786170b4e2eb8139c8e39</Hash>
+    <Hash>afac74ed56b0591c2625dec8e07f30bd</Hash>
 </Codenesium>*/

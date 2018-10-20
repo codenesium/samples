@@ -78,7 +78,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public string Revision { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("rowguid")]
 		public Guid Rowguid { get; private set; }
 
@@ -92,5 +91,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>770425c2abd0d68517321a0d363d6d49</Hash>
+    <Hash>805c3f3ddbff17eeb15efb52cf4482aa</Hash>
 </Codenesium>*/

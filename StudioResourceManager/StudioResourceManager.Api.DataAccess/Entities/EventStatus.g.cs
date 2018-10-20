@@ -15,23 +15,27 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int id,
-			string name)
+			string name,
+			bool isDeleted)
 		{
 			this.Id = id;
 			this.Name = name;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
 		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
+
+		[Column("isDeleted")]
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2073fa72a2ae0e6bd18c814b56a51615</Hash>
+    <Hash>ac9ece5b91fc9c98c22c711642cd5ff0</Hash>
 </Codenesium>*/

@@ -30,26 +30,26 @@ namespace PetShippingNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int CountryId { get; private set; }
+		public int CountryId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Email { get; private set; }
+		public string Email { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string FirstName { get; private set; }
+		public string FirstName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string LastName { get; private set; }
+		public string LastName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Phone { get; private set; }
+		public string Phone { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>42f88fe120f32317b8e3255ba41f5191</Hash>
+    <Hash>68eeb829cfaefab87d80aa3968cd6eff</Hash>
 </Codenesium>*/

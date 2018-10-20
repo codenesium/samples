@@ -21,6 +21,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.LastNameRules();
 			this.PhoneRules();
 			this.UserIdRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -32,6 +33,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.LastNameRules();
 			this.PhoneRules();
 			this.UserIdRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -43,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e9be53e3bcf2882154b018c9b54582a4</Hash>
+    <Hash>9613c71dcd891d3979caf30694686bae</Hash>
 </Codenesium>*/

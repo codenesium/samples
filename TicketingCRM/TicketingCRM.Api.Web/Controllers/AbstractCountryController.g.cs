@@ -190,7 +190,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace TicketingCRMNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace TicketingCRMNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{countryId}/Provinces")]
+		[Route("{countryId}/ProvincesByCountryId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProvinceResponseModel>), 200)]
-		public async virtual Task<IActionResult> Provinces(int countryId, int? limit, int? offset)
+		public async virtual Task<IActionResult> ProvincesByCountryId(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProvinceResponseModel> response = await this.CountryService.Provinces(countryId, query.Limit, query.Offset);
+			List<ApiProvinceResponseModel> response = await this.CountryService.ProvincesByCountryId(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +242,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5e9ce3bdc1e53d01303d8494d3188c63</Hash>
+    <Hash>ebc1feaa60e2af6cadcc783cd6148d7d</Hash>
 </Codenesium>*/

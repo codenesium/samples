@@ -81,7 +81,7 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<LinkStatus>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<Link>> Links(int linkStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Link>> LinksByLinkStatusId(int linkStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Link>().Where(x => x.LinkStatusId == linkStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
@@ -118,5 +118,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>db72d7fb00b563c8198e58f611235035</Hash>
+    <Hash>d0427aab3a706df2dae2416e3046be28</Hash>
 </Codenesium>*/

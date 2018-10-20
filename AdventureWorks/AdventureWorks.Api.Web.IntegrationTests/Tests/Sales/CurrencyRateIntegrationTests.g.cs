@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "CurrencyRate")]
 	[Trait("Area", "Integration")]
-	public class CurrencyRateIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CurrencyRateIntegrationTests
 	{
-		public CurrencyRateIntegrationTests(TestWebApplicationFactory fixture)
+		public CurrencyRateIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CurrencyRateDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCurrencyRateResponseModel model = await client.CurrencyRateGetAsync(1);
 
 			ApiCurrencyRateModelMapper mapper = new ApiCurrencyRateModelMapper();
 
-			UpdateResponse<ApiCurrencyRateResponseModel> updateResponse = await this.Client.CurrencyRateUpdateAsync(model.CurrencyRateID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCurrencyRateResponseModel> updateResponse = await client.CurrencyRateUpdateAsync(model.CurrencyRateID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CurrencyRateDeleteAsync(model.CurrencyRateID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCurrencyRateResponseModel response = await client.CurrencyRateGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CurrencyRateDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CurrencyRateGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCurrencyRateResponseModel response = await this.Client.CurrencyRateGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCurrencyRateResponseModel response = await client.CurrencyRateGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCurrencyRateResponseModel> response = await this.Client.CurrencyRateAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCurrencyRateResponseModel> response = await client.CurrencyRateAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCurrencyRateResponseModel> CreateRecord()
+		private async Task<ApiCurrencyRateResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCurrencyRateRequestModel();
 			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, "A", DateTime.Parse("1/1/1988 12:00:00 AM"), "A");
-			CreateResponse<ApiCurrencyRateResponseModel> result = await this.Client.CurrencyRateCreateAsync(model);
+			CreateResponse<ApiCurrencyRateResponseModel> result = await client.CurrencyRateCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CurrencyRateDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3ff785b0e9d63ecc44c576b8b511b5d8</Hash>
+    <Hash>823d3f56954ce5eae023de001abadd7f</Hash>
 </Codenesium>*/

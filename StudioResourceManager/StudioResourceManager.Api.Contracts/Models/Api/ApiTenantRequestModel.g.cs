@@ -22,10 +22,10 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6dd23f731b2f5c3925cafbc39ba50d18</Hash>
+    <Hash>6649559311724afccf4d89374e275691</Hash>
 </Codenesium>*/

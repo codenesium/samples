@@ -29,25 +29,25 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string CatalogDescription { get; private set; }
+		public string CatalogDescription { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Instruction { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public string Instruction { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public string Name { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public Guid Rowguid { get; private set; } = default(Guid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>98041f3684beacdec50fdf06260552f1</Hash>
+    <Hash>38ddd86c63d8a38dd1d4bf664fce88df</Hash>
 </Codenesium>*/

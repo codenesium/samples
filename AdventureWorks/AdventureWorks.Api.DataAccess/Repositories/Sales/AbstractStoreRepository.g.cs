@@ -86,7 +86,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.Demographic == demographic, limit, offset);
 		}
 
-		public async virtual Task<List<Customer>> Customers(int storeID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Customer>> CustomersByStoreID(int storeID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Customer>().Where(x => x.StoreID == storeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
@@ -128,5 +128,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ee67afde1d69e973ab43c7750443e697</Hash>
+    <Hash>2d3515d1d1591dcfb8cfc2460a4159fa</Hash>
 </Codenesium>*/

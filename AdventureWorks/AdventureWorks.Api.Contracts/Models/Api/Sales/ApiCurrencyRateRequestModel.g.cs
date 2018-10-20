@@ -32,30 +32,30 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public decimal AverageRate { get; private set; }
+		public decimal AverageRate { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime CurrencyRateDate { get; private set; }
+		public DateTime CurrencyRateDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public decimal EndOfDayRate { get; private set; }
+		public decimal EndOfDayRate { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public string FromCurrencyCode { get; private set; }
+		public string FromCurrencyCode { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string ToCurrencyCode { get; private set; }
+		public string ToCurrencyCode { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce3ebd4843379b63ec341b4910374465</Hash>
+    <Hash>c52c6c8a2691e7cd4b468431b9870a3a</Hash>
 </Codenesium>*/

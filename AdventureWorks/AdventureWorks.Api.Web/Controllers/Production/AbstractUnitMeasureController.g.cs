@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(string id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -226,10 +226,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{unitMeasureCode}/BillOfMaterials")]
+		[Route("{unitMeasureCode}/BillOfMaterialsByUnitMeasureCode")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBillOfMaterialResponseModel>), 200)]
-		public async virtual Task<IActionResult> BillOfMaterials(string unitMeasureCode, int? limit, int? offset)
+		public async virtual Task<IActionResult> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -237,16 +237,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBillOfMaterialResponseModel> response = await this.UnitMeasureService.BillOfMaterials(unitMeasureCode, query.Limit, query.Offset);
+			List<ApiBillOfMaterialResponseModel> response = await this.UnitMeasureService.BillOfMaterialsByUnitMeasureCode(unitMeasureCode, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{sizeUnitMeasureCode}/Products")]
+		[Route("{sizeUnitMeasureCode}/ProductsBySizeUnitMeasureCode")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
-		public async virtual Task<IActionResult> Products(string sizeUnitMeasureCode, int? limit, int? offset)
+		public async virtual Task<IActionResult> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -254,7 +254,24 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductResponseModel> response = await this.UnitMeasureService.Products(sizeUnitMeasureCode, query.Limit, query.Offset);
+			List<ApiProductResponseModel> response = await this.UnitMeasureService.ProductsBySizeUnitMeasureCode(sizeUnitMeasureCode, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{weightUnitMeasureCode}/ProductsByWeightUnitMeasureCode")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiProductResponseModel>), 200)]
+		public async virtual Task<IActionResult> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiProductResponseModel> response = await this.UnitMeasureService.ProductsByWeightUnitMeasureCode(weightUnitMeasureCode, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -278,5 +295,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>80320427d8ccd7967e262ec9dbca9fac</Hash>
+    <Hash>4419c0f02dd05c0e5ad80558d94b62c1</Hash>
 </Codenesium>*/

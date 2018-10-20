@@ -190,7 +190,7 @@ namespace TwitterNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace TwitterNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -224,10 +224,10 @@ namespace TwitterNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{taggedUserId}/DirectTweets")]
+		[Route("{taggedUserId}/DirectTweetsByTaggedUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiDirectTweetResponseModel>), 200)]
-		public async virtual Task<IActionResult> DirectTweets(int taggedUserId, int? limit, int? offset)
+		public async virtual Task<IActionResult> DirectTweetsByTaggedUserId(int taggedUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,16 +235,16 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDirectTweetResponseModel> response = await this.UserService.DirectTweets(taggedUserId, query.Limit, query.Offset);
+			List<ApiDirectTweetResponseModel> response = await this.UserService.DirectTweetsByTaggedUserId(taggedUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{followedUserId}/Followers")]
+		[Route("{followedUserId}/FollowersByFollowedUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiFollowerResponseModel>), 200)]
-		public async virtual Task<IActionResult> Followers(int followedUserId, int? limit, int? offset)
+		public async virtual Task<IActionResult> FollowersByFollowedUserId(int followedUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,16 +252,33 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiFollowerResponseModel> response = await this.UserService.Followers(followedUserId, query.Limit, query.Offset);
+			List<ApiFollowerResponseModel> response = await this.UserService.FollowersByFollowedUserId(followedUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{senderUserId}/Messages")]
+		[Route("{followingUserId}/FollowersByFollowingUserId")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiFollowerResponseModel>), 200)]
+		public async virtual Task<IActionResult> FollowersByFollowingUserId(int followingUserId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiFollowerResponseModel> response = await this.UserService.FollowersByFollowingUserId(followingUserId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{senderUserId}/MessagesBySenderUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiMessageResponseModel>), 200)]
-		public async virtual Task<IActionResult> Messages(int senderUserId, int? limit, int? offset)
+		public async virtual Task<IActionResult> MessagesBySenderUserId(int senderUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -269,16 +286,16 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiMessageResponseModel> response = await this.UserService.Messages(senderUserId, query.Limit, query.Offset);
+			List<ApiMessageResponseModel> response = await this.UserService.MessagesBySenderUserId(senderUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{toUserId}/Messengers")]
+		[Route("{toUserId}/MessengersByToUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiMessengerResponseModel>), 200)]
-		public async virtual Task<IActionResult> Messengers(int toUserId, int? limit, int? offset)
+		public async virtual Task<IActionResult> MessengersByToUserId(int toUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -286,16 +303,33 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiMessengerResponseModel> response = await this.UserService.Messengers(toUserId, query.Limit, query.Offset);
+			List<ApiMessengerResponseModel> response = await this.UserService.MessengersByToUserId(toUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{retweeterUserId}/QuoteTweets")]
+		[Route("{userId}/MessengersByUserId")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiMessengerResponseModel>), 200)]
+		public async virtual Task<IActionResult> MessengersByUserId(int userId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiMessengerResponseModel> response = await this.UserService.MessengersByUserId(userId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
+		[HttpGet]
+		[Route("{retweeterUserId}/QuoteTweetsByRetweeterUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiQuoteTweetResponseModel>), 200)]
-		public async virtual Task<IActionResult> QuoteTweets(int retweeterUserId, int? limit, int? offset)
+		public async virtual Task<IActionResult> QuoteTweetsByRetweeterUserId(int retweeterUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -303,16 +337,16 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiQuoteTweetResponseModel> response = await this.UserService.QuoteTweets(retweeterUserId, query.Limit, query.Offset);
+			List<ApiQuoteTweetResponseModel> response = await this.UserService.QuoteTweetsByRetweeterUserId(retweeterUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{replierUserId}/Replies")]
+		[Route("{replierUserId}/RepliesByReplierUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiReplyResponseModel>), 200)]
-		public async virtual Task<IActionResult> Replies(int replierUserId, int? limit, int? offset)
+		public async virtual Task<IActionResult> RepliesByReplierUserId(int replierUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -320,16 +354,16 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiReplyResponseModel> response = await this.UserService.Replies(replierUserId, query.Limit, query.Offset);
+			List<ApiReplyResponseModel> response = await this.UserService.RepliesByReplierUserId(replierUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{retwitterUserId}/Retweets")]
+		[Route("{retwitterUserId}/RetweetsByRetwitterUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiRetweetResponseModel>), 200)]
-		public async virtual Task<IActionResult> Retweets(int retwitterUserId, int? limit, int? offset)
+		public async virtual Task<IActionResult> RetweetsByRetwitterUserId(int retwitterUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -337,16 +371,16 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiRetweetResponseModel> response = await this.UserService.Retweets(retwitterUserId, query.Limit, query.Offset);
+			List<ApiRetweetResponseModel> response = await this.UserService.RetweetsByRetwitterUserId(retwitterUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{userUserId}/Tweets")]
+		[Route("{userUserId}/TweetsByUserUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTweetResponseModel>), 200)]
-		public async virtual Task<IActionResult> Tweets(int userUserId, int? limit, int? offset)
+		public async virtual Task<IActionResult> TweetsByUserUserId(int userUserId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -354,7 +388,7 @@ namespace TwitterNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTweetResponseModel> response = await this.UserService.Tweets(userUserId, query.Limit, query.Offset);
+			List<ApiTweetResponseModel> response = await this.UserService.TweetsByUserUserId(userUserId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -395,5 +429,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ea977dce0fedb80325299248e54bd388</Hash>
+    <Hash>bca3f87f215c46a385acf6c4c3f9bc2e</Hash>
 </Codenesium>*/

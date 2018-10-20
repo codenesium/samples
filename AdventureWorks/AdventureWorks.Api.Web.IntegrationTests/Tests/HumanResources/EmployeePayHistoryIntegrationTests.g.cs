@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "EmployeePayHistory")]
 	[Trait("Area", "Integration")]
-	public class EmployeePayHistoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class EmployeePayHistoryIntegrationTests
 	{
-		public EmployeePayHistoryIntegrationTests(TestWebApplicationFactory fixture)
+		public EmployeePayHistoryIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.EmployeePayHistoryDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiEmployeePayHistoryResponseModel model = await client.EmployeePayHistoryGetAsync(1);
 
 			ApiEmployeePayHistoryModelMapper mapper = new ApiEmployeePayHistoryModelMapper();
 
-			UpdateResponse<ApiEmployeePayHistoryResponseModel> updateResponse = await this.Client.EmployeePayHistoryUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiEmployeePayHistoryResponseModel> updateResponse = await client.EmployeePayHistoryUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.EmployeePayHistoryDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiEmployeePayHistoryResponseModel response = await client.EmployeePayHistoryGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.EmployeePayHistoryDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.EmployeePayHistoryGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiEmployeePayHistoryResponseModel response = await this.Client.EmployeePayHistoryGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiEmployeePayHistoryResponseModel response = await client.EmployeePayHistoryGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiEmployeePayHistoryResponseModel> response = await this.Client.EmployeePayHistoryAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiEmployeePayHistoryResponseModel> response = await client.EmployeePayHistoryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiEmployeePayHistoryResponseModel> CreateRecord()
+		private async Task<ApiEmployeePayHistoryResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiEmployeePayHistoryRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"));
-			CreateResponse<ApiEmployeePayHistoryResponseModel> result = await this.Client.EmployeePayHistoryCreateAsync(model);
+			CreateResponse<ApiEmployeePayHistoryResponseModel> result = await client.EmployeePayHistoryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.EmployeePayHistoryDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>51da81625550d7b847add3826eaece8c</Hash>
+    <Hash>cfa8eeeb65c4ab3be4ae6f3a6118ae63</Hash>
 </Codenesium>*/

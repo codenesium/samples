@@ -190,7 +190,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace StudioResourceManagerNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{familyId}/Students")]
+		[Route("{familyId}/StudentsByFamilyId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
-		public async virtual Task<IActionResult> Students(int familyId, int? limit, int? offset)
+		public async virtual Task<IActionResult> StudentsByFamilyId(int familyId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiStudentResponseModel> response = await this.FamilyService.Students(familyId, query.Limit, query.Offset);
+			List<ApiStudentResponseModel> response = await this.FamilyService.StudentsByFamilyId(familyId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +242,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5aaa8e652a9bf6b5afefc5eb8b0ff765</Hash>
+    <Hash>fac9aa5a9ff8b8092bfb62655dbb8ec9</Hash>
 </Codenesium>*/

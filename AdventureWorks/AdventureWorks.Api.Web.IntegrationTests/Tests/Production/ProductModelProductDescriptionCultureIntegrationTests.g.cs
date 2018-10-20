@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ProductModelProductDescriptionCulture")]
 	[Trait("Area", "Integration")]
-	public class ProductModelProductDescriptionCultureIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ProductModelProductDescriptionCultureIntegrationTests
 	{
-		public ProductModelProductDescriptionCultureIntegrationTests(TestWebApplicationFactory fixture)
+		public ProductModelProductDescriptionCultureIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ProductModelProductDescriptionCultureDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiProductModelProductDescriptionCultureResponseModel model = await client.ProductModelProductDescriptionCultureGetAsync(1);
 
 			ApiProductModelProductDescriptionCultureModelMapper mapper = new ApiProductModelProductDescriptionCultureModelMapper();
 
-			UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel> updateResponse = await this.Client.ProductModelProductDescriptionCultureUpdateAsync(model.ProductModelID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductModelProductDescriptionCultureResponseModel> updateResponse = await client.ProductModelProductDescriptionCultureUpdateAsync(model.ProductModelID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ProductModelProductDescriptionCultureDeleteAsync(model.ProductModelID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiProductModelProductDescriptionCultureResponseModel response = await client.ProductModelProductDescriptionCultureGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ProductModelProductDescriptionCultureDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ProductModelProductDescriptionCultureGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiProductModelProductDescriptionCultureResponseModel response = await this.Client.ProductModelProductDescriptionCultureGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiProductModelProductDescriptionCultureResponseModel response = await client.ProductModelProductDescriptionCultureGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiProductModelProductDescriptionCultureResponseModel> response = await this.Client.ProductModelProductDescriptionCultureAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiProductModelProductDescriptionCultureResponseModel> response = await client.ProductModelProductDescriptionCultureAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiProductModelProductDescriptionCultureResponseModel> CreateRecord()
+		private async Task<ApiProductModelProductDescriptionCultureResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiProductModelProductDescriptionCultureRequestModel();
 			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
-			CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await this.Client.ProductModelProductDescriptionCultureCreateAsync(model);
+			CreateResponse<ApiProductModelProductDescriptionCultureResponseModel> result = await client.ProductModelProductDescriptionCultureCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ProductModelProductDescriptionCultureDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bbbe4bafb11932f081bbf8ad0ae1f72d</Hash>
+    <Hash>450a90d05a23f5416637f1e4d5038c13</Hash>
 </Codenesium>*/

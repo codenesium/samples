@@ -15,54 +15,82 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Tenant")]
 	[Trait("Area", "Integration")]
-	public class TenantIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TenantIntegrationTests
 	{
-		public TenantIntegrationTests(TestWebApplicationFactory fixture)
+		public TenantIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TenantDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTenantResponseModel model = await client.TenantGetAsync(1);
 
 			ApiTenantModelMapper mapper = new ApiTenantModelMapper();
 
-			UpdateResponse<ApiTenantResponseModel> updateResponse = await this.Client.TenantUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTenantResponseModel> updateResponse = await client.TenantUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TenantDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTenantResponseModel response = await client.TenantGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TenantDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TenantGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTenantResponseModel response = await this.Client.TenantGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTenantResponseModel response = await client.TenantGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTenantResponseModel> response = await this.Client.TenantAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTenantResponseModel> response = await client.TenantAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTenantResponseModel> CreateRecord()
+		private async Task<ApiTenantResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTenantRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiTenantResponseModel> result = await this.Client.TenantCreateAsync(model);
+			CreateResponse<ApiTenantResponseModel> result = await client.TenantCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TenantDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6c908097287b870fe33c76678e819c94</Hash>
+    <Hash>54c3802210e422cf7080c6408a43c1b3</Hash>
 </Codenesium>*/

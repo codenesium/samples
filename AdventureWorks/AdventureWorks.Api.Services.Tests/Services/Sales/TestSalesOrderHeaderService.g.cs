@@ -262,12 +262,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void SalesOrderDetails_Exists()
+		public async void SalesOrderDetailsBySalesOrderID_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
 			var records = new List<SalesOrderDetail>();
 			records.Add(new SalesOrderDetail());
-			mock.RepositoryMock.Setup(x => x.SalesOrderDetails(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesOrderDetailsBySalesOrderID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
@@ -276,17 +276,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
-			List<ApiSalesOrderDetailResponseModel> response = await service.SalesOrderDetails(default(int));
+			List<ApiSalesOrderDetailResponseModel> response = await service.SalesOrderDetailsBySalesOrderID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderDetails(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesOrderDetailsBySalesOrderID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SalesOrderDetails_Not_Exists()
+		public async void SalesOrderDetailsBySalesOrderID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesOrderHeaderRepository>();
-			mock.RepositoryMock.Setup(x => x.SalesOrderDetails(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderDetail>>(new List<SalesOrderDetail>()));
+			mock.RepositoryMock.Setup(x => x.SalesOrderDetailsBySalesOrderID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderDetail>>(new List<SalesOrderDetail>()));
 			var service = new SalesOrderHeaderService(mock.LoggerMock.Object,
 			                                          mock.RepositoryMock.Object,
 			                                          mock.ModelValidatorMockFactory.SalesOrderHeaderModelValidatorMock.Object,
@@ -295,14 +295,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                          mock.BOLMapperMockFactory.BOLSalesOrderDetailMapperMock,
 			                                          mock.DALMapperMockFactory.DALSalesOrderDetailMapperMock);
 
-			List<ApiSalesOrderDetailResponseModel> response = await service.SalesOrderDetails(default(int));
+			List<ApiSalesOrderDetailResponseModel> response = await service.SalesOrderDetailsBySalesOrderID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderDetails(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesOrderDetailsBySalesOrderID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9618bc7b9de7159badc76674c454f738</Hash>
+    <Hash>92f1b93439b8731358f0ed658ea2dece</Hash>
 </Codenesium>*/

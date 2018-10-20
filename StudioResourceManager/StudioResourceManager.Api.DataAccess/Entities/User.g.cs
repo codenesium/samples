@@ -16,15 +16,16 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public virtual void SetProperties(
 			int id,
 			string password,
-			string username)
+			string username,
+			bool isDeleted)
 		{
 			this.Id = id;
 			this.Password = password;
 			this.Username = username;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -35,9 +36,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("username")]
 		public string Username { get; private set; }
+
+		[Column("isDeleted")]
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>85e26c37525d38cb801a58c7340312ad</Hash>
+    <Hash>5945a602298b9f417e5cd73f6961124a</Hash>
 </Codenesium>*/

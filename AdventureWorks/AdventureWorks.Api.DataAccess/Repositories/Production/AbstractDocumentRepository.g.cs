@@ -81,6 +81,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.FileName == fileName && x.Revision == revision, limit, offset);
 		}
 
+		public async virtual Task<List<Document>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.ProductDocuments
+			              join documents in this.Context.Documents on
+			              refTable.DocumentNode equals documents.DocumentNode
+			              where refTable.ProductID == productID
+			              select documents).Skip(offset).Take(limit).ToListAsync();
+		}
+
 		protected async Task<List<Document>> Where(
 			Expression<Func<Document, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +122,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>8374cdee9a12ffc10434e2842f75163e</Hash>
+    <Hash>083fa5b3866b9de5943b744f5b78dfb2</Hash>
 </Codenesium>*/

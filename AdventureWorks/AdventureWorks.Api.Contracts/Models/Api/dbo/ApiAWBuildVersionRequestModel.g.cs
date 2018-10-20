@@ -26,18 +26,18 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Database_Version { get; private set; }
+		public string Database_Version { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime VersionDate { get; private set; }
+		public DateTime VersionDate { get; private set; } = default(DateTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4df81710ee8976c9065315c9659ae911</Hash>
+    <Hash>d0cd54d01d979fb7981f7cbb1532fa60</Hash>
 </Codenesium>*/

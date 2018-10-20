@@ -16,12 +16,14 @@ namespace StudioResourceManagerNS.Api.Services
 		public async Task<ValidationResult> ValidateCreateAsync(ApiEventStatusRequestModel model)
 		{
 			this.NameRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiEventStatusRequestModel model)
 		{
 			this.NameRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -33,5 +35,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a65d01d5e10c1a963e5faddf391d7a65</Hash>
+    <Hash>a58ed3d15b201b845d1748be7dac5b9a</Hash>
 </Codenesium>*/

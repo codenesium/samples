@@ -21,10 +21,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<List<ApiEventStatusResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiEventResponseModel>> Events(int eventStatusId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEventResponseModel>> EventsByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4a86578edf44851f906bab3db33656af</Hash>
+    <Hash>2ff1466ceec78017f93cc3d58ecbcd28</Hash>
 </Codenesium>*/

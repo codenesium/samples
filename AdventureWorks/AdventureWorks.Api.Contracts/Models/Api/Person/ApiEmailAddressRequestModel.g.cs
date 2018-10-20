@@ -27,22 +27,22 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string EmailAddress1 { get; private set; }
+		public string EmailAddress1 { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int EmailAddressID { get; private set; }
+		public int EmailAddressID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e308f2a559fbd6c4a9235eeb7378a5de</Hash>
+    <Hash>6440de21a1c7c1e3d97a3af420bda945</Hash>
 </Codenesium>*/

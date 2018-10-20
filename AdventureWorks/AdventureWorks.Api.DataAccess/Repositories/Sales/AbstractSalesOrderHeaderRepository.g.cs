@@ -91,7 +91,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.SalesPersonID == salesPersonID, limit, offset);
 		}
 
-		public async virtual Task<List<SalesOrderDetail>> SalesOrderDetails(int salesOrderID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<SalesOrderDetail>> SalesOrderDetailsBySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderDetail>().Where(x => x.SalesOrderID == salesOrderID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderDetail>();
 		}
@@ -121,13 +121,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.TerritoryID == territoryID);
 		}
 
-		// Reference foreign key. Reference Table=SalesOrderHeaderSalesReason. First table=salesOrderHeaders. Second table=salesOrderHeaders
-		public async virtual Task<List<SalesOrderHeader>> BySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<SalesOrderHeader>> BySalesReasonID(int salesReasonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.SalesOrderHeaderSalesReasons
 			              join salesOrderHeaders in this.Context.SalesOrderHeaders on
 			              refTable.SalesOrderID equals salesOrderHeaders.SalesOrderID
-			              where refTable.SalesOrderID == salesOrderID
+			              where refTable.SalesReasonID == salesReasonID
 			              select salesOrderHeaders).Skip(offset).Take(limit).ToListAsync();
 		}
 
@@ -163,5 +162,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4410dd6d93c52fc40e95c9b308e015c6</Hash>
+    <Hash>22326cdff38edd2cb93976c849b6f2b7</Hash>
 </Codenesium>*/

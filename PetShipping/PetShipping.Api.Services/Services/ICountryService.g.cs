@@ -21,12 +21,12 @@ namespace PetShippingNS.Api.Services
 
 		Task<List<ApiCountryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCountryRequirementResponseModel>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCountryRequirementResponseModel>> CountryRequirementsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDestinationResponseModel>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiDestinationResponseModel>> DestinationsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b4e48eedf353797cbfcf2955cf73d13d</Hash>
+    <Hash>80638d468f8790c44c5faea44eace1b9</Hash>
 </Codenesium>*/

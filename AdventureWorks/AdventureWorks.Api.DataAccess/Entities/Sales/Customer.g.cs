@@ -37,7 +37,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public string AccountNumber { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("CustomerID")]
 		public int CustomerID { get; private set; }
 
@@ -66,5 +65,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>729923e575bf19bf470208310946665b</Hash>
+    <Hash>48543886f99407d771f3ec1752374795</Hash>
 </Codenesium>*/

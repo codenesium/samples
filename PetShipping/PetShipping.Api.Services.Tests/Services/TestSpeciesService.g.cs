@@ -143,12 +143,12 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Breeds_Exists()
+		public async void BreedsBySpeciesId_Exists()
 		{
 			var mock = new ServiceMockFacade<ISpeciesRepository>();
 			var records = new List<Breed>();
 			records.Add(new Breed());
-			mock.RepositoryMock.Setup(x => x.Breeds(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.BreedsBySpeciesId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SpeciesService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
@@ -157,17 +157,17 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                                 mock.DALMapperMockFactory.DALBreedMapperMock);
 
-			List<ApiBreedResponseModel> response = await service.Breeds(default(int));
+			List<ApiBreedResponseModel> response = await service.BreedsBySpeciesId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Breeds(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.BreedsBySpeciesId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Breeds_Not_Exists()
+		public async void BreedsBySpeciesId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISpeciesRepository>();
-			mock.RepositoryMock.Setup(x => x.Breeds(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Breed>>(new List<Breed>()));
+			mock.RepositoryMock.Setup(x => x.BreedsBySpeciesId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Breed>>(new List<Breed>()));
 			var service = new SpeciesService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.SpeciesModelValidatorMock.Object,
@@ -176,14 +176,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLBreedMapperMock,
 			                                 mock.DALMapperMockFactory.DALBreedMapperMock);
 
-			List<ApiBreedResponseModel> response = await service.Breeds(default(int));
+			List<ApiBreedResponseModel> response = await service.BreedsBySpeciesId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Breeds(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.BreedsBySpeciesId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d18d9ecacd508c2d90eaf95c48b8d13d</Hash>
+    <Hash>71dbb8f6c8dea88b761d8cae7cfedb20</Hash>
 </Codenesium>*/

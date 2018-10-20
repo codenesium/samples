@@ -21,9 +21,9 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<List<Tweet>> ByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<QuoteTweet>> QuoteTweets(int sourceTweetId, int limit = int.MaxValue, int offset = 0);
+		Task<List<QuoteTweet>> QuoteTweetsBySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Retweet>> Retweets(int tweetTweetId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Retweet>> RetweetsByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0);
 
 		Task<Location> LocationByLocationId(int locationId);
 
@@ -32,5 +32,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c777d33c887ad7585dc5b1dc4c2c2611</Hash>
+    <Hash>c7f7e6ce2416222c68738de9ca8057d9</Hash>
 </Codenesium>*/

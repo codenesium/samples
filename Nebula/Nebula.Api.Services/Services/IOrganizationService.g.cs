@@ -23,10 +23,10 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiOrganizationResponseModel> ByName(string name);
 
-		Task<List<ApiTeamResponseModel>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTeamResponseModel>> TeamsByOrganizationId(int organizationId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e69a8a75446d5facba62caa2fd94719</Hash>
+    <Hash>7b379e6cdf5a49d7a2f64d0766d6ac9a</Hash>
 </Codenesium>*/

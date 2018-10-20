@@ -130,9 +130,9 @@ namespace NebulaNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiChainResponseModel>> Chains(int teamId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiChainResponseModel>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Chain> records = await this.TeamRepository.Chains(teamId, limit, offset);
+			List<Chain> records = await this.TeamRepository.ChainsByTeamId(teamId, limit, offset);
 
 			return this.BolChainMapper.MapBOToModel(this.DalChainMapper.MapEFToBO(records));
 		}
@@ -147,5 +147,5 @@ namespace NebulaNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>337c78f8ffd58a1179fc0beb7a082f21</Hash>
+    <Hash>cb2ae933a9066eb3b12d4330af0abe89</Hash>
 </Codenesium>*/

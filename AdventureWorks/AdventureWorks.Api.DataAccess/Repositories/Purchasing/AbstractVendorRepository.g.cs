@@ -81,12 +81,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Vendor>().SingleOrDefaultAsync(x => x.AccountNumber == accountNumber);
 		}
 
-		public async virtual Task<List<ProductVendor>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductVendor>> ProductVendorsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductVendor>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductVendor>();
 		}
 
-		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.VendorID == vendorID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
 		}
@@ -123,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a661d16b7aa0faa7e25620dd48d4eab7</Hash>
+    <Hash>b9d9e773660af435f6b5ff2b48307f34</Hash>
 </Codenesium>*/

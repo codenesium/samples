@@ -277,6 +277,7 @@ CREATE TABLE [dbo].[Admin](
 [lastName] [varchar]  (128)   NOT NULL,
 [phone] [varchar]  (128)   NULL,
 [userId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -291,6 +292,7 @@ CREATE TABLE [dbo].[Event](
 [scheduledStartDate] [datetime]     NULL,
 [studentNotes] [text]     NULL,
 [teacherNotes] [text]     NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -298,6 +300,7 @@ CREATE TABLE [dbo].[EventStatus](
 [tenantId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [name] [varchar]  (128)   NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -305,6 +308,7 @@ CREATE TABLE [dbo].[EventStudent](
 [tenantId] [int]     NOT NULL,
 [eventId] [int]     NOT NULL,
 [studentId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -312,6 +316,7 @@ CREATE TABLE [dbo].[EventTeacher](
 [tenantId] [int]     NOT NULL,
 [eventId] [int]     NOT NULL,
 [teacherId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -323,6 +328,7 @@ CREATE TABLE [dbo].[Family](
 [primaryContactFirstName] [varchar]  (128)   NULL,
 [primaryContactLastName] [varchar]  (128)   NULL,
 [primaryContactPhone] [varchar]  (128)   NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -332,6 +338,7 @@ CREATE TABLE [dbo].[Rate](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [teacherId] [int]     NOT NULL,
 [teacherSkillId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -340,6 +347,7 @@ CREATE TABLE [dbo].[Space](
 [description] [varchar]  (128)   NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [name] [varchar]  (128)   NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -347,6 +355,7 @@ CREATE TABLE [dbo].[SpaceFeature](
 [tenantId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [name] [varchar]  (128)   NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -354,6 +363,7 @@ CREATE TABLE [dbo].[SpaceSpaceFeature](
 [tenantId] [int]     NOT NULL,
 [spaceFeatureId] [int]     NOT NULL,
 [spaceId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -370,6 +380,7 @@ CREATE TABLE [dbo].[Student](
 [phone] [varchar]  (128)   NOT NULL,
 [smsRemindersEnabled] [bit]     NOT NULL,
 [userId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -383,6 +394,7 @@ CREATE TABLE [dbo].[Studio](
 [province] [varchar]  (90)   NOT NULL,
 [website] [varchar]  (128)   NOT NULL,
 [zip] [varchar]  (128)   NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -395,6 +407,7 @@ CREATE TABLE [dbo].[Teacher](
 [lastName] [varchar]  (128)   NOT NULL,
 [phone] [varchar]  (128)   NULL,
 [userId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -402,6 +415,7 @@ CREATE TABLE [dbo].[TeacherSkill](
 [tenantId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [name] [varchar]  (128)   NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -409,6 +423,7 @@ CREATE TABLE [dbo].[TeacherTeacherSkill](
 [tenantId] [int]     NOT NULL,
 [teacherId] [int]     NOT NULL,
 [teacherSkillId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -423,6 +438,7 @@ CREATE TABLE [dbo].[User](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [password] [varchar]  (128)   NOT NULL,
 [username] [varchar]  (128)   NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -435,6 +451,7 @@ CREATE TABLE [dbo].[vEvents](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [scheduledEndDate] [datetime]     NULL,
 [scheduledStartDate] [datetime]     NULL,
+[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 

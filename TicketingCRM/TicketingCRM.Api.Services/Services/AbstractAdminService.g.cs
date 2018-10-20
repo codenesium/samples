@@ -116,9 +116,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiVenueResponseModel>> Venues(int adminId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiVenueResponseModel>> VenuesByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Venue> records = await this.AdminRepository.Venues(adminId, limit, offset);
+			List<Venue> records = await this.AdminRepository.VenuesByAdminId(adminId, limit, offset);
 
 			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8ff4c8f9a5c8551969059e831b440a1f</Hash>
+    <Hash>281f8aa484f761c6c424dd9dc67cd4b7</Hash>
 </Codenesium>*/

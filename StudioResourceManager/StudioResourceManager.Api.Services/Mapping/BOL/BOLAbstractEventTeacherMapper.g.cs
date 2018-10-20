@@ -15,7 +15,8 @@ namespace StudioResourceManagerNS.Api.Services
 			BOEventTeacher boEventTeacher = new BOEventTeacher();
 			boEventTeacher.SetProperties(
 				eventId,
-				model.TeacherId);
+				model.TeacherId,
+				model.IsDeleted);
 			return boEventTeacher;
 		}
 
@@ -24,7 +25,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiEventTeacherResponseModel();
 
-			model.SetProperties(boEventTeacher.EventId, boEventTeacher.TeacherId);
+			model.SetProperties(boEventTeacher.EventId, boEventTeacher.TeacherId, boEventTeacher.IsDeleted);
 
 			return model;
 		}
@@ -45,5 +46,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d0343bbad4caf76e76e6f16c82f3777c</Hash>
+    <Hash>c09a6b320096bee27771fcc7d8e714c1</Hash>
 </Codenesium>*/

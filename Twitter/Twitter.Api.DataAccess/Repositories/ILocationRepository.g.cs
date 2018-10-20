@@ -17,12 +17,12 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<List<Location>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Tweet>> Tweets(int locationId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Tweet>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<User>> Users(int locationLocationId, int limit = int.MaxValue, int offset = 0);
+		Task<List<User>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bdfee26a6514b8d3dcda264c948b6f7e</Hash>
+    <Hash>1354bfa996b86539c0333c7bec8f417d</Hash>
 </Codenesium>*/

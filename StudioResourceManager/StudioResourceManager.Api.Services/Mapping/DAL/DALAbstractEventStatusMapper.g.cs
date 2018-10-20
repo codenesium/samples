@@ -14,7 +14,8 @@ namespace StudioResourceManagerNS.Api.Services
 			EventStatus efEventStatus = new EventStatus();
 			efEventStatus.SetProperties(
 				bo.Id,
-				bo.Name);
+				bo.Name,
+				bo.IsDeleted);
 			return efEventStatus;
 		}
 
@@ -25,7 +26,8 @@ namespace StudioResourceManagerNS.Api.Services
 
 			bo.SetProperties(
 				ef.Id,
-				ef.Name);
+				ef.Name,
+				ef.IsDeleted);
 			return bo;
 		}
 
@@ -45,5 +47,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1e5486b8c0638421835b7442d0047ddc</Hash>
+    <Hash>98c9950cbe7879144615e6712110f8a1</Hash>
 </Codenesium>*/

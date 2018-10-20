@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<CountryRegion> ByName(string name);
 
-		Task<List<StateProvince>> StateProvinces(string countryRegionCode, int limit = int.MaxValue, int offset = 0);
+		Task<List<StateProvince>> StateProvincesByCountryRegionCode(string countryRegionCode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4ceaf8727f428f27f9cfc8b4992ac042</Hash>
+    <Hash>8a0f6a4b2f35d8c6b61ef082202fb7f7</Hash>
 </Codenesium>*/

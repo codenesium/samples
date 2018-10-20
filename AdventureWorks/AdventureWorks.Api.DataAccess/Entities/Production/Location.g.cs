@@ -34,7 +34,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public decimal CostRate { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("LocationID")]
 		public short LocationID { get; private set; }
 
@@ -48,5 +47,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>39e7fa9df62f547b27cceef6bb4ffbf8</Hash>
+    <Hash>91381355b414c88b06b65b3e7b3c7b1f</Hash>
 </Codenesium>*/

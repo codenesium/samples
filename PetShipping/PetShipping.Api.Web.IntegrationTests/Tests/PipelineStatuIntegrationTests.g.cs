@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PipelineStatu")]
 	[Trait("Area", "Integration")]
-	public class PipelineStatuIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PipelineStatuIntegrationTests
 	{
-		public PipelineStatuIntegrationTests(TestWebApplicationFactory fixture)
+		public PipelineStatuIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PipelineStatuDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPipelineStatuResponseModel model = await client.PipelineStatuGetAsync(1);
 
 			ApiPipelineStatuModelMapper mapper = new ApiPipelineStatuModelMapper();
 
-			UpdateResponse<ApiPipelineStatuResponseModel> updateResponse = await this.Client.PipelineStatuUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPipelineStatuResponseModel> updateResponse = await client.PipelineStatuUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PipelineStatuDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPipelineStatuResponseModel response = await client.PipelineStatuGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PipelineStatuDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PipelineStatuGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPipelineStatuResponseModel response = await this.Client.PipelineStatuGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPipelineStatuResponseModel response = await client.PipelineStatuGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPipelineStatuResponseModel> response = await this.Client.PipelineStatuAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPipelineStatuResponseModel> response = await client.PipelineStatuAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPipelineStatuResponseModel> CreateRecord()
+		private async Task<ApiPipelineStatuResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPipelineStatuRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiPipelineStatuResponseModel> result = await this.Client.PipelineStatuCreateAsync(model);
+			CreateResponse<ApiPipelineStatuResponseModel> result = await client.PipelineStatuCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PipelineStatuDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1b0d369492dc78d802dbc0061c216269</Hash>
+    <Hash>268d0d3850479e6b5ac8955382dba3be</Hash>
 </Codenesium>*/

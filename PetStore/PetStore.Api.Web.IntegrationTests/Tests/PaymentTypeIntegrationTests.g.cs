@@ -15,54 +15,82 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PaymentType")]
 	[Trait("Area", "Integration")]
-	public class PaymentTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PaymentTypeIntegrationTests
 	{
-		public PaymentTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public PaymentTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PaymentTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPaymentTypeResponseModel model = await client.PaymentTypeGetAsync(1);
 
 			ApiPaymentTypeModelMapper mapper = new ApiPaymentTypeModelMapper();
 
-			UpdateResponse<ApiPaymentTypeResponseModel> updateResponse = await this.Client.PaymentTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPaymentTypeResponseModel> updateResponse = await client.PaymentTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PaymentTypeDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPaymentTypeResponseModel response = await client.PaymentTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PaymentTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PaymentTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPaymentTypeResponseModel response = await this.Client.PaymentTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPaymentTypeResponseModel response = await client.PaymentTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPaymentTypeResponseModel> response = await this.Client.PaymentTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPaymentTypeResponseModel> response = await client.PaymentTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPaymentTypeResponseModel> CreateRecord()
+		private async Task<ApiPaymentTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPaymentTypeRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiPaymentTypeResponseModel> result = await this.Client.PaymentTypeCreateAsync(model);
+			CreateResponse<ApiPaymentTypeResponseModel> result = await client.PaymentTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PaymentTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a15eedde2d74309f8a70c609748fa5a</Hash>
+    <Hash>5cd292b884501558d2259e643380d6f3</Hash>
 </Codenesium>*/

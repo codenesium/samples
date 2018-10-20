@@ -17,12 +17,13 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALEventTeacherMapper();
 			var bo = new BOEventTeacher();
-			bo.SetProperties(1, 1);
+			bo.SetProperties(1, 1, true);
 
 			EventTeacher response = mapper.MapBOToEF(bo);
 
 			response.EventId.Should().Be(1);
 			response.TeacherId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -30,12 +31,13 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALEventTeacherMapper();
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(1, 1);
+			entity.SetProperties(1, 1, true);
 
 			BOEventTeacher response = mapper.MapEFToBO(entity);
 
 			response.EventId.Should().Be(1);
 			response.TeacherId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -43,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALEventTeacherMapper();
 			EventTeacher entity = new EventTeacher();
-			entity.SetProperties(1, 1);
+			entity.SetProperties(1, 1, true);
 
 			List<BOEventTeacher> response = mapper.MapEFToBO(new List<EventTeacher>() { entity });
 
@@ -53,5 +55,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9049774eba8abf08684cfcec5a240e84</Hash>
+    <Hash>49c182d5866f78778d6473aa8d3fe393</Hash>
 </Codenesium>*/

@@ -37,16 +37,9 @@ namespace AdventureWorksNS.Api.Services
 		public virtual void RowguidRules()
 		{
 		}
-
-		private async Task<bool> BeValidSpecialOfferBySpecialOfferID(int id,  CancellationToken cancellationToken)
-		{
-			var record = await this.specialOfferProductRepository.SpecialOfferBySpecialOfferID(id);
-
-			return record != null;
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>45c12855dbb764b777b9626b03ccae78</Hash>
+    <Hash>713b5b57daccd4abef4a2edb763c4af4</Hash>
 </Codenesium>*/

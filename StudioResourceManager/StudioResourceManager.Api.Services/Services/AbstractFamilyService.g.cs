@@ -116,9 +116,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiStudentResponseModel>> Students(int familyId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiStudentResponseModel>> StudentsByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Student> records = await this.FamilyRepository.Students(familyId, limit, offset);
+			List<Student> records = await this.FamilyRepository.StudentsByFamilyId(familyId, limit, offset);
 
 			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e8f76a3579c644e2646d67bbc42bc01d</Hash>
+    <Hash>f026aaea15c11d05a713bcfbc812b0a7</Hash>
 </Codenesium>*/

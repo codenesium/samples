@@ -86,7 +86,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.StateProvinceID == stateProvinceID, limit, offset);
 		}
 
-		public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddressesByAddressID(int addressID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BusinessEntityAddress>().Where(x => x.AddressID == addressID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
 		}
@@ -123,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7a02d7ea6fbe7977105a5588db7748e0</Hash>
+    <Hash>deb7d36a05b0790e6f222387f8d497fd</Hash>
 </Codenesium>*/

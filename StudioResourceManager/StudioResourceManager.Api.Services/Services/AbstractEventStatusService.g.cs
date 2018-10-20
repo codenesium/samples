@@ -116,9 +116,9 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiEventResponseModel>> Events(int eventStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventResponseModel>> EventsByEventStatusId(int eventStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Event> records = await this.EventStatusRepository.Events(eventStatusId, limit, offset);
+			List<Event> records = await this.EventStatusRepository.EventsByEventStatusId(eventStatusId, limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>3a0a47b2a5f837fd776bfed28612c1f5</Hash>
+    <Hash>f1b3d0e947937018946e27477c9abb6d</Hash>
 </Codenesium>*/

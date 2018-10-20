@@ -116,9 +116,9 @@ namespace FileServiceNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiFileResponseModel>> Files(int fileTypeId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiFileResponseModel>> FilesByFileTypeId(int fileTypeId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<File> records = await this.FileTypeRepository.Files(fileTypeId, limit, offset);
+			List<File> records = await this.FileTypeRepository.FilesByFileTypeId(fileTypeId, limit, offset);
 
 			return this.BolFileMapper.MapBOToModel(this.DalFileMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace FileServiceNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b230970ed688695f0286ef30de4761b</Hash>
+    <Hash>84e20e59bd787d43208bec037cb88ebe</Hash>
 </Codenesium>*/

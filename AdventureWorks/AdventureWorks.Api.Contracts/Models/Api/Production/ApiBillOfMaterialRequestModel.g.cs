@@ -36,36 +36,36 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public short BOMLevel { get; private set; }
+		public short BOMLevel { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public int ComponentID { get; private set; }
+		public int ComponentID { get; private set; } = default(int);
 
 		[JsonProperty]
-		public DateTime? EndDate { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime? EndDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public double PerAssemblyQty { get; private set; }
-
-		[JsonProperty]
-		public int? ProductAssemblyID { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime StartDate { get; private set; }
+		public double PerAssemblyQty { get; private set; } = default(double);
+
+		[JsonProperty]
+		public int? ProductAssemblyID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string UnitMeasureCode { get; private set; }
+		public DateTime StartDate { get; private set; } = default(DateTime);
+
+		[Required]
+		[JsonProperty]
+		public string UnitMeasureCode { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cce156378f242310e01f1f14c16c8338</Hash>
+    <Hash>5b539d027ff161d658b5ebfced31cbf8</Hash>
 </Codenesium>*/

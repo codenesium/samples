@@ -15,54 +15,82 @@ namespace NebulaNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "VersionInfo")]
 	[Trait("Area", "Integration")]
-	public class VersionInfoIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class VersionInfoIntegrationTests
 	{
-		public VersionInfoIntegrationTests(TestWebApplicationFactory fixture)
+		public VersionInfoIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.VersionInfoDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiVersionInfoResponseModel model = await client.VersionInfoGetAsync(1);
 
 			ApiVersionInfoModelMapper mapper = new ApiVersionInfoModelMapper();
 
-			UpdateResponse<ApiVersionInfoResponseModel> updateResponse = await this.Client.VersionInfoUpdateAsync(model.Version, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiVersionInfoResponseModel> updateResponse = await client.VersionInfoUpdateAsync(model.Version, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.VersionInfoDeleteAsync(model.Version);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiVersionInfoResponseModel response = await client.VersionInfoGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.VersionInfoDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.VersionInfoGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiVersionInfoResponseModel response = await this.Client.VersionInfoGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiVersionInfoResponseModel response = await client.VersionInfoGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace NebulaNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiVersionInfoResponseModel> response = await this.Client.VersionInfoAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiVersionInfoResponseModel> response = await client.VersionInfoAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiVersionInfoResponseModel> CreateRecord()
+		private async Task<ApiVersionInfoResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiVersionInfoRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiVersionInfoResponseModel> result = await this.Client.VersionInfoCreateAsync(model);
+			CreateResponse<ApiVersionInfoResponseModel> result = await client.VersionInfoCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.VersionInfoDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f47da258dafb0f9fd49cdc47e47cbcb4</Hash>
+    <Hash>d8a028c60e488fb248b45db746a51246</Hash>
 </Codenesium>*/

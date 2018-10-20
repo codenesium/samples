@@ -23,12 +23,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiLocationResponseModel> ByName(string name);
 
-		Task<List<ApiProductInventoryResponseModel>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductInventoryResponseModel>> ProductInventoriesByLocationID(short locationID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutingsByLocationID(short locationID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6af2f4f06faefd80556ce607b752514a</Hash>
+    <Hash>1008364e5bde57ec3f4349adf13b283f</Hash>
 </Codenesium>*/

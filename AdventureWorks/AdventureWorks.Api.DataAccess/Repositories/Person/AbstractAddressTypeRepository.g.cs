@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<AddressType>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressTypeID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<BusinessEntityAddress>> BusinessEntityAddressesByAddressTypeID(int addressTypeID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BusinessEntityAddress>().Where(x => x.AddressTypeID == addressTypeID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityAddress>();
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d45c074701758dbafdcda445744dec5a</Hash>
+    <Hash>56b0b140d39a032a82b4a476ae4dfa89</Hash>
 </Codenesium>*/

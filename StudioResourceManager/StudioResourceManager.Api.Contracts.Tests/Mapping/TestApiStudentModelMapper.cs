@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudentModelMapper();
 			var model = new ApiStudentRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1, true);
 			ApiStudentResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -31,6 +31,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.Phone.Should().Be("A");
 			response.SmsRemindersEnabled.Should().Be(true);
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -38,7 +39,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudentModelMapper();
 			var model = new ApiStudentResponseModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1, true);
 			ApiStudentRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -51,6 +52,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.Phone.Should().Be("A");
 			response.SmsRemindersEnabled.Should().Be(true);
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -58,7 +60,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudentModelMapper();
 			var model = new ApiStudentRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1, true);
 
 			JsonPatchDocument<ApiStudentRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiStudentRequestModel();
@@ -73,10 +75,11 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.Phone.Should().Be("A");
 			response.SmsRemindersEnabled.Should().Be(true);
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5af605dd204d0523994c79a967eb2ca3</Hash>
+    <Hash>38b08dfb0fc2f7054fefd38abb63d936</Hash>
 </Codenesium>*/

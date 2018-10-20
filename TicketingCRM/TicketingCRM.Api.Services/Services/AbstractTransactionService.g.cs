@@ -123,9 +123,9 @@ namespace TicketingCRMNS.Api.Services
 			return this.BolTransactionMapper.MapBOToModel(this.DalTransactionMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSaleResponseModel>> Sales(int transactionId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSaleResponseModel>> SalesByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Sale> records = await this.TransactionRepository.Sales(transactionId, limit, offset);
+			List<Sale> records = await this.TransactionRepository.SalesByTransactionId(transactionId, limit, offset);
 
 			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
@@ -133,5 +133,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9c889fa5fa248238e273390d28c7113f</Hash>
+    <Hash>f726b019e81ecd0b74c9ee40765c3fed</Hash>
 </Codenesium>*/

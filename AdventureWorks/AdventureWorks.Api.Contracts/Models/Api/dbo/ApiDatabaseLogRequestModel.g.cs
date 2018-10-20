@@ -34,32 +34,32 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string DatabaseUser { get; private set; }
+		public string DatabaseUser { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string @Event { get; private set; }
+		public string @Event { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string @Object { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime PostTime { get; private set; }
-
-		[JsonProperty]
-		public string Schema { get; private set; }
+		public string @Object { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Tsql { get; private set; }
+		public DateTime PostTime { get; private set; } = default(DateTime);
+
+		[JsonProperty]
+		public string Schema { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string XmlEvent { get; private set; }
+		public string Tsql { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public string XmlEvent { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>04097726c518accfb77a836e85f1bed7</Hash>
+    <Hash>a84b0a016d2bbc3a10ab8dff89ba7e13</Hash>
 </Codenesium>*/

@@ -19,14 +19,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<SalesOrderDetail>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<SpecialOfferProduct> SpecialOfferProductByProductID(int productID);
-
 		Task<SalesOrderHeader> SalesOrderHeaderBySalesOrderID(int salesOrderID);
-
-		Task<SpecialOfferProduct> SpecialOfferProductBySpecialOfferID(int specialOfferID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b415994a453d28d9e43e4110fca3be7</Hash>
+    <Hash>404ac98a2cf47390486669700bd19567</Hash>
 </Codenesium>*/

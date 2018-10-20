@@ -15,54 +15,82 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "VoteType")]
 	[Trait("Area", "Integration")]
-	public class VoteTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class VoteTypeIntegrationTests
 	{
-		public VoteTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public VoteTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.VoteTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiVoteTypeResponseModel model = await client.VoteTypeGetAsync(1);
 
 			ApiVoteTypeModelMapper mapper = new ApiVoteTypeModelMapper();
 
-			UpdateResponse<ApiVoteTypeResponseModel> updateResponse = await this.Client.VoteTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiVoteTypeResponseModel> updateResponse = await client.VoteTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.VoteTypeDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiVoteTypeResponseModel response = await client.VoteTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.VoteTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.VoteTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiVoteTypeResponseModel response = await this.Client.VoteTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiVoteTypeResponseModel response = await client.VoteTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiVoteTypeResponseModel> response = await this.Client.VoteTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiVoteTypeResponseModel> response = await client.VoteTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiVoteTypeResponseModel> CreateRecord()
+		private async Task<ApiVoteTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiVoteTypeRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiVoteTypeResponseModel> result = await this.Client.VoteTypeCreateAsync(model);
+			CreateResponse<ApiVoteTypeResponseModel> result = await client.VoteTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.VoteTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ee1fe4ee8e1db6dbece61d9045d23c2e</Hash>
+    <Hash>c780dd42fa22f658a8f46063a1bb2fbe</Hash>
 </Codenesium>*/

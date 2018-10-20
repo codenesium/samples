@@ -78,17 +78,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("UnitPriceDiscount")]
 		public decimal UnitPriceDiscount { get; private set; }
 
-		[ForeignKey("ProductID")]
-		public virtual SpecialOfferProduct SpecialOfferProductNavigation { get; private set; }
-
 		[ForeignKey("SalesOrderID")]
 		public virtual SalesOrderHeader SalesOrderHeaderNavigation { get; private set; }
-
-		[ForeignKey("SpecialOfferID")]
-		public virtual SpecialOfferProduct SpecialOfferProduct1Navigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f83412ab8d582a1dc471003c962874a</Hash>
+    <Hash>761ed30eeb3e736826a0561ba5995d29</Hash>
 </Codenesium>*/

@@ -116,9 +116,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiAirTransportResponseModel>> AirTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiAirTransportResponseModel>> AirTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<AirTransport> records = await this.HandlerRepository.AirTransports(handlerId, limit, offset);
+			List<AirTransport> records = await this.HandlerRepository.AirTransportsByHandlerId(handlerId, limit, offset);
 
 			return this.BolAirTransportMapper.MapBOToModel(this.DalAirTransportMapper.MapEFToBO(records));
 		}
@@ -133,5 +133,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>08421dac89e8c70ea0242533c3829597</Hash>
+    <Hash>e4d95ed3dda122d2fe2c158f4bb08eb7</Hash>
 </Codenesium>*/

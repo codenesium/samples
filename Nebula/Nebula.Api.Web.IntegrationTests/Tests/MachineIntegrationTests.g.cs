@@ -15,54 +15,82 @@ namespace NebulaNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Machine")]
 	[Trait("Area", "Integration")]
-	public class MachineIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class MachineIntegrationTests
 	{
-		public MachineIntegrationTests(TestWebApplicationFactory fixture)
+		public MachineIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.MachineDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiMachineResponseModel model = await client.MachineGetAsync(1);
 
 			ApiMachineModelMapper mapper = new ApiMachineModelMapper();
 
-			UpdateResponse<ApiMachineResponseModel> updateResponse = await this.Client.MachineUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiMachineResponseModel> updateResponse = await client.MachineUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.MachineDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiMachineResponseModel response = await client.MachineGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.MachineDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.MachineGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiMachineResponseModel response = await this.Client.MachineGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiMachineResponseModel response = await client.MachineGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace NebulaNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiMachineResponseModel> response = await this.Client.MachineAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiMachineResponseModel> response = await client.MachineAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiMachineResponseModel> CreateRecord()
+		private async Task<ApiMachineResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiMachineRequestModel();
 			model.SetProperties("B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
-			CreateResponse<ApiMachineResponseModel> result = await this.Client.MachineCreateAsync(model);
+			CreateResponse<ApiMachineResponseModel> result = await client.MachineCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.MachineDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fdf3f2a68720462b37bd196312990dd7</Hash>
+    <Hash>de0ad48d87c3d392b79d6ccad41f0022</Hash>
 </Codenesium>*/

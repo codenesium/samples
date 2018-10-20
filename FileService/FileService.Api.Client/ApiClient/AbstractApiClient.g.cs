@@ -110,9 +110,9 @@ namespace FileServiceNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiBucketResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiFileResponseModel>> Files(int bucketId)
+		public virtual async Task<List<ApiFileResponseModel>> FilesByBucketId(int bucketId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/Files/{bucketId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Buckets/FilesByBucketId/{bucketId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -200,9 +200,16 @@ namespace FileServiceNS.Api.Client
 
 			return JsonConvert.DeserializeObject<List<ApiFileTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
+
+		public virtual async Task<List<ApiFileResponseModel>> FilesByFileTypeId(int fileTypeId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/FileTypes/FilesByFileTypeId/{fileTypeId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFileResponseModel>>(httpResponse.Content.ContentToString());
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0d06a7ecd1dde064f51b4e427362e346</Hash>
+    <Hash>9b7739737eb99119982adfed6e03350a</Hash>
 </Codenesium>*/

@@ -138,16 +138,16 @@ namespace TwitterNS.Api.Services
 			return this.BolTweetMapper.MapBOToModel(this.DalTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiQuoteTweetResponseModel>> QuoteTweets(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiQuoteTweetResponseModel>> QuoteTweetsBySourceTweetId(int sourceTweetId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<QuoteTweet> records = await this.TweetRepository.QuoteTweets(sourceTweetId, limit, offset);
+			List<QuoteTweet> records = await this.TweetRepository.QuoteTweetsBySourceTweetId(sourceTweetId, limit, offset);
 
 			return this.BolQuoteTweetMapper.MapBOToModel(this.DalQuoteTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiRetweetResponseModel>> Retweets(int tweetTweetId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiRetweetResponseModel>> RetweetsByTweetTweetId(int tweetTweetId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Retweet> records = await this.TweetRepository.Retweets(tweetTweetId, limit, offset);
+			List<Retweet> records = await this.TweetRepository.RetweetsByTweetTweetId(tweetTweetId, limit, offset);
 
 			return this.BolRetweetMapper.MapBOToModel(this.DalRetweetMapper.MapEFToBO(records));
 		}
@@ -155,5 +155,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b178b7b91a72ef261051e17f3d9031d2</Hash>
+    <Hash>a78aa75ff84645cb9eedcfb8f81b3353</Hash>
 </Codenesium>*/

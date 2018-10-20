@@ -15,54 +15,82 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PostHistoryType")]
 	[Trait("Area", "Integration")]
-	public class PostHistoryTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PostHistoryTypeIntegrationTests
 	{
-		public PostHistoryTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public PostHistoryTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PostHistoryTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPostHistoryTypeResponseModel model = await client.PostHistoryTypeGetAsync(1);
 
 			ApiPostHistoryTypeModelMapper mapper = new ApiPostHistoryTypeModelMapper();
 
-			UpdateResponse<ApiPostHistoryTypeResponseModel> updateResponse = await this.Client.PostHistoryTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPostHistoryTypeResponseModel> updateResponse = await client.PostHistoryTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PostHistoryTypeDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPostHistoryTypeResponseModel response = await client.PostHistoryTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PostHistoryTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PostHistoryTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPostHistoryTypeResponseModel response = await this.Client.PostHistoryTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPostHistoryTypeResponseModel response = await client.PostHistoryTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPostHistoryTypeResponseModel> response = await this.Client.PostHistoryTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPostHistoryTypeResponseModel> response = await client.PostHistoryTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPostHistoryTypeResponseModel> CreateRecord()
+		private async Task<ApiPostHistoryTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPostHistoryTypeRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiPostHistoryTypeResponseModel> result = await this.Client.PostHistoryTypeCreateAsync(model);
+			CreateResponse<ApiPostHistoryTypeResponseModel> result = await client.PostHistoryTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PostHistoryTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>aa8b62133ced9394006722f56ab08980</Hash>
+    <Hash>804b7307160c79aa1856c8078a8342b4</Hash>
 </Codenesium>*/

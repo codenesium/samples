@@ -17,10 +17,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<Family>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Student>> Students(int familyId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Student>> StudentsByFamilyId(int familyId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>42273ca7a3d5a7f66b2f9176b2b72dc1</Hash>
+    <Hash>2f2713a89a6a3c5f3d6aef70d9413692</Hash>
 </Codenesium>*/

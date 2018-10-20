@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiFamilyModelMapper();
 			var model = new ApiFamilyRequestModel();
-			model.SetProperties("A", "A", "A", "A", "A");
+			model.SetProperties("A", "A", "A", "A", "A", true);
 			ApiFamilyResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Id.Should().Be(1);
@@ -26,6 +26,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
 			response.PrimaryContactPhone.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -33,7 +34,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiFamilyModelMapper();
 			var model = new ApiFamilyResponseModel();
-			model.SetProperties(1, "A", "A", "A", "A", "A");
+			model.SetProperties(1, "A", "A", "A", "A", "A", true);
 			ApiFamilyRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Note.Should().Be("A");
@@ -41,6 +42,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
 			response.PrimaryContactPhone.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -48,7 +50,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiFamilyModelMapper();
 			var model = new ApiFamilyRequestModel();
-			model.SetProperties("A", "A", "A", "A", "A");
+			model.SetProperties("A", "A", "A", "A", "A", true);
 
 			JsonPatchDocument<ApiFamilyRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiFamilyRequestModel();
@@ -58,10 +60,11 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
 			response.PrimaryContactPhone.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>794f89a71c799ba20ed6f02d9155ceee</Hash>
+    <Hash>aa5d071de17ca8df8c9ed8ee7011e199</Hash>
 </Codenesium>*/

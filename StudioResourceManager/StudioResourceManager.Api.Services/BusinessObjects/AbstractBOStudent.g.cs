@@ -20,7 +20,8 @@ namespace StudioResourceManagerNS.Api.Services
 		                                  string lastName,
 		                                  string phone,
 		                                  bool smsRemindersEnabled,
-		                                  int userId)
+		                                  int userId,
+		                                  bool isDeleted)
 		{
 			this.Birthday = birthday;
 			this.Email = email;
@@ -33,6 +34,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled;
 			this.UserId = userId;
+			this.IsDeleted = isDeleted;
 		}
 
 		public DateTime Birthday { get; private set; }
@@ -56,9 +58,11 @@ namespace StudioResourceManagerNS.Api.Services
 		public bool SmsRemindersEnabled { get; private set; }
 
 		public int UserId { get; private set; }
+
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bc96b4c2bfdc3ee6ce597199ecf48590</Hash>
+    <Hash>12bbb7df78f5b274c6b4e77ff1abb455</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PipelineStepStatu")]
 	[Trait("Area", "Integration")]
-	public class PipelineStepStatuIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PipelineStepStatuIntegrationTests
 	{
-		public PipelineStepStatuIntegrationTests(TestWebApplicationFactory fixture)
+		public PipelineStepStatuIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PipelineStepStatuDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPipelineStepStatuResponseModel model = await client.PipelineStepStatuGetAsync(1);
 
 			ApiPipelineStepStatuModelMapper mapper = new ApiPipelineStepStatuModelMapper();
 
-			UpdateResponse<ApiPipelineStepStatuResponseModel> updateResponse = await this.Client.PipelineStepStatuUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPipelineStepStatuResponseModel> updateResponse = await client.PipelineStepStatuUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PipelineStepStatuDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPipelineStepStatuResponseModel response = await client.PipelineStepStatuGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PipelineStepStatuDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PipelineStepStatuGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPipelineStepStatuResponseModel response = await this.Client.PipelineStepStatuGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPipelineStepStatuResponseModel response = await client.PipelineStepStatuGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPipelineStepStatuResponseModel> response = await this.Client.PipelineStepStatuAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPipelineStepStatuResponseModel> response = await client.PipelineStepStatuAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPipelineStepStatuResponseModel> CreateRecord()
+		private async Task<ApiPipelineStepStatuResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPipelineStepStatuRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiPipelineStepStatuResponseModel> result = await this.Client.PipelineStepStatuCreateAsync(model);
+			CreateResponse<ApiPipelineStepStatuResponseModel> result = await client.PipelineStepStatuCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PipelineStepStatuDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46817ac326280ce649087bb4256f07fd</Hash>
+    <Hash>85653508c2b33783b7920fc70fec32f5</Hash>
 </Codenesium>*/

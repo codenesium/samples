@@ -23,10 +23,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiCreditCardResponseModel> ByCardNumber(string cardNumber);
 
-		Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiCreditCardResponseModel>> ByBusinessEntityID(int creditCardID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f95389114e2dc833c3959a76588e1d06</Hash>
+    <Hash>2667552ef672e83c86dce96f5d7b5846</Hash>
 </Codenesium>*/

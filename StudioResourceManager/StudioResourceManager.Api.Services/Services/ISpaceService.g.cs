@@ -21,12 +21,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<List<ApiSpaceResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeatures(int spaceId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiSpaceResponseModel>> BySpaceFeatureId(int spaceId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesBySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e2ced789a0facf59c7a54e580e5bdfd7</Hash>
+    <Hash>901c43f8800ccc64b831a52ceac93e8f</Hash>
 </Codenesium>*/

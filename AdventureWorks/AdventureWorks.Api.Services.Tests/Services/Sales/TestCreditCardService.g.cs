@@ -182,12 +182,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void SalesOrderHeaders_Exists()
+		public async void SalesOrderHeadersByCreditCardID_Exists()
 		{
 			var mock = new ServiceMockFacade<ICreditCardRepository>();
 			var records = new List<SalesOrderHeader>();
 			records.Add(new SalesOrderHeader());
-			mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersByCreditCardID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CreditCardService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
-			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default(int));
+			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeadersByCreditCardID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesOrderHeadersByCreditCardID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SalesOrderHeaders_Not_Exists()
+		public async void SalesOrderHeadersByCreditCardID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICreditCardRepository>();
-			mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
+			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersByCreditCardID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
 			var service = new CreditCardService(mock.LoggerMock.Object,
 			                                    mock.RepositoryMock.Object,
 			                                    mock.ModelValidatorMockFactory.CreditCardModelValidatorMock.Object,
@@ -215,14 +215,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                    mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                    mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
-			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default(int));
+			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeadersByCreditCardID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesOrderHeadersByCreditCardID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ffbee268207db96723bdf59e9ebf6661</Hash>
+    <Hash>7dd0aa9a7d93f297b6618d2e5e1beaf4</Hash>
 </Codenesium>*/

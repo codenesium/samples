@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "WorkOrder")]
 	[Trait("Area", "Integration")]
-	public class WorkOrderIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class WorkOrderIntegrationTests
 	{
-		public WorkOrderIntegrationTests(TestWebApplicationFactory fixture)
+		public WorkOrderIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.WorkOrderDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiWorkOrderResponseModel model = await client.WorkOrderGetAsync(1);
 
 			ApiWorkOrderModelMapper mapper = new ApiWorkOrderModelMapper();
 
-			UpdateResponse<ApiWorkOrderResponseModel> updateResponse = await this.Client.WorkOrderUpdateAsync(model.WorkOrderID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiWorkOrderResponseModel> updateResponse = await client.WorkOrderUpdateAsync(model.WorkOrderID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.WorkOrderDeleteAsync(model.WorkOrderID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiWorkOrderResponseModel response = await client.WorkOrderGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.WorkOrderDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.WorkOrderGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiWorkOrderResponseModel response = await this.Client.WorkOrderGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiWorkOrderResponseModel response = await client.WorkOrderGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiWorkOrderResponseModel> response = await this.Client.WorkOrderAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiWorkOrderResponseModel> response = await client.WorkOrderAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiWorkOrderResponseModel> CreateRecord()
+		private async Task<ApiWorkOrderResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiWorkOrderRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2);
-			CreateResponse<ApiWorkOrderResponseModel> result = await this.Client.WorkOrderCreateAsync(model);
+			CreateResponse<ApiWorkOrderResponseModel> result = await client.WorkOrderCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.WorkOrderDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b5b090ed905a3e8fd129ab3b692f2548</Hash>
+    <Hash>f7075ca4b80d33b7d7e69d099a7c95a3</Hash>
 </Codenesium>*/

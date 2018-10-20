@@ -24,14 +24,14 @@ namespace ESPIOTNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public Guid PublicId { get; private set; }
+		public Guid PublicId { get; private set; } = default(Guid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8ee8146320ca271042fd2de5383c731</Hash>
+    <Hash>9d00df55891b04e369f14352b3350cbf</Hash>
 </Codenesium>*/

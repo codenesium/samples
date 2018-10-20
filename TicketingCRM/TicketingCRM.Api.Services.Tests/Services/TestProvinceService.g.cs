@@ -199,12 +199,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Cities_Exists()
+		public async void CitiesByProvinceId_Exists()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
 			var records = new List<City>();
 			records.Add(new City());
-			mock.RepositoryMock.Setup(x => x.Cities(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.CitiesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProvinceService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -215,17 +215,17 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiCityResponseModel> response = await service.Cities(default(int));
+			List<ApiCityResponseModel> response = await service.CitiesByProvinceId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Cities(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.CitiesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Cities_Not_Exists()
+		public async void CitiesByProvinceId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
-			mock.RepositoryMock.Setup(x => x.Cities(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<City>>(new List<City>()));
+			mock.RepositoryMock.Setup(x => x.CitiesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<City>>(new List<City>()));
 			var service = new ProvinceService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -236,19 +236,19 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiCityResponseModel> response = await service.Cities(default(int));
+			List<ApiCityResponseModel> response = await service.CitiesByProvinceId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Cities(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.CitiesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Venues_Exists()
+		public async void VenuesByProvinceId_Exists()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
 			var records = new List<Venue>();
 			records.Add(new Venue());
-			mock.RepositoryMock.Setup(x => x.Venues(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.VenuesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProvinceService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -259,17 +259,17 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.Venues(default(int));
+			List<ApiVenueResponseModel> response = await service.VenuesByProvinceId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Venues(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.VenuesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Venues_Not_Exists()
+		public async void VenuesByProvinceId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProvinceRepository>();
-			mock.RepositoryMock.Setup(x => x.Venues(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
+			mock.RepositoryMock.Setup(x => x.VenuesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
 			var service = new ProvinceService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.ProvinceModelValidatorMock.Object,
@@ -280,14 +280,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                                  mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.Venues(default(int));
+			List<ApiVenueResponseModel> response = await service.VenuesByProvinceId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Venues(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.VenuesByProvinceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e3a9973983254f5878f6955e1af0a5a6</Hash>
+    <Hash>a96c0e26d743cd75bc3d741aa8681b2c</Hash>
 </Codenesium>*/

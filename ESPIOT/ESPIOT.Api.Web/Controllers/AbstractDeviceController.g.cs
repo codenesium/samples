@@ -190,7 +190,7 @@ namespace ESPIOTNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace ESPIOTNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -226,10 +226,10 @@ namespace ESPIOTNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{deviceId}/DeviceActions")]
+		[Route("{deviceId}/DeviceActionsByDeviceId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiDeviceActionResponseModel>), 200)]
-		public async virtual Task<IActionResult> DeviceActions(int deviceId, int? limit, int? offset)
+		public async virtual Task<IActionResult> DeviceActionsByDeviceId(int deviceId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -237,7 +237,7 @@ namespace ESPIOTNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDeviceActionResponseModel> response = await this.DeviceService.DeviceActions(deviceId, query.Limit, query.Offset);
+			List<ApiDeviceActionResponseModel> response = await this.DeviceService.DeviceActionsByDeviceId(deviceId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -261,5 +261,5 @@ namespace ESPIOTNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>e39560a745afd75857a8ec35c92ed620</Hash>
+    <Hash>7e453672652e0108454f47651cb74c59</Hash>
 </Codenesium>*/

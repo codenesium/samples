@@ -24,14 +24,14 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int OrganizationId { get; private set; }
+		public int OrganizationId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0e49683b6d1af69b19f59a99940719d9</Hash>
+    <Hash>8fa6f5bdc4d112fe8e1433f7a7aefea9</Hash>
 </Codenesium>*/

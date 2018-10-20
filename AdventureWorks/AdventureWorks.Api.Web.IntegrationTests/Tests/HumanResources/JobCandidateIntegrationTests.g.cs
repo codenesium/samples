@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "JobCandidate")]
 	[Trait("Area", "Integration")]
-	public class JobCandidateIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class JobCandidateIntegrationTests
 	{
-		public JobCandidateIntegrationTests(TestWebApplicationFactory fixture)
+		public JobCandidateIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.JobCandidateDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiJobCandidateResponseModel model = await client.JobCandidateGetAsync(1);
 
 			ApiJobCandidateModelMapper mapper = new ApiJobCandidateModelMapper();
 
-			UpdateResponse<ApiJobCandidateResponseModel> updateResponse = await this.Client.JobCandidateUpdateAsync(model.JobCandidateID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiJobCandidateResponseModel> updateResponse = await client.JobCandidateUpdateAsync(model.JobCandidateID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.JobCandidateDeleteAsync(model.JobCandidateID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiJobCandidateResponseModel response = await client.JobCandidateGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.JobCandidateDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.JobCandidateGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiJobCandidateResponseModel response = await this.Client.JobCandidateGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiJobCandidateResponseModel response = await client.JobCandidateGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiJobCandidateResponseModel> response = await this.Client.JobCandidateAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiJobCandidateResponseModel> response = await client.JobCandidateAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiJobCandidateResponseModel> CreateRecord()
+		private async Task<ApiJobCandidateResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiJobCandidateRequestModel();
 			model.SetProperties(2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiJobCandidateResponseModel> result = await this.Client.JobCandidateCreateAsync(model);
+			CreateResponse<ApiJobCandidateResponseModel> result = await client.JobCandidateCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.JobCandidateDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f4988be644603db84051e8a19ce63fa6</Hash>
+    <Hash>6f3de24487c5efdd5f3aa6d34d1eb835</Hash>
 </Codenesium>*/

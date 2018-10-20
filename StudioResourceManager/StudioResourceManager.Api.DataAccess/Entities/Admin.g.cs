@@ -20,7 +20,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			int id,
 			string lastName,
 			string phone,
-			int userId)
+			int userId,
+			bool isDeleted)
 		{
 			this.Birthday = birthday;
 			this.Email = email;
@@ -29,6 +30,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.UserId = userId;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Column("birthday")]
@@ -43,7 +45,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public string FirstName { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -58,11 +59,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[Column("userId")]
 		public int UserId { get; private set; }
 
+		[Column("isDeleted")]
+		public bool IsDeleted { get; private set; }
+
 		[ForeignKey("UserId")]
 		public virtual User UserNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>14c18850f65319599ca60a823ce545d7</Hash>
+    <Hash>191d4a02d09492d07c80ed8996d1ba0e</Hash>
 </Codenesium>*/

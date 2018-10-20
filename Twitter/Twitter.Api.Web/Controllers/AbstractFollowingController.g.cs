@@ -190,7 +190,7 @@ namespace TwitterNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(string id)
 		{
@@ -198,7 +198,7 @@ namespace TwitterNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -225,5 +225,5 @@ namespace TwitterNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3cab4f7c742ae3cd0c62c82cbd50c2ca</Hash>
+    <Hash>5aaeaf6f557d90061df89ec5ec34e0fc</Hash>
 </Codenesium>*/

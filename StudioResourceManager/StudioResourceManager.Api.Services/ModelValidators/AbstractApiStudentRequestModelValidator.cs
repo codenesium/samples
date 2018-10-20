@@ -76,6 +76,10 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.UserId).MustAsync(this.BeValidUserByUserId).When(x => x?.UserId != null).WithMessage("Invalid reference");
 		}
 
+		public virtual void IsDeletedRules()
+		{
+		}
+
 		private async Task<bool> BeValidFamilyByFamilyId(int id,  CancellationToken cancellationToken)
 		{
 			var record = await this.studentRepository.FamilyByFamilyId(id);
@@ -93,5 +97,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1080f1c27601e4aeb1ff4a6f7acba2cf</Hash>
+    <Hash>ae944e430a6c893a4733bda2bb8b0709</Hash>
 </Codenesium>*/

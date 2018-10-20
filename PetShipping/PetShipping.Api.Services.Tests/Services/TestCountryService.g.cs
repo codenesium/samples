@@ -155,12 +155,12 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void CountryRequirements_Exists()
+		public async void CountryRequirementsByCountryId_Exists()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			var records = new List<CountryRequirement>();
 			records.Add(new CountryRequirement());
-			mock.RepositoryMock.Setup(x => x.CountryRequirements(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.CountryRequirementsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CountryService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
@@ -171,17 +171,17 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiCountryRequirementResponseModel> response = await service.CountryRequirements(default(int));
+			List<ApiCountryRequirementResponseModel> response = await service.CountryRequirementsByCountryId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.CountryRequirements(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.CountryRequirementsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void CountryRequirements_Not_Exists()
+		public async void CountryRequirementsByCountryId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
-			mock.RepositoryMock.Setup(x => x.CountryRequirements(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CountryRequirement>>(new List<CountryRequirement>()));
+			mock.RepositoryMock.Setup(x => x.CountryRequirementsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CountryRequirement>>(new List<CountryRequirement>()));
 			var service = new CountryService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
@@ -192,19 +192,19 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiCountryRequirementResponseModel> response = await service.CountryRequirements(default(int));
+			List<ApiCountryRequirementResponseModel> response = await service.CountryRequirementsByCountryId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.CountryRequirements(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.CountryRequirementsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Destinations_Exists()
+		public async void DestinationsByCountryId_Exists()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
 			var records = new List<Destination>();
 			records.Add(new Destination());
-			mock.RepositoryMock.Setup(x => x.Destinations(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.DestinationsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CountryService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
@@ -215,17 +215,17 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiDestinationResponseModel> response = await service.Destinations(default(int));
+			List<ApiDestinationResponseModel> response = await service.DestinationsByCountryId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Destinations(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.DestinationsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Destinations_Not_Exists()
+		public async void DestinationsByCountryId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICountryRepository>();
-			mock.RepositoryMock.Setup(x => x.Destinations(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Destination>>(new List<Destination>()));
+			mock.RepositoryMock.Setup(x => x.DestinationsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Destination>>(new List<Destination>()));
 			var service = new CountryService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CountryModelValidatorMock.Object,
@@ -236,14 +236,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLDestinationMapperMock,
 			                                 mock.DALMapperMockFactory.DALDestinationMapperMock);
 
-			List<ApiDestinationResponseModel> response = await service.Destinations(default(int));
+			List<ApiDestinationResponseModel> response = await service.DestinationsByCountryId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Destinations(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.DestinationsByCountryId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ce095b24b92d4c0a665d1b4cf170d460</Hash>
+    <Hash>fc2d065ffbbf8a0b323269220251dfa7</Hash>
 </Codenesium>*/

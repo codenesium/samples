@@ -123,9 +123,9 @@ namespace TwitterNS.Api.Services
 			return this.BolMessageMapper.MapBOToModel(this.DalMessageMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiMessengerResponseModel>> Messengers(int messageId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiMessengerResponseModel>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Messenger> records = await this.MessageRepository.Messengers(messageId, limit, offset);
+			List<Messenger> records = await this.MessageRepository.MessengersByMessageId(messageId, limit, offset);
 
 			return this.BolMessengerMapper.MapBOToModel(this.DalMessengerMapper.MapEFToBO(records));
 		}
@@ -133,5 +133,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>74d12ff24e353dccf8ada82b9a90981c</Hash>
+    <Hash>6ec667427c06f6de15e3e311a12782dc</Hash>
 </Codenesium>*/

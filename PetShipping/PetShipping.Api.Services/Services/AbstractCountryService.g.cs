@@ -124,16 +124,16 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiCountryRequirementResponseModel>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiCountryRequirementResponseModel>> CountryRequirementsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<CountryRequirement> records = await this.CountryRepository.CountryRequirements(countryId, limit, offset);
+			List<CountryRequirement> records = await this.CountryRepository.CountryRequirementsByCountryId(countryId, limit, offset);
 
 			return this.BolCountryRequirementMapper.MapBOToModel(this.DalCountryRequirementMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiDestinationResponseModel>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiDestinationResponseModel>> DestinationsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Destination> records = await this.CountryRepository.Destinations(countryId, limit, offset);
+			List<Destination> records = await this.CountryRepository.DestinationsByCountryId(countryId, limit, offset);
 
 			return this.BolDestinationMapper.MapBOToModel(this.DalDestinationMapper.MapEFToBO(records));
 		}
@@ -141,5 +141,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9be0aaad75e947fc82166ff322e6f222</Hash>
+    <Hash>4f9f73602515aeb77a1a0d5d713fdedd</Hash>
 </Codenesium>*/

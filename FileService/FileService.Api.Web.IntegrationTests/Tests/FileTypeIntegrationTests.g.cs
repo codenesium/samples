@@ -15,54 +15,82 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "FileType")]
 	[Trait("Area", "Integration")]
-	public class FileTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class FileTypeIntegrationTests
 	{
-		public FileTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public FileTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.FileTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiFileTypeResponseModel model = await client.FileTypeGetAsync(1);
 
 			ApiFileTypeModelMapper mapper = new ApiFileTypeModelMapper();
 
-			UpdateResponse<ApiFileTypeResponseModel> updateResponse = await this.Client.FileTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiFileTypeResponseModel> updateResponse = await client.FileTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.FileTypeDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiFileTypeResponseModel response = await client.FileTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.FileTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.FileTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiFileTypeResponseModel response = await this.Client.FileTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiFileTypeResponseModel response = await client.FileTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiFileTypeResponseModel> response = await this.Client.FileTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiFileTypeResponseModel> response = await client.FileTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiFileTypeResponseModel> CreateRecord()
+		private async Task<ApiFileTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiFileTypeRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiFileTypeResponseModel> result = await this.Client.FileTypeCreateAsync(model);
+			CreateResponse<ApiFileTypeResponseModel> result = await client.FileTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.FileTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6e3706eec5e4ad9a36a88def817c06f9</Hash>
+    <Hash>336a6a9b18079ce56ee52884b1d90056</Hash>
 </Codenesium>*/

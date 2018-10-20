@@ -194,8 +194,8 @@ namespace AdventureWorksNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
-		/// <param name="acceptAllChangesOnSuccess"></param>
-		/// <param name="cancellationToken"></param>
+		/// <param name="acceptAllChangesOnSuccess">Commit all changes on success</param>
+		/// <param name="cancellationToken">Token that can be passed to hault execution</param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -228,6 +228,56 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<AWBuildVersion>()
+			.HasKey(c => new
+			{
+				c.SystemInformationID,
+			});
+
+			modelBuilder.Entity<AWBuildVersion>()
+			.Property("SystemInformationID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<DatabaseLog>()
+			.HasKey(c => new
+			{
+				c.DatabaseLogID,
+			});
+
+			modelBuilder.Entity<DatabaseLog>()
+			.Property("DatabaseLogID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<ErrorLog>()
+			.HasKey(c => new
+			{
+				c.ErrorLogID,
+			});
+
+			modelBuilder.Entity<ErrorLog>()
+			.Property("ErrorLogID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Department>()
+			.HasKey(c => new
+			{
+				c.DepartmentID,
+			});
+
+			modelBuilder.Entity<Department>()
+			.Property("DepartmentID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Employee>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+			});
+
 			modelBuilder.Entity<EmployeeDepartmentHistory>()
 			.HasKey(c => new
 			{
@@ -236,12 +286,69 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.DepartmentID,
 				c.ShiftID,
 			});
+
 			modelBuilder.Entity<EmployeePayHistory>()
 			.HasKey(c => new
 			{
 				c.BusinessEntityID,
 				c.RateChangeDate,
 			});
+
+			modelBuilder.Entity<JobCandidate>()
+			.HasKey(c => new
+			{
+				c.JobCandidateID,
+			});
+
+			modelBuilder.Entity<JobCandidate>()
+			.Property("JobCandidateID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Shift>()
+			.HasKey(c => new
+			{
+				c.ShiftID,
+			});
+
+			modelBuilder.Entity<Shift>()
+			.Property("ShiftID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Address>()
+			.HasKey(c => new
+			{
+				c.AddressID,
+			});
+
+			modelBuilder.Entity<Address>()
+			.Property("AddressID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<AddressType>()
+			.HasKey(c => new
+			{
+				c.AddressTypeID,
+			});
+
+			modelBuilder.Entity<AddressType>()
+			.Property("AddressTypeID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<BusinessEntity>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+			});
+
+			modelBuilder.Entity<BusinessEntity>()
+			.Property("BusinessEntityID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<BusinessEntityAddress>()
 			.HasKey(c => new
 			{
@@ -249,6 +356,7 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.AddressID,
 				c.AddressTypeID,
 			});
+
 			modelBuilder.Entity<BusinessEntityContact>()
 			.HasKey(c => new
 			{
@@ -256,12 +364,48 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.PersonID,
 				c.ContactTypeID,
 			});
+
+			modelBuilder.Entity<ContactType>()
+			.HasKey(c => new
+			{
+				c.ContactTypeID,
+			});
+
+			modelBuilder.Entity<ContactType>()
+			.Property("ContactTypeID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<CountryRegion>()
+			.HasKey(c => new
+			{
+				c.CountryRegionCode,
+			});
+
 			modelBuilder.Entity<EmailAddress>()
 			.HasKey(c => new
 			{
 				c.BusinessEntityID,
 				c.EmailAddressID,
 			});
+
+			modelBuilder.Entity<EmailAddress>()
+			.Property("EmailAddressID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Password>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+			});
+
+			modelBuilder.Entity<Person>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+			});
+
 			modelBuilder.Entity<PersonPhone>()
 			.HasKey(c => new
 			{
@@ -269,36 +413,158 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.PhoneNumber,
 				c.PhoneNumberTypeID,
 			});
+
+			modelBuilder.Entity<PhoneNumberType>()
+			.HasKey(c => new
+			{
+				c.PhoneNumberTypeID,
+			});
+
+			modelBuilder.Entity<PhoneNumberType>()
+			.Property("PhoneNumberTypeID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<StateProvince>()
+			.HasKey(c => new
+			{
+				c.StateProvinceID,
+			});
+
+			modelBuilder.Entity<StateProvince>()
+			.Property("StateProvinceID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<VStateProvinceCountryRegion>()
 			.HasKey(c => new
 			{
 				c.StateProvinceID,
 				c.CountryRegionCode,
 			});
+
+			modelBuilder.Entity<BillOfMaterial>()
+			.HasKey(c => new
+			{
+				c.BillOfMaterialsID,
+			});
+
+			modelBuilder.Entity<BillOfMaterial>()
+			.Property("BillOfMaterialsID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Culture>()
+			.HasKey(c => new
+			{
+				c.CultureID,
+			});
+
+			modelBuilder.Entity<Document>()
+			.HasKey(c => new
+			{
+				c.Rowguid,
+			});
+
+			modelBuilder.Entity<Document>()
+			.Property("Rowguid")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Illustration>()
+			.HasKey(c => new
+			{
+				c.IllustrationID,
+			});
+
+			modelBuilder.Entity<Illustration>()
+			.Property("IllustrationID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Location>()
+			.HasKey(c => new
+			{
+				c.LocationID,
+			});
+
+			modelBuilder.Entity<Location>()
+			.Property("LocationID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Product>()
+			.HasKey(c => new
+			{
+				c.ProductID,
+			});
+
+			modelBuilder.Entity<Product>()
+			.Property("ProductID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<ProductCategory>()
+			.HasKey(c => new
+			{
+				c.ProductCategoryID,
+			});
+
+			modelBuilder.Entity<ProductCategory>()
+			.Property("ProductCategoryID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<ProductCostHistory>()
 			.HasKey(c => new
 			{
 				c.ProductID,
 				c.StartDate,
 			});
+
+			modelBuilder.Entity<ProductDescription>()
+			.HasKey(c => new
+			{
+				c.ProductDescriptionID,
+			});
+
+			modelBuilder.Entity<ProductDescription>()
+			.Property("ProductDescriptionID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<ProductInventory>()
 			.HasKey(c => new
 			{
 				c.ProductID,
 				c.LocationID,
 			});
+
 			modelBuilder.Entity<ProductListPriceHistory>()
 			.HasKey(c => new
 			{
 				c.ProductID,
 				c.StartDate,
 			});
+
+			modelBuilder.Entity<ProductModel>()
+			.HasKey(c => new
+			{
+				c.ProductModelID,
+			});
+
+			modelBuilder.Entity<ProductModel>()
+			.Property("ProductModelID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<ProductModelIllustration>()
 			.HasKey(c => new
 			{
 				c.ProductModelID,
 				c.IllustrationID,
 			});
+
 			modelBuilder.Entity<ProductModelProductDescriptionCulture>()
 			.HasKey(c => new
 			{
@@ -306,18 +572,99 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.ProductDescriptionID,
 				c.CultureID,
 			});
+
+			modelBuilder.Entity<ProductPhoto>()
+			.HasKey(c => new
+			{
+				c.ProductPhotoID,
+			});
+
+			modelBuilder.Entity<ProductPhoto>()
+			.Property("ProductPhotoID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<ProductProductPhoto>()
 			.HasKey(c => new
 			{
 				c.ProductID,
 				c.ProductPhotoID,
 			});
+
+			modelBuilder.Entity<ProductReview>()
+			.HasKey(c => new
+			{
+				c.ProductReviewID,
+			});
+
+			modelBuilder.Entity<ProductReview>()
+			.Property("ProductReviewID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<ProductSubcategory>()
+			.HasKey(c => new
+			{
+				c.ProductSubcategoryID,
+			});
+
+			modelBuilder.Entity<ProductSubcategory>()
+			.Property("ProductSubcategoryID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<ScrapReason>()
+			.HasKey(c => new
+			{
+				c.ScrapReasonID,
+			});
+
+			modelBuilder.Entity<ScrapReason>()
+			.Property("ScrapReasonID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<TransactionHistory>()
+			.HasKey(c => new
+			{
+				c.TransactionID,
+			});
+
+			modelBuilder.Entity<TransactionHistory>()
+			.Property("TransactionID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<TransactionHistoryArchive>()
+			.HasKey(c => new
+			{
+				c.TransactionID,
+			});
+
+			modelBuilder.Entity<UnitMeasure>()
+			.HasKey(c => new
+			{
+				c.UnitMeasureCode,
+			});
+
 			modelBuilder.Entity<VProductAndDescription>()
 			.HasKey(c => new
 			{
 				c.CultureID,
 				c.ProductID,
 			});
+
+			modelBuilder.Entity<WorkOrder>()
+			.HasKey(c => new
+			{
+				c.WorkOrderID,
+			});
+
+			modelBuilder.Entity<WorkOrder>()
+			.Property("WorkOrderID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<WorkOrderRouting>()
 			.HasKey(c => new
 			{
@@ -325,48 +672,183 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.ProductID,
 				c.OperationSequence,
 			});
+
 			modelBuilder.Entity<ProductVendor>()
 			.HasKey(c => new
 			{
 				c.ProductID,
 				c.BusinessEntityID,
 			});
+
 			modelBuilder.Entity<PurchaseOrderDetail>()
 			.HasKey(c => new
 			{
 				c.PurchaseOrderID,
 				c.PurchaseOrderDetailID,
 			});
+
+			modelBuilder.Entity<PurchaseOrderDetail>()
+			.Property("PurchaseOrderDetailID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<PurchaseOrderHeader>()
+			.HasKey(c => new
+			{
+				c.PurchaseOrderID,
+			});
+
+			modelBuilder.Entity<PurchaseOrderHeader>()
+			.Property("PurchaseOrderID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<ShipMethod>()
+			.HasKey(c => new
+			{
+				c.ShipMethodID,
+			});
+
+			modelBuilder.Entity<ShipMethod>()
+			.Property("ShipMethodID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Vendor>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+			});
+
 			modelBuilder.Entity<CountryRegionCurrency>()
 			.HasKey(c => new
 			{
 				c.CountryRegionCode,
 				c.CurrencyCode,
 			});
+
+			modelBuilder.Entity<CreditCard>()
+			.HasKey(c => new
+			{
+				c.CreditCardID,
+			});
+
+			modelBuilder.Entity<CreditCard>()
+			.Property("CreditCardID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Currency>()
+			.HasKey(c => new
+			{
+				c.CurrencyCode,
+			});
+
+			modelBuilder.Entity<CurrencyRate>()
+			.HasKey(c => new
+			{
+				c.CurrencyRateID,
+			});
+
+			modelBuilder.Entity<CurrencyRate>()
+			.Property("CurrencyRateID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Customer>()
+			.HasKey(c => new
+			{
+				c.CustomerID,
+			});
+
+			modelBuilder.Entity<Customer>()
+			.Property("CustomerID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<PersonCreditCard>()
 			.HasKey(c => new
 			{
 				c.BusinessEntityID,
 				c.CreditCardID,
 			});
+
 			modelBuilder.Entity<SalesOrderDetail>()
 			.HasKey(c => new
 			{
 				c.SalesOrderID,
 				c.SalesOrderDetailID,
 			});
+
+			modelBuilder.Entity<SalesOrderDetail>()
+			.Property("SalesOrderDetailID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<SalesOrderHeader>()
+			.HasKey(c => new
+			{
+				c.SalesOrderID,
+			});
+
+			modelBuilder.Entity<SalesOrderHeader>()
+			.Property("SalesOrderID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<SalesOrderHeaderSalesReason>()
 			.HasKey(c => new
 			{
 				c.SalesOrderID,
 				c.SalesReasonID,
 			});
+
+			modelBuilder.Entity<SalesPerson>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
+			});
+
 			modelBuilder.Entity<SalesPersonQuotaHistory>()
 			.HasKey(c => new
 			{
 				c.BusinessEntityID,
 				c.QuotaDate,
 			});
+
+			modelBuilder.Entity<SalesReason>()
+			.HasKey(c => new
+			{
+				c.SalesReasonID,
+			});
+
+			modelBuilder.Entity<SalesReason>()
+			.Property("SalesReasonID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<SalesTaxRate>()
+			.HasKey(c => new
+			{
+				c.SalesTaxRateID,
+			});
+
+			modelBuilder.Entity<SalesTaxRate>()
+			.Property("SalesTaxRateID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<SalesTerritory>()
+			.HasKey(c => new
+			{
+				c.TerritoryID,
+			});
+
+			modelBuilder.Entity<SalesTerritory>()
+			.Property("TerritoryID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<SalesTerritoryHistory>()
 			.HasKey(c => new
 			{
@@ -374,11 +856,40 @@ namespace AdventureWorksNS.Api.DataAccess
 				c.StartDate,
 				c.TerritoryID,
 			});
+
+			modelBuilder.Entity<ShoppingCartItem>()
+			.HasKey(c => new
+			{
+				c.ShoppingCartItemID,
+			});
+
+			modelBuilder.Entity<ShoppingCartItem>()
+			.Property("ShoppingCartItemID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<SpecialOffer>()
+			.HasKey(c => new
+			{
+				c.SpecialOfferID,
+			});
+
+			modelBuilder.Entity<SpecialOffer>()
+			.Property("SpecialOfferID")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<SpecialOfferProduct>()
 			.HasKey(c => new
 			{
 				c.SpecialOfferID,
 				c.ProductID,
+			});
+
+			modelBuilder.Entity<Store>()
+			.HasKey(c => new
+			{
+				c.BusinessEntityID,
 			});
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
@@ -411,5 +922,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5787a540168e8e641a3bdd719b8d5b87</Hash>
+    <Hash>74bd96761cbb2699e75bed9897a64b68</Hash>
 </Codenesium>*/

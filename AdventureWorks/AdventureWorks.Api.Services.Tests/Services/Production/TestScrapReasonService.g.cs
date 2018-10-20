@@ -182,12 +182,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void WorkOrders_Exists()
+		public async void WorkOrdersByScrapReasonID_Exists()
 		{
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
 			var records = new List<WorkOrder>();
 			records.Add(new WorkOrder());
-			mock.RepositoryMock.Setup(x => x.WorkOrders(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.WorkOrdersByScrapReasonID(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.WorkOrders(default(short));
+			List<ApiWorkOrderResponseModel> response = await service.WorkOrdersByScrapReasonID(default(short));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.WorkOrders(default(short), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.WorkOrdersByScrapReasonID(default(short), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void WorkOrders_Not_Exists()
+		public async void WorkOrdersByScrapReasonID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IScrapReasonRepository>();
-			mock.RepositoryMock.Setup(x => x.WorkOrders(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrder>>(new List<WorkOrder>()));
+			mock.RepositoryMock.Setup(x => x.WorkOrdersByScrapReasonID(default(short), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<WorkOrder>>(new List<WorkOrder>()));
 			var service = new ScrapReasonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.ScrapReasonModelValidatorMock.Object,
@@ -215,14 +215,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLWorkOrderMapperMock,
 			                                     mock.DALMapperMockFactory.DALWorkOrderMapperMock);
 
-			List<ApiWorkOrderResponseModel> response = await service.WorkOrders(default(short));
+			List<ApiWorkOrderResponseModel> response = await service.WorkOrdersByScrapReasonID(default(short));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.WorkOrders(default(short), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.WorkOrdersByScrapReasonID(default(short), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e973bd5707726c0e9facde59d86972c</Hash>
+    <Hash>a4774ad2e39d5427c482dc90ca91a83f</Hash>
 </Codenesium>*/

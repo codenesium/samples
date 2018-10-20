@@ -386,11 +386,6 @@ GO
 --ALTER TABLE [Sales].[PersonCreditCard] DROP CONSTRAINT [FK_PersonCreditCard_CreditCard_CreditCardID]
 --END
 --GO
---IF (OBJECT_ID('Sales.FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [Sales].[SalesOrderDetail] DROP CONSTRAINT [FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID]
---END
---GO
 --IF (OBJECT_ID('Sales.FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [Sales].[SalesOrderDetail] DROP CONSTRAINT [FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID]
@@ -484,16 +479,6 @@ GO
 --IF (OBJECT_ID('Sales.FK_ShoppingCartItem_Product_ProductID', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [Sales].[ShoppingCartItem] DROP CONSTRAINT [FK_ShoppingCartItem_Product_ProductID]
---END
---GO
---IF (OBJECT_ID('Sales.FK_SpecialOfferProduct_Product_ProductID', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [Sales].[SpecialOfferProduct] DROP CONSTRAINT [FK_SpecialOfferProduct_Product_ProductID]
---END
---GO
---IF (OBJECT_ID('Sales.FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [Sales].[SpecialOfferProduct] DROP CONSTRAINT [FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID]
 --END
 --GO
 --IF (OBJECT_ID('Sales.FK_Store_SalesPerson_SalesPersonID', 'F') IS NOT NULL)
@@ -1941,7 +1926,7 @@ CREATE TABLE [Sales].[SpecialOfferProduct](
 [SpecialOfferID] [int]     NOT NULL,
 [ModifiedDate] [datetime]     NOT NULL,
 [ProductID] [int]     NOT NULL,
-[rowguid] [uniqueidentifier]    ROWGUIDCOL NOT NULL,
+[rowguid] [uniqueidentifier]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -3019,11 +3004,6 @@ CREATE UNIQUE NONCLUSTERED INDEX[AK_SpecialOfferProduct_rowguid] ON[Sales].[Spec
 [rowguid] ASC)
 WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-CREATE  NONCLUSTERED INDEX[IX_SpecialOfferProduct_ProductID] ON[Sales].[SpecialOfferProduct]
-(
-[ProductID] ASC)
-WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-GO
 ALTER TABLE[Sales].[Store]
 ADD CONSTRAINT[PK_Store_BusinessEntityID] PRIMARY KEY CLUSTERED
 (
@@ -3633,14 +3613,6 @@ ALTER TABLE[Sales].[SpecialOffer]
 ADD CONSTRAINT[DF_SpecialOffer_rowguid]  DEFAULT(newid()) FOR[rowguid]
 GO
 
-ALTER TABLE[Sales].[SpecialOfferProduct]
-ADD CONSTRAINT[DF_SpecialOfferProduct_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
-GO
-
-ALTER TABLE[Sales].[SpecialOfferProduct]
-ADD CONSTRAINT[DF_SpecialOfferProduct_rowguid]  DEFAULT(newid()) FOR[rowguid]
-GO
-
 ALTER TABLE[Sales].[Store]
 ADD CONSTRAINT[DF_Store_ModifiedDate]  DEFAULT(getdate()) FOR[ModifiedDate]
 GO
@@ -3985,11 +3957,6 @@ REFERENCES[Sales].[CreditCard]([CreditCardID])
 GO
 ALTER TABLE[Sales].[PersonCreditCard] CHECK CONSTRAINT[FK_PersonCreditCard_CreditCard_CreditCardID]
 GO
-ALTER TABLE[Sales].[SalesOrderDetail]  WITH CHECK ADD  CONSTRAINT[FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID] FOREIGN KEY([SpecialOfferID],[ProductID])
-REFERENCES[Sales].[SpecialOfferProduct]([SpecialOfferID],[ProductID])
-GO
-ALTER TABLE[Sales].[SalesOrderDetail] CHECK CONSTRAINT[FK_SalesOrderDetail_SpecialOfferProduct_SpecialOfferIDProductID]
-GO
 ALTER TABLE[Sales].[SalesOrderDetail]  WITH CHECK ADD  CONSTRAINT[FK_SalesOrderDetail_SalesOrderHeader_SalesOrderID] FOREIGN KEY([SalesOrderID])
 REFERENCES[Sales].[SalesOrderHeader]([SalesOrderID])
 GO
@@ -4084,16 +4051,6 @@ ALTER TABLE[Sales].[ShoppingCartItem]  WITH CHECK ADD  CONSTRAINT[FK_ShoppingCar
 REFERENCES[Production].[Product]([ProductID])
 GO
 ALTER TABLE[Sales].[ShoppingCartItem] CHECK CONSTRAINT[FK_ShoppingCartItem_Product_ProductID]
-GO
-ALTER TABLE[Sales].[SpecialOfferProduct]  WITH CHECK ADD  CONSTRAINT[FK_SpecialOfferProduct_Product_ProductID] FOREIGN KEY([ProductID])
-REFERENCES[Production].[Product]([ProductID])
-GO
-ALTER TABLE[Sales].[SpecialOfferProduct] CHECK CONSTRAINT[FK_SpecialOfferProduct_Product_ProductID]
-GO
-ALTER TABLE[Sales].[SpecialOfferProduct]  WITH CHECK ADD  CONSTRAINT[FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID] FOREIGN KEY([SpecialOfferID])
-REFERENCES[Sales].[SpecialOffer]([SpecialOfferID])
-GO
-ALTER TABLE[Sales].[SpecialOfferProduct] CHECK CONSTRAINT[FK_SpecialOfferProduct_SpecialOffer_SpecialOfferID]
 GO
 ALTER TABLE[Sales].[Store]  WITH CHECK ADD  CONSTRAINT[FK_Store_SalesPerson_SalesPersonID] FOREIGN KEY([SalesPersonID])
 REFERENCES[Sales].[SalesPerson]([BusinessEntityID])

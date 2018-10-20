@@ -144,9 +144,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiAddressResponseModel>> Addresses(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiAddressResponseModel>> AddressesByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Address> records = await this.StateProvinceRepository.Addresses(stateProvinceID, limit, offset);
+			List<Address> records = await this.StateProvinceRepository.AddressesByStateProvinceID(stateProvinceID, limit, offset);
 
 			return this.BolAddressMapper.MapBOToModel(this.DalAddressMapper.MapEFToBO(records));
 		}
@@ -154,5 +154,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c4d90e17c65b525c98bc79db62fb68e9</Hash>
+    <Hash>1910809563c6db21a743cf0a2b58a319</Hash>
 </Codenesium>*/

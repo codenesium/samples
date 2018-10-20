@@ -23,10 +23,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiProductCategoryResponseModel> ByName(string name);
 
-		Task<List<ApiProductSubcategoryResponseModel>> ProductSubcategories(int productCategoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductSubcategoryResponseModel>> ProductSubcategoriesByProductCategoryID(int productCategoryID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7d3084eac3b93dace07214ed66efffa</Hash>
+    <Hash>062c617dd0267fbf44f24de2492663db</Hash>
 </Codenesium>*/

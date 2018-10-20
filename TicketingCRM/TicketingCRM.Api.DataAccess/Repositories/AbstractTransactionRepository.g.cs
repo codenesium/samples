@@ -81,7 +81,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			return await this.Where(x => x.TransactionStatusId == transactionStatusId, limit, offset);
 		}
 
-		public async virtual Task<List<Sale>> Sales(int transactionId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Sale>> SalesByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Sale>().Where(x => x.TransactionId == transactionId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
@@ -123,5 +123,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b09635a27428514b23eb71ffc4e06180</Hash>
+    <Hash>a36bc0c74e22e5fb1d00f9f03bdb7b15</Hash>
 </Codenesium>*/

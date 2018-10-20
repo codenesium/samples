@@ -15,7 +15,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			response.SetProperties(id,
 			                       request.AmountPerMinute,
 			                       request.TeacherId,
-			                       request.TeacherSkillId);
+			                       request.TeacherSkillId,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -26,7 +27,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			request.SetProperties(
 				response.AmountPerMinute,
 				response.TeacherId,
-				response.TeacherSkillId);
+				response.TeacherSkillId,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -36,11 +38,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 			patch.Replace(x => x.AmountPerMinute, model.AmountPerMinute);
 			patch.Replace(x => x.TeacherId, model.TeacherId);
 			patch.Replace(x => x.TeacherSkillId, model.TeacherSkillId);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f2d0fc5a2e1f2e6e89d5a4b79f38fa57</Hash>
+    <Hash>cd777fce1bef0ee25b73fbf0c0b67974</Hash>
 </Codenesium>*/

@@ -19,33 +19,39 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string primaryContactEmail,
 			string primaryContactFirstName,
 			string primaryContactLastName,
-			string primaryContactPhone)
+			string primaryContactPhone,
+			bool isDeleted)
 		{
 			this.Note = note;
 			this.PrimaryContactEmail = primaryContactEmail;
 			this.PrimaryContactFirstName = primaryContactFirstName;
 			this.PrimaryContactLastName = primaryContactLastName;
 			this.PrimaryContactPhone = primaryContactPhone;
+			this.IsDeleted = isDeleted;
 		}
 
 		[JsonProperty]
-		public string Note { get; private set; }
+		public string Note { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string PrimaryContactEmail { get; private set; }
+		public string PrimaryContactEmail { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string PrimaryContactFirstName { get; private set; }
+		public string PrimaryContactFirstName { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string PrimaryContactLastName { get; private set; }
+		public string PrimaryContactLastName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string PrimaryContactPhone { get; private set; }
+		public string PrimaryContactPhone { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>234cd5ae5cb8f6d2b5fcc6ff008e76a6</Hash>
+    <Hash>e7e8fdb2a6d6712d8a82dfa2105c0ea0</Hash>
 </Codenesium>*/

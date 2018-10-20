@@ -76,12 +76,12 @@ namespace TwitterNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<Tweet>> Tweets(int locationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Tweet>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Tweet>().Where(x => x.LocationId == locationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
 
-		public async virtual Task<List<User>> Users(int locationLocationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<User>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<User>().Where(x => x.LocationLocationId == locationLocationId).AsQueryable().Skip(offset).Take(limit).ToListAsync<User>();
 		}
@@ -118,5 +118,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f091656e2c3bbb5332005430e2582df4</Hash>
+    <Hash>5ece793af4469572241bd744fd85cc0d</Hash>
 </Codenesium>*/

@@ -39,46 +39,46 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string CarrierTrackingNumber { get; private set; }
+		public string CarrierTrackingNumber { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public decimal LineTotal { get; private set; }
+		public decimal LineTotal { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public short OrderQty { get; private set; }
+		public short OrderQty { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; }
+		public int ProductID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public int SalesOrderDetailID { get; private set; }
+		public int SalesOrderDetailID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int SpecialOfferID { get; private set; }
+		public int SpecialOfferID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public decimal UnitPrice { get; private set; }
+		public decimal UnitPrice { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public decimal UnitPriceDiscount { get; private set; }
+		public decimal UnitPriceDiscount { get; private set; } = default(decimal);
 	}
 }
 
 /*<Codenesium>
-    <Hash>db6678be171c3a78adf443a14369aece</Hash>
+    <Hash>527ed618a2dfae02c6dc9e2eb85abe6b</Hash>
 </Codenesium>*/

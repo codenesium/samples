@@ -75,91 +75,91 @@ namespace TestsNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public long? FieldBigInt { get; private set; }
+		public long? FieldBigInt { get; private set; } = default(long);
 
 		[JsonProperty]
-		public byte[] FieldBinary { get; private set; }
+		public byte[] FieldBinary { get; private set; } = default(byte[]);
 
 		[JsonProperty]
-		public bool? FieldBit { get; private set; }
+		public bool? FieldBit { get; private set; } = default(bool);
 
 		[JsonProperty]
-		public string FieldChar { get; private set; }
+		public string FieldChar { get; private set; } = default(string);
 
 		[JsonProperty]
-		public DateTime? FieldDate { get; private set; }
+		public DateTime? FieldDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public DateTime? FieldDateTime { get; private set; }
+		public DateTime? FieldDateTime { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public DateTime? FieldDateTime2 { get; private set; }
+		public DateTime? FieldDateTime2 { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public DateTimeOffset? FieldDateTimeOffset { get; private set; }
+		public DateTimeOffset? FieldDateTimeOffset { get; private set; } = default(DateTimeOffset);
 
 		[JsonProperty]
-		public double? FieldDecimal { get; private set; }
+		public double? FieldDecimal { get; private set; } = default(double);
 
 		[JsonProperty]
-		public double? FieldFloat { get; private set; }
+		public double? FieldFloat { get; private set; } = default(double);
 
 		[JsonProperty]
-		public byte[] FieldImage { get; private set; }
+		public byte[] FieldImage { get; private set; } = default(byte[]);
 
 		[JsonProperty]
-		public decimal? FieldMoney { get; private set; }
+		public decimal? FieldMoney { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public string FieldNChar { get; private set; }
+		public string FieldNChar { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string FieldNText { get; private set; }
+		public string FieldNText { get; private set; } = default(string);
 
 		[JsonProperty]
-		public decimal? FieldNumeric { get; private set; }
+		public decimal? FieldNumeric { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public string FieldNVarchar { get; private set; }
+		public string FieldNVarchar { get; private set; } = default(string);
 
 		[JsonProperty]
-		public decimal? FieldReal { get; private set; }
+		public decimal? FieldReal { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public DateTime? FieldSmallDateTime { get; private set; }
+		public DateTime? FieldSmallDateTime { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public short? FieldSmallInt { get; private set; }
+		public short? FieldSmallInt { get; private set; } = default(short);
 
 		[JsonProperty]
-		public decimal? FieldSmallMoney { get; private set; }
+		public decimal? FieldSmallMoney { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public string FieldText { get; private set; }
+		public string FieldText { get; private set; } = default(string);
 
 		[JsonProperty]
-		public TimeSpan? FieldTime { get; private set; }
+		public TimeSpan? FieldTime { get; private set; } = default(TimeSpan);
 
 		[JsonProperty]
-		public byte[] FieldTimestamp { get; private set; }
+		public byte[] FieldTimestamp { get; private set; } = default(byte[]);
 
 		[JsonProperty]
-		public int? FieldTinyInt { get; private set; }
+		public int? FieldTinyInt { get; private set; } = default(int);
 
 		[JsonProperty]
-		public Guid? FieldUniqueIdentifier { get; private set; }
+		public Guid? FieldUniqueIdentifier { get; private set; } = default(Guid);
 
 		[JsonProperty]
-		public byte[] FieldVarBinary { get; private set; }
+		public byte[] FieldVarBinary { get; private set; } = default(byte[]);
 
 		[JsonProperty]
-		public string FieldVarchar { get; private set; }
+		public string FieldVarchar { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string FieldXML { get; private set; }
+		public string FieldXML { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3b8dbb3cc4423ae544938bc32ae8f01</Hash>
+    <Hash>84d660fbb8f84a784fe2e61a5dc5c40d</Hash>
 </Codenesium>*/

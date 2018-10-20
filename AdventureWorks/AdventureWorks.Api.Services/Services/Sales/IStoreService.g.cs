@@ -25,10 +25,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiStoreResponseModel>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiCustomerResponseModel>> Customers(int storeID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCustomerResponseModel>> CustomersByStoreID(int storeID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>59a5d2417dd60c284b1c8db247d5f30f</Hash>
+    <Hash>db30fa61137b8183ec1994fe30c7a03c</Hash>
 </Codenesium>*/

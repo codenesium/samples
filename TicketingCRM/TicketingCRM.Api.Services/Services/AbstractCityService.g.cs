@@ -123,9 +123,9 @@ namespace TicketingCRMNS.Api.Services
 			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEventResponseModel>> Events(int cityId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventResponseModel>> EventsByCityId(int cityId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Event> records = await this.CityRepository.Events(cityId, limit, offset);
+			List<Event> records = await this.CityRepository.EventsByCityId(cityId, limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
@@ -133,5 +133,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dfbea3221d90503c73eab75808b9e737</Hash>
+    <Hash>0c0fa697a1fdd5956e0af2fb4b44e5e5</Hash>
 </Codenesium>*/

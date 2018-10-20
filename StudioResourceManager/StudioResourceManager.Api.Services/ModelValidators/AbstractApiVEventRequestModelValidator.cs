@@ -49,9 +49,13 @@ namespace StudioResourceManagerNS.Api.Services
 		public virtual void ScheduledStartDateRules()
 		{
 		}
+
+		public virtual void IsDeletedRules()
+		{
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b0782426f5f9d75269591aafc1fefbf6</Hash>
+    <Hash>3f752263b031402feff7c413749e2682</Hash>
 </Codenesium>*/

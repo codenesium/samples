@@ -21,7 +21,7 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<List<Link>> ByChainId(int chainId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<LinkLog>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0);
+		Task<List<LinkLog>> LinkLogsByLinkId(int linkId, int limit = int.MaxValue, int offset = 0);
 
 		Task<Machine> MachineByAssignedMachineId(int? assignedMachineId);
 
@@ -32,5 +32,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c2254ba101ca96cac12c76d87d9c4997</Hash>
+    <Hash>c5b95d0a2c87079f6011dd57608ede7e</Hash>
 </Codenesium>*/

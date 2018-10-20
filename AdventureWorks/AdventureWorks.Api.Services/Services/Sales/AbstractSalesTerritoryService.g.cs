@@ -154,30 +154,30 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiCustomerResponseModel>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiCustomerResponseModel>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Customer> records = await this.SalesTerritoryRepository.Customers(territoryID, limit, offset);
+			List<Customer> records = await this.SalesTerritoryRepository.CustomersByTerritoryID(territoryID, limit, offset);
 
 			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int territoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesOrderHeader> records = await this.SalesTerritoryRepository.SalesOrderHeaders(territoryID, limit, offset);
+			List<SalesOrderHeader> records = await this.SalesTerritoryRepository.SalesOrderHeadersByTerritoryID(territoryID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesPersonResponseModel>> SalesPersons(int territoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesPersonResponseModel>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesPerson> records = await this.SalesTerritoryRepository.SalesPersons(territoryID, limit, offset);
+			List<SalesPerson> records = await this.SalesTerritoryRepository.SalesPersonsByTerritoryID(territoryID, limit, offset);
 
 			return this.BolSalesPersonMapper.MapBOToModel(this.DalSalesPersonMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistories(int territoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistoriesByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesTerritoryHistory> records = await this.SalesTerritoryRepository.SalesTerritoryHistories(territoryID, limit, offset);
+			List<SalesTerritoryHistory> records = await this.SalesTerritoryRepository.SalesTerritoryHistoriesByTerritoryID(territoryID, limit, offset);
 
 			return this.BolSalesTerritoryHistoryMapper.MapBOToModel(this.DalSalesTerritoryHistoryMapper.MapEFToBO(records));
 		}
@@ -185,5 +185,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>bd5d4a7e0b4bf1a710766ccbdef4c84a</Hash>
+    <Hash>8eaf00c0025abd3b45fd5499be98cfea</Hash>
 </Codenesium>*/

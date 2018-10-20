@@ -182,12 +182,12 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Teams_Exists()
+		public async void TeamsByOrganizationId_Exists()
 		{
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
 			var records = new List<Team>();
 			records.Add(new Team());
-			mock.RepositoryMock.Setup(x => x.Teams(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.TeamsByOrganizationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new OrganizationService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace NebulaNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLTeamMapperMock,
 			                                      mock.DALMapperMockFactory.DALTeamMapperMock);
 
-			List<ApiTeamResponseModel> response = await service.Teams(default(int));
+			List<ApiTeamResponseModel> response = await service.TeamsByOrganizationId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Teams(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.TeamsByOrganizationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Teams_Not_Exists()
+		public async void TeamsByOrganizationId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IOrganizationRepository>();
-			mock.RepositoryMock.Setup(x => x.Teams(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Team>>(new List<Team>()));
+			mock.RepositoryMock.Setup(x => x.TeamsByOrganizationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Team>>(new List<Team>()));
 			var service = new OrganizationService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.OrganizationModelValidatorMock.Object,
@@ -215,14 +215,14 @@ namespace NebulaNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLTeamMapperMock,
 			                                      mock.DALMapperMockFactory.DALTeamMapperMock);
 
-			List<ApiTeamResponseModel> response = await service.Teams(default(int));
+			List<ApiTeamResponseModel> response = await service.TeamsByOrganizationId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Teams(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.TeamsByOrganizationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fd4cdcbd9f6a7fea62f3d5af21219ca7</Hash>
+    <Hash>5c01991a4127449fbffa3c35e370c637</Hash>
 </Codenesium>*/

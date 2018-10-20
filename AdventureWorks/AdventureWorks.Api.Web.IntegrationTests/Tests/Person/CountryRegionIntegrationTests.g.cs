@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "CountryRegion")]
 	[Trait("Area", "Integration")]
-	public class CountryRegionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CountryRegionIntegrationTests
 	{
-		public CountryRegionIntegrationTests(TestWebApplicationFactory fixture)
+		public CountryRegionIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CountryRegionDeleteAsync("A");
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCountryRegionResponseModel model = await client.CountryRegionGetAsync("A");
 
 			ApiCountryRegionModelMapper mapper = new ApiCountryRegionModelMapper();
 
-			UpdateResponse<ApiCountryRegionResponseModel> updateResponse = await this.Client.CountryRegionUpdateAsync(model.CountryRegionCode, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCountryRegionResponseModel> updateResponse = await client.CountryRegionUpdateAsync(model.CountryRegionCode, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CountryRegionDeleteAsync(model.CountryRegionCode);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCountryRegionResponseModel response = await client.CountryRegionGetAsync("A");
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CountryRegionDeleteAsync("A");
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CountryRegionGetAsync("A");
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCountryRegionResponseModel response = await this.Client.CountryRegionGetAsync("A");
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCountryRegionResponseModel response = await client.CountryRegionGetAsync("A");
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCountryRegionResponseModel> response = await this.Client.CountryRegionAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCountryRegionResponseModel> response = await client.CountryRegionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCountryRegionResponseModel> CreateRecord()
+		private async Task<ApiCountryRegionResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCountryRegionRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiCountryRegionResponseModel> result = await this.Client.CountryRegionCreateAsync(model);
+			CreateResponse<ApiCountryRegionResponseModel> result = await client.CountryRegionCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CountryRegionDeleteAsync("B");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8fb0b8f67695f93d4ee139408fb7a23e</Hash>
+    <Hash>e75e8a18c8d8cc01d54c408312e2f4c5</Hash>
 </Codenesium>*/

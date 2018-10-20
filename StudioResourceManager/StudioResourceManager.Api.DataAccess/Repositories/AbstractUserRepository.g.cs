@@ -76,17 +76,17 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<Admin>> Admins(int userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Admin>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Admin>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Admin>();
 		}
 
-		public async virtual Task<List<Student>> Students(int userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Student>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Student>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
-		public async virtual Task<List<Teacher>> Teachers(int userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Teacher>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Teacher>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Teacher>();
 		}
@@ -123,5 +123,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>bc37bd004ee2f6bcdf509d78227c7d27</Hash>
+    <Hash>d4f120725eb3dde1486add5f00adfcc4</Hash>
 </Codenesium>*/

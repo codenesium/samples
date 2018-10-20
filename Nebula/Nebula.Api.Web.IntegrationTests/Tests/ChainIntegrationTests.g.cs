@@ -15,54 +15,82 @@ namespace NebulaNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Chain")]
 	[Trait("Area", "Integration")]
-	public class ChainIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ChainIntegrationTests
 	{
-		public ChainIntegrationTests(TestWebApplicationFactory fixture)
+		public ChainIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ChainDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiChainResponseModel model = await client.ChainGetAsync(1);
 
 			ApiChainModelMapper mapper = new ApiChainModelMapper();
 
-			UpdateResponse<ApiChainResponseModel> updateResponse = await this.Client.ChainUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiChainResponseModel> updateResponse = await client.ChainUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ChainDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiChainResponseModel response = await client.ChainGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ChainDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ChainGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiChainResponseModel response = await this.Client.ChainGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiChainResponseModel response = await client.ChainGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace NebulaNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiChainResponseModel> response = await this.Client.ChainAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiChainResponseModel> response = await client.ChainAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiChainResponseModel> CreateRecord()
+		private async Task<ApiChainResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiChainRequestModel();
 			model.SetProperties(1, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 1);
-			CreateResponse<ApiChainResponseModel> result = await this.Client.ChainCreateAsync(model);
+			CreateResponse<ApiChainResponseModel> result = await client.ChainCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ChainDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d59b37e02bd2e1102453b7a96073cee6</Hash>
+    <Hash>13595e679ee6210df3376cba6a6e7314</Hash>
 </Codenesium>*/

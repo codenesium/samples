@@ -21,7 +21,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string name,
 			string province,
 			string website,
-			string zip)
+			string zip,
+			bool isDeleted)
 		{
 			this.Address1 = address1;
 			this.Address2 = address2;
@@ -30,37 +31,42 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.Province = province;
 			this.Website = website;
 			this.Zip = zip;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
 		[JsonProperty]
-		public string Address1 { get; private set; }
+		public string Address1 { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Address2 { get; private set; }
+		public string Address2 { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string City { get; private set; }
+		public string City { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Province { get; private set; }
+		public string Province { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Website { get; private set; }
+		public string Website { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Zip { get; private set; }
+		public string Zip { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe6c1959e7ee70dc56d4e4e578b9774c</Hash>
+    <Hash>1851537780f9bcd85c452b31b81d75fe</Hash>
 </Codenesium>*/

@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiStateProvinceResponseModel>> StateProvinces(string countryRegionCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiStateProvinceResponseModel>> StateProvincesByCountryRegionCode(string countryRegionCode, int limit = int.MaxValue, int offset = 0)
 		{
-			List<StateProvince> records = await this.CountryRegionRepository.StateProvinces(countryRegionCode, limit, offset);
+			List<StateProvince> records = await this.CountryRegionRepository.StateProvincesByCountryRegionCode(countryRegionCode, limit, offset);
 
 			return this.BolStateProvinceMapper.MapBOToModel(this.DalStateProvinceMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>effcb724179329dbec65133e5f80a1f8</Hash>
+    <Hash>e5ae124087c85a40527417e66bbccae3</Hash>
 </Codenesium>*/

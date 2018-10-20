@@ -22,7 +22,6 @@ namespace StackOverflowNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("Id")]
 		public int Id { get; private set; }
 
@@ -33,5 +32,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f9c7dec7cde958c36a7a88dc09cf9412</Hash>
+    <Hash>32fa84879800862bfe6c0eeea75f8dfb</Hash>
 </Codenesium>*/

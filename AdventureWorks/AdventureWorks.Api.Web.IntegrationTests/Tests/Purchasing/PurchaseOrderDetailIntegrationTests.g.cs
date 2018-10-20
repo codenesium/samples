@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PurchaseOrderDetail")]
 	[Trait("Area", "Integration")]
-	public class PurchaseOrderDetailIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PurchaseOrderDetailIntegrationTests
 	{
-		public PurchaseOrderDetailIntegrationTests(TestWebApplicationFactory fixture)
+		public PurchaseOrderDetailIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PurchaseOrderDetailDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPurchaseOrderDetailResponseModel model = await client.PurchaseOrderDetailGetAsync(1);
 
 			ApiPurchaseOrderDetailModelMapper mapper = new ApiPurchaseOrderDetailModelMapper();
 
-			UpdateResponse<ApiPurchaseOrderDetailResponseModel> updateResponse = await this.Client.PurchaseOrderDetailUpdateAsync(model.PurchaseOrderID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPurchaseOrderDetailResponseModel> updateResponse = await client.PurchaseOrderDetailUpdateAsync(model.PurchaseOrderID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PurchaseOrderDetailDeleteAsync(model.PurchaseOrderID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPurchaseOrderDetailResponseModel response = await client.PurchaseOrderDetailGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PurchaseOrderDetailDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PurchaseOrderDetailGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPurchaseOrderDetailResponseModel response = await this.Client.PurchaseOrderDetailGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPurchaseOrderDetailResponseModel response = await client.PurchaseOrderDetailGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPurchaseOrderDetailResponseModel> response = await this.Client.PurchaseOrderDetailAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPurchaseOrderDetailResponseModel> response = await client.PurchaseOrderDetailAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPurchaseOrderDetailResponseModel> CreateRecord()
+		private async Task<ApiPurchaseOrderDetailResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPurchaseOrderDetailRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, 2, 2, 2m);
-			CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await this.Client.PurchaseOrderDetailCreateAsync(model);
+			CreateResponse<ApiPurchaseOrderDetailResponseModel> result = await client.PurchaseOrderDetailCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PurchaseOrderDetailDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>57fdfea6cc0aaa83bcc19baded4a105e</Hash>
+    <Hash>08f71fa09e1e69583e45f1b6e1e8812f</Hash>
 </Codenesium>*/

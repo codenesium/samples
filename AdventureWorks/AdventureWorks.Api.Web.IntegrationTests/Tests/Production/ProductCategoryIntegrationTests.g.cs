@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ProductCategory")]
 	[Trait("Area", "Integration")]
-	public class ProductCategoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ProductCategoryIntegrationTests
 	{
-		public ProductCategoryIntegrationTests(TestWebApplicationFactory fixture)
+		public ProductCategoryIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ProductCategoryDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiProductCategoryResponseModel model = await client.ProductCategoryGetAsync(1);
 
 			ApiProductCategoryModelMapper mapper = new ApiProductCategoryModelMapper();
 
-			UpdateResponse<ApiProductCategoryResponseModel> updateResponse = await this.Client.ProductCategoryUpdateAsync(model.ProductCategoryID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductCategoryResponseModel> updateResponse = await client.ProductCategoryUpdateAsync(model.ProductCategoryID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ProductCategoryDeleteAsync(model.ProductCategoryID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiProductCategoryResponseModel response = await client.ProductCategoryGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ProductCategoryDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ProductCategoryGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiProductCategoryResponseModel response = await this.Client.ProductCategoryGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiProductCategoryResponseModel response = await client.ProductCategoryGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiProductCategoryResponseModel> response = await this.Client.ProductCategoryAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiProductCategoryResponseModel> response = await client.ProductCategoryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiProductCategoryResponseModel> CreateRecord()
+		private async Task<ApiProductCategoryResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiProductCategoryRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiProductCategoryResponseModel> result = await this.Client.ProductCategoryCreateAsync(model);
+			CreateResponse<ApiProductCategoryResponseModel> result = await client.ProductCategoryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ProductCategoryDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7bbdedf0c70ee3cd804c95f184295f0b</Hash>
+    <Hash>6203b43ea7117f2064a3420b8e0dc675</Hash>
 </Codenesium>*/

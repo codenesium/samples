@@ -140,30 +140,30 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int salesPersonID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesOrderHeader> records = await this.SalesPersonRepository.SalesOrderHeaders(salesPersonID, limit, offset);
+			List<SalesOrderHeader> records = await this.SalesPersonRepository.SalesOrderHeadersBySalesPersonID(salesPersonID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesPersonQuotaHistoryResponseModel>> SalesPersonQuotaHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesPersonQuotaHistoryResponseModel>> SalesPersonQuotaHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesPersonQuotaHistory> records = await this.SalesPersonRepository.SalesPersonQuotaHistories(businessEntityID, limit, offset);
+			List<SalesPersonQuotaHistory> records = await this.SalesPersonRepository.SalesPersonQuotaHistoriesByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolSalesPersonQuotaHistoryMapper.MapBOToModel(this.DalSalesPersonQuotaHistoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistories(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistoriesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesTerritoryHistory> records = await this.SalesPersonRepository.SalesTerritoryHistories(businessEntityID, limit, offset);
+			List<SalesTerritoryHistory> records = await this.SalesPersonRepository.SalesTerritoryHistoriesByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolSalesTerritoryHistoryMapper.MapBOToModel(this.DalSalesTerritoryHistoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiStoreResponseModel>> Stores(int salesPersonID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiStoreResponseModel>> StoresBySalesPersonID(int salesPersonID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Store> records = await this.SalesPersonRepository.Stores(salesPersonID, limit, offset);
+			List<Store> records = await this.SalesPersonRepository.StoresBySalesPersonID(salesPersonID, limit, offset);
 
 			return this.BolStoreMapper.MapBOToModel(this.DalStoreMapper.MapEFToBO(records));
 		}
@@ -171,5 +171,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a0dbab2f80c68d6fb1f28fd433e45c83</Hash>
+    <Hash>5fafcdec341a29e520d02a622de28b61</Hash>
 </Codenesium>*/

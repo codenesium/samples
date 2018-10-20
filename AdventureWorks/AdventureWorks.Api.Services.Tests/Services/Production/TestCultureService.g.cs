@@ -182,12 +182,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void ProductModelProductDescriptionCultures_Exists()
+		public async void ProductModelProductDescriptionCulturesByCultureID_Exists()
 		{
 			var mock = new ServiceMockFacade<ICultureRepository>();
 			var records = new List<ProductModelProductDescriptionCulture>();
 			records.Add(new ProductModelProductDescriptionCulture());
-			mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCultures(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCulturesByCultureID(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CultureService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-			List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCultures(default(string));
+			List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCulturesByCultureID(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCultures(default(string), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCulturesByCultureID(default(string), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void ProductModelProductDescriptionCultures_Not_Exists()
+		public async void ProductModelProductDescriptionCulturesByCultureID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICultureRepository>();
-			mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCultures(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModelProductDescriptionCulture>>(new List<ProductModelProductDescriptionCulture>()));
+			mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCulturesByCultureID(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModelProductDescriptionCulture>>(new List<ProductModelProductDescriptionCulture>()));
 			var service = new CultureService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.CultureModelValidatorMock.Object,
@@ -215,14 +215,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                 mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-			List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCultures(default(string));
+			List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCulturesByCultureID(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCultures(default(string), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCulturesByCultureID(default(string), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>727254e1777376a919a4f40c79d658db</Hash>
+    <Hash>348543a66f3fe93997b64dbcd8f14fee</Hash>
 </Codenesium>*/

@@ -103,9 +103,9 @@ namespace ESPIOTNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiDeviceResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActions(int deviceId)
+		public virtual async Task<List<ApiDeviceActionResponseModel>> DeviceActionsByDeviceId(int deviceId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/DeviceActions/{deviceId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Devices/DeviceActionsByDeviceId/{deviceId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiDeviceActionResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -162,5 +162,5 @@ namespace ESPIOTNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>9c305b4057cdd54f671d00618e6ae50a</Hash>
+    <Hash>6412fe6a9b12072dda9c532151e591aa</Hash>
 </Codenesium>*/

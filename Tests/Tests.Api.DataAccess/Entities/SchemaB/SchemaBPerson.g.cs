@@ -22,7 +22,6 @@ namespace TestsNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -33,5 +32,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>67582aa78bff4d3a590ed49c260744a9</Hash>
+    <Hash>d4956033a7b3050c5009c3661088920d</Hash>
 </Codenesium>*/

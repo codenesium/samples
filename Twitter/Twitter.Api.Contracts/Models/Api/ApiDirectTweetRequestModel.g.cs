@@ -28,22 +28,22 @@ namespace TwitterNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Content { get; private set; }
+		public string Content { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime Date { get; private set; }
+		public DateTime Date { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int TaggedUserId { get; private set; }
+		public int TaggedUserId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public TimeSpan Time { get; private set; }
+		public TimeSpan Time { get; private set; } = default(TimeSpan);
 	}
 }
 
 /*<Codenesium>
-    <Hash>98871fdefc6d00f9a289841ccea4a4de</Hash>
+    <Hash>98e924d985819d00d68c4bc453aeb0b1</Hash>
 </Codenesium>*/

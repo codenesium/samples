@@ -116,9 +116,9 @@ namespace PetStoreNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiSaleResponseModel>> Sales(int petId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSaleResponseModel>> SalesByPetId(int petId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Sale> records = await this.PetRepository.Sales(petId, limit, offset);
+			List<Sale> records = await this.PetRepository.SalesByPetId(petId, limit, offset);
 
 			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace PetStoreNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>c5e7ba87ee6ff12f860015a94be0d4a8</Hash>
+    <Hash>e618fe607485083d700fb905941b01cc</Hash>
 </Codenesium>*/

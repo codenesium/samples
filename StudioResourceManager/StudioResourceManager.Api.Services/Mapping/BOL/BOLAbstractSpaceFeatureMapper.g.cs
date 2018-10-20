@@ -15,7 +15,8 @@ namespace StudioResourceManagerNS.Api.Services
 			BOSpaceFeature boSpaceFeature = new BOSpaceFeature();
 			boSpaceFeature.SetProperties(
 				id,
-				model.Name);
+				model.Name,
+				model.IsDeleted);
 			return boSpaceFeature;
 		}
 
@@ -24,7 +25,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiSpaceFeatureResponseModel();
 
-			model.SetProperties(boSpaceFeature.Id, boSpaceFeature.Name);
+			model.SetProperties(boSpaceFeature.Id, boSpaceFeature.Name, boSpaceFeature.IsDeleted);
 
 			return model;
 		}
@@ -45,5 +46,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>55cfdcaddc53e045a78b7a74d16a004b</Hash>
+    <Hash>e2034dafcf7c36ef6a84510625e71a1d</Hash>
 </Codenesium>*/

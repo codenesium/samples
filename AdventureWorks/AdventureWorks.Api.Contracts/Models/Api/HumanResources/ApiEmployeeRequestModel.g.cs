@@ -48,61 +48,61 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime BirthDate { get; private set; }
+		public DateTime BirthDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public bool CurrentFlag { get; private set; }
+		public bool CurrentFlag { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public string Gender { get; private set; }
+		public string Gender { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime HireDate { get; private set; }
+		public DateTime HireDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string JobTitle { get; private set; }
+		public string JobTitle { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string LoginID { get; private set; }
+		public string LoginID { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string MaritalStatu { get; private set; }
+		public string MaritalStatu { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string NationalIDNumber { get; private set; }
+		public string NationalIDNumber { get; private set; } = default(string);
 
 		[JsonProperty]
-		public short? OrganizationLevel { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public short? OrganizationLevel { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public bool SalariedFlag { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public short SickLeaveHour { get; private set; }
+		public bool SalariedFlag { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public short VacationHour { get; private set; }
+		public short SickLeaveHour { get; private set; } = default(short);
+
+		[Required]
+		[JsonProperty]
+		public short VacationHour { get; private set; } = default(short);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8c09bab53cd7cf9c25712eea6ceb47de</Hash>
+    <Hash>8a789d0cc9e496aed2b4cd69e7da0d06</Hash>
 </Codenesium>*/

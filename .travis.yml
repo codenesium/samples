@@ -5,7 +5,6 @@ script:
    -  dotnet build ESPIOT/ESPIOT.Api.Web/ESPIOT.Api.Web.csproj
    -  dotnet build FileService/FileService.Api.Web/FileService.Api.Web.csproj
    -  dotnet build Nebula/Nebula.Api.Web/Nebula.Api.Web.csproj
-   -  dotnet build AdventureWorks/AdventureWorks.Api.Web/AdventureWorks.Api.Web.csproj
    -  dotnet build Twitter/Twitter.Api.Web/Twitter.Api.Web.csproj
    -  dotnet build PetShipping/PetShipping.Api.Web/PetShipping.Api.Web.csproj
    -  dotnet build PetStore/PetStore.Api.Web/PetStore.Api.Web.csproj
@@ -16,7 +15,6 @@ script:
    -  dotnet test ESPIOT/ESPIOT.Api.DataAccess.Tests/ESPIOT.Api.DataAccess.Tests.csproj
    -  dotnet test FileService/FileService.Api.DataAccess.Tests/FileService.Api.DataAccess.Tests.csproj
    -  dotnet test Nebula/Nebula.Api.DataAccess.Tests/Nebula.Api.DataAccess.Tests.csproj
-   -  dotnet test AdventureWorks/AdventureWorks.Api.DataAccess.Tests/AdventureWorks.Api.DataAccess.Tests.csproj
    -  dotnet test Twitter/Twitter.Api.DataAccess.Tests/Twitter.Api.DataAccess.Tests.csproj
    -  dotnet test PetShipping/PetShipping.Api.DataAccess.Tests/PetShipping.Api.DataAccess.Tests.csproj
    -  dotnet test PetStore/PetStore.Api.DataAccess.Tests/PetStore.Api.DataAccess.Tests.csproj
@@ -27,7 +25,6 @@ script:
    -  dotnet test ESPIOT/ESPIOT.Api.Services.Tests/ESPIOT.Api.Services.Tests.csproj
    -  dotnet test FileService/FileService.Api.Services.Tests/FileService.Api.Services.Tests.csproj
    -  dotnet test Nebula/Nebula.Api.Services.Tests/Nebula.Api.Services.Tests.csproj
-   -  dotnet test AdventureWorks/AdventureWorks.Api.Services.Tests/AdventureWorks.Api.Services.Tests.csproj
    -  dotnet test Twitter/Twitter.Api.Services.Tests/Twitter.Api.Services.Tests.csproj
    -  dotnet test PetShipping/PetShipping.Api.Services.Tests/PetShipping.Api.Services.Tests.csproj
    -  dotnet test PetStore/PetStore.Api.Services.Tests/PetStore.Api.Services.Tests.csproj
@@ -38,7 +35,6 @@ script:
    -  dotnet test ESPIOT/ESPIOT.Api.Client.Tests/ESPIOT.Api.Client.Tests.csproj
    -  dotnet test FileService/FileService.Api.Client.Tests/FileService.Api.Client.Tests.csproj
    -  dotnet test Nebula/Nebula.Api.Client.Tests/Nebula.Api.Client.Tests.csproj
-   -  dotnet test AdventureWorks/AdventureWorks.Api.Client.Tests/AdventureWorks.Api.Client.Tests.csproj
    -  dotnet test Twitter/Twitter.Api.Client.Tests/Twitter.Api.Client.Tests.csproj
    -  dotnet test PetShipping/PetShipping.Api.Client.Tests/PetShipping.Api.Client.Tests.csproj
    -  dotnet test PetStore/PetStore.Api.Client.Tests/PetStore.Api.Client.Tests.csproj
@@ -49,7 +45,6 @@ script:
    -  dotnet test ESPIOT/ESPIOT.Api.Web.Tests/ESPIOT.Api.Web.Tests.csproj
    -  dotnet test FileService/FileService.Api.Web.Tests/FileService.Api.Web.Tests.csproj
    -  dotnet test Nebula/Nebula.Api.Web.Tests/Nebula.Api.Web.Tests.csproj
-   -  dotnet test AdventureWorks/AdventureWorks.Api.Web.Tests/AdventureWorks.Api.Web.Tests.csproj
    -  dotnet test Twitter/Twitter.Api.Web.Tests/Twitter.Api.Web.Tests.csproj
    -  dotnet test PetShipping/PetShipping.Api.Web.Tests/PetShipping.Api.Web.Tests.csproj
    -  dotnet test PetStore/PetStore.Api.Web.Tests/PetStore.Api.Web.Tests.csproj

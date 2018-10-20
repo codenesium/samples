@@ -221,12 +221,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Addresses_Exists()
+		public async void AddressesByStateProvinceID_Exists()
 		{
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
 			var records = new List<Address>();
 			records.Add(new Address());
-			mock.RepositoryMock.Setup(x => x.Addresses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.AddressesByStateProvinceID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
@@ -235,17 +235,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                       mock.DALMapperMockFactory.DALAddressMapperMock);
 
-			List<ApiAddressResponseModel> response = await service.Addresses(default(int));
+			List<ApiAddressResponseModel> response = await service.AddressesByStateProvinceID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Addresses(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.AddressesByStateProvinceID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Addresses_Not_Exists()
+		public async void AddressesByStateProvinceID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IStateProvinceRepository>();
-			mock.RepositoryMock.Setup(x => x.Addresses(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Address>>(new List<Address>()));
+			mock.RepositoryMock.Setup(x => x.AddressesByStateProvinceID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Address>>(new List<Address>()));
 			var service = new StateProvinceService(mock.LoggerMock.Object,
 			                                       mock.RepositoryMock.Object,
 			                                       mock.ModelValidatorMockFactory.StateProvinceModelValidatorMock.Object,
@@ -254,14 +254,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                       mock.BOLMapperMockFactory.BOLAddressMapperMock,
 			                                       mock.DALMapperMockFactory.DALAddressMapperMock);
 
-			List<ApiAddressResponseModel> response = await service.Addresses(default(int));
+			List<ApiAddressResponseModel> response = await service.AddressesByStateProvinceID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Addresses(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.AddressesByStateProvinceID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f63e284c3a6da27c7e5ccad4572952bf</Hash>
+    <Hash>2f2fa73d64adb7ee895e75d6afe9484b</Hash>
 </Codenesium>*/

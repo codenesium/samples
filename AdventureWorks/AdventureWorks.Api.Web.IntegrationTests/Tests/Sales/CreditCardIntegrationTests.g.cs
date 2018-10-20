@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "CreditCard")]
 	[Trait("Area", "Integration")]
-	public class CreditCardIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CreditCardIntegrationTests
 	{
-		public CreditCardIntegrationTests(TestWebApplicationFactory fixture)
+		public CreditCardIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CreditCardDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCreditCardResponseModel model = await client.CreditCardGetAsync(1);
 
 			ApiCreditCardModelMapper mapper = new ApiCreditCardModelMapper();
 
-			UpdateResponse<ApiCreditCardResponseModel> updateResponse = await this.Client.CreditCardUpdateAsync(model.CreditCardID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCreditCardResponseModel> updateResponse = await client.CreditCardUpdateAsync(model.CreditCardID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CreditCardDeleteAsync(model.CreditCardID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCreditCardResponseModel response = await client.CreditCardGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CreditCardDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CreditCardGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCreditCardResponseModel response = await this.Client.CreditCardGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCreditCardResponseModel response = await client.CreditCardGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCreditCardResponseModel> response = await this.Client.CreditCardAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCreditCardResponseModel> response = await client.CreditCardAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCreditCardResponseModel> CreateRecord()
+		private async Task<ApiCreditCardResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCreditCardRequestModel();
 			model.SetProperties("B", "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
-			CreateResponse<ApiCreditCardResponseModel> result = await this.Client.CreditCardCreateAsync(model);
+			CreateResponse<ApiCreditCardResponseModel> result = await client.CreditCardCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CreditCardDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>59fe79ccda4ac681671dd5b83bbf7511</Hash>
+    <Hash>b6994280fbe351fdd56ca022958ac15f</Hash>
 </Codenesium>*/

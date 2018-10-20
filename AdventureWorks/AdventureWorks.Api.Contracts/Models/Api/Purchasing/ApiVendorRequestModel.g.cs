@@ -34,33 +34,33 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string AccountNumber { get; private set; }
+		public string AccountNumber { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool ActiveFlag { get; private set; }
+		public bool ActiveFlag { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public int CreditRating { get; private set; }
+		public int CreditRating { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool PreferredVendorStatu { get; private set; }
+		public bool PreferredVendorStatu { get; private set; } = default(bool);
 
 		[JsonProperty]
-		public string PurchasingWebServiceURL { get; private set; }
+		public string PurchasingWebServiceURL { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>276656e633200286f8ecc64eaec508ad</Hash>
+    <Hash>12570ca2c2950531bcef4f7b2e290010</Hash>
 </Codenesium>*/

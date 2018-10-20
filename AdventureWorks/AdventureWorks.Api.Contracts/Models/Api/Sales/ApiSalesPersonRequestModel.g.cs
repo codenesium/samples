@@ -36,36 +36,36 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public decimal Bonus { get; private set; }
+		public decimal Bonus { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public decimal CommissionPct { get; private set; }
+		public decimal CommissionPct { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public decimal SalesLastYear { get; private set; }
+		public decimal SalesLastYear { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public decimal? SalesQuota { get; private set; }
+		public decimal? SalesQuota { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public decimal SalesYTD { get; private set; }
+		public decimal SalesYTD { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public int? TerritoryID { get; private set; }
+		public int? TerritoryID { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>203bf4cb8949d629faaddf2e8265dfbe</Hash>
+    <Hash>66e071d1094f4e0228b9d46ac1a97040</Hash>
 </Codenesium>*/

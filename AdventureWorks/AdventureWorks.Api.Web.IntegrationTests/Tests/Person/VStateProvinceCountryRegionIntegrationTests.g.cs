@@ -15,19 +15,22 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "VStateProvinceCountryRegion")]
 	[Trait("Area", "Integration")]
-	public class VStateProvinceCountryRegionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class VStateProvinceCountryRegionIntegrationTests
 	{
-		public VStateProvinceCountryRegionIntegrationTests(TestWebApplicationFactory fixture)
+		public VStateProvinceCountryRegionIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiVStateProvinceCountryRegionResponseModel response = await this.Client.VStateProvinceCountryRegionGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiVStateProvinceCountryRegionResponseModel response = await client.VStateProvinceCountryRegionGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -35,7 +38,14 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiVStateProvinceCountryRegionResponseModel> response = await this.Client.VStateProvinceCountryRegionAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiVStateProvinceCountryRegionResponseModel> response = await client.VStateProvinceCountryRegionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
@@ -43,5 +53,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>93f2a9cbaae9cc0e69f8bc74d536a127</Hash>
+    <Hash>e3fa920c7f4c7b089e7c2f7a243f2432</Hash>
 </Codenesium>*/

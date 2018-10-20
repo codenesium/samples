@@ -17,12 +17,13 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiUserModelMapper();
 			var model = new ApiUserRequestModel();
-			model.SetProperties("A", "A");
+			model.SetProperties("A", "A", true);
 			ApiUserResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Id.Should().Be(1);
 			response.Password.Should().Be("A");
 			response.Username.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -30,11 +31,12 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiUserModelMapper();
 			var model = new ApiUserResponseModel();
-			model.SetProperties(1, "A", "A");
+			model.SetProperties(1, "A", "A", true);
 			ApiUserRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Password.Should().Be("A");
 			response.Username.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -42,17 +44,18 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiUserModelMapper();
 			var model = new ApiUserRequestModel();
-			model.SetProperties("A", "A");
+			model.SetProperties("A", "A", true);
 
 			JsonPatchDocument<ApiUserRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiUserRequestModel();
 			patch.ApplyTo(response);
 			response.Password.Should().Be("A");
 			response.Username.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>67032000e5383227afdb39c691904d9c</Hash>
+    <Hash>fc9a11ee26804a8c4f0639248ad08d8b</Hash>
 </Codenesium>*/

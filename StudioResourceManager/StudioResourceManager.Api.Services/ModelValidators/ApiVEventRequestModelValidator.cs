@@ -21,6 +21,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.EventStatusIdRules();
 			this.ScheduledEndDateRules();
 			this.ScheduledStartDateRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -32,6 +33,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.EventStatusIdRules();
 			this.ScheduledEndDateRules();
 			this.ScheduledStartDateRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -43,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9b2ba22e89f6a92f27c58df7082903dc</Hash>
+    <Hash>0927a3aa4dced8738baa8db01394482d</Hash>
 </Codenesium>*/

@@ -182,12 +182,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void CurrencyRates_Exists()
+		public async void CurrencyRatesByFromCurrencyCode_Exists()
 		{
 			var mock = new ServiceMockFacade<ICurrencyRepository>();
 			var records = new List<CurrencyRate>();
 			records.Add(new CurrencyRate());
-			mock.RepositoryMock.Setup(x => x.CurrencyRates(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.CurrencyRatesByFromCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CurrencyService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRates(default(string));
+			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRatesByFromCurrencyCode(default(string));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.CurrencyRates(default(string), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.CurrencyRatesByFromCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void CurrencyRates_Not_Exists()
+		public async void CurrencyRatesByFromCurrencyCode_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICurrencyRepository>();
-			mock.RepositoryMock.Setup(x => x.CurrencyRates(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CurrencyRate>>(new List<CurrencyRate>()));
+			mock.RepositoryMock.Setup(x => x.CurrencyRatesByFromCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CurrencyRate>>(new List<CurrencyRate>()));
 			var service = new CurrencyService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
@@ -215,14 +215,54 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
 			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
 
-			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRates(default(string));
+			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRatesByFromCurrencyCode(default(string));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.CurrencyRates(default(string), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.CurrencyRatesByFromCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void CurrencyRatesByToCurrencyCode_Exists()
+		{
+			var mock = new ServiceMockFacade<ICurrencyRepository>();
+			var records = new List<CurrencyRate>();
+			records.Add(new CurrencyRate());
+			mock.RepositoryMock.Setup(x => x.CurrencyRatesByToCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new CurrencyService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
+			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
+			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
+
+			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRatesByToCurrencyCode(default(string));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.CurrencyRatesByToCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void CurrencyRatesByToCurrencyCode_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<ICurrencyRepository>();
+			mock.RepositoryMock.Setup(x => x.CurrencyRatesByToCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<CurrencyRate>>(new List<CurrencyRate>()));
+			var service = new CurrencyService(mock.LoggerMock.Object,
+			                                  mock.RepositoryMock.Object,
+			                                  mock.ModelValidatorMockFactory.CurrencyModelValidatorMock.Object,
+			                                  mock.BOLMapperMockFactory.BOLCurrencyMapperMock,
+			                                  mock.DALMapperMockFactory.DALCurrencyMapperMock,
+			                                  mock.BOLMapperMockFactory.BOLCurrencyRateMapperMock,
+			                                  mock.DALMapperMockFactory.DALCurrencyRateMapperMock);
+
+			List<ApiCurrencyRateResponseModel> response = await service.CurrencyRatesByToCurrencyCode(default(string));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.CurrencyRatesByToCurrencyCode(default(string), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>887725315e7308ad261872f2725156da</Hash>
+    <Hash>07e10afa8ce499c75dfa51b1d0f4614c</Hash>
 </Codenesium>*/

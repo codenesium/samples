@@ -22,7 +22,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
 			string studentNote,
-			string teacherNote)
+			string teacherNote,
+			bool isDeleted)
 		{
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
@@ -32,35 +33,40 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.ScheduledStartDate = scheduledStartDate;
 			this.StudentNote = studentNote;
 			this.TeacherNote = teacherNote;
+			this.IsDeleted = isDeleted;
 		}
 
 		[JsonProperty]
-		public DateTime? ActualEndDate { get; private set; }
+		public DateTime? ActualEndDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public DateTime? ActualStartDate { get; private set; }
+		public DateTime? ActualStartDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public decimal? BillAmount { get; private set; }
+		public decimal? BillAmount { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public int EventStatusId { get; private set; }
+		public int EventStatusId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public DateTime? ScheduledEndDate { get; private set; }
+		public DateTime? ScheduledEndDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public DateTime? ScheduledStartDate { get; private set; }
+		public DateTime? ScheduledStartDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string StudentNote { get; private set; }
+		public string StudentNote { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string TeacherNote { get; private set; }
+		public string TeacherNote { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a02f1efffef15f2045cdd3033f6955b6</Hash>
+    <Hash>432a055283074311de4edd658962f780</Hash>
 </Codenesium>*/

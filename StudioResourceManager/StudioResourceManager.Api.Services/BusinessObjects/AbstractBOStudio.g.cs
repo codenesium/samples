@@ -17,7 +17,8 @@ namespace StudioResourceManagerNS.Api.Services
 		                                  string name,
 		                                  string province,
 		                                  string website,
-		                                  string zip)
+		                                  string zip,
+		                                  bool isDeleted)
 		{
 			this.Address1 = address1;
 			this.Address2 = address2;
@@ -27,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.Province = province;
 			this.Website = website;
 			this.Zip = zip;
+			this.IsDeleted = isDeleted;
 		}
 
 		public string Address1 { get; private set; }
@@ -44,9 +46,11 @@ namespace StudioResourceManagerNS.Api.Services
 		public string Website { get; private set; }
 
 		public string Zip { get; private set; }
+
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>43f908e44a88ec29482687ab70e88393</Hash>
+    <Hash>c1a43bb51e2a5c17b0991fd6c2681c5f</Hash>
 </Codenesium>*/

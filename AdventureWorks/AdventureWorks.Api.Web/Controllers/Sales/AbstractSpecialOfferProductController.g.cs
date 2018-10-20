@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,46 +198,12 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
 				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
 			}
-		}
-
-		[HttpGet]
-		[Route("byProductID/{productID}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpecialOfferProductResponseModel>), 200)]
-		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSpecialOfferProductResponseModel> response = await this.SpecialOfferProductService.ByProductID(productID, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("{specialOfferID}/SalesOrderDetails")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSalesOrderDetailResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesOrderDetails(int specialOfferID, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSalesOrderDetailResponseModel> response = await this.SpecialOfferProductService.SalesOrderDetails(specialOfferID, query.Limit, query.Offset);
-
-			return this.Ok(response);
 		}
 
 		private async Task<ApiSpecialOfferProductRequestModel> PatchModel(int id, JsonPatchDocument<ApiSpecialOfferProductRequestModel> patch)
@@ -259,5 +225,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>c0d5793124d806fbb5f473b698298fc1</Hash>
+    <Hash>a3169ab79f0206304d73f7b33e5ea04c</Hash>
 </Codenesium>*/

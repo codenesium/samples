@@ -31,6 +31,10 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.TeacherId).MustAsync(this.BeValidTeacherByTeacherId).When(x => x?.TeacherId != null).WithMessage("Invalid reference");
 		}
 
+		public virtual void IsDeletedRules()
+		{
+		}
+
 		private async Task<bool> BeValidEventByEventId(int id,  CancellationToken cancellationToken)
 		{
 			var record = await this.eventTeacherRepository.EventByEventId(id);
@@ -48,5 +52,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9af470d4a2970da1a4c169715fec7247</Hash>
+    <Hash>21b758fbe50637fed3654a947e7f894d</Hash>
 </Codenesium>*/

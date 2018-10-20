@@ -76,11 +76,6 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<SpecialOfferProduct>> SpecialOfferProducts(int specialOfferID, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SpecialOfferProduct>().Where(x => x.SpecialOfferID == specialOfferID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpecialOfferProduct>();
-		}
-
 		protected async Task<List<SpecialOffer>> Where(
 			Expression<Func<SpecialOffer, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +108,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e8dda2f29946563a48a33d647ab7eb8a</Hash>
+    <Hash>eca1856b5d713d3e8f713aae6cf8fdfe</Hash>
 </Codenesium>*/

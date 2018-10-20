@@ -13,7 +13,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var response = new ApiSpaceFeatureResponseModel();
 			response.SetProperties(id,
-			                       request.Name);
+			                       request.Name,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -22,7 +23,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var request = new ApiSpaceFeatureRequestModel();
 			request.SetProperties(
-				response.Name);
+				response.Name,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -30,11 +32,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var patch = new JsonPatchDocument<ApiSpaceFeatureRequestModel>();
 			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3014e3380096aab989b090a2ae47ab54</Hash>
+    <Hash>670f7788964a01359677443643e13eb6</Hash>
 </Codenesium>*/

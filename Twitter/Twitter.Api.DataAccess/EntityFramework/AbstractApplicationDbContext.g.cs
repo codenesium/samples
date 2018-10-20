@@ -72,8 +72,8 @@ namespace TwitterNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
-		/// <param name="acceptAllChangesOnSuccess"></param>
-		/// <param name="cancellationToken"></param>
+		/// <param name="acceptAllChangesOnSuccess">Commit all changes on success</param>
+		/// <param name="cancellationToken">Token that can be passed to hault execution</param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -106,11 +106,87 @@ namespace TwitterNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<DirectTweet>()
+			.HasKey(c => new
+			{
+				c.TweetId,
+			});
+
+			modelBuilder.Entity<Follower>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Following>()
+			.HasKey(c => new
+			{
+				c.UserId,
+			});
+
 			modelBuilder.Entity<Like>()
 			.HasKey(c => new
 			{
 				c.LikerUserId,
 				c.TweetId,
+			});
+
+			modelBuilder.Entity<Location>()
+			.HasKey(c => new
+			{
+				c.LocationId,
+			});
+
+			modelBuilder.Entity<Message>()
+			.HasKey(c => new
+			{
+				c.MessageId,
+			});
+
+			modelBuilder.Entity<Messenger>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Messenger>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<QuoteTweet>()
+			.HasKey(c => new
+			{
+				c.QuoteTweetId,
+			});
+
+			modelBuilder.Entity<Reply>()
+			.HasKey(c => new
+			{
+				c.ReplyId,
+			});
+
+			modelBuilder.Entity<Retweet>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Retweet>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Tweet>()
+			.HasKey(c => new
+			{
+				c.TweetId,
+			});
+
+			modelBuilder.Entity<User>()
+			.HasKey(c => new
+			{
+				c.UserId,
 			});
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
@@ -143,5 +219,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cec9c0f2a85fdba25a95c692433f3199</Hash>
+    <Hash>2ddf43f8654061f70699e33c6c028564</Hash>
 </Codenesium>*/

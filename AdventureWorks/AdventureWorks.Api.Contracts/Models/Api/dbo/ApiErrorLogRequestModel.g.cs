@@ -35,35 +35,35 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? ErrorLine { get; private set; }
+		public int? ErrorLine { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string ErrorMessage { get; private set; }
+		public string ErrorMessage { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int ErrorNumber { get; private set; }
+		public int ErrorNumber { get; private set; } = default(int);
 
 		[JsonProperty]
-		public string ErrorProcedure { get; private set; }
+		public string ErrorProcedure { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? ErrorSeverity { get; private set; }
+		public int? ErrorSeverity { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int? ErrorState { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime ErrorTime { get; private set; }
+		public int? ErrorState { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string UserName { get; private set; }
+		public DateTime ErrorTime { get; private set; } = default(DateTime);
+
+		[Required]
+		[JsonProperty]
+		public string UserName { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3b23ebbe87e1a598895e1d75fbc89d0f</Hash>
+    <Hash>0501e9610909d55bef1cf6afd60917e2</Hash>
 </Codenesium>*/

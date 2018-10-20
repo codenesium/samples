@@ -22,7 +22,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
 			string studentNote,
-			string teacherNote)
+			string teacherNote,
+			bool isDeleted)
 		{
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
@@ -33,6 +34,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.ScheduledStartDate = scheduledStartDate;
 			this.StudentNote = studentNote;
 			this.TeacherNote = teacherNote;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Column("actualEndDate")]
@@ -48,7 +50,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public int EventStatusId { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -66,11 +67,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[Column("teacherNotes")]
 		public string TeacherNote { get; private set; }
 
+		[Column("isDeleted")]
+		public bool IsDeleted { get; private set; }
+
 		[ForeignKey("EventStatusId")]
 		public virtual EventStatus EventStatusNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>12a7195f9dd6f66b9b71fad8b2ee0a6b</Hash>
+    <Hash>f00fca37550d5ec5e2237c4e82ed1b45</Hash>
 </Codenesium>*/

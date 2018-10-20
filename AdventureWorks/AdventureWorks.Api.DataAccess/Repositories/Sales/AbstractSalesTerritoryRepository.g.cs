@@ -81,22 +81,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<SalesTerritory>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<Customer>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Customer>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Customer>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Customer>();
 		}
 
-		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int territoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
 		}
 
-		public async virtual Task<List<SalesPerson>> SalesPersons(int territoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<SalesPerson>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesPerson>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesPerson>();
 		}
 
-		public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistories(int territoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<SalesTerritoryHistory>> SalesTerritoryHistoriesByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesTerritoryHistory>().Where(x => x.TerritoryID == territoryID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesTerritoryHistory>();
 		}
@@ -133,5 +133,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>244fdfe6e34b699bad33a87d79273a3d</Hash>
+    <Hash>f7455f47cd0e64351bdda870aca45e61</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Province")]
 	[Trait("Area", "Integration")]
-	public class ProvinceIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ProvinceIntegrationTests
 	{
-		public ProvinceIntegrationTests(TestWebApplicationFactory fixture)
+		public ProvinceIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ProvinceDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiProvinceResponseModel model = await client.ProvinceGetAsync(1);
 
 			ApiProvinceModelMapper mapper = new ApiProvinceModelMapper();
 
-			UpdateResponse<ApiProvinceResponseModel> updateResponse = await this.Client.ProvinceUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProvinceResponseModel> updateResponse = await client.ProvinceUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ProvinceDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiProvinceResponseModel response = await client.ProvinceGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ProvinceDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ProvinceGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiProvinceResponseModel response = await this.Client.ProvinceGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiProvinceResponseModel response = await client.ProvinceGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiProvinceResponseModel> response = await this.Client.ProvinceAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiProvinceResponseModel> response = await client.ProvinceAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiProvinceResponseModel> CreateRecord()
+		private async Task<ApiProvinceResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiProvinceRequestModel();
 			model.SetProperties(1, "B");
-			CreateResponse<ApiProvinceResponseModel> result = await this.Client.ProvinceCreateAsync(model);
+			CreateResponse<ApiProvinceResponseModel> result = await client.ProvinceCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ProvinceDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c43f66d31c65583cf36028d9982606f7</Hash>
+    <Hash>cada2be1c72862a7395a87cf31491c9a</Hash>
 </Codenesium>*/

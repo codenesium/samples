@@ -155,12 +155,12 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Tweets_Exists()
+		public async void TweetsByLocationId_Exists()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			var records = new List<Tweet>();
 			records.Add(new Tweet());
-			mock.RepositoryMock.Setup(x => x.Tweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.TweetsByLocationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LocationService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -171,17 +171,17 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiTweetResponseModel> response = await service.Tweets(default(int));
+			List<ApiTweetResponseModel> response = await service.TweetsByLocationId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Tweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.TweetsByLocationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Tweets_Not_Exists()
+		public async void TweetsByLocationId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
-			mock.RepositoryMock.Setup(x => x.Tweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Tweet>>(new List<Tweet>()));
+			mock.RepositoryMock.Setup(x => x.TweetsByLocationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Tweet>>(new List<Tweet>()));
 			var service = new LocationService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -192,19 +192,19 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiTweetResponseModel> response = await service.Tweets(default(int));
+			List<ApiTweetResponseModel> response = await service.TweetsByLocationId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Tweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.TweetsByLocationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Users_Exists()
+		public async void UsersByLocationLocationId_Exists()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
 			var records = new List<User>();
 			records.Add(new User());
-			mock.RepositoryMock.Setup(x => x.Users(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.UsersByLocationLocationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new LocationService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -215,17 +215,17 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiUserResponseModel> response = await service.Users(default(int));
+			List<ApiUserResponseModel> response = await service.UsersByLocationLocationId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Users(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.UsersByLocationLocationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Users_Not_Exists()
+		public async void UsersByLocationLocationId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ILocationRepository>();
-			mock.RepositoryMock.Setup(x => x.Users(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<User>>(new List<User>()));
+			mock.RepositoryMock.Setup(x => x.UsersByLocationLocationId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<User>>(new List<User>()));
 			var service = new LocationService(mock.LoggerMock.Object,
 			                                  mock.RepositoryMock.Object,
 			                                  mock.ModelValidatorMockFactory.LocationModelValidatorMock.Object,
@@ -236,14 +236,14 @@ namespace TwitterNS.Api.Services.Tests
 			                                  mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                  mock.DALMapperMockFactory.DALUserMapperMock);
 
-			List<ApiUserResponseModel> response = await service.Users(default(int));
+			List<ApiUserResponseModel> response = await service.UsersByLocationLocationId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Users(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.UsersByLocationLocationId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c6f1f05fc5cb2d9ce1a5f1261ec7967a</Hash>
+    <Hash>43a275d8769823afea84d1966a3fa87c</Hash>
 </Codenesium>*/

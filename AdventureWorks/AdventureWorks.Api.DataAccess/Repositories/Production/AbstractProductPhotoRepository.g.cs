@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<ProductProductPhoto>> ProductProductPhotoes(int productPhotoID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductProductPhoto>> ProductProductPhotoesByProductPhotoID(int productPhotoID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductProductPhoto>().Where(x => x.ProductPhotoID == productPhotoID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
 		}
@@ -113,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>252d3a6d5a434f1f202157fc68baa211</Hash>
+    <Hash>4d59302cb9c0eb8c2881dc3bf3fbe563</Hash>
 </Codenesium>*/

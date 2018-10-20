@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Illustration")]
 	[Trait("Area", "Integration")]
-	public class IllustrationIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class IllustrationIntegrationTests
 	{
-		public IllustrationIntegrationTests(TestWebApplicationFactory fixture)
+		public IllustrationIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.IllustrationDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiIllustrationResponseModel model = await client.IllustrationGetAsync(1);
 
 			ApiIllustrationModelMapper mapper = new ApiIllustrationModelMapper();
 
-			UpdateResponse<ApiIllustrationResponseModel> updateResponse = await this.Client.IllustrationUpdateAsync(model.IllustrationID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiIllustrationResponseModel> updateResponse = await client.IllustrationUpdateAsync(model.IllustrationID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.IllustrationDeleteAsync(model.IllustrationID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiIllustrationResponseModel response = await client.IllustrationGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.IllustrationDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.IllustrationGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiIllustrationResponseModel response = await this.Client.IllustrationGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiIllustrationResponseModel response = await client.IllustrationGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiIllustrationResponseModel> response = await this.Client.IllustrationAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiIllustrationResponseModel> response = await client.IllustrationAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiIllustrationResponseModel> CreateRecord()
+		private async Task<ApiIllustrationResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiIllustrationRequestModel();
 			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"));
-			CreateResponse<ApiIllustrationResponseModel> result = await this.Client.IllustrationCreateAsync(model);
+			CreateResponse<ApiIllustrationResponseModel> result = await client.IllustrationCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.IllustrationDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3443d322d93b211140a7c17d6ccfb8c6</Hash>
+    <Hash>07d7b4ce91e206b2864439cb9ef208ef</Hash>
 </Codenesium>*/

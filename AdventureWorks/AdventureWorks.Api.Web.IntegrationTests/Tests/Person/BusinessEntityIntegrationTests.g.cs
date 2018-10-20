@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "BusinessEntity")]
 	[Trait("Area", "Integration")]
-	public class BusinessEntityIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class BusinessEntityIntegrationTests
 	{
-		public BusinessEntityIntegrationTests(TestWebApplicationFactory fixture)
+		public BusinessEntityIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.BusinessEntityDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiBusinessEntityResponseModel model = await client.BusinessEntityGetAsync(1);
 
 			ApiBusinessEntityModelMapper mapper = new ApiBusinessEntityModelMapper();
 
-			UpdateResponse<ApiBusinessEntityResponseModel> updateResponse = await this.Client.BusinessEntityUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiBusinessEntityResponseModel> updateResponse = await client.BusinessEntityUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.BusinessEntityDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiBusinessEntityResponseModel response = await client.BusinessEntityGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.BusinessEntityDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.BusinessEntityGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiBusinessEntityResponseModel response = await this.Client.BusinessEntityGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiBusinessEntityResponseModel response = await client.BusinessEntityGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiBusinessEntityResponseModel> response = await this.Client.BusinessEntityAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiBusinessEntityResponseModel> response = await client.BusinessEntityAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiBusinessEntityResponseModel> CreateRecord()
+		private async Task<ApiBusinessEntityResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiBusinessEntityRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiBusinessEntityResponseModel> result = await this.Client.BusinessEntityCreateAsync(model);
+			CreateResponse<ApiBusinessEntityResponseModel> result = await client.BusinessEntityCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.BusinessEntityDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>097ef4490178ab2028186d0777e17c28</Hash>
+    <Hash>43ab0860cd4dadd72776309f98d8290f</Hash>
 </Codenesium>*/

@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(int workOrderID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutingsByWorkOrderID(int workOrderID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<WorkOrderRouting> records = await this.WorkOrderRepository.WorkOrderRoutings(workOrderID, limit, offset);
+			List<WorkOrderRouting> records = await this.WorkOrderRepository.WorkOrderRoutingsByWorkOrderID(workOrderID, limit, offset);
 
 			return this.BolWorkOrderRoutingMapper.MapBOToModel(this.DalWorkOrderRoutingMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1ab02f898c626ff5791275e2848c7364</Hash>
+    <Hash>6ba6c2f6a899f5bddf59ecbc83302219</Hash>
 </Codenesium>*/

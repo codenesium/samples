@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "AddressType")]
 	[Trait("Area", "Integration")]
-	public class AddressTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class AddressTypeIntegrationTests
 	{
-		public AddressTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public AddressTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.AddressTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiAddressTypeResponseModel model = await client.AddressTypeGetAsync(1);
 
 			ApiAddressTypeModelMapper mapper = new ApiAddressTypeModelMapper();
 
-			UpdateResponse<ApiAddressTypeResponseModel> updateResponse = await this.Client.AddressTypeUpdateAsync(model.AddressTypeID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiAddressTypeResponseModel> updateResponse = await client.AddressTypeUpdateAsync(model.AddressTypeID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.AddressTypeDeleteAsync(model.AddressTypeID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiAddressTypeResponseModel response = await client.AddressTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.AddressTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.AddressTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiAddressTypeResponseModel response = await this.Client.AddressTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiAddressTypeResponseModel response = await client.AddressTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiAddressTypeResponseModel> response = await this.Client.AddressTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiAddressTypeResponseModel> response = await client.AddressTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiAddressTypeResponseModel> CreateRecord()
+		private async Task<ApiAddressTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiAddressTypeRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiAddressTypeResponseModel> result = await this.Client.AddressTypeCreateAsync(model);
+			CreateResponse<ApiAddressTypeResponseModel> result = await client.AddressTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.AddressTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0359153a70d062869a0e26ba1453a2f0</Hash>
+    <Hash>72c724035ee49ea858a17177cc21efa5</Hash>
 </Codenesium>*/

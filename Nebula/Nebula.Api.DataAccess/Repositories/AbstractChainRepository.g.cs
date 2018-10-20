@@ -81,7 +81,7 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<Chain>().SingleOrDefaultAsync(x => x.ExternalId == externalId);
 		}
 
-		public async virtual Task<List<Link>> Links(int chainId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Link>> LinksByChainId(int chainId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Link>().Where(x => x.ChainId == chainId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Link>();
 		}
@@ -137,5 +137,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f61341bcd0839b08fcdd398291b0080e</Hash>
+    <Hash>13f307dee99b675ec00b0f71768686c8</Hash>
 </Codenesium>*/

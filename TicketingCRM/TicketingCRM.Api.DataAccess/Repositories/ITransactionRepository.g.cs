@@ -19,12 +19,12 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		Task<List<Transaction>> ByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Sale>> Sales(int transactionId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Sale>> SalesByTransactionId(int transactionId, int limit = int.MaxValue, int offset = 0);
 
 		Task<TransactionStatu> TransactionStatuByTransactionStatusId(int transactionStatusId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f99c3387c5414df2d6f131ba5c9c0cdf</Hash>
+    <Hash>05e8d3438b5dff6e6f2d310bfcfa6da2</Hash>
 </Codenesium>*/

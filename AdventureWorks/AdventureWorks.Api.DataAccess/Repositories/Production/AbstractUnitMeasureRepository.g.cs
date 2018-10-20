@@ -81,14 +81,19 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<UnitMeasure>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<BillOfMaterial>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>().Where(x => x.UnitMeasureCode == unitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
-		public async virtual Task<List<Product>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Product>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Product>().Where(x => x.SizeUnitMeasureCode == sizeUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
+		}
+
+		public async virtual Task<List<Product>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Product>().Where(x => x.WeightUnitMeasureCode == weightUnitMeasureCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
 		protected async Task<List<UnitMeasure>> Where(
@@ -123,5 +128,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3116062ab6f825b834c850b6f6f67943</Hash>
+    <Hash>cb89b69ff4819703e27c34bf0f4bb7f4</Hash>
 </Codenesium>*/

@@ -18,7 +18,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLVEventMapper();
 			ApiVEventRequestModel model = new ApiVEventRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 			BOVEvent response = mapper.MapModelToBO(1, model);
 
 			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -27,6 +27,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.EventStatusId.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -34,7 +35,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLVEventMapper();
 			BOVEvent bo = new BOVEvent();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 			ApiVEventResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -44,6 +45,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Id.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -51,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLVEventMapper();
 			BOVEvent bo = new BOVEvent();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 			List<ApiVEventResponseModel> response = mapper.MapBOToModel(new List<BOVEvent>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -60,5 +62,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2e6a8945b3f2747c351238c755208a77</Hash>
+    <Hash>2324f803c95d2433ba4726f15424199e</Hash>
 </Codenesium>*/

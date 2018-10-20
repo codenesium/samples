@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "SchemaBPerson")]
 	[Trait("Area", "Integration")]
-	public class SchemaBPersonIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class SchemaBPersonIntegrationTests
 	{
-		public SchemaBPersonIntegrationTests(TestWebApplicationFactory fixture)
+		public SchemaBPersonIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.SchemaBPersonDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiSchemaBPersonResponseModel model = await client.SchemaBPersonGetAsync(1);
 
 			ApiSchemaBPersonModelMapper mapper = new ApiSchemaBPersonModelMapper();
 
-			UpdateResponse<ApiSchemaBPersonResponseModel> updateResponse = await this.Client.SchemaBPersonUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSchemaBPersonResponseModel> updateResponse = await client.SchemaBPersonUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.SchemaBPersonDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiSchemaBPersonResponseModel response = await client.SchemaBPersonGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.SchemaBPersonDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.SchemaBPersonGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiSchemaBPersonResponseModel response = await this.Client.SchemaBPersonGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiSchemaBPersonResponseModel response = await client.SchemaBPersonGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiSchemaBPersonResponseModel> response = await this.Client.SchemaBPersonAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiSchemaBPersonResponseModel> response = await client.SchemaBPersonAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiSchemaBPersonResponseModel> CreateRecord()
+		private async Task<ApiSchemaBPersonResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiSchemaBPersonRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiSchemaBPersonResponseModel> result = await this.Client.SchemaBPersonCreateAsync(model);
+			CreateResponse<ApiSchemaBPersonResponseModel> result = await client.SchemaBPersonCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.SchemaBPersonDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b8127c73ba6011ba837ceb81b3a6881d</Hash>
+    <Hash>2caf85cfd8d093f4ef4461d79eca3ff6</Hash>
 </Codenesium>*/

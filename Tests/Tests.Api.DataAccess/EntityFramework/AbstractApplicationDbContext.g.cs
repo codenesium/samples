@@ -76,8 +76,8 @@ namespace TestsNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
-		/// <param name="acceptAllChangesOnSuccess"></param>
-		/// <param name="cancellationToken"></param>
+		/// <param name="acceptAllChangesOnSuccess">Commit all changes on success</param>
+		/// <param name="cancellationToken">Token that can be passed to hault execution</param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -110,12 +110,155 @@ namespace TestsNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<ColumnSameAsFKTable>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<ColumnSameAsFKTable>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<CompositePrimaryKey>()
 			.HasKey(c => new
 			{
 				c.Id,
 				c.Id2,
 			});
+
+			modelBuilder.Entity<IncludedColumnTest>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<IncludedColumnTest>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Person>()
+			.HasKey(c => new
+			{
+				c.PersonId,
+			});
+
+			modelBuilder.Entity<Person>()
+			.Property("PersonId")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<RowVersionCheck>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<RowVersionCheck>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<SelfReference>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<SelfReference>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Table>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Table>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<TestAllFieldType>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<TestAllFieldType>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<TestAllFieldTypesNullable>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<TestAllFieldTypesNullable>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<TimestampCheck>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<TimestampCheck>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<VPerson>()
+			.HasKey(c => new
+			{
+				c.PersonId,
+			});
+
+			modelBuilder.Entity<VPerson>()
+			.Property("PersonId")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<SchemaAPerson>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<SchemaAPerson>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<SchemaBPerson>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<SchemaBPerson>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<PersonRef>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<PersonRef>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 		}
@@ -147,5 +290,5 @@ namespace TestsNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f43de1cc1c38637deceba9340329baf9</Hash>
+    <Hash>2f6c37dacd72a9110136d20c5eea3d9a</Hash>
 </Codenesium>*/

@@ -86,7 +86,6 @@ namespace TicketingCRMNS.Api.DataAccess
 			return await this.Context.Set<Transaction>().SingleOrDefaultAsync(x => x.Id == transactionId);
 		}
 
-		// Reference foreign key. Reference Table=SaleTicket. First table=sales. Second table=sales
 		public async virtual Task<List<Sale>> BySaleId(int saleId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.SaleTickets
@@ -128,5 +127,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1ad2ce18e041a2a6346a964d2ff0fc1f</Hash>
+    <Hash>6eaa7bec7c201374f9eb4445f01af026</Hash>
 </Codenesium>*/

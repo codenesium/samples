@@ -29,23 +29,23 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public byte[] LargePhoto { get; private set; }
+		public byte[] LargePhoto { get; private set; } = default(byte[]);
 
 		[JsonProperty]
-		public string LargePhotoFileName { get; private set; }
+		public string LargePhotoFileName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public byte[] ThumbNailPhoto { get; private set; }
+		public byte[] ThumbNailPhoto { get; private set; } = default(byte[]);
 
 		[JsonProperty]
-		public string ThumbnailPhotoFileName { get; private set; }
+		public string ThumbnailPhotoFileName { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a09c586fb54f8c95a3147efefe41526b</Hash>
+    <Hash>c3dd253161492c24a2785ddfe3c316de</Hash>
 </Codenesium>*/

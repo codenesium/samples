@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Department>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistoriesByDepartmentID(short departmentID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.DepartmentID == departmentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f8d143f8315de9c0b212909f3fe2816d</Hash>
+    <Hash>b28d9e3aaa264ddaf2d98f963aef2dfd</Hash>
 </Codenesium>*/

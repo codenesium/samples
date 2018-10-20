@@ -27,7 +27,6 @@ namespace FileServiceNS.Api.DataAccess
 		public Guid ExternalId { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -38,5 +37,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>edd466a41b56d25b9a8b38114256c00a</Hash>
+    <Hash>8b5581ec04e9e69f052950f6816707c9</Hash>
 </Codenesium>*/

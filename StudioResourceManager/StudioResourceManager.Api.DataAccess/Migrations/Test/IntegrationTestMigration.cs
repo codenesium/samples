@@ -19,63 +19,63 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public async void Migrate()
 		{
 			var adminItem1 = new Admin();
-			adminItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
+			adminItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1, true);
 			this.context.Admins.Add(adminItem1);
 
 			var eventItem1 = new Event();
-			eventItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+			eventItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", true);
 			this.context.Events.Add(eventItem1);
 
 			var eventStatusItem1 = new EventStatus();
-			eventStatusItem1.SetProperties(1, "A");
+			eventStatusItem1.SetProperties(1, "A", true);
 			this.context.EventStatuses.Add(eventStatusItem1);
 
 			var eventStudentItem1 = new EventStudent();
-			eventStudentItem1.SetProperties(1, 1);
+			eventStudentItem1.SetProperties(1, 1, true);
 			this.context.EventStudents.Add(eventStudentItem1);
 
 			var eventTeacherItem1 = new EventTeacher();
-			eventTeacherItem1.SetProperties(1, 1);
+			eventTeacherItem1.SetProperties(1, 1, true);
 			this.context.EventTeachers.Add(eventTeacherItem1);
 
 			var familyItem1 = new Family();
-			familyItem1.SetProperties(1, "A", "A", "A", "A", "A");
+			familyItem1.SetProperties(1, "A", "A", "A", "A", "A", true);
 			this.context.Families.Add(familyItem1);
 
 			var rateItem1 = new Rate();
-			rateItem1.SetProperties(1m, 1, 1, 1);
+			rateItem1.SetProperties(1m, 1, 1, 1, true);
 			this.context.Rates.Add(rateItem1);
 
 			var spaceItem1 = new Space();
-			spaceItem1.SetProperties("A", 1, "A");
+			spaceItem1.SetProperties("A", 1, "A", true);
 			this.context.Spaces.Add(spaceItem1);
 
 			var spaceFeatureItem1 = new SpaceFeature();
-			spaceFeatureItem1.SetProperties(1, "A");
+			spaceFeatureItem1.SetProperties(1, "A", true);
 			this.context.SpaceFeatures.Add(spaceFeatureItem1);
 
 			var spaceSpaceFeatureItem1 = new SpaceSpaceFeature();
-			spaceSpaceFeatureItem1.SetProperties(1, 1);
+			spaceSpaceFeatureItem1.SetProperties(1, 1, true);
 			this.context.SpaceSpaceFeatures.Add(spaceSpaceFeatureItem1);
 
 			var studentItem1 = new Student();
-			studentItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1);
+			studentItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1, true);
 			this.context.Students.Add(studentItem1);
 
 			var studioItem1 = new Studio();
-			studioItem1.SetProperties("A", "A", "A", 1, "A", "A", "A", "A");
+			studioItem1.SetProperties("A", "A", "A", 1, "A", "A", "A", "A", true);
 			this.context.Studios.Add(studioItem1);
 
 			var teacherItem1 = new Teacher();
-			teacherItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
+			teacherItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1, true);
 			this.context.Teachers.Add(teacherItem1);
 
 			var teacherSkillItem1 = new TeacherSkill();
-			teacherSkillItem1.SetProperties(1, "A");
+			teacherSkillItem1.SetProperties(1, "A", true);
 			this.context.TeacherSkills.Add(teacherSkillItem1);
 
 			var teacherTeacherSkillItem1 = new TeacherTeacherSkill();
-			teacherTeacherSkillItem1.SetProperties(1, 1);
+			teacherTeacherSkillItem1.SetProperties(1, 1, true);
 			this.context.TeacherTeacherSkills.Add(teacherTeacherSkillItem1);
 
 			var tenantItem1 = new Tenant();
@@ -83,11 +83,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.context.Tenants.Add(tenantItem1);
 
 			var userItem1 = new User();
-			userItem1.SetProperties(1, "A", "A");
+			userItem1.SetProperties(1, "A", "A", true);
 			this.context.Users.Add(userItem1);
 
 			var vEventItem1 = new VEvent();
-			vEventItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			vEventItem1.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 			this.context.VEvents.Add(vEventItem1);
 
 			await this.context.SaveChangesAsync();
@@ -96,5 +96,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d1251dfb9d580729fa07f2b0a5c77a16</Hash>
+    <Hash>61415a1458324b9f84bb36792c72663f</Hash>
 </Codenesium>*/

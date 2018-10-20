@@ -70,8 +70,8 @@ namespace NebulaNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
-		/// <param name="acceptAllChangesOnSuccess"></param>
-		/// <param name="cancellationToken"></param>
+		/// <param name="acceptAllChangesOnSuccess">Commit all changes on success</param>
+		/// <param name="cancellationToken">Token that can be passed to hault execution</param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -104,17 +104,123 @@ namespace NebulaNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Chain>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Chain>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<ChainStatus>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<ChainStatus>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<Clasp>()
 			.HasKey(c => new
 			{
 				c.PreviousChainId,
 				c.NextChainId,
 			});
+
+			modelBuilder.Entity<Link>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Link>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<LinkLog>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<LinkLog>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<LinkStatus>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<LinkStatus>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Machine>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Machine>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<MachineRefTeam>()
 			.HasKey(c => new
 			{
 				c.MachineId,
 				c.TeamId,
+			});
+
+			modelBuilder.Entity<Organization>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Organization>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Sysdiagram>()
+			.HasKey(c => new
+			{
+				c.DiagramId,
+			});
+
+			modelBuilder.Entity<Sysdiagram>()
+			.Property("DiagramId")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Team>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Team>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<VersionInfo>()
+			.HasKey(c => new
+			{
+				c.Version,
 			});
 
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
@@ -147,5 +253,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>45757cdff7d1dea1fa828b09ed305853</Hash>
+    <Hash>3018433624e95ef50c88a7328d9afb8b</Hash>
 </Codenesium>*/

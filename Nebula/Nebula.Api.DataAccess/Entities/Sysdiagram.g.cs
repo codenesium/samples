@@ -32,7 +32,6 @@ namespace NebulaNS.Api.DataAccess
 		public byte[] Definition { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("diagram_id")]
 		public int DiagramId { get; private set; }
 
@@ -49,5 +48,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>09dce609c0890f60ffd19f3d5bfaf61d</Hash>
+    <Hash>2056b7148bf2b67012943b0de399e197</Hash>
 </Codenesium>*/

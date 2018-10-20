@@ -24,14 +24,14 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>775c2160a729118790e84ecbde266a78</Hash>
+    <Hash>8295ef4d29c2ce71a780ae31636e1815</Hash>
 </Codenesium>*/

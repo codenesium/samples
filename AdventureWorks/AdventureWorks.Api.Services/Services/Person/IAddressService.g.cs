@@ -25,10 +25,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiAddressResponseModel>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressesByAddressID(int addressID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>96f2f8ddd025c652926871d3d16f0686</Hash>
+    <Hash>0906f00ee75ac65576370389035d94a2</Hash>
 </Codenesium>*/

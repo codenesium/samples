@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCulturesByCultureID(string cultureID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductModelProductDescriptionCulture> records = await this.CultureRepository.ProductModelProductDescriptionCultures(cultureID, limit, offset);
+			List<ProductModelProductDescriptionCulture> records = await this.CultureRepository.ProductModelProductDescriptionCulturesByCultureID(cultureID, limit, offset);
 
 			return this.BolProductModelProductDescriptionCultureMapper.MapBOToModel(this.DalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>cb631354551fdfb5029e08f7c1500239</Hash>
+    <Hash>1f532723efd8cf0d01a70d21543323fc</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<ProductCategory> ByName(string name);
 
-		Task<List<ProductSubcategory>> ProductSubcategories(int productCategoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ProductSubcategory>> ProductSubcategoriesByProductCategoryID(int productCategoryID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7af2b53fcd5f01605034179e511e6d65</Hash>
+    <Hash>5f599e3ea95cadb16adb2e6cc003094b</Hash>
 </Codenesium>*/

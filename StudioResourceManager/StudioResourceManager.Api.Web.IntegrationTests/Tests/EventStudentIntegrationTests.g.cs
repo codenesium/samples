@@ -15,54 +15,82 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "EventStudent")]
 	[Trait("Area", "Integration")]
-	public class EventStudentIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class EventStudentIntegrationTests
 	{
-		public EventStudentIntegrationTests(TestWebApplicationFactory fixture)
+		public EventStudentIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.EventStudentDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiEventStudentResponseModel model = await client.EventStudentGetAsync(1);
 
 			ApiEventStudentModelMapper mapper = new ApiEventStudentModelMapper();
 
-			UpdateResponse<ApiEventStudentResponseModel> updateResponse = await this.Client.EventStudentUpdateAsync(model.EventId, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiEventStudentResponseModel> updateResponse = await client.EventStudentUpdateAsync(model.EventId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.EventStudentDeleteAsync(model.EventId);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiEventStudentResponseModel response = await client.EventStudentGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.EventStudentDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.EventStudentGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiEventStudentResponseModel response = await this.Client.EventStudentGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiEventStudentResponseModel response = await client.EventStudentGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiEventStudentResponseModel> response = await this.Client.EventStudentAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiEventStudentResponseModel> response = await client.EventStudentAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiEventStudentResponseModel> CreateRecord()
+		private async Task<ApiEventStudentResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiEventStudentRequestModel();
-			model.SetProperties(1);
-			CreateResponse<ApiEventStudentResponseModel> result = await this.Client.EventStudentCreateAsync(model);
+			model.SetProperties(1, true);
+			CreateResponse<ApiEventStudentResponseModel> result = await client.EventStudentCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.EventStudentDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>619a6c676e5e3df3149fad58e3fb1f7d</Hash>
+    <Hash>c408f0d30166adbf357e2b798fa79f39</Hash>
 </Codenesium>*/

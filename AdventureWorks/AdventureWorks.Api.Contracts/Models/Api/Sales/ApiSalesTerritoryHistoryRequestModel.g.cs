@@ -29,26 +29,26 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? EndDate { get; private set; }
+		public DateTime? EndDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public DateTime StartDate { get; private set; }
+		public DateTime StartDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int TerritoryID { get; private set; }
+		public int TerritoryID { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>237dab9d9d3a620aa463e7ce74642ef2</Hash>
+    <Hash>d209862b32b173d40f28d863775bffdd</Hash>
 </Codenesium>*/

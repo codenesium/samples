@@ -23,13 +23,13 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? AppliedOn { get; private set; }
+		public DateTime? AppliedOn { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string Description { get; private set; }
+		public string Description { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8c17cccf912833797534efc5daf7ce75</Hash>
+    <Hash>d26bf7886398aca795949f0764ad50b6</Hash>
 </Codenesium>*/

@@ -43,49 +43,49 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? AssignedMachineId { get; private set; }
+		public int? AssignedMachineId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int ChainId { get; private set; }
+		public int ChainId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public DateTime? DateCompleted { get; private set; }
+		public DateTime? DateCompleted { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public DateTime? DateStarted { get; private set; }
+		public DateTime? DateStarted { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string DynamicParameter { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public Guid ExternalId { get; private set; }
+		public string DynamicParameter { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int LinkStatusId { get; private set; }
+		public Guid ExternalId { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public int LinkStatusId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int Order { get; private set; }
-
-		[JsonProperty]
-		public string Response { get; private set; }
-
-		[JsonProperty]
-		public string StaticParameter { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int TimeoutInSecond { get; private set; }
+		public int Order { get; private set; } = default(int);
+
+		[JsonProperty]
+		public string Response { get; private set; } = default(string);
+
+		[JsonProperty]
+		public string StaticParameter { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public int TimeoutInSecond { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ffd508e7c13fde5d9007ed439ee72c43</Hash>
+    <Hash>48564aab1d36362b964fb96cf8aa6332</Hash>
 </Codenesium>*/

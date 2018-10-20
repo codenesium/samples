@@ -16,7 +16,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string name,
 			string province,
 			string website,
-			string zip)
+			string zip,
+			bool isDeleted)
 		{
 			this.Id = id;
 			this.Address1 = address1;
@@ -26,6 +27,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.Province = province;
 			this.Website = website;
 			this.Zip = zip;
+			this.IsDeleted = isDeleted;
 		}
 
 		[JsonProperty]
@@ -52,9 +54,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 		[Required]
 		[JsonProperty]
 		public string Zip { get; private set; }
+
+		[JsonProperty]
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>593c32a21c8cd3172cfdf16e0cfb81a5</Hash>
+    <Hash>89eb27fbeb2bb9a8e374744dfa868a97</Hash>
 </Codenesium>*/

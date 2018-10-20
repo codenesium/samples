@@ -18,7 +18,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLFamilyMapper();
 			ApiFamilyRequestModel model = new ApiFamilyRequestModel();
-			model.SetProperties("A", "A", "A", "A", "A");
+			model.SetProperties("A", "A", "A", "A", "A", true);
 			BOFamily response = mapper.MapModelToBO(1, model);
 
 			response.Note.Should().Be("A");
@@ -26,6 +26,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
 			response.PrimaryContactPhone.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -33,7 +34,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLFamilyMapper();
 			BOFamily bo = new BOFamily();
-			bo.SetProperties(1, "A", "A", "A", "A", "A");
+			bo.SetProperties(1, "A", "A", "A", "A", "A", true);
 			ApiFamilyResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
@@ -42,6 +43,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
 			response.PrimaryContactPhone.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -49,7 +51,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLFamilyMapper();
 			BOFamily bo = new BOFamily();
-			bo.SetProperties(1, "A", "A", "A", "A", "A");
+			bo.SetProperties(1, "A", "A", "A", "A", "A", true);
 			List<ApiFamilyResponseModel> response = mapper.MapBOToModel(new List<BOFamily>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -58,5 +60,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>004f7536294aca66c7b0ea55fcdfe5b7</Hash>
+    <Hash>fb3f83b1d64ab372c243d73cb5d618d6</Hash>
 </Codenesium>*/

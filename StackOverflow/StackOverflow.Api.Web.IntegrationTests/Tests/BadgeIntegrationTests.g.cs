@@ -15,54 +15,82 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Badge")]
 	[Trait("Area", "Integration")]
-	public class BadgeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class BadgeIntegrationTests
 	{
-		public BadgeIntegrationTests(TestWebApplicationFactory fixture)
+		public BadgeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.BadgeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiBadgeResponseModel model = await client.BadgeGetAsync(1);
 
 			ApiBadgeModelMapper mapper = new ApiBadgeModelMapper();
 
-			UpdateResponse<ApiBadgeResponseModel> updateResponse = await this.Client.BadgeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiBadgeResponseModel> updateResponse = await client.BadgeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.BadgeDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiBadgeResponseModel response = await client.BadgeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.BadgeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.BadgeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiBadgeResponseModel response = await this.Client.BadgeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiBadgeResponseModel response = await client.BadgeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiBadgeResponseModel> response = await this.Client.BadgeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiBadgeResponseModel> response = await client.BadgeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiBadgeResponseModel> CreateRecord()
+		private async Task<ApiBadgeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiBadgeRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
-			CreateResponse<ApiBadgeResponseModel> result = await this.Client.BadgeCreateAsync(model);
+			CreateResponse<ApiBadgeResponseModel> result = await client.BadgeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.BadgeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>44b597f52d79d48f027f67c7ffe3ca4d</Hash>
+    <Hash>1c920913cc151d5f657e0fc49620d361</Hash>
 </Codenesium>*/

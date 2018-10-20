@@ -190,7 +190,7 @@ namespace TestsNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace TestsNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -225,5 +225,5 @@ namespace TestsNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>f0415114dea4ad34e088f70ce7074152</Hash>
+    <Hash>763bf1777bdde65a96900f9fa0af65f1</Hash>
 </Codenesium>*/

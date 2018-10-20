@@ -15,54 +15,82 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Retweet")]
 	[Trait("Area", "Integration")]
-	public class RetweetIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class RetweetIntegrationTests
 	{
-		public RetweetIntegrationTests(TestWebApplicationFactory fixture)
+		public RetweetIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.RetweetDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiRetweetResponseModel model = await client.RetweetGetAsync(1);
 
 			ApiRetweetModelMapper mapper = new ApiRetweetModelMapper();
 
-			UpdateResponse<ApiRetweetResponseModel> updateResponse = await this.Client.RetweetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiRetweetResponseModel> updateResponse = await client.RetweetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.RetweetDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiRetweetResponseModel response = await client.RetweetGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.RetweetDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.RetweetGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiRetweetResponseModel response = await this.Client.RetweetGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiRetweetResponseModel response = await client.RetweetGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TwitterNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiRetweetResponseModel> response = await this.Client.RetweetAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiRetweetResponseModel> response = await client.RetweetAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiRetweetResponseModel> CreateRecord()
+		private async Task<ApiRetweetResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiRetweetRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("1"), 1);
-			CreateResponse<ApiRetweetResponseModel> result = await this.Client.RetweetCreateAsync(model);
+			CreateResponse<ApiRetweetResponseModel> result = await client.RetweetCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.RetweetDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>98dc050d2b06c4dd984ec73a61db31ae</Hash>
+    <Hash>d8e75111e51fdb17b1e2c561e379eefd</Hash>
 </Codenesium>*/

@@ -32,30 +32,30 @@ namespace PetStoreNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime AcquiredDate { get; private set; }
+		public DateTime AcquiredDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int BreedId { get; private set; }
+		public int BreedId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Description { get; private set; }
+		public string Description { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int PenId { get; private set; }
+		public int PenId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public decimal Price { get; private set; }
+		public decimal Price { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public int SpeciesId { get; private set; }
+		public int SpeciesId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a4491c8509d3c198391e136f5c9374f4</Hash>
+    <Hash>c3488abc0859b2ff0f6b6681d10c489c</Hash>
 </Codenesium>*/

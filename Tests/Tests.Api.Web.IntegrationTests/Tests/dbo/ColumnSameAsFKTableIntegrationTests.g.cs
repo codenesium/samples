@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ColumnSameAsFKTable")]
 	[Trait("Area", "Integration")]
-	public class ColumnSameAsFKTableIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ColumnSameAsFKTableIntegrationTests
 	{
-		public ColumnSameAsFKTableIntegrationTests(TestWebApplicationFactory fixture)
+		public ColumnSameAsFKTableIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ColumnSameAsFKTableDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiColumnSameAsFKTableResponseModel model = await client.ColumnSameAsFKTableGetAsync(1);
 
 			ApiColumnSameAsFKTableModelMapper mapper = new ApiColumnSameAsFKTableModelMapper();
 
-			UpdateResponse<ApiColumnSameAsFKTableResponseModel> updateResponse = await this.Client.ColumnSameAsFKTableUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiColumnSameAsFKTableResponseModel> updateResponse = await client.ColumnSameAsFKTableUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ColumnSameAsFKTableDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiColumnSameAsFKTableResponseModel response = await client.ColumnSameAsFKTableGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ColumnSameAsFKTableDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ColumnSameAsFKTableGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiColumnSameAsFKTableResponseModel response = await this.Client.ColumnSameAsFKTableGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiColumnSameAsFKTableResponseModel response = await client.ColumnSameAsFKTableGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiColumnSameAsFKTableResponseModel> response = await this.Client.ColumnSameAsFKTableAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiColumnSameAsFKTableResponseModel> response = await client.ColumnSameAsFKTableAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiColumnSameAsFKTableResponseModel> CreateRecord()
+		private async Task<ApiColumnSameAsFKTableResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiColumnSameAsFKTableRequestModel();
 			model.SetProperties(2, 2);
-			CreateResponse<ApiColumnSameAsFKTableResponseModel> result = await this.Client.ColumnSameAsFKTableCreateAsync(model);
+			CreateResponse<ApiColumnSameAsFKTableResponseModel> result = await client.ColumnSameAsFKTableCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ColumnSameAsFKTableDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>91634229bcd91237b91727b83666dce0</Hash>
+    <Hash>2972ab0cf934e693e1fd09c2c11acb1c</Hash>
 </Codenesium>*/

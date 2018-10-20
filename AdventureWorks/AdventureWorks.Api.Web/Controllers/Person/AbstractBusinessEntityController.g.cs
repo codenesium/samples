@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/BusinessEntityAddresses")]
+		[Route("{businessEntityID}/BusinessEntityAddressesByBusinessEntityID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
-		public async virtual Task<IActionResult> BusinessEntityAddresses(int businessEntityID, int? limit, int? offset)
+		public async virtual Task<IActionResult> BusinessEntityAddressesByBusinessEntityID(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,16 +218,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityService.BusinessEntityAddresses(businessEntityID, query.Limit, query.Offset);
+			List<ApiBusinessEntityAddressResponseModel> response = await this.BusinessEntityService.BusinessEntityAddressesByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/BusinessEntityContacts")]
+		[Route("{businessEntityID}/BusinessEntityContactsByBusinessEntityID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBusinessEntityContactResponseModel>), 200)]
-		public async virtual Task<IActionResult> BusinessEntityContacts(int businessEntityID, int? limit, int? offset)
+		public async virtual Task<IActionResult> BusinessEntityContactsByBusinessEntityID(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,16 +235,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityService.BusinessEntityContacts(businessEntityID, query.Limit, query.Offset);
+			List<ApiBusinessEntityContactResponseModel> response = await this.BusinessEntityService.BusinessEntityContactsByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/People")]
+		[Route("{businessEntityID}/PeopleByBusinessEntityID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPersonResponseModel>), 200)]
-		public async virtual Task<IActionResult> People(int businessEntityID, int? limit, int? offset)
+		public async virtual Task<IActionResult> PeopleByBusinessEntityID(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,7 +252,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPersonResponseModel> response = await this.BusinessEntityService.People(businessEntityID, query.Limit, query.Offset);
+			List<ApiPersonResponseModel> response = await this.BusinessEntityService.PeopleByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -276,5 +276,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0c017eafd46ba68a26ddb25cc624c439</Hash>
+    <Hash>b90c9bf859dadb9be59484c4be9d06eb</Hash>
 </Codenesium>*/

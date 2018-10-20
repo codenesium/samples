@@ -15,54 +15,82 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "SpaceFeature")]
 	[Trait("Area", "Integration")]
-	public class SpaceFeatureIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class SpaceFeatureIntegrationTests
 	{
-		public SpaceFeatureIntegrationTests(TestWebApplicationFactory fixture)
+		public SpaceFeatureIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.SpaceFeatureDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiSpaceFeatureResponseModel model = await client.SpaceFeatureGetAsync(1);
 
 			ApiSpaceFeatureModelMapper mapper = new ApiSpaceFeatureModelMapper();
 
-			UpdateResponse<ApiSpaceFeatureResponseModel> updateResponse = await this.Client.SpaceFeatureUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSpaceFeatureResponseModel> updateResponse = await client.SpaceFeatureUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.SpaceFeatureDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiSpaceFeatureResponseModel response = await client.SpaceFeatureGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.SpaceFeatureDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.SpaceFeatureGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiSpaceFeatureResponseModel response = await this.Client.SpaceFeatureGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiSpaceFeatureResponseModel response = await client.SpaceFeatureGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiSpaceFeatureResponseModel> response = await this.Client.SpaceFeatureAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiSpaceFeatureResponseModel> response = await client.SpaceFeatureAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiSpaceFeatureResponseModel> CreateRecord()
+		private async Task<ApiSpaceFeatureResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiSpaceFeatureRequestModel();
-			model.SetProperties("B");
-			CreateResponse<ApiSpaceFeatureResponseModel> result = await this.Client.SpaceFeatureCreateAsync(model);
+			model.SetProperties("B", true);
+			CreateResponse<ApiSpaceFeatureResponseModel> result = await client.SpaceFeatureCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.SpaceFeatureDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4d84d81f73611d7d6b635ec672df57e0</Hash>
+    <Hash>172b5ac2880cb3bf85bbbf140b1b2d46</Hash>
 </Codenesium>*/

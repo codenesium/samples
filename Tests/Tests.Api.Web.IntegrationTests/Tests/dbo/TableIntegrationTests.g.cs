@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Table")]
 	[Trait("Area", "Integration")]
-	public class TableIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TableIntegrationTests
 	{
-		public TableIntegrationTests(TestWebApplicationFactory fixture)
+		public TableIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TableDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTableResponseModel model = await client.TableGetAsync(1);
 
 			ApiTableModelMapper mapper = new ApiTableModelMapper();
 
-			UpdateResponse<ApiTableResponseModel> updateResponse = await this.Client.TableUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTableResponseModel> updateResponse = await client.TableUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TableDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTableResponseModel response = await client.TableGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TableDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TableGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTableResponseModel response = await this.Client.TableGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTableResponseModel response = await client.TableGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTableResponseModel> response = await this.Client.TableAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTableResponseModel> response = await client.TableAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTableResponseModel> CreateRecord()
+		private async Task<ApiTableResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTableRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiTableResponseModel> result = await this.Client.TableCreateAsync(model);
+			CreateResponse<ApiTableResponseModel> result = await client.TableCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TableDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>53f2ba5d8d2a43ba8057d90ff4b90c1a</Hash>
+    <Hash>fb410903fa809fc15e496d001d84d077</Hash>
 </Codenesium>*/

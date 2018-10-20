@@ -56,7 +56,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public string StateProvinceCode { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("StateProvinceID")]
 		public int StateProvinceID { get; private set; }
 
@@ -66,5 +65,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>68ea87e216aa99206de1901790f537dd</Hash>
+    <Hash>6aa06faff504f6569ace54ecd579b17b</Hash>
 </Codenesium>*/

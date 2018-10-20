@@ -34,7 +34,6 @@ namespace StackOverflowNS.Api.DataAccess
 		public int ExcerptPostId { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("Id")]
 		public int Id { get; private set; }
 
@@ -48,5 +47,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>40bf8a6f1cf62ee2cb65b819921d7135</Hash>
+    <Hash>b984a2b7bddcc5611e0809a3994ca6fe</Hash>
 </Codenesium>*/

@@ -18,10 +18,11 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLSpaceSpaceFeatureMapper();
 			ApiSpaceSpaceFeatureRequestModel model = new ApiSpaceSpaceFeatureRequestModel();
-			model.SetProperties(1);
+			model.SetProperties(1, true);
 			BOSpaceSpaceFeature response = mapper.MapModelToBO(1, model);
 
 			response.SpaceFeatureId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -29,11 +30,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLSpaceSpaceFeatureMapper();
 			BOSpaceSpaceFeature bo = new BOSpaceSpaceFeature();
-			bo.SetProperties(1, 1);
+			bo.SetProperties(1, 1, true);
 			ApiSpaceSpaceFeatureResponseModel response = mapper.MapBOToModel(bo);
 
 			response.SpaceFeatureId.Should().Be(1);
 			response.SpaceId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -41,7 +43,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLSpaceSpaceFeatureMapper();
 			BOSpaceSpaceFeature bo = new BOSpaceSpaceFeature();
-			bo.SetProperties(1, 1);
+			bo.SetProperties(1, 1, true);
 			List<ApiSpaceSpaceFeatureResponseModel> response = mapper.MapBOToModel(new List<BOSpaceSpaceFeature>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -50,5 +52,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c6e166809e803f64714aca7cb17214da</Hash>
+    <Hash>71e79326eeed35786cbbcb92c811f85b</Hash>
 </Codenesium>*/

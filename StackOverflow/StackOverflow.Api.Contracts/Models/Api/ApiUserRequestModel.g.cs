@@ -45,53 +45,53 @@ namespace StackOverflowNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string AboutMe { get; private set; }
+		public string AboutMe { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? AccountId { get; private set; }
+		public int? AccountId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int? Age { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime CreationDate { get; private set; }
+		public int? Age { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string DisplayName { get; private set; }
+		public DateTime CreationDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int DownVote { get; private set; }
-
-		[JsonProperty]
-		public string EmailHash { get; private set; }
+		public string DisplayName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime LastAccessDate { get; private set; }
+		public int DownVote { get; private set; } = default(int);
 
 		[JsonProperty]
-		public string Location { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public int Reputation { get; private set; }
+		public string EmailHash { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int UpVote { get; private set; }
+		public DateTime LastAccessDate { get; private set; } = default(DateTime);
+
+		[JsonProperty]
+		public string Location { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int View { get; private set; }
+		public int Reputation { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public int UpVote { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public int View { get; private set; } = default(int);
 
 		[JsonProperty]
-		public string WebsiteUrl { get; private set; }
+		public string WebsiteUrl { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>58b13661ebf5b7cc7ad945b83bd00459</Hash>
+    <Hash>d2762cc8694689e90bd4fb712137665e</Hash>
 </Codenesium>*/

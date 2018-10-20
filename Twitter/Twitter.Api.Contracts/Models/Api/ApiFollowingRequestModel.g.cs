@@ -23,13 +23,13 @@ namespace TwitterNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? DateFollowed { get; private set; }
+		public DateTime? DateFollowed { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string Muted { get; private set; }
+		public string Muted { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2ab27fbb42f1a60919bdb34b6d6a1d1c</Hash>
+    <Hash>3243721ded2e194d49868bf397f47527</Hash>
 </Codenesium>*/

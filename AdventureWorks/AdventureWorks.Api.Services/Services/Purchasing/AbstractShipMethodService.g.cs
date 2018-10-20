@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PurchaseOrderHeader> records = await this.ShipMethodRepository.PurchaseOrderHeaders(shipMethodID, limit, offset);
+			List<PurchaseOrderHeader> records = await this.ShipMethodRepository.PurchaseOrderHeadersByShipMethodID(shipMethodID, limit, offset);
 
 			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b66b4bf36a9bb88ec2fc4ccaa6f6755e</Hash>
+    <Hash>2601477b37368955c920d4142187e8d5</Hash>
 </Codenesium>*/

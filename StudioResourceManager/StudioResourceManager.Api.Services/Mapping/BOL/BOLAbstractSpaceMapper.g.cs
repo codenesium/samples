@@ -16,7 +16,8 @@ namespace StudioResourceManagerNS.Api.Services
 			boSpace.SetProperties(
 				id,
 				model.Description,
-				model.Name);
+				model.Name,
+				model.IsDeleted);
 			return boSpace;
 		}
 
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiSpaceResponseModel();
 
-			model.SetProperties(boSpace.Id, boSpace.Description, boSpace.Name);
+			model.SetProperties(boSpace.Id, boSpace.Description, boSpace.Name, boSpace.IsDeleted);
 
 			return model;
 		}
@@ -46,5 +47,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>b71e4f124a7e21f20a465301741d5971</Hash>
+    <Hash>e108d49ca2296b9f7abe45284c6f1a26</Hash>
 </Codenesium>*/

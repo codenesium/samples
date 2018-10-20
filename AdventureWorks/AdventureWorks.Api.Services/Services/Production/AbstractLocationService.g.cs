@@ -138,16 +138,16 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiProductInventoryResponseModel>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductInventoryResponseModel>> ProductInventoriesByLocationID(short locationID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductInventory> records = await this.LocationRepository.ProductInventories(locationID, limit, offset);
+			List<ProductInventory> records = await this.LocationRepository.ProductInventoriesByLocationID(locationID, limit, offset);
 
 			return this.BolProductInventoryMapper.MapBOToModel(this.DalProductInventoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiWorkOrderRoutingResponseModel>> WorkOrderRoutingsByLocationID(short locationID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<WorkOrderRouting> records = await this.LocationRepository.WorkOrderRoutings(locationID, limit, offset);
+			List<WorkOrderRouting> records = await this.LocationRepository.WorkOrderRoutingsByLocationID(locationID, limit, offset);
 
 			return this.BolWorkOrderRoutingMapper.MapBOToModel(this.DalWorkOrderRoutingMapper.MapEFToBO(records));
 		}
@@ -155,5 +155,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec8a9aa545fc1ba31cc2f6e3c5e467ba</Hash>
+    <Hash>c8f172dd910e3f832caf340249d4efee</Hash>
 </Codenesium>*/

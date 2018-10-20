@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ShoppingCartItem")]
 	[Trait("Area", "Integration")]
-	public class ShoppingCartItemIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ShoppingCartItemIntegrationTests
 	{
-		public ShoppingCartItemIntegrationTests(TestWebApplicationFactory fixture)
+		public ShoppingCartItemIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ShoppingCartItemDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiShoppingCartItemResponseModel model = await client.ShoppingCartItemGetAsync(1);
 
 			ApiShoppingCartItemModelMapper mapper = new ApiShoppingCartItemModelMapper();
 
-			UpdateResponse<ApiShoppingCartItemResponseModel> updateResponse = await this.Client.ShoppingCartItemUpdateAsync(model.ShoppingCartItemID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiShoppingCartItemResponseModel> updateResponse = await client.ShoppingCartItemUpdateAsync(model.ShoppingCartItemID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ShoppingCartItemDeleteAsync(model.ShoppingCartItemID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiShoppingCartItemResponseModel response = await client.ShoppingCartItemGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ShoppingCartItemDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ShoppingCartItemGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiShoppingCartItemResponseModel response = await this.Client.ShoppingCartItemGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiShoppingCartItemResponseModel response = await client.ShoppingCartItemGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiShoppingCartItemResponseModel> response = await this.Client.ShoppingCartItemAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiShoppingCartItemResponseModel> response = await client.ShoppingCartItemAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiShoppingCartItemResponseModel> CreateRecord()
+		private async Task<ApiShoppingCartItemResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiShoppingCartItemRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B");
-			CreateResponse<ApiShoppingCartItemResponseModel> result = await this.Client.ShoppingCartItemCreateAsync(model);
+			CreateResponse<ApiShoppingCartItemResponseModel> result = await client.ShoppingCartItemCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ShoppingCartItemDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>15f718cc9cef441ebabff17b6dbb6695</Hash>
+    <Hash>a447ede661b833fa60ba4a21c352ec58</Hash>
 </Codenesium>*/

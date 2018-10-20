@@ -15,54 +15,82 @@ namespace NebulaNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Link")]
 	[Trait("Area", "Integration")]
-	public class LinkIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class LinkIntegrationTests
 	{
-		public LinkIntegrationTests(TestWebApplicationFactory fixture)
+		public LinkIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.LinkDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiLinkResponseModel model = await client.LinkGetAsync(1);
 
 			ApiLinkModelMapper mapper = new ApiLinkModelMapper();
 
-			UpdateResponse<ApiLinkResponseModel> updateResponse = await this.Client.LinkUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiLinkResponseModel> updateResponse = await client.LinkUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.LinkDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiLinkResponseModel response = await client.LinkGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.LinkDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.LinkGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiLinkResponseModel response = await this.Client.LinkGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiLinkResponseModel response = await client.LinkGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace NebulaNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiLinkResponseModel> response = await this.Client.LinkAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiLinkResponseModel> response = await client.LinkAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiLinkResponseModel> CreateRecord()
+		private async Task<ApiLinkResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiLinkRequestModel();
 			model.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
-			CreateResponse<ApiLinkResponseModel> result = await this.Client.LinkCreateAsync(model);
+			CreateResponse<ApiLinkResponseModel> result = await client.LinkCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.LinkDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b5647ea73e8dcfb97522d44ada5115cd</Hash>
+    <Hash>d2f061cecbecd792524575d9d9a84c01</Hash>
 </Codenesium>*/

@@ -84,8 +84,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		/// To work around this limitation we detect ROWGUID columns here and set the value.
 		/// On SQL Server the database would set the value.
 		/// </summary>
-		/// <param name="acceptAllChangesOnSuccess"></param>
-		/// <param name="cancellationToken"></param>
+		/// <param name="acceptAllChangesOnSuccess">Commit all changes on success</param>
+		/// <param name="cancellationToken">Token that can be passed to hault execution</param>
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
@@ -118,24 +118,148 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<Admin>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Admin>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Event>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Event>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<EventStatus>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<EventStatus>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<EventStudent>()
 			.HasKey(c => new
 			{
 				c.EventId,
 				c.StudentId,
 			});
+
 			modelBuilder.Entity<EventTeacher>()
 			.HasKey(c => new
 			{
 				c.EventId,
 				c.TeacherId,
 			});
+
+			modelBuilder.Entity<Family>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Family>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Rate>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Rate>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Space>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Space>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<SpaceFeature>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<SpaceFeature>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<SpaceSpaceFeature>()
 			.HasKey(c => new
 			{
 				c.SpaceId,
 				c.SpaceFeatureId,
 			});
+
+			modelBuilder.Entity<Student>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Student>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Studio>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Studio>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<Teacher>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Teacher>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<TeacherSkill>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<TeacherSkill>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			modelBuilder.Entity<TeacherTeacherSkill>()
 			.HasKey(c => new
 			{
@@ -143,7 +267,58 @@ namespace StudioResourceManagerNS.Api.DataAccess
 				c.TeacherSkillId,
 			});
 
+			modelBuilder.Entity<Tenant>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<Tenant>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<User>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<User>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
+			modelBuilder.Entity<VEvent>()
+			.HasKey(c => new
+			{
+				c.Id,
+			});
+
+			modelBuilder.Entity<VEvent>()
+			.Property("Id")
+			.ValueGeneratedOnAdd()
+			.UseSqlServerIdentityColumn();
+
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
+
+			modelBuilder.Entity<Admin>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Event>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<EventStatus>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<EventStudent>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<EventTeacher>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Family>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Rate>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Space>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<SpaceFeature>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<SpaceSpaceFeature>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Student>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Studio>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Teacher>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<TeacherSkill>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<TeacherTeacherSkill>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<VEvent>().HasQueryFilter(x => !x.IsDeleted);
 		}
 	}
 
@@ -173,5 +348,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>94ff0bc437667071838b4625f5c0d274</Hash>
+    <Hash>cf420bf8195daa6689142a8eb6494a69</Hash>
 </Codenesium>*/

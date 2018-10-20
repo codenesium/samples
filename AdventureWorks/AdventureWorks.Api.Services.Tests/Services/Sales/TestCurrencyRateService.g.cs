@@ -182,12 +182,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void SalesOrderHeaders_Exists()
+		public async void SalesOrderHeadersByCurrencyRateID_Exists()
 		{
 			var mock = new ServiceMockFacade<ICurrencyRateRepository>();
 			var records = new List<SalesOrderHeader>();
 			records.Add(new SalesOrderHeader());
-			mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersByCurrencyRateID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new CurrencyRateService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.CurrencyRateModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
-			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default(int));
+			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeadersByCurrencyRateID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesOrderHeadersByCurrencyRateID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SalesOrderHeaders_Not_Exists()
+		public async void SalesOrderHeadersByCurrencyRateID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ICurrencyRateRepository>();
-			mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
+			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersByCurrencyRateID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
 			var service = new CurrencyRateService(mock.LoggerMock.Object,
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.CurrencyRateModelValidatorMock.Object,
@@ -215,14 +215,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.BOLMapperMockFactory.BOLSalesOrderHeaderMapperMock,
 			                                      mock.DALMapperMockFactory.DALSalesOrderHeaderMapperMock);
 
-			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default(int));
+			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeadersByCurrencyRateID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesOrderHeadersByCurrencyRateID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7eab9575e8dd635b03d273a3e0163e4d</Hash>
+    <Hash>0ab406499aa842e19b57ac0dbf74d92e</Hash>
 </Codenesium>*/

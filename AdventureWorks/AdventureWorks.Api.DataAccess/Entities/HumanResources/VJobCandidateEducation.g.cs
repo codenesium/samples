@@ -88,12 +88,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Edu.StartDate")]
 		public DateTime? EduStartDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("JobCandidateID")]
 		public int JobCandidateID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>e79597bd0889c9eec0bb238e68e06c70</Hash>
+    <Hash>eb6a9def4c964637dc3281e1fa17052b</Hash>
 </Codenesium>*/

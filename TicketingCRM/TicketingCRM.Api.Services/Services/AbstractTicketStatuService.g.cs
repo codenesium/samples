@@ -116,9 +116,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiTicketResponseModel>> Tickets(int ticketStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTicketResponseModel>> TicketsByTicketStatusId(int ticketStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Ticket> records = await this.TicketStatuRepository.Tickets(ticketStatusId, limit, offset);
+			List<Ticket> records = await this.TicketStatuRepository.TicketsByTicketStatusId(ticketStatusId, limit, offset);
 
 			return this.BolTicketMapper.MapBOToModel(this.DalTicketMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>31c35cefee77148741b28142ca73c013</Hash>
+    <Hash>71231d88cbe8a8807ab09a9e92bfa9f4</Hash>
 </Codenesium>*/

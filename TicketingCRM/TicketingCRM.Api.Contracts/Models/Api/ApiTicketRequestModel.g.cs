@@ -24,14 +24,14 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string PublicId { get; private set; }
+		public string PublicId { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int TicketStatusId { get; private set; }
+		public int TicketStatusId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6add3b75052a6513de020871404d210e</Hash>
+    <Hash>b803c3226d34bb81737b508bb3d186e7</Hash>
 </Codenesium>*/

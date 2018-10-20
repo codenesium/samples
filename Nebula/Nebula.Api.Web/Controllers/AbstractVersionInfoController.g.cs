@@ -190,7 +190,7 @@ namespace NebulaNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(long id)
 		{
@@ -198,7 +198,7 @@ namespace NebulaNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -225,5 +225,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>43e812207c64c98eb4f3dbcb2a1cf3a3</Hash>
+    <Hash>509ab18d1198e65869a70681ded5dd94</Hash>
 </Codenesium>*/

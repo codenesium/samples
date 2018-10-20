@@ -24,14 +24,14 @@ namespace TestsNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public Guid RowVersion { get; private set; }
+		public Guid RowVersion { get; private set; } = default(Guid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>09b8e0559822b9d15335989ffd86d13f</Hash>
+    <Hash>865fcd913610cdafb6b86e883a03c18c</Hash>
 </Codenesium>*/

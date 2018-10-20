@@ -22,10 +22,10 @@ namespace StackOverflowNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Type { get; private set; }
+		public string Type { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6fa3467f035c64ac03c786ffee0dfc65</Hash>
+    <Hash>6f5914fda937a84e8d4ef7a00c29557e</Hash>
 </Codenesium>*/

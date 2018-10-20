@@ -86,53 +86,57 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Product>().SingleOrDefaultAsync(x => x.ProductNumber == productNumber);
 		}
 
-		public async virtual Task<List<BillOfMaterial>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BillOfMaterial>().Where(x => x.ProductAssemblyID == productAssemblyID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
 		}
 
-		public async virtual Task<List<ProductCostHistory>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<BillOfMaterial>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<BillOfMaterial>().Where(x => x.ComponentID == componentID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BillOfMaterial>();
+		}
+
+		public async virtual Task<List<ProductCostHistory>> ProductCostHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductCostHistory>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductCostHistory>();
 		}
 
-		public async virtual Task<List<ProductInventory>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductInventory>> ProductInventoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductInventory>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductInventory>();
 		}
 
-		public async virtual Task<List<ProductListPriceHistory>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductListPriceHistory>> ProductListPriceHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductListPriceHistory>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductListPriceHistory>();
 		}
 
-		public async virtual Task<List<ProductProductPhoto>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductProductPhoto>> ProductProductPhotoesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductProductPhoto>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductProductPhoto>();
 		}
 
-		public async virtual Task<List<ProductReview>> ProductReviews(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductReview>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductReview>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductReview>();
 		}
 
-		public async virtual Task<List<TransactionHistory>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<TransactionHistory>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<TransactionHistory>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<TransactionHistory>();
 		}
 
-		public async virtual Task<List<WorkOrder>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<WorkOrder>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<WorkOrder>().Where(x => x.ProductID == productID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
 
-		// Reference foreign key. Reference Table=ProductDocument. First table=products. Second table=products
-		public async virtual Task<List<Product>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Product>> ByDocumentNode(int documentNode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.ProductDocuments
 			              join products in this.Context.Products on
 			              refTable.ProductID equals products.ProductID
-			              where refTable.ProductID == productID
+			              where refTable.DocumentNode == documentNode
 			              select products).Skip(offset).Take(limit).ToListAsync();
 		}
 
@@ -168,5 +172,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fe9447faa10a3ec152150a19cf1df8eb</Hash>
+    <Hash>923a7770cb7c693b26fa6fd5870ccb2b</Hash>
 </Codenesium>*/

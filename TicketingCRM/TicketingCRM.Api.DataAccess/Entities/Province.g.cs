@@ -27,7 +27,6 @@ namespace TicketingCRMNS.Api.DataAccess
 		public int CountryId { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -41,5 +40,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e4771a91508c4c6e649110ef8860b902</Hash>
+    <Hash>ad90a478e8d4c1c6e4eb94ef98df2c36</Hash>
 </Codenesium>*/

@@ -299,8 +299,8 @@ namespace TwitterNS.Api.Web.Tests
 
 			IActionResult response = await controller.Delete(default(string));
 
-			response.Should().BeOfType<NoContentResult>();
-			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<string>()));
 		}
 
@@ -338,5 +338,5 @@ namespace TwitterNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>64dc6b776cc77197550e07025be1baff</Hash>
+    <Hash>4aa50a44ad6fdb10b0ef54672298f3f9</Hash>
 </Codenesium>*/

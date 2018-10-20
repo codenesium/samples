@@ -17,13 +17,14 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALUserMapper();
 			var bo = new BOUser();
-			bo.SetProperties(1, "A", "A");
+			bo.SetProperties(1, "A", "A", true);
 
 			User response = mapper.MapBOToEF(bo);
 
 			response.Id.Should().Be(1);
 			response.Password.Should().Be("A");
 			response.Username.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -31,13 +32,14 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALUserMapper();
 			User entity = new User();
-			entity.SetProperties(1, "A", "A");
+			entity.SetProperties(1, "A", "A", true);
 
 			BOUser response = mapper.MapEFToBO(entity);
 
 			response.Id.Should().Be(1);
 			response.Password.Should().Be("A");
 			response.Username.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -45,7 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALUserMapper();
 			User entity = new User();
-			entity.SetProperties(1, "A", "A");
+			entity.SetProperties(1, "A", "A", true);
 
 			List<BOUser> response = mapper.MapEFToBO(new List<User>() { entity });
 
@@ -55,5 +57,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3bc4c15d0a62eff7012ac0ec0abf9e8f</Hash>
+    <Hash>2ad4a230e803a378bc3554fec3dd4535</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Organization> ByName(string name);
 
-		Task<List<Team>> Teams(int organizationId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Team>> TeamsByOrganizationId(int organizationId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2a928d9e5580fa75b286ced84b13194f</Hash>
+    <Hash>6986dafa3aaf5b2ed530d9e6b95038b2</Hash>
 </Codenesium>*/

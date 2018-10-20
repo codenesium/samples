@@ -14,7 +14,8 @@ namespace StudioResourceManagerNS.Api.Services
 			EventStudent efEventStudent = new EventStudent();
 			efEventStudent.SetProperties(
 				bo.EventId,
-				bo.StudentId);
+				bo.StudentId,
+				bo.IsDeleted);
 			return efEventStudent;
 		}
 
@@ -25,7 +26,8 @@ namespace StudioResourceManagerNS.Api.Services
 
 			bo.SetProperties(
 				ef.EventId,
-				ef.StudentId);
+				ef.StudentId,
+				ef.IsDeleted);
 			return bo;
 		}
 
@@ -45,5 +47,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe38412f25b5f8da07c2206e4f619818</Hash>
+    <Hash>e0e99eb99acd874125dbc8f079a16796</Hash>
 </Codenesium>*/

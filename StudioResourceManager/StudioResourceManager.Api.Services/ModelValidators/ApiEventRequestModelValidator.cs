@@ -23,6 +23,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.ScheduledStartDateRules();
 			this.StudentNoteRules();
 			this.TeacherNoteRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -36,6 +37,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.ScheduledStartDateRules();
 			this.StudentNoteRules();
 			this.TeacherNoteRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -47,5 +49,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>66b6d4c7a5f4191788b9ce5770459b90</Hash>
+    <Hash>f27d3303b9782bc29dfddb0ca6b55ff2</Hash>
 </Codenesium>*/

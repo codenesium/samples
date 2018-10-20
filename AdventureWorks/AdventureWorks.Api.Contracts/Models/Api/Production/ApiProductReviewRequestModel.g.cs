@@ -33,34 +33,34 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string Comment { get; private set; }
+		public string Comment { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string EmailAddress { get; private set; }
+		public string EmailAddress { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; }
+		public int ProductID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int Rating { get; private set; }
+		public int Rating { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ReviewDate { get; private set; }
+		public DateTime ReviewDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string ReviewerName { get; private set; }
+		public string ReviewerName { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>682272dc229735d641459ad55203ee66</Hash>
+    <Hash>e492d4ecb245d311e5c27451e300a68a</Hash>
 </Codenesium>*/

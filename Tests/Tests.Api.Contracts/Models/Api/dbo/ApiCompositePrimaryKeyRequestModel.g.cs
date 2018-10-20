@@ -22,10 +22,10 @@ namespace TestsNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int Id2 { get; private set; }
+		public int Id2 { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a87c86da2842194e4c18f4a516ab7757</Hash>
+    <Hash>6a8efae255d5231c2d2618ba7a4ce651</Hash>
 </Codenesium>*/

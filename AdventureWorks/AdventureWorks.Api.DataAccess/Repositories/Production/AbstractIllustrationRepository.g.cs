@@ -76,6 +76,15 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
+		public async virtual Task<List<Illustration>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.ProductModelIllustrations
+			              join illustrations in this.Context.Illustrations on
+			              refTable.IllustrationID equals illustrations.IllustrationID
+			              where refTable.ProductModelID == productModelID
+			              select illustrations).Skip(offset).Take(limit).ToListAsync();
+		}
+
 		protected async Task<List<Illustration>> Where(
 			Expression<Func<Illustration, bool>> predicate,
 			int limit = int.MaxValue,
@@ -108,5 +117,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c505e0480ee5d17a1b39cb3269f83657</Hash>
+    <Hash>f72ebad8f5550580c1cbae6c5ebbc2d6</Hash>
 </Codenesium>*/

@@ -17,10 +17,10 @@ namespace TicketingCRMNS.Api.DataAccess
 
 		Task<List<Country>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Province>> Provinces(int countryId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Province>> ProvincesByCountryId(int countryId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bfd5ee8b90b2af5b8aaa1e8c25fc1aa0</Hash>
+    <Hash>f5757f3c1af4eb01963aa9481751ee04</Hash>
 </Codenesium>*/

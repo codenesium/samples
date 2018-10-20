@@ -23,12 +23,12 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiVendorResponseModel> ByAccountNumber(string accountNumber);
 
-		Task<List<ApiProductVendorResponseModel>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductVendorResponseModel>> ProductVendorsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b24fa7119b1a4b0d27e527ab103351a1</Hash>
+    <Hash>2bde61c4701853f239991a55a287fe07</Hash>
 </Codenesium>*/

@@ -124,29 +124,22 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiRateResponseModel>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiRateResponseModel>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Rate> records = await this.TeacherSkillRepository.Rates(teacherSkillId, limit, offset);
+			List<Rate> records = await this.TeacherSkillRepository.RatesByTeacherSkillId(teacherSkillId, limit, offset);
 
 			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkills(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<TeacherTeacherSkill> records = await this.TeacherSkillRepository.TeacherTeacherSkills(teacherSkillId, limit, offset);
+			List<TeacherTeacherSkill> records = await this.TeacherSkillRepository.TeacherTeacherSkillsByTeacherSkillId(teacherSkillId, limit, offset);
 
 			return this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiTeacherSkillResponseModel>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<TeacherSkill> records = await this.TeacherSkillRepository.ByTeacherId(teacherId, limit, offset);
-
-			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>44ca87f39fd195bf38195e8c682fddb5</Hash>
+    <Hash>de475a9439055bc7bbc51e441a75410e</Hash>
 </Codenesium>*/

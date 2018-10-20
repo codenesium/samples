@@ -38,7 +38,6 @@ namespace TwitterNS.Api.DataAccess
 		public int? FromUserId { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -66,5 +65,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>831feff2ea99795a0c505a2b4356a52e</Hash>
+    <Hash>65becfca390aaa3f308fd2d0d3abcb1d</Hash>
 </Codenesium>*/

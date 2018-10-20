@@ -33,9 +33,7 @@ namespace AdventureWorksNS.Api.Contracts
 			this.UnitPrice = unitPrice;
 			this.UnitPriceDiscount = unitPriceDiscount;
 
-			this.ProductIDEntity = nameof(ApiResponse.SpecialOfferProducts);
 			this.SalesOrderIDEntity = nameof(ApiResponse.SalesOrderHeaders);
-			this.SpecialOfferIDEntity = nameof(ApiResponse.SpecialOfferProducts);
 		}
 
 		[Required]
@@ -55,9 +53,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public int ProductID { get; private set; }
 
 		[JsonProperty]
-		public string ProductIDEntity { get; set; }
-
-		[JsonProperty]
 		public Guid Rowguid { get; private set; }
 
 		[JsonProperty]
@@ -73,9 +68,6 @@ namespace AdventureWorksNS.Api.Contracts
 		public int SpecialOfferID { get; private set; }
 
 		[JsonProperty]
-		public string SpecialOfferIDEntity { get; set; }
-
-		[JsonProperty]
 		public decimal UnitPrice { get; private set; }
 
 		[JsonProperty]
@@ -84,5 +76,5 @@ namespace AdventureWorksNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>340a133bb5fe79f3748f5ba23468b827</Hash>
+    <Hash>a8a1a62edda8f60a887b01ae82a848a3</Hash>
 </Codenesium>*/

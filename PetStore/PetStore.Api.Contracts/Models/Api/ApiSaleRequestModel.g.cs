@@ -32,30 +32,30 @@ namespace PetStoreNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public decimal Amount { get; private set; }
+		public decimal Amount { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public string FirstName { get; private set; }
+		public string FirstName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string LastName { get; private set; }
+		public string LastName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int PaymentTypeId { get; private set; }
+		public int PaymentTypeId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int PetId { get; private set; }
+		public int PetId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Phone { get; private set; }
+		public string Phone { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b7328ea5342d872225350a8c0cc97ff9</Hash>
+    <Hash>1ef1bfbc5d6ef529a7228aca94c1ae42</Hash>
 </Codenesium>*/

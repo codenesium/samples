@@ -190,7 +190,7 @@ namespace FileServiceNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace FileServiceNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -245,10 +245,10 @@ namespace FileServiceNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{bucketId}/Files")]
+		[Route("{bucketId}/FilesByBucketId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiFileResponseModel>), 200)]
-		public async virtual Task<IActionResult> Files(int bucketId, int? limit, int? offset)
+		public async virtual Task<IActionResult> FilesByBucketId(int bucketId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -256,7 +256,7 @@ namespace FileServiceNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiFileResponseModel> response = await this.BucketService.Files(bucketId, query.Limit, query.Offset);
+			List<ApiFileResponseModel> response = await this.BucketService.FilesByBucketId(bucketId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -280,5 +280,5 @@ namespace FileServiceNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3b37b0faa0d492f36145822e45f86bf5</Hash>
+    <Hash>3dbdb245e27d1da45e9c0627483de2ad</Hash>
 </Codenesium>*/

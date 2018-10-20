@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ProductVendor")]
 	[Trait("Area", "Integration")]
-	public class ProductVendorIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ProductVendorIntegrationTests
 	{
-		public ProductVendorIntegrationTests(TestWebApplicationFactory fixture)
+		public ProductVendorIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ProductVendorDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiProductVendorResponseModel model = await client.ProductVendorGetAsync(1);
 
 			ApiProductVendorModelMapper mapper = new ApiProductVendorModelMapper();
 
-			UpdateResponse<ApiProductVendorResponseModel> updateResponse = await this.Client.ProductVendorUpdateAsync(model.ProductID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductVendorResponseModel> updateResponse = await client.ProductVendorUpdateAsync(model.ProductID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ProductVendorDeleteAsync(model.ProductID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiProductVendorResponseModel response = await client.ProductVendorGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ProductVendorDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ProductVendorGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiProductVendorResponseModel response = await this.Client.ProductVendorGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiProductVendorResponseModel response = await client.ProductVendorGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiProductVendorResponseModel> response = await this.Client.ProductVendorAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiProductVendorResponseModel> response = await client.ProductVendorAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiProductVendorResponseModel> CreateRecord()
+		private async Task<ApiProductVendorResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiProductVendorRequestModel();
 			model.SetProperties(2, 2, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B");
-			CreateResponse<ApiProductVendorResponseModel> result = await this.Client.ProductVendorCreateAsync(model);
+			CreateResponse<ApiProductVendorResponseModel> result = await client.ProductVendorCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ProductVendorDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ff37450739cbbeb3436d52497acbe44</Hash>
+    <Hash>c19adeb931de1f323e61ff9146b94a60</Hash>
 </Codenesium>*/

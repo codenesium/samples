@@ -23,12 +23,12 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiMachineResponseModel> ByMachineGuid(Guid machineGuid);
 
-		Task<List<ApiLinkResponseModel>> Links(int assignedMachineId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiLinkResponseModel>> LinksByAssignedMachineId(int assignedMachineId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiMachineResponseModel>> ByTeamId(int machineId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5787257abf029bf2468fb1de30e6807b</Hash>
+    <Hash>82102f0b4c1d8f06a2368ce597618daa</Hash>
 </Codenesium>*/

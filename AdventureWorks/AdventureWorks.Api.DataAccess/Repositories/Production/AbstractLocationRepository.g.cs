@@ -81,12 +81,12 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<ProductInventory>> ProductInventories(short locationID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductInventory>> ProductInventoriesByLocationID(short locationID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductInventory>().Where(x => x.LocationID == locationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductInventory>();
 		}
 
-		public async virtual Task<List<WorkOrderRouting>> WorkOrderRoutings(short locationID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<WorkOrderRouting>> WorkOrderRoutingsByLocationID(short locationID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<WorkOrderRouting>().Where(x => x.LocationID == locationID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrderRouting>();
 		}
@@ -123,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1f26ecc5b45efc3f6d239e312c9b7bad</Hash>
+    <Hash>5b401c2e98420898266e357f132c13d7</Hash>
 </Codenesium>*/

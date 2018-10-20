@@ -15,54 +15,82 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "City")]
 	[Trait("Area", "Integration")]
-	public class CityIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CityIntegrationTests
 	{
-		public CityIntegrationTests(TestWebApplicationFactory fixture)
+		public CityIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CityDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCityResponseModel model = await client.CityGetAsync(1);
 
 			ApiCityModelMapper mapper = new ApiCityModelMapper();
 
-			UpdateResponse<ApiCityResponseModel> updateResponse = await this.Client.CityUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCityResponseModel> updateResponse = await client.CityUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CityDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCityResponseModel response = await client.CityGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CityDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CityGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCityResponseModel response = await this.Client.CityGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCityResponseModel response = await client.CityGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCityResponseModel> response = await this.Client.CityAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCityResponseModel> response = await client.CityAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCityResponseModel> CreateRecord()
+		private async Task<ApiCityResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCityRequestModel();
 			model.SetProperties("B", 1);
-			CreateResponse<ApiCityResponseModel> result = await this.Client.CityCreateAsync(model);
+			CreateResponse<ApiCityResponseModel> result = await client.CityCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CityDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0f4b6275139fb45bc150dc9010312e24</Hash>
+    <Hash>364ccbce3d74f2dbfe268325327d7c7d</Hash>
 </Codenesium>*/

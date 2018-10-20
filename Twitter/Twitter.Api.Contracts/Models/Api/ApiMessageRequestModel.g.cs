@@ -23,13 +23,13 @@ namespace TwitterNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string Content { get; private set; }
+		public string Content { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? SenderUserId { get; private set; }
+		public int? SenderUserId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>03e80c60ba5b33ecb36a161320c9e134</Hash>
+    <Hash>5ea3bc51bc3506dc74e6f5dd26bc3261</Hash>
 </Codenesium>*/

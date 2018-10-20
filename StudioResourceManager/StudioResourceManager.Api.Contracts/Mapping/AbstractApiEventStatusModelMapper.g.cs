@@ -13,7 +13,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var response = new ApiEventStatusResponseModel();
 			response.SetProperties(id,
-			                       request.Name);
+			                       request.Name,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -22,7 +23,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var request = new ApiEventStatusRequestModel();
 			request.SetProperties(
-				response.Name);
+				response.Name,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -30,11 +32,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var patch = new JsonPatchDocument<ApiEventStatusRequestModel>();
 			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d0b8da97e890551b97b6fd6a7dc0231</Hash>
+    <Hash>8108b6f831af5d828744f4b1009e2866</Hash>
 </Codenesium>*/

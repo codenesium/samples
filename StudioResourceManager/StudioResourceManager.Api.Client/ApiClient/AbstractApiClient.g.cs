@@ -138,16 +138,16 @@ namespace StudioResourceManagerNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiEventStudentResponseModel>> EventStudents(int eventId)
+		public virtual async Task<List<ApiEventStudentResponseModel>> EventStudentsByEventId(int eventId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/EventStudents/{eventId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/EventStudentsByEventId/{eventId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiEventStudentResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiEventTeacherResponseModel>> EventTeachers(int eventId)
+		public virtual async Task<List<ApiEventTeacherResponseModel>> EventTeachersByEventId(int eventId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/EventTeachers/{eventId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Events/EventTeachersByEventId/{eventId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiEventTeacherResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -194,9 +194,9 @@ namespace StudioResourceManagerNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiEventStatusResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiEventResponseModel>> Events(int eventStatusId)
+		public virtual async Task<List<ApiEventResponseModel>> EventsByEventStatusId(int eventStatusId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EventStatuses/Events/{eventStatusId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/EventStatuses/EventsByEventStatusId/{eventStatusId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -327,9 +327,9 @@ namespace StudioResourceManagerNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiFamilyResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiStudentResponseModel>> Students(int familyId)
+		public virtual async Task<List<ApiStudentResponseModel>> StudentsByFamilyId(int familyId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families/Students/{familyId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Families/StudentsByFamilyId/{familyId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiStudentResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -418,9 +418,9 @@ namespace StudioResourceManagerNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiSpaceResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeatures(int spaceId)
+		public virtual async Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesBySpaceId(int spaceId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Spaces/SpaceSpaceFeatures/{spaceId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Spaces/SpaceSpaceFeaturesBySpaceId/{spaceId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiSpaceSpaceFeatureResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -465,6 +465,13 @@ namespace StudioResourceManagerNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceFeatures?limit={limit}&offset={offset}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiSpaceFeatureResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesBySpaceFeatureId(int spaceFeatureId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/SpaceFeatures/SpaceSpaceFeaturesBySpaceFeatureId/{spaceFeatureId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiSpaceSpaceFeatureResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeatureBulkInsertAsync(List<ApiSpaceSpaceFeatureRequestModel> items)
@@ -551,6 +558,13 @@ namespace StudioResourceManagerNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiStudentResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<List<ApiEventStudentResponseModel>> EventStudentsByStudentId(int studentId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Students/EventStudentsByStudentId/{studentId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiEventStudentResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiStudioResponseModel>> StudioBulkInsertAsync(List<ApiStudioRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Studios/BulkInsert", items).ConfigureAwait(false);
@@ -635,16 +649,23 @@ namespace StudioResourceManagerNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTeacherResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiRateResponseModel>> Rates(int teacherId)
+		public virtual async Task<List<ApiEventTeacherResponseModel>> EventTeachersByTeacherId(int teacherId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers/Rates/{teacherId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers/EventTeachersByTeacherId/{teacherId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiEventTeacherResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiRateResponseModel>> RatesByTeacherId(int teacherId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers/RatesByTeacherId/{teacherId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiRateResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkills(int teacherId)
+		public virtual async Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTeacherId(int teacherId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers/TeacherTeacherSkills/{teacherId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teachers/TeacherTeacherSkillsByTeacherId/{teacherId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTeacherTeacherSkillResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -689,6 +710,20 @@ namespace StudioResourceManagerNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherSkills?limit={limit}&offset={offset}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTeacherSkillResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiRateResponseModel>> RatesByTeacherSkillId(int teacherSkillId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherSkills/RatesByTeacherSkillId/{teacherSkillId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiRateResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTeacherSkillId(int teacherSkillId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TeacherSkills/TeacherTeacherSkillsByTeacherSkillId/{teacherSkillId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiTeacherTeacherSkillResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillBulkInsertAsync(List<ApiTeacherTeacherSkillRequestModel> items)
@@ -817,16 +852,23 @@ namespace StudioResourceManagerNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiAdminResponseModel>> Admins(int userId)
+		public virtual async Task<List<ApiAdminResponseModel>> AdminsByUserId(int userId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/Admins/{userId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/AdminsByUserId/{userId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiAdminResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTeacherResponseModel>> Teachers(int userId)
+		public virtual async Task<List<ApiStudentResponseModel>> StudentsByUserId(int userId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/Teachers/{userId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/StudentsByUserId/{userId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiStudentResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiTeacherResponseModel>> TeachersByUserId(int userId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/TeachersByUserId/{userId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTeacherResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -848,5 +890,5 @@ namespace StudioResourceManagerNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>cb98e0cda3d68ba07406c7825ad06359</Hash>
+    <Hash>5d66a684e71a528656597fbdc4b5c62c</Hash>
 </Codenesium>*/

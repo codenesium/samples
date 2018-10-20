@@ -67,91 +67,91 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string @Class { get; private set; }
+		public string @Class { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Color { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public int DaysToManufacture { get; private set; }
-
-		[JsonProperty]
-		public DateTime? DiscontinuedDate { get; private set; }
+		public string Color { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool FinishedGoodsFlag { get; private set; }
+		public int DaysToManufacture { get; private set; } = default(int);
+
+		[JsonProperty]
+		public DateTime? DiscontinuedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public decimal ListPrice { get; private set; }
+		public bool FinishedGoodsFlag { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public bool MakeFlag { get; private set; }
+		public decimal ListPrice { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public bool MakeFlag { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
-
-		[JsonProperty]
-		public string ProductLine { get; private set; }
-
-		[JsonProperty]
-		public int? ProductModelID { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string ProductNumber { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? ProductSubcategoryID { get; private set; }
+		public string ProductLine { get; private set; } = default(string);
 
-		[Required]
 		[JsonProperty]
-		public short ReorderPoint { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public int? ProductModelID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public short SafetyStockLevel { get; private set; }
+		public string ProductNumber { get; private set; } = default(string);
 
 		[JsonProperty]
-		public DateTime? SellEndDate { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime SellStartDate { get; private set; }
-
-		[JsonProperty]
-		public string Size { get; private set; }
-
-		[JsonProperty]
-		public string SizeUnitMeasureCode { get; private set; }
+		public int? ProductSubcategoryID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public decimal StandardCost { get; private set; }
+		public short ReorderPoint { get; private set; } = default(short);
+
+		[Required]
+		[JsonProperty]
+		public Guid Rowguid { get; private set; } = default(Guid);
+
+		[Required]
+		[JsonProperty]
+		public short SafetyStockLevel { get; private set; } = default(short);
 
 		[JsonProperty]
-		public string Style { get; private set; }
+		public DateTime? SellEndDate { get; private set; } = default(DateTime);
+
+		[Required]
+		[JsonProperty]
+		public DateTime SellStartDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public double? Weight { get; private set; }
+		public string Size { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string WeightUnitMeasureCode { get; private set; }
+		public string SizeUnitMeasureCode { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public decimal StandardCost { get; private set; } = default(decimal);
+
+		[JsonProperty]
+		public string Style { get; private set; } = default(string);
+
+		[JsonProperty]
+		public double? Weight { get; private set; } = default(double);
+
+		[JsonProperty]
+		public string WeightUnitMeasureCode { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7b66f72ba1eb1b71976b059f2b6be866</Hash>
+    <Hash>fc52d7f40451b191d25b1809c301cfab</Hash>
 </Codenesium>*/

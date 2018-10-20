@@ -116,9 +116,9 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiPipelineStepResponseModel>> PipelineSteps(int pipelineStepStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineStepResponseModel>> PipelineStepsByPipelineStepStatusId(int pipelineStepStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PipelineStep> records = await this.PipelineStepStatuRepository.PipelineSteps(pipelineStepStatusId, limit, offset);
+			List<PipelineStep> records = await this.PipelineStepStatuRepository.PipelineStepsByPipelineStepStatusId(pipelineStepStatusId, limit, offset);
 
 			return this.BolPipelineStepMapper.MapBOToModel(this.DalPipelineStepMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>85d4ffc857586540810e3e6ca8fad005</Hash>
+    <Hash>a31d1b944d7eaa0afd0508db25704261</Hash>
 </Codenesium>*/

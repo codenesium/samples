@@ -15,54 +15,82 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "TicketStatu")]
 	[Trait("Area", "Integration")]
-	public class TicketStatuIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TicketStatuIntegrationTests
 	{
-		public TicketStatuIntegrationTests(TestWebApplicationFactory fixture)
+		public TicketStatuIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TicketStatuDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTicketStatuResponseModel model = await client.TicketStatuGetAsync(1);
 
 			ApiTicketStatuModelMapper mapper = new ApiTicketStatuModelMapper();
 
-			UpdateResponse<ApiTicketStatuResponseModel> updateResponse = await this.Client.TicketStatuUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTicketStatuResponseModel> updateResponse = await client.TicketStatuUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TicketStatuDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTicketStatuResponseModel response = await client.TicketStatuGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TicketStatuDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TicketStatuGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTicketStatuResponseModel response = await this.Client.TicketStatuGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTicketStatuResponseModel response = await client.TicketStatuGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTicketStatuResponseModel> response = await this.Client.TicketStatuAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTicketStatuResponseModel> response = await client.TicketStatuAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTicketStatuResponseModel> CreateRecord()
+		private async Task<ApiTicketStatuResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTicketStatuRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiTicketStatuResponseModel> result = await this.Client.TicketStatuCreateAsync(model);
+			CreateResponse<ApiTicketStatuResponseModel> result = await client.TicketStatuCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TicketStatuDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f39c7bd50ac1da457ecca1ca672a1ef4</Hash>
+    <Hash>74060e2fc8f12b934f4ffc1303bb41ef</Hash>
 </Codenesium>*/

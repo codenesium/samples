@@ -179,12 +179,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void SalesOrderHeaders_Exists()
+		public async void SalesOrderHeadersBySalesPersonID_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
 			var records = new List<SalesOrderHeader>();
 			records.Add(new SalesOrderHeader());
-			mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersBySalesPersonID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesPersonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Object,
@@ -199,17 +199,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
 			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
 
-			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default(int));
+			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeadersBySalesPersonID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesOrderHeadersBySalesPersonID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SalesOrderHeaders_Not_Exists()
+		public async void SalesOrderHeadersBySalesPersonID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
+			mock.RepositoryMock.Setup(x => x.SalesOrderHeadersBySalesPersonID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesOrderHeader>>(new List<SalesOrderHeader>()));
 			var service = new SalesPersonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Object,
@@ -224,19 +224,19 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
 			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
 
-			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeaders(default(int));
+			List<ApiSalesOrderHeaderResponseModel> response = await service.SalesOrderHeadersBySalesPersonID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesOrderHeadersBySalesPersonID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SalesPersonQuotaHistories_Exists()
+		public async void SalesPersonQuotaHistoriesByBusinessEntityID_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
 			var records = new List<SalesPersonQuotaHistory>();
 			records.Add(new SalesPersonQuotaHistory());
-			mock.RepositoryMock.Setup(x => x.SalesPersonQuotaHistories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesPersonQuotaHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesPersonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Object,
@@ -251,17 +251,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
 			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
 
-			List<ApiSalesPersonQuotaHistoryResponseModel> response = await service.SalesPersonQuotaHistories(default(int));
+			List<ApiSalesPersonQuotaHistoryResponseModel> response = await service.SalesPersonQuotaHistoriesByBusinessEntityID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesPersonQuotaHistories(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesPersonQuotaHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SalesPersonQuotaHistories_Not_Exists()
+		public async void SalesPersonQuotaHistoriesByBusinessEntityID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.SalesPersonQuotaHistories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesPersonQuotaHistory>>(new List<SalesPersonQuotaHistory>()));
+			mock.RepositoryMock.Setup(x => x.SalesPersonQuotaHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesPersonQuotaHistory>>(new List<SalesPersonQuotaHistory>()));
 			var service = new SalesPersonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Object,
@@ -276,19 +276,19 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
 			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
 
-			List<ApiSalesPersonQuotaHistoryResponseModel> response = await service.SalesPersonQuotaHistories(default(int));
+			List<ApiSalesPersonQuotaHistoryResponseModel> response = await service.SalesPersonQuotaHistoriesByBusinessEntityID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesPersonQuotaHistories(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesPersonQuotaHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SalesTerritoryHistories_Exists()
+		public async void SalesTerritoryHistoriesByBusinessEntityID_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
 			var records = new List<SalesTerritoryHistory>();
 			records.Add(new SalesTerritoryHistory());
-			mock.RepositoryMock.Setup(x => x.SalesTerritoryHistories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesTerritoryHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesPersonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Object,
@@ -303,17 +303,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
 			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
 
-			List<ApiSalesTerritoryHistoryResponseModel> response = await service.SalesTerritoryHistories(default(int));
+			List<ApiSalesTerritoryHistoryResponseModel> response = await service.SalesTerritoryHistoriesByBusinessEntityID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesTerritoryHistories(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesTerritoryHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void SalesTerritoryHistories_Not_Exists()
+		public async void SalesTerritoryHistoriesByBusinessEntityID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.SalesTerritoryHistories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesTerritoryHistory>>(new List<SalesTerritoryHistory>()));
+			mock.RepositoryMock.Setup(x => x.SalesTerritoryHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SalesTerritoryHistory>>(new List<SalesTerritoryHistory>()));
 			var service = new SalesPersonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Object,
@@ -328,19 +328,19 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
 			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
 
-			List<ApiSalesTerritoryHistoryResponseModel> response = await service.SalesTerritoryHistories(default(int));
+			List<ApiSalesTerritoryHistoryResponseModel> response = await service.SalesTerritoryHistoriesByBusinessEntityID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SalesTerritoryHistories(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesTerritoryHistoriesByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Stores_Exists()
+		public async void StoresBySalesPersonID_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
 			var records = new List<Store>();
 			records.Add(new Store());
-			mock.RepositoryMock.Setup(x => x.Stores(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.StoresBySalesPersonID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new SalesPersonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Object,
@@ -355,17 +355,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
 			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
 
-			List<ApiStoreResponseModel> response = await service.Stores(default(int));
+			List<ApiStoreResponseModel> response = await service.StoresBySalesPersonID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Stores(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.StoresBySalesPersonID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Stores_Not_Exists()
+		public async void StoresBySalesPersonID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ISalesPersonRepository>();
-			mock.RepositoryMock.Setup(x => x.Stores(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Store>>(new List<Store>()));
+			mock.RepositoryMock.Setup(x => x.StoresBySalesPersonID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Store>>(new List<Store>()));
 			var service = new SalesPersonService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.SalesPersonModelValidatorMock.Object,
@@ -380,14 +380,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLStoreMapperMock,
 			                                     mock.DALMapperMockFactory.DALStoreMapperMock);
 
-			List<ApiStoreResponseModel> response = await service.Stores(default(int));
+			List<ApiStoreResponseModel> response = await service.StoresBySalesPersonID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Stores(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.StoresBySalesPersonID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7f0dec5c2140732349c2526658aa14c2</Hash>
+    <Hash>f5bec7921c2cd7b0f7d5be1ae53e9acf</Hash>
 </Codenesium>*/

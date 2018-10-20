@@ -17,19 +17,20 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			decimal amountPerMinute,
 			int id,
 			int teacherId,
-			int teacherSkillId)
+			int teacherSkillId,
+			bool isDeleted)
 		{
 			this.AmountPerMinute = amountPerMinute;
 			this.Id = id;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Column("amountPerMinute")]
 		public decimal AmountPerMinute { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -38,6 +39,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		[Column("teacherSkillId")]
 		public int TeacherSkillId { get; private set; }
+
+		[Column("isDeleted")]
+		public bool IsDeleted { get; private set; }
 
 		[ForeignKey("TeacherId")]
 		public virtual Teacher TeacherNavigation { get; private set; }
@@ -48,5 +52,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>982180975905fe813f9fefa3c58956a8</Hash>
+    <Hash>6623bc1fd6582e2c44035469db4dbe99</Hash>
 </Codenesium>*/

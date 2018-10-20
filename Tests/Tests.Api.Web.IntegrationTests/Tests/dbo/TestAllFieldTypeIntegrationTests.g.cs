@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "TestAllFieldType")]
 	[Trait("Area", "Integration")]
-	public class TestAllFieldTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TestAllFieldTypeIntegrationTests
 	{
-		public TestAllFieldTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public TestAllFieldTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TestAllFieldTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTestAllFieldTypeResponseModel model = await client.TestAllFieldTypeGetAsync(1);
 
 			ApiTestAllFieldTypeModelMapper mapper = new ApiTestAllFieldTypeModelMapper();
 
-			UpdateResponse<ApiTestAllFieldTypeResponseModel> updateResponse = await this.Client.TestAllFieldTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTestAllFieldTypeResponseModel> updateResponse = await client.TestAllFieldTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TestAllFieldTypeDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTestAllFieldTypeResponseModel response = await client.TestAllFieldTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TestAllFieldTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TestAllFieldTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTestAllFieldTypeResponseModel response = await this.Client.TestAllFieldTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTestAllFieldTypeResponseModel response = await client.TestAllFieldTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTestAllFieldTypeResponseModel> response = await this.Client.TestAllFieldTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTestAllFieldTypeResponseModel> response = await client.TestAllFieldTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTestAllFieldTypeResponseModel> CreateRecord()
+		private async Task<ApiTestAllFieldTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTestAllFieldTypeRequestModel();
 			model.SetProperties(2, BitConverter.GetBytes(2), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), DateTimeOffset.Parse("1/1/1988 12:00:00 AM"), 2, 2, BitConverter.GetBytes(2), 2m, "B", "B", 2m, "B", 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2m, "B", TimeSpan.Parse("1"), BitConverter.GetBytes(2), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), BitConverter.GetBytes(2), "B", "B");
-			CreateResponse<ApiTestAllFieldTypeResponseModel> result = await this.Client.TestAllFieldTypeCreateAsync(model);
+			CreateResponse<ApiTestAllFieldTypeResponseModel> result = await client.TestAllFieldTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TestAllFieldTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>980ee2e795f145e17a9b303b405384f8</Hash>
+    <Hash>ebae398572c124b1c25b3755137991ff</Hash>
 </Codenesium>*/

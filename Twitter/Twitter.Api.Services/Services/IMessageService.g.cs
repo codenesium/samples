@@ -23,10 +23,10 @@ namespace TwitterNS.Api.Services
 
 		Task<List<ApiMessageResponseModel>> BySenderUserId(int? senderUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiMessengerResponseModel>> Messengers(int messageId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMessengerResponseModel>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b908cf84bb6a5e6e1dd314bf6e999330</Hash>
+    <Hash>abd003227543d71d251877646c7356ca</Hash>
 </Codenesium>*/

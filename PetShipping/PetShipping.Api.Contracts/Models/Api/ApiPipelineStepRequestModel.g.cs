@@ -26,18 +26,18 @@ namespace PetShippingNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int PipelineStepStatusId { get; private set; }
+		public int PipelineStepStatusId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int ShipperId { get; private set; }
+		public int ShipperId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4b7cef6449c7b350b82f07b183ed62ef</Hash>
+    <Hash>beeb1e29db9b7e92a86b8e98aa558cd0</Hash>
 </Codenesium>*/

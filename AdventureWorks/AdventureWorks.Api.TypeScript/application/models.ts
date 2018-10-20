@@ -2464,13 +2464,11 @@ lineTotal:number;
 modifiedDate:string;
 orderQty:number;
 productID:number;
-productIDEntity:number;
 rowguid:string;
 salesOrderDetailID:number;
 salesOrderID:number;
 salesOrderIDEntity:number;
 specialOfferID:number;
-specialOfferIDEntity:number;
 unitPrice:number;
 unitPriceDiscount:number;
 
@@ -2498,13 +2496,11 @@ lineTotal:number;
 modifiedDate:string;
 orderQty:number;
 productID:number;
-productIDEntity:number;
 rowguid:string;
 salesOrderDetailID:number;
 salesOrderID:number;
 salesOrderIDEntity:number;
 specialOfferID:number;
-specialOfferIDEntity:number;
 unitPrice:number;
 unitPriceDiscount:number;
 
@@ -3037,7 +3033,6 @@ this.type = '';
 productID:number;
 rowguid:string;
 specialOfferID:number;
-specialOfferIDEntity:number;
 
 	
 				constructor() {
@@ -3055,7 +3050,6 @@ this.specialOfferID = 0;
 productID:number;
 rowguid:string;
 specialOfferID:number;
-specialOfferIDEntity:number;
 
 	
 				constructor() {

@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "TransactionHistoryArchive")]
 	[Trait("Area", "Integration")]
-	public class TransactionHistoryArchiveIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TransactionHistoryArchiveIntegrationTests
 	{
-		public TransactionHistoryArchiveIntegrationTests(TestWebApplicationFactory fixture)
+		public TransactionHistoryArchiveIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TransactionHistoryArchiveDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTransactionHistoryArchiveResponseModel model = await client.TransactionHistoryArchiveGetAsync(1);
 
 			ApiTransactionHistoryArchiveModelMapper mapper = new ApiTransactionHistoryArchiveModelMapper();
 
-			UpdateResponse<ApiTransactionHistoryArchiveResponseModel> updateResponse = await this.Client.TransactionHistoryArchiveUpdateAsync(model.TransactionID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTransactionHistoryArchiveResponseModel> updateResponse = await client.TransactionHistoryArchiveUpdateAsync(model.TransactionID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TransactionHistoryArchiveDeleteAsync(model.TransactionID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTransactionHistoryArchiveResponseModel response = await client.TransactionHistoryArchiveGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TransactionHistoryArchiveDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TransactionHistoryArchiveGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTransactionHistoryArchiveResponseModel response = await this.Client.TransactionHistoryArchiveGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTransactionHistoryArchiveResponseModel response = await client.TransactionHistoryArchiveGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTransactionHistoryArchiveResponseModel> response = await this.Client.TransactionHistoryArchiveAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTransactionHistoryArchiveResponseModel> response = await client.TransactionHistoryArchiveAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTransactionHistoryArchiveResponseModel> CreateRecord()
+		private async Task<ApiTransactionHistoryArchiveResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTransactionHistoryArchiveRequestModel();
 			model.SetProperties(2m, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await this.Client.TransactionHistoryArchiveCreateAsync(model);
+			CreateResponse<ApiTransactionHistoryArchiveResponseModel> result = await client.TransactionHistoryArchiveCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TransactionHistoryArchiveDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>28a61f0f4549fae621420b494797e910</Hash>
+    <Hash>685337412368a5b57a55365841c55e54</Hash>
 </Codenesium>*/

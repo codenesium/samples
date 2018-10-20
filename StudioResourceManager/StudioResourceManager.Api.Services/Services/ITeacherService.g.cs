@@ -21,18 +21,14 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<List<ApiTeacherResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiEventTeacherResponseModel>> EventTeachers(int teacherId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEventTeacherResponseModel>> EventTeachersByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiRateResponseModel>> Rates(int teacherId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiRateResponseModel>> RatesByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkills(int teacherId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiTeacherResponseModel>> ByEventId(int teacherId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiTeacherResponseModel>> ByTeacherSkillId(int teacherId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5deab884d8cc97e92b52b4cc5fb7d7b3</Hash>
+    <Hash>f15df23706303faa02db87e3aea85358</Hash>
 </Codenesium>*/

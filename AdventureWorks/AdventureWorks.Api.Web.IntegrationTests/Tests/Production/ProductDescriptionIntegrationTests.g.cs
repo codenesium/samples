@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ProductDescription")]
 	[Trait("Area", "Integration")]
-	public class ProductDescriptionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ProductDescriptionIntegrationTests
 	{
-		public ProductDescriptionIntegrationTests(TestWebApplicationFactory fixture)
+		public ProductDescriptionIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ProductDescriptionDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiProductDescriptionResponseModel model = await client.ProductDescriptionGetAsync(1);
 
 			ApiProductDescriptionModelMapper mapper = new ApiProductDescriptionModelMapper();
 
-			UpdateResponse<ApiProductDescriptionResponseModel> updateResponse = await this.Client.ProductDescriptionUpdateAsync(model.ProductDescriptionID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductDescriptionResponseModel> updateResponse = await client.ProductDescriptionUpdateAsync(model.ProductDescriptionID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ProductDescriptionDeleteAsync(model.ProductDescriptionID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiProductDescriptionResponseModel response = await client.ProductDescriptionGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ProductDescriptionDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ProductDescriptionGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiProductDescriptionResponseModel response = await this.Client.ProductDescriptionGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiProductDescriptionResponseModel response = await client.ProductDescriptionGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiProductDescriptionResponseModel> response = await this.Client.ProductDescriptionAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiProductDescriptionResponseModel> response = await client.ProductDescriptionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiProductDescriptionResponseModel> CreateRecord()
+		private async Task<ApiProductDescriptionResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiProductDescriptionRequestModel();
 			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiProductDescriptionResponseModel> result = await this.Client.ProductDescriptionCreateAsync(model);
+			CreateResponse<ApiProductDescriptionResponseModel> result = await client.ProductDescriptionCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ProductDescriptionDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>13fc17d548ddcf03f2d925e388ded5d1</Hash>
+    <Hash>ef4dc08ae70efc7c126accc624de9d10</Hash>
 </Codenesium>*/

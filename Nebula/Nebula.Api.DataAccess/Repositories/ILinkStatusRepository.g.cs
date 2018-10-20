@@ -19,10 +19,10 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<LinkStatus> ByName(string name);
 
-		Task<List<Link>> Links(int linkStatusId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Link>> LinksByLinkStatusId(int linkStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>950312acec31d013668c054e6aff6acd</Hash>
+    <Hash>97e24007f3cb040184444c7aef31946f</Hash>
 </Codenesium>*/

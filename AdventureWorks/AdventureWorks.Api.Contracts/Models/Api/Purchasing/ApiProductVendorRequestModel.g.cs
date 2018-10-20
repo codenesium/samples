@@ -40,43 +40,43 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int AverageLeadTime { get; private set; }
+		public int AverageLeadTime { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int BusinessEntityID { get; private set; }
+		public int BusinessEntityID { get; private set; } = default(int);
 
 		[JsonProperty]
-		public decimal? LastReceiptCost { get; private set; }
+		public decimal? LastReceiptCost { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public DateTime? LastReceiptDate { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public int MaxOrderQty { get; private set; }
+		public DateTime? LastReceiptDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int MinOrderQty { get; private set; }
+		public int MaxOrderQty { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
-
-		[JsonProperty]
-		public int? OnOrderQty { get; private set; }
+		public int MinOrderQty { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public decimal StandardPrice { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
+
+		[JsonProperty]
+		public int? OnOrderQty { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string UnitMeasureCode { get; private set; }
+		public decimal StandardPrice { get; private set; } = default(decimal);
+
+		[Required]
+		[JsonProperty]
+		public string UnitMeasureCode { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e288b2c2ce2fe9fd74cf2904c36a65b3</Hash>
+    <Hash>88b5ebd772cb2e252e49974e047900c5</Hash>
 </Codenesium>*/

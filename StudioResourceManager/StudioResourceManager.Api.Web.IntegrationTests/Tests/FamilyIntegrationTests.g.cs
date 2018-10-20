@@ -15,54 +15,82 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Family")]
 	[Trait("Area", "Integration")]
-	public class FamilyIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class FamilyIntegrationTests
 	{
-		public FamilyIntegrationTests(TestWebApplicationFactory fixture)
+		public FamilyIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.FamilyDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiFamilyResponseModel model = await client.FamilyGetAsync(1);
 
 			ApiFamilyModelMapper mapper = new ApiFamilyModelMapper();
 
-			UpdateResponse<ApiFamilyResponseModel> updateResponse = await this.Client.FamilyUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiFamilyResponseModel> updateResponse = await client.FamilyUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.FamilyDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiFamilyResponseModel response = await client.FamilyGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.FamilyDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.FamilyGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiFamilyResponseModel response = await this.Client.FamilyGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiFamilyResponseModel response = await client.FamilyGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiFamilyResponseModel> response = await this.Client.FamilyAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiFamilyResponseModel> response = await client.FamilyAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiFamilyResponseModel> CreateRecord()
+		private async Task<ApiFamilyResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiFamilyRequestModel();
-			model.SetProperties("B", "B", "B", "B", "B");
-			CreateResponse<ApiFamilyResponseModel> result = await this.Client.FamilyCreateAsync(model);
+			model.SetProperties("B", "B", "B", "B", "B", true);
+			CreateResponse<ApiFamilyResponseModel> result = await client.FamilyCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.FamilyDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>2bcce3dc2776bca303c3fc7bf30876e1</Hash>
+    <Hash>bfb5446f237cfc0aa0d820ce353ec093</Hash>
 </Codenesium>*/

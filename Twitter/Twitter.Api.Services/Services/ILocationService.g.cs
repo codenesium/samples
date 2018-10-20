@@ -21,12 +21,12 @@ namespace TwitterNS.Api.Services
 
 		Task<List<ApiLocationResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTweetResponseModel>> Tweets(int locationId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTweetResponseModel>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiUserResponseModel>> Users(int locationLocationId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiUserResponseModel>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d87ce41e4cc9fd48d4294c09731bc416</Hash>
+    <Hash>16e033e89a70b2b36f523ffd62814000</Hash>
 </Codenesium>*/

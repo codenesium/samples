@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "BusinessEntityAddress")]
 	[Trait("Area", "Integration")]
-	public class BusinessEntityAddressIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class BusinessEntityAddressIntegrationTests
 	{
-		public BusinessEntityAddressIntegrationTests(TestWebApplicationFactory fixture)
+		public BusinessEntityAddressIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.BusinessEntityAddressDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiBusinessEntityAddressResponseModel model = await client.BusinessEntityAddressGetAsync(1);
 
 			ApiBusinessEntityAddressModelMapper mapper = new ApiBusinessEntityAddressModelMapper();
 
-			UpdateResponse<ApiBusinessEntityAddressResponseModel> updateResponse = await this.Client.BusinessEntityAddressUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiBusinessEntityAddressResponseModel> updateResponse = await client.BusinessEntityAddressUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.BusinessEntityAddressDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiBusinessEntityAddressResponseModel response = await client.BusinessEntityAddressGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.BusinessEntityAddressDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.BusinessEntityAddressGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiBusinessEntityAddressResponseModel response = await this.Client.BusinessEntityAddressGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiBusinessEntityAddressResponseModel response = await client.BusinessEntityAddressGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiBusinessEntityAddressResponseModel> response = await this.Client.BusinessEntityAddressAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiBusinessEntityAddressResponseModel> response = await client.BusinessEntityAddressAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiBusinessEntityAddressResponseModel> CreateRecord()
+		private async Task<ApiBusinessEntityAddressResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiBusinessEntityAddressRequestModel();
 			model.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiBusinessEntityAddressResponseModel> result = await this.Client.BusinessEntityAddressCreateAsync(model);
+			CreateResponse<ApiBusinessEntityAddressResponseModel> result = await client.BusinessEntityAddressCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.BusinessEntityAddressDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>46213bb6ffe4aa62d498e2bb92e75fc9</Hash>
+    <Hash>14f3854dd6b8e7041d2f47ed1b04148c</Hash>
 </Codenesium>*/

@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -226,10 +226,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{territoryID}/Customers")]
+		[Route("{territoryID}/CustomersByTerritoryID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCustomerResponseModel>), 200)]
-		public async virtual Task<IActionResult> Customers(int territoryID, int? limit, int? offset)
+		public async virtual Task<IActionResult> CustomersByTerritoryID(int territoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -237,16 +237,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCustomerResponseModel> response = await this.SalesTerritoryService.Customers(territoryID, query.Limit, query.Offset);
+			List<ApiCustomerResponseModel> response = await this.SalesTerritoryService.CustomersByTerritoryID(territoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{territoryID}/SalesOrderHeaders")]
+		[Route("{territoryID}/SalesOrderHeadersByTerritoryID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSalesOrderHeaderResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesOrderHeaders(int territoryID, int? limit, int? offset)
+		public async virtual Task<IActionResult> SalesOrderHeadersByTerritoryID(int territoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -254,16 +254,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesTerritoryService.SalesOrderHeaders(territoryID, query.Limit, query.Offset);
+			List<ApiSalesOrderHeaderResponseModel> response = await this.SalesTerritoryService.SalesOrderHeadersByTerritoryID(territoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{territoryID}/SalesPersons")]
+		[Route("{territoryID}/SalesPersonsByTerritoryID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSalesPersonResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesPersons(int territoryID, int? limit, int? offset)
+		public async virtual Task<IActionResult> SalesPersonsByTerritoryID(int territoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -271,16 +271,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesPersonResponseModel> response = await this.SalesTerritoryService.SalesPersons(territoryID, query.Limit, query.Offset);
+			List<ApiSalesPersonResponseModel> response = await this.SalesTerritoryService.SalesPersonsByTerritoryID(territoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{territoryID}/SalesTerritoryHistories")]
+		[Route("{territoryID}/SalesTerritoryHistoriesByTerritoryID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSalesTerritoryHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> SalesTerritoryHistories(int territoryID, int? limit, int? offset)
+		public async virtual Task<IActionResult> SalesTerritoryHistoriesByTerritoryID(int territoryID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -288,7 +288,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSalesTerritoryHistoryResponseModel> response = await this.SalesTerritoryService.SalesTerritoryHistories(territoryID, query.Limit, query.Offset);
+			List<ApiSalesTerritoryHistoryResponseModel> response = await this.SalesTerritoryService.SalesTerritoryHistoriesByTerritoryID(territoryID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -312,5 +312,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5f31e5667029787b793743052d144ab9</Hash>
+    <Hash>82df25a3c65d4cfe6cff8c17e1de05b9</Hash>
 </Codenesium>*/

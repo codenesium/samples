@@ -76,7 +76,7 @@ namespace TicketingCRMNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<Venue>> Venues(int adminId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Venue>> VenuesByAdminId(int adminId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Venue>().Where(x => x.AdminId == adminId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Venue>();
 		}
@@ -113,5 +113,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a8e135ce65331756158ca7b4dbbdb2c2</Hash>
+    <Hash>293874e4224a9f864bee0341178c0c19</Hash>
 </Codenesium>*/

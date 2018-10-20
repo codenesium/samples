@@ -190,7 +190,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace TicketingCRMNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace TicketingCRMNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{ticketStatusId}/Tickets")]
+		[Route("{ticketStatusId}/TicketsByTicketStatusId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTicketResponseModel>), 200)]
-		public async virtual Task<IActionResult> Tickets(int ticketStatusId, int? limit, int? offset)
+		public async virtual Task<IActionResult> TicketsByTicketStatusId(int ticketStatusId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTicketResponseModel> response = await this.TicketStatuService.Tickets(ticketStatusId, query.Limit, query.Offset);
+			List<ApiTicketResponseModel> response = await this.TicketStatuService.TicketsByTicketStatusId(ticketStatusId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +242,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fe3fb564d67936fd20e89cd1cd427004</Hash>
+    <Hash>26ef22afa52c0d280cc63d963009f81c</Hash>
 </Codenesium>*/

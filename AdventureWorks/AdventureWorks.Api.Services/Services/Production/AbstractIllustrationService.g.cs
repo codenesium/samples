@@ -107,9 +107,16 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiIllustrationResponseModel>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Illustration> records = await this.IllustrationRepository.ByProductModelID(productModelID, limit, offset);
+
+			return this.BolIllustrationMapper.MapBOToModel(this.DalIllustrationMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>81874d40c16f9348001fc86bfb1dd788</Hash>
+    <Hash>c9cceff432919cbf1ec9e8a0f962c070</Hash>
 </Codenesium>*/

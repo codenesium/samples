@@ -143,12 +143,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Venues_Exists()
+		public async void VenuesByAdminId_Exists()
 		{
 			var mock = new ServiceMockFacade<IAdminRepository>();
 			var records = new List<Venue>();
 			records.Add(new Venue());
-			mock.RepositoryMock.Setup(x => x.Venues(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.VenuesByAdminId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new AdminService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
@@ -157,17 +157,17 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.Venues(default(int));
+			List<ApiVenueResponseModel> response = await service.VenuesByAdminId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Venues(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.VenuesByAdminId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Venues_Not_Exists()
+		public async void VenuesByAdminId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IAdminRepository>();
-			mock.RepositoryMock.Setup(x => x.Venues(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
+			mock.RepositoryMock.Setup(x => x.VenuesByAdminId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Venue>>(new List<Venue>()));
 			var service = new AdminService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.AdminModelValidatorMock.Object,
@@ -176,14 +176,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLVenueMapperMock,
 			                               mock.DALMapperMockFactory.DALVenueMapperMock);
 
-			List<ApiVenueResponseModel> response = await service.Venues(default(int));
+			List<ApiVenueResponseModel> response = await service.VenuesByAdminId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Venues(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.VenuesByAdminId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>197ca007aa4cf07c22a03ddb7ea717d9</Hash>
+    <Hash>c6de97acbb159477590f6b36f7642822</Hash>
 </Codenesium>*/

@@ -38,40 +38,40 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime DueDate { get; private set; }
+		public DateTime DueDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public DateTime? EndDate { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime? EndDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int OrderQty { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; }
+		public int OrderQty { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public short ScrappedQty { get; private set; }
-
-		[JsonProperty]
-		public short? ScrapReasonID { get; private set; }
+		public int ProductID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime StartDate { get; private set; }
+		public short ScrappedQty { get; private set; } = default(short);
+
+		[JsonProperty]
+		public short? ScrapReasonID { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public int StockedQty { get; private set; }
+		public DateTime StartDate { get; private set; } = default(DateTime);
+
+		[Required]
+		[JsonProperty]
+		public int StockedQty { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>48fdf1b8cb181a4cb36c5e6132e18b5b</Hash>
+    <Hash>232c69e858c755d8764b61fc36ce7e2c</Hash>
 </Codenesium>*/

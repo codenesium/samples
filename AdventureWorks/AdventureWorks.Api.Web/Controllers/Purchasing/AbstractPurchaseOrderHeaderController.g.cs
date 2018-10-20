@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -241,10 +241,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{purchaseOrderID}/PurchaseOrderDetails")]
+		[Route("{purchaseOrderID}/PurchaseOrderDetailsByPurchaseOrderID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPurchaseOrderDetailResponseModel>), 200)]
-		public async virtual Task<IActionResult> PurchaseOrderDetails(int purchaseOrderID, int? limit, int? offset)
+		public async virtual Task<IActionResult> PurchaseOrderDetailsByPurchaseOrderID(int purchaseOrderID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,7 +252,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderHeaderService.PurchaseOrderDetails(purchaseOrderID, query.Limit, query.Offset);
+			List<ApiPurchaseOrderDetailResponseModel> response = await this.PurchaseOrderHeaderService.PurchaseOrderDetailsByPurchaseOrderID(purchaseOrderID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -276,5 +276,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>54d50206b2a0c4ba03ddecedadfd3569</Hash>
+    <Hash>e750a6e00d3a1b89c4eb75b9fd22dbb3</Hash>
 </Codenesium>*/

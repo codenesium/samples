@@ -18,7 +18,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudioMapper();
 			ApiStudioRequestModel model = new ApiStudioRequestModel();
-			model.SetProperties("A", "A", "A", "A", "A", "A", "A");
+			model.SetProperties("A", "A", "A", "A", "A", "A", "A", true);
 			BOStudio response = mapper.MapModelToBO(1, model);
 
 			response.Address1.Should().Be("A");
@@ -28,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -35,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudioMapper();
 			BOStudio bo = new BOStudio();
-			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
+			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A", true);
 			ApiStudioResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Address1.Should().Be("A");
@@ -46,6 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -53,7 +55,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudioMapper();
 			BOStudio bo = new BOStudio();
-			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
+			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A", true);
 			List<ApiStudioResponseModel> response = mapper.MapBOToModel(new List<BOStudio>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -62,5 +64,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a958e748e9b47946c8b41fef1094b726</Hash>
+    <Hash>5197ec97f7e6384e4232d2c6c4fa60b0</Hash>
 </Codenesium>*/

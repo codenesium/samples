@@ -38,7 +38,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public DateTime CurrencyRateDate { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("CurrencyRateID")]
 		public int CurrencyRateID { get; private set; }
 
@@ -65,5 +64,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a1e81036c1149d700d64853881dc3e1e</Hash>
+    <Hash>371ccd4af29cfc0dec8aecf273ac87fa</Hash>
 </Codenesium>*/

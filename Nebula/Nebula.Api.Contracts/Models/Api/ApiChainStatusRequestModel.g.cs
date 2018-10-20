@@ -22,10 +22,10 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1a47bcab90fd2ba62d8c6d7d94b6e671</Hash>
+    <Hash>c732f2ff7206d51ec2e55fa3c7462a1f</Hash>
 </Codenesium>*/

@@ -28,22 +28,22 @@ namespace PetShippingNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int ClientId { get; private set; }
+		public int ClientId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime DateCreated { get; private set; }
+		public DateTime DateCreated { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int EmployeeId { get; private set; }
+		public int EmployeeId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Note { get; private set; }
+		public string Note { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5282298946d6372f7f2918a501bb4db</Hash>
+    <Hash>a37feef60f7b8ceb711fd202a152c993</Hash>
 </Codenesium>*/

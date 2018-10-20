@@ -299,8 +299,8 @@ namespace NebulaNS.Api.Web.Tests
 
 			IActionResult response = await controller.Delete(default(long));
 
-			response.Should().BeOfType<NoContentResult>();
-			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<long>()));
 		}
 
@@ -338,5 +338,5 @@ namespace NebulaNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>b6f1af78e12441367be633d5ff83cbe8</Hash>
+    <Hash>c9569123c1c6921e94efb241b0c33def</Hash>
 </Codenesium>*/

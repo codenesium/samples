@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Culture>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCulturesByCultureID(string cultureID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(x => x.CultureID == cultureID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0f10f9ab6bbd4c14586e840e8f09c0f7</Hash>
+    <Hash>113a290450906a7238a7225609193569</Hash>
 </Codenesium>*/

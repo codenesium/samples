@@ -23,10 +23,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiDepartmentResponseModel> ByName(string name);
 
-		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoriesByDepartmentID(short departmentID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>229a6b6d99ba024ac4667a73a2a79764</Hash>
+    <Hash>219f7534b521ef2f412e4d8c86c38f83</Hash>
 </Codenesium>*/

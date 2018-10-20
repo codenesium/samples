@@ -21,12 +21,12 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<Store>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Customer>> Customers(int storeID, int limit = int.MaxValue, int offset = 0);
+		Task<List<Customer>> CustomersByStoreID(int storeID, int limit = int.MaxValue, int offset = 0);
 
 		Task<SalesPerson> SalesPersonBySalesPersonID(int? salesPersonID);
 	}
 }
 
 /*<Codenesium>
-    <Hash>621231c6d7a57c46dfbd8cc39b33606c</Hash>
+    <Hash>31bbcb66d4d95de308804f74e68def2f</Hash>
 </Codenesium>*/

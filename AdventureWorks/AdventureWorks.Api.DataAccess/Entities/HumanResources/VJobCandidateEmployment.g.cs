@@ -71,12 +71,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("Emp.StartDate")]
 		public DateTime? EmpStartDate { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("JobCandidateID")]
 		public int JobCandidateID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>d64a24994b34a604b1c7a9091e852f17</Hash>
+    <Hash>8640fff655d6767372ac634915612a54</Hash>
 </Codenesium>*/

@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiProductResponseModel>> Products(int productSubcategoryID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductResponseModel>> ProductsByProductSubcategoryID(int productSubcategoryID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Product> records = await this.ProductSubcategoryRepository.Products(productSubcategoryID, limit, offset);
+			List<Product> records = await this.ProductSubcategoryRepository.ProductsByProductSubcategoryID(productSubcategoryID, limit, offset);
 
 			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>aed0b63708950586cf18636e418995b9</Hash>
+    <Hash>4dacea871e89e7ecfdd136ba98a38c69</Hash>
 </Codenesium>*/

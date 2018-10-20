@@ -15,54 +15,82 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PostLink")]
 	[Trait("Area", "Integration")]
-	public class PostLinkIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PostLinkIntegrationTests
 	{
-		public PostLinkIntegrationTests(TestWebApplicationFactory fixture)
+		public PostLinkIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PostLinkDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPostLinkResponseModel model = await client.PostLinkGetAsync(1);
 
 			ApiPostLinkModelMapper mapper = new ApiPostLinkModelMapper();
 
-			UpdateResponse<ApiPostLinkResponseModel> updateResponse = await this.Client.PostLinkUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPostLinkResponseModel> updateResponse = await client.PostLinkUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PostLinkDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPostLinkResponseModel response = await client.PostLinkGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PostLinkDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PostLinkGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPostLinkResponseModel response = await this.Client.PostLinkGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPostLinkResponseModel response = await client.PostLinkGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPostLinkResponseModel> response = await this.Client.PostLinkAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPostLinkResponseModel> response = await client.PostLinkAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPostLinkResponseModel> CreateRecord()
+		private async Task<ApiPostLinkResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPostLinkRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2);
-			CreateResponse<ApiPostLinkResponseModel> result = await this.Client.PostLinkCreateAsync(model);
+			CreateResponse<ApiPostLinkResponseModel> result = await client.PostLinkCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PostLinkDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dcb9b67acbb5624b1a6c222e958d1e30</Hash>
+    <Hash>66b1569408f8ae4fb3645846efd8c14a</Hash>
 </Codenesium>*/

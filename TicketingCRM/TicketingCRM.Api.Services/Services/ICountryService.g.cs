@@ -21,10 +21,10 @@ namespace TicketingCRMNS.Api.Services
 
 		Task<List<ApiCountryResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProvinceResponseModel>> Provinces(int countryId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProvinceResponseModel>> ProvincesByCountryId(int countryId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>bdab6ce7120c1a0d04dd129cebab7124</Hash>
+    <Hash>11b8be936c0952691e11699f32dd6489</Hash>
 </Codenesium>*/

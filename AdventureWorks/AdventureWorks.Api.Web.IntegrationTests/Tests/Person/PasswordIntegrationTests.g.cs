@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Password")]
 	[Trait("Area", "Integration")]
-	public class PasswordIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PasswordIntegrationTests
 	{
-		public PasswordIntegrationTests(TestWebApplicationFactory fixture)
+		public PasswordIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PasswordDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPasswordResponseModel model = await client.PasswordGetAsync(1);
 
 			ApiPasswordModelMapper mapper = new ApiPasswordModelMapper();
 
-			UpdateResponse<ApiPasswordResponseModel> updateResponse = await this.Client.PasswordUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPasswordResponseModel> updateResponse = await client.PasswordUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PasswordDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPasswordResponseModel response = await client.PasswordGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PasswordDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PasswordGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPasswordResponseModel response = await this.Client.PasswordGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPasswordResponseModel response = await client.PasswordGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPasswordResponseModel> response = await this.Client.PasswordAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPasswordResponseModel> response = await client.PasswordAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPasswordResponseModel> CreateRecord()
+		private async Task<ApiPasswordResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPasswordRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiPasswordResponseModel> result = await this.Client.PasswordCreateAsync(model);
+			CreateResponse<ApiPasswordResponseModel> result = await client.PasswordCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PasswordDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d37c43423207973c7061f7ef41a86f6a</Hash>
+    <Hash>683bd9ab865728056cfcc94d201c1979</Hash>
 </Codenesium>*/

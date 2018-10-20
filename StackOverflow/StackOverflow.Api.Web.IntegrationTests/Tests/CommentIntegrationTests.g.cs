@@ -15,54 +15,82 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Comment")]
 	[Trait("Area", "Integration")]
-	public class CommentIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CommentIntegrationTests
 	{
-		public CommentIntegrationTests(TestWebApplicationFactory fixture)
+		public CommentIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CommentDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCommentResponseModel model = await client.CommentGetAsync(1);
 
 			ApiCommentModelMapper mapper = new ApiCommentModelMapper();
 
-			UpdateResponse<ApiCommentResponseModel> updateResponse = await this.Client.CommentUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCommentResponseModel> updateResponse = await client.CommentUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CommentDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCommentResponseModel response = await client.CommentGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CommentDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CommentGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCommentResponseModel response = await this.Client.CommentGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCommentResponseModel response = await client.CommentGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCommentResponseModel> response = await this.Client.CommentAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCommentResponseModel> response = await client.CommentAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCommentResponseModel> CreateRecord()
+		private async Task<ApiCommentResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCommentRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", 2);
-			CreateResponse<ApiCommentResponseModel> result = await this.Client.CommentCreateAsync(model);
+			CreateResponse<ApiCommentResponseModel> result = await client.CommentCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CommentDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eeb2f5e1683cdd1f08a6e17628e731b6</Hash>
+    <Hash>51a6932d3d4566609ea23d44929d76c6</Hash>
 </Codenesium>*/

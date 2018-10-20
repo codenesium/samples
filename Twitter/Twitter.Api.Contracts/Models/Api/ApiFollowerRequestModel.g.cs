@@ -32,30 +32,30 @@ namespace TwitterNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Blocked { get; private set; }
+		public string Blocked { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime DateFollowed { get; private set; }
+		public DateTime DateFollowed { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string FollowRequestStatu { get; private set; }
+		public string FollowRequestStatu { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int FollowedUserId { get; private set; }
+		public int FollowedUserId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int FollowingUserId { get; private set; }
+		public int FollowingUserId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Muted { get; private set; }
+		public string Muted { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>36108b886d9f0ae68601ca4192b63388</Hash>
+    <Hash>aaee4b35f7b20be2288831d6976190a5</Hash>
 </Codenesium>*/

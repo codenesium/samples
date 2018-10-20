@@ -10,10 +10,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 	{
 		public virtual void SetProperties(
 			int eventId,
-			int studentId)
+			int studentId,
+			bool isDeleted)
 		{
 			this.EventId = eventId;
 			this.StudentId = studentId;
+			this.IsDeleted = isDeleted;
 
 			this.EventIdEntity = nameof(ApiResponse.Events);
 			this.StudentIdEntity = nameof(ApiResponse.Students);
@@ -30,9 +32,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[JsonProperty]
 		public string StudentIdEntity { get; set; }
+
+		[JsonProperty]
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a6924ca9b9477c634319e34a2612b6c9</Hash>
+    <Hash>4975b312b6e05aaf517d3de0c12786e9</Hash>
 </Codenesium>*/

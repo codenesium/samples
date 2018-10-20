@@ -76,12 +76,12 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<CountryRequirement>> CountryRequirements(int countryId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<CountryRequirement>> CountryRequirementsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<CountryRequirement>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<CountryRequirement>();
 		}
 
-		public async virtual Task<List<Destination>> Destinations(int countryId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Destination>> DestinationsByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Destination>().Where(x => x.CountryId == countryId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Destination>();
 		}
@@ -118,5 +118,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>aa347708f3b525f9a225221beb47c612</Hash>
+    <Hash>43a4b08de033380f379f158827e38567</Hash>
 </Codenesium>*/

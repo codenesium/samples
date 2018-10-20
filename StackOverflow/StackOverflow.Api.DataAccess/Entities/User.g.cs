@@ -69,7 +69,6 @@ namespace StackOverflowNS.Api.DataAccess
 		public string EmailHash { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("Id")]
 		public int Id { get; private set; }
 
@@ -96,5 +95,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>fb262cc4bf592ca33cda9adec9e8ee35</Hash>
+    <Hash>51d62ba153cbad3e83ffa9c327ee900b</Hash>
 </Codenesium>*/

@@ -25,10 +25,10 @@ namespace NebulaNS.Api.Services
 
 		Task<List<ApiLinkResponseModel>> ByChainId(int chainId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiLinkLogResponseModel>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiLinkLogResponseModel>> LinkLogsByLinkId(int linkId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e405204fa1380e98f04959edebc3e34d</Hash>
+    <Hash>5929784777627e226ff9b50a825a900e</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "QuoteTweet")]
 	[Trait("Area", "Integration")]
-	public class QuoteTweetIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class QuoteTweetIntegrationTests
 	{
-		public QuoteTweetIntegrationTests(TestWebApplicationFactory fixture)
+		public QuoteTweetIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.QuoteTweetDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiQuoteTweetResponseModel model = await client.QuoteTweetGetAsync(1);
 
 			ApiQuoteTweetModelMapper mapper = new ApiQuoteTweetModelMapper();
 
-			UpdateResponse<ApiQuoteTweetResponseModel> updateResponse = await this.Client.QuoteTweetUpdateAsync(model.QuoteTweetId, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiQuoteTweetResponseModel> updateResponse = await client.QuoteTweetUpdateAsync(model.QuoteTweetId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.QuoteTweetDeleteAsync(model.QuoteTweetId);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiQuoteTweetResponseModel response = await client.QuoteTweetGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.QuoteTweetDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.QuoteTweetGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiQuoteTweetResponseModel response = await this.Client.QuoteTweetGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiQuoteTweetResponseModel response = await client.QuoteTweetGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TwitterNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiQuoteTweetResponseModel> response = await this.Client.QuoteTweetAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiQuoteTweetResponseModel> response = await client.QuoteTweetAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiQuoteTweetResponseModel> CreateRecord()
+		private async Task<ApiQuoteTweetResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiQuoteTweetRequestModel();
 			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, 1, TimeSpan.Parse("1"));
-			CreateResponse<ApiQuoteTweetResponseModel> result = await this.Client.QuoteTweetCreateAsync(model);
+			CreateResponse<ApiQuoteTweetResponseModel> result = await client.QuoteTweetCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.QuoteTweetDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6177b28967a76ed992db21d265dc46af</Hash>
+    <Hash>ed1016acd15919519294aa14ef2077dc</Hash>
 </Codenesium>*/

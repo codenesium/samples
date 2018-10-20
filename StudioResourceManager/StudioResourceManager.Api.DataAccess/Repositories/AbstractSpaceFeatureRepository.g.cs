@@ -76,18 +76,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<SpaceSpaceFeature>> SpaceSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<SpaceSpaceFeature>> SpaceSpaceFeaturesBySpaceFeatureId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SpaceSpaceFeature>().Where(x => x.SpaceFeatureId == spaceFeatureId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceSpaceFeature>();
-		}
-
-		public async virtual Task<List<SpaceFeature>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.SpaceSpaceFeatures
-			              join spaceFeatures in this.Context.SpaceFeatures on
-			              refTable.SpaceFeatureId equals spaceFeatures.Id
-			              where refTable.SpaceId == spaceId
-			              select spaceFeatures).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<SpaceFeature>> Where(
@@ -122,5 +113,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>a12a63060d3ae194d756eea6ada5c096</Hash>
+    <Hash>3af05a598256c94125feb3555ce0c861</Hash>
 </Codenesium>*/

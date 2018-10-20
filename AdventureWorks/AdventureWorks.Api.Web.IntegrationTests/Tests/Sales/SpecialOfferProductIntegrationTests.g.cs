@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "SpecialOfferProduct")]
 	[Trait("Area", "Integration")]
-	public class SpecialOfferProductIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class SpecialOfferProductIntegrationTests
 	{
-		public SpecialOfferProductIntegrationTests(TestWebApplicationFactory fixture)
+		public SpecialOfferProductIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.SpecialOfferProductDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiSpecialOfferProductResponseModel model = await client.SpecialOfferProductGetAsync(1);
 
 			ApiSpecialOfferProductModelMapper mapper = new ApiSpecialOfferProductModelMapper();
 
-			UpdateResponse<ApiSpecialOfferProductResponseModel> updateResponse = await this.Client.SpecialOfferProductUpdateAsync(model.SpecialOfferID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSpecialOfferProductResponseModel> updateResponse = await client.SpecialOfferProductUpdateAsync(model.SpecialOfferID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.SpecialOfferProductDeleteAsync(model.SpecialOfferID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiSpecialOfferProductResponseModel response = await client.SpecialOfferProductGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.SpecialOfferProductDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.SpecialOfferProductGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiSpecialOfferProductResponseModel response = await this.Client.SpecialOfferProductGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiSpecialOfferProductResponseModel response = await client.SpecialOfferProductGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiSpecialOfferProductResponseModel> response = await this.Client.SpecialOfferProductAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiSpecialOfferProductResponseModel> response = await client.SpecialOfferProductAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiSpecialOfferProductResponseModel> CreateRecord()
+		private async Task<ApiSpecialOfferProductResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiSpecialOfferProductRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiSpecialOfferProductResponseModel> result = await this.Client.SpecialOfferProductCreateAsync(model);
+			CreateResponse<ApiSpecialOfferProductResponseModel> result = await client.SpecialOfferProductCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.SpecialOfferProductDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f8b8e92b9dfd496fd34e27b8988f8f31</Hash>
+    <Hash>44d936573fb9537f41c97bad01d7ddc8</Hash>
 </Codenesium>*/

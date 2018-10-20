@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "BillOfMaterial")]
 	[Trait("Area", "Integration")]
-	public class BillOfMaterialIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class BillOfMaterialIntegrationTests
 	{
-		public BillOfMaterialIntegrationTests(TestWebApplicationFactory fixture)
+		public BillOfMaterialIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.BillOfMaterialDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiBillOfMaterialResponseModel model = await client.BillOfMaterialGetAsync(1);
 
 			ApiBillOfMaterialModelMapper mapper = new ApiBillOfMaterialModelMapper();
 
-			UpdateResponse<ApiBillOfMaterialResponseModel> updateResponse = await this.Client.BillOfMaterialUpdateAsync(model.BillOfMaterialsID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiBillOfMaterialResponseModel> updateResponse = await client.BillOfMaterialUpdateAsync(model.BillOfMaterialsID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.BillOfMaterialDeleteAsync(model.BillOfMaterialsID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiBillOfMaterialResponseModel response = await client.BillOfMaterialGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.BillOfMaterialDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.BillOfMaterialGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiBillOfMaterialResponseModel response = await this.Client.BillOfMaterialGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiBillOfMaterialResponseModel response = await client.BillOfMaterialGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiBillOfMaterialResponseModel> response = await this.Client.BillOfMaterialAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiBillOfMaterialResponseModel> response = await client.BillOfMaterialAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiBillOfMaterialResponseModel> CreateRecord()
+		private async Task<ApiBillOfMaterialResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiBillOfMaterialRequestModel();
 			model.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiBillOfMaterialResponseModel> result = await this.Client.BillOfMaterialCreateAsync(model);
+			CreateResponse<ApiBillOfMaterialResponseModel> result = await client.BillOfMaterialCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.BillOfMaterialDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6eeae2ff971462169b808e22a072204</Hash>
+    <Hash>1b056b6705e9c8769dfedbbdbe3eadf5</Hash>
 </Codenesium>*/

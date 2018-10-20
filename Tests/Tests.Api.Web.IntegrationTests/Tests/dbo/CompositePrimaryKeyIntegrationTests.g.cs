@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "CompositePrimaryKey")]
 	[Trait("Area", "Integration")]
-	public class CompositePrimaryKeyIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CompositePrimaryKeyIntegrationTests
 	{
-		public CompositePrimaryKeyIntegrationTests(TestWebApplicationFactory fixture)
+		public CompositePrimaryKeyIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CompositePrimaryKeyDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCompositePrimaryKeyResponseModel model = await client.CompositePrimaryKeyGetAsync(1);
 
 			ApiCompositePrimaryKeyModelMapper mapper = new ApiCompositePrimaryKeyModelMapper();
 
-			UpdateResponse<ApiCompositePrimaryKeyResponseModel> updateResponse = await this.Client.CompositePrimaryKeyUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCompositePrimaryKeyResponseModel> updateResponse = await client.CompositePrimaryKeyUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CompositePrimaryKeyDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCompositePrimaryKeyResponseModel response = await client.CompositePrimaryKeyGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CompositePrimaryKeyDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CompositePrimaryKeyGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCompositePrimaryKeyResponseModel response = await this.Client.CompositePrimaryKeyGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCompositePrimaryKeyResponseModel response = await client.CompositePrimaryKeyGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCompositePrimaryKeyResponseModel> response = await this.Client.CompositePrimaryKeyAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCompositePrimaryKeyResponseModel> response = await client.CompositePrimaryKeyAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCompositePrimaryKeyResponseModel> CreateRecord()
+		private async Task<ApiCompositePrimaryKeyResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCompositePrimaryKeyRequestModel();
 			model.SetProperties(2);
-			CreateResponse<ApiCompositePrimaryKeyResponseModel> result = await this.Client.CompositePrimaryKeyCreateAsync(model);
+			CreateResponse<ApiCompositePrimaryKeyResponseModel> result = await client.CompositePrimaryKeyCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CompositePrimaryKeyDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fe72c6015e25f1d9d1ec20c8539f2653</Hash>
+    <Hash>ff6b698dd061d5e60d0e616a83a770f5</Hash>
 </Codenesium>*/

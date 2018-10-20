@@ -15,19 +15,22 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "VProductAndDescription")]
 	[Trait("Area", "Integration")]
-	public class VProductAndDescriptionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class VProductAndDescriptionIntegrationTests
 	{
-		public VProductAndDescriptionIntegrationTests(TestWebApplicationFactory fixture)
+		public VProductAndDescriptionIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiVProductAndDescriptionResponseModel response = await this.Client.VProductAndDescriptionGetAsync("A");
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiVProductAndDescriptionResponseModel response = await client.VProductAndDescriptionGetAsync("A");
 
 			response.Should().NotBeNull();
 		}
@@ -35,7 +38,14 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiVProductAndDescriptionResponseModel> response = await this.Client.VProductAndDescriptionAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiVProductAndDescriptionResponseModel> response = await client.VProductAndDescriptionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
@@ -43,5 +53,5 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>9144a1d04f2c8ce7ee6acc8466b58bfc</Hash>
+    <Hash>dee6f48f29a92342438a47c3efbccfe1</Hash>
 </Codenesium>*/

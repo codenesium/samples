@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<ShipMethod>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PurchaseOrderHeader>().Where(x => x.ShipMethodID == shipMethodID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PurchaseOrderHeader>();
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7351b534a58890483074099e97643527</Hash>
+    <Hash>559fd72c559dcc550750dc735720cc20</Hash>
 </Codenesium>*/

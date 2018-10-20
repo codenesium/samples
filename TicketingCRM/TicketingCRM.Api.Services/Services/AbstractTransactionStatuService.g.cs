@@ -116,9 +116,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiTransactionResponseModel>> Transactions(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTransactionResponseModel>> TransactionsByTransactionStatusId(int transactionStatusId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Transaction> records = await this.TransactionStatuRepository.Transactions(transactionStatusId, limit, offset);
+			List<Transaction> records = await this.TransactionStatuRepository.TransactionsByTransactionStatusId(transactionStatusId, limit, offset);
 
 			return this.BolTransactionMapper.MapBOToModel(this.DalTransactionMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ec3b29ac33c02280ad9aff9a692861c9</Hash>
+    <Hash>a3fc4849940ad78c6fe54105b1e995e5</Hash>
 </Codenesium>*/

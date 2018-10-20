@@ -21,10 +21,10 @@ namespace PetStoreNS.Api.Services
 
 		Task<List<ApiPetResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSaleResponseModel>> Sales(int petId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSaleResponseModel>> SalesByPetId(int petId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>c59fc533fd94077ac745a5b751da7653</Hash>
+    <Hash>6aec967f2150720c97fedc336a4dd781</Hash>
 </Codenesium>*/

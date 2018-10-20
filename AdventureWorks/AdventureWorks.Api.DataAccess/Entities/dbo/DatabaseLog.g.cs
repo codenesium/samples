@@ -34,7 +34,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("DatabaseLogID")]
 		public int DatabaseLogID { get; private set; }
 
@@ -66,5 +65,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7445b384d5d8d9f8e8aaa932371f2bc5</Hash>
+    <Hash>e08b5416f88ad1531e4057b250437b4c</Hash>
 </Codenesium>*/

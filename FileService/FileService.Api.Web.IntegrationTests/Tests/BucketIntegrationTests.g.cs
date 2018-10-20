@@ -15,54 +15,82 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Bucket")]
 	[Trait("Area", "Integration")]
-	public class BucketIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class BucketIntegrationTests
 	{
-		public BucketIntegrationTests(TestWebApplicationFactory fixture)
+		public BucketIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.BucketDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiBucketResponseModel model = await client.BucketGetAsync(1);
 
 			ApiBucketModelMapper mapper = new ApiBucketModelMapper();
 
-			UpdateResponse<ApiBucketResponseModel> updateResponse = await this.Client.BucketUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiBucketResponseModel> updateResponse = await client.BucketUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.BucketDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiBucketResponseModel response = await client.BucketGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.BucketDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.BucketGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiBucketResponseModel response = await this.Client.BucketGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiBucketResponseModel response = await client.BucketGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiBucketResponseModel> response = await this.Client.BucketAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiBucketResponseModel> response = await client.BucketAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiBucketResponseModel> CreateRecord()
+		private async Task<ApiBucketResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiBucketRequestModel();
 			model.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
-			CreateResponse<ApiBucketResponseModel> result = await this.Client.BucketCreateAsync(model);
+			CreateResponse<ApiBucketResponseModel> result = await client.BucketCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.BucketDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9623897efb22b01730307cc90f36ddef</Hash>
+    <Hash>f76748b155ad44c4bc036081a9b98c4b</Hash>
 </Codenesium>*/

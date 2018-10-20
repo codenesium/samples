@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALTeacherMapper();
 			var bo = new BOTeacher();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1, true);
 
 			Teacher response = mapper.MapBOToEF(bo);
 
@@ -28,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -35,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALTeacherMapper();
 			Teacher entity = new Teacher();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1, true);
 
 			BOTeacher response = mapper.MapEFToBO(entity);
 
@@ -46,6 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -53,7 +55,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALTeacherMapper();
 			Teacher entity = new Teacher();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1, true);
 
 			List<BOTeacher> response = mapper.MapEFToBO(new List<Teacher>() { entity });
 
@@ -63,5 +65,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>adeb1b8a99229816d8cead0fb0a1f979</Hash>
+    <Hash>117e8f563397ef7b71b23b3ee5a95391</Hash>
 </Codenesium>*/

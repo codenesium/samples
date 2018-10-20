@@ -15,54 +15,82 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Message")]
 	[Trait("Area", "Integration")]
-	public class MessageIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class MessageIntegrationTests
 	{
-		public MessageIntegrationTests(TestWebApplicationFactory fixture)
+		public MessageIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.MessageDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiMessageResponseModel model = await client.MessageGetAsync(1);
 
 			ApiMessageModelMapper mapper = new ApiMessageModelMapper();
 
-			UpdateResponse<ApiMessageResponseModel> updateResponse = await this.Client.MessageUpdateAsync(model.MessageId, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiMessageResponseModel> updateResponse = await client.MessageUpdateAsync(model.MessageId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.MessageDeleteAsync(model.MessageId);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiMessageResponseModel response = await client.MessageGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.MessageDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.MessageGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiMessageResponseModel response = await this.Client.MessageGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiMessageResponseModel response = await client.MessageGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TwitterNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiMessageResponseModel> response = await this.Client.MessageAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiMessageResponseModel> response = await client.MessageAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiMessageResponseModel> CreateRecord()
+		private async Task<ApiMessageResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiMessageRequestModel();
 			model.SetProperties("B", 1);
-			CreateResponse<ApiMessageResponseModel> result = await this.Client.MessageCreateAsync(model);
+			CreateResponse<ApiMessageResponseModel> result = await client.MessageCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.MessageDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2daa9bd1719511ad765b2bccbbd68ce</Hash>
+    <Hash>9851ae93395edbc4bef3f83007dda65f</Hash>
 </Codenesium>*/

@@ -116,22 +116,15 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeatures(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesBySpaceFeatureId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SpaceSpaceFeature> records = await this.SpaceFeatureRepository.SpaceSpaceFeatures(spaceFeatureId, limit, offset);
+			List<SpaceSpaceFeature> records = await this.SpaceFeatureRepository.SpaceSpaceFeaturesBySpaceFeatureId(spaceFeatureId, limit, offset);
 
 			return this.BolSpaceSpaceFeatureMapper.MapBOToModel(this.DalSpaceSpaceFeatureMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiSpaceFeatureResponseModel>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SpaceFeature> records = await this.SpaceFeatureRepository.BySpaceId(spaceId, limit, offset);
-
-			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f76489256b7c0c25e34f8a93c34e96e6</Hash>
+    <Hash>f0b51bfad32b258251b021741caf41bc</Hash>
 </Codenesium>*/

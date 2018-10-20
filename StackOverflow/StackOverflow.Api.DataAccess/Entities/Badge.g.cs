@@ -29,7 +29,6 @@ namespace StackOverflowNS.Api.DataAccess
 		public DateTime Date { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("Id")]
 		public int Id { get; private set; }
 
@@ -43,5 +42,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>f2e4ad4865de897e26f598be76dad549</Hash>
+    <Hash>f0c38ae71d90a8aefcbfc00fb4405250</Hash>
 </Codenesium>*/

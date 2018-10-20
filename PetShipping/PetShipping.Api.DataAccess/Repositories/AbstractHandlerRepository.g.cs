@@ -76,12 +76,11 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<AirTransport>> AirTransports(int handlerId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<AirTransport>> AirTransportsByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<AirTransport>().Where(x => x.HandlerId == handlerId).AsQueryable().Skip(offset).Take(limit).ToListAsync<AirTransport>();
 		}
 
-		// Reference foreign key. Reference Table=HandlerPipelineStep. First table=handlers. Second table=handlers
 		public async virtual Task<List<Handler>> ByHandlerId(int handlerId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.HandlerPipelineSteps
@@ -123,5 +122,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>16d325a967139ac2f9f5b98ca0425eac</Hash>
+    <Hash>b59fdad76197502964b0f0c59292176b</Hash>
 </Codenesium>*/

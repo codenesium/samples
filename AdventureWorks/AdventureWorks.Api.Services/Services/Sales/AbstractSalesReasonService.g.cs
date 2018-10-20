@@ -107,9 +107,16 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
+
+		public async virtual Task<List<ApiSalesReasonResponseModel>> BySalesOrderID(int salesOrderID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<SalesReason> records = await this.SalesReasonRepository.BySalesOrderID(salesOrderID, limit, offset);
+
+			return this.BolSalesReasonMapper.MapBOToModel(this.DalSalesReasonMapper.MapEFToBO(records));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>04bab2b11627b731a65d4755b7aaa38e</Hash>
+    <Hash>3b8d91fea4a89c8eca2bb90c01b94b95</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ErrorLog")]
 	[Trait("Area", "Integration")]
-	public class ErrorLogIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ErrorLogIntegrationTests
 	{
-		public ErrorLogIntegrationTests(TestWebApplicationFactory fixture)
+		public ErrorLogIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ErrorLogDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiErrorLogResponseModel model = await client.ErrorLogGetAsync(1);
 
 			ApiErrorLogModelMapper mapper = new ApiErrorLogModelMapper();
 
-			UpdateResponse<ApiErrorLogResponseModel> updateResponse = await this.Client.ErrorLogUpdateAsync(model.ErrorLogID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiErrorLogResponseModel> updateResponse = await client.ErrorLogUpdateAsync(model.ErrorLogID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ErrorLogDeleteAsync(model.ErrorLogID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiErrorLogResponseModel response = await client.ErrorLogGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ErrorLogDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ErrorLogGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiErrorLogResponseModel response = await this.Client.ErrorLogGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiErrorLogResponseModel response = await client.ErrorLogGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiErrorLogResponseModel> response = await this.Client.ErrorLogAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiErrorLogResponseModel> response = await client.ErrorLogAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiErrorLogResponseModel> CreateRecord()
+		private async Task<ApiErrorLogResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiErrorLogRequestModel();
 			model.SetProperties(2, "B", 2, "B", 2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiErrorLogResponseModel> result = await this.Client.ErrorLogCreateAsync(model);
+			CreateResponse<ApiErrorLogResponseModel> result = await client.ErrorLogCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ErrorLogDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>33d155870b9cf391e212a45bbeb13852</Hash>
+    <Hash>04b11d6e8d9ba76461c977ef6a5731fe</Hash>
 </Codenesium>*/

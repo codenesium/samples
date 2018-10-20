@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -241,10 +241,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{workOrderID}/WorkOrderRoutings")]
+		[Route("{workOrderID}/WorkOrderRoutingsByWorkOrderID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
-		public async virtual Task<IActionResult> WorkOrderRoutings(int workOrderID, int? limit, int? offset)
+		public async virtual Task<IActionResult> WorkOrderRoutingsByWorkOrderID(int workOrderID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,7 +252,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiWorkOrderRoutingResponseModel> response = await this.WorkOrderService.WorkOrderRoutings(workOrderID, query.Limit, query.Offset);
+			List<ApiWorkOrderRoutingResponseModel> response = await this.WorkOrderService.WorkOrderRoutingsByWorkOrderID(workOrderID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -276,5 +276,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>10897544f44334c64c25817f25252194</Hash>
+    <Hash>804972e901128e8abc96922fece61352</Hash>
 </Codenesium>*/

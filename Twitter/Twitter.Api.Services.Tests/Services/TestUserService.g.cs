@@ -295,12 +295,12 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void DirectTweets_Exists()
+		public async void DirectTweetsByTaggedUserId_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<DirectTweet>();
 			records.Add(new DirectTweet());
-			mock.RepositoryMock.Setup(x => x.DirectTweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.DirectTweetsByTaggedUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -323,17 +323,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiDirectTweetResponseModel> response = await service.DirectTweets(default(int));
+			List<ApiDirectTweetResponseModel> response = await service.DirectTweetsByTaggedUserId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.DirectTweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.DirectTweetsByTaggedUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void DirectTweets_Not_Exists()
+		public async void DirectTweetsByTaggedUserId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.DirectTweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DirectTweet>>(new List<DirectTweet>()));
+			mock.RepositoryMock.Setup(x => x.DirectTweetsByTaggedUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<DirectTweet>>(new List<DirectTweet>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -356,19 +356,19 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiDirectTweetResponseModel> response = await service.DirectTweets(default(int));
+			List<ApiDirectTweetResponseModel> response = await service.DirectTweetsByTaggedUserId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.DirectTweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.DirectTweetsByTaggedUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Followers_Exists()
+		public async void FollowersByFollowedUserId_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<Follower>();
 			records.Add(new Follower());
-			mock.RepositoryMock.Setup(x => x.Followers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.FollowersByFollowedUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -391,17 +391,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiFollowerResponseModel> response = await service.Followers(default(int));
+			List<ApiFollowerResponseModel> response = await service.FollowersByFollowedUserId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Followers(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.FollowersByFollowedUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Followers_Not_Exists()
+		public async void FollowersByFollowedUserId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.Followers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Follower>>(new List<Follower>()));
+			mock.RepositoryMock.Setup(x => x.FollowersByFollowedUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Follower>>(new List<Follower>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -424,19 +424,87 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiFollowerResponseModel> response = await service.Followers(default(int));
+			List<ApiFollowerResponseModel> response = await service.FollowersByFollowedUserId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Followers(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.FollowersByFollowedUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Messages_Exists()
+		public async void FollowersByFollowingUserId_Exists()
+		{
+			var mock = new ServiceMockFacade<IUserRepository>();
+			var records = new List<Follower>();
+			records.Add(new Follower());
+			mock.RepositoryMock.Setup(x => x.FollowersByFollowingUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                              mock.DALMapperMockFactory.DALUserMapperMock,
+			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
+			                              mock.DALMapperMockFactory.DALMessageMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
+			                              mock.DALMapperMockFactory.DALMessengerMapperMock,
+			                              mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLReplyMapperMock,
+			                              mock.DALMapperMockFactory.DALReplyMapperMock,
+			                              mock.BOLMapperMockFactory.BOLRetweetMapperMock,
+			                              mock.DALMapperMockFactory.DALRetweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALTweetMapperMock);
+
+			List<ApiFollowerResponseModel> response = await service.FollowersByFollowingUserId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.FollowersByFollowingUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void FollowersByFollowingUserId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IUserRepository>();
+			mock.RepositoryMock.Setup(x => x.FollowersByFollowingUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Follower>>(new List<Follower>()));
+			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                              mock.DALMapperMockFactory.DALUserMapperMock,
+			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
+			                              mock.DALMapperMockFactory.DALMessageMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
+			                              mock.DALMapperMockFactory.DALMessengerMapperMock,
+			                              mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLReplyMapperMock,
+			                              mock.DALMapperMockFactory.DALReplyMapperMock,
+			                              mock.BOLMapperMockFactory.BOLRetweetMapperMock,
+			                              mock.DALMapperMockFactory.DALRetweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALTweetMapperMock);
+
+			List<ApiFollowerResponseModel> response = await service.FollowersByFollowingUserId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.FollowersByFollowingUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void MessagesBySenderUserId_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<Message>();
 			records.Add(new Message());
-			mock.RepositoryMock.Setup(x => x.Messages(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.MessagesBySenderUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -459,17 +527,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiMessageResponseModel> response = await service.Messages(default(int));
+			List<ApiMessageResponseModel> response = await service.MessagesBySenderUserId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Messages(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.MessagesBySenderUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Messages_Not_Exists()
+		public async void MessagesBySenderUserId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.Messages(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Message>>(new List<Message>()));
+			mock.RepositoryMock.Setup(x => x.MessagesBySenderUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Message>>(new List<Message>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -492,19 +560,19 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiMessageResponseModel> response = await service.Messages(default(int));
+			List<ApiMessageResponseModel> response = await service.MessagesBySenderUserId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Messages(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.MessagesBySenderUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Messengers_Exists()
+		public async void MessengersByToUserId_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<Messenger>();
 			records.Add(new Messenger());
-			mock.RepositoryMock.Setup(x => x.Messengers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.MessengersByToUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -527,17 +595,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiMessengerResponseModel> response = await service.Messengers(default(int));
+			List<ApiMessengerResponseModel> response = await service.MessengersByToUserId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Messengers(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.MessengersByToUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Messengers_Not_Exists()
+		public async void MessengersByToUserId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.Messengers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Messenger>>(new List<Messenger>()));
+			mock.RepositoryMock.Setup(x => x.MessengersByToUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Messenger>>(new List<Messenger>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -560,19 +628,87 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiMessengerResponseModel> response = await service.Messengers(default(int));
+			List<ApiMessengerResponseModel> response = await service.MessengersByToUserId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Messengers(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.MessengersByToUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void QuoteTweets_Exists()
+		public async void MessengersByUserId_Exists()
+		{
+			var mock = new ServiceMockFacade<IUserRepository>();
+			var records = new List<Messenger>();
+			records.Add(new Messenger());
+			mock.RepositoryMock.Setup(x => x.MessengersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                              mock.DALMapperMockFactory.DALUserMapperMock,
+			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
+			                              mock.DALMapperMockFactory.DALMessageMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
+			                              mock.DALMapperMockFactory.DALMessengerMapperMock,
+			                              mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLReplyMapperMock,
+			                              mock.DALMapperMockFactory.DALReplyMapperMock,
+			                              mock.BOLMapperMockFactory.BOLRetweetMapperMock,
+			                              mock.DALMapperMockFactory.DALRetweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALTweetMapperMock);
+
+			List<ApiMessengerResponseModel> response = await service.MessengersByUserId(default(int));
+
+			response.Should().NotBeEmpty();
+			mock.RepositoryMock.Verify(x => x.MessengersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void MessengersByUserId_Not_Exists()
+		{
+			var mock = new ServiceMockFacade<IUserRepository>();
+			mock.RepositoryMock.Setup(x => x.MessengersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Messenger>>(new List<Messenger>()));
+			var service = new UserService(mock.LoggerMock.Object,
+			                              mock.RepositoryMock.Object,
+			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
+			                              mock.BOLMapperMockFactory.BOLUserMapperMock,
+			                              mock.DALMapperMockFactory.DALUserMapperMock,
+			                              mock.BOLMapperMockFactory.BOLDirectTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALDirectTweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLFollowerMapperMock,
+			                              mock.DALMapperMockFactory.DALFollowerMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMessageMapperMock,
+			                              mock.DALMapperMockFactory.DALMessageMapperMock,
+			                              mock.BOLMapperMockFactory.BOLMessengerMapperMock,
+			                              mock.DALMapperMockFactory.DALMessengerMapperMock,
+			                              mock.BOLMapperMockFactory.BOLQuoteTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALQuoteTweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLReplyMapperMock,
+			                              mock.DALMapperMockFactory.DALReplyMapperMock,
+			                              mock.BOLMapperMockFactory.BOLRetweetMapperMock,
+			                              mock.DALMapperMockFactory.DALRetweetMapperMock,
+			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
+			                              mock.DALMapperMockFactory.DALTweetMapperMock);
+
+			List<ApiMessengerResponseModel> response = await service.MessengersByUserId(default(int));
+
+			response.Should().BeEmpty();
+			mock.RepositoryMock.Verify(x => x.MessengersByUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
+		}
+
+		[Fact]
+		public async void QuoteTweetsByRetweeterUserId_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<QuoteTweet>();
 			records.Add(new QuoteTweet());
-			mock.RepositoryMock.Setup(x => x.QuoteTweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.QuoteTweetsByRetweeterUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -595,17 +731,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.QuoteTweets(default(int));
+			List<ApiQuoteTweetResponseModel> response = await service.QuoteTweetsByRetweeterUserId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.QuoteTweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.QuoteTweetsByRetweeterUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void QuoteTweets_Not_Exists()
+		public async void QuoteTweetsByRetweeterUserId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.QuoteTweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<QuoteTweet>>(new List<QuoteTweet>()));
+			mock.RepositoryMock.Setup(x => x.QuoteTweetsByRetweeterUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<QuoteTweet>>(new List<QuoteTweet>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -628,19 +764,19 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.QuoteTweets(default(int));
+			List<ApiQuoteTweetResponseModel> response = await service.QuoteTweetsByRetweeterUserId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.QuoteTweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.QuoteTweetsByRetweeterUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Replies_Exists()
+		public async void RepliesByReplierUserId_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<Reply>();
 			records.Add(new Reply());
-			mock.RepositoryMock.Setup(x => x.Replies(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.RepliesByReplierUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -663,17 +799,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiReplyResponseModel> response = await service.Replies(default(int));
+			List<ApiReplyResponseModel> response = await service.RepliesByReplierUserId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Replies(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.RepliesByReplierUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Replies_Not_Exists()
+		public async void RepliesByReplierUserId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.Replies(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Reply>>(new List<Reply>()));
+			mock.RepositoryMock.Setup(x => x.RepliesByReplierUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Reply>>(new List<Reply>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -696,19 +832,19 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiReplyResponseModel> response = await service.Replies(default(int));
+			List<ApiReplyResponseModel> response = await service.RepliesByReplierUserId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Replies(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.RepliesByReplierUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Retweets_Exists()
+		public async void RetweetsByRetwitterUserId_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<Retweet>();
 			records.Add(new Retweet());
-			mock.RepositoryMock.Setup(x => x.Retweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.RetweetsByRetwitterUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -731,17 +867,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiRetweetResponseModel> response = await service.Retweets(default(int));
+			List<ApiRetweetResponseModel> response = await service.RetweetsByRetwitterUserId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Retweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.RetweetsByRetwitterUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Retweets_Not_Exists()
+		public async void RetweetsByRetwitterUserId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.Retweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Retweet>>(new List<Retweet>()));
+			mock.RepositoryMock.Setup(x => x.RetweetsByRetwitterUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Retweet>>(new List<Retweet>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -764,19 +900,19 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiRetweetResponseModel> response = await service.Retweets(default(int));
+			List<ApiRetweetResponseModel> response = await service.RetweetsByRetwitterUserId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Retweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.RetweetsByRetwitterUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Tweets_Exists()
+		public async void TweetsByUserUserId_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
 			var records = new List<Tweet>();
 			records.Add(new Tweet());
-			mock.RepositoryMock.Setup(x => x.Tweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.TweetsByUserUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -799,17 +935,17 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiTweetResponseModel> response = await service.Tweets(default(int));
+			List<ApiTweetResponseModel> response = await service.TweetsByUserUserId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Tweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.TweetsByUserUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Tweets_Not_Exists()
+		public async void TweetsByUserUserId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IUserRepository>();
-			mock.RepositoryMock.Setup(x => x.Tweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Tweet>>(new List<Tweet>()));
+			mock.RepositoryMock.Setup(x => x.TweetsByUserUserId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Tweet>>(new List<Tweet>()));
 			var service = new UserService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.UserModelValidatorMock.Object,
@@ -832,14 +968,14 @@ namespace TwitterNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLTweetMapperMock,
 			                              mock.DALMapperMockFactory.DALTweetMapperMock);
 
-			List<ApiTweetResponseModel> response = await service.Tweets(default(int));
+			List<ApiTweetResponseModel> response = await service.TweetsByUserUserId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Tweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.TweetsByUserUserId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e5af9dfb977016525629b62b75cbcf6</Hash>
+    <Hash>bf6a7f7653a0fb04bdff5d45e87e68b9</Hash>
 </Codenesium>*/

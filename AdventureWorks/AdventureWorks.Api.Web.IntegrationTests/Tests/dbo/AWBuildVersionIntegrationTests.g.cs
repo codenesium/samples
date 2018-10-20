@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "AWBuildVersion")]
 	[Trait("Area", "Integration")]
-	public class AWBuildVersionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class AWBuildVersionIntegrationTests
 	{
-		public AWBuildVersionIntegrationTests(TestWebApplicationFactory fixture)
+		public AWBuildVersionIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.AWBuildVersionDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiAWBuildVersionResponseModel model = await client.AWBuildVersionGetAsync(1);
 
 			ApiAWBuildVersionModelMapper mapper = new ApiAWBuildVersionModelMapper();
 
-			UpdateResponse<ApiAWBuildVersionResponseModel> updateResponse = await this.Client.AWBuildVersionUpdateAsync(model.SystemInformationID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiAWBuildVersionResponseModel> updateResponse = await client.AWBuildVersionUpdateAsync(model.SystemInformationID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.AWBuildVersionDeleteAsync(model.SystemInformationID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiAWBuildVersionResponseModel response = await client.AWBuildVersionGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.AWBuildVersionDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.AWBuildVersionGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiAWBuildVersionResponseModel response = await this.Client.AWBuildVersionGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiAWBuildVersionResponseModel response = await client.AWBuildVersionGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiAWBuildVersionResponseModel> response = await this.Client.AWBuildVersionAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiAWBuildVersionResponseModel> response = await client.AWBuildVersionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiAWBuildVersionResponseModel> CreateRecord()
+		private async Task<ApiAWBuildVersionResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiAWBuildVersionRequestModel();
 			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
-			CreateResponse<ApiAWBuildVersionResponseModel> result = await this.Client.AWBuildVersionCreateAsync(model);
+			CreateResponse<ApiAWBuildVersionResponseModel> result = await client.AWBuildVersionCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.AWBuildVersionDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e13476e0e9c2c6784da5398a23e34a8</Hash>
+    <Hash>b10492498ae897087d87feeeedffe360</Hash>
 </Codenesium>*/

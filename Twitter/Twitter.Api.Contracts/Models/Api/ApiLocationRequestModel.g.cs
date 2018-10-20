@@ -26,18 +26,18 @@ namespace TwitterNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int GpsLat { get; private set; }
+		public int GpsLat { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int GpsLong { get; private set; }
+		public int GpsLong { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string LocationName { get; private set; }
+		public string LocationName { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>21ad18243453517c64a9cf5b54e0319d</Hash>
+    <Hash>1bdbff36e063bfd4d4d5c9665946e228</Hash>
 </Codenesium>*/

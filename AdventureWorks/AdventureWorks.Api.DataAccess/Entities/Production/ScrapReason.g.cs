@@ -31,12 +31,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		public string Name { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ScrapReasonID")]
 		public short ScrapReasonID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>a3c2bb3e7c9a69a6406e2c819b0c93b1</Hash>
+    <Hash>331ed3cfd8f146225e1e2ad71e6d6030</Hash>
 </Codenesium>*/

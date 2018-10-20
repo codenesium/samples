@@ -17,10 +17,10 @@ namespace PetShippingNS.Api.DataAccess
 
 		Task<List<PipelineStatu>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Pipeline>> Pipelines(int pipelineStatusId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Pipeline>> PipelinesByPipelineStatusId(int pipelineStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>317dd3136464b5028bfd5307f9644aa3</Hash>
+    <Hash>327c31ddf878d2bfe4ad60177263b264</Hash>
 </Codenesium>*/

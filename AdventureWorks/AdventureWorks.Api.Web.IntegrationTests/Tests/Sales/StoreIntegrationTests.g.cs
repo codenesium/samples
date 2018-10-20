@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Store")]
 	[Trait("Area", "Integration")]
-	public class StoreIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class StoreIntegrationTests
 	{
-		public StoreIntegrationTests(TestWebApplicationFactory fixture)
+		public StoreIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.StoreDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiStoreResponseModel model = await client.StoreGetAsync(1);
 
 			ApiStoreModelMapper mapper = new ApiStoreModelMapper();
 
-			UpdateResponse<ApiStoreResponseModel> updateResponse = await this.Client.StoreUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiStoreResponseModel> updateResponse = await client.StoreUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.StoreDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiStoreResponseModel response = await client.StoreGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.StoreDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.StoreGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiStoreResponseModel response = await this.Client.StoreGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiStoreResponseModel response = await client.StoreGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiStoreResponseModel> response = await this.Client.StoreAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiStoreResponseModel> response = await client.StoreAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiStoreResponseModel> CreateRecord()
+		private async Task<ApiStoreResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiStoreRequestModel();
 			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1);
-			CreateResponse<ApiStoreResponseModel> result = await this.Client.StoreCreateAsync(model);
+			CreateResponse<ApiStoreResponseModel> result = await client.StoreCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.StoreDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7061fb95d258e2679ce1d22aa6f4240c</Hash>
+    <Hash>ea9f3783a4bd12a5b27f4442d7ae7cf4</Hash>
 </Codenesium>*/

@@ -33,7 +33,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public DateTime ModifiedDate { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("SystemInformationID")]
 		public int SystemInformationID { get; private set; }
 
@@ -43,5 +42,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2084aeec7553c1e6037dea71e3a3dcae</Hash>
+    <Hash>a03bfb33419cac0628751651d4270651</Hash>
 </Codenesium>*/

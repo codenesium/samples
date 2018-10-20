@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Culture")]
 	[Trait("Area", "Integration")]
-	public class CultureIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CultureIntegrationTests
 	{
-		public CultureIntegrationTests(TestWebApplicationFactory fixture)
+		public CultureIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CultureDeleteAsync("A");
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCultureResponseModel model = await client.CultureGetAsync("A");
 
 			ApiCultureModelMapper mapper = new ApiCultureModelMapper();
 
-			UpdateResponse<ApiCultureResponseModel> updateResponse = await this.Client.CultureUpdateAsync(model.CultureID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCultureResponseModel> updateResponse = await client.CultureUpdateAsync(model.CultureID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CultureDeleteAsync(model.CultureID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCultureResponseModel response = await client.CultureGetAsync("A");
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CultureDeleteAsync("A");
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CultureGetAsync("A");
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCultureResponseModel response = await this.Client.CultureGetAsync("A");
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCultureResponseModel response = await client.CultureGetAsync("A");
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCultureResponseModel> response = await this.Client.CultureAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCultureResponseModel> response = await client.CultureAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCultureResponseModel> CreateRecord()
+		private async Task<ApiCultureResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCultureRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiCultureResponseModel> result = await this.Client.CultureCreateAsync(model);
+			CreateResponse<ApiCultureResponseModel> result = await client.CultureCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CultureDeleteAsync("B");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1369180d75bb65b146a2a3db28525a99</Hash>
+    <Hash>79cf6f13b94f497633400670f23cf35c</Hash>
 </Codenesium>*/

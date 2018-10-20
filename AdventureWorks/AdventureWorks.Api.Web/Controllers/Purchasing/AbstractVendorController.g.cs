@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -226,10 +226,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/ProductVendors")]
+		[Route("{businessEntityID}/ProductVendorsByBusinessEntityID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProductVendorResponseModel>), 200)]
-		public async virtual Task<IActionResult> ProductVendors(int businessEntityID, int? limit, int? offset)
+		public async virtual Task<IActionResult> ProductVendorsByBusinessEntityID(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -237,16 +237,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductVendorResponseModel> response = await this.VendorService.ProductVendors(businessEntityID, query.Limit, query.Offset);
+			List<ApiProductVendorResponseModel> response = await this.VendorService.ProductVendorsByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{vendorID}/PurchaseOrderHeaders")]
+		[Route("{vendorID}/PurchaseOrderHeadersByVendorID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPurchaseOrderHeaderResponseModel>), 200)]
-		public async virtual Task<IActionResult> PurchaseOrderHeaders(int vendorID, int? limit, int? offset)
+		public async virtual Task<IActionResult> PurchaseOrderHeadersByVendorID(int vendorID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -254,7 +254,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPurchaseOrderHeaderResponseModel> response = await this.VendorService.PurchaseOrderHeaders(vendorID, query.Limit, query.Offset);
+			List<ApiPurchaseOrderHeaderResponseModel> response = await this.VendorService.PurchaseOrderHeadersByVendorID(vendorID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -278,5 +278,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5e3a23a335e4366546a311e8a009a0af</Hash>
+    <Hash>b9276e89c4c4ab2b9303e3b5c7bf0b5f</Hash>
 </Codenesium>*/

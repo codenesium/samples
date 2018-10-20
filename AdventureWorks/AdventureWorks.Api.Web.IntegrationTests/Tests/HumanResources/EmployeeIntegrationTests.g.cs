@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Employee")]
 	[Trait("Area", "Integration")]
-	public class EmployeeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class EmployeeIntegrationTests
 	{
-		public EmployeeIntegrationTests(TestWebApplicationFactory fixture)
+		public EmployeeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.EmployeeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiEmployeeResponseModel model = await client.EmployeeGetAsync(1);
 
 			ApiEmployeeModelMapper mapper = new ApiEmployeeModelMapper();
 
-			UpdateResponse<ApiEmployeeResponseModel> updateResponse = await this.Client.EmployeeUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiEmployeeResponseModel> updateResponse = await client.EmployeeUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.EmployeeDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiEmployeeResponseModel response = await client.EmployeeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.EmployeeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.EmployeeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiEmployeeResponseModel response = await this.Client.EmployeeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiEmployeeResponseModel response = await client.EmployeeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiEmployeeResponseModel> response = await this.Client.EmployeeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiEmployeeResponseModel> response = await client.EmployeeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiEmployeeResponseModel> CreateRecord()
+		private async Task<ApiEmployeeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiEmployeeRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), true, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), true, 2, 2);
-			CreateResponse<ApiEmployeeResponseModel> result = await this.Client.EmployeeCreateAsync(model);
+			CreateResponse<ApiEmployeeResponseModel> result = await client.EmployeeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.EmployeeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c8676fd4cc36e3efd42ce2e0fb6a91a3</Hash>
+    <Hash>aff4096716c2f58fba7dbe5428a9cf51</Hash>
 </Codenesium>*/

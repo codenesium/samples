@@ -36,7 +36,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("BillOfMaterialsID")]
 		public int BillOfMaterialsID { get; private set; }
 
@@ -68,5 +67,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>405057e50db592360a94054a0ac55243</Hash>
+    <Hash>df1ae60224f70b2882f32a514b66876d</Hash>
 </Codenesium>*/

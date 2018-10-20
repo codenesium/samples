@@ -81,9 +81,18 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<CreditCard>().SingleOrDefaultAsync(x => x.CardNumber == cardNumber);
 		}
 
-		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<SalesOrderHeader>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<SalesOrderHeader>().Where(x => x.CreditCardID == creditCardID).AsQueryable().Skip(offset).Take(limit).ToListAsync<SalesOrderHeader>();
+		}
+
+		public async virtual Task<List<CreditCard>> ByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.PersonCreditCards
+			              join creditCards in this.Context.CreditCards on
+			              refTable.CreditCardID equals creditCards.CreditCardID
+			              where refTable.BusinessEntityID == businessEntityID
+			              select creditCards).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<CreditCard>> Where(
@@ -118,5 +127,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d9e9bbf1d94a1572ee2832cc91407fdb</Hash>
+    <Hash>699f45ab7135daf38b21875503a53435</Hash>
 </Codenesium>*/

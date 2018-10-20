@@ -31,7 +31,6 @@ namespace TwitterNS.Api.DataAccess
 		public DateTime? Date { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -53,5 +52,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>5bb6a3f4685f96092d01b75cd942f09b</Hash>
+    <Hash>769a8a36cbcb6bd7841877657a19c6d3</Hash>
 </Codenesium>*/

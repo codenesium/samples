@@ -22,10 +22,10 @@ namespace PetStoreNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d3fac55a355aaf191e128f465932461</Hash>
+    <Hash>742e5968325b9a9c4f24352eee1dfa4a</Hash>
 </Codenesium>*/

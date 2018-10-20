@@ -23,10 +23,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiCurrencyRateResponseModel> ByCurrencyRateDateFromCurrencyCodeToCurrencyCode(DateTime currencyRateDate, string fromCurrencyCode, string toCurrencyCode);
 
-		Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int currencyRateID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByCurrencyRateID(int currencyRateID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e31225c902d6b5d23ff9e5ef35df99a3</Hash>
+    <Hash>c00f48d56ff41723f3bd05a675044317</Hash>
 </Codenesium>*/

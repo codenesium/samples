@@ -22,7 +22,6 @@ namespace PetStoreNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -33,5 +32,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>249133f6d18327a71abec9514043bc4b</Hash>
+    <Hash>ea41d7c3396884b12bf892b9c97ed178</Hash>
 </Codenesium>*/

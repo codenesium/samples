@@ -28,22 +28,22 @@ namespace StackOverflowNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int Count { get; private set; }
+		public int Count { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int ExcerptPostId { get; private set; }
+		public int ExcerptPostId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string TagName { get; private set; }
+		public string TagName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int WikiPostId { get; private set; }
+		public int WikiPostId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>35652d6aae8edeb5fd44c00bd20681a1</Hash>
+    <Hash>2bc686c2a1316e1af8d92b691243f510</Hash>
 </Codenesium>*/

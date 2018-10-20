@@ -23,14 +23,14 @@ namespace TestsNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public byte[] Timestamp { get; private set; }
+		public byte[] Timestamp { get; private set; } = default(byte[]);
 	}
 }
 
 /*<Codenesium>
-    <Hash>328fb046491fe4fbf942a3701690410c</Hash>
+    <Hash>e2ff377a0022e8c7c9e57e441241bb10</Hash>
 </Codenesium>*/

@@ -66,9 +66,13 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			this.RuleFor(x => x.Zip).Length(0, 128);
 		}
+
+		public virtual void IsDeletedRules()
+		{
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>21b54fc6e85831e6324d5a4dcbc3c549</Hash>
+    <Hash>fbf32849475cb2151a3b92b9a46b46c4</Hash>
 </Codenesium>*/

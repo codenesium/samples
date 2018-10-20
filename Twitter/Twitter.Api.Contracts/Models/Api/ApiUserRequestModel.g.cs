@@ -45,52 +45,52 @@ namespace TwitterNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string BioImgUrl { get; private set; }
+		public string BioImgUrl { get; private set; } = default(string);
 
 		[JsonProperty]
-		public DateTime? Birthday { get; private set; }
+		public DateTime? Birthday { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string ContentDescription { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public string Email { get; private set; }
+		public string ContentDescription { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string FullName { get; private set; }
-
-		[JsonProperty]
-		public string HeaderImgUrl { get; private set; }
-
-		[JsonProperty]
-		public string Interest { get; private set; }
+		public string Email { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int LocationLocationId { get; private set; }
+		public string FullName { get; private set; } = default(string);
+
+		[JsonProperty]
+		public string HeaderImgUrl { get; private set; } = default(string);
+
+		[JsonProperty]
+		public string Interest { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Password { get; private set; }
-
-		[JsonProperty]
-		public string PhoneNumber { get; private set; }
+		public int LocationLocationId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Privacy { get; private set; }
+		public string Password { get; private set; } = default(string);
+
+		[JsonProperty]
+		public string PhoneNumber { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Username { get; private set; }
+		public string Privacy { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public string Username { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Website { get; private set; }
+		public string Website { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7b1545f6e7d390facbea60461337b58</Hash>
+    <Hash>7efa3fefa2b58297e3dfd745c80da87d</Hash>
 </Codenesium>*/

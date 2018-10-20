@@ -30,26 +30,26 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public decimal ShipBase { get; private set; }
+		public decimal ShipBase { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public decimal ShipRate { get; private set; }
+		public decimal ShipRate { get; private set; } = default(decimal);
 	}
 }
 
 /*<Codenesium>
-    <Hash>516a81e98a7bc2c05e48368830b87b1a</Hash>
+    <Hash>f59ba7820a7424d290a939126e95795d</Hash>
 </Codenesium>*/

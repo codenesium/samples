@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PersonRef")]
 	[Trait("Area", "Integration")]
-	public class PersonRefIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PersonRefIntegrationTests
 	{
-		public PersonRefIntegrationTests(TestWebApplicationFactory fixture)
+		public PersonRefIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PersonRefDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPersonRefResponseModel model = await client.PersonRefGetAsync(1);
 
 			ApiPersonRefModelMapper mapper = new ApiPersonRefModelMapper();
 
-			UpdateResponse<ApiPersonRefResponseModel> updateResponse = await this.Client.PersonRefUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPersonRefResponseModel> updateResponse = await client.PersonRefUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PersonRefDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPersonRefResponseModel response = await client.PersonRefGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PersonRefDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PersonRefGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPersonRefResponseModel response = await this.Client.PersonRefGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPersonRefResponseModel response = await client.PersonRefGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPersonRefResponseModel> response = await this.Client.PersonRefAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPersonRefResponseModel> response = await client.PersonRefAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPersonRefResponseModel> CreateRecord()
+		private async Task<ApiPersonRefResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPersonRefRequestModel();
 			model.SetProperties(2, 2);
-			CreateResponse<ApiPersonRefResponseModel> result = await this.Client.PersonRefCreateAsync(model);
+			CreateResponse<ApiPersonRefResponseModel> result = await client.PersonRefCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PersonRefDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0fd71d4c6ba786dc14f29612ae6662bb</Hash>
+    <Hash>c1a3a3ef6308b45498114b261091167d</Hash>
 </Codenesium>*/

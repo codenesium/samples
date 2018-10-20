@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ProductListPriceHistory")]
 	[Trait("Area", "Integration")]
-	public class ProductListPriceHistoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ProductListPriceHistoryIntegrationTests
 	{
-		public ProductListPriceHistoryIntegrationTests(TestWebApplicationFactory fixture)
+		public ProductListPriceHistoryIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ProductListPriceHistoryDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiProductListPriceHistoryResponseModel model = await client.ProductListPriceHistoryGetAsync(1);
 
 			ApiProductListPriceHistoryModelMapper mapper = new ApiProductListPriceHistoryModelMapper();
 
-			UpdateResponse<ApiProductListPriceHistoryResponseModel> updateResponse = await this.Client.ProductListPriceHistoryUpdateAsync(model.ProductID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductListPriceHistoryResponseModel> updateResponse = await client.ProductListPriceHistoryUpdateAsync(model.ProductID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ProductListPriceHistoryDeleteAsync(model.ProductID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiProductListPriceHistoryResponseModel response = await client.ProductListPriceHistoryGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ProductListPriceHistoryDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ProductListPriceHistoryGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiProductListPriceHistoryResponseModel response = await this.Client.ProductListPriceHistoryGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiProductListPriceHistoryResponseModel response = await client.ProductListPriceHistoryGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiProductListPriceHistoryResponseModel> response = await this.Client.ProductListPriceHistoryAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiProductListPriceHistoryResponseModel> response = await client.ProductListPriceHistoryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiProductListPriceHistoryResponseModel> CreateRecord()
+		private async Task<ApiProductListPriceHistoryResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiProductListPriceHistoryRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"));
-			CreateResponse<ApiProductListPriceHistoryResponseModel> result = await this.Client.ProductListPriceHistoryCreateAsync(model);
+			CreateResponse<ApiProductListPriceHistoryResponseModel> result = await client.ProductListPriceHistoryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ProductListPriceHistoryDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c818207b24c04917bc28ea02d41142b1</Hash>
+    <Hash>ffb7896eb7da7a27e34dc5c1f4e04586</Hash>
 </Codenesium>*/

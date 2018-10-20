@@ -20,9 +20,41 @@ namespace StudioResourceManagerNS.Api.Services
 		Task<ApiTenantResponseModel> Get(int id);
 
 		Task<List<ApiTenantResponseModel>> All(int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiAdminResponseModel>> AdminsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiEventResponseModel>> EventsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiEventStatusResponseModel>> EventStatusesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiEventStudentResponseModel>> EventStudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiEventTeacherResponseModel>> EventTeachersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiFamilyResponseModel>> FamiliesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiRateResponseModel>> RatesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiSpaceResponseModel>> SpacesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiSpaceFeatureResponseModel>> SpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiStudentResponseModel>> StudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiStudioResponseModel>> StudiosByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiTeacherResponseModel>> TeachersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiTeacherSkillResponseModel>> TeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiUserResponseModel>> UsersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>15e1b10b83d00220cca475acbc540e85</Hash>
+    <Hash>82d53fe4d3139df9bf7392eaddbfa9bc</Hash>
 </Codenesium>*/

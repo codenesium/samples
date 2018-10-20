@@ -18,10 +18,11 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLEventStatusMapper();
 			ApiEventStatusRequestModel model = new ApiEventStatusRequestModel();
-			model.SetProperties("A");
+			model.SetProperties("A", true);
 			BOEventStatus response = mapper.MapModelToBO(1, model);
 
 			response.Name.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -29,11 +30,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLEventStatusMapper();
 			BOEventStatus bo = new BOEventStatus();
-			bo.SetProperties(1, "A");
+			bo.SetProperties(1, "A", true);
 			ApiEventStatusResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -41,7 +43,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLEventStatusMapper();
 			BOEventStatus bo = new BOEventStatus();
-			bo.SetProperties(1, "A");
+			bo.SetProperties(1, "A", true);
 			List<ApiEventStatusResponseModel> response = mapper.MapBOToModel(new List<BOEventStatus>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -50,5 +52,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>36cf9f53d1bb3e23f9320fb30f8c7d88</Hash>
+    <Hash>eaaad1cea64be0d84ae1804f582bee9e</Hash>
 </Codenesium>*/

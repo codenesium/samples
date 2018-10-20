@@ -15,54 +15,82 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Tag")]
 	[Trait("Area", "Integration")]
-	public class TagIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TagIntegrationTests
 	{
-		public TagIntegrationTests(TestWebApplicationFactory fixture)
+		public TagIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TagDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTagResponseModel model = await client.TagGetAsync(1);
 
 			ApiTagModelMapper mapper = new ApiTagModelMapper();
 
-			UpdateResponse<ApiTagResponseModel> updateResponse = await this.Client.TagUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTagResponseModel> updateResponse = await client.TagUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TagDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTagResponseModel response = await client.TagGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TagDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TagGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTagResponseModel response = await this.Client.TagGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTagResponseModel response = await client.TagGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTagResponseModel> response = await this.Client.TagAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTagResponseModel> response = await client.TagAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTagResponseModel> CreateRecord()
+		private async Task<ApiTagResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTagRequestModel();
 			model.SetProperties(2, 2, "B", 2);
-			CreateResponse<ApiTagResponseModel> result = await this.Client.TagCreateAsync(model);
+			CreateResponse<ApiTagResponseModel> result = await client.TagCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TagDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1450a94461b04ce147bfeb703966a89d</Hash>
+    <Hash>2663c608080e5a5eb0ab4922762b6879</Hash>
 </Codenesium>*/

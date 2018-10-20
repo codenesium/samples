@@ -25,10 +25,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiShiftResponseModel> ByStartTimeEndTime(TimeSpan startTime, TimeSpan endTime);
 
-		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(int shiftID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoriesByShiftID(int shiftID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3721491b6a486010edc4b923af5b22cf</Hash>
+    <Hash>bc925c3c2318f523f00f1387907d1a1e</Hash>
 </Codenesium>*/

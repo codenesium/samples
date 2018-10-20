@@ -23,12 +23,12 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiTeamResponseModel> ByName(string name);
 
-		Task<List<ApiChainResponseModel>> Chains(int teamId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiChainResponseModel>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiTeamResponseModel>> ByMachineId(int teamId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>18d9d4a0c3406a7489df65566544d56e</Hash>
+    <Hash>c42a17d0f0413988027d4606ee7f76ab</Hash>
 </Codenesium>*/

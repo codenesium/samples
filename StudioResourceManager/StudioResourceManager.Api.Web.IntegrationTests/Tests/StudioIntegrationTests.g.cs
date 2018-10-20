@@ -15,54 +15,82 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Studio")]
 	[Trait("Area", "Integration")]
-	public class StudioIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class StudioIntegrationTests
 	{
-		public StudioIntegrationTests(TestWebApplicationFactory fixture)
+		public StudioIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.StudioDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiStudioResponseModel model = await client.StudioGetAsync(1);
 
 			ApiStudioModelMapper mapper = new ApiStudioModelMapper();
 
-			UpdateResponse<ApiStudioResponseModel> updateResponse = await this.Client.StudioUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiStudioResponseModel> updateResponse = await client.StudioUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.StudioDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiStudioResponseModel response = await client.StudioGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.StudioDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.StudioGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiStudioResponseModel response = await this.Client.StudioGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiStudioResponseModel response = await client.StudioGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiStudioResponseModel> response = await this.Client.StudioAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiStudioResponseModel> response = await client.StudioAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiStudioResponseModel> CreateRecord()
+		private async Task<ApiStudioResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiStudioRequestModel();
-			model.SetProperties("B", "B", "B", "B", "B", "B", "B");
-			CreateResponse<ApiStudioResponseModel> result = await this.Client.StudioCreateAsync(model);
+			model.SetProperties("B", "B", "B", "B", "B", "B", "B", true);
+			CreateResponse<ApiStudioResponseModel> result = await client.StudioCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.StudioDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>d55a9714a70f2ea8a6586ffdfb79ac60</Hash>
+    <Hash>f630aa729fe649b66eed788cd28990fb</Hash>
 </Codenesium>*/

@@ -76,7 +76,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(int productDescriptionID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCulturesByProductDescriptionID(int productDescriptionID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(x => x.ProductDescriptionID == productDescriptionID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
 		}
@@ -113,5 +113,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6015204cc6d4d6606f896e2149ca0d5a</Hash>
+    <Hash>9bacdf6c35734cc914ec3d6f3709b49a</Hash>
 </Codenesium>*/

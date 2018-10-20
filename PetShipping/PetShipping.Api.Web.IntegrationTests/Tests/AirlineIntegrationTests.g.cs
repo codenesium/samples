@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Airline")]
 	[Trait("Area", "Integration")]
-	public class AirlineIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class AirlineIntegrationTests
 	{
-		public AirlineIntegrationTests(TestWebApplicationFactory fixture)
+		public AirlineIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.AirlineDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiAirlineResponseModel model = await client.AirlineGetAsync(1);
 
 			ApiAirlineModelMapper mapper = new ApiAirlineModelMapper();
 
-			UpdateResponse<ApiAirlineResponseModel> updateResponse = await this.Client.AirlineUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiAirlineResponseModel> updateResponse = await client.AirlineUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.AirlineDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiAirlineResponseModel response = await client.AirlineGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.AirlineDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.AirlineGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiAirlineResponseModel response = await this.Client.AirlineGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiAirlineResponseModel response = await client.AirlineGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiAirlineResponseModel> response = await this.Client.AirlineAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiAirlineResponseModel> response = await client.AirlineAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiAirlineResponseModel> CreateRecord()
+		private async Task<ApiAirlineResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiAirlineRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiAirlineResponseModel> result = await this.Client.AirlineCreateAsync(model);
+			CreateResponse<ApiAirlineResponseModel> result = await client.AirlineCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.AirlineDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9555eb6453dfa1306fb4d99840ccbc89</Hash>
+    <Hash>e1b0884fe816cf7a592b75f4982c16f1</Hash>
 </Codenesium>*/

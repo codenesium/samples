@@ -21,10 +21,10 @@ namespace PetStoreNS.Api.Services
 
 		Task<List<ApiPaymentTypeResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSaleResponseModel>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSaleResponseModel>> SalesByPaymentTypeId(int paymentTypeId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1469cd111fa4ff778f9adb3f06975bd9</Hash>
+    <Hash>3432848d37f88bcf9de143c59090e9a0</Hash>
 </Codenesium>*/

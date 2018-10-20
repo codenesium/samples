@@ -124,16 +124,16 @@ namespace TwitterNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiTweetResponseModel>> Tweets(int locationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTweetResponseModel>> TweetsByLocationId(int locationId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Tweet> records = await this.LocationRepository.Tweets(locationId, limit, offset);
+			List<Tweet> records = await this.LocationRepository.TweetsByLocationId(locationId, limit, offset);
 
 			return this.BolTweetMapper.MapBOToModel(this.DalTweetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiUserResponseModel>> Users(int locationLocationId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiUserResponseModel>> UsersByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<User> records = await this.LocationRepository.Users(locationLocationId, limit, offset);
+			List<User> records = await this.LocationRepository.UsersByLocationLocationId(locationLocationId, limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
@@ -141,5 +141,5 @@ namespace TwitterNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>22d72f0daaae3ff2286214f9854bff0a</Hash>
+    <Hash>df3c4d6d6ad25c6cf706faa9db9ce2f7</Hash>
 </Codenesium>*/

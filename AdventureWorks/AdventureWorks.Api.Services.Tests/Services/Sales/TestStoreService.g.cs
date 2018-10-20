@@ -223,12 +223,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Customers_Exists()
+		public async void CustomersByStoreID_Exists()
 		{
 			var mock = new ServiceMockFacade<IStoreRepository>();
 			var records = new List<Customer>();
 			records.Add(new Customer());
-			mock.RepositoryMock.Setup(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.CustomersByStoreID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new StoreService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.StoreModelValidatorMock.Object,
@@ -237,17 +237,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLCustomerMapperMock,
 			                               mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-			List<ApiCustomerResponseModel> response = await service.Customers(default(int));
+			List<ApiCustomerResponseModel> response = await service.CustomersByStoreID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.CustomersByStoreID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Customers_Not_Exists()
+		public async void CustomersByStoreID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IStoreRepository>();
-			mock.RepositoryMock.Setup(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
+			mock.RepositoryMock.Setup(x => x.CustomersByStoreID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Customer>>(new List<Customer>()));
 			var service = new StoreService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.StoreModelValidatorMock.Object,
@@ -256,14 +256,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLCustomerMapperMock,
 			                               mock.DALMapperMockFactory.DALCustomerMapperMock);
 
-			List<ApiCustomerResponseModel> response = await service.Customers(default(int));
+			List<ApiCustomerResponseModel> response = await service.CustomersByStoreID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Customers(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.CustomersByStoreID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>0b4ec4d4cf7c1ef00db073a4b448eade</Hash>
+    <Hash>de989d252ca9bd82477fb61a7babc45b</Hash>
 </Codenesium>*/

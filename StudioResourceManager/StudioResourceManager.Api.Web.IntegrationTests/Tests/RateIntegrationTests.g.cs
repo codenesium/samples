@@ -15,54 +15,82 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Rate")]
 	[Trait("Area", "Integration")]
-	public class RateIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class RateIntegrationTests
 	{
-		public RateIntegrationTests(TestWebApplicationFactory fixture)
+		public RateIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.RateDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiRateResponseModel model = await client.RateGetAsync(1);
 
 			ApiRateModelMapper mapper = new ApiRateModelMapper();
 
-			UpdateResponse<ApiRateResponseModel> updateResponse = await this.Client.RateUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiRateResponseModel> updateResponse = await client.RateUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.RateDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiRateResponseModel response = await client.RateGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.RateDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.RateGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiRateResponseModel response = await this.Client.RateGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiRateResponseModel response = await client.RateGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiRateResponseModel> response = await this.Client.RateAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiRateResponseModel> response = await client.RateAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiRateResponseModel> CreateRecord()
+		private async Task<ApiRateResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiRateRequestModel();
-			model.SetProperties(2m, 1, 1);
-			CreateResponse<ApiRateResponseModel> result = await this.Client.RateCreateAsync(model);
+			model.SetProperties(2m, 1, 1, true);
+			CreateResponse<ApiRateResponseModel> result = await client.RateCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.RateDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9e8e47013bb285c894c9d5d5de3ce4ef</Hash>
+    <Hash>1b3c7868a608f1a0f0a5c501199852d4</Hash>
 </Codenesium>*/

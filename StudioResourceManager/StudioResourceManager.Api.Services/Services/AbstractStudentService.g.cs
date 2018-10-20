@@ -116,22 +116,15 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudents(int studentId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudentsByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EventStudent> records = await this.StudentRepository.EventStudents(studentId, limit, offset);
+			List<EventStudent> records = await this.StudentRepository.EventStudentsByStudentId(studentId, limit, offset);
 
 			return this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiStudentResponseModel>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<Student> records = await this.StudentRepository.ByEventId(eventId, limit, offset);
-
-			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>642ec9c582101de1d83b1793530da095</Hash>
+    <Hash>a8337be37492a253436300a81004e488</Hash>
 </Codenesium>*/

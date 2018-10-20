@@ -22,10 +22,6 @@ namespace AdventureWorksNS.Api.Services
 
 		protected IDALSpecialOfferMapper DalSpecialOfferMapper { get; private set; }
 
-		protected IBOLSpecialOfferProductMapper BolSpecialOfferProductMapper { get; private set; }
-
-		protected IDALSpecialOfferProductMapper DalSpecialOfferProductMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractSpecialOfferService(
@@ -33,17 +29,13 @@ namespace AdventureWorksNS.Api.Services
 			ISpecialOfferRepository specialOfferRepository,
 			IApiSpecialOfferRequestModelValidator specialOfferModelValidator,
 			IBOLSpecialOfferMapper bolSpecialOfferMapper,
-			IDALSpecialOfferMapper dalSpecialOfferMapper,
-			IBOLSpecialOfferProductMapper bolSpecialOfferProductMapper,
-			IDALSpecialOfferProductMapper dalSpecialOfferProductMapper)
+			IDALSpecialOfferMapper dalSpecialOfferMapper)
 			: base()
 		{
 			this.SpecialOfferRepository = specialOfferRepository;
 			this.SpecialOfferModelValidator = specialOfferModelValidator;
 			this.BolSpecialOfferMapper = bolSpecialOfferMapper;
 			this.DalSpecialOfferMapper = dalSpecialOfferMapper;
-			this.BolSpecialOfferProductMapper = bolSpecialOfferProductMapper;
-			this.DalSpecialOfferProductMapper = dalSpecialOfferProductMapper;
 			this.logger = logger;
 		}
 
@@ -115,16 +107,9 @@ namespace AdventureWorksNS.Api.Services
 
 			return response;
 		}
-
-		public async virtual Task<List<ApiSpecialOfferProductResponseModel>> SpecialOfferProducts(int specialOfferID, int limit = int.MaxValue, int offset = 0)
-		{
-			List<SpecialOfferProduct> records = await this.SpecialOfferRepository.SpecialOfferProducts(specialOfferID, limit, offset);
-
-			return this.BolSpecialOfferProductMapper.MapBOToModel(this.DalSpecialOfferProductMapper.MapEFToBO(records));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e18ec96a8c3d6d41af5185a4034d4908</Hash>
+    <Hash>f0344f6c73353f404db98243deffcc65</Hash>
 </Codenesium>*/

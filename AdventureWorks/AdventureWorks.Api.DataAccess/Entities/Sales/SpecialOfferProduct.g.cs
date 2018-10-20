@@ -39,12 +39,9 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Key]
 		[Column("SpecialOfferID")]
 		public int SpecialOfferID { get; private set; }
-
-		[ForeignKey("SpecialOfferID")]
-		public virtual SpecialOffer SpecialOfferNavigation { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9bc96b97cbfa9bd19b18eaaaf3050b29</Hash>
+    <Hash>169e3dd6bac4c61c11522eb3266867df</Hash>
 </Codenesium>*/

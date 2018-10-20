@@ -299,8 +299,8 @@ namespace PetStoreNS.Api.Web.Tests
 
 			IActionResult response = await controller.Delete(default(int));
 
-			response.Should().BeOfType<NoContentResult>();
-			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
 		}
 
@@ -338,5 +338,5 @@ namespace PetStoreNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>d905816b8b5f9957699d5a159088d667</Hash>
+    <Hash>e134bd1056584a2bd67b57474560c2f2</Hash>
 </Codenesium>*/

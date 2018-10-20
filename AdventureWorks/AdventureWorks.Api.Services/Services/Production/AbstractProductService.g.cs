@@ -200,65 +200,72 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<BillOfMaterial> records = await this.ProductRepository.BillOfMaterials(productAssemblyID, limit, offset);
+			List<BillOfMaterial> records = await this.ProductRepository.BillOfMaterialsByProductAssemblyID(productAssemblyID, limit, offset);
 
 			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductCostHistory> records = await this.ProductRepository.ProductCostHistories(productID, limit, offset);
+			List<BillOfMaterial> records = await this.ProductRepository.BillOfMaterialsByComponentID(componentID, limit, offset);
+
+			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<ProductCostHistory> records = await this.ProductRepository.ProductCostHistoriesByProductID(productID, limit, offset);
 
 			return this.BolProductCostHistoryMapper.MapBOToModel(this.DalProductCostHistoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductInventoryResponseModel>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductInventoryResponseModel>> ProductInventoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductInventory> records = await this.ProductRepository.ProductInventories(productID, limit, offset);
+			List<ProductInventory> records = await this.ProductRepository.ProductInventoriesByProductID(productID, limit, offset);
 
 			return this.BolProductInventoryMapper.MapBOToModel(this.DalProductInventoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductListPriceHistory> records = await this.ProductRepository.ProductListPriceHistories(productID, limit, offset);
+			List<ProductListPriceHistory> records = await this.ProductRepository.ProductListPriceHistoriesByProductID(productID, limit, offset);
 
 			return this.BolProductListPriceHistoryMapper.MapBOToModel(this.DalProductListPriceHistoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductProductPhoto> records = await this.ProductRepository.ProductProductPhotoes(productID, limit, offset);
+			List<ProductProductPhoto> records = await this.ProductRepository.ProductProductPhotoesByProductID(productID, limit, offset);
 
 			return this.BolProductProductPhotoMapper.MapBOToModel(this.DalProductProductPhotoMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductReviewResponseModel>> ProductReviews(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductReviewResponseModel>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductReview> records = await this.ProductRepository.ProductReviews(productID, limit, offset);
+			List<ProductReview> records = await this.ProductRepository.ProductReviewsByProductID(productID, limit, offset);
 
 			return this.BolProductReviewMapper.MapBOToModel(this.DalProductReviewMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTransactionHistoryResponseModel>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTransactionHistoryResponseModel>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<TransactionHistory> records = await this.ProductRepository.TransactionHistories(productID, limit, offset);
+			List<TransactionHistory> records = await this.ProductRepository.TransactionHistoriesByProductID(productID, limit, offset);
 
 			return this.BolTransactionHistoryMapper.MapBOToModel(this.DalTransactionHistoryMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiWorkOrderResponseModel>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiWorkOrderResponseModel>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<WorkOrder> records = await this.ProductRepository.WorkOrders(productID, limit, offset);
+			List<WorkOrder> records = await this.ProductRepository.WorkOrdersByProductID(productID, limit, offset);
 
 			return this.BolWorkOrderMapper.MapBOToModel(this.DalWorkOrderMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductResponseModel>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductResponseModel>> ByDocumentNode(int documentNode, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Product> records = await this.ProductRepository.ByProductID(productID, limit, offset);
+			List<Product> records = await this.ProductRepository.ByDocumentNode(documentNode, limit, offset);
 
 			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
 		}
@@ -266,5 +273,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e55004d559f5221ea2ed9709c6ec4dbc</Hash>
+    <Hash>4f828b1e38fe90257491694979971aef</Hash>
 </Codenesium>*/

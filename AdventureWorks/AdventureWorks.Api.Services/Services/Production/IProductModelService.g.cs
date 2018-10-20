@@ -27,14 +27,14 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiProductModelResponseModel>> ByInstruction(string instruction, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductResponseModel>> Products(int productModelID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductResponseModel>> ProductsByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCulturesByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductModelResponseModel>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductModelResponseModel>> ByIllustrationID(int productModelID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4d1ba184c79fad1445e6d134c713cfe6</Hash>
+    <Hash>3c06ad6f685d4a30c229175d092e7c7d</Hash>
 </Codenesium>*/

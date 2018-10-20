@@ -22,10 +22,10 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>30153bd8c9dfffa042436ed13a8c97ae</Hash>
+    <Hash>46d8c8b11fa350f439f68e659ffed025</Hash>
 </Codenesium>*/

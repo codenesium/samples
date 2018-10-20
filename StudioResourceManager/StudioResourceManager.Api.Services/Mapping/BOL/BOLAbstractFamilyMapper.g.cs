@@ -19,7 +19,8 @@ namespace StudioResourceManagerNS.Api.Services
 				model.PrimaryContactEmail,
 				model.PrimaryContactFirstName,
 				model.PrimaryContactLastName,
-				model.PrimaryContactPhone);
+				model.PrimaryContactPhone,
+				model.IsDeleted);
 			return boFamily;
 		}
 
@@ -28,7 +29,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiFamilyResponseModel();
 
-			model.SetProperties(boFamily.Id, boFamily.Note, boFamily.PrimaryContactEmail, boFamily.PrimaryContactFirstName, boFamily.PrimaryContactLastName, boFamily.PrimaryContactPhone);
+			model.SetProperties(boFamily.Id, boFamily.Note, boFamily.PrimaryContactEmail, boFamily.PrimaryContactFirstName, boFamily.PrimaryContactLastName, boFamily.PrimaryContactPhone, boFamily.IsDeleted);
 
 			return model;
 		}
@@ -49,5 +50,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>02e37021a4c28e5b680e7fa6d087d10b</Hash>
+    <Hash>1c0f31445806fe3024762bd90e2221e7</Hash>
 </Codenesium>*/

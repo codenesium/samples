@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -245,10 +245,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/EmployeeDepartmentHistories")]
+		[Route("{businessEntityID}/EmployeeDepartmentHistoriesByBusinessEntityID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> EmployeeDepartmentHistories(int businessEntityID, int? limit, int? offset)
+		public async virtual Task<IActionResult> EmployeeDepartmentHistoriesByBusinessEntityID(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -256,16 +256,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeService.EmployeeDepartmentHistories(businessEntityID, query.Limit, query.Offset);
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.EmployeeService.EmployeeDepartmentHistoriesByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/EmployeePayHistories")]
+		[Route("{businessEntityID}/EmployeePayHistoriesByBusinessEntityID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEmployeePayHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> EmployeePayHistories(int businessEntityID, int? limit, int? offset)
+		public async virtual Task<IActionResult> EmployeePayHistoriesByBusinessEntityID(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -273,16 +273,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEmployeePayHistoryResponseModel> response = await this.EmployeeService.EmployeePayHistories(businessEntityID, query.Limit, query.Offset);
+			List<ApiEmployeePayHistoryResponseModel> response = await this.EmployeeService.EmployeePayHistoriesByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{businessEntityID}/JobCandidates")]
+		[Route("{businessEntityID}/JobCandidatesByBusinessEntityID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiJobCandidateResponseModel>), 200)]
-		public async virtual Task<IActionResult> JobCandidates(int businessEntityID, int? limit, int? offset)
+		public async virtual Task<IActionResult> JobCandidatesByBusinessEntityID(int businessEntityID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -290,7 +290,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiJobCandidateResponseModel> response = await this.EmployeeService.JobCandidates(businessEntityID, query.Limit, query.Offset);
+			List<ApiJobCandidateResponseModel> response = await this.EmployeeService.JobCandidatesByBusinessEntityID(businessEntityID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -314,5 +314,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0c29f97c45ec9269b810cc9870c7fbf5</Hash>
+    <Hash>aa2e5c4e9df4c7a1d38f0bcf92e1beb5</Hash>
 </Codenesium>*/

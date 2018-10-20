@@ -132,23 +132,23 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiClientCommunicationResponseModel>> ClientCommunications(int employeeId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiClientCommunicationResponseModel>> ClientCommunicationsByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ClientCommunication> records = await this.EmployeeRepository.ClientCommunications(employeeId, limit, offset);
+			List<ClientCommunication> records = await this.EmployeeRepository.ClientCommunicationsByEmployeeId(employeeId, limit, offset);
 
 			return this.BolClientCommunicationMapper.MapBOToModel(this.DalClientCommunicationMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPipelineStepResponseModel>> PipelineSteps(int shipperId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineStepResponseModel>> PipelineStepsByShipperId(int shipperId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PipelineStep> records = await this.EmployeeRepository.PipelineSteps(shipperId, limit, offset);
+			List<PipelineStep> records = await this.EmployeeRepository.PipelineStepsByShipperId(shipperId, limit, offset);
 
 			return this.BolPipelineStepMapper.MapBOToModel(this.DalPipelineStepMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotes(int employeeId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotesByEmployeeId(int employeeId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PipelineStepNote> records = await this.EmployeeRepository.PipelineStepNotes(employeeId, limit, offset);
+			List<PipelineStepNote> records = await this.EmployeeRepository.PipelineStepNotesByEmployeeId(employeeId, limit, offset);
 
 			return this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(records));
 		}
@@ -156,5 +156,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7ddac8ac0ddbb8fd3458d05828603270</Hash>
+    <Hash>bc16654f4b7ee940008bab735359d14b</Hash>
 </Codenesium>*/

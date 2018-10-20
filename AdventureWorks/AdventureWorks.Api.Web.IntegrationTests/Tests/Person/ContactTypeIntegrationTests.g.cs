@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ContactType")]
 	[Trait("Area", "Integration")]
-	public class ContactTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ContactTypeIntegrationTests
 	{
-		public ContactTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public ContactTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ContactTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiContactTypeResponseModel model = await client.ContactTypeGetAsync(1);
 
 			ApiContactTypeModelMapper mapper = new ApiContactTypeModelMapper();
 
-			UpdateResponse<ApiContactTypeResponseModel> updateResponse = await this.Client.ContactTypeUpdateAsync(model.ContactTypeID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiContactTypeResponseModel> updateResponse = await client.ContactTypeUpdateAsync(model.ContactTypeID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ContactTypeDeleteAsync(model.ContactTypeID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiContactTypeResponseModel response = await client.ContactTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ContactTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ContactTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiContactTypeResponseModel response = await this.Client.ContactTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiContactTypeResponseModel response = await client.ContactTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiContactTypeResponseModel> response = await this.Client.ContactTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiContactTypeResponseModel> response = await client.ContactTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiContactTypeResponseModel> CreateRecord()
+		private async Task<ApiContactTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiContactTypeRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiContactTypeResponseModel> result = await this.Client.ContactTypeCreateAsync(model);
+			CreateResponse<ApiContactTypeResponseModel> result = await client.ContactTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ContactTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>22b76806267d8058e3fd562e3413abea</Hash>
+    <Hash>8deb12157b72238b68945a053476e9f1</Hash>
 </Codenesium>*/

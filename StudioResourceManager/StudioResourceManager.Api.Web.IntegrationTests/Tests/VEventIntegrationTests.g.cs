@@ -15,19 +15,22 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "VEvent")]
 	[Trait("Area", "Integration")]
-	public class VEventIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class VEventIntegrationTests
 	{
-		public VEventIntegrationTests(TestWebApplicationFactory fixture)
+		public VEventIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiVEventResponseModel response = await this.Client.VEventGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiVEventResponseModel response = await client.VEventGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -35,7 +38,14 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiVEventResponseModel> response = await this.Client.VEventAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiVEventResponseModel> response = await client.VEventAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
@@ -43,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>bde2e65e54d9030a281ea061e1fca2a7</Hash>
+    <Hash>53e19e806c154c2afee5f3002fd5fef3</Hash>
 </Codenesium>*/

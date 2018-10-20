@@ -81,9 +81,23 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Currency>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<CurrencyRate>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<CurrencyRate>> CurrencyRatesByFromCurrencyCode(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<CurrencyRate>().Where(x => x.FromCurrencyCode == fromCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
+		}
+
+		public async virtual Task<List<CurrencyRate>> CurrencyRatesByToCurrencyCode(string toCurrencyCode, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<CurrencyRate>().Where(x => x.ToCurrencyCode == toCurrencyCode).AsQueryable().Skip(offset).Take(limit).ToListAsync<CurrencyRate>();
+		}
+
+		public async virtual Task<List<Currency>> ByCountryRegionCode(int countryRegionCode, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.CountryRegionCurrencies
+			              join currencies in this.Context.Currencies on
+			              refTable.CurrencyCode equals currencies.CurrencyCode
+			              where refTable.CountryRegionCode == countryRegionCode
+			              select currencies).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Currency>> Where(
@@ -118,5 +132,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7a7390c6217bd0732c101c28e71fcf69</Hash>
+    <Hash>1d42bf5bc2dd819bc5f07f609c54eb32</Hash>
 </Codenesium>*/

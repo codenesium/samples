@@ -152,23 +152,23 @@ namespace AdventureWorksNS.Api.Services
 			return this.BolProductModelMapper.MapBOToModel(this.DalProductModelMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductResponseModel>> Products(int productModelID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductResponseModel>> ProductsByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Product> records = await this.ProductModelRepository.Products(productModelID, limit, offset);
+			List<Product> records = await this.ProductModelRepository.ProductsByProductModelID(productModelID, limit, offset);
 
 			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductModelProductDescriptionCultureResponseModel>> ProductModelProductDescriptionCulturesByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductModelProductDescriptionCulture> records = await this.ProductModelRepository.ProductModelProductDescriptionCultures(productModelID, limit, offset);
+			List<ProductModelProductDescriptionCulture> records = await this.ProductModelRepository.ProductModelProductDescriptionCulturesByProductModelID(productModelID, limit, offset);
 
 			return this.BolProductModelProductDescriptionCultureMapper.MapBOToModel(this.DalProductModelProductDescriptionCultureMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductModelResponseModel>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductModelResponseModel>> ByIllustrationID(int illustrationID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductModel> records = await this.ProductModelRepository.ByProductModelID(productModelID, limit, offset);
+			List<ProductModel> records = await this.ProductModelRepository.ByIllustrationID(illustrationID, limit, offset);
 
 			return this.BolProductModelMapper.MapBOToModel(this.DalProductModelMapper.MapEFToBO(records));
 		}
@@ -176,5 +176,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d94926df35d68dbcccd65001959a1f18</Hash>
+    <Hash>82c86160642ba99db5c1c939794bcd40</Hash>
 </Codenesium>*/

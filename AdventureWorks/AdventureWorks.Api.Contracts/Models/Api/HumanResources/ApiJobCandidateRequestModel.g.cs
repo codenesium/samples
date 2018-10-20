@@ -25,17 +25,17 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? BusinessEntityID { get; private set; }
+		public int? BusinessEntityID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string Resume { get; private set; }
+		public string Resume { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>251a53e425a4b14a6a3528e222be2d39</Hash>
+    <Hash>dfdedef5355826fc225ee4263bcd47bc</Hash>
 </Codenesium>*/

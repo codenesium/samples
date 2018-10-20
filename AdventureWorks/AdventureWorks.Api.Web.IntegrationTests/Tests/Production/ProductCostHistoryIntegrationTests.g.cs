@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ProductCostHistory")]
 	[Trait("Area", "Integration")]
-	public class ProductCostHistoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ProductCostHistoryIntegrationTests
 	{
-		public ProductCostHistoryIntegrationTests(TestWebApplicationFactory fixture)
+		public ProductCostHistoryIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ProductCostHistoryDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiProductCostHistoryResponseModel model = await client.ProductCostHistoryGetAsync(1);
 
 			ApiProductCostHistoryModelMapper mapper = new ApiProductCostHistoryModelMapper();
 
-			UpdateResponse<ApiProductCostHistoryResponseModel> updateResponse = await this.Client.ProductCostHistoryUpdateAsync(model.ProductID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductCostHistoryResponseModel> updateResponse = await client.ProductCostHistoryUpdateAsync(model.ProductID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ProductCostHistoryDeleteAsync(model.ProductID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiProductCostHistoryResponseModel response = await client.ProductCostHistoryGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ProductCostHistoryDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ProductCostHistoryGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiProductCostHistoryResponseModel response = await this.Client.ProductCostHistoryGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiProductCostHistoryResponseModel response = await client.ProductCostHistoryGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiProductCostHistoryResponseModel> response = await this.Client.ProductCostHistoryAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiProductCostHistoryResponseModel> response = await client.ProductCostHistoryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiProductCostHistoryResponseModel> CreateRecord()
+		private async Task<ApiProductCostHistoryResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiProductCostHistoryRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"));
-			CreateResponse<ApiProductCostHistoryResponseModel> result = await this.Client.ProductCostHistoryCreateAsync(model);
+			CreateResponse<ApiProductCostHistoryResponseModel> result = await client.ProductCostHistoryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ProductCostHistoryDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>614213c1f957f035326ec98972b49276</Hash>
+    <Hash>700ab4017699f071fa29dcaa7ccb2395</Hash>
 </Codenesium>*/

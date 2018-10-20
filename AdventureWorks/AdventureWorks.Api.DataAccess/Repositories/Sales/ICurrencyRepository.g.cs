@@ -19,10 +19,14 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Currency> ByName(string name);
 
-		Task<List<CurrencyRate>> CurrencyRates(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0);
+		Task<List<CurrencyRate>> CurrencyRatesByFromCurrencyCode(string fromCurrencyCode, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<CurrencyRate>> CurrencyRatesByToCurrencyCode(string toCurrencyCode, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Currency>> ByCountryRegionCode(int countryRegionCode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>353f72a55bfa0b4659d611d17f681012</Hash>
+    <Hash>1721f14f912a7b908b159c3731b61c16</Hash>
 </Codenesium>*/

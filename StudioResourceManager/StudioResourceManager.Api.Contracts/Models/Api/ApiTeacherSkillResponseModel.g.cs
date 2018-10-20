@@ -10,10 +10,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 	{
 		public virtual void SetProperties(
 			int id,
-			string name)
+			string name,
+			bool isDeleted)
 		{
 			this.Id = id;
 			this.Name = name;
+			this.IsDeleted = isDeleted;
 		}
 
 		[JsonProperty]
@@ -21,9 +23,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[JsonProperty]
 		public string Name { get; private set; }
+
+		[JsonProperty]
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>25d1d79754bac85e421ca44609ec1974</Hash>
+    <Hash>88a571943c04b33c36c06f65a8ce3213</Hash>
 </Codenesium>*/

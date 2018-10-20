@@ -14,7 +14,8 @@ namespace StudioResourceManagerNS.Api.Services
 			TeacherSkill efTeacherSkill = new TeacherSkill();
 			efTeacherSkill.SetProperties(
 				bo.Id,
-				bo.Name);
+				bo.Name,
+				bo.IsDeleted);
 			return efTeacherSkill;
 		}
 
@@ -25,7 +26,8 @@ namespace StudioResourceManagerNS.Api.Services
 
 			bo.SetProperties(
 				ef.Id,
-				ef.Name);
+				ef.Name,
+				ef.IsDeleted);
 			return bo;
 		}
 
@@ -45,5 +47,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>939beea88066fd965f5c2bcaba52f10f</Hash>
+    <Hash>9ba9cf0f0a2f39603d730242a70b9a2a</Hash>
 </Codenesium>*/

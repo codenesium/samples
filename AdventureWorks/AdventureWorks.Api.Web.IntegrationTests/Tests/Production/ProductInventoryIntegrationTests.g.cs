@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ProductInventory")]
 	[Trait("Area", "Integration")]
-	public class ProductInventoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ProductInventoryIntegrationTests
 	{
-		public ProductInventoryIntegrationTests(TestWebApplicationFactory fixture)
+		public ProductInventoryIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ProductInventoryDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiProductInventoryResponseModel model = await client.ProductInventoryGetAsync(1);
 
 			ApiProductInventoryModelMapper mapper = new ApiProductInventoryModelMapper();
 
-			UpdateResponse<ApiProductInventoryResponseModel> updateResponse = await this.Client.ProductInventoryUpdateAsync(model.ProductID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiProductInventoryResponseModel> updateResponse = await client.ProductInventoryUpdateAsync(model.ProductID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ProductInventoryDeleteAsync(model.ProductID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiProductInventoryResponseModel response = await client.ProductInventoryGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ProductInventoryDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ProductInventoryGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiProductInventoryResponseModel response = await this.Client.ProductInventoryGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiProductInventoryResponseModel response = await client.ProductInventoryGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiProductInventoryResponseModel> response = await this.Client.ProductInventoryAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiProductInventoryResponseModel> response = await client.ProductInventoryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiProductInventoryResponseModel> CreateRecord()
+		private async Task<ApiProductInventoryResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiProductInventoryRequestModel();
 			model.SetProperties(2, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
-			CreateResponse<ApiProductInventoryResponseModel> result = await this.Client.ProductInventoryCreateAsync(model);
+			CreateResponse<ApiProductInventoryResponseModel> result = await client.ProductInventoryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ProductInventoryDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>14986a293fa3f992bb85878d605c1665</Hash>
+    <Hash>a6e01d8769edfd46f8f8081ab6145670</Hash>
 </Codenesium>*/

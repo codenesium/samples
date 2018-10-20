@@ -116,9 +116,9 @@ namespace TicketingCRMNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiProvinceResponseModel>> Provinces(int countryId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProvinceResponseModel>> ProvincesByCountryId(int countryId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Province> records = await this.CountryRepository.Provinces(countryId, limit, offset);
+			List<Province> records = await this.CountryRepository.ProvincesByCountryId(countryId, limit, offset);
 
 			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>021bf0f6b8721f8bda22bf129d0fbf93</Hash>
+    <Hash>2cf09c66ccc063fde7bb0a1f7253fb38</Hash>
 </Codenesium>*/

@@ -76,17 +76,17 @@ namespace PetShippingNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<ClientCommunication>> ClientCommunications(int clientId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ClientCommunication>> ClientCommunicationsByClientId(int clientId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ClientCommunication>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<ClientCommunication>();
 		}
 
-		public async virtual Task<List<Pet>> Pets(int clientId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Pet>> PetsByClientId(int clientId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Pet>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Pet>();
 		}
 
-		public async virtual Task<List<Sale>> Sales(int clientId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Sale>> SalesByClientId(int clientId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Sale>().Where(x => x.ClientId == clientId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
@@ -123,5 +123,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ee431f1a79cbd39ee871a2a9fa8c9957</Hash>
+    <Hash>4e234557fce7f7d4467d0bc995ac7ed6</Hash>
 </Codenesium>*/

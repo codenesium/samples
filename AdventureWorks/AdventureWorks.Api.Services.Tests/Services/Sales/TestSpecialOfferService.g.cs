@@ -29,9 +29,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			List<ApiSpecialOfferResponseModel> response = await service.All();
 
@@ -49,9 +47,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ApiSpecialOfferResponseModel response = await service.Get(default(int));
 
@@ -68,9 +64,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ApiSpecialOfferResponseModel response = await service.Get(default(int));
 
@@ -88,9 +82,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			CreateResponse<ApiSpecialOfferResponseModel> response = await service.Create(model);
 
@@ -110,9 +102,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			UpdateResponse<ApiSpecialOfferResponseModel> response = await service.Update(default(int), model);
 
@@ -131,9 +121,7 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                      mock.RepositoryMock.Object,
 			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
 			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
+			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -141,49 +129,9 @@ namespace AdventureWorksNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void SpecialOfferProducts_Exists()
-		{
-			var mock = new ServiceMockFacade<ISpecialOfferRepository>();
-			var records = new List<SpecialOfferProduct>();
-			records.Add(new SpecialOfferProduct());
-			mock.RepositoryMock.Setup(x => x.SpecialOfferProducts(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new SpecialOfferService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
-
-			List<ApiSpecialOfferProductResponseModel> response = await service.SpecialOfferProducts(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SpecialOfferProducts(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void SpecialOfferProducts_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ISpecialOfferRepository>();
-			mock.RepositoryMock.Setup(x => x.SpecialOfferProducts(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SpecialOfferProduct>>(new List<SpecialOfferProduct>()));
-			var service = new SpecialOfferService(mock.LoggerMock.Object,
-			                                      mock.RepositoryMock.Object,
-			                                      mock.ModelValidatorMockFactory.SpecialOfferModelValidatorMock.Object,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferMapperMock,
-			                                      mock.BOLMapperMockFactory.BOLSpecialOfferProductMapperMock,
-			                                      mock.DALMapperMockFactory.DALSpecialOfferProductMapperMock);
-
-			List<ApiSpecialOfferProductResponseModel> response = await service.SpecialOfferProducts(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SpecialOfferProducts(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ab9f1d8e76dccaa91d5c667989ee8c6d</Hash>
+    <Hash>25db8811df9fc944c9d7db2cbda7e31b</Hash>
 </Codenesium>*/

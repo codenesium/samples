@@ -35,35 +35,35 @@ namespace StackOverflowNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string Comment { get; private set; }
+		public string Comment { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime CreationDate { get; private set; }
+		public DateTime CreationDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int PostHistoryTypeId { get; private set; }
+		public int PostHistoryTypeId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int PostId { get; private set; }
+		public int PostId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string RevisionGUID { get; private set; }
+		public string RevisionGUID { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Text { get; private set; }
+		public string Text { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string UserDisplayName { get; private set; }
+		public string UserDisplayName { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? UserId { get; private set; }
+		public int? UserId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>a20ef1d7bfbd73b83276ed84d78813c4</Hash>
+    <Hash>d3a9f4d6f63af2fbbe15798e6e13ba2f</Hash>
 </Codenesium>*/

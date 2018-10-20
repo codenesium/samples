@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALAdminMapper();
 			var bo = new BOAdmin();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1, true);
 
 			Admin response = mapper.MapBOToEF(bo);
 
@@ -28,6 +28,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -35,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALAdminMapper();
 			Admin entity = new Admin();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1, true);
 
 			BOAdmin response = mapper.MapEFToBO(entity);
 
@@ -46,6 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -53,7 +55,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALAdminMapper();
 			Admin entity = new Admin();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", 1, "A", "A", 1, true);
 
 			List<BOAdmin> response = mapper.MapEFToBO(new List<Admin>() { entity });
 
@@ -63,5 +65,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>8f7e21b694d3dcc6379c53311f06aee3</Hash>
+    <Hash>02d69b9824e61da95b2ee78c77ec4000</Hash>
 </Codenesium>*/

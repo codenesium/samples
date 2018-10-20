@@ -15,54 +15,82 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Messenger")]
 	[Trait("Area", "Integration")]
-	public class MessengerIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class MessengerIntegrationTests
 	{
-		public MessengerIntegrationTests(TestWebApplicationFactory fixture)
+		public MessengerIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.MessengerDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiMessengerResponseModel model = await client.MessengerGetAsync(1);
 
 			ApiMessengerModelMapper mapper = new ApiMessengerModelMapper();
 
-			UpdateResponse<ApiMessengerResponseModel> updateResponse = await this.Client.MessengerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiMessengerResponseModel> updateResponse = await client.MessengerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.MessengerDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiMessengerResponseModel response = await client.MessengerGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.MessengerDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.MessengerGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiMessengerResponseModel response = await this.Client.MessengerGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiMessengerResponseModel response = await client.MessengerGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TwitterNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiMessengerResponseModel> response = await this.Client.MessengerAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiMessengerResponseModel> response = await client.MessengerAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiMessengerResponseModel> CreateRecord()
+		private async Task<ApiMessengerResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiMessengerRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 1, TimeSpan.Parse("1"), 1, 1);
-			CreateResponse<ApiMessengerResponseModel> result = await this.Client.MessengerCreateAsync(model);
+			CreateResponse<ApiMessengerResponseModel> result = await client.MessengerCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.MessengerDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c3fe5e2c106e4f9dfe0a800c306b586</Hash>
+    <Hash>bbf1ba2a9dbe0c3d9737c6b420cba0b5</Hash>
 </Codenesium>*/

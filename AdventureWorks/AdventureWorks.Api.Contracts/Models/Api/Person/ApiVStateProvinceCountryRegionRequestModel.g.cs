@@ -32,30 +32,30 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string CountryRegionCode { get; private set; }
+		public string CountryRegionCode { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string CountryRegionName { get; private set; }
+		public string CountryRegionName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool IsOnlyStateProvinceFlag { get; private set; }
+		public bool IsOnlyStateProvinceFlag { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public string StateProvinceCode { get; private set; }
+		public string StateProvinceCode { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string StateProvinceName { get; private set; }
+		public string StateProvinceName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int TerritoryID { get; private set; }
+		public int TerritoryID { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b6fffd291b60a1f272e91b201f70e4d3</Hash>
+    <Hash>421bed33aaa2d7be04124a1ad5810314</Hash>
 </Codenesium>*/

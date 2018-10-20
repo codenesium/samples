@@ -81,7 +81,6 @@ namespace PetShippingNS.Api.DataAccess
 			return await this.Context.Set<Country>().SingleOrDefaultAsync(x => x.Id == countryId);
 		}
 
-		// Reference foreign key. Reference Table=PipelineStepDestination. First table=destinations. Second table=destinations
 		public async virtual Task<List<Destination>> ByDestinationId(int destinationId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.PipelineStepDestinations
@@ -123,5 +122,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>0c9ad0b6a1da893422f1f9e7484054d0</Hash>
+    <Hash>2503ecebc7ae3db52d575b80528c2b5b</Hash>
 </Codenesium>*/

@@ -190,7 +190,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace StudioResourceManagerNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{spaceFeatureId}/SpaceSpaceFeatures")]
+		[Route("{spaceFeatureId}/SpaceSpaceFeaturesBySpaceFeatureId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiSpaceSpaceFeatureResponseModel>), 200)]
-		public async virtual Task<IActionResult> SpaceSpaceFeatures(int spaceFeatureId, int? limit, int? offset)
+		public async virtual Task<IActionResult> SpaceSpaceFeaturesBySpaceFeatureId(int spaceFeatureId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,24 +218,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSpaceSpaceFeatureResponseModel> response = await this.SpaceFeatureService.SpaceSpaceFeatures(spaceFeatureId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("bySpaceId/{spaceId}")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceFeatureResponseModel>), 200)]
-		public async virtual Task<IActionResult> BySpaceId(int spaceId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSpaceFeatureResponseModel> response = await this.SpaceFeatureService.BySpaceId(spaceId, query.Limit, query.Offset);
+			List<ApiSpaceSpaceFeatureResponseModel> response = await this.SpaceFeatureService.SpaceSpaceFeaturesBySpaceFeatureId(spaceFeatureId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -259,5 +242,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>b20defc587a25a69dc4c97f1f493cb2a</Hash>
+    <Hash>740da2991aa32c353ed950baa34b6862</Hash>
 </Codenesium>*/

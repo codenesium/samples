@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Species")]
 	[Trait("Area", "Integration")]
-	public class SpeciesIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class SpeciesIntegrationTests
 	{
-		public SpeciesIntegrationTests(TestWebApplicationFactory fixture)
+		public SpeciesIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.SpeciesDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiSpeciesResponseModel model = await client.SpeciesGetAsync(1);
 
 			ApiSpeciesModelMapper mapper = new ApiSpeciesModelMapper();
 
-			UpdateResponse<ApiSpeciesResponseModel> updateResponse = await this.Client.SpeciesUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSpeciesResponseModel> updateResponse = await client.SpeciesUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.SpeciesDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiSpeciesResponseModel response = await client.SpeciesGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.SpeciesDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.SpeciesGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiSpeciesResponseModel response = await this.Client.SpeciesGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiSpeciesResponseModel response = await client.SpeciesGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiSpeciesResponseModel> response = await this.Client.SpeciesAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiSpeciesResponseModel> response = await client.SpeciesAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiSpeciesResponseModel> CreateRecord()
+		private async Task<ApiSpeciesResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiSpeciesRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiSpeciesResponseModel> result = await this.Client.SpeciesCreateAsync(model);
+			CreateResponse<ApiSpeciesResponseModel> result = await client.SpeciesCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.SpeciesDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>323b1ba9c2fc771a5366e5b3d2518b6a</Hash>
+    <Hash>9fe2e10a87e1233afd75f36ea8e5d982</Hash>
 </Codenesium>*/

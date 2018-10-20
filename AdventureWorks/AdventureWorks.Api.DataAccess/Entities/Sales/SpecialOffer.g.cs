@@ -67,7 +67,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public Guid Rowguid { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("SpecialOfferID")]
 		public int SpecialOfferID { get; private set; }
 
@@ -81,5 +80,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ecb398aee239ec2e2c7f38554b23457b</Hash>
+    <Hash>8491a516d0a60919f198e6b379c2ce6f</Hash>
 </Codenesium>*/

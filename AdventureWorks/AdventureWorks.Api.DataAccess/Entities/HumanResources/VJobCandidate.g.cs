@@ -75,7 +75,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		[Column("EMail")]
 		public string EMail { get; private set; }
 
-		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		[Column("JobCandidateID")]
 		public int JobCandidateID { get; private set; }
 
@@ -111,5 +110,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>31258fb98f40334d162fcb311b73f9d9</Hash>
+    <Hash>e99ad85ce58633c68f130659a14268f5</Hash>
 </Codenesium>*/

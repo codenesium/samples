@@ -40,7 +40,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public DateTime ModifiedDate { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ProductPhotoID")]
 		public int ProductPhotoID { get; private set; }
 
@@ -54,5 +53,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6aa5933a914ad133ef0a81cf42188f3d</Hash>
+    <Hash>960da523d585b8144a09b4e6779e4499</Hash>
 </Codenesium>*/

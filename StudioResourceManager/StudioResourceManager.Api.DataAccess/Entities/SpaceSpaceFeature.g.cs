@@ -15,10 +15,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int spaceFeatureId,
-			int spaceId)
+			int spaceId,
+			bool isDeleted)
 		{
 			this.SpaceFeatureId = spaceFeatureId;
 			this.SpaceId = spaceId;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Key]
@@ -29,6 +31,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[Column("spaceId")]
 		public int SpaceId { get; private set; }
 
+		[Column("isDeleted")]
+		public bool IsDeleted { get; private set; }
+
 		[ForeignKey("SpaceFeatureId")]
 		public virtual SpaceFeature SpaceFeatureNavigation { get; private set; }
 
@@ -38,5 +43,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d907a7142e3a55f5156b7bae3e1e5ac9</Hash>
+    <Hash>13ed982cb92861b5845ed5d735b6ebf2</Hash>
 </Codenesium>*/

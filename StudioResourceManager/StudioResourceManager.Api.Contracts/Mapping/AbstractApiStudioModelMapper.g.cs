@@ -19,7 +19,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			                       request.Name,
 			                       request.Province,
 			                       request.Website,
-			                       request.Zip);
+			                       request.Zip,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -34,7 +35,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 				response.Name,
 				response.Province,
 				response.Website,
-				response.Zip);
+				response.Zip,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -48,11 +50,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 			patch.Replace(x => x.Province, model.Province);
 			patch.Replace(x => x.Website, model.Website);
 			patch.Replace(x => x.Zip, model.Zip);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9acb49524eb789315bef6e06ea1d8a27</Hash>
+    <Hash>8f93a3707947597097da448d137f29f8</Hash>
 </Codenesium>*/

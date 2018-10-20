@@ -15,7 +15,8 @@ namespace StudioResourceManagerNS.Api.Services
 			efSpace.SetProperties(
 				bo.Description,
 				bo.Id,
-				bo.Name);
+				bo.Name,
+				bo.IsDeleted);
 			return efSpace;
 		}
 
@@ -27,7 +28,8 @@ namespace StudioResourceManagerNS.Api.Services
 			bo.SetProperties(
 				ef.Id,
 				ef.Description,
-				ef.Name);
+				ef.Name,
+				ef.IsDeleted);
 			return bo;
 		}
 
@@ -47,5 +49,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>88765cd57bd25211c6b4fa4bd16204a5</Hash>
+    <Hash>afb41450c672b6cbda49379ce35085ad</Hash>
 </Codenesium>*/

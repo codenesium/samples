@@ -86,7 +86,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<Shift>().SingleOrDefaultAsync(x => x.StartTime == startTime && x.EndTime == endTime);
 		}
 
-		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistories(int shiftID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<EmployeeDepartmentHistory>> EmployeeDepartmentHistoriesByShiftID(int shiftID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EmployeeDepartmentHistory>().Where(x => x.ShiftID == shiftID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmployeeDepartmentHistory>();
 		}
@@ -123,5 +123,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e4a9a201fbf501ccc4b6a7f6908b8112</Hash>
+    <Hash>21aa251ba99bebabb5f16c25a77247f9</Hash>
 </Codenesium>*/

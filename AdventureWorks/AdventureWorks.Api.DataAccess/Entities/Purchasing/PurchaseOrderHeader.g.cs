@@ -56,7 +56,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public DateTime OrderDate { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("PurchaseOrderID")]
 		public int PurchaseOrderID { get; private set; }
 
@@ -88,5 +87,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1a56a96c934cdd423ebe9e44f687cc7d</Hash>
+    <Hash>662112aac08253837ce7f54ffd9a464f</Hash>
 </Codenesium>*/

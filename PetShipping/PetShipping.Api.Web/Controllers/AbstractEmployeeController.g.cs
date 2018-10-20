@@ -190,7 +190,7 @@ namespace PetShippingNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace PetShippingNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{employeeId}/ClientCommunications")]
+		[Route("{employeeId}/ClientCommunicationsByEmployeeId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiClientCommunicationResponseModel>), 200)]
-		public async virtual Task<IActionResult> ClientCommunications(int employeeId, int? limit, int? offset)
+		public async virtual Task<IActionResult> ClientCommunicationsByEmployeeId(int employeeId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,16 +218,16 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiClientCommunicationResponseModel> response = await this.EmployeeService.ClientCommunications(employeeId, query.Limit, query.Offset);
+			List<ApiClientCommunicationResponseModel> response = await this.EmployeeService.ClientCommunicationsByEmployeeId(employeeId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{shipperId}/PipelineSteps")]
+		[Route("{shipperId}/PipelineStepsByShipperId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPipelineStepResponseModel>), 200)]
-		public async virtual Task<IActionResult> PipelineSteps(int shipperId, int? limit, int? offset)
+		public async virtual Task<IActionResult> PipelineStepsByShipperId(int shipperId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,16 +235,16 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPipelineStepResponseModel> response = await this.EmployeeService.PipelineSteps(shipperId, query.Limit, query.Offset);
+			List<ApiPipelineStepResponseModel> response = await this.EmployeeService.PipelineStepsByShipperId(shipperId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{employeeId}/PipelineStepNotes")]
+		[Route("{employeeId}/PipelineStepNotesByEmployeeId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPipelineStepNoteResponseModel>), 200)]
-		public async virtual Task<IActionResult> PipelineStepNotes(int employeeId, int? limit, int? offset)
+		public async virtual Task<IActionResult> PipelineStepNotesByEmployeeId(int employeeId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,7 +252,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPipelineStepNoteResponseModel> response = await this.EmployeeService.PipelineStepNotes(employeeId, query.Limit, query.Offset);
+			List<ApiPipelineStepNoteResponseModel> response = await this.EmployeeService.PipelineStepNotesByEmployeeId(employeeId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -276,5 +276,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>7696327e6b4e7788af8c6cd421b61877</Hash>
+    <Hash>b1c22648bca2947e2b1627bae9372e55</Hash>
 </Codenesium>*/

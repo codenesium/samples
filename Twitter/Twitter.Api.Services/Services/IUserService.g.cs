@@ -23,26 +23,30 @@ namespace TwitterNS.Api.Services
 
 		Task<List<ApiUserResponseModel>> ByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiDirectTweetResponseModel>> DirectTweets(int taggedUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiDirectTweetResponseModel>> DirectTweetsByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiFollowerResponseModel>> Followers(int followedUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiFollowerResponseModel>> FollowersByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiMessageResponseModel>> Messages(int senderUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiFollowerResponseModel>> FollowersByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiMessengerResponseModel>> Messengers(int toUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMessageResponseModel>> MessagesBySenderUserId(int senderUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiQuoteTweetResponseModel>> QuoteTweets(int retweeterUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMessengerResponseModel>> MessengersByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiReplyResponseModel>> Replies(int replierUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiMessengerResponseModel>> MessengersByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiRetweetResponseModel>> Retweets(int retwitterUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiQuoteTweetResponseModel>> QuoteTweetsByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTweetResponseModel>> Tweets(int userUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiReplyResponseModel>> RepliesByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiRetweetResponseModel>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiTweetResponseModel>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiUserResponseModel>> ByLikerUserId(int likerUserId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>cec466ccff769f2e04efab0205b612d7</Hash>
+    <Hash>7d21b3fd701d82a4fca866b40fe950ee</Hash>
 </Codenesium>*/

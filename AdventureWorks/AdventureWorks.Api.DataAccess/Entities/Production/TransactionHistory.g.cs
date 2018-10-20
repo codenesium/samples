@@ -57,7 +57,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public DateTime TransactionDate { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("TransactionID")]
 		public int TransactionID { get; private set; }
 
@@ -68,5 +67,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>2f52c7e31bcd06e7d9456ea5a3c36004</Hash>
+    <Hash>94ffee6b440f3ab07e61e17dcee9fd7c</Hash>
 </Codenesium>*/

@@ -30,26 +30,26 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime DateCreated { get; private set; }
+		public DateTime DateCreated { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; }
+		public int ProductID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int Quantity { get; private set; }
+		public int Quantity { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string ShoppingCartID { get; private set; }
+		public string ShoppingCartID { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>baa1998d99d5d0929cadc9a17e8d2e99</Hash>
+    <Hash>8848ae0f08bd3395957d29d490c014bb</Hash>
 </Codenesium>*/

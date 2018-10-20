@@ -243,12 +243,12 @@ namespace TwitterNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void QuoteTweets_Exists()
+		public async void QuoteTweetsBySourceTweetId_Exists()
 		{
 			var mock = new ServiceMockFacade<ITweetRepository>();
 			var records = new List<QuoteTweet>();
 			records.Add(new QuoteTweet());
-			mock.RepositoryMock.Setup(x => x.QuoteTweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.QuoteTweetsBySourceTweetId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TweetService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
@@ -259,17 +259,17 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.QuoteTweets(default(int));
+			List<ApiQuoteTweetResponseModel> response = await service.QuoteTweetsBySourceTweetId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.QuoteTweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.QuoteTweetsBySourceTweetId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void QuoteTweets_Not_Exists()
+		public async void QuoteTweetsBySourceTweetId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITweetRepository>();
-			mock.RepositoryMock.Setup(x => x.QuoteTweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<QuoteTweet>>(new List<QuoteTweet>()));
+			mock.RepositoryMock.Setup(x => x.QuoteTweetsBySourceTweetId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<QuoteTweet>>(new List<QuoteTweet>()));
 			var service = new TweetService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
@@ -280,19 +280,19 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
-			List<ApiQuoteTweetResponseModel> response = await service.QuoteTweets(default(int));
+			List<ApiQuoteTweetResponseModel> response = await service.QuoteTweetsBySourceTweetId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.QuoteTweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.QuoteTweetsBySourceTweetId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Retweets_Exists()
+		public async void RetweetsByTweetTweetId_Exists()
 		{
 			var mock = new ServiceMockFacade<ITweetRepository>();
 			var records = new List<Retweet>();
 			records.Add(new Retweet());
-			mock.RepositoryMock.Setup(x => x.Retweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.RetweetsByTweetTweetId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TweetService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
@@ -303,17 +303,17 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
-			List<ApiRetweetResponseModel> response = await service.Retweets(default(int));
+			List<ApiRetweetResponseModel> response = await service.RetweetsByTweetTweetId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Retweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.RetweetsByTweetTweetId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Retweets_Not_Exists()
+		public async void RetweetsByTweetTweetId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITweetRepository>();
-			mock.RepositoryMock.Setup(x => x.Retweets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Retweet>>(new List<Retweet>()));
+			mock.RepositoryMock.Setup(x => x.RetweetsByTweetTweetId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Retweet>>(new List<Retweet>()));
 			var service = new TweetService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.TweetModelValidatorMock.Object,
@@ -324,14 +324,14 @@ namespace TwitterNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLRetweetMapperMock,
 			                               mock.DALMapperMockFactory.DALRetweetMapperMock);
 
-			List<ApiRetweetResponseModel> response = await service.Retweets(default(int));
+			List<ApiRetweetResponseModel> response = await service.RetweetsByTweetTweetId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Retweets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.RetweetsByTweetTweetId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>c571ec6570cab7379047d8093574f44b</Hash>
+    <Hash>795b1f519f330a33e3468b688c775dd0</Hash>
 </Codenesium>*/

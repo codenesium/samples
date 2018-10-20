@@ -236,114 +236,114 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiAdminResponseModel>> Admins(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiAdminResponseModel>> AdminsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Admin> records = await this.TenantRepository.Admins(tenantId, limit, offset);
+			List<Admin> records = await this.TenantRepository.AdminsByTenantId(tenantId, limit, offset);
 
 			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEventResponseModel>> Events(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventResponseModel>> EventsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Event> records = await this.TenantRepository.Events(tenantId, limit, offset);
+			List<Event> records = await this.TenantRepository.EventsByTenantId(tenantId, limit, offset);
 
 			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEventStatusResponseModel>> EventStatuses(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventStatusResponseModel>> EventStatusesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EventStatus> records = await this.TenantRepository.EventStatuses(tenantId, limit, offset);
+			List<EventStatus> records = await this.TenantRepository.EventStatusesByTenantId(tenantId, limit, offset);
 
 			return this.BolEventStatusMapper.MapBOToModel(this.DalEventStatusMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudents(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EventStudent> records = await this.TenantRepository.EventStudents(tenantId, limit, offset);
+			List<EventStudent> records = await this.TenantRepository.EventStudentsByTenantId(tenantId, limit, offset);
 
 			return this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEventTeacherResponseModel>> EventTeachers(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventTeacherResponseModel>> EventTeachersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EventTeacher> records = await this.TenantRepository.EventTeachers(tenantId, limit, offset);
+			List<EventTeacher> records = await this.TenantRepository.EventTeachersByTenantId(tenantId, limit, offset);
 
 			return this.BolEventTeacherMapper.MapBOToModel(this.DalEventTeacherMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiFamilyResponseModel>> Families(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiFamilyResponseModel>> FamiliesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Family> records = await this.TenantRepository.Families(tenantId, limit, offset);
+			List<Family> records = await this.TenantRepository.FamiliesByTenantId(tenantId, limit, offset);
 
 			return this.BolFamilyMapper.MapBOToModel(this.DalFamilyMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiRateResponseModel>> Rates(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiRateResponseModel>> RatesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Rate> records = await this.TenantRepository.Rates(tenantId, limit, offset);
+			List<Rate> records = await this.TenantRepository.RatesByTenantId(tenantId, limit, offset);
 
 			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSpaceResponseModel>> Spaces(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSpaceResponseModel>> SpacesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Space> records = await this.TenantRepository.Spaces(tenantId, limit, offset);
+			List<Space> records = await this.TenantRepository.SpacesByTenantId(tenantId, limit, offset);
 
 			return this.BolSpaceMapper.MapBOToModel(this.DalSpaceMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSpaceFeatureResponseModel>> SpaceFeatures(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSpaceFeatureResponseModel>> SpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SpaceFeature> records = await this.TenantRepository.SpaceFeatures(tenantId, limit, offset);
+			List<SpaceFeature> records = await this.TenantRepository.SpaceFeaturesByTenantId(tenantId, limit, offset);
 
 			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeatures(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SpaceSpaceFeature> records = await this.TenantRepository.SpaceSpaceFeatures(tenantId, limit, offset);
+			List<SpaceSpaceFeature> records = await this.TenantRepository.SpaceSpaceFeaturesByTenantId(tenantId, limit, offset);
 
 			return this.BolSpaceSpaceFeatureMapper.MapBOToModel(this.DalSpaceSpaceFeatureMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiStudentResponseModel>> Students(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiStudentResponseModel>> StudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Student> records = await this.TenantRepository.Students(tenantId, limit, offset);
+			List<Student> records = await this.TenantRepository.StudentsByTenantId(tenantId, limit, offset);
 
 			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiStudioResponseModel>> Studios(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiStudioResponseModel>> StudiosByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Studio> records = await this.TenantRepository.Studios(tenantId, limit, offset);
+			List<Studio> records = await this.TenantRepository.StudiosByTenantId(tenantId, limit, offset);
 
 			return this.BolStudioMapper.MapBOToModel(this.DalStudioMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTeacherResponseModel>> Teachers(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTeacherResponseModel>> TeachersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Teacher> records = await this.TenantRepository.Teachers(tenantId, limit, offset);
+			List<Teacher> records = await this.TenantRepository.TeachersByTenantId(tenantId, limit, offset);
 
 			return this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTeacherSkillResponseModel>> TeacherSkills(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTeacherSkillResponseModel>> TeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<TeacherSkill> records = await this.TenantRepository.TeacherSkills(tenantId, limit, offset);
+			List<TeacherSkill> records = await this.TenantRepository.TeacherSkillsByTenantId(tenantId, limit, offset);
 
 			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkills(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<TeacherTeacherSkill> records = await this.TenantRepository.TeacherTeacherSkills(tenantId, limit, offset);
+			List<TeacherTeacherSkill> records = await this.TenantRepository.TeacherTeacherSkillsByTenantId(tenantId, limit, offset);
 
 			return this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiUserResponseModel>> Users(int tenantId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiUserResponseModel>> UsersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<User> records = await this.TenantRepository.Users(tenantId, limit, offset);
+			List<User> records = await this.TenantRepository.UsersByTenantId(tenantId, limit, offset);
 
 			return this.BolUserMapper.MapBOToModel(this.DalUserMapper.MapEFToBO(records));
 		}
@@ -351,5 +351,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6ff691d79c86edf2cdf571e49c8e482d</Hash>
+    <Hash>aa099f07085f5211ee507894f5877f59</Hash>
 </Codenesium>*/

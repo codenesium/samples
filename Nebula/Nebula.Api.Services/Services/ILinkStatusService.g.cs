@@ -23,10 +23,10 @@ namespace NebulaNS.Api.Services
 
 		Task<ApiLinkStatusResponseModel> ByName(string name);
 
-		Task<List<ApiLinkResponseModel>> Links(int linkStatusId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiLinkResponseModel>> LinksByLinkStatusId(int linkStatusId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7eaf623eeb1fa28d608bce8264b95a86</Hash>
+    <Hash>4e23afc03c379818a76a1c630c6e9b5a</Hash>
 </Codenesium>*/

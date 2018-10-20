@@ -243,16 +243,16 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLocationResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTweetResponseModel>> Tweets(int locationId)
+		public virtual async Task<List<ApiTweetResponseModel>> TweetsByLocationId(int locationId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/Tweets/{locationId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/TweetsByLocationId/{locationId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiUserResponseModel>> Users(int locationLocationId)
+		public virtual async Task<List<ApiUserResponseModel>> UsersByLocationLocationId(int locationLocationId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/Users/{locationLocationId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Locations/UsersByLocationLocationId/{locationLocationId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -306,9 +306,9 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiMessageResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMessengerResponseModel>> Messengers(int messageId)
+		public virtual async Task<List<ApiMessengerResponseModel>> MessengersByMessageId(int messageId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Messages/Messengers/{messageId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Messages/MessengersByMessageId/{messageId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -593,16 +593,16 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiQuoteTweetResponseModel>> QuoteTweets(int sourceTweetId)
+		public virtual async Task<List<ApiQuoteTweetResponseModel>> QuoteTweetsBySourceTweetId(int sourceTweetId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tweets/QuoteTweets/{sourceTweetId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tweets/QuoteTweetsBySourceTweetId/{sourceTweetId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiQuoteTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiRetweetResponseModel>> Retweets(int tweetTweetId)
+		public virtual async Task<List<ApiRetweetResponseModel>> RetweetsByTweetTweetId(int tweetTweetId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tweets/Retweets/{tweetTweetId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Tweets/RetweetsByTweetTweetId/{tweetTweetId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiRetweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -656,36 +656,78 @@ namespace TwitterNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiUserResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiDirectTweetResponseModel>> DirectTweets(int taggedUserId)
+		public virtual async Task<List<ApiDirectTweetResponseModel>> DirectTweetsByTaggedUserId(int taggedUserId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/DirectTweets/{taggedUserId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/DirectTweetsByTaggedUserId/{taggedUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiDirectTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiFollowerResponseModel>> Followers(int followedUserId)
+		public virtual async Task<List<ApiFollowerResponseModel>> FollowersByFollowedUserId(int followedUserId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/Followers/{followedUserId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/FollowersByFollowedUserId/{followedUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiMessageResponseModel>> Messages(int senderUserId)
+		public virtual async Task<List<ApiFollowerResponseModel>> FollowersByFollowingUserId(int followingUserId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/Messages/{senderUserId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/FollowersByFollowingUserId/{followingUserId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiFollowerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiMessageResponseModel>> MessagesBySenderUserId(int senderUserId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/MessagesBySenderUserId/{senderUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiMessageResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiReplyResponseModel>> Replies(int replierUserId)
+		public virtual async Task<List<ApiMessengerResponseModel>> MessengersByToUserId(int toUserId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/Replies/{replierUserId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/MessengersByToUserId/{toUserId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiMessengerResponseModel>> MessengersByUserId(int userId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/MessengersByUserId/{userId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiMessengerResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiQuoteTweetResponseModel>> QuoteTweetsByRetweeterUserId(int retweeterUserId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/QuoteTweetsByRetweeterUserId/{retweeterUserId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiQuoteTweetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiReplyResponseModel>> RepliesByReplierUserId(int replierUserId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/RepliesByReplierUserId/{replierUserId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiReplyResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiRetweetResponseModel>> RetweetsByRetwitterUserId(int retwitterUserId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/RetweetsByRetwitterUserId/{retwitterUserId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiRetweetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiTweetResponseModel>> TweetsByUserUserId(int userUserId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Users/TweetsByUserUserId/{userUserId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiTweetResponseModel>>(httpResponse.Content.ContentToString());
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f5e65564cfbf73feb6f33da89867d704</Hash>
+    <Hash>4b4d9112c7274e20236bfd1aa975d900</Hash>
 </Codenesium>*/

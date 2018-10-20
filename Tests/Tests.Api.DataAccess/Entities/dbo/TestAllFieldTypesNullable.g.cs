@@ -169,12 +169,11 @@ namespace TestsNS.Api.DataAccess
 		public string FieldXML { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>4dcd1d847d76c6d5189714f5847c6313</Hash>
+    <Hash>4f1ba3209885a0b45666627dced1fc21</Hash>
 </Codenesium>*/

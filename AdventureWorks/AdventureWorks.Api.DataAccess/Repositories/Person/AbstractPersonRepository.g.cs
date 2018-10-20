@@ -91,22 +91,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.Demographic == demographic, limit, offset);
 		}
 
-		public async virtual Task<List<BusinessEntityContact>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<BusinessEntityContact>> BusinessEntityContactsByPersonID(int personID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<BusinessEntityContact>().Where(x => x.PersonID == personID).AsQueryable().Skip(offset).Take(limit).ToListAsync<BusinessEntityContact>();
 		}
 
-		public async virtual Task<List<EmailAddress>> EmailAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<EmailAddress>> EmailAddressesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<EmailAddress>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<EmailAddress>();
 		}
 
-		public async virtual Task<List<Password>> Passwords(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Password>> PasswordsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Password>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Password>();
 		}
 
-		public async virtual Task<List<PersonPhone>> PersonPhones(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<PersonPhone>> PersonPhonesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<PersonPhone>().Where(x => x.BusinessEntityID == businessEntityID).AsQueryable().Skip(offset).Take(limit).ToListAsync<PersonPhone>();
 		}
@@ -143,5 +143,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>50f7aac7d3803928a9fe8ea108b47e62</Hash>
+    <Hash>97654bc06757ee53be7eefb8d6fb1996</Hash>
 </Codenesium>*/

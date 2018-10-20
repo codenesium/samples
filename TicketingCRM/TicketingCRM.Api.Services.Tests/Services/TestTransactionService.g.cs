@@ -183,12 +183,12 @@ namespace TicketingCRMNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Sales_Exists()
+		public async void SalesByTransactionId_Exists()
 		{
 			var mock = new ServiceMockFacade<ITransactionRepository>();
 			var records = new List<Sale>();
 			records.Add(new Sale());
-			mock.RepositoryMock.Setup(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesByTransactionId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TransactionService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
@@ -197,17 +197,17 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiSaleResponseModel> response = await service.Sales(default(int));
+			List<ApiSaleResponseModel> response = await service.SalesByTransactionId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesByTransactionId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Sales_Not_Exists()
+		public async void SalesByTransactionId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITransactionRepository>();
-			mock.RepositoryMock.Setup(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
+			mock.RepositoryMock.Setup(x => x.SalesByTransactionId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
 			var service = new TransactionService(mock.LoggerMock.Object,
 			                                     mock.RepositoryMock.Object,
 			                                     mock.ModelValidatorMockFactory.TransactionModelValidatorMock.Object,
@@ -216,14 +216,14 @@ namespace TicketingCRMNS.Api.Services.Tests
 			                                     mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                     mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiSaleResponseModel> response = await service.Sales(default(int));
+			List<ApiSaleResponseModel> response = await service.SalesByTransactionId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesByTransactionId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>eb60766ae1562fb56d49fe0c8afd6072</Hash>
+    <Hash>3f0a0811885526ec9d6e96fc7e3391f5</Hash>
 </Codenesium>*/

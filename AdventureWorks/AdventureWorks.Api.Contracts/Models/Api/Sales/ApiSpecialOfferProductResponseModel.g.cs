@@ -18,8 +18,6 @@ namespace AdventureWorksNS.Api.Contracts
 			this.ModifiedDate = modifiedDate;
 			this.ProductID = productID;
 			this.Rowguid = rowguid;
-
-			this.SpecialOfferIDEntity = nameof(ApiResponse.SpecialOffers);
 		}
 
 		[JsonProperty]
@@ -33,12 +31,9 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[JsonProperty]
 		public int SpecialOfferID { get; private set; }
-
-		[JsonProperty]
-		public string SpecialOfferIDEntity { get; set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bb4d10e2e738d45bd79263216adc72ee</Hash>
+    <Hash>97f693446cc58e848761cc0ce4f25ccc</Hash>
 </Codenesium>*/

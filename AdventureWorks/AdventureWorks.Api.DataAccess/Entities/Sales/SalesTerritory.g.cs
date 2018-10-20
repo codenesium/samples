@@ -69,12 +69,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		public decimal SalesYTD { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("TerritoryID")]
 		public int TerritoryID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>637b0b0fb5f4e516422bc49ea5e7dabf</Hash>
+    <Hash>dd94be965cd67907dedf7eb165528352</Hash>
 </Codenesium>*/

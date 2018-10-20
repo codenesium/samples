@@ -31,26 +31,26 @@ namespace TwitterNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? Date { get; private set; }
+		public DateTime? Date { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public int? FromUserId { get; private set; }
+		public int? FromUserId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int? MessageId { get; private set; }
+		public int? MessageId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public TimeSpan? Time { get; private set; }
+		public TimeSpan? Time { get; private set; } = default(TimeSpan);
 
 		[Required]
 		[JsonProperty]
-		public int ToUserId { get; private set; }
+		public int ToUserId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int? UserId { get; private set; }
+		public int? UserId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>95914b7f2e2a0b344913f9163e75202e</Hash>
+    <Hash>e68390fb785aa3b6647cfee988eec712</Hash>
 </Codenesium>*/

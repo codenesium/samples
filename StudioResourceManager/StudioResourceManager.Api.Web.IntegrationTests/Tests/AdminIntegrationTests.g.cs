@@ -15,54 +15,82 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Admin")]
 	[Trait("Area", "Integration")]
-	public class AdminIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class AdminIntegrationTests
 	{
-		public AdminIntegrationTests(TestWebApplicationFactory fixture)
+		public AdminIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.AdminDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiAdminResponseModel model = await client.AdminGetAsync(1);
 
 			ApiAdminModelMapper mapper = new ApiAdminModelMapper();
 
-			UpdateResponse<ApiAdminResponseModel> updateResponse = await this.Client.AdminUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiAdminResponseModel> updateResponse = await client.AdminUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.AdminDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiAdminResponseModel response = await client.AdminGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.AdminDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.AdminGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiAdminResponseModel response = await this.Client.AdminGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiAdminResponseModel response = await client.AdminGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiAdminResponseModel> response = await this.Client.AdminAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiAdminResponseModel> response = await client.AdminAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiAdminResponseModel> CreateRecord()
+		private async Task<ApiAdminResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiAdminRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
-			CreateResponse<ApiAdminResponseModel> result = await this.Client.AdminCreateAsync(model);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1, true);
+			CreateResponse<ApiAdminResponseModel> result = await client.AdminCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.AdminDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>88d588152426c084c277a5dd2dbefd52</Hash>
+    <Hash>f8aea5ab235918850270b53f7bab4bed</Hash>
 </Codenesium>*/

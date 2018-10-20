@@ -190,7 +190,7 @@ namespace TicketingCRMNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace TicketingCRMNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -224,10 +224,10 @@ namespace TicketingCRMNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{cityId}/Events")]
+		[Route("{cityId}/EventsByCityId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
-		public async virtual Task<IActionResult> Events(int cityId, int? limit, int? offset)
+		public async virtual Task<IActionResult> EventsByCityId(int cityId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,7 +235,7 @@ namespace TicketingCRMNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEventResponseModel> response = await this.CityService.Events(cityId, query.Limit, query.Offset);
+			List<ApiEventResponseModel> response = await this.CityService.EventsByCityId(cityId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -259,5 +259,5 @@ namespace TicketingCRMNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1fd3de15c38656a6f7cc08217a322b4d</Hash>
+    <Hash>29beee556fa9acc63d89ce4f67abc4d5</Hash>
 </Codenesium>*/

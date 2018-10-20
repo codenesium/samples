@@ -15,54 +15,82 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Pen")]
 	[Trait("Area", "Integration")]
-	public class PenIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PenIntegrationTests
 	{
-		public PenIntegrationTests(TestWebApplicationFactory fixture)
+		public PenIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PenDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPenResponseModel model = await client.PenGetAsync(1);
 
 			ApiPenModelMapper mapper = new ApiPenModelMapper();
 
-			UpdateResponse<ApiPenResponseModel> updateResponse = await this.Client.PenUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPenResponseModel> updateResponse = await client.PenUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PenDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPenResponseModel response = await client.PenGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PenDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PenGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPenResponseModel response = await this.Client.PenGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPenResponseModel response = await client.PenGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPenResponseModel> response = await this.Client.PenAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPenResponseModel> response = await client.PenAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPenResponseModel> CreateRecord()
+		private async Task<ApiPenResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPenRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiPenResponseModel> result = await this.Client.PenCreateAsync(model);
+			CreateResponse<ApiPenResponseModel> result = await client.PenCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PenDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>25539300ffe35b14ab475e7720d52f2b</Hash>
+    <Hash>f18b999d00fa2438ac908a0d2fe750a4</Hash>
 </Codenesium>*/

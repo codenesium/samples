@@ -221,12 +221,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void EmployeeDepartmentHistories_Exists()
+		public async void EmployeeDepartmentHistoriesByShiftID_Exists()
 		{
 			var mock = new ServiceMockFacade<IShiftRepository>();
 			var records = new List<EmployeeDepartmentHistory>();
 			records.Add(new EmployeeDepartmentHistory());
-			mock.RepositoryMock.Setup(x => x.EmployeeDepartmentHistories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.EmployeeDepartmentHistoriesByShiftID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ShiftService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
@@ -235,17 +235,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
 			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
 
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await service.EmployeeDepartmentHistories(default(int));
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await service.EmployeeDepartmentHistoriesByShiftID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmployeeDepartmentHistories(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.EmployeeDepartmentHistoriesByShiftID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void EmployeeDepartmentHistories_Not_Exists()
+		public async void EmployeeDepartmentHistoriesByShiftID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IShiftRepository>();
-			mock.RepositoryMock.Setup(x => x.EmployeeDepartmentHistories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EmployeeDepartmentHistory>>(new List<EmployeeDepartmentHistory>()));
+			mock.RepositoryMock.Setup(x => x.EmployeeDepartmentHistoriesByShiftID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EmployeeDepartmentHistory>>(new List<EmployeeDepartmentHistory>()));
 			var service = new ShiftService(mock.LoggerMock.Object,
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.ShiftModelValidatorMock.Object,
@@ -254,14 +254,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                               mock.BOLMapperMockFactory.BOLEmployeeDepartmentHistoryMapperMock,
 			                               mock.DALMapperMockFactory.DALEmployeeDepartmentHistoryMapperMock);
 
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await service.EmployeeDepartmentHistories(default(int));
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await service.EmployeeDepartmentHistoriesByShiftID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EmployeeDepartmentHistories(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.EmployeeDepartmentHistoriesByShiftID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>fc1c2b3c86f8c3b5942b3ed7ef4ad915</Hash>
+    <Hash>8db926601e20902e8eefdc95fc0561c5</Hash>
 </Codenesium>*/

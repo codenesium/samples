@@ -143,12 +143,12 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void AirTransports_Exists()
+		public async void AirTransportsByHandlerId_Exists()
 		{
 			var mock = new ServiceMockFacade<IHandlerRepository>();
 			var records = new List<AirTransport>();
 			records.Add(new AirTransport());
-			mock.RepositoryMock.Setup(x => x.AirTransports(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.AirTransportsByHandlerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new HandlerService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -157,17 +157,17 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                 mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
-			List<ApiAirTransportResponseModel> response = await service.AirTransports(default(int));
+			List<ApiAirTransportResponseModel> response = await service.AirTransportsByHandlerId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.AirTransports(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.AirTransportsByHandlerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void AirTransports_Not_Exists()
+		public async void AirTransportsByHandlerId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IHandlerRepository>();
-			mock.RepositoryMock.Setup(x => x.AirTransports(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<AirTransport>>(new List<AirTransport>()));
+			mock.RepositoryMock.Setup(x => x.AirTransportsByHandlerId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<AirTransport>>(new List<AirTransport>()));
 			var service = new HandlerService(mock.LoggerMock.Object,
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.HandlerModelValidatorMock.Object,
@@ -176,14 +176,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                 mock.BOLMapperMockFactory.BOLAirTransportMapperMock,
 			                                 mock.DALMapperMockFactory.DALAirTransportMapperMock);
 
-			List<ApiAirTransportResponseModel> response = await service.AirTransports(default(int));
+			List<ApiAirTransportResponseModel> response = await service.AirTransportsByHandlerId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.AirTransports(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.AirTransportsByHandlerId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>35c35c317316295321f39272c6b077c1</Hash>
+    <Hash>6994dc129e37c1ee09fc5175c55c76cd</Hash>
 </Codenesium>*/

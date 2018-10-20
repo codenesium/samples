@@ -19,12 +19,12 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<List<Message>> BySenderUserId(int? senderUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Messenger>> Messengers(int messageId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Messenger>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0);
 
 		Task<User> UserBySenderUserId(int? senderUserId);
 	}
 }
 
 /*<Codenesium>
-    <Hash>108f8aa3a1baf86fab6e4440b0362bc3</Hash>
+    <Hash>cd5f278766169471f037e0227240a22c</Hash>
 </Codenesium>*/

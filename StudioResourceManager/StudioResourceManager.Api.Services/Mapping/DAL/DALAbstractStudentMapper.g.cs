@@ -23,7 +23,8 @@ namespace StudioResourceManagerNS.Api.Services
 				bo.LastName,
 				bo.Phone,
 				bo.SmsRemindersEnabled,
-				bo.UserId);
+				bo.UserId,
+				bo.IsDeleted);
 			return efStudent;
 		}
 
@@ -43,7 +44,8 @@ namespace StudioResourceManagerNS.Api.Services
 				ef.LastName,
 				ef.Phone,
 				ef.SmsRemindersEnabled,
-				ef.UserId);
+				ef.UserId,
+				ef.IsDeleted);
 			return bo;
 		}
 
@@ -63,5 +65,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ce0ec7b1b7fc1e0821037594c9cbd1f1</Hash>
+    <Hash>4195b3fc368d638bab937b274f8b886e</Hash>
 </Codenesium>*/

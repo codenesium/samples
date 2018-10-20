@@ -143,12 +143,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void ProductModelProductDescriptionCultures_Exists()
+		public async void ProductModelProductDescriptionCulturesByProductDescriptionID_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductDescriptionRepository>();
 			var records = new List<ProductModelProductDescriptionCulture>();
 			records.Add(new ProductModelProductDescriptionCulture());
-			mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCultures(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCulturesByProductDescriptionID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductDescriptionService(mock.LoggerMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductDescriptionModelValidatorMock.Object,
@@ -157,17 +157,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                            mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                            mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-			List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCultures(default(int));
+			List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCulturesByProductDescriptionID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCultures(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCulturesByProductDescriptionID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void ProductModelProductDescriptionCultures_Not_Exists()
+		public async void ProductModelProductDescriptionCulturesByProductDescriptionID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductDescriptionRepository>();
-			mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCultures(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModelProductDescriptionCulture>>(new List<ProductModelProductDescriptionCulture>()));
+			mock.RepositoryMock.Setup(x => x.ProductModelProductDescriptionCulturesByProductDescriptionID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductModelProductDescriptionCulture>>(new List<ProductModelProductDescriptionCulture>()));
 			var service = new ProductDescriptionService(mock.LoggerMock.Object,
 			                                            mock.RepositoryMock.Object,
 			                                            mock.ModelValidatorMockFactory.ProductDescriptionModelValidatorMock.Object,
@@ -176,14 +176,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                            mock.BOLMapperMockFactory.BOLProductModelProductDescriptionCultureMapperMock,
 			                                            mock.DALMapperMockFactory.DALProductModelProductDescriptionCultureMapperMock);
 
-			List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCultures(default(int));
+			List<ApiProductModelProductDescriptionCultureResponseModel> response = await service.ProductModelProductDescriptionCulturesByProductDescriptionID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCultures(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ProductModelProductDescriptionCulturesByProductDescriptionID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e56694f5157cd6228d3be65d217a6e98</Hash>
+    <Hash>50748cda19bab53b14c618ca20fb76e9</Hash>
 </Codenesium>*/

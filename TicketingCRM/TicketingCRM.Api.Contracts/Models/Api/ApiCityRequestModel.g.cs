@@ -24,14 +24,14 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int ProvinceId { get; private set; }
+		public int ProvinceId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>913a957054ad71a46d55b8d5e53a1fa0</Hash>
+    <Hash>7ba4b9c84a22d1bda746168b7c479677</Hash>
 </Codenesium>*/

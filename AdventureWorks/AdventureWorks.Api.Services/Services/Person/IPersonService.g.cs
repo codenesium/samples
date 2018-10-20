@@ -27,16 +27,16 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<List<ApiPersonResponseModel>> ByDemographic(string demographic, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContactsByPersonID(int personID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiEmailAddressResponseModel>> EmailAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiEmailAddressResponseModel>> EmailAddressesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPasswordResponseModel>> Passwords(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPasswordResponseModel>> PasswordsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPersonPhoneResponseModel>> PersonPhones(int businessEntityID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPersonPhoneResponseModel>> PersonPhonesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e5ba88d5841334d8d8497788a42f757f</Hash>
+    <Hash>7925f6b085444702ff69d100195d1274</Hash>
 </Codenesium>*/

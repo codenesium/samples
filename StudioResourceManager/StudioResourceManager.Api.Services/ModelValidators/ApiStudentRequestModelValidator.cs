@@ -25,6 +25,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.PhoneRules();
 			this.SmsRemindersEnabledRules();
 			this.UserIdRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -40,6 +41,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.PhoneRules();
 			this.SmsRemindersEnabledRules();
 			this.UserIdRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -51,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>fe090579c9b53b458d9101386dcb57ed</Hash>
+    <Hash>50e52d3c2f2dc8a86fa193581732fcfa</Hash>
 </Codenesium>*/

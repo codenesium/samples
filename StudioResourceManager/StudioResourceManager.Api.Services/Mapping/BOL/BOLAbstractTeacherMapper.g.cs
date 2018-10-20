@@ -20,7 +20,8 @@ namespace StudioResourceManagerNS.Api.Services
 				model.FirstName,
 				model.LastName,
 				model.Phone,
-				model.UserId);
+				model.UserId,
+				model.IsDeleted);
 			return boTeacher;
 		}
 
@@ -29,7 +30,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiTeacherResponseModel();
 
-			model.SetProperties(boTeacher.Id, boTeacher.Birthday, boTeacher.Email, boTeacher.FirstName, boTeacher.LastName, boTeacher.Phone, boTeacher.UserId);
+			model.SetProperties(boTeacher.Id, boTeacher.Birthday, boTeacher.Email, boTeacher.FirstName, boTeacher.LastName, boTeacher.Phone, boTeacher.UserId, boTeacher.IsDeleted);
 
 			return model;
 		}
@@ -50,5 +51,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>7921ca53b2baf6fa6615ef41733cd7c3</Hash>
+    <Hash>7cec35926a5c263b3c6729bfed16b696</Hash>
 </Codenesium>*/

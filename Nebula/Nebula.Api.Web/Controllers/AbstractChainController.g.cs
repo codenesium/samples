@@ -190,7 +190,7 @@ namespace NebulaNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace NebulaNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -226,10 +226,10 @@ namespace NebulaNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{chainId}/Links")]
+		[Route("{chainId}/LinksByChainId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiLinkResponseModel>), 200)]
-		public async virtual Task<IActionResult> Links(int chainId, int? limit, int? offset)
+		public async virtual Task<IActionResult> LinksByChainId(int chainId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -237,7 +237,7 @@ namespace NebulaNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiLinkResponseModel> response = await this.ChainService.Links(chainId, query.Limit, query.Offset);
+			List<ApiLinkResponseModel> response = await this.ChainService.LinksByChainId(chainId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -278,5 +278,5 @@ namespace NebulaNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>5ee82c822dfc78af6d6dacde16c44f48</Hash>
+    <Hash>39943cfe1e370b3e7e9bbbcc263cd27a</Hash>
 </Codenesium>*/

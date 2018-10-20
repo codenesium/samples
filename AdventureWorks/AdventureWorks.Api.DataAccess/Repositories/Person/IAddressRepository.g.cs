@@ -21,10 +21,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<List<Address>> ByStateProvinceID(int stateProvinceID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<BusinessEntityAddress>> BusinessEntityAddresses(int addressID, int limit = int.MaxValue, int offset = 0);
+		Task<List<BusinessEntityAddress>> BusinessEntityAddressesByAddressID(int addressID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>6a5b918d114aee4134efca3b8d8177ba</Hash>
+    <Hash>5ca155679ee6afc51d18a674bb1c1668</Hash>
 </Codenesium>*/

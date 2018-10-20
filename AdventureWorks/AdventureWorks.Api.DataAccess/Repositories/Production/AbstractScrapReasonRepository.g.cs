@@ -81,7 +81,7 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Context.Set<ScrapReason>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<WorkOrder>> WorkOrders(short scrapReasonID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<WorkOrder>> WorkOrdersByScrapReasonID(short scrapReasonID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<WorkOrder>().Where(x => x.ScrapReasonID == scrapReasonID).AsQueryable().Skip(offset).Take(limit).ToListAsync<WorkOrder>();
 		}
@@ -118,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6f25b5ce792561592f56f936869c332a</Hash>
+    <Hash>c85e1af191c7ad5bac85cdea2bb8761e</Hash>
 </Codenesium>*/

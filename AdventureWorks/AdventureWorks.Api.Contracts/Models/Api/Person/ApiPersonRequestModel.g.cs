@@ -43,50 +43,50 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string AdditionalContactInfo { get; private set; }
+		public string AdditionalContactInfo { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Demographic { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public int EmailPromotion { get; private set; }
+		public string Demographic { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string FirstName { get; private set; }
+		public int EmailPromotion { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string LastName { get; private set; }
-
-		[JsonProperty]
-		public string MiddleName { get; private set; }
+		public string FirstName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public string LastName { get; private set; } = default(string);
+
+		[JsonProperty]
+		public string MiddleName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public bool NameStyle { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string PersonType { get; private set; }
+		public bool NameStyle { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public string PersonType { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[JsonProperty]
-		public string Suffix { get; private set; }
+		public string Suffix { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Title { get; private set; }
+		public string Title { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>db8dbdd215eb277bcd703a0f8d851bb2</Hash>
+    <Hash>2d9702a2476c43d791207161c9851ace</Hash>
 </Codenesium>*/

@@ -22,10 +22,10 @@ namespace TestsNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8ee455e09082a5f8ff38e489e2a5058d</Hash>
+    <Hash>b4d33ec2d575c07b82c96a37c99ab235</Hash>
 </Codenesium>*/

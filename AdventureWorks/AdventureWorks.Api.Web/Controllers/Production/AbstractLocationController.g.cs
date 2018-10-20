@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(short id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -226,10 +226,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{locationID}/ProductInventories")]
+		[Route("{locationID}/ProductInventoriesByLocationID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiProductInventoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> ProductInventories(short locationID, int? limit, int? offset)
+		public async virtual Task<IActionResult> ProductInventoriesByLocationID(short locationID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -237,16 +237,16 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiProductInventoryResponseModel> response = await this.LocationService.ProductInventories(locationID, query.Limit, query.Offset);
+			List<ApiProductInventoryResponseModel> response = await this.LocationService.ProductInventoriesByLocationID(locationID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{locationID}/WorkOrderRoutings")]
+		[Route("{locationID}/WorkOrderRoutingsByLocationID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiWorkOrderRoutingResponseModel>), 200)]
-		public async virtual Task<IActionResult> WorkOrderRoutings(short locationID, int? limit, int? offset)
+		public async virtual Task<IActionResult> WorkOrderRoutingsByLocationID(short locationID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -254,7 +254,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiWorkOrderRoutingResponseModel> response = await this.LocationService.WorkOrderRoutings(locationID, query.Limit, query.Offset);
+			List<ApiWorkOrderRoutingResponseModel> response = await this.LocationService.WorkOrderRoutingsByLocationID(locationID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -278,5 +278,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>bc7bcf41cc52be0d702bbbb021d9790f</Hash>
+    <Hash>b6a0ac9ab02e8968e1a98583b12105b6</Hash>
 </Codenesium>*/

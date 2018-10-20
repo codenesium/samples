@@ -21,7 +21,8 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			string name,
 			string province,
 			string website,
-			string zip)
+			string zip,
+			bool isDeleted)
 		{
 			this.Address1 = address1;
 			this.Address2 = address2;
@@ -31,6 +32,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Province = province;
 			this.Website = website;
 			this.Zip = zip;
+			this.IsDeleted = isDeleted;
 		}
 
 		[MaxLength(128)]
@@ -46,7 +48,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public string City { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -65,9 +66,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("zip")]
 		public string Zip { get; private set; }
+
+		[Column("isDeleted")]
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>12a08831564449d0758484663154b0c1</Hash>
+    <Hash>75efe9c59ba28103feba7986e89ce611</Hash>
 </Codenesium>*/

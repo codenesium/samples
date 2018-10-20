@@ -132,23 +132,23 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiAdminResponseModel>> Admins(int userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiAdminResponseModel>> AdminsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Admin> records = await this.UserRepository.Admins(userId, limit, offset);
+			List<Admin> records = await this.UserRepository.AdminsByUserId(userId, limit, offset);
 
 			return this.BolAdminMapper.MapBOToModel(this.DalAdminMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiStudentResponseModel>> Students(int userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiStudentResponseModel>> StudentsByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Student> records = await this.UserRepository.Students(userId, limit, offset);
+			List<Student> records = await this.UserRepository.StudentsByUserId(userId, limit, offset);
 
 			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTeacherResponseModel>> Teachers(int userId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTeacherResponseModel>> TeachersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Teacher> records = await this.UserRepository.Teachers(userId, limit, offset);
+			List<Teacher> records = await this.UserRepository.TeachersByUserId(userId, limit, offset);
 
 			return this.BolTeacherMapper.MapBOToModel(this.DalTeacherMapper.MapEFToBO(records));
 		}
@@ -156,5 +156,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>969ee24ce7549ee3489332a9ee1e46ac</Hash>
+    <Hash>1c1262400ccbfd957e6e904579ea8d1d</Hash>
 </Codenesium>*/

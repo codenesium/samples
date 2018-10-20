@@ -19,21 +19,25 @@ namespace TwitterNS.Api.DataAccess
 
 		Task<List<User>> ByLocationLocationId(int locationLocationId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<DirectTweet>> DirectTweets(int taggedUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<DirectTweet>> DirectTweetsByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Follower>> Followers(int followedUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Follower>> FollowersByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Message>> Messages(int senderUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Follower>> FollowersByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Messenger>> Messengers(int toUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Message>> MessagesBySenderUserId(int senderUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<QuoteTweet>> QuoteTweets(int retweeterUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Messenger>> MessengersByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Reply>> Replies(int replierUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Messenger>> MessengersByUserId(int userId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Retweet>> Retweets(int retwitterUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<QuoteTweet>> QuoteTweetsByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Tweet>> Tweets(int userUserId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Reply>> RepliesByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Retweet>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Tweet>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0);
 
 		Task<Location> LocationByLocationLocationId(int locationLocationId);
 
@@ -42,5 +46,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d9b90137d11ca4651f62abf0abb90880</Hash>
+    <Hash>bb77d796220c4de94a16bd95e97e7247</Hash>
 </Codenesium>*/

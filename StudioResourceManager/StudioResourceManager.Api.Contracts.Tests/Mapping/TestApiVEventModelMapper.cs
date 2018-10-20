@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiVEventModelMapper();
 			var model = new ApiVEventRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 			ApiVEventResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -27,6 +27,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.Id.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -34,7 +35,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiVEventModelMapper();
 			var model = new ApiVEventResponseModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 			ApiVEventRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -43,6 +44,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.EventStatusId.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -50,7 +52,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiVEventModelMapper();
 			var model = new ApiVEventRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"));
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), true);
 
 			JsonPatchDocument<ApiVEventRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiVEventRequestModel();
@@ -61,10 +63,11 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.EventStatusId.Should().Be(1);
 			response.ScheduledEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
+			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>3f2090e15d0abefca156ee2a644228c9</Hash>
+    <Hash>b45445c277733514f55df7e3427590be</Hash>
 </Codenesium>*/

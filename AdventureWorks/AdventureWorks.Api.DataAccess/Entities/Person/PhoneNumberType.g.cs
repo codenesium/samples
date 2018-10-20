@@ -31,12 +31,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		public string Name { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("PhoneNumberTypeID")]
 		public int PhoneNumberTypeID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>af02b637c6e74fa8ff6ea3a2e453ab9d</Hash>
+    <Hash>21480be6dd82d2f98a14ec48bc1b6ea6</Hash>
 </Codenesium>*/

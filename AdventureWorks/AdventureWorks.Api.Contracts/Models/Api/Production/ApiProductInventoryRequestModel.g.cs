@@ -32,30 +32,30 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int Bin { get; private set; }
+		public int Bin { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public short LocationID { get; private set; }
+		public short LocationID { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public short Quantity { get; private set; }
+		public short Quantity { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public string Shelf { get; private set; }
+		public string Shelf { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>3a8dbdeb1b7478e94b87a15a1a9e3cb8</Hash>
+    <Hash>db689c5fbbef3949f9fc79ce4c859d82</Hash>
 </Codenesium>*/

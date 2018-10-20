@@ -41,49 +41,49 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? BucketId { get; private set; }
+		public int? BucketId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime DateCreated { get; private set; }
+		public DateTime DateCreated { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string Description { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime Expiration { get; private set; }
+		public string Description { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Extension { get; private set; }
+		public DateTime Expiration { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public Guid ExternalId { get; private set; }
+		public string Extension { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public double FileSizeInByte { get; private set; }
+		public Guid ExternalId { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public int FileTypeId { get; private set; }
+		public double FileSizeInByte { get; private set; } = default(double);
 
 		[Required]
 		[JsonProperty]
-		public string Location { get; private set; }
+		public int FileTypeId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string PrivateKey { get; private set; }
+		public string Location { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string PublicKey { get; private set; }
+		public string PrivateKey { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public string PublicKey { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f6b7fd4b2a07aee0de1b7de89ff6df98</Hash>
+    <Hash>2d6f6a5353dc69ce4f2325f4d724b956</Hash>
 </Codenesium>*/

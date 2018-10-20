@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "SalesPerson")]
 	[Trait("Area", "Integration")]
-	public class SalesPersonIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class SalesPersonIntegrationTests
 	{
-		public SalesPersonIntegrationTests(TestWebApplicationFactory fixture)
+		public SalesPersonIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.SalesPersonDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiSalesPersonResponseModel model = await client.SalesPersonGetAsync(1);
 
 			ApiSalesPersonModelMapper mapper = new ApiSalesPersonModelMapper();
 
-			UpdateResponse<ApiSalesPersonResponseModel> updateResponse = await this.Client.SalesPersonUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSalesPersonResponseModel> updateResponse = await client.SalesPersonUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.SalesPersonDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiSalesPersonResponseModel response = await client.SalesPersonGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.SalesPersonDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.SalesPersonGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiSalesPersonResponseModel response = await this.Client.SalesPersonGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiSalesPersonResponseModel response = await client.SalesPersonGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiSalesPersonResponseModel> response = await this.Client.SalesPersonAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiSalesPersonResponseModel> response = await client.SalesPersonAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiSalesPersonResponseModel> CreateRecord()
+		private async Task<ApiSalesPersonResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiSalesPersonRequestModel();
 			model.SetProperties(2m, 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m, 2m, 2m, 1);
-			CreateResponse<ApiSalesPersonResponseModel> result = await this.Client.SalesPersonCreateAsync(model);
+			CreateResponse<ApiSalesPersonResponseModel> result = await client.SalesPersonCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.SalesPersonDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>be136a380397b239a054529647de1768</Hash>
+    <Hash>c64356c8e5618500668ea2dd2047047d</Hash>
 </Codenesium>*/

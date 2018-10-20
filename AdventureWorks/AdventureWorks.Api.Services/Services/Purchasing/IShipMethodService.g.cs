@@ -23,10 +23,10 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiShipMethodResponseModel> ByName(string name);
 
-		Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8f7e6c8f70e5e9e134e8d4caf5d4cbd0</Hash>
+    <Hash>6f93af2fcf3987c0222d0d8e61fd4584</Hash>
 </Codenesium>*/

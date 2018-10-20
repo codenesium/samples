@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -243,10 +243,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{addressID}/BusinessEntityAddresses")]
+		[Route("{addressID}/BusinessEntityAddressesByAddressID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiBusinessEntityAddressResponseModel>), 200)]
-		public async virtual Task<IActionResult> BusinessEntityAddresses(int addressID, int? limit, int? offset)
+		public async virtual Task<IActionResult> BusinessEntityAddressesByAddressID(int addressID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -254,7 +254,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiBusinessEntityAddressResponseModel> response = await this.AddressService.BusinessEntityAddresses(addressID, query.Limit, query.Offset);
+			List<ApiBusinessEntityAddressResponseModel> response = await this.AddressService.BusinessEntityAddressesByAddressID(addressID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -278,5 +278,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>0dade2060d756c45ebdeaae58c289e67</Hash>
+    <Hash>d73bdac0182afc66240ee040013f2eca</Hash>
 </Codenesium>*/

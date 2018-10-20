@@ -57,7 +57,6 @@ namespace TicketingCRMNS.Api.DataAccess
 		public string Facebook { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -85,5 +84,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1e0a0665691f45fe0b1b84f547d1e3a3</Hash>
+    <Hash>0fb02d91168a90bfd17514b3c8fd3b84</Hash>
 </Codenesium>*/

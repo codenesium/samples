@@ -33,7 +33,6 @@ namespace TicketingCRMNS.Api.DataAccess
 		public string GatewayConfirmationNumber { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -46,5 +45,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4bdf6b9ef1bd4f1f626341f85e68e638</Hash>
+    <Hash>a7a4b8cd2808adad53c30414cfe6afc1</Hash>
 </Codenesium>*/

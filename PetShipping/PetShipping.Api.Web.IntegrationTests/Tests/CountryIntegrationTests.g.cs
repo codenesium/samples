@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Country")]
 	[Trait("Area", "Integration")]
-	public class CountryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CountryIntegrationTests
 	{
-		public CountryIntegrationTests(TestWebApplicationFactory fixture)
+		public CountryIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CountryDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCountryResponseModel model = await client.CountryGetAsync(1);
 
 			ApiCountryModelMapper mapper = new ApiCountryModelMapper();
 
-			UpdateResponse<ApiCountryResponseModel> updateResponse = await this.Client.CountryUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCountryResponseModel> updateResponse = await client.CountryUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CountryDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCountryResponseModel response = await client.CountryGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CountryDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CountryGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCountryResponseModel response = await this.Client.CountryGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCountryResponseModel response = await client.CountryGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCountryResponseModel> response = await this.Client.CountryAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCountryResponseModel> response = await client.CountryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCountryResponseModel> CreateRecord()
+		private async Task<ApiCountryResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCountryRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiCountryResponseModel> result = await this.Client.CountryCreateAsync(model);
+			CreateResponse<ApiCountryResponseModel> result = await client.CountryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CountryDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5818c7792db55e41fc8e289a90f223c8</Hash>
+    <Hash>f16eb3de91d35c08a7644fce8e8b9f3a</Hash>
 </Codenesium>*/

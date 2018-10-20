@@ -28,22 +28,22 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int AddressID { get; private set; }
+		public int AddressID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int AddressTypeID { get; private set; }
+		public int AddressTypeID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4defc048c64ad6a245aa9f6a83079f59</Hash>
+    <Hash>e852f39c6bb1a213cd911e895273f004</Hash>
 </Codenesium>*/

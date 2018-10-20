@@ -91,23 +91,22 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.Instruction == instruction, limit, offset);
 		}
 
-		public async virtual Task<List<Product>> Products(int productModelID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Product>> ProductsByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Product>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<Product>();
 		}
 
-		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(int productModelID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCulturesByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<ProductModelProductDescriptionCulture>().Where(x => x.ProductModelID == productModelID).AsQueryable().Skip(offset).Take(limit).ToListAsync<ProductModelProductDescriptionCulture>();
 		}
 
-		// Reference foreign key. Reference Table=ProductModelIllustration. First table=productModels. Second table=productModels
-		public async virtual Task<List<ProductModel>> ByProductModelID(int productModelID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ProductModel>> ByIllustrationID(int illustrationID, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.ProductModelIllustrations
 			              join productModels in this.Context.ProductModels on
 			              refTable.ProductModelID equals productModels.ProductModelID
-			              where refTable.ProductModelID == productModelID
+			              where refTable.IllustrationID == illustrationID
 			              select productModels).Skip(offset).Take(limit).ToListAsync();
 		}
 
@@ -143,5 +142,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b745a5141611361de2fb24e520aab417</Hash>
+    <Hash>eaaf3f4ee47afda4eaf939db7306b108</Hash>
 </Codenesium>*/

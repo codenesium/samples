@@ -190,7 +190,7 @@ namespace PetShippingNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace PetShippingNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace PetShippingNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{countryId}/CountryRequirements")]
+		[Route("{countryId}/CountryRequirementsByCountryId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiCountryRequirementResponseModel>), 200)]
-		public async virtual Task<IActionResult> CountryRequirements(int countryId, int? limit, int? offset)
+		public async virtual Task<IActionResult> CountryRequirementsByCountryId(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,16 +218,16 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiCountryRequirementResponseModel> response = await this.CountryService.CountryRequirements(countryId, query.Limit, query.Offset);
+			List<ApiCountryRequirementResponseModel> response = await this.CountryService.CountryRequirementsByCountryId(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{countryId}/Destinations")]
+		[Route("{countryId}/DestinationsByCountryId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiDestinationResponseModel>), 200)]
-		public async virtual Task<IActionResult> Destinations(int countryId, int? limit, int? offset)
+		public async virtual Task<IActionResult> DestinationsByCountryId(int countryId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,7 +235,7 @@ namespace PetShippingNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiDestinationResponseModel> response = await this.CountryService.Destinations(countryId, query.Limit, query.Offset);
+			List<ApiDestinationResponseModel> response = await this.CountryService.DestinationsByCountryId(countryId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -259,5 +259,5 @@ namespace PetShippingNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>ffafea32be2b77b829eaf68471a5d2e3</Hash>
+    <Hash>b60a3a9d4223c777ac03293912e4e17d</Hash>
 </Codenesium>*/

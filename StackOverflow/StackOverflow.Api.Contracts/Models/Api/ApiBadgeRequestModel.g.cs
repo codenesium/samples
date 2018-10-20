@@ -26,18 +26,18 @@ namespace StackOverflowNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime Date { get; private set; }
+		public DateTime Date { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int UserId { get; private set; }
+		public int UserId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>4e76a3e66a46e7fed3366521823a3240</Hash>
+    <Hash>e4af53a4897bf493b070d071f633dc16</Hash>
 </Codenesium>*/

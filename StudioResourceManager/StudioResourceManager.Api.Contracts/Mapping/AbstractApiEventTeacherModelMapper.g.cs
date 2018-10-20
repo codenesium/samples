@@ -13,7 +13,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var response = new ApiEventTeacherResponseModel();
 			response.SetProperties(eventId,
-			                       request.TeacherId);
+			                       request.TeacherId,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -22,7 +23,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var request = new ApiEventTeacherRequestModel();
 			request.SetProperties(
-				response.TeacherId);
+				response.TeacherId,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -30,11 +32,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var patch = new JsonPatchDocument<ApiEventTeacherRequestModel>();
 			patch.Replace(x => x.TeacherId, model.TeacherId);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b3f61ce81a69a4bbf1eaf75eefdc1733</Hash>
+    <Hash>08c6c2362fd107b91b4febc839331ada</Hash>
 </Codenesium>*/

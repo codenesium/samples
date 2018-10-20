@@ -167,12 +167,12 @@ namespace PetShippingNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void ClientCommunications_Exists()
+		public async void ClientCommunicationsByClientId_Exists()
 		{
 			var mock = new ServiceMockFacade<IClientRepository>();
 			var records = new List<ClientCommunication>();
 			records.Add(new ClientCommunication());
-			mock.RepositoryMock.Setup(x => x.ClientCommunications(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ClientCommunicationsByClientId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ClientService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -185,17 +185,17 @@ namespace PetShippingNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiClientCommunicationResponseModel> response = await service.ClientCommunications(default(int));
+			List<ApiClientCommunicationResponseModel> response = await service.ClientCommunicationsByClientId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ClientCommunications(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ClientCommunicationsByClientId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void ClientCommunications_Not_Exists()
+		public async void ClientCommunicationsByClientId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IClientRepository>();
-			mock.RepositoryMock.Setup(x => x.ClientCommunications(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ClientCommunication>>(new List<ClientCommunication>()));
+			mock.RepositoryMock.Setup(x => x.ClientCommunicationsByClientId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ClientCommunication>>(new List<ClientCommunication>()));
 			var service = new ClientService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -208,19 +208,19 @@ namespace PetShippingNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiClientCommunicationResponseModel> response = await service.ClientCommunications(default(int));
+			List<ApiClientCommunicationResponseModel> response = await service.ClientCommunicationsByClientId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ClientCommunications(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ClientCommunicationsByClientId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Pets_Exists()
+		public async void PetsByClientId_Exists()
 		{
 			var mock = new ServiceMockFacade<IClientRepository>();
 			var records = new List<Pet>();
 			records.Add(new Pet());
-			mock.RepositoryMock.Setup(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.PetsByClientId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ClientService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -233,17 +233,17 @@ namespace PetShippingNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiPetResponseModel> response = await service.Pets(default(int));
+			List<ApiPetResponseModel> response = await service.PetsByClientId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.PetsByClientId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Pets_Not_Exists()
+		public async void PetsByClientId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IClientRepository>();
-			mock.RepositoryMock.Setup(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
+			mock.RepositoryMock.Setup(x => x.PetsByClientId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Pet>>(new List<Pet>()));
 			var service = new ClientService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -256,19 +256,19 @@ namespace PetShippingNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiPetResponseModel> response = await service.Pets(default(int));
+			List<ApiPetResponseModel> response = await service.PetsByClientId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Pets(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.PetsByClientId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Sales_Exists()
+		public async void SalesByClientId_Exists()
 		{
 			var mock = new ServiceMockFacade<IClientRepository>();
 			var records = new List<Sale>();
 			records.Add(new Sale());
-			mock.RepositoryMock.Setup(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesByClientId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ClientService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -281,17 +281,17 @@ namespace PetShippingNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiSaleResponseModel> response = await service.Sales(default(int));
+			List<ApiSaleResponseModel> response = await service.SalesByClientId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesByClientId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Sales_Not_Exists()
+		public async void SalesByClientId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IClientRepository>();
-			mock.RepositoryMock.Setup(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
+			mock.RepositoryMock.Setup(x => x.SalesByClientId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
 			var service = new ClientService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.ClientModelValidatorMock.Object,
@@ -304,14 +304,14 @@ namespace PetShippingNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                                mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiSaleResponseModel> response = await service.Sales(default(int));
+			List<ApiSaleResponseModel> response = await service.SalesByClientId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesByClientId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9239b92f98fc8b7ad3c555148b85e2b5</Hash>
+    <Hash>0544a48b9a1153ceda4d3d7c6c6ab712</Hash>
 </Codenesium>*/

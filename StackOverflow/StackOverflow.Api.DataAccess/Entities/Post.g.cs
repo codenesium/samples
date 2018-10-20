@@ -82,7 +82,6 @@ namespace StackOverflowNS.Api.DataAccess
 		public int? FavoriteCount { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("Id")]
 		public int Id { get; private set; }
 
@@ -125,5 +124,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d2fff09170c32e0c91753bc0b2569b21</Hash>
+    <Hash>7988d2ea59ec6439f9f5c5eb6ea4eaa6</Hash>
 </Codenesium>*/

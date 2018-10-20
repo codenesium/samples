@@ -96,9 +96,9 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiBreedResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiPetResponseModel>> Pets(int breedId)
+		public virtual async Task<List<ApiPetResponseModel>> PetsByBreedId(int breedId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds/Pets/{breedId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Breeds/PetsByBreedId/{breedId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -145,9 +145,9 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPaymentTypeResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleResponseModel>> Sales(int paymentTypeId)
+		public virtual async Task<List<ApiSaleResponseModel>> SalesByPaymentTypeId(int paymentTypeId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PaymentTypes/Sales/{paymentTypeId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/PaymentTypes/SalesByPaymentTypeId/{paymentTypeId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -194,6 +194,13 @@ namespace PetStoreNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiPenResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<List<ApiPetResponseModel>> PetsByPenId(int penId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pens/PetsByPenId/{penId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiPetResponseModel>> PetBulkInsertAsync(List<ApiPetRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Pets/BulkInsert", items).ConfigureAwait(false);
@@ -234,6 +241,13 @@ namespace PetStoreNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pets?limit={limit}&offset={offset}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiSaleResponseModel>> SalesByPetId(int petId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Pets/SalesByPetId/{petId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiSaleResponseModel>> SaleBulkInsertAsync(List<ApiSaleRequestModel> items)
@@ -319,9 +333,16 @@ namespace PetStoreNS.Api.Client
 
 			return JsonConvert.DeserializeObject<List<ApiSpeciesResponseModel>>(httpResponse.Content.ContentToString());
 		}
+
+		public virtual async Task<List<ApiPetResponseModel>> PetsBySpeciesId(int speciesId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Species/PetsBySpeciesId/{speciesId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiPetResponseModel>>(httpResponse.Content.ContentToString());
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ed584f4e42c29712f01eea1fcf5e9288</Hash>
+    <Hash>2222eea14235548cd6dcb4957e3da292</Hash>
 </Codenesium>*/

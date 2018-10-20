@@ -13,7 +13,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var response = new ApiTeacherSkillResponseModel();
 			response.SetProperties(id,
-			                       request.Name);
+			                       request.Name,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -22,7 +23,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var request = new ApiTeacherSkillRequestModel();
 			request.SetProperties(
-				response.Name);
+				response.Name,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -30,11 +32,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 		{
 			var patch = new JsonPatchDocument<ApiTeacherSkillRequestModel>();
 			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e9e17f094bb61386855764229d03b407</Hash>
+    <Hash>e071260583341f3cb90ef0c9f48400df</Hash>
 </Codenesium>*/

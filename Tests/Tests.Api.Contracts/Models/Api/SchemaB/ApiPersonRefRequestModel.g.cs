@@ -24,14 +24,14 @@ namespace TestsNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int PersonAId { get; private set; }
+		public int PersonAId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int PersonBId { get; private set; }
+		public int PersonBId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>40bb80db94bb7e5975715a14d355b21e</Hash>
+    <Hash>630125c2a49e348c865e19dbb577242e</Hash>
 </Codenesium>*/

@@ -81,7 +81,7 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Where(x => x.SenderUserId == senderUserId, limit, offset);
 		}
 
-		public async virtual Task<List<Messenger>> Messengers(int messageId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Messenger>> MessengersByMessageId(int messageId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Messenger>().Where(x => x.MessageId == messageId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
@@ -123,5 +123,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>9c7b43217d43d14a114bd83568ff573c</Hash>
+    <Hash>6ca37f472fd423bacb68f268afca508b</Hash>
 </Codenesium>*/

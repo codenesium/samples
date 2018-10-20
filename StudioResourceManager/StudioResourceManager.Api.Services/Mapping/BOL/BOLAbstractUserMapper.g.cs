@@ -16,7 +16,8 @@ namespace StudioResourceManagerNS.Api.Services
 			boUser.SetProperties(
 				id,
 				model.Password,
-				model.Username);
+				model.Username,
+				model.IsDeleted);
 			return boUser;
 		}
 
@@ -25,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiUserResponseModel();
 
-			model.SetProperties(boUser.Id, boUser.Password, boUser.Username);
+			model.SetProperties(boUser.Id, boUser.Password, boUser.Username, boUser.IsDeleted);
 
 			return model;
 		}
@@ -46,5 +47,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>1913ae9159be01b2e94d409255bf5240</Hash>
+    <Hash>e8315495a937566cb4d06527ef09a10e</Hash>
 </Codenesium>*/

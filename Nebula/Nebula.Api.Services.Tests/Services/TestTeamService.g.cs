@@ -182,12 +182,12 @@ namespace NebulaNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Chains_Exists()
+		public async void ChainsByTeamId_Exists()
 		{
 			var mock = new ServiceMockFacade<ITeamRepository>();
 			var records = new List<Chain>();
 			records.Add(new Chain());
-			mock.RepositoryMock.Setup(x => x.Chains(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new TeamService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
-			List<ApiChainResponseModel> response = await service.Chains(default(int));
+			List<ApiChainResponseModel> response = await service.ChainsByTeamId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Chains(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Chains_Not_Exists()
+		public async void ChainsByTeamId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<ITeamRepository>();
-			mock.RepositoryMock.Setup(x => x.Chains(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Chain>>(new List<Chain>()));
+			mock.RepositoryMock.Setup(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Chain>>(new List<Chain>()));
 			var service = new TeamService(mock.LoggerMock.Object,
 			                              mock.RepositoryMock.Object,
 			                              mock.ModelValidatorMockFactory.TeamModelValidatorMock.Object,
@@ -215,14 +215,14 @@ namespace NebulaNS.Api.Services.Tests
 			                              mock.BOLMapperMockFactory.BOLChainMapperMock,
 			                              mock.DALMapperMockFactory.DALChainMapperMock);
 
-			List<ApiChainResponseModel> response = await service.Chains(default(int));
+			List<ApiChainResponseModel> response = await service.ChainsByTeamId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Chains(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ChainsByTeamId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>7c9659c9b61ff06193db0dfd7830ff79</Hash>
+    <Hash>9254daccefe6ff2a69a5708e9be7cff1</Hash>
 </Codenesium>*/

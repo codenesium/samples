@@ -182,12 +182,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void ProductSubcategories_Exists()
+		public async void ProductSubcategoriesByProductCategoryID_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductCategoryRepository>();
 			var records = new List<ProductSubcategory>();
 			records.Add(new ProductSubcategory());
-			mock.RepositoryMock.Setup(x => x.ProductSubcategories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ProductSubcategoriesByProductCategoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new ProductCategoryService(mock.LoggerMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Object,
@@ -196,17 +196,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			List<ApiProductSubcategoryResponseModel> response = await service.ProductSubcategories(default(int));
+			List<ApiProductSubcategoryResponseModel> response = await service.ProductSubcategoriesByProductCategoryID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductSubcategories(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ProductSubcategoriesByProductCategoryID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void ProductSubcategories_Not_Exists()
+		public async void ProductSubcategoriesByProductCategoryID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IProductCategoryRepository>();
-			mock.RepositoryMock.Setup(x => x.ProductSubcategories(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductSubcategory>>(new List<ProductSubcategory>()));
+			mock.RepositoryMock.Setup(x => x.ProductSubcategoriesByProductCategoryID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductSubcategory>>(new List<ProductSubcategory>()));
 			var service = new ProductCategoryService(mock.LoggerMock.Object,
 			                                         mock.RepositoryMock.Object,
 			                                         mock.ModelValidatorMockFactory.ProductCategoryModelValidatorMock.Object,
@@ -215,14 +215,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                         mock.BOLMapperMockFactory.BOLProductSubcategoryMapperMock,
 			                                         mock.DALMapperMockFactory.DALProductSubcategoryMapperMock);
 
-			List<ApiProductSubcategoryResponseModel> response = await service.ProductSubcategories(default(int));
+			List<ApiProductSubcategoryResponseModel> response = await service.ProductSubcategoriesByProductCategoryID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductSubcategories(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ProductSubcategoriesByProductCategoryID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e92cd6e75fc146d7b6addadce17f215b</Hash>
+    <Hash>b2fb7e6ea7432917ec60e409b3e81ee5</Hash>
 </Codenesium>*/

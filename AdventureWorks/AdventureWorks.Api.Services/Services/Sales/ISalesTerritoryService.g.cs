@@ -23,16 +23,16 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiSalesTerritoryResponseModel> ByName(string name);
 
-		Task<List<ApiCustomerResponseModel>> Customers(int territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiCustomerResponseModel>> CustomersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSalesPersonResponseModel>> SalesPersons(int territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesPersonResponseModel>> SalesPersonsByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistories(int territoryID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSalesTerritoryHistoryResponseModel>> SalesTerritoryHistoriesByTerritoryID(int territoryID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>d5f2d5a019cc78f4d61959ce7d349c56</Hash>
+    <Hash>c6318e1cc694d714404bb1a6156afeb8</Hash>
 </Codenesium>*/

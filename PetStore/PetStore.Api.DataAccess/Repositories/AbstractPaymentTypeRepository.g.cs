@@ -76,7 +76,7 @@ namespace PetStoreNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<Sale>> Sales(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Sale>> SalesByPaymentTypeId(int paymentTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Sale>().Where(x => x.PaymentTypeId == paymentTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Sale>();
 		}
@@ -113,5 +113,5 @@ namespace PetStoreNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>e50a482a064662c8c99f18605c506325</Hash>
+    <Hash>22d00f7f0bce30358d88def659dc83bb</Hash>
 </Codenesium>*/

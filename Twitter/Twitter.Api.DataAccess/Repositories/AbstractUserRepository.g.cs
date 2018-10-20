@@ -81,42 +81,52 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Where(x => x.LocationLocationId == locationLocationId, limit, offset);
 		}
 
-		public async virtual Task<List<DirectTweet>> DirectTweets(int taggedUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<DirectTweet>> DirectTweetsByTaggedUserId(int taggedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<DirectTweet>().Where(x => x.TaggedUserId == taggedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<DirectTweet>();
 		}
 
-		public async virtual Task<List<Follower>> Followers(int followedUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Follower>> FollowersByFollowedUserId(int followedUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Follower>().Where(x => x.FollowedUserId == followedUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
 		}
 
-		public async virtual Task<List<Message>> Messages(int senderUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Follower>> FollowersByFollowingUserId(int followingUserId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Follower>().Where(x => x.FollowingUserId == followingUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Follower>();
+		}
+
+		public async virtual Task<List<Message>> MessagesBySenderUserId(int senderUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Message>().Where(x => x.SenderUserId == senderUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Message>();
 		}
 
-		public async virtual Task<List<Messenger>> Messengers(int toUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Messenger>> MessengersByToUserId(int toUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Messenger>().Where(x => x.ToUserId == toUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
 		}
 
-		public async virtual Task<List<QuoteTweet>> QuoteTweets(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Messenger>> MessengersByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await this.Context.Set<Messenger>().Where(x => x.UserId == userId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Messenger>();
+		}
+
+		public async virtual Task<List<QuoteTweet>> QuoteTweetsByRetweeterUserId(int retweeterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<QuoteTweet>().Where(x => x.RetweeterUserId == retweeterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<QuoteTweet>();
 		}
 
-		public async virtual Task<List<Reply>> Replies(int replierUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Reply>> RepliesByReplierUserId(int replierUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Reply>().Where(x => x.ReplierUserId == replierUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Reply>();
 		}
 
-		public async virtual Task<List<Retweet>> Retweets(int retwitterUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Retweet>> RetweetsByRetwitterUserId(int retwitterUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Retweet>().Where(x => x.RetwitterUserId == retwitterUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Retweet>();
 		}
 
-		public async virtual Task<List<Tweet>> Tweets(int userUserId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Tweet>> TweetsByUserUserId(int userUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Tweet>().Where(x => x.UserUserId == userUserId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Tweet>();
 		}
@@ -126,7 +136,6 @@ namespace TwitterNS.Api.DataAccess
 			return await this.Context.Set<Location>().SingleOrDefaultAsync(x => x.LocationId == locationLocationId);
 		}
 
-		// Reference foreign key. Reference Table=Like. First table=users. Second table=users
 		public async virtual Task<List<User>> ByLikerUserId(int likerUserId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await (from refTable in this.Context.Likes
@@ -168,5 +177,5 @@ namespace TwitterNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>891db7dea818222db60497d316144df7</Hash>
+    <Hash>34b2f9f9aed45507429a120378f3e747</Hash>
 </Codenesium>*/

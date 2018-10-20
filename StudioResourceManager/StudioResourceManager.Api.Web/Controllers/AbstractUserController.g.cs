@@ -190,7 +190,7 @@ namespace StudioResourceManagerNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace StudioResourceManagerNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{userId}/Admins")]
+		[Route("{userId}/AdminsByUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiAdminResponseModel>), 200)]
-		public async virtual Task<IActionResult> Admins(int userId, int? limit, int? offset)
+		public async virtual Task<IActionResult> AdminsByUserId(int userId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,16 +218,16 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiAdminResponseModel> response = await this.UserService.Admins(userId, query.Limit, query.Offset);
+			List<ApiAdminResponseModel> response = await this.UserService.AdminsByUserId(userId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{userId}/Students")]
+		[Route("{userId}/StudentsByUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
-		public async virtual Task<IActionResult> Students(int userId, int? limit, int? offset)
+		public async virtual Task<IActionResult> StudentsByUserId(int userId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -235,16 +235,16 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiStudentResponseModel> response = await this.UserService.Students(userId, query.Limit, query.Offset);
+			List<ApiStudentResponseModel> response = await this.UserService.StudentsByUserId(userId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
 
 		[HttpGet]
-		[Route("{userId}/Teachers")]
+		[Route("{userId}/TeachersByUserId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> Teachers(int userId, int? limit, int? offset)
+		public async virtual Task<IActionResult> TeachersByUserId(int userId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,7 +252,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTeacherResponseModel> response = await this.UserService.Teachers(userId, query.Limit, query.Offset);
+			List<ApiTeacherResponseModel> response = await this.UserService.TeachersByUserId(userId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -276,5 +276,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>9f97b93befccdbdcc375b440b34dadab</Hash>
+    <Hash>645e4e02eaee269c1646c81509529b3f</Hash>
 </Codenesium>*/

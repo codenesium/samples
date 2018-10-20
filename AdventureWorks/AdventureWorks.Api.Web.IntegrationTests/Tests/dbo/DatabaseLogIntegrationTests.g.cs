@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "DatabaseLog")]
 	[Trait("Area", "Integration")]
-	public class DatabaseLogIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class DatabaseLogIntegrationTests
 	{
-		public DatabaseLogIntegrationTests(TestWebApplicationFactory fixture)
+		public DatabaseLogIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.DatabaseLogDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiDatabaseLogResponseModel model = await client.DatabaseLogGetAsync(1);
 
 			ApiDatabaseLogModelMapper mapper = new ApiDatabaseLogModelMapper();
 
-			UpdateResponse<ApiDatabaseLogResponseModel> updateResponse = await this.Client.DatabaseLogUpdateAsync(model.DatabaseLogID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiDatabaseLogResponseModel> updateResponse = await client.DatabaseLogUpdateAsync(model.DatabaseLogID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.DatabaseLogDeleteAsync(model.DatabaseLogID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiDatabaseLogResponseModel response = await client.DatabaseLogGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.DatabaseLogDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.DatabaseLogGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiDatabaseLogResponseModel response = await this.Client.DatabaseLogGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiDatabaseLogResponseModel response = await client.DatabaseLogGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiDatabaseLogResponseModel> response = await this.Client.DatabaseLogAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiDatabaseLogResponseModel> response = await client.DatabaseLogAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiDatabaseLogResponseModel> CreateRecord()
+		private async Task<ApiDatabaseLogResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiDatabaseLogRequestModel();
 			model.SetProperties("B", "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B");
-			CreateResponse<ApiDatabaseLogResponseModel> result = await this.Client.DatabaseLogCreateAsync(model);
+			CreateResponse<ApiDatabaseLogResponseModel> result = await client.DatabaseLogCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.DatabaseLogDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a66d3be7a45c316137a1e31421661831</Hash>
+    <Hash>ed0409694602557d22f84a285f054760</Hash>
 </Codenesium>*/

@@ -69,98 +69,98 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public string AccountNumber { get; private set; }
+		public string AccountNumber { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int BillToAddressID { get; private set; }
+		public int BillToAddressID { get; private set; } = default(int);
 
 		[JsonProperty]
-		public string Comment { get; private set; }
+		public string Comment { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string CreditCardApprovalCode { get; private set; }
+		public string CreditCardApprovalCode { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? CreditCardID { get; private set; }
+		public int? CreditCardID { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int? CurrencyRateID { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public int CustomerID { get; private set; }
+		public int? CurrencyRateID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime DueDate { get; private set; }
+		public int CustomerID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public decimal Freight { get; private set; }
+		public DateTime DueDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public decimal Freight { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public bool OnlineOrderFlag { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime OrderDate { get; private set; }
-
-		[JsonProperty]
-		public string PurchaseOrderNumber { get; private set; }
+		public bool OnlineOrderFlag { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public int RevisionNumber { get; private set; }
+		public DateTime OrderDate { get; private set; } = default(DateTime);
+
+		[JsonProperty]
+		public string PurchaseOrderNumber { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public Guid Rowguid { get; private set; }
+		public int RevisionNumber { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string SalesOrderNumber { get; private set; }
-
-		[JsonProperty]
-		public int? SalesPersonID { get; private set; }
-
-		[JsonProperty]
-		public DateTime? ShipDate { get; private set; }
+		public Guid Rowguid { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public int ShipMethodID { get; private set; }
+		public string SalesOrderNumber { get; private set; } = default(string);
+
+		[JsonProperty]
+		public int? SalesPersonID { get; private set; } = default(int);
+
+		[JsonProperty]
+		public DateTime? ShipDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int ShipToAddressID { get; private set; }
+		public int ShipMethodID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int Status { get; private set; }
+		public int ShipToAddressID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public decimal SubTotal { get; private set; }
+		public int Status { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public decimal TaxAmt { get; private set; }
-
-		[JsonProperty]
-		public int? TerritoryID { get; private set; }
+		public decimal SubTotal { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public decimal TotalDue { get; private set; }
+		public decimal TaxAmt { get; private set; } = default(decimal);
+
+		[JsonProperty]
+		public int? TerritoryID { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public decimal TotalDue { get; private set; } = default(decimal);
 	}
 }
 
 /*<Codenesium>
-    <Hash>ed5db1b602456b89a5de89f187c83db9</Hash>
+    <Hash>5bf035b2ab8481aa0961afd93887145d</Hash>
 </Codenesium>*/

@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Culture> ByName(string name);
 
-		Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCultures(string cultureID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ProductModelProductDescriptionCulture>> ProductModelProductDescriptionCulturesByCultureID(string cultureID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c063b9a1320c90c373fbbe93127c475</Hash>
+    <Hash>fd170a4cafc7e62484b9e0fd5907f876</Hash>
 </Codenesium>*/

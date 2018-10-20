@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "IncludedColumnTest")]
 	[Trait("Area", "Integration")]
-	public class IncludedColumnTestIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class IncludedColumnTestIntegrationTests
 	{
-		public IncludedColumnTestIntegrationTests(TestWebApplicationFactory fixture)
+		public IncludedColumnTestIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.IncludedColumnTestDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiIncludedColumnTestResponseModel model = await client.IncludedColumnTestGetAsync(1);
 
 			ApiIncludedColumnTestModelMapper mapper = new ApiIncludedColumnTestModelMapper();
 
-			UpdateResponse<ApiIncludedColumnTestResponseModel> updateResponse = await this.Client.IncludedColumnTestUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiIncludedColumnTestResponseModel> updateResponse = await client.IncludedColumnTestUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.IncludedColumnTestDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiIncludedColumnTestResponseModel response = await client.IncludedColumnTestGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.IncludedColumnTestDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.IncludedColumnTestGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiIncludedColumnTestResponseModel response = await this.Client.IncludedColumnTestGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiIncludedColumnTestResponseModel response = await client.IncludedColumnTestGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiIncludedColumnTestResponseModel> response = await this.Client.IncludedColumnTestAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiIncludedColumnTestResponseModel> response = await client.IncludedColumnTestAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiIncludedColumnTestResponseModel> CreateRecord()
+		private async Task<ApiIncludedColumnTestResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiIncludedColumnTestRequestModel();
 			model.SetProperties("B", "B");
-			CreateResponse<ApiIncludedColumnTestResponseModel> result = await this.Client.IncludedColumnTestCreateAsync(model);
+			CreateResponse<ApiIncludedColumnTestResponseModel> result = await client.IncludedColumnTestCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.IncludedColumnTestDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a2235fcd68ac1eb45f0fb84f05f08117</Hash>
+    <Hash>dbfca58bacfcec355ead079374a075e0</Hash>
 </Codenesium>*/

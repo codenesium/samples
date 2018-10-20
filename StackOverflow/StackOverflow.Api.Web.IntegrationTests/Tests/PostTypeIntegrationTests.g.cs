@@ -15,54 +15,82 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PostType")]
 	[Trait("Area", "Integration")]
-	public class PostTypeIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PostTypeIntegrationTests
 	{
-		public PostTypeIntegrationTests(TestWebApplicationFactory fixture)
+		public PostTypeIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PostTypeDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPostTypeResponseModel model = await client.PostTypeGetAsync(1);
 
 			ApiPostTypeModelMapper mapper = new ApiPostTypeModelMapper();
 
-			UpdateResponse<ApiPostTypeResponseModel> updateResponse = await this.Client.PostTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPostTypeResponseModel> updateResponse = await client.PostTypeUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PostTypeDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPostTypeResponseModel response = await client.PostTypeGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PostTypeDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PostTypeGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPostTypeResponseModel response = await this.Client.PostTypeGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPostTypeResponseModel response = await client.PostTypeGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPostTypeResponseModel> response = await this.Client.PostTypeAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPostTypeResponseModel> response = await client.PostTypeAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPostTypeResponseModel> CreateRecord()
+		private async Task<ApiPostTypeResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPostTypeRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiPostTypeResponseModel> result = await this.Client.PostTypeCreateAsync(model);
+			CreateResponse<ApiPostTypeResponseModel> result = await client.PostTypeCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PostTypeDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bbe40f348fef833eb97c5926ae510979</Hash>
+    <Hash>9e4b61ccaa6016f4c977d0aba3fc52c7</Hash>
 </Codenesium>*/

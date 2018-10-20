@@ -46,12 +46,11 @@ namespace AdventureWorksNS.Api.DataAccess
 		public string ShoppingCartID { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ShoppingCartItemID")]
 		public int ShoppingCartItemID { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>eeded8d0df3ace61811445def1de675d</Hash>
+    <Hash>a1a22625abdef8e0517f12b09a212a75</Hash>
 </Codenesium>*/

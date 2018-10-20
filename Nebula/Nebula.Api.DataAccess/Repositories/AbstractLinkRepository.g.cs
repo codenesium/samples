@@ -86,7 +86,7 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Where(x => x.ChainId == chainId, limit, offset);
 		}
 
-		public async virtual Task<List<LinkLog>> LinkLogs(int linkId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<LinkLog>> LinkLogsByLinkId(int linkId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<LinkLog>().Where(x => x.LinkId == linkId).AsQueryable().Skip(offset).Take(limit).ToListAsync<LinkLog>();
 		}
@@ -138,5 +138,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>34f5968b1a0fd2a7431ec3cee8f2c832</Hash>
+    <Hash>7aa03a4b0153acc9cfeb63d3b4e9085d</Hash>
 </Codenesium>*/

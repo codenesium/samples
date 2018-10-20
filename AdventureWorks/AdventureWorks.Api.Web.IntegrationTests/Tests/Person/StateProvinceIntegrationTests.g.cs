@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "StateProvince")]
 	[Trait("Area", "Integration")]
-	public class StateProvinceIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class StateProvinceIntegrationTests
 	{
-		public StateProvinceIntegrationTests(TestWebApplicationFactory fixture)
+		public StateProvinceIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.StateProvinceDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiStateProvinceResponseModel model = await client.StateProvinceGetAsync(1);
 
 			ApiStateProvinceModelMapper mapper = new ApiStateProvinceModelMapper();
 
-			UpdateResponse<ApiStateProvinceResponseModel> updateResponse = await this.Client.StateProvinceUpdateAsync(model.StateProvinceID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiStateProvinceResponseModel> updateResponse = await client.StateProvinceUpdateAsync(model.StateProvinceID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.StateProvinceDeleteAsync(model.StateProvinceID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiStateProvinceResponseModel response = await client.StateProvinceGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.StateProvinceDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.StateProvinceGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiStateProvinceResponseModel response = await this.Client.StateProvinceGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiStateProvinceResponseModel response = await client.StateProvinceGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiStateProvinceResponseModel> response = await this.Client.StateProvinceAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiStateProvinceResponseModel> response = await client.StateProvinceAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiStateProvinceResponseModel> CreateRecord()
+		private async Task<ApiStateProvinceResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiStateProvinceRequestModel();
 			model.SetProperties("B", true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 2);
-			CreateResponse<ApiStateProvinceResponseModel> result = await this.Client.StateProvinceCreateAsync(model);
+			CreateResponse<ApiStateProvinceResponseModel> result = await client.StateProvinceCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.StateProvinceDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>212617e2b07e28f64885fe215574cfa4</Hash>
+    <Hash>580730d592756db8678bb5108b6bcefc</Hash>
 </Codenesium>*/

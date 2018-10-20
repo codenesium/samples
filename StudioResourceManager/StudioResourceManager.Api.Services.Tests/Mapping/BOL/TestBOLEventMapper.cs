@@ -18,7 +18,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLEventMapper();
 			ApiEventRequestModel model = new ApiEventRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", true);
 			BOEvent response = mapper.MapModelToBO(1, model);
 
 			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -29,6 +29,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.StudentNote.Should().Be("A");
 			response.TeacherNote.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -36,7 +37,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLEventMapper();
 			BOEvent bo = new BOEvent();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", true);
 			ApiEventResponseModel response = mapper.MapBOToModel(bo);
 
 			response.ActualEndDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -48,6 +49,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.ScheduledStartDate.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
 			response.StudentNote.Should().Be("A");
 			response.TeacherNote.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -55,7 +57,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLEventMapper();
 			BOEvent bo = new BOEvent();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A");
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), 1m, 1, DateTime.Parse("1/1/1987 12:00:00 AM"), DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", true);
 			List<ApiEventResponseModel> response = mapper.MapBOToModel(new List<BOEvent>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -64,5 +66,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>9e1314afada0e86d56b4ca30b578410e</Hash>
+    <Hash>29181ca150ebce0411a912eed71c45b7</Hash>
 </Codenesium>*/

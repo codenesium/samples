@@ -15,7 +15,8 @@ namespace StudioResourceManagerNS.Api.Services
 			BOTeacherTeacherSkill boTeacherTeacherSkill = new BOTeacherTeacherSkill();
 			boTeacherTeacherSkill.SetProperties(
 				teacherId,
-				model.TeacherSkillId);
+				model.TeacherSkillId,
+				model.IsDeleted);
 			return boTeacherTeacherSkill;
 		}
 
@@ -24,7 +25,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiTeacherTeacherSkillResponseModel();
 
-			model.SetProperties(boTeacherTeacherSkill.TeacherId, boTeacherTeacherSkill.TeacherSkillId);
+			model.SetProperties(boTeacherTeacherSkill.TeacherId, boTeacherTeacherSkill.TeacherSkillId, boTeacherTeacherSkill.IsDeleted);
 
 			return model;
 		}
@@ -45,5 +46,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>47682f525dd5c99efd1699258401ad3f</Hash>
+    <Hash>5ac850a459021ed4c0d1a30aa9e9f7fb</Hash>
 </Codenesium>*/

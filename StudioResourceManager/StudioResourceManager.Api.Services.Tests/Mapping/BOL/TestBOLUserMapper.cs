@@ -18,11 +18,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLUserMapper();
 			ApiUserRequestModel model = new ApiUserRequestModel();
-			model.SetProperties("A", "A");
+			model.SetProperties("A", "A", true);
 			BOUser response = mapper.MapModelToBO(1, model);
 
 			response.Password.Should().Be("A");
 			response.Username.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -30,12 +31,13 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLUserMapper();
 			BOUser bo = new BOUser();
-			bo.SetProperties(1, "A", "A");
+			bo.SetProperties(1, "A", "A", true);
 			ApiUserResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Id.Should().Be(1);
 			response.Password.Should().Be("A");
 			response.Username.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -43,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLUserMapper();
 			BOUser bo = new BOUser();
-			bo.SetProperties(1, "A", "A");
+			bo.SetProperties(1, "A", "A", true);
 			List<ApiUserResponseModel> response = mapper.MapBOToModel(new List<BOUser>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -52,5 +54,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>2ded289188d5f9aea47de612806d737e</Hash>
+    <Hash>523164336ad4bf46d253bc6a16636fb4</Hash>
 </Codenesium>*/

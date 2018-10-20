@@ -19,10 +19,10 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<ShipMethod> ByName(string name);
 
-		Task<List<PurchaseOrderHeader>> PurchaseOrderHeaders(int shipMethodID, int limit = int.MaxValue, int offset = 0);
+		Task<List<PurchaseOrderHeader>> PurchaseOrderHeadersByShipMethodID(int shipMethodID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>5e59305b1aa287a8f2ec3c1d1703c6dc</Hash>
+    <Hash>0b9c1feed8119f03a40c7cadfe4a5b3e</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "SalesPersonQuotaHistory")]
 	[Trait("Area", "Integration")]
-	public class SalesPersonQuotaHistoryIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class SalesPersonQuotaHistoryIntegrationTests
 	{
-		public SalesPersonQuotaHistoryIntegrationTests(TestWebApplicationFactory fixture)
+		public SalesPersonQuotaHistoryIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.SalesPersonQuotaHistoryDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiSalesPersonQuotaHistoryResponseModel model = await client.SalesPersonQuotaHistoryGetAsync(1);
 
 			ApiSalesPersonQuotaHistoryModelMapper mapper = new ApiSalesPersonQuotaHistoryModelMapper();
 
-			UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel> updateResponse = await this.Client.SalesPersonQuotaHistoryUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSalesPersonQuotaHistoryResponseModel> updateResponse = await client.SalesPersonQuotaHistoryUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.SalesPersonQuotaHistoryDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiSalesPersonQuotaHistoryResponseModel response = await client.SalesPersonQuotaHistoryGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.SalesPersonQuotaHistoryDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.SalesPersonQuotaHistoryGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiSalesPersonQuotaHistoryResponseModel response = await this.Client.SalesPersonQuotaHistoryGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiSalesPersonQuotaHistoryResponseModel response = await client.SalesPersonQuotaHistoryGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiSalesPersonQuotaHistoryResponseModel> response = await this.Client.SalesPersonQuotaHistoryAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiSalesPersonQuotaHistoryResponseModel> response = await client.SalesPersonQuotaHistoryAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiSalesPersonQuotaHistoryResponseModel> CreateRecord()
+		private async Task<ApiSalesPersonQuotaHistoryResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiSalesPersonQuotaHistoryRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2m);
-			CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> result = await this.Client.SalesPersonQuotaHistoryCreateAsync(model);
+			CreateResponse<ApiSalesPersonQuotaHistoryResponseModel> result = await client.SalesPersonQuotaHistoryCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.SalesPersonQuotaHistoryDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>487752c26b0276178373122bae2f2259</Hash>
+    <Hash>9ecb89a2779bb686d99e20d6c1fbed10</Hash>
 </Codenesium>*/

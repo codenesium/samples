@@ -98,7 +98,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public string Name { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ProductID")]
 		public int ProductID { get; private set; }
 
@@ -157,5 +156,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>11f5cfccd8b2503d1ced1866cab863a3</Hash>
+    <Hash>089de0ba692ff64ec34ec9a0d71887c8</Hash>
 </Codenesium>*/

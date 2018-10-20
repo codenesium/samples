@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Destination")]
 	[Trait("Area", "Integration")]
-	public class DestinationIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class DestinationIntegrationTests
 	{
-		public DestinationIntegrationTests(TestWebApplicationFactory fixture)
+		public DestinationIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.DestinationDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiDestinationResponseModel model = await client.DestinationGetAsync(1);
 
 			ApiDestinationModelMapper mapper = new ApiDestinationModelMapper();
 
-			UpdateResponse<ApiDestinationResponseModel> updateResponse = await this.Client.DestinationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiDestinationResponseModel> updateResponse = await client.DestinationUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.DestinationDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiDestinationResponseModel response = await client.DestinationGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.DestinationDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.DestinationGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiDestinationResponseModel response = await this.Client.DestinationGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiDestinationResponseModel response = await client.DestinationGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiDestinationResponseModel> response = await this.Client.DestinationAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiDestinationResponseModel> response = await client.DestinationAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiDestinationResponseModel> CreateRecord()
+		private async Task<ApiDestinationResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiDestinationRequestModel();
 			model.SetProperties(1, "B", 2);
-			CreateResponse<ApiDestinationResponseModel> result = await this.Client.DestinationCreateAsync(model);
+			CreateResponse<ApiDestinationResponseModel> result = await client.DestinationCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.DestinationDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b69849f640febe23121d7ddc6a52bf51</Hash>
+    <Hash>adfb481a1442860058523827b51baa6b</Hash>
 </Codenesium>*/

@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALFamilyMapper();
 			var bo = new BOFamily();
-			bo.SetProperties(1, "A", "A", "A", "A", "A");
+			bo.SetProperties(1, "A", "A", "A", "A", "A", true);
 
 			Family response = mapper.MapBOToEF(bo);
 
@@ -27,6 +27,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
 			response.PrimaryContactPhone.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -34,7 +35,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALFamilyMapper();
 			Family entity = new Family();
-			entity.SetProperties(1, "A", "A", "A", "A", "A");
+			entity.SetProperties(1, "A", "A", "A", "A", "A", true);
 
 			BOFamily response = mapper.MapEFToBO(entity);
 
@@ -44,6 +45,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.PrimaryContactFirstName.Should().Be("A");
 			response.PrimaryContactLastName.Should().Be("A");
 			response.PrimaryContactPhone.Should().Be("A");
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -51,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALFamilyMapper();
 			Family entity = new Family();
-			entity.SetProperties(1, "A", "A", "A", "A", "A");
+			entity.SetProperties(1, "A", "A", "A", "A", "A", true);
 
 			List<BOFamily> response = mapper.MapEFToBO(new List<Family>() { entity });
 
@@ -61,5 +63,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>cd91db67db8bb3474b5dfd6f92b28c16</Hash>
+    <Hash>6a863f42306600c675fc8bac741ce8c0</Hash>
 </Codenesium>*/

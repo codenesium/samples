@@ -30,26 +30,26 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Description { get; private set; }
+		public string Description { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string JwtKey { get; private set; }
+		public string JwtKey { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string LastIpAddress { get; private set; }
+		public string LastIpAddress { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public Guid MachineGuid { get; private set; }
+		public Guid MachineGuid { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2e3fecec19b13d4294365da48e3a4e13</Hash>
+    <Hash>466ae7a95ffac7a7dcdf2c9acc7aa12e</Hash>
 </Codenesium>*/

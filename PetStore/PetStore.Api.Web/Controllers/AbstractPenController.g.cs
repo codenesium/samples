@@ -190,7 +190,7 @@ namespace PetStoreNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace PetStoreNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -207,10 +207,10 @@ namespace PetStoreNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{penId}/Pets")]
+		[Route("{penId}/PetsByPenId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiPetResponseModel>), 200)]
-		public async virtual Task<IActionResult> Pets(int penId, int? limit, int? offset)
+		public async virtual Task<IActionResult> PetsByPenId(int penId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace PetStoreNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiPetResponseModel> response = await this.PenService.Pets(penId, query.Limit, query.Offset);
+			List<ApiPetResponseModel> response = await this.PenService.PetsByPenId(penId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +242,5 @@ namespace PetStoreNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>eb24493afac72eb9eb743e42c768aac5</Hash>
+    <Hash>f4b033d51e610607906dc4587c1cbaf8</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Department")]
 	[Trait("Area", "Integration")]
-	public class DepartmentIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class DepartmentIntegrationTests
 	{
-		public DepartmentIntegrationTests(TestWebApplicationFactory fixture)
+		public DepartmentIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.DepartmentDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiDepartmentResponseModel model = await client.DepartmentGetAsync(1);
 
 			ApiDepartmentModelMapper mapper = new ApiDepartmentModelMapper();
 
-			UpdateResponse<ApiDepartmentResponseModel> updateResponse = await this.Client.DepartmentUpdateAsync(model.DepartmentID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiDepartmentResponseModel> updateResponse = await client.DepartmentUpdateAsync(model.DepartmentID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.DepartmentDeleteAsync(model.DepartmentID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiDepartmentResponseModel response = await client.DepartmentGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.DepartmentDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.DepartmentGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiDepartmentResponseModel response = await this.Client.DepartmentGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiDepartmentResponseModel response = await client.DepartmentGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiDepartmentResponseModel> response = await this.Client.DepartmentAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiDepartmentResponseModel> response = await client.DepartmentAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiDepartmentResponseModel> CreateRecord()
+		private async Task<ApiDepartmentResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiDepartmentRequestModel();
 			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiDepartmentResponseModel> result = await this.Client.DepartmentCreateAsync(model);
+			CreateResponse<ApiDepartmentResponseModel> result = await client.DepartmentCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.DepartmentDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a35cb05c69353f0151da56f63d275300</Hash>
+    <Hash>610b97f866994047f8422a6e4116d15c</Hash>
 </Codenesium>*/

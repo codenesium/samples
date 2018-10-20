@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "EmailAddress")]
 	[Trait("Area", "Integration")]
-	public class EmailAddressIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class EmailAddressIntegrationTests
 	{
-		public EmailAddressIntegrationTests(TestWebApplicationFactory fixture)
+		public EmailAddressIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.EmailAddressDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiEmailAddressResponseModel model = await client.EmailAddressGetAsync(1);
 
 			ApiEmailAddressModelMapper mapper = new ApiEmailAddressModelMapper();
 
-			UpdateResponse<ApiEmailAddressResponseModel> updateResponse = await this.Client.EmailAddressUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiEmailAddressResponseModel> updateResponse = await client.EmailAddressUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.EmailAddressDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiEmailAddressResponseModel response = await client.EmailAddressGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.EmailAddressDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.EmailAddressGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiEmailAddressResponseModel response = await this.Client.EmailAddressGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiEmailAddressResponseModel response = await client.EmailAddressGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiEmailAddressResponseModel> response = await this.Client.EmailAddressAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiEmailAddressResponseModel> response = await client.EmailAddressAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiEmailAddressResponseModel> CreateRecord()
+		private async Task<ApiEmailAddressResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiEmailAddressRequestModel();
 			model.SetProperties("B", 2, DateTime.Parse("1/1/1988 12:00:00 AM"), Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
-			CreateResponse<ApiEmailAddressResponseModel> result = await this.Client.EmailAddressCreateAsync(model);
+			CreateResponse<ApiEmailAddressResponseModel> result = await client.EmailAddressCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.EmailAddressDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9a1f0a11c29bfd2ff59b6279ea9d4469</Hash>
+    <Hash>eb12ee8b2eca0b5094d3f88c243fadf5</Hash>
 </Codenesium>*/

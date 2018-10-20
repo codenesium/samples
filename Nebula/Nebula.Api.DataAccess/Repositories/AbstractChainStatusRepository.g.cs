@@ -81,7 +81,7 @@ namespace NebulaNS.Api.DataAccess
 			return await this.Context.Set<ChainStatus>().SingleOrDefaultAsync(x => x.Name == name);
 		}
 
-		public async virtual Task<List<Chain>> Chains(int chainStatusId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Chain>> ChainsByChainStatusId(int chainStatusId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Chain>().Where(x => x.ChainStatusId == chainStatusId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Chain>();
 		}
@@ -118,5 +118,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>107c3dfe645ba9eaf2b09d3129aea456</Hash>
+    <Hash>02c2befd9fdeecaeb3920628e0328e96</Hash>
 </Codenesium>*/

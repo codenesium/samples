@@ -29,25 +29,25 @@ namespace StackOverflowNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? BountyAmount { get; private set; }
+		public int? BountyAmount { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime CreationDate { get; private set; }
+		public DateTime CreationDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int PostId { get; private set; }
+		public int PostId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int? UserId { get; private set; }
+		public int? UserId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int VoteTypeId { get; private set; }
+		public int VoteTypeId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c834394c4fc065d6aa8395e3308bc56</Hash>
+    <Hash>55e1b1fd9ba36136287daed36d9b5d70</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Tweet")]
 	[Trait("Area", "Integration")]
-	public class TweetIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class TweetIntegrationTests
 	{
-		public TweetIntegrationTests(TestWebApplicationFactory fixture)
+		public TweetIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.TweetDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiTweetResponseModel model = await client.TweetGetAsync(1);
 
 			ApiTweetModelMapper mapper = new ApiTweetModelMapper();
 
-			UpdateResponse<ApiTweetResponseModel> updateResponse = await this.Client.TweetUpdateAsync(model.TweetId, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiTweetResponseModel> updateResponse = await client.TweetUpdateAsync(model.TweetId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.TweetDeleteAsync(model.TweetId);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiTweetResponseModel response = await client.TweetGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.TweetDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.TweetGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiTweetResponseModel response = await this.Client.TweetGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiTweetResponseModel response = await client.TweetGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TwitterNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiTweetResponseModel> response = await this.Client.TweetAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiTweetResponseModel> response = await client.TweetAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiTweetResponseModel> CreateRecord()
+		private async Task<ApiTweetResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTweetRequestModel();
 			model.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("1"), 1);
-			CreateResponse<ApiTweetResponseModel> result = await this.Client.TweetCreateAsync(model);
+			CreateResponse<ApiTweetResponseModel> result = await client.TweetCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.TweetDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b1830ea11c5d2c4a1991aa8797fc5f7b</Hash>
+    <Hash>1c452e6129e6f58f4bc14efee48c206f</Hash>
 </Codenesium>*/

@@ -11,18 +11,22 @@ namespace StudioResourceManagerNS.Api.Services
 		}
 
 		public virtual void SetProperties(int teacherId,
-		                                  int teacherSkillId)
+		                                  int teacherSkillId,
+		                                  bool isDeleted)
 		{
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
+			this.IsDeleted = isDeleted;
 		}
 
 		public int TeacherId { get; private set; }
 
 		public int TeacherSkillId { get; private set; }
+
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>da7353aff6f9f11b1b9c5620f8129137</Hash>
+    <Hash>c2b46c5975e29ebaf1e19a0f8d0140ff</Hash>
 </Codenesium>*/

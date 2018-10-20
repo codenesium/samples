@@ -132,23 +132,23 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBusinessEntityAddressResponseModel>> BusinessEntityAddressesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<BusinessEntityAddress> records = await this.BusinessEntityRepository.BusinessEntityAddresses(businessEntityID, limit, offset);
+			List<BusinessEntityAddress> records = await this.BusinessEntityRepository.BusinessEntityAddressesByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolBusinessEntityAddressMapper.MapBOToModel(this.DalBusinessEntityAddressMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContactsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<BusinessEntityContact> records = await this.BusinessEntityRepository.BusinessEntityContacts(businessEntityID, limit, offset);
+			List<BusinessEntityContact> records = await this.BusinessEntityRepository.BusinessEntityContactsByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolBusinessEntityContactMapper.MapBOToModel(this.DalBusinessEntityContactMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPersonResponseModel>> People(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPersonResponseModel>> PeopleByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Person> records = await this.BusinessEntityRepository.People(businessEntityID, limit, offset);
+			List<Person> records = await this.BusinessEntityRepository.PeopleByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
 		}
@@ -156,5 +156,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a69d158c33c92f51e6096fa17eac1b29</Hash>
+    <Hash>d09091d4cd75ac952401b4486a6f16bf</Hash>
 </Codenesium>*/

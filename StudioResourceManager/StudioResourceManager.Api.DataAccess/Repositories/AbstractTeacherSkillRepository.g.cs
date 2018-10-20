@@ -76,23 +76,14 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<Rate>> Rates(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<Rate>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Rate>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Rate>();
 		}
 
-		public async virtual Task<List<TeacherTeacherSkill>> TeacherTeacherSkills(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<TeacherTeacherSkill>> TeacherTeacherSkillsByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<TeacherTeacherSkill>().Where(x => x.TeacherSkillId == teacherSkillId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherTeacherSkill>();
-		}
-
-		public async virtual Task<List<TeacherSkill>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await (from refTable in this.Context.TeacherTeacherSkills
-			              join teacherSkills in this.Context.TeacherSkills on
-			              refTable.TeacherSkillId equals teacherSkills.Id
-			              where refTable.TeacherId == teacherId
-			              select teacherSkills).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<TeacherSkill>> Where(
@@ -127,5 +118,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>ccdffc57cf2757f1450c5d99fbc62323</Hash>
+    <Hash>92baf13a7c845cf7854dadeb9e3eb243</Hash>
 </Codenesium>*/

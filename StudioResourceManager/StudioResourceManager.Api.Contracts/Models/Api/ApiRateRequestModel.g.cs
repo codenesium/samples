@@ -17,27 +17,33 @@ namespace StudioResourceManagerNS.Api.Contracts
 		public virtual void SetProperties(
 			decimal amountPerMinute,
 			int teacherId,
-			int teacherSkillId)
+			int teacherSkillId,
+			bool isDeleted)
 		{
 			this.AmountPerMinute = amountPerMinute;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
 		[JsonProperty]
-		public decimal AmountPerMinute { get; private set; }
+		public decimal AmountPerMinute { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public int TeacherId { get; private set; }
+		public int TeacherId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int TeacherSkillId { get; private set; }
+		public int TeacherSkillId { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>0aa0ce3d379c262b44d968fd27451b03</Hash>
+    <Hash>c7f454466a2b09261125deff3c3edfca</Hash>
 </Codenesium>*/

@@ -36,38 +36,38 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public decimal ActualCost { get; private set; }
+		public decimal ActualCost { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; }
+		public int ProductID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int Quantity { get; private set; }
+		public int Quantity { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int ReferenceOrderID { get; private set; }
+		public int ReferenceOrderID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int ReferenceOrderLineID { get; private set; }
+		public int ReferenceOrderLineID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime TransactionDate { get; private set; }
+		public DateTime TransactionDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string TransactionType { get; private set; }
+		public string TransactionType { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9fed2140fabf2d90e1a16266635bd314</Hash>
+    <Hash>4306dd944f803fd0289f8e37fcfd2a80</Hash>
 </Codenesium>*/

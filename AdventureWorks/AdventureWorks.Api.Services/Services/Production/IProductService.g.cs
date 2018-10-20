@@ -25,26 +25,28 @@ namespace AdventureWorksNS.Api.Services
 
 		Task<ApiProductResponseModel> ByProductNumber(string productNumber);
 
-		Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductInventoryResponseModel>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductCostHistoryResponseModel>> ProductCostHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductInventoryResponseModel>> ProductInventoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductListPriceHistoryResponseModel>> ProductListPriceHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductReviewResponseModel>> ProductReviews(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTransactionHistoryResponseModel>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiProductReviewResponseModel>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiWorkOrderResponseModel>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTransactionHistoryResponseModel>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiProductResponseModel>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiWorkOrderResponseModel>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<ApiProductResponseModel>> ByDocumentNode(int productID, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>8e57b952a4b3a59a94def292b12a8c24</Hash>
+    <Hash>1c6aeb0bfdcf014219c8c6bbe8e292f8</Hash>
 </Codenesium>*/

@@ -19,7 +19,7 @@ namespace NebulaNS.Api.DataAccess
 
 		Task<Team> ByName(string name);
 
-		Task<List<Chain>> Chains(int teamId, int limit = int.MaxValue, int offset = 0);
+		Task<List<Chain>> ChainsByTeamId(int teamId, int limit = int.MaxValue, int offset = 0);
 
 		Task<Organization> OrganizationByOrganizationId(int organizationId);
 
@@ -28,5 +28,5 @@ namespace NebulaNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>48f4fa2b175dd58db2cf80e463d3c33c</Hash>
+    <Hash>7cd6be4e5a36e599ed8031945f7c9dad</Hash>
 </Codenesium>*/

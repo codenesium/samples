@@ -26,18 +26,18 @@ namespace ESPIOTNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int DeviceId { get; private set; }
+		public int DeviceId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string @Value { get; private set; }
+		public string @Value { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>760fbeea647149ecc1ea3da6f3c6f493</Hash>
+    <Hash>6024d00ea53b1be83533296b54658e5d</Hash>
 </Codenesium>*/

@@ -24,7 +24,6 @@ namespace TicketingCRMNS.Api.DataAccess
 		}
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -43,5 +42,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>7bace3a5c64c1ac05d229fa435428110</Hash>
+    <Hash>85941f67c9cde9332e650928cfcc9710</Hash>
 </Codenesium>*/

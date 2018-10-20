@@ -18,7 +18,8 @@ namespace StudioResourceManagerNS.Api.Services
 		                                  DateTime? scheduledEndDate,
 		                                  DateTime? scheduledStartDate,
 		                                  string studentNote,
-		                                  string teacherNote)
+		                                  string teacherNote,
+		                                  bool isDeleted)
 		{
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
@@ -29,6 +30,7 @@ namespace StudioResourceManagerNS.Api.Services
 			this.ScheduledStartDate = scheduledStartDate;
 			this.StudentNote = studentNote;
 			this.TeacherNote = teacherNote;
+			this.IsDeleted = isDeleted;
 		}
 
 		public DateTime? ActualEndDate { get; private set; }
@@ -48,9 +50,11 @@ namespace StudioResourceManagerNS.Api.Services
 		public string StudentNote { get; private set; }
 
 		public string TeacherNote { get; private set; }
+
+		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c684985a9fd76f45bdcb01e7ca98c9f9</Hash>
+    <Hash>c068f5e914a8a97b0966d36f673aeb63</Hash>
 </Codenesium>*/

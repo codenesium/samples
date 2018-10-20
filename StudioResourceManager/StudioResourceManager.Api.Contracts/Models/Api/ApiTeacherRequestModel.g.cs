@@ -20,7 +20,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string firstName,
 			string lastName,
 			string phone,
-			int userId)
+			int userId,
+			bool isDeleted)
 		{
 			this.Birthday = birthday;
 			this.Email = email;
@@ -28,33 +29,38 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.UserId = userId;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
 		[JsonProperty]
-		public DateTime Birthday { get; private set; }
+		public DateTime Birthday { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public string Email { get; private set; }
+		public string Email { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string FirstName { get; private set; }
+		public string FirstName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string LastName { get; private set; }
+		public string LastName { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Phone { get; private set; }
+		public string Phone { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int UserId { get; private set; }
+		public int UserId { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>95335e8a1e830c53b9da4c5eadb94f1b</Hash>
+    <Hash>740c61f7fcee1e5f82e5d47655a09622</Hash>
 </Codenesium>*/

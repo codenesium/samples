@@ -143,12 +143,12 @@ namespace PetStoreNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void Sales_Exists()
+		public async void SalesByPetId_Exists()
 		{
 			var mock = new ServiceMockFacade<IPetRepository>();
 			var records = new List<Sale>();
 			records.Add(new Sale());
-			mock.RepositoryMock.Setup(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.SalesByPetId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new PetService(mock.LoggerMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PetModelValidatorMock.Object,
@@ -157,17 +157,17 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                             mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiSaleResponseModel> response = await service.Sales(default(int));
+			List<ApiSaleResponseModel> response = await service.SalesByPetId(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesByPetId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void Sales_Not_Exists()
+		public async void SalesByPetId_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IPetRepository>();
-			mock.RepositoryMock.Setup(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
+			mock.RepositoryMock.Setup(x => x.SalesByPetId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<Sale>>(new List<Sale>()));
 			var service = new PetService(mock.LoggerMock.Object,
 			                             mock.RepositoryMock.Object,
 			                             mock.ModelValidatorMockFactory.PetModelValidatorMock.Object,
@@ -176,14 +176,14 @@ namespace PetStoreNS.Api.Services.Tests
 			                             mock.BOLMapperMockFactory.BOLSaleMapperMock,
 			                             mock.DALMapperMockFactory.DALSaleMapperMock);
 
-			List<ApiSaleResponseModel> response = await service.Sales(default(int));
+			List<ApiSaleResponseModel> response = await service.SalesByPetId(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.Sales(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.SalesByPetId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f1e0019a8250148a0dff9a83fe6ba902</Hash>
+    <Hash>685bc564c3022f6321bdd4545c354a45</Hash>
 </Codenesium>*/

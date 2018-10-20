@@ -15,54 +15,82 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Student")]
 	[Trait("Area", "Integration")]
-	public class StudentIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class StudentIntegrationTests
 	{
-		public StudentIntegrationTests(TestWebApplicationFactory fixture)
+		public StudentIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.StudentDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiStudentResponseModel model = await client.StudentGetAsync(1);
 
 			ApiStudentModelMapper mapper = new ApiStudentModelMapper();
 
-			UpdateResponse<ApiStudentResponseModel> updateResponse = await this.Client.StudentUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiStudentResponseModel> updateResponse = await client.StudentUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.StudentDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiStudentResponseModel response = await client.StudentGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.StudentDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.StudentGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiStudentResponseModel response = await this.Client.StudentGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiStudentResponseModel response = await client.StudentGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiStudentResponseModel> response = await this.Client.StudentAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiStudentResponseModel> response = await client.StudentAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiStudentResponseModel> CreateRecord()
+		private async Task<ApiStudentResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiStudentRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", true, "B", "B", true, 1);
-			CreateResponse<ApiStudentResponseModel> result = await this.Client.StudentCreateAsync(model);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", true, 1, "B", true, "B", "B", true, 1, true);
+			CreateResponse<ApiStudentResponseModel> result = await client.StudentCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.StudentDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f01ed6053495ac06abe68bad76c3cf93</Hash>
+    <Hash>074b2f29815a70bbd762a738ad87c12d</Hash>
 </Codenesium>*/

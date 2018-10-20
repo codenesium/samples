@@ -15,54 +15,82 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Pet")]
 	[Trait("Area", "Integration")]
-	public class PetIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PetIntegrationTests
 	{
-		public PetIntegrationTests(TestWebApplicationFactory fixture)
+		public PetIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PetDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPetResponseModel model = await client.PetGetAsync(1);
 
 			ApiPetModelMapper mapper = new ApiPetModelMapper();
 
-			UpdateResponse<ApiPetResponseModel> updateResponse = await this.Client.PetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPetResponseModel> updateResponse = await client.PetUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PetDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPetResponseModel response = await client.PetGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PetDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PetGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPetResponseModel response = await this.Client.PetGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPetResponseModel response = await client.PetGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPetResponseModel> response = await this.Client.PetAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPetResponseModel> response = await client.PetAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPetResponseModel> CreateRecord()
+		private async Task<ApiPetResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPetRequestModel();
 			model.SetProperties(1, 1, "B", 2);
-			CreateResponse<ApiPetResponseModel> result = await this.Client.PetCreateAsync(model);
+			CreateResponse<ApiPetResponseModel> result = await client.PetCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PetDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b51f36e0d22046e801c25c5bb66ff3a8</Hash>
+    <Hash>e477241675a7e6733013400020544d41</Hash>
 </Codenesium>*/

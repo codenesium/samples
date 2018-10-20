@@ -131,16 +131,16 @@ namespace TicketingCRMNS.Api.Services
 			return this.BolProvinceMapper.MapBOToModel(this.DalProvinceMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiCityResponseModel>> Cities(int provinceId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiCityResponseModel>> CitiesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<City> records = await this.ProvinceRepository.Cities(provinceId, limit, offset);
+			List<City> records = await this.ProvinceRepository.CitiesByProvinceId(provinceId, limit, offset);
 
 			return this.BolCityMapper.MapBOToModel(this.DalCityMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiVenueResponseModel>> Venues(int provinceId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiVenueResponseModel>> VenuesByProvinceId(int provinceId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Venue> records = await this.ProvinceRepository.Venues(provinceId, limit, offset);
+			List<Venue> records = await this.ProvinceRepository.VenuesByProvinceId(provinceId, limit, offset);
 
 			return this.BolVenueMapper.MapBOToModel(this.DalVenueMapper.MapEFToBO(records));
 		}
@@ -148,5 +148,5 @@ namespace TicketingCRMNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2dcf528965968187ad9cceb586e0004e</Hash>
+    <Hash>9dda081a023c7dc84630e5cea9a0d336</Hash>
 </Codenesium>*/

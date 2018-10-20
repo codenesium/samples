@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			return this.BolStoreMapper.MapBOToModel(this.DalStoreMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiCustomerResponseModel>> Customers(int storeID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiCustomerResponseModel>> CustomersByStoreID(int storeID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Customer> records = await this.StoreRepository.Customers(storeID, limit, offset);
+			List<Customer> records = await this.StoreRepository.CustomersByStoreID(storeID, limit, offset);
 
 			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>8da5a03e785e6f8ce83e3e981867b97b</Hash>
+    <Hash>5a0c7bf5864b278283decf697c3deea9</Hash>
 </Codenesium>*/

@@ -21,14 +21,14 @@ namespace PetShippingNS.Api.Services
 
 		Task<List<ApiClientResponseModel>> All(int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiClientCommunicationResponseModel>> ClientCommunications(int clientId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiClientCommunicationResponseModel>> ClientCommunicationsByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiPetResponseModel>> Pets(int clientId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiPetResponseModel>> PetsByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiSaleResponseModel>> Sales(int clientId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiSaleResponseModel>> SalesByClientId(int clientId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>36331523ed350450a00cebca836f7529</Hash>
+    <Hash>b65d714297f9e01fa9d143b77ee249a5</Hash>
 </Codenesium>*/

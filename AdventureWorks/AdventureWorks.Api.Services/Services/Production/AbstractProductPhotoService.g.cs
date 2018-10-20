@@ -116,9 +116,9 @@ namespace AdventureWorksNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoes(int productPhotoID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductProductPhotoResponseModel>> ProductProductPhotoesByProductPhotoID(int productPhotoID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductProductPhoto> records = await this.ProductPhotoRepository.ProductProductPhotoes(productPhotoID, limit, offset);
+			List<ProductProductPhoto> records = await this.ProductPhotoRepository.ProductProductPhotoesByProductPhotoID(productPhotoID, limit, offset);
 
 			return this.BolProductProductPhotoMapper.MapBOToModel(this.DalProductProductPhotoMapper.MapEFToBO(records));
 		}
@@ -126,5 +126,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>e00ce53effe3b91621c80c6aa1b33729</Hash>
+    <Hash>ef7840a51f9aa454c666e0da40d65651</Hash>
 </Codenesium>*/

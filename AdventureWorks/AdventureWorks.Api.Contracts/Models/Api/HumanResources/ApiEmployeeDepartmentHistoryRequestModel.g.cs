@@ -30,25 +30,25 @@ namespace AdventureWorksNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public short DepartmentID { get; private set; }
+		public short DepartmentID { get; private set; } = default(short);
 
 		[JsonProperty]
-		public DateTime? EndDate { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public DateTime? EndDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int ShiftID { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime StartDate { get; private set; }
+		public int ShiftID { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public DateTime StartDate { get; private set; } = default(DateTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>2be47d002437769363219ec5cc8fdd83</Hash>
+    <Hash>8b402194c1ea155d0af4ed2f8caede60</Hash>
 </Codenesium>*/

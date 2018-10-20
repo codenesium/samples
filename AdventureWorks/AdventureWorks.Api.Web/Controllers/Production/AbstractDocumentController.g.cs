@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(Guid id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -223,6 +223,23 @@ namespace AdventureWorksNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("byProductID/{productID}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiDocumentResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByProductID(int productID, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiDocumentResponseModel> response = await this.DocumentService.ByProductID(productID, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiDocumentRequestModel> PatchModel(Guid id, JsonPatchDocument<ApiDocumentRequestModel> patch)
 		{
 			var record = await this.DocumentService.Get(id);
@@ -242,5 +259,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>1c345530ca9581b8b3f72ddbababdd77</Hash>
+    <Hash>979d533fdd6177c86d75aa241135e269</Hash>
 </Codenesium>*/

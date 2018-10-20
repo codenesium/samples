@@ -22,10 +22,10 @@ namespace FileServiceNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>59c4b84cb1cd186a880abb9da6b1bc63</Hash>
+    <Hash>a0561536ae61cc85acbb92e8d2d63c89</Hash>
 </Codenesium>*/

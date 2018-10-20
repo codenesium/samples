@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "SalesOrderHeader")]
 	[Trait("Area", "Integration")]
-	public class SalesOrderHeaderIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class SalesOrderHeaderIntegrationTests
 	{
-		public SalesOrderHeaderIntegrationTests(TestWebApplicationFactory fixture)
+		public SalesOrderHeaderIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.SalesOrderHeaderDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiSalesOrderHeaderResponseModel model = await client.SalesOrderHeaderGetAsync(1);
 
 			ApiSalesOrderHeaderModelMapper mapper = new ApiSalesOrderHeaderModelMapper();
 
-			UpdateResponse<ApiSalesOrderHeaderResponseModel> updateResponse = await this.Client.SalesOrderHeaderUpdateAsync(model.SalesOrderID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiSalesOrderHeaderResponseModel> updateResponse = await client.SalesOrderHeaderUpdateAsync(model.SalesOrderID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.SalesOrderHeaderDeleteAsync(model.SalesOrderID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiSalesOrderHeaderResponseModel response = await client.SalesOrderHeaderGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.SalesOrderHeaderDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.SalesOrderHeaderGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiSalesOrderHeaderResponseModel response = await this.Client.SalesOrderHeaderGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiSalesOrderHeaderResponseModel response = await client.SalesOrderHeaderGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiSalesOrderHeaderResponseModel> response = await this.Client.SalesOrderHeaderAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiSalesOrderHeaderResponseModel> response = await client.SalesOrderHeaderAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiSalesOrderHeaderResponseModel> CreateRecord()
+		private async Task<ApiSalesOrderHeaderResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiSalesOrderHeaderRequestModel();
 			model.SetProperties("B", 2, "B", "B", 1, 1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, DateTime.Parse("1/1/1988 12:00:00 AM"), true, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, 2, 2m, 2m, 1, 2m);
-			CreateResponse<ApiSalesOrderHeaderResponseModel> result = await this.Client.SalesOrderHeaderCreateAsync(model);
+			CreateResponse<ApiSalesOrderHeaderResponseModel> result = await client.SalesOrderHeaderCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.SalesOrderHeaderDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9795fb7b3347b360c3ef3f7c04abaf9b</Hash>
+    <Hash>6d949677f9260333bcfc959f6647ac83</Hash>
 </Codenesium>*/

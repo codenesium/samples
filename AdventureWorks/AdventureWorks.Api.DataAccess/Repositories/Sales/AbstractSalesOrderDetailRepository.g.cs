@@ -81,19 +81,9 @@ namespace AdventureWorksNS.Api.DataAccess
 			return await this.Where(x => x.ProductID == productID, limit, offset);
 		}
 
-		public async virtual Task<SpecialOfferProduct> SpecialOfferProductByProductID(int productID)
-		{
-			return await this.Context.Set<SpecialOfferProduct>().SingleOrDefaultAsync(x => x.SpecialOfferID == productID);
-		}
-
 		public async virtual Task<SalesOrderHeader> SalesOrderHeaderBySalesOrderID(int salesOrderID)
 		{
 			return await this.Context.Set<SalesOrderHeader>().SingleOrDefaultAsync(x => x.SalesOrderID == salesOrderID);
-		}
-
-		public async virtual Task<SpecialOfferProduct> SpecialOfferProductBySpecialOfferID(int specialOfferID)
-		{
-			return await this.Context.Set<SpecialOfferProduct>().SingleOrDefaultAsync(x => x.SpecialOfferID == specialOfferID);
 		}
 
 		protected async Task<List<SalesOrderDetail>> Where(
@@ -128,5 +118,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c20b1629c678647559479fe28238b853</Hash>
+    <Hash>0e3b3a6c2834fa0303d4801edf2781d3</Hash>
 </Codenesium>*/

@@ -30,25 +30,25 @@ namespace PetShippingNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Email { get; private set; }
+		public string Email { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string FirstName { get; private set; }
+		public string FirstName { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string LastName { get; private set; }
+		public string LastName { get; private set; } = default(string);
 
 		[JsonProperty]
-		public string Note { get; private set; }
+		public string Note { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Phone { get; private set; }
+		public string Phone { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>377cd35759d5e29e4381fd6963ac3c0c</Hash>
+    <Hash>ab86ff8cd1b9cd32536871c10da98833</Hash>
 </Codenesium>*/

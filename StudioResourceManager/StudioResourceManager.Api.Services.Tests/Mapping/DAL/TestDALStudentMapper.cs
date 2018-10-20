@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALStudentMapper();
 			var bo = new BOStudent();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1, true);
 
 			Student response = mapper.MapBOToEF(bo);
 
@@ -32,6 +32,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Phone.Should().Be("A");
 			response.SmsRemindersEnabled.Should().Be(true);
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -39,7 +40,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALStudentMapper();
 			Student entity = new Student();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1, true);
 
 			BOStudent response = mapper.MapEFToBO(entity);
 
@@ -54,6 +55,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Phone.Should().Be("A");
 			response.SmsRemindersEnabled.Should().Be(true);
 			response.UserId.Should().Be(1);
+			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -61,7 +63,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALStudentMapper();
 			Student entity = new Student();
-			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1);
+			entity.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", 1, true, "A", "A", true, 1, true);
 
 			List<BOStudent> response = mapper.MapEFToBO(new List<Student>() { entity });
 
@@ -71,5 +73,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c6af4c6aa298a757a840c9f9a0ad06b9</Hash>
+    <Hash>6962b6a2ba6f81ed85655159a0a2ff76</Hash>
 </Codenesium>*/

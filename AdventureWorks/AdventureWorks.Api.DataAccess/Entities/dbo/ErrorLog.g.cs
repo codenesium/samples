@@ -39,7 +39,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public int? ErrorLine { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("ErrorLogID")]
 		public int ErrorLogID { get; private set; }
 
@@ -70,5 +69,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>3812b038f6994042e9d5c5b1258fdefe</Hash>
+    <Hash>82bf27e7855a415ee97b9f53fed4f4aa</Hash>
 </Codenesium>*/

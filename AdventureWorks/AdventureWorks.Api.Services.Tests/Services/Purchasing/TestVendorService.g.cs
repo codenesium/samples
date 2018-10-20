@@ -198,12 +198,12 @@ namespace AdventureWorksNS.Api.Services.Tests
 		}
 
 		[Fact]
-		public async void ProductVendors_Exists()
+		public async void ProductVendorsByBusinessEntityID_Exists()
 		{
 			var mock = new ServiceMockFacade<IVendorRepository>();
 			var records = new List<ProductVendor>();
 			records.Add(new ProductVendor());
-			mock.RepositoryMock.Setup(x => x.ProductVendors(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.ProductVendorsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VendorService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
@@ -214,17 +214,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			List<ApiProductVendorResponseModel> response = await service.ProductVendors(default(int));
+			List<ApiProductVendorResponseModel> response = await service.ProductVendorsByBusinessEntityID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductVendors(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ProductVendorsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void ProductVendors_Not_Exists()
+		public async void ProductVendorsByBusinessEntityID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IVendorRepository>();
-			mock.RepositoryMock.Setup(x => x.ProductVendors(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductVendor>>(new List<ProductVendor>()));
+			mock.RepositoryMock.Setup(x => x.ProductVendorsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<ProductVendor>>(new List<ProductVendor>()));
 			var service = new VendorService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
@@ -235,19 +235,19 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			List<ApiProductVendorResponseModel> response = await service.ProductVendors(default(int));
+			List<ApiProductVendorResponseModel> response = await service.ProductVendorsByBusinessEntityID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.ProductVendors(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.ProductVendorsByBusinessEntityID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void PurchaseOrderHeaders_Exists()
+		public async void PurchaseOrderHeadersByVendorID_Exists()
 		{
 			var mock = new ServiceMockFacade<IVendorRepository>();
 			var records = new List<PurchaseOrderHeader>();
 			records.Add(new PurchaseOrderHeader());
-			mock.RepositoryMock.Setup(x => x.PurchaseOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
+			mock.RepositoryMock.Setup(x => x.PurchaseOrderHeadersByVendorID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
 			var service = new VendorService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
@@ -258,17 +258,17 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeaders(default(int));
+			List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeadersByVendorID(default(int));
 
 			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.PurchaseOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.PurchaseOrderHeadersByVendorID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
-		public async void PurchaseOrderHeaders_Not_Exists()
+		public async void PurchaseOrderHeadersByVendorID_Not_Exists()
 		{
 			var mock = new ServiceMockFacade<IVendorRepository>();
-			mock.RepositoryMock.Setup(x => x.PurchaseOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
+			mock.RepositoryMock.Setup(x => x.PurchaseOrderHeadersByVendorID(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<PurchaseOrderHeader>>(new List<PurchaseOrderHeader>()));
 			var service = new VendorService(mock.LoggerMock.Object,
 			                                mock.RepositoryMock.Object,
 			                                mock.ModelValidatorMockFactory.VendorModelValidatorMock.Object,
@@ -279,14 +279,14 @@ namespace AdventureWorksNS.Api.Services.Tests
 			                                mock.BOLMapperMockFactory.BOLPurchaseOrderHeaderMapperMock,
 			                                mock.DALMapperMockFactory.DALPurchaseOrderHeaderMapperMock);
 
-			List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeaders(default(int));
+			List<ApiPurchaseOrderHeaderResponseModel> response = await service.PurchaseOrderHeadersByVendorID(default(int));
 
 			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.PurchaseOrderHeaders(default(int), It.IsAny<int>(), It.IsAny<int>()));
+			mock.RepositoryMock.Verify(x => x.PurchaseOrderHeadersByVendorID(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a9a94f2957a3c815c7f87e53f0d2d459</Hash>
+    <Hash>a6f26590158463e7f304d8f2dc70e056</Hash>
 </Codenesium>*/

@@ -190,7 +190,7 @@ namespace AdventureWorksNS.Api.Web
 		[HttpDelete]
 		[Route("{id}")]
 		[UnitOfWork]
-		[ProducesResponseType(typeof(void), 204)]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
 		[ProducesResponseType(typeof(ActionResponse), 422)]
 		public virtual async Task<IActionResult> Delete(int id)
 		{
@@ -198,7 +198,7 @@ namespace AdventureWorksNS.Api.Web
 
 			if (result.Success)
 			{
-				return this.NoContent();
+				return this.StatusCode(StatusCodes.Status200OK, result);
 			}
 			else
 			{
@@ -245,10 +245,10 @@ namespace AdventureWorksNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{shiftID}/EmployeeDepartmentHistories")]
+		[Route("{shiftID}/EmployeeDepartmentHistoriesByShiftID")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiEmployeeDepartmentHistoryResponseModel>), 200)]
-		public async virtual Task<IActionResult> EmployeeDepartmentHistories(int shiftID, int? limit, int? offset)
+		public async virtual Task<IActionResult> EmployeeDepartmentHistoriesByShiftID(int shiftID, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -256,7 +256,7 @@ namespace AdventureWorksNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.ShiftService.EmployeeDepartmentHistories(shiftID, query.Limit, query.Offset);
+			List<ApiEmployeeDepartmentHistoryResponseModel> response = await this.ShiftService.EmployeeDepartmentHistoriesByShiftID(shiftID, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -280,5 +280,5 @@ namespace AdventureWorksNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d5aa8327e52149158f0f91cd895679ad</Hash>
+    <Hash>9fec23d9982cb41bbe8a9d4b26455ce7</Hash>
 </Codenesium>*/

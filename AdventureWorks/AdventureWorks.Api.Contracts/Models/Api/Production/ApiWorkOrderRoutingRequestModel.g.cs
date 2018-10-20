@@ -41,47 +41,47 @@ namespace AdventureWorksNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public decimal? ActualCost { get; private set; }
+		public decimal? ActualCost { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public DateTime? ActualEndDate { get; private set; }
+		public DateTime? ActualEndDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public double? ActualResourceHr { get; private set; }
+		public double? ActualResourceHr { get; private set; } = default(double);
 
 		[JsonProperty]
-		public DateTime? ActualStartDate { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public short LocationID { get; private set; }
+		public DateTime? ActualStartDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ModifiedDate { get; private set; }
+		public short LocationID { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public short OperationSequence { get; private set; }
+		public DateTime ModifiedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public decimal PlannedCost { get; private set; }
+		public short OperationSequence { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public int ProductID { get; private set; }
+		public decimal PlannedCost { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ScheduledEndDate { get; private set; }
+		public int ProductID { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime ScheduledStartDate { get; private set; }
+		public DateTime ScheduledEndDate { get; private set; } = default(DateTime);
+
+		[Required]
+		[JsonProperty]
+		public DateTime ScheduledStartDate { get; private set; } = default(DateTime);
 	}
 }
 
 /*<Codenesium>
-    <Hash>63d922ea3d767357e427e59595d32c56</Hash>
+    <Hash>5a3e16afb90fe3d4e2162cd9d6b2009a</Hash>
 </Codenesium>*/

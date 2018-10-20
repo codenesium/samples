@@ -137,9 +137,9 @@ namespace AdventureWorksNS.Api.Services
 			return this.BolCustomerMapper.MapBOToModel(this.DalCustomerMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int customerID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByCustomerID(int customerID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesOrderHeader> records = await this.CustomerRepository.SalesOrderHeaders(customerID, limit, offset);
+			List<SalesOrderHeader> records = await this.CustomerRepository.SalesOrderHeadersByCustomerID(customerID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
 		}
@@ -147,5 +147,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>f4b7c0ae1097e05983e8340125feb54a</Hash>
+    <Hash>64d4f618d37cd907ff3a73a60628cc80</Hash>
 </Codenesium>*/

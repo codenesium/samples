@@ -76,7 +76,7 @@ namespace FileServiceNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<File>> Files(int fileTypeId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<File>> FilesByFileTypeId(int fileTypeId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<File>().Where(x => x.FileTypeId == fileTypeId).AsQueryable().Skip(offset).Take(limit).ToListAsync<File>();
 		}
@@ -113,5 +113,5 @@ namespace FileServiceNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>4db31919a0da473f60439096be960f36</Hash>
+    <Hash>ad706347ad3e706564f8faae20c8c108</Hash>
 </Codenesium>*/

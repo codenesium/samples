@@ -15,54 +15,82 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Customer")]
 	[Trait("Area", "Integration")]
-	public class CustomerIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class CustomerIntegrationTests
 	{
-		public CustomerIntegrationTests(TestWebApplicationFactory fixture)
+		public CustomerIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.CustomerDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiCustomerResponseModel model = await client.CustomerGetAsync(1);
 
 			ApiCustomerModelMapper mapper = new ApiCustomerModelMapper();
 
-			UpdateResponse<ApiCustomerResponseModel> updateResponse = await this.Client.CustomerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiCustomerResponseModel> updateResponse = await client.CustomerUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.CustomerDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiCustomerResponseModel response = await client.CustomerGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.CustomerDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.CustomerGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiCustomerResponseModel response = await this.Client.CustomerGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiCustomerResponseModel response = await client.CustomerGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiCustomerResponseModel> response = await this.Client.CustomerAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiCustomerResponseModel> response = await client.CustomerAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiCustomerResponseModel> CreateRecord()
+		private async Task<ApiCustomerResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiCustomerRequestModel();
 			model.SetProperties("B", "B", "B", "B");
-			CreateResponse<ApiCustomerResponseModel> result = await this.Client.CustomerCreateAsync(model);
+			CreateResponse<ApiCustomerResponseModel> result = await client.CustomerCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.CustomerDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a11400e027b93736fb902d14b28f8e6c</Hash>
+    <Hash>a3192e64804ae9394f705b8919e7dcd0</Hash>
 </Codenesium>*/

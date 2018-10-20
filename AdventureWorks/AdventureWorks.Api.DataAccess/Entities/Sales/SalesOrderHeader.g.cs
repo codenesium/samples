@@ -120,7 +120,6 @@ namespace AdventureWorksNS.Api.DataAccess
 		public Guid Rowguid { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("SalesOrderID")]
 		public int SalesOrderID { get; private set; }
 
@@ -175,5 +174,5 @@ namespace AdventureWorksNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>751c1970d18284e773f4b800093ead62</Hash>
+    <Hash>47d1658e0d6ec26634b1bbe3c0a84fa7</Hash>
 </Codenesium>*/

@@ -51,9 +51,13 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.PrimaryContactPhone).NotNull();
 			this.RuleFor(x => x.PrimaryContactPhone).Length(0, 128);
 		}
+
+		public virtual void IsDeletedRules()
+		{
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>ad6d3af7dbc1d53a8b2c6857aa17e57e</Hash>
+    <Hash>77d30a0d88033a7cd96e9b77b8302f74</Hash>
 </Codenesium>*/

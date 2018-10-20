@@ -124,16 +124,16 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotes(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineStepNoteResponseModel>> PipelineStepNotesByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PipelineStepNote> records = await this.PipelineStepRepository.PipelineStepNotes(pipelineStepId, limit, offset);
+			List<PipelineStepNote> records = await this.PipelineStepRepository.PipelineStepNotesByPipelineStepId(pipelineStepId, limit, offset);
 
 			return this.BolPipelineStepNoteMapper.MapBOToModel(this.DalPipelineStepNoteMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirements(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPipelineStepStepRequirementResponseModel>> PipelineStepStepRequirementsByPipelineStepId(int pipelineStepId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PipelineStepStepRequirement> records = await this.PipelineStepRepository.PipelineStepStepRequirements(pipelineStepId, limit, offset);
+			List<PipelineStepStepRequirement> records = await this.PipelineStepRepository.PipelineStepStepRequirementsByPipelineStepId(pipelineStepId, limit, offset);
 
 			return this.BolPipelineStepStepRequirementMapper.MapBOToModel(this.DalPipelineStepStepRequirementMapper.MapEFToBO(records));
 		}
@@ -148,5 +148,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>95bc855caadc800d630d00c7c02b3587</Hash>
+    <Hash>2768e8a6da0255cab5b8922f4e766be7</Hash>
 </Codenesium>*/

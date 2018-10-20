@@ -16,12 +16,14 @@ namespace StudioResourceManagerNS.Api.Services
 		public async Task<ValidationResult> ValidateCreateAsync(ApiTeacherTeacherSkillRequestModel model)
 		{
 			this.TeacherSkillIdRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
 		public async Task<ValidationResult> ValidateUpdateAsync(int id, ApiTeacherTeacherSkillRequestModel model)
 		{
 			this.TeacherSkillIdRules();
+			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -33,5 +35,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>79a72ed893cf86fde7dc06bfb0415ac7</Hash>
+    <Hash>f4a910efb8634a30bd2267107dded6ca</Hash>
 </Codenesium>*/

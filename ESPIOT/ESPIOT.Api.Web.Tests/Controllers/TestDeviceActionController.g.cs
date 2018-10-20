@@ -299,8 +299,8 @@ namespace ESPIOTNS.Api.Web.Tests
 
 			IActionResult response = await controller.Delete(default(int));
 
-			response.Should().BeOfType<NoContentResult>();
-			(response as NoContentResult).StatusCode.Should().Be((int)HttpStatusCode.NoContent);
+			response.Should().BeOfType<ObjectResult>();
+			(response as ObjectResult).StatusCode.Should().Be((int)HttpStatusCode.OK);
 			mock.ServiceMock.Verify(x => x.Delete(It.IsAny<int>()));
 		}
 
@@ -338,5 +338,5 @@ namespace ESPIOTNS.Api.Web.Tests
 }
 
 /*<Codenesium>
-    <Hash>2f86ed9ee7f2170f4125a5b1745a6d16</Hash>
+    <Hash>1a9df65b41bf187b640f61ca3c168d45</Hash>
 </Codenesium>*/

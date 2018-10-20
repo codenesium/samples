@@ -24,14 +24,14 @@ namespace PetShippingNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int PipelineStatusId { get; private set; }
+		public int PipelineStatusId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int SaleId { get; private set; }
+		public int SaleId { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1c30d62902d5e07bdae8eb567c7fa7bb</Hash>
+    <Hash>3a07a561d3ee481a0082b771c296b48c</Hash>
 </Codenesium>*/

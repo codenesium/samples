@@ -15,54 +15,82 @@ namespace TestsNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Person")]
 	[Trait("Area", "Integration")]
-	public class PersonIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PersonIntegrationTests
 	{
-		public PersonIntegrationTests(TestWebApplicationFactory fixture)
+		public PersonIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PersonDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPersonResponseModel model = await client.PersonGetAsync(1);
 
 			ApiPersonModelMapper mapper = new ApiPersonModelMapper();
 
-			UpdateResponse<ApiPersonResponseModel> updateResponse = await this.Client.PersonUpdateAsync(model.PersonId, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPersonResponseModel> updateResponse = await client.PersonUpdateAsync(model.PersonId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PersonDeleteAsync(model.PersonId);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPersonResponseModel response = await client.PersonGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PersonDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PersonGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPersonResponseModel response = await this.Client.PersonGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPersonResponseModel response = await client.PersonGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TestsNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPersonResponseModel> response = await this.Client.PersonAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPersonResponseModel> response = await client.PersonAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPersonResponseModel> CreateRecord()
+		private async Task<ApiPersonResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPersonRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiPersonResponseModel> result = await this.Client.PersonCreateAsync(model);
+			CreateResponse<ApiPersonResponseModel> result = await client.PersonCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PersonDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>65324f8175643c4472d06599b113f1a3</Hash>
+    <Hash>a56b4b9d8246f1ca60af451d16a64f3b</Hash>
 </Codenesium>*/

@@ -23,13 +23,13 @@ namespace TestsNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? SelfReferenceId { get; private set; }
+		public int? SelfReferenceId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int? SelfReferenceId2 { get; private set; }
+		public int? SelfReferenceId2 { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>b5044f1a4f02546a3c89aef9d0f781ef</Hash>
+    <Hash>01de1be914555931866a401822579693</Hash>
 </Codenesium>*/

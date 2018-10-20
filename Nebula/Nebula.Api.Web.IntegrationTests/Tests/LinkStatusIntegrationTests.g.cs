@@ -15,54 +15,82 @@ namespace NebulaNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "LinkStatus")]
 	[Trait("Area", "Integration")]
-	public class LinkStatusIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class LinkStatusIntegrationTests
 	{
-		public LinkStatusIntegrationTests(TestWebApplicationFactory fixture)
+		public LinkStatusIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.LinkStatusDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiLinkStatusResponseModel model = await client.LinkStatusGetAsync(1);
 
 			ApiLinkStatusModelMapper mapper = new ApiLinkStatusModelMapper();
 
-			UpdateResponse<ApiLinkStatusResponseModel> updateResponse = await this.Client.LinkStatusUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiLinkStatusResponseModel> updateResponse = await client.LinkStatusUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.LinkStatusDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiLinkStatusResponseModel response = await client.LinkStatusGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.LinkStatusDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.LinkStatusGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiLinkStatusResponseModel response = await this.Client.LinkStatusGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiLinkStatusResponseModel response = await client.LinkStatusGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace NebulaNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiLinkStatusResponseModel> response = await this.Client.LinkStatusAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiLinkStatusResponseModel> response = await client.LinkStatusAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiLinkStatusResponseModel> CreateRecord()
+		private async Task<ApiLinkStatusResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiLinkStatusRequestModel();
 			model.SetProperties("B");
-			CreateResponse<ApiLinkStatusResponseModel> result = await this.Client.LinkStatusCreateAsync(model);
+			CreateResponse<ApiLinkStatusResponseModel> result = await client.LinkStatusCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.LinkStatusDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>1164df2a968173a8df11aed497fd4c9c</Hash>
+    <Hash>c7c59a04133a4ff461886f5829dfba25</Hash>
 </Codenesium>*/

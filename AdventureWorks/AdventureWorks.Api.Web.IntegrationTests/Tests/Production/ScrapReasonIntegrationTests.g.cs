@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "ScrapReason")]
 	[Trait("Area", "Integration")]
-	public class ScrapReasonIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class ScrapReasonIntegrationTests
 	{
-		public ScrapReasonIntegrationTests(TestWebApplicationFactory fixture)
+		public ScrapReasonIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.ScrapReasonDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiScrapReasonResponseModel model = await client.ScrapReasonGetAsync(1);
 
 			ApiScrapReasonModelMapper mapper = new ApiScrapReasonModelMapper();
 
-			UpdateResponse<ApiScrapReasonResponseModel> updateResponse = await this.Client.ScrapReasonUpdateAsync(model.ScrapReasonID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiScrapReasonResponseModel> updateResponse = await client.ScrapReasonUpdateAsync(model.ScrapReasonID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.ScrapReasonDeleteAsync(model.ScrapReasonID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiScrapReasonResponseModel response = await client.ScrapReasonGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.ScrapReasonDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.ScrapReasonGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiScrapReasonResponseModel response = await this.Client.ScrapReasonGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiScrapReasonResponseModel response = await client.ScrapReasonGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiScrapReasonResponseModel> response = await this.Client.ScrapReasonAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiScrapReasonResponseModel> response = await client.ScrapReasonAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiScrapReasonResponseModel> CreateRecord()
+		private async Task<ApiScrapReasonResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiScrapReasonRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiScrapReasonResponseModel> result = await this.Client.ScrapReasonCreateAsync(model);
+			CreateResponse<ApiScrapReasonResponseModel> result = await client.ScrapReasonCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.ScrapReasonDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>503949b043a08e4e9556e3059632be03</Hash>
+    <Hash>a955ef6c83761a16328ab47eb8a46cd4</Hash>
 </Codenesium>*/

@@ -15,10 +15,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int teacherId,
-			int teacherSkillId)
+			int teacherSkillId,
+			bool isDeleted)
 		{
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
+			this.IsDeleted = isDeleted;
 		}
 
 		[Key]
@@ -29,6 +31,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[Column("teacherSkillId")]
 		public int TeacherSkillId { get; private set; }
 
+		[Column("isDeleted")]
+		public bool IsDeleted { get; private set; }
+
 		[ForeignKey("TeacherId")]
 		public virtual Teacher TeacherNavigation { get; private set; }
 
@@ -38,5 +43,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>971a16014a7b767834f8551488caa27b</Hash>
+    <Hash>069272699ffe790acce305676ed0ae23</Hash>
 </Codenesium>*/

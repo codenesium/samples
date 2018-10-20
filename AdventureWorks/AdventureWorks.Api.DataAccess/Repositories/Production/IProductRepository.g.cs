@@ -21,26 +21,28 @@ namespace AdventureWorksNS.Api.DataAccess
 
 		Task<Product> ByProductNumber(string productNumber);
 
-		Task<List<BillOfMaterial>> BillOfMaterials(int productAssemblyID, int limit = int.MaxValue, int offset = 0);
+		Task<List<BillOfMaterial>> BillOfMaterialsByProductAssemblyID(int productAssemblyID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ProductCostHistory>> ProductCostHistories(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<BillOfMaterial>> BillOfMaterialsByComponentID(int componentID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ProductInventory>> ProductInventories(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ProductCostHistory>> ProductCostHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ProductListPriceHistory>> ProductListPriceHistories(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ProductInventory>> ProductInventoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ProductProductPhoto>> ProductProductPhotoes(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ProductListPriceHistory>> ProductListPriceHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ProductReview>> ProductReviews(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ProductProductPhoto>> ProductProductPhotoesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<TransactionHistory>> TransactionHistories(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<ProductReview>> ProductReviewsByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<WorkOrder>> WorkOrders(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<TransactionHistory>> TransactionHistoriesByProductID(int productID, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<Product>> ByProductID(int productID, int limit = int.MaxValue, int offset = 0);
+		Task<List<WorkOrder>> WorkOrdersByProductID(int productID, int limit = int.MaxValue, int offset = 0);
+
+		Task<List<Product>> ByDocumentNode(int documentNode, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>f602f00d314b96da92ac973e124fc836</Hash>
+    <Hash>48d03db84d431aa0595b0651c75c5763</Hash>
 </Codenesium>*/

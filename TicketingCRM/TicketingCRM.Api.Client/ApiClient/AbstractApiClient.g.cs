@@ -96,9 +96,9 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiAdminResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiVenueResponseModel>> Venues(int adminId)
+		public virtual async Task<List<ApiVenueResponseModel>> VenuesByAdminId(int adminId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Admins/Venues/{adminId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Admins/VenuesByAdminId/{adminId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiVenueResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -152,9 +152,9 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCityResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiEventResponseModel>> Events(int cityId)
+		public virtual async Task<List<ApiEventResponseModel>> EventsByCityId(int cityId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cities/Events/{cityId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Cities/EventsByCityId/{cityId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiEventResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -201,9 +201,9 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiCountryResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiProvinceResponseModel>> Provinces(int countryId)
+		public virtual async Task<List<ApiProvinceResponseModel>> ProvincesByCountryId(int countryId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Countries/Provinces/{countryId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Countries/ProvincesByCountryId/{countryId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiProvinceResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -348,11 +348,18 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiProvinceResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiCityResponseModel>> Cities(int provinceId)
+		public virtual async Task<List<ApiCityResponseModel>> CitiesByProvinceId(int provinceId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Provinces/Cities/{provinceId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Provinces/CitiesByProvinceId/{provinceId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiCityResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiVenueResponseModel>> VenuesByProvinceId(int provinceId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Provinces/VenuesByProvinceId/{provinceId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiVenueResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiSaleResponseModel>> SaleBulkInsertAsync(List<ApiSaleRequestModel> items)
@@ -495,9 +502,9 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTicketStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTicketResponseModel>> Tickets(int ticketStatusId)
+		public virtual async Task<List<ApiTicketResponseModel>> TicketsByTicketStatusId(int ticketStatusId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TicketStatus/Tickets/{ticketStatusId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TicketStatus/TicketsByTicketStatusId/{ticketStatusId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTicketResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -551,9 +558,9 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTransactionResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiSaleResponseModel>> Sales(int transactionId)
+		public virtual async Task<List<ApiSaleResponseModel>> SalesByTransactionId(int transactionId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Transactions/Sales/{transactionId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Transactions/SalesByTransactionId/{transactionId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiSaleResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -600,9 +607,9 @@ namespace TicketingCRMNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiTransactionStatuResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTransactionResponseModel>> Transactions(int transactionStatusId)
+		public virtual async Task<List<ApiTransactionResponseModel>> TransactionsByTransactionStatusId(int transactionStatusId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionStatus/Transactions/{transactionStatusId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/TransactionStatus/TransactionsByTransactionStatusId/{transactionStatusId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTransactionResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -666,5 +673,5 @@ namespace TicketingCRMNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>2ae2fe518dfffe11162cd218fbace88d</Hash>
+    <Hash>e49521905596b36b0487e7057e94a3d8</Hash>
 </Codenesium>*/

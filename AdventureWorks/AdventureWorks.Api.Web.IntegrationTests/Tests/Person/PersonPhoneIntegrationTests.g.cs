@@ -15,54 +15,82 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "PersonPhone")]
 	[Trait("Area", "Integration")]
-	public class PersonPhoneIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class PersonPhoneIntegrationTests
 	{
-		public PersonPhoneIntegrationTests(TestWebApplicationFactory fixture)
+		public PersonPhoneIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.PersonPhoneDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiPersonPhoneResponseModel model = await client.PersonPhoneGetAsync(1);
 
 			ApiPersonPhoneModelMapper mapper = new ApiPersonPhoneModelMapper();
 
-			UpdateResponse<ApiPersonPhoneResponseModel> updateResponse = await this.Client.PersonPhoneUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiPersonPhoneResponseModel> updateResponse = await client.PersonPhoneUpdateAsync(model.BusinessEntityID, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.PersonPhoneDeleteAsync(model.BusinessEntityID);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiPersonPhoneResponseModel response = await client.PersonPhoneGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.PersonPhoneDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.PersonPhoneGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiPersonPhoneResponseModel response = await this.Client.PersonPhoneGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiPersonPhoneResponseModel response = await client.PersonPhoneGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace AdventureWorksNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiPersonPhoneResponseModel> response = await this.Client.PersonPhoneAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiPersonPhoneResponseModel> response = await client.PersonPhoneAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiPersonPhoneResponseModel> CreateRecord()
+		private async Task<ApiPersonPhoneResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiPersonPhoneRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
-			CreateResponse<ApiPersonPhoneResponseModel> result = await this.Client.PersonPhoneCreateAsync(model);
+			CreateResponse<ApiPersonPhoneResponseModel> result = await client.PersonPhoneCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.PersonPhoneDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>00b51009a640f60cd55de38717aae825</Hash>
+    <Hash>f9050c8bfbf258f5437431fb1f2c4002</Hash>
 </Codenesium>*/

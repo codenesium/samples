@@ -25,10 +25,10 @@ namespace FileServiceNS.Api.Services
 
 		Task<ApiBucketResponseModel> ByName(string name);
 
-		Task<List<ApiFileResponseModel>> Files(int bucketId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiFileResponseModel>> FilesByBucketId(int bucketId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>da4328f867346c01af71669643de2630</Hash>
+    <Hash>490ceff4ea8d42a8ae461d41e0494f23</Hash>
 </Codenesium>*/

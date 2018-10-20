@@ -15,54 +15,82 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "DeviceAction")]
 	[Trait("Area", "Integration")]
-	public class DeviceActionIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class DeviceActionIntegrationTests
 	{
-		public DeviceActionIntegrationTests(TestWebApplicationFactory fixture)
+		public DeviceActionIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.DeviceActionDeleteAsync(1);
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiDeviceActionResponseModel model = await client.DeviceActionGetAsync(1);
 
 			ApiDeviceActionModelMapper mapper = new ApiDeviceActionModelMapper();
 
-			UpdateResponse<ApiDeviceActionResponseModel> updateResponse = await this.Client.DeviceActionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiDeviceActionResponseModel> updateResponse = await client.DeviceActionUpdateAsync(model.Id, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.DeviceActionDeleteAsync(model.Id);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiDeviceActionResponseModel response = await client.DeviceActionGetAsync(1);
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.DeviceActionDeleteAsync(1);
+
+			result.Success.Should().BeTrue();
+
+			response = await client.DeviceActionGetAsync(1);
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiDeviceActionResponseModel response = await this.Client.DeviceActionGetAsync(1);
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiDeviceActionResponseModel response = await client.DeviceActionGetAsync(1);
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiDeviceActionResponseModel> response = await this.Client.DeviceActionAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiDeviceActionResponseModel> response = await client.DeviceActionAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiDeviceActionResponseModel> CreateRecord()
+		private async Task<ApiDeviceActionResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiDeviceActionRequestModel();
 			model.SetProperties(1, "B", "B");
-			CreateResponse<ApiDeviceActionResponseModel> result = await this.Client.DeviceActionCreateAsync(model);
+			CreateResponse<ApiDeviceActionResponseModel> result = await client.DeviceActionCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.DeviceActionDeleteAsync(2);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9f6eb592102bfa57ce94fcbfa19e7aa6</Hash>
+    <Hash>a2f9a0000c61876823bf29019967e3f8</Hash>
 </Codenesium>*/

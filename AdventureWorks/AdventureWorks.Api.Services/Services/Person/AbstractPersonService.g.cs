@@ -161,30 +161,30 @@ namespace AdventureWorksNS.Api.Services
 			return this.BolPersonMapper.MapBOToModel(this.DalPersonMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContacts(int personID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBusinessEntityContactResponseModel>> BusinessEntityContactsByPersonID(int personID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<BusinessEntityContact> records = await this.PersonRepository.BusinessEntityContacts(personID, limit, offset);
+			List<BusinessEntityContact> records = await this.PersonRepository.BusinessEntityContactsByPersonID(personID, limit, offset);
 
 			return this.BolBusinessEntityContactMapper.MapBOToModel(this.DalBusinessEntityContactMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiEmailAddressResponseModel>> EmailAddresses(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEmailAddressResponseModel>> EmailAddressesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EmailAddress> records = await this.PersonRepository.EmailAddresses(businessEntityID, limit, offset);
+			List<EmailAddress> records = await this.PersonRepository.EmailAddressesByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolEmailAddressMapper.MapBOToModel(this.DalEmailAddressMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPasswordResponseModel>> Passwords(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPasswordResponseModel>> PasswordsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Password> records = await this.PersonRepository.Passwords(businessEntityID, limit, offset);
+			List<Password> records = await this.PersonRepository.PasswordsByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolPasswordMapper.MapBOToModel(this.DalPasswordMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPersonPhoneResponseModel>> PersonPhones(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPersonPhoneResponseModel>> PersonPhonesByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PersonPhone> records = await this.PersonRepository.PersonPhones(businessEntityID, limit, offset);
+			List<PersonPhone> records = await this.PersonRepository.PersonPhonesByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolPersonPhoneMapper.MapBOToModel(this.DalPersonPhoneMapper.MapEFToBO(records));
 		}
@@ -192,5 +192,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>dfe1217df57d9a0bb3ff4327f8319e29</Hash>
+    <Hash>3cd5bfca41c0db44b59e8b9a1ad4fc2c</Hash>
 </Codenesium>*/

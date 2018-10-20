@@ -38,42 +38,42 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public string Address1 { get; private set; }
+		public string Address1 { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Address2 { get; private set; }
+		public string Address2 { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int AdminId { get; private set; }
+		public int AdminId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Email { get; private set; }
+		public string Email { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Facebook { get; private set; }
+		public string Facebook { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Name { get; private set; }
+		public string Name { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string Phone { get; private set; }
+		public string Phone { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public int ProvinceId { get; private set; }
+		public int ProvinceId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public string Website { get; private set; }
+		public string Website { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>876aa030c01cdbf8a3d7717a99d03181</Hash>
+    <Hash>d70db594cef61c53200cbb7c1b8bc1ca</Hash>
 </Codenesium>*/

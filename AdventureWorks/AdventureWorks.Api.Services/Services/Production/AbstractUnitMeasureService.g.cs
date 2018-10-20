@@ -138,16 +138,23 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterials(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiBillOfMaterialResponseModel>> BillOfMaterialsByUnitMeasureCode(string unitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
-			List<BillOfMaterial> records = await this.UnitMeasureRepository.BillOfMaterials(unitMeasureCode, limit, offset);
+			List<BillOfMaterial> records = await this.UnitMeasureRepository.BillOfMaterialsByUnitMeasureCode(unitMeasureCode, limit, offset);
 
 			return this.BolBillOfMaterialMapper.MapBOToModel(this.DalBillOfMaterialMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiProductResponseModel>> Products(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductResponseModel>> ProductsBySizeUnitMeasureCode(string sizeUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Product> records = await this.UnitMeasureRepository.Products(sizeUnitMeasureCode, limit, offset);
+			List<Product> records = await this.UnitMeasureRepository.ProductsBySizeUnitMeasureCode(sizeUnitMeasureCode, limit, offset);
+
+			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiProductResponseModel>> ProductsByWeightUnitMeasureCode(string weightUnitMeasureCode, int limit = int.MaxValue, int offset = 0)
+		{
+			List<Product> records = await this.UnitMeasureRepository.ProductsByWeightUnitMeasureCode(weightUnitMeasureCode, limit, offset);
 
 			return this.BolProductMapper.MapBOToModel(this.DalProductMapper.MapEFToBO(records));
 		}
@@ -155,5 +162,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a201b9abaf309cda466afecbb75da1d4</Hash>
+    <Hash>2d4af6e14ec7070fb64d44eaeba5d848</Hash>
 </Codenesium>*/

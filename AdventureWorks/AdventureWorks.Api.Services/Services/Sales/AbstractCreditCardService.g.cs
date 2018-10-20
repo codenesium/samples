@@ -130,15 +130,22 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeaders(int creditCardID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSalesOrderHeaderResponseModel>> SalesOrderHeadersByCreditCardID(int creditCardID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SalesOrderHeader> records = await this.CreditCardRepository.SalesOrderHeaders(creditCardID, limit, offset);
+			List<SalesOrderHeader> records = await this.CreditCardRepository.SalesOrderHeadersByCreditCardID(creditCardID, limit, offset);
 
 			return this.BolSalesOrderHeaderMapper.MapBOToModel(this.DalSalesOrderHeaderMapper.MapEFToBO(records));
+		}
+
+		public async virtual Task<List<ApiCreditCardResponseModel>> ByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		{
+			List<CreditCard> records = await this.CreditCardRepository.ByBusinessEntityID(businessEntityID, limit, offset);
+
+			return this.BolCreditCardMapper.MapBOToModel(this.DalCreditCardMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9ecf43d2e559368a48a4d5d26ab9c2a3</Hash>
+    <Hash>00957f9bd5cb6032ce557c9487009ed3</Hash>
 </Codenesium>*/

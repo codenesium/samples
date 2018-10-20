@@ -130,9 +130,9 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistories(short departmentID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEmployeeDepartmentHistoryResponseModel>> EmployeeDepartmentHistoriesByDepartmentID(short departmentID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EmployeeDepartmentHistory> records = await this.DepartmentRepository.EmployeeDepartmentHistories(departmentID, limit, offset);
+			List<EmployeeDepartmentHistory> records = await this.DepartmentRepository.EmployeeDepartmentHistoriesByDepartmentID(departmentID, limit, offset);
 
 			return this.BolEmployeeDepartmentHistoryMapper.MapBOToModel(this.DalEmployeeDepartmentHistoryMapper.MapEFToBO(records));
 		}
@@ -140,5 +140,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>855b791c0dd6c5da336e3a821a3c86f1</Hash>
+    <Hash>0891f1142a3846c4e9978c6e1cd73024</Hash>
 </Codenesium>*/

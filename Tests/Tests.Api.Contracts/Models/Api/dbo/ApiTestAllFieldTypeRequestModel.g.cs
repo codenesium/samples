@@ -76,118 +76,118 @@ namespace TestsNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public long FieldBigInt { get; private set; }
+		public long FieldBigInt { get; private set; } = default(long);
 
 		[Required]
 		[JsonProperty]
-		public byte[] FieldBinary { get; private set; }
+		public byte[] FieldBinary { get; private set; } = default(byte[]);
 
 		[Required]
 		[JsonProperty]
-		public bool FieldBit { get; private set; }
+		public bool FieldBit { get; private set; } = default(bool);
 
 		[Required]
 		[JsonProperty]
-		public string FieldChar { get; private set; }
+		public string FieldChar { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime FieldDate { get; private set; }
+		public DateTime FieldDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime FieldDateTime { get; private set; }
+		public DateTime FieldDateTime { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTime FieldDateTime2 { get; private set; }
+		public DateTime FieldDateTime2 { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public DateTimeOffset FieldDateTimeOffset { get; private set; }
+		public DateTimeOffset FieldDateTimeOffset { get; private set; } = default(DateTimeOffset);
 
 		[Required]
 		[JsonProperty]
-		public double FieldDecimal { get; private set; }
+		public double FieldDecimal { get; private set; } = default(double);
 
 		[Required]
 		[JsonProperty]
-		public double FieldFloat { get; private set; }
+		public double FieldFloat { get; private set; } = default(double);
 
 		[Required]
 		[JsonProperty]
-		public byte[] FieldImage { get; private set; }
+		public byte[] FieldImage { get; private set; } = default(byte[]);
 
 		[Required]
 		[JsonProperty]
-		public decimal FieldMoney { get; private set; }
+		public decimal FieldMoney { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public string FieldNChar { get; private set; }
+		public string FieldNChar { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string FieldNText { get; private set; }
+		public string FieldNText { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public decimal FieldNumeric { get; private set; }
+		public decimal FieldNumeric { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public string FieldNVarchar { get; private set; }
+		public string FieldNVarchar { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public decimal FieldReal { get; private set; }
+		public decimal FieldReal { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public DateTime FieldSmallDateTime { get; private set; }
+		public DateTime FieldSmallDateTime { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public short FieldSmallInt { get; private set; }
+		public short FieldSmallInt { get; private set; } = default(short);
 
 		[Required]
 		[JsonProperty]
-		public decimal FieldSmallMoney { get; private set; }
+		public decimal FieldSmallMoney { get; private set; } = default(decimal);
 
 		[Required]
 		[JsonProperty]
-		public string FieldText { get; private set; }
+		public string FieldText { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public TimeSpan FieldTime { get; private set; }
+		public TimeSpan FieldTime { get; private set; } = default(TimeSpan);
 
 		[Required]
 		[JsonProperty]
-		public byte[] FieldTimestamp { get; private set; }
+		public byte[] FieldTimestamp { get; private set; } = default(byte[]);
 
 		[Required]
 		[JsonProperty]
-		public int FieldTinyInt { get; private set; }
+		public int FieldTinyInt { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public Guid FieldUniqueIdentifier { get; private set; }
+		public Guid FieldUniqueIdentifier { get; private set; } = default(Guid);
 
 		[Required]
 		[JsonProperty]
-		public byte[] FieldVarBinary { get; private set; }
+		public byte[] FieldVarBinary { get; private set; } = default(byte[]);
 
 		[Required]
 		[JsonProperty]
-		public string FieldVarchar { get; private set; }
+		public string FieldVarchar { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public string FieldXML { get; private set; }
+		public string FieldXML { get; private set; } = default(string);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1b8a7a2d80846eacb157e3ecd61d9ac7</Hash>
+    <Hash>ff30a03ff53531589345e06591743157</Hash>
 </Codenesium>*/

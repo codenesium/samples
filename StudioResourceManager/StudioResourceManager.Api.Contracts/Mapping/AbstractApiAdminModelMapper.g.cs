@@ -18,7 +18,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			                       request.FirstName,
 			                       request.LastName,
 			                       request.Phone,
-			                       request.UserId);
+			                       request.UserId,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -32,7 +33,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 				response.FirstName,
 				response.LastName,
 				response.Phone,
-				response.UserId);
+				response.UserId,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -45,11 +47,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 			patch.Replace(x => x.LastName, model.LastName);
 			patch.Replace(x => x.Phone, model.Phone);
 			patch.Replace(x => x.UserId, model.UserId);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>864eefb658eb8637a396d392632a75b9</Hash>
+    <Hash>74db6d6440e6dbe22fdeca3c9eb7a4fc</Hash>
 </Codenesium>*/

@@ -138,16 +138,16 @@ namespace AdventureWorksNS.Api.Services
 			}
 		}
 
-		public async virtual Task<List<ApiProductVendorResponseModel>> ProductVendors(int businessEntityID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiProductVendorResponseModel>> ProductVendorsByBusinessEntityID(int businessEntityID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ProductVendor> records = await this.VendorRepository.ProductVendors(businessEntityID, limit, offset);
+			List<ProductVendor> records = await this.VendorRepository.ProductVendorsByBusinessEntityID(businessEntityID, limit, offset);
 
 			return this.BolProductVendorMapper.MapBOToModel(this.DalProductVendorMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeaders(int vendorID, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPurchaseOrderHeaderResponseModel>> PurchaseOrderHeadersByVendorID(int vendorID, int limit = int.MaxValue, int offset = 0)
 		{
-			List<PurchaseOrderHeader> records = await this.VendorRepository.PurchaseOrderHeaders(vendorID, limit, offset);
+			List<PurchaseOrderHeader> records = await this.VendorRepository.PurchaseOrderHeadersByVendorID(vendorID, limit, offset);
 
 			return this.BolPurchaseOrderHeaderMapper.MapBOToModel(this.DalPurchaseOrderHeaderMapper.MapEFToBO(records));
 		}
@@ -155,5 +155,5 @@ namespace AdventureWorksNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>61796a03d73a44e9e2be99360131c21b</Hash>
+    <Hash>fc7c11aa8be4764723023c7a02a26015</Hash>
 </Codenesium>*/

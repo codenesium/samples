@@ -132,23 +132,23 @@ namespace PetShippingNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiClientCommunicationResponseModel>> ClientCommunications(int clientId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiClientCommunicationResponseModel>> ClientCommunicationsByClientId(int clientId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<ClientCommunication> records = await this.ClientRepository.ClientCommunications(clientId, limit, offset);
+			List<ClientCommunication> records = await this.ClientRepository.ClientCommunicationsByClientId(clientId, limit, offset);
 
 			return this.BolClientCommunicationMapper.MapBOToModel(this.DalClientCommunicationMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiPetResponseModel>> Pets(int clientId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiPetResponseModel>> PetsByClientId(int clientId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Pet> records = await this.ClientRepository.Pets(clientId, limit, offset);
+			List<Pet> records = await this.ClientRepository.PetsByClientId(clientId, limit, offset);
 
 			return this.BolPetMapper.MapBOToModel(this.DalPetMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiSaleResponseModel>> Sales(int clientId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSaleResponseModel>> SalesByClientId(int clientId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<Sale> records = await this.ClientRepository.Sales(clientId, limit, offset);
+			List<Sale> records = await this.ClientRepository.SalesByClientId(clientId, limit, offset);
 
 			return this.BolSaleMapper.MapBOToModel(this.DalSaleMapper.MapEFToBO(records));
 		}
@@ -156,5 +156,5 @@ namespace PetShippingNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>72f532fd9557a6b246df10ed62475763</Hash>
+    <Hash>54a947563f7155318efb3ffb4a143b50</Hash>
 </Codenesium>*/

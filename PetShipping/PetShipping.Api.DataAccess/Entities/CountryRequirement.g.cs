@@ -31,7 +31,6 @@ namespace PetShippingNS.Api.DataAccess
 		public string Detail { get; private set; }
 
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Column("id")]
 		public int Id { get; private set; }
 
@@ -41,5 +40,5 @@ namespace PetShippingNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>1f1c94900dfb5367247ecf4918e21ca9</Hash>
+    <Hash>37de71f04bc48049df1bd8cc7aa63e08</Hash>
 </Codenesium>*/

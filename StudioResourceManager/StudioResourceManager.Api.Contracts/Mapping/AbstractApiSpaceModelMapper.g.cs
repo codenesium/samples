@@ -14,7 +14,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			var response = new ApiSpaceResponseModel();
 			response.SetProperties(id,
 			                       request.Description,
-			                       request.Name);
+			                       request.Name,
+			                       request.IsDeleted);
 			return response;
 		}
 
@@ -24,7 +25,8 @@ namespace StudioResourceManagerNS.Api.Contracts
 			var request = new ApiSpaceRequestModel();
 			request.SetProperties(
 				response.Description,
-				response.Name);
+				response.Name,
+				response.IsDeleted);
 			return request;
 		}
 
@@ -33,11 +35,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 			var patch = new JsonPatchDocument<ApiSpaceRequestModel>();
 			patch.Replace(x => x.Description, model.Description);
 			patch.Replace(x => x.Name, model.Name);
+			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6487317b646fea3f4b3148e328434d07</Hash>
+    <Hash>7a1b2e617639ce98cef295175fe3fc98</Hash>
 </Codenesium>*/

@@ -15,54 +15,82 @@ namespace TwitterNS.Api.Web.IntegrationTests
 	[Trait("Type", "Integration")]
 	[Trait("Table", "Following")]
 	[Trait("Area", "Integration")]
-	public class FollowingIntegrationTests : IClassFixture<TestWebApplicationFactory>
+	public class FollowingIntegrationTests
 	{
-		public FollowingIntegrationTests(TestWebApplicationFactory fixture)
+		public FollowingIntegrationTests()
 		{
-			this.Client = new ApiClient(fixture.CreateClient());
 		}
-
-		public ApiClient Client { get; }
 
 		[Fact]
 		public async void TestCreate()
 		{
-			var response = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			await client.FollowingDeleteAsync("A");
+
+			var response = await this.CreateRecord(client);
 
 			response.Should().NotBeNull();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestUpdate()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			ApiFollowingResponseModel model = await client.FollowingGetAsync("A");
 
 			ApiFollowingModelMapper mapper = new ApiFollowingModelMapper();
 
-			UpdateResponse<ApiFollowingResponseModel> updateResponse = await this.Client.FollowingUpdateAsync(model.UserId, mapper.MapResponseToRequest(model));
+			UpdateResponse<ApiFollowingResponseModel> updateResponse = await client.FollowingUpdateAsync(model.UserId, mapper.MapResponseToRequest(model));
 
 			updateResponse.Record.Should().NotBeNull();
 			updateResponse.Success.Should().BeTrue();
-
-			await this.Cleanup();
 		}
 
 		[Fact]
 		public async void TestDelete()
 		{
-			var model = await this.CreateRecord();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
 
-			await this.Client.FollowingDeleteAsync(model.UserId);
+			var client = new ApiClient(testServer.CreateClient());
 
-			await this.Cleanup();
+			ApiFollowingResponseModel response = await client.FollowingGetAsync("A");
+
+			response.Should().NotBeNull();
+
+			ActionResponse result = await client.FollowingDeleteAsync("A");
+
+			result.Success.Should().BeTrue();
+
+			response = await client.FollowingGetAsync("A");
+
+			response.Should().BeNull();
 		}
 
 		[Fact]
 		public async void TestGet()
 		{
-			ApiFollowingResponseModel response = await this.Client.FollowingGetAsync("A");
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+			ApiFollowingResponseModel response = await client.FollowingGetAsync("A");
 
 			response.Should().NotBeNull();
 		}
@@ -70,28 +98,30 @@ namespace TwitterNS.Api.Web.IntegrationTests
 		[Fact]
 		public async void TestAll()
 		{
-			List<ApiFollowingResponseModel> response = await this.Client.FollowingAllAsync();
+			var builder = new WebHostBuilder()
+			              .UseEnvironment("Production")
+			              .UseStartup<TestStartup>();
+			TestServer testServer = new TestServer(builder);
+
+			var client = new ApiClient(testServer.CreateClient());
+
+			List<ApiFollowingResponseModel> response = await client.FollowingAllAsync();
 
 			response.Count.Should().BeGreaterThan(0);
 		}
 
-		private async Task<ApiFollowingResponseModel> CreateRecord()
+		private async Task<ApiFollowingResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiFollowingRequestModel();
 			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
-			CreateResponse<ApiFollowingResponseModel> result = await this.Client.FollowingCreateAsync(model);
+			CreateResponse<ApiFollowingResponseModel> result = await client.FollowingCreateAsync(model);
 
 			result.Success.Should().BeTrue();
 			return result.Record;
-		}
-
-		private async Task Cleanup()
-		{
-			await this.Client.FollowingDeleteAsync("B");
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a5d3582faef632b19f4febb6b961e671</Hash>
+    <Hash>3a8607d1685450aad27d990df861f5a5</Hash>
 </Codenesium>*/

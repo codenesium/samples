@@ -57,70 +57,70 @@ namespace StackOverflowNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? AcceptedAnswerId { get; private set; }
+		public int? AcceptedAnswerId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public int? AnswerCount { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public string Body { get; private set; }
-
-		[JsonProperty]
-		public DateTime? ClosedDate { get; private set; }
-
-		[JsonProperty]
-		public int? CommentCount { get; private set; }
-
-		[JsonProperty]
-		public DateTime? CommunityOwnedDate { get; private set; }
+		public int? AnswerCount { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime CreationDate { get; private set; }
+		public string Body { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? FavoriteCount { get; private set; }
-
-		[Required]
-		[JsonProperty]
-		public DateTime LastActivityDate { get; private set; }
+		public DateTime? ClosedDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public DateTime? LastEditDate { get; private set; }
+		public int? CommentCount { get; private set; } = default(int);
 
 		[JsonProperty]
-		public string LastEditorDisplayName { get; private set; }
-
-		[JsonProperty]
-		public int? LastEditorUserId { get; private set; }
-
-		[JsonProperty]
-		public int? OwnerUserId { get; private set; }
-
-		[JsonProperty]
-		public int? ParentId { get; private set; }
+		public DateTime? CommunityOwnedDate { get; private set; } = default(DateTime);
 
 		[Required]
 		[JsonProperty]
-		public int PostTypeId { get; private set; }
+		public DateTime CreationDate { get; private set; } = default(DateTime);
+
+		[JsonProperty]
+		public int? FavoriteCount { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int Score { get; private set; }
+		public DateTime LastActivityDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string Tag { get; private set; }
+		public DateTime? LastEditDate { get; private set; } = default(DateTime);
 
 		[JsonProperty]
-		public string Title { get; private set; }
+		public string LastEditorDisplayName { get; private set; } = default(string);
+
+		[JsonProperty]
+		public int? LastEditorUserId { get; private set; } = default(int);
+
+		[JsonProperty]
+		public int? OwnerUserId { get; private set; } = default(int);
+
+		[JsonProperty]
+		public int? ParentId { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public int ViewCount { get; private set; }
+		public int PostTypeId { get; private set; } = default(int);
+
+		[Required]
+		[JsonProperty]
+		public int Score { get; private set; } = default(int);
+
+		[JsonProperty]
+		public string Tag { get; private set; } = default(string);
+
+		[JsonProperty]
+		public string Title { get; private set; } = default(string);
+
+		[Required]
+		[JsonProperty]
+		public int ViewCount { get; private set; } = default(int);
 	}
 }
 
 /*<Codenesium>
-    <Hash>9c0379cbab4684ef5428f9f096094537</Hash>
+    <Hash>55f2229fecc4ab2d8c249b3022ba7ab9</Hash>
 </Codenesium>*/

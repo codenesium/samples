@@ -103,9 +103,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiChainResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkResponseModel>> Links(int chainId)
+		public virtual async Task<List<ApiLinkResponseModel>> LinksByChainId(int chainId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/Links/{chainId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Chains/LinksByChainId/{chainId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -159,9 +159,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiChainStatusResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiChainResponseModel>> Chains(int chainStatusId)
+		public virtual async Task<List<ApiChainResponseModel>> ChainsByChainStatusId(int chainStatusId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatuses/Chains/{chainStatusId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/ChainStatuses/ChainsByChainStatusId/{chainStatusId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -222,9 +222,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiLinkLogResponseModel>> LinkLogs(int linkId)
+		public virtual async Task<List<ApiLinkLogResponseModel>> LinkLogsByLinkId(int linkId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/LinkLogs/{linkId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Links/LinkLogsByLinkId/{linkId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiLinkLogResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -320,6 +320,13 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiLinkStatusResponseModel>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<List<ApiLinkResponseModel>> LinksByLinkStatusId(int linkStatusId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/LinkStatuses/LinksByLinkStatusId/{linkStatusId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiMachineResponseModel>> MachineBulkInsertAsync(List<ApiMachineRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/Machines/BulkInsert", items).ConfigureAwait(false);
@@ -367,6 +374,13 @@ namespace NebulaNS.Api.Client
 			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/byMachineGuid/{machineGuid}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<ApiMachineResponseModel>(httpResponse.Content.ContentToString());
+		}
+
+		public virtual async Task<List<ApiLinkResponseModel>> LinksByAssignedMachineId(int assignedMachineId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Machines/LinksByAssignedMachineId/{assignedMachineId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiLinkResponseModel>>(httpResponse.Content.ContentToString());
 		}
 
 		public virtual async Task<List<ApiOrganizationResponseModel>> OrganizationBulkInsertAsync(List<ApiOrganizationRequestModel> items)
@@ -418,9 +432,9 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiOrganizationResponseModel>(httpResponse.Content.ContentToString());
 		}
 
-		public virtual async Task<List<ApiTeamResponseModel>> Teams(int organizationId)
+		public virtual async Task<List<ApiTeamResponseModel>> TeamsByOrganizationId(int organizationId)
 		{
-			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/Teams/{organizationId}").ConfigureAwait(false);
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Organizations/TeamsByOrganizationId/{organizationId}").ConfigureAwait(false);
 
 			return JsonConvert.DeserializeObject<List<ApiTeamResponseModel>>(httpResponse.Content.ContentToString());
 		}
@@ -474,6 +488,13 @@ namespace NebulaNS.Api.Client
 			return JsonConvert.DeserializeObject<ApiTeamResponseModel>(httpResponse.Content.ContentToString());
 		}
 
+		public virtual async Task<List<ApiChainResponseModel>> ChainsByTeamId(int teamId)
+		{
+			HttpResponseMessage httpResponse = await this.client.GetAsync($"api/Teams/ChainsByTeamId/{teamId}").ConfigureAwait(false);
+
+			return JsonConvert.DeserializeObject<List<ApiChainResponseModel>>(httpResponse.Content.ContentToString());
+		}
+
 		public virtual async Task<List<ApiVersionInfoResponseModel>> VersionInfoBulkInsertAsync(List<ApiVersionInfoRequestModel> items)
 		{
 			HttpResponseMessage httpResponse = await this.client.PostAsJsonAsync($"api/VersionInfoes/BulkInsert", items).ConfigureAwait(false);
@@ -519,5 +540,5 @@ namespace NebulaNS.Api.Client
 }
 
 /*<Codenesium>
-    <Hash>3a9f92869e2941bbbc83382f35d6d4bc</Hash>
+    <Hash>0d29c59ec21c10f78755e62eeb103888</Hash>
 </Codenesium>*/

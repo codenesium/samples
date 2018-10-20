@@ -22,7 +22,8 @@ namespace StudioResourceManagerNS.Api.Services
 				model.ScheduledEndDate,
 				model.ScheduledStartDate,
 				model.StudentNote,
-				model.TeacherNote);
+				model.TeacherNote,
+				model.IsDeleted);
 			return boEvent;
 		}
 
@@ -31,7 +32,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiEventResponseModel();
 
-			model.SetProperties(boEvent.Id, boEvent.ActualEndDate, boEvent.ActualStartDate, boEvent.BillAmount, boEvent.EventStatusId, boEvent.ScheduledEndDate, boEvent.ScheduledStartDate, boEvent.StudentNote, boEvent.TeacherNote);
+			model.SetProperties(boEvent.Id, boEvent.ActualEndDate, boEvent.ActualStartDate, boEvent.BillAmount, boEvent.EventStatusId, boEvent.ScheduledEndDate, boEvent.ScheduledStartDate, boEvent.StudentNote, boEvent.TeacherNote, boEvent.IsDeleted);
 
 			return model;
 		}
@@ -52,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0b1e629459efdf92fa1d454424ec1cb0</Hash>
+    <Hash>f8c9151daeaf7bd0a9146f0540d47cd4</Hash>
 </Codenesium>*/
