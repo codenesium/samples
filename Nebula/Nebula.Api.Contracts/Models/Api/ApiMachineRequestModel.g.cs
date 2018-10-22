@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
@@ -51,5 +52,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>466ae7a95ffac7a7dcdf2c9acc7aa12e</Hash>
+    <Hash>b1e5a483b3efffdcd45e471ca75fd2e6</Hash>
 </Codenesium>*/

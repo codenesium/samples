@@ -17,7 +17,6 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			this.DescriptionRules();
 			this.NameRules();
-			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -25,7 +24,6 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			this.DescriptionRules();
 			this.NameRules();
-			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -37,5 +35,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>acfa7c0d49813ae9a0edc9874512d34b</Hash>
+    <Hash>b46ec81a72f0ab2c01593ca97e9aa870</Hash>
 </Codenesium>*/

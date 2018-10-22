@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
@@ -36,14 +37,14 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime SaleDate { get; private set; } = default(DateTime);
+		public DateTime SaleDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
-		public int TransactionId { get; private set; } = default(int);
+		public int TransactionId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7637faa77588c984b48e5ab8ccf87693</Hash>
+    <Hash>c82609804e642f621a2735de3c2828e6</Hash>
 </Codenesium>*/

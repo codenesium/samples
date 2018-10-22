@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StudioResourceManagerNS.Api.Contracts
@@ -21,8 +22,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string name,
 			string province,
 			string website,
-			string zip,
-			bool isDeleted)
+			string zip)
 		{
 			this.Address1 = address1;
 			this.Address2 = address2;
@@ -31,7 +31,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.Province = province;
 			this.Website = website;
 			this.Zip = zip;
-			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
@@ -60,13 +59,9 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[JsonProperty]
 		public string Zip { get; private set; } = default(string);
-
-		[Required]
-		[JsonProperty]
-		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1851537780f9bcd85c452b31b81d75fe</Hash>
+    <Hash>7789edd7cfbf49bbbad0674e56d5fbe8</Hash>
 </Codenesium>*/

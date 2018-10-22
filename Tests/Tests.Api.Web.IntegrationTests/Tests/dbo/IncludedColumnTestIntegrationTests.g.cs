@@ -68,17 +68,23 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiIncludedColumnTestResponseModel response = await client.IncludedColumnTestGetAsync(1);
+			var createModel = new ApiIncludedColumnTestRequestModel();
+			createModel.SetProperties("B", "B");
+			CreateResponse<ApiIncludedColumnTestResponseModel> createResult = await client.IncludedColumnTestCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.IncludedColumnTestDeleteAsync(1);
+			ApiIncludedColumnTestResponseModel getResponse = await client.IncludedColumnTestGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.IncludedColumnTestGetAsync(1);
+			ActionResponse deleteResult = await client.IncludedColumnTestDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiIncludedColumnTestResponseModel verifyResponse = await client.IncludedColumnTestGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>dbfca58bacfcec355ead079374a075e0</Hash>
+    <Hash>216691dd296dc821bd09280c7de6c188</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiTeacherResponseModel response = await client.TeacherGetAsync(1);
+			var createModel = new ApiTeacherRequestModel();
+			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
+			CreateResponse<ApiTeacherResponseModel> createResult = await client.TeacherCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.TeacherDeleteAsync(1);
+			ApiTeacherResponseModel getResponse = await client.TeacherGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.TeacherGetAsync(1);
+			ActionResponse deleteResult = await client.TeacherDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiTeacherResponseModel verifyResponse = await client.TeacherGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiTeacherResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTeacherRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1, true);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", "B", "B", 1);
 			CreateResponse<ApiTeacherResponseModel> result = await client.TeacherCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>bf75ada8063f392d4de87d22dd3ecac8</Hash>
+    <Hash>a00dfdf6ba6164104bc9badc748c00b1</Hash>
 </Codenesium>*/

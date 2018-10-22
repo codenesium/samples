@@ -91,16 +91,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<EventStatus>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStatus>();
 		}
 
-		public async virtual Task<List<EventStudent>> EventStudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<EventStudent>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
-		}
-
-		public async virtual Task<List<EventTeacher>> EventTeachersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<EventTeacher>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
-		}
-
 		public async virtual Task<List<Family>> FamiliesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Family>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Family>();
@@ -121,11 +111,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<SpaceFeature>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceFeature>();
 		}
 
-		public async virtual Task<List<SpaceSpaceFeature>> SpaceSpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<SpaceSpaceFeature>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<SpaceSpaceFeature>();
-		}
-
 		public async virtual Task<List<Student>> StudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<Student>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
@@ -144,11 +129,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public async virtual Task<List<TeacherSkill>> TeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
 		{
 			return await this.Context.Set<TeacherSkill>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherSkill>();
-		}
-
-		public async virtual Task<List<TeacherTeacherSkill>> TeacherTeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<TeacherTeacherSkill>().Where(x => x.TenantId == tenantId).AsQueryable().Skip(offset).Take(limit).ToListAsync<TeacherTeacherSkill>();
 		}
 
 		public async virtual Task<List<User>> UsersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0)
@@ -188,5 +168,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>921184a04badd813db75355d176edc3e</Hash>
+    <Hash>138976abf6b4ba3c9bd81068f081e15a</Hash>
 </Codenesium>*/

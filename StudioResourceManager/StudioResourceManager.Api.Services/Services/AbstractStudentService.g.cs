@@ -22,10 +22,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALStudentMapper DalStudentMapper { get; private set; }
 
-		protected IBOLEventStudentMapper BolEventStudentMapper { get; private set; }
-
-		protected IDALEventStudentMapper DalEventStudentMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractStudentService(
@@ -33,17 +29,13 @@ namespace StudioResourceManagerNS.Api.Services
 			IStudentRepository studentRepository,
 			IApiStudentRequestModelValidator studentModelValidator,
 			IBOLStudentMapper bolStudentMapper,
-			IDALStudentMapper dalStudentMapper,
-			IBOLEventStudentMapper bolEventStudentMapper,
-			IDALEventStudentMapper dalEventStudentMapper)
+			IDALStudentMapper dalStudentMapper)
 			: base()
 		{
 			this.StudentRepository = studentRepository;
 			this.StudentModelValidator = studentModelValidator;
 			this.BolStudentMapper = bolStudentMapper;
 			this.DalStudentMapper = dalStudentMapper;
-			this.BolEventStudentMapper = bolEventStudentMapper;
-			this.DalEventStudentMapper = dalEventStudentMapper;
 			this.logger = logger;
 		}
 
@@ -116,15 +108,15 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudentsByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiStudentResponseModel>> ByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EventStudent> records = await this.StudentRepository.EventStudentsByStudentId(studentId, limit, offset);
+			List<Student> records = await this.StudentRepository.ByEventId(eventId, limit, offset);
 
-			return this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(records));
+			return this.BolStudentMapper.MapBOToModel(this.DalStudentMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>a8337be37492a253436300a81004e488</Hash>
+    <Hash>767d0836ef1dcbb49bb8cc7ad266ab63</Hash>
 </Codenesium>*/

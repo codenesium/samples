@@ -68,17 +68,23 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiRowVersionCheckResponseModel response = await client.RowVersionCheckGetAsync(1);
+			var createModel = new ApiRowVersionCheckRequestModel();
+			createModel.SetProperties("B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			CreateResponse<ApiRowVersionCheckResponseModel> createResult = await client.RowVersionCheckCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.RowVersionCheckDeleteAsync(1);
+			ApiRowVersionCheckResponseModel getResponse = await client.RowVersionCheckGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.RowVersionCheckGetAsync(1);
+			ActionResponse deleteResult = await client.RowVersionCheckDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiRowVersionCheckResponseModel verifyResponse = await client.RowVersionCheckGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>dc521a4c217d63a519acf6aa691b5d3d</Hash>
+    <Hash>58222d0cb7f75175e55e584750b6061a</Hash>
 </Codenesium>*/

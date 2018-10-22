@@ -68,17 +68,23 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiSaleResponseModel response = await client.SaleGetAsync(1);
+			var createModel = new ApiSaleRequestModel();
+			createModel.SetProperties("B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1);
+			CreateResponse<ApiSaleResponseModel> createResult = await client.SaleCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.SaleDeleteAsync(1);
+			ApiSaleResponseModel getResponse = await client.SaleGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.SaleGetAsync(1);
+			ActionResponse deleteResult = await client.SaleDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiSaleResponseModel verifyResponse = await client.SaleGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>853dbf46ca1fd4be083a469d8f092921</Hash>
+    <Hash>551c041cd171b35af8db9d6114800770</Hash>
 </Codenesium>*/

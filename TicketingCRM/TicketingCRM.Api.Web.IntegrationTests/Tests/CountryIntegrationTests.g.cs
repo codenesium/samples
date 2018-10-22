@@ -68,17 +68,23 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiCountryResponseModel response = await client.CountryGetAsync(1);
+			var createModel = new ApiCountryRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiCountryResponseModel> createResult = await client.CountryCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.CountryDeleteAsync(1);
+			ApiCountryResponseModel getResponse = await client.CountryGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.CountryGetAsync(1);
+			ActionResponse deleteResult = await client.CountryDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiCountryResponseModel verifyResponse = await client.CountryGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>5dc4177b733794208e80535bc8991ba3</Hash>
+    <Hash>5b9322b92f06fc1db5afdb6abac473a9</Hash>
 </Codenesium>*/

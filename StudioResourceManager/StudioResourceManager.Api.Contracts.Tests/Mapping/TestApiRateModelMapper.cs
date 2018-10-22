@@ -17,14 +17,13 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiRateModelMapper();
 			var model = new ApiRateRequestModel();
-			model.SetProperties(1m, 1, 1, true);
+			model.SetProperties(1m, 1, 1);
 			ApiRateResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.AmountPerMinute.Should().Be(1m);
 			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -32,13 +31,12 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiRateModelMapper();
 			var model = new ApiRateResponseModel();
-			model.SetProperties(1, 1m, 1, 1, true);
+			model.SetProperties(1, 1m, 1, 1);
 			ApiRateRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.AmountPerMinute.Should().Be(1m);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -46,7 +44,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiRateModelMapper();
 			var model = new ApiRateRequestModel();
-			model.SetProperties(1m, 1, 1, true);
+			model.SetProperties(1m, 1, 1);
 
 			JsonPatchDocument<ApiRateRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiRateRequestModel();
@@ -54,11 +52,10 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.AmountPerMinute.Should().Be(1m);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>89937bdae3585e6b5749a0b0db0e7ed5</Hash>
+    <Hash>6575b02a437cab135b4291801f1d0834</Hash>
 </Codenesium>*/

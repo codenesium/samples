@@ -68,17 +68,23 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiPostResponseModel response = await client.PostGetAsync(1);
+			var createModel = new ApiPostRequestModel();
+			createModel.SetProperties(2, 2, "B", DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2, 2, 2, 2, 2, "B", "B", 2);
+			CreateResponse<ApiPostResponseModel> createResult = await client.PostCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.PostDeleteAsync(1);
+			ApiPostResponseModel getResponse = await client.PostGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.PostGetAsync(1);
+			ActionResponse deleteResult = await client.PostDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiPostResponseModel verifyResponse = await client.PostGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>5310b152d2d9a37423fefbfe2e8b7375</Hash>
+    <Hash>e59f5fca2227574100971883eb28f426</Hash>
 </Codenesium>*/

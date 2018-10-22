@@ -71,9 +71,67 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Should().BeNull();
 			mock.RepositoryMock.Verify(x => x.Get(It.IsAny<int>()));
 		}
+
+		[Fact]
+		public async void Create()
+		{
+			var mock = new ServiceMockFacade<IVEventRepository>();
+			var model = new ApiVEventRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VEvent>())).Returns(Task.FromResult(new VEvent()));
+			var service = new VEventService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.VEventModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLVEventMapperMock,
+			                                mock.DALMapperMockFactory.DALVEventMapperMock);
+
+			CreateResponse<ApiVEventResponseModel> response = await service.Create(model);
+
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.VEventModelValidatorMock.Verify(x => x.ValidateCreateAsync(It.IsAny<ApiVEventRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Create(It.IsAny<VEvent>()));
+		}
+
+		[Fact]
+		public async void Update()
+		{
+			var mock = new ServiceMockFacade<IVEventRepository>();
+			var model = new ApiVEventRequestModel();
+			mock.RepositoryMock.Setup(x => x.Create(It.IsAny<VEvent>())).Returns(Task.FromResult(new VEvent()));
+			mock.RepositoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(Task.FromResult(new VEvent()));
+			var service = new VEventService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.VEventModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLVEventMapperMock,
+			                                mock.DALMapperMockFactory.DALVEventMapperMock);
+
+			UpdateResponse<ApiVEventResponseModel> response = await service.Update(default(int), model);
+
+			response.Should().NotBeNull();
+			mock.ModelValidatorMockFactory.VEventModelValidatorMock.Verify(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiVEventRequestModel>()));
+			mock.RepositoryMock.Verify(x => x.Update(It.IsAny<VEvent>()));
+		}
+
+		[Fact]
+		public async void Delete()
+		{
+			var mock = new ServiceMockFacade<IVEventRepository>();
+			var model = new ApiVEventRequestModel();
+			mock.RepositoryMock.Setup(x => x.Delete(It.IsAny<int>())).Returns(Task.CompletedTask);
+			var service = new VEventService(mock.LoggerMock.Object,
+			                                mock.RepositoryMock.Object,
+			                                mock.ModelValidatorMockFactory.VEventModelValidatorMock.Object,
+			                                mock.BOLMapperMockFactory.BOLVEventMapperMock,
+			                                mock.DALMapperMockFactory.DALVEventMapperMock);
+
+			ActionResponse response = await service.Delete(default(int));
+
+			response.Should().NotBeNull();
+			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
+			mock.ModelValidatorMockFactory.VEventModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
+		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>5650afa2de4ceb92d8cabb299b174cab</Hash>
+    <Hash>8f27769f70a1f7b9130e00cab81a7ca4</Hash>
 </Codenesium>*/

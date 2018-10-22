@@ -68,17 +68,23 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiBadgeResponseModel response = await client.BadgeGetAsync(1);
+			var createModel = new ApiBadgeRequestModel();
+			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B", 2);
+			CreateResponse<ApiBadgeResponseModel> createResult = await client.BadgeCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.BadgeDeleteAsync(1);
+			ApiBadgeResponseModel getResponse = await client.BadgeGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.BadgeGetAsync(1);
+			ActionResponse deleteResult = await client.BadgeDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiBadgeResponseModel verifyResponse = await client.BadgeGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>1c920913cc151d5f657e0fc49620d361</Hash>
+    <Hash>86a55cfc418ca088c9daa52dca1d8a67</Hash>
 </Codenesium>*/

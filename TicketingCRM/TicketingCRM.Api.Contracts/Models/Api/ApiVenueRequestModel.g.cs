@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
@@ -46,7 +47,7 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int AdminId { get; private set; } = default(int);
+		public int AdminId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -66,7 +67,7 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int ProvinceId { get; private set; } = default(int);
+		public int ProvinceId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -75,5 +76,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d70db594cef61c53200cbb7c1b8bc1ca</Hash>
+    <Hash>1423afe8ab9cf3f4c1aa9490d5670946</Hash>
 </Codenesium>*/

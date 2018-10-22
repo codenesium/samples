@@ -77,6 +77,135 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 		}
 
+		[HttpPost]
+		[Route("BulkInsert")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(List<ApiVEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 413)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> BulkInsert([FromBody] List<ApiVEventRequestModel> models)
+		{
+			if (models.Count > this.BulkInsertLimit)
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge);
+			}
+
+			List<ApiVEventResponseModel> records = new List<ApiVEventResponseModel>();
+			foreach (var model in models)
+			{
+				CreateResponse<ApiVEventResponseModel> result = await this.VEventService.Create(model);
+
+				if (result.Success)
+				{
+					records.Add(result.Record);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+
+			return this.Ok(records);
+		}
+
+		[HttpPost]
+		[Route("")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(CreateResponse<ApiVEventResponseModel>), 201)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Create([FromBody] ApiVEventRequestModel model)
+		{
+			CreateResponse<ApiVEventResponseModel> result = await this.VEventService.Create(model);
+
+			if (result.Success)
+			{
+				return this.Created($"{this.Settings.ExternalBaseUrl}/api/VEvents/{result.Record.Id}", result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
+
+		[HttpPatch]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ApiVEventRequestModel> patch)
+		{
+			ApiVEventResponseModel record = await this.VEventService.Get(id);
+
+			if (record == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				ApiVEventRequestModel model = await this.PatchModel(id, patch);
+
+				UpdateResponse<ApiVEventResponseModel> result = await this.VEventService.Update(id, model);
+
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
+
+		[HttpPut]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(UpdateResponse<ApiVEventResponseModel>), 200)]
+		[ProducesResponseType(typeof(void), 404)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Update(int id, [FromBody] ApiVEventRequestModel model)
+		{
+			ApiVEventRequestModel request = await this.PatchModel(id, this.VEventModelMapper.CreatePatch(model));
+
+			if (request == null)
+			{
+				return this.StatusCode(StatusCodes.Status404NotFound);
+			}
+			else
+			{
+				UpdateResponse<ApiVEventResponseModel> result = await this.VEventService.Update(id, request);
+
+				if (result.Success)
+				{
+					return this.Ok(result);
+				}
+				else
+				{
+					return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+				}
+			}
+		}
+
+		[HttpDelete]
+		[Route("{id}")]
+		[UnitOfWork]
+		[ProducesResponseType(typeof(ActionResponse), 200)]
+		[ProducesResponseType(typeof(ActionResponse), 422)]
+		public virtual async Task<IActionResult> Delete(int id)
+		{
+			ActionResponse result = await this.VEventService.Delete(id);
+
+			if (result.Success)
+			{
+				return this.StatusCode(StatusCodes.Status200OK, result);
+			}
+			else
+			{
+				return this.StatusCode(StatusCodes.Status422UnprocessableEntity, result);
+			}
+		}
+
 		private async Task<ApiVEventRequestModel> PatchModel(int id, JsonPatchDocument<ApiVEventRequestModel> patch)
 		{
 			var record = await this.VEventService.Get(id);
@@ -96,5 +225,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d06abd5aab57de26d29e1612d1583d46</Hash>
+    <Hash>99d8b7a8d09866c7da8279a8c7b5013a</Hash>
 </Codenesium>*/

@@ -89,18 +89,21 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
+			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var createdEntry in entries)
+				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
+					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
 					}
+				}
 
-					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+				{
+					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
 					if (tenantEntity != null)
 					{
 						tenantEntity.CurrentValue = this.TenantId;
@@ -303,22 +306,39 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			var booleanStringConverter = new BoolToStringConverter("N", "Y");
 
 			modelBuilder.Entity<Admin>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Admin>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Event>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Event>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<EventStatus>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<EventStatus>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<EventStudent>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<EventStudent>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<EventTeacher>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<EventTeacher>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Family>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Family>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Rate>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Rate>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Space>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Space>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<SpaceFeature>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<SpaceFeature>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<SpaceSpaceFeature>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<SpaceSpaceFeature>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Student>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Student>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Studio>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Studio>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<Teacher>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<Teacher>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<TeacherSkill>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<TeacherSkill>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<TeacherTeacherSkill>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<TeacherTeacherSkill>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<User>().HasQueryFilter(x => x.TenantId == this.TenantId);
 			modelBuilder.Entity<VEvent>().HasQueryFilter(x => !x.IsDeleted);
+			modelBuilder.Entity<VEvent>().HasQueryFilter(x => x.TenantId == this.TenantId);
 		}
 	}
 
@@ -348,5 +368,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>cf420bf8195daa6689142a8eb6494a69</Hash>
+    <Hash>3d41f1069d4a724ea7f6de46ee78311e</Hash>
 </Codenesium>*/

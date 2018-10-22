@@ -30,12 +30,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiTeacherResponseModel> response = await service.All();
 
@@ -54,12 +50,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ApiTeacherResponseModel response = await service.Get(default(int));
 
@@ -77,12 +69,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ApiTeacherResponseModel response = await service.Get(default(int));
 
@@ -101,12 +89,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			CreateResponse<ApiTeacherResponseModel> response = await service.Create(model);
 
@@ -127,12 +111,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			UpdateResponse<ApiTeacherResponseModel> response = await service.Update(default(int), model);
 
@@ -152,66 +132,14 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
 			response.Should().NotBeNull();
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EventTeachersByTeacherId_Exists()
-		{
-			var mock = new ServiceMockFacade<ITeacherRepository>();
-			var records = new List<EventTeacher>();
-			records.Add(new EventTeacher());
-			mock.RepositoryMock.Setup(x => x.EventTeachersByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TeacherService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
-
-			List<ApiEventTeacherResponseModel> response = await service.EventTeachersByTeacherId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EventTeachersByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EventTeachersByTeacherId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITeacherRepository>();
-			mock.RepositoryMock.Setup(x => x.EventTeachersByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventTeacher>>(new List<EventTeacher>()));
-			var service = new TeacherService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
-
-			List<ApiEventTeacherResponseModel> response = await service.EventTeachersByTeacherId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EventTeachersByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -226,12 +154,8 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiRateResponseModel> response = await service.RatesByTeacherId(default(int));
 
@@ -249,69 +173,17 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
 			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
+			                                 mock.DALMapperMockFactory.DALRateMapperMock);
 
 			List<ApiRateResponseModel> response = await service.RatesByTeacherId(default(int));
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.RatesByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void TeacherTeacherSkillsByTeacherId_Exists()
-		{
-			var mock = new ServiceMockFacade<ITeacherRepository>();
-			var records = new List<TeacherTeacherSkill>();
-			records.Add(new TeacherTeacherSkill());
-			mock.RepositoryMock.Setup(x => x.TeacherTeacherSkillsByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TeacherService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await service.TeacherTeacherSkillsByTeacherId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.TeacherTeacherSkillsByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void TeacherTeacherSkillsByTeacherId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITeacherRepository>();
-			mock.RepositoryMock.Setup(x => x.TeacherTeacherSkillsByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TeacherTeacherSkill>>(new List<TeacherTeacherSkill>()));
-			var service = new TeacherService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.TeacherModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                 mock.DALMapperMockFactory.DALRateMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                 mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock);
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await service.TeacherTeacherSkillsByTeacherId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.TeacherTeacherSkillsByTeacherId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>bbd8ca9bfb2ff729f9d9ba6c2ef46daf</Hash>
+    <Hash>8fd8eaf224291a72ddf49bc8a8fa79e0</Hash>
 </Codenesium>*/

@@ -22,10 +22,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALSpaceFeatureMapper DalSpaceFeatureMapper { get; private set; }
 
-		protected IBOLSpaceSpaceFeatureMapper BolSpaceSpaceFeatureMapper { get; private set; }
-
-		protected IDALSpaceSpaceFeatureMapper DalSpaceSpaceFeatureMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractSpaceFeatureService(
@@ -33,17 +29,13 @@ namespace StudioResourceManagerNS.Api.Services
 			ISpaceFeatureRepository spaceFeatureRepository,
 			IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
 			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
-			IDALSpaceFeatureMapper dalSpaceFeatureMapper,
-			IBOLSpaceSpaceFeatureMapper bolSpaceSpaceFeatureMapper,
-			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper)
+			IDALSpaceFeatureMapper dalSpaceFeatureMapper)
 			: base()
 		{
 			this.SpaceFeatureRepository = spaceFeatureRepository;
 			this.SpaceFeatureModelValidator = spaceFeatureModelValidator;
 			this.BolSpaceFeatureMapper = bolSpaceFeatureMapper;
 			this.DalSpaceFeatureMapper = dalSpaceFeatureMapper;
-			this.BolSpaceSpaceFeatureMapper = bolSpaceSpaceFeatureMapper;
-			this.DalSpaceSpaceFeatureMapper = dalSpaceSpaceFeatureMapper;
 			this.logger = logger;
 		}
 
@@ -116,15 +108,15 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesBySpaceFeatureId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSpaceFeatureResponseModel>> BySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SpaceSpaceFeature> records = await this.SpaceFeatureRepository.SpaceSpaceFeaturesBySpaceFeatureId(spaceFeatureId, limit, offset);
+			List<SpaceFeature> records = await this.SpaceFeatureRepository.BySpaceId(spaceId, limit, offset);
 
-			return this.BolSpaceSpaceFeatureMapper.MapBOToModel(this.DalSpaceSpaceFeatureMapper.MapEFToBO(records));
+			return this.BolSpaceFeatureMapper.MapBOToModel(this.DalSpaceFeatureMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>f0b51bfad32b258251b021741caf41bc</Hash>
+    <Hash>89b9597c481fd0116eb3c4e4d6d32da4</Hash>
 </Codenesium>*/

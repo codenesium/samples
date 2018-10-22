@@ -68,17 +68,23 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiBucketResponseModel response = await client.BucketGetAsync(1);
+			var createModel = new ApiBucketRequestModel();
+			createModel.SetProperties(Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
+			CreateResponse<ApiBucketResponseModel> createResult = await client.BucketCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.BucketDeleteAsync(1);
+			ApiBucketResponseModel getResponse = await client.BucketGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.BucketGetAsync(1);
+			ActionResponse deleteResult = await client.BucketDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiBucketResponseModel verifyResponse = await client.BucketGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f76748b155ad44c4bc036081a9b98c4b</Hash>
+    <Hash>89805f47e3c714f4f9b13d81ca9f20dd</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
@@ -32,11 +33,11 @@ namespace PetStoreNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime AcquiredDate { get; private set; } = default(DateTime);
+		public DateTime AcquiredDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
-		public int BreedId { get; private set; } = default(int);
+		public int BreedId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -44,7 +45,7 @@ namespace PetStoreNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int PenId { get; private set; } = default(int);
+		public int PenId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -52,10 +53,10 @@ namespace PetStoreNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int SpeciesId { get; private set; } = default(int);
+		public int SpeciesId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c3488abc0859b2ff0f6b6681d10c489c</Hash>
+    <Hash>048216ee05b14ab9ca23d22eb2d5b579</Hash>
 </Codenesium>*/

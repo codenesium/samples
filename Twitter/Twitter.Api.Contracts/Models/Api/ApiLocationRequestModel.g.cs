@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TwitterNS.Api.Contracts
@@ -39,5 +40,5 @@ namespace TwitterNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1bdbff36e063bfd4d4d5c9665946e228</Hash>
+    <Hash>b35835a529e9ccca1bfd0b2e2362df1f</Hash>
 </Codenesium>*/

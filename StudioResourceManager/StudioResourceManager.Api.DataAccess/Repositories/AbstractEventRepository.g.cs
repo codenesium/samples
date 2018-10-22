@@ -76,19 +76,18 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			}
 		}
 
-		public async virtual Task<List<EventStudent>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<EventStudent>().Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventStudent>();
-		}
-
-		public async virtual Task<List<EventTeacher>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
-		{
-			return await this.Context.Set<EventTeacher>().Where(x => x.EventId == eventId).AsQueryable().Skip(offset).Take(limit).ToListAsync<EventTeacher>();
-		}
-
 		public async virtual Task<EventStatus> EventStatusByEventStatusId(int eventStatusId)
 		{
 			return await this.Context.Set<EventStatus>().SingleOrDefaultAsync(x => x.Id == eventStatusId);
+		}
+
+		public async virtual Task<List<Event>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.EventStudents
+			              join events in this.Context.Events on
+			              refTable.EventId equals events.Id
+			              where refTable.StudentId == studentId
+			              select events).Skip(offset).Take(limit).ToListAsync();
 		}
 
 		protected async Task<List<Event>> Where(
@@ -123,5 +122,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c736e6770c1c6a079c628440d2af462e</Hash>
+    <Hash>f08d5a597008c5e74959d579132c12b5</Hash>
 </Codenesium>*/

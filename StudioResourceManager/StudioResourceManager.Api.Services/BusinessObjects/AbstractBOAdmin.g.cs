@@ -16,8 +16,7 @@ namespace StudioResourceManagerNS.Api.Services
 		                                  string firstName,
 		                                  string lastName,
 		                                  string phone,
-		                                  int userId,
-		                                  bool isDeleted)
+		                                  int userId)
 		{
 			this.Birthday = birthday;
 			this.Email = email;
@@ -26,7 +25,6 @@ namespace StudioResourceManagerNS.Api.Services
 			this.LastName = lastName;
 			this.Phone = phone;
 			this.UserId = userId;
-			this.IsDeleted = isDeleted;
 		}
 
 		public DateTime? Birthday { get; private set; }
@@ -42,11 +40,9 @@ namespace StudioResourceManagerNS.Api.Services
 		public string Phone { get; private set; }
 
 		public int UserId { get; private set; }
-
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>98a334127cecc2410be4531c6fce6341</Hash>
+    <Hash>3e5f06706e575f007e30e6b048af9def</Hash>
 </Codenesium>*/

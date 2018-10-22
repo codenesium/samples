@@ -17,14 +17,13 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceMapper();
 			var bo = new BOSpace();
-			bo.SetProperties(1, "A", "A", true);
+			bo.SetProperties(1, "A", "A");
 
 			Space response = mapper.MapBOToEF(bo);
 
 			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -32,14 +31,13 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceMapper();
 			Space entity = new Space();
-			entity.SetProperties("A", 1, "A", true);
+			entity.SetProperties("A", 1, "A");
 
 			BOSpace response = mapper.MapEFToBO(entity);
 
 			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -47,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALSpaceMapper();
 			Space entity = new Space();
-			entity.SetProperties("A", 1, "A", true);
+			entity.SetProperties("A", 1, "A");
 
 			List<BOSpace> response = mapper.MapEFToBO(new List<Space>() { entity });
 
@@ -57,5 +55,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b4b6b126af71732350fd56a2826446ca</Hash>
+    <Hash>833e37b1e563962f4eb54a9b7bd95daf</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
@@ -33,5 +34,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>e56865b0f45f1a5cd6b372eabd4026c2</Hash>
+    <Hash>c3e2d873f57f10949c5dc789c5ef3c67</Hash>
 </Codenesium>*/

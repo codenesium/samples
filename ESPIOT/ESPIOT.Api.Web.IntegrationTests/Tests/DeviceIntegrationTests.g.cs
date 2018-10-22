@@ -68,17 +68,23 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiDeviceResponseModel response = await client.DeviceGetAsync(1);
+			var createModel = new ApiDeviceRequestModel();
+			createModel.SetProperties("B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"));
+			CreateResponse<ApiDeviceResponseModel> createResult = await client.DeviceCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.DeviceDeleteAsync(1);
+			ApiDeviceResponseModel getResponse = await client.DeviceGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.DeviceGetAsync(1);
+			ActionResponse deleteResult = await client.DeviceDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiDeviceResponseModel verifyResponse = await client.DeviceGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace ESPIOTNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f709db02991ec63f2051e1b985063793</Hash>
+    <Hash>17ba8f13c2729f29b010fbab447e6380</Hash>
 </Codenesium>*/

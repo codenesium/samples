@@ -68,17 +68,23 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiSelfReferenceResponseModel response = await client.SelfReferenceGetAsync(1);
+			var createModel = new ApiSelfReferenceRequestModel();
+			createModel.SetProperties(2, 2);
+			CreateResponse<ApiSelfReferenceResponseModel> createResult = await client.SelfReferenceCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.SelfReferenceDeleteAsync(1);
+			ApiSelfReferenceResponseModel getResponse = await client.SelfReferenceGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.SelfReferenceGetAsync(1);
+			ActionResponse deleteResult = await client.SelfReferenceDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiSelfReferenceResponseModel verifyResponse = await client.SelfReferenceGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>60b7a3e4cb4bbb094b62e89083787b4b</Hash>
+    <Hash>944c62412ee746d1517c2100fd02c9db</Hash>
 </Codenesium>*/

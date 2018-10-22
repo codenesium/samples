@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TwitterNS.Api.Contracts
@@ -36,7 +37,7 @@ namespace TwitterNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime DateFollowed { get; private set; } = default(DateTime);
+		public DateTime DateFollowed { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
@@ -44,11 +45,11 @@ namespace TwitterNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int FollowedUserId { get; private set; } = default(int);
+		public int FollowedUserId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public int FollowingUserId { get; private set; } = default(int);
+		public int FollowingUserId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -57,5 +58,5 @@ namespace TwitterNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>aaee4b35f7b20be2288831d6976190a5</Hash>
+    <Hash>dc3d438eb4362b723cc08834ef226f75</Hash>
 </Codenesium>*/

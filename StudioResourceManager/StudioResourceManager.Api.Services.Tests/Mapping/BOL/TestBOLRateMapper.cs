@@ -18,13 +18,12 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLRateMapper();
 			ApiRateRequestModel model = new ApiRateRequestModel();
-			model.SetProperties(1m, 1, 1, true);
+			model.SetProperties(1m, 1, 1);
 			BORate response = mapper.MapModelToBO(1, model);
 
 			response.AmountPerMinute.Should().Be(1m);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -32,14 +31,13 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLRateMapper();
 			BORate bo = new BORate();
-			bo.SetProperties(1, 1m, 1, 1, true);
+			bo.SetProperties(1, 1m, 1, 1);
 			ApiRateResponseModel response = mapper.MapBOToModel(bo);
 
 			response.AmountPerMinute.Should().Be(1m);
 			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -47,7 +45,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLRateMapper();
 			BORate bo = new BORate();
-			bo.SetProperties(1, 1m, 1, 1, true);
+			bo.SetProperties(1, 1m, 1, 1);
 			List<ApiRateResponseModel> response = mapper.MapBOToModel(new List<BORate>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -56,5 +54,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>b3f1513c5d843e03167bb67543059a04</Hash>
+    <Hash>4ba8f9c0ca1426e7c56f4d12f8eb8da0</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiCommentResponseModel response = await client.CommentGetAsync(1);
+			var createModel = new ApiCommentRequestModel();
+			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 2, 2, "B", 2);
+			CreateResponse<ApiCommentResponseModel> createResult = await client.CommentCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.CommentDeleteAsync(1);
+			ApiCommentResponseModel getResponse = await client.CommentGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.CommentGetAsync(1);
+			ActionResponse deleteResult = await client.CommentDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiCommentResponseModel verifyResponse = await client.CommentGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>51a6932d3d4566609ea23d44929d76c6</Hash>
+    <Hash>4a9b11824605796d014a2affcfff3caa</Hash>
 </Codenesium>*/

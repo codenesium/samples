@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TwitterNS.Api.Contracts
@@ -26,10 +27,10 @@ namespace TwitterNS.Api.Contracts
 		public string Content { get; private set; } = default(string);
 
 		[JsonProperty]
-		public int? SenderUserId { get; private set; } = default(int);
+		public int? SenderUserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>5ea3bc51bc3506dc74e6f5dd26bc3261</Hash>
+    <Hash>685134ab7b4d6e330e2e7f1654d2b77d</Hash>
 </Codenesium>*/

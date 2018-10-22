@@ -36,10 +36,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -48,8 +44,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -58,8 +52,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -86,10 +78,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -98,8 +86,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -108,8 +94,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -135,10 +119,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -147,8 +127,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -157,8 +135,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -185,10 +161,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -197,8 +169,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -207,8 +177,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -237,10 +205,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -249,8 +213,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -259,8 +221,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -288,10 +248,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -300,8 +256,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -310,8 +264,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -340,10 +292,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -352,8 +300,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -362,8 +308,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -389,10 +333,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -401,8 +341,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -411,8 +349,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -440,10 +376,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -452,8 +384,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -462,8 +392,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -489,10 +417,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -501,8 +425,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -511,8 +433,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -540,10 +460,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -552,8 +468,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -562,8 +476,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -589,10 +501,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -601,8 +509,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -611,8 +517,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -620,206 +524,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.EventStatusesByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EventStudentsByTenantId_Exists()
-		{
-			var mock = new ServiceMockFacade<ITenantRepository>();
-			var records = new List<EventStudent>();
-			records.Add(new EventStudent());
-			mock.RepositoryMock.Setup(x => x.EventStudentsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TenantService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTenantMapperMock,
-			                                mock.DALMapperMockFactory.DALTenantMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventMapperMock,
-			                                mock.DALMapperMockFactory.DALEventMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                mock.DALMapperMockFactory.DALRateMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
-			                                mock.DALMapperMockFactory.DALUserMapperMock);
-
-			List<ApiEventStudentResponseModel> response = await service.EventStudentsByTenantId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EventStudentsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EventStudentsByTenantId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITenantRepository>();
-			mock.RepositoryMock.Setup(x => x.EventStudentsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventStudent>>(new List<EventStudent>()));
-			var service = new TenantService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTenantMapperMock,
-			                                mock.DALMapperMockFactory.DALTenantMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventMapperMock,
-			                                mock.DALMapperMockFactory.DALEventMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                mock.DALMapperMockFactory.DALRateMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
-			                                mock.DALMapperMockFactory.DALUserMapperMock);
-
-			List<ApiEventStudentResponseModel> response = await service.EventStudentsByTenantId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EventStudentsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EventTeachersByTenantId_Exists()
-		{
-			var mock = new ServiceMockFacade<ITenantRepository>();
-			var records = new List<EventTeacher>();
-			records.Add(new EventTeacher());
-			mock.RepositoryMock.Setup(x => x.EventTeachersByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TenantService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTenantMapperMock,
-			                                mock.DALMapperMockFactory.DALTenantMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventMapperMock,
-			                                mock.DALMapperMockFactory.DALEventMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                mock.DALMapperMockFactory.DALRateMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
-			                                mock.DALMapperMockFactory.DALUserMapperMock);
-
-			List<ApiEventTeacherResponseModel> response = await service.EventTeachersByTenantId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EventTeachersByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EventTeachersByTenantId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITenantRepository>();
-			mock.RepositoryMock.Setup(x => x.EventTeachersByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventTeacher>>(new List<EventTeacher>()));
-			var service = new TenantService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTenantMapperMock,
-			                                mock.DALMapperMockFactory.DALTenantMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventMapperMock,
-			                                mock.DALMapperMockFactory.DALEventMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                mock.DALMapperMockFactory.DALRateMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
-			                                mock.DALMapperMockFactory.DALUserMapperMock);
-
-			List<ApiEventTeacherResponseModel> response = await service.EventTeachersByTenantId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EventTeachersByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -840,10 +544,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -852,8 +552,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -862,8 +560,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -889,10 +585,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -901,8 +593,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -911,8 +601,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -940,10 +628,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -952,8 +636,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -962,8 +644,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -989,10 +669,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1001,8 +677,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1011,8 +685,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1040,10 +712,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1052,8 +720,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1062,8 +728,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1089,10 +753,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1101,8 +761,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1111,8 +769,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1140,10 +796,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1152,8 +804,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1162,8 +812,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1189,10 +837,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1201,8 +845,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1211,8 +853,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1220,106 +860,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.SpaceFeaturesByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void SpaceSpaceFeaturesByTenantId_Exists()
-		{
-			var mock = new ServiceMockFacade<ITenantRepository>();
-			var records = new List<SpaceSpaceFeature>();
-			records.Add(new SpaceSpaceFeature());
-			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeaturesByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TenantService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTenantMapperMock,
-			                                mock.DALMapperMockFactory.DALTenantMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventMapperMock,
-			                                mock.DALMapperMockFactory.DALEventMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                mock.DALMapperMockFactory.DALRateMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
-			                                mock.DALMapperMockFactory.DALUserMapperMock);
-
-			List<ApiSpaceSpaceFeatureResponseModel> response = await service.SpaceSpaceFeaturesByTenantId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeaturesByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void SpaceSpaceFeaturesByTenantId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITenantRepository>();
-			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeaturesByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SpaceSpaceFeature>>(new List<SpaceSpaceFeature>()));
-			var service = new TenantService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTenantMapperMock,
-			                                mock.DALMapperMockFactory.DALTenantMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventMapperMock,
-			                                mock.DALMapperMockFactory.DALEventMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                mock.DALMapperMockFactory.DALRateMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
-			                                mock.DALMapperMockFactory.DALUserMapperMock);
-
-			List<ApiSpaceSpaceFeatureResponseModel> response = await service.SpaceSpaceFeaturesByTenantId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeaturesByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -1340,10 +880,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1352,8 +888,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1362,8 +896,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1389,10 +921,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1401,8 +929,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1411,8 +937,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1440,10 +964,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1452,8 +972,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1462,8 +980,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1489,10 +1005,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1501,8 +1013,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1511,8 +1021,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1540,10 +1048,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1552,8 +1056,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1562,8 +1064,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1589,10 +1089,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1601,8 +1097,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1611,8 +1105,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1640,10 +1132,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1652,8 +1140,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1662,8 +1148,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1689,10 +1173,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1701,8 +1181,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1711,8 +1189,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1720,106 +1196,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 			response.Should().BeEmpty();
 			mock.RepositoryMock.Verify(x => x.TeacherSkillsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void TeacherTeacherSkillsByTenantId_Exists()
-		{
-			var mock = new ServiceMockFacade<ITenantRepository>();
-			var records = new List<TeacherTeacherSkill>();
-			records.Add(new TeacherTeacherSkill());
-			mock.RepositoryMock.Setup(x => x.TeacherTeacherSkillsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new TenantService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTenantMapperMock,
-			                                mock.DALMapperMockFactory.DALTenantMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventMapperMock,
-			                                mock.DALMapperMockFactory.DALEventMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                mock.DALMapperMockFactory.DALRateMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
-			                                mock.DALMapperMockFactory.DALUserMapperMock);
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await service.TeacherTeacherSkillsByTenantId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.TeacherTeacherSkillsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void TeacherTeacherSkillsByTenantId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ITenantRepository>();
-			mock.RepositoryMock.Setup(x => x.TeacherTeacherSkillsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<TeacherTeacherSkill>>(new List<TeacherTeacherSkill>()));
-			var service = new TenantService(mock.LoggerMock.Object,
-			                                mock.RepositoryMock.Object,
-			                                mock.ModelValidatorMockFactory.TenantModelValidatorMock.Object,
-			                                mock.BOLMapperMockFactory.BOLTenantMapperMock,
-			                                mock.DALMapperMockFactory.DALTenantMapperMock,
-			                                mock.BOLMapperMockFactory.BOLAdminMapperMock,
-			                                mock.DALMapperMockFactory.DALAdminMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventMapperMock,
-			                                mock.DALMapperMockFactory.DALEventMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
-			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
-			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
-			                                mock.DALMapperMockFactory.DALRateMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
-			                                mock.DALMapperMockFactory.DALStudioMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
-			                                mock.DALMapperMockFactory.DALUserMapperMock);
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await service.TeacherTeacherSkillsByTenantId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.TeacherTeacherSkillsByTenantId(default(int), It.IsAny<int>(), It.IsAny<int>()));
 		}
 
 		[Fact]
@@ -1840,10 +1216,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1852,8 +1224,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1862,8 +1232,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1889,10 +1257,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALEventMapperMock,
 			                                mock.BOLMapperMockFactory.BOLEventStatusMapperMock,
 			                                mock.DALMapperMockFactory.DALEventStatusMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                mock.DALMapperMockFactory.DALEventStudentMapperMock,
-			                                mock.BOLMapperMockFactory.BOLEventTeacherMapperMock,
-			                                mock.DALMapperMockFactory.DALEventTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLFamilyMapperMock,
 			                                mock.DALMapperMockFactory.DALFamilyMapperMock,
 			                                mock.BOLMapperMockFactory.BOLRateMapperMock,
@@ -1901,8 +1265,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALSpaceMapperMock,
 			                                mock.BOLMapperMockFactory.BOLSpaceFeatureMapperMock,
 			                                mock.DALMapperMockFactory.DALSpaceFeatureMapperMock,
-			                                mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                                mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudentMapperMock,
 			                                mock.DALMapperMockFactory.DALStudentMapperMock,
 			                                mock.BOLMapperMockFactory.BOLStudioMapperMock,
@@ -1911,8 +1273,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                mock.DALMapperMockFactory.DALTeacherMapperMock,
 			                                mock.BOLMapperMockFactory.BOLTeacherSkillMapperMock,
 			                                mock.DALMapperMockFactory.DALTeacherSkillMapperMock,
-			                                mock.BOLMapperMockFactory.BOLTeacherTeacherSkillMapperMock,
-			                                mock.DALMapperMockFactory.DALTeacherTeacherSkillMapperMock,
 			                                mock.BOLMapperMockFactory.BOLUserMapperMock,
 			                                mock.DALMapperMockFactory.DALUserMapperMock);
 
@@ -1925,5 +1285,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>44d0ef125bb2eb802f18fbff981e116f</Hash>
+    <Hash>11c893af3dca4428514588b7f58285e2</Hash>
 </Codenesium>*/

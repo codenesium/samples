@@ -19,28 +19,20 @@ namespace StudioResourceManagerNS.Api.Services
 			IApiTeacherRequestModelValidator teacherModelValidator,
 			IBOLTeacherMapper bolteacherMapper,
 			IDALTeacherMapper dalteacherMapper,
-			IBOLEventTeacherMapper bolEventTeacherMapper,
-			IDALEventTeacherMapper dalEventTeacherMapper,
 			IBOLRateMapper bolRateMapper,
-			IDALRateMapper dalRateMapper,
-			IBOLTeacherTeacherSkillMapper bolTeacherTeacherSkillMapper,
-			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper)
+			IDALRateMapper dalRateMapper)
 			: base(logger,
 			       teacherRepository,
 			       teacherModelValidator,
 			       bolteacherMapper,
 			       dalteacherMapper,
-			       bolEventTeacherMapper,
-			       dalEventTeacherMapper,
 			       bolRateMapper,
-			       dalRateMapper,
-			       bolTeacherTeacherSkillMapper,
-			       dalTeacherTeacherSkillMapper)
+			       dalRateMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>18ca31de5cfa46e7dc3d3a5a69028171</Hash>
+    <Hash>edc6ec974555b34a401b8c429bc7ab18</Hash>
 </Codenesium>*/

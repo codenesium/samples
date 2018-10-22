@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TestsNS.Api.Contracts
@@ -87,16 +88,16 @@ namespace TestsNS.Api.Contracts
 		public string FieldChar { get; private set; } = default(string);
 
 		[JsonProperty]
-		public DateTime? FieldDate { get; private set; } = default(DateTime);
+		public DateTime? FieldDate { get; private set; } = null;
 
 		[JsonProperty]
-		public DateTime? FieldDateTime { get; private set; } = default(DateTime);
+		public DateTime? FieldDateTime { get; private set; } = null;
 
 		[JsonProperty]
-		public DateTime? FieldDateTime2 { get; private set; } = default(DateTime);
+		public DateTime? FieldDateTime2 { get; private set; } = null;
 
 		[JsonProperty]
-		public DateTimeOffset? FieldDateTimeOffset { get; private set; } = default(DateTimeOffset);
+		public DateTimeOffset? FieldDateTimeOffset { get; private set; } = null;
 
 		[JsonProperty]
 		public double? FieldDecimal { get; private set; } = default(double);
@@ -126,7 +127,7 @@ namespace TestsNS.Api.Contracts
 		public decimal? FieldReal { get; private set; } = default(decimal);
 
 		[JsonProperty]
-		public DateTime? FieldSmallDateTime { get; private set; } = default(DateTime);
+		public DateTime? FieldSmallDateTime { get; private set; } = null;
 
 		[JsonProperty]
 		public short? FieldSmallInt { get; private set; } = default(short);
@@ -161,5 +162,5 @@ namespace TestsNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>84d660fbb8f84a784fe2e61a5dc5c40d</Hash>
+    <Hash>fc3cd157b8cfd72f93dc0c22ca7f0bf7</Hash>
 </Codenesium>*/

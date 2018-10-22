@@ -27,10 +27,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<List<ApiEventStatusResponseModel>> EventStatusesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiEventStudentResponseModel>> EventStudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiEventTeacherResponseModel>> EventTeachersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<ApiFamilyResponseModel>> FamiliesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiRateResponseModel>> RatesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
@@ -38,8 +34,6 @@ namespace StudioResourceManagerNS.Api.Services
 		Task<List<ApiSpaceResponseModel>> SpacesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiSpaceFeatureResponseModel>> SpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<ApiStudentResponseModel>> StudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
@@ -49,12 +43,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<List<ApiTeacherSkillResponseModel>> TeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<ApiUserResponseModel>> UsersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>82d53fe4d3139df9bf7392eaddbfa9bc</Hash>
+    <Hash>974ee8f2e9b04e9a5bfbbe63435c1f94</Hash>
 </Codenesium>*/

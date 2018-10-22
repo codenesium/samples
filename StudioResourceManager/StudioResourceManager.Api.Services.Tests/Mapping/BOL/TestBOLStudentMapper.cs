@@ -18,7 +18,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudentMapper();
 			ApiStudentRequestModel model = new ApiStudentRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1, true);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
 			BOStudent response = mapper.MapModelToBO(1, model);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -31,7 +31,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Phone.Should().Be("A");
 			response.SmsRemindersEnabled.Should().Be(true);
 			response.UserId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -39,7 +38,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudentMapper();
 			BOStudent bo = new BOStudent();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1, true);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
 			ApiStudentResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -53,7 +52,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Phone.Should().Be("A");
 			response.SmsRemindersEnabled.Should().Be(true);
 			response.UserId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -61,7 +59,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLStudentMapper();
 			BOStudent bo = new BOStudent();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1, true);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", true, 1, "A", true, "A", "A", true, 1);
 			List<ApiStudentResponseModel> response = mapper.MapBOToModel(new List<BOStudent>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -70,5 +68,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>c3657d1374d61e935d715c216951c06e</Hash>
+    <Hash>37d81064e88572dad49ddb44c8d5ebbb</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiTeacherSkillResponseModel response = await client.TeacherSkillGetAsync(1);
+			var createModel = new ApiTeacherSkillRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiTeacherSkillResponseModel> createResult = await client.TeacherSkillCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.TeacherSkillDeleteAsync(1);
+			ApiTeacherSkillResponseModel getResponse = await client.TeacherSkillGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.TeacherSkillGetAsync(1);
+			ActionResponse deleteResult = await client.TeacherSkillDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiTeacherSkillResponseModel verifyResponse = await client.TeacherSkillGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiTeacherSkillResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiTeacherSkillRequestModel();
-			model.SetProperties("B", true);
+			model.SetProperties("B");
 			CreateResponse<ApiTeacherSkillResponseModel> result = await client.TeacherSkillCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>4f1798a8b327e81d74dc2e1a43a30c67</Hash>
+    <Hash>4c80ec85a497ff478ed1d4f566cd61e1</Hash>
 </Codenesium>*/

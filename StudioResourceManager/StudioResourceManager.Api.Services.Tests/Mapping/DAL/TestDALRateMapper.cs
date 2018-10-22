@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALRateMapper();
 			var bo = new BORate();
-			bo.SetProperties(1, 1m, 1, 1, true);
+			bo.SetProperties(1, 1m, 1, 1);
 
 			Rate response = mapper.MapBOToEF(bo);
 
@@ -25,7 +25,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -33,7 +32,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALRateMapper();
 			Rate entity = new Rate();
-			entity.SetProperties(1m, 1, 1, 1, true);
+			entity.SetProperties(1m, 1, 1, 1);
 
 			BORate response = mapper.MapEFToBO(entity);
 
@@ -41,7 +40,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Id.Should().Be(1);
 			response.TeacherId.Should().Be(1);
 			response.TeacherSkillId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -49,7 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALRateMapper();
 			Rate entity = new Rate();
-			entity.SetProperties(1m, 1, 1, 1, true);
+			entity.SetProperties(1m, 1, 1, 1);
 
 			List<BORate> response = mapper.MapEFToBO(new List<Rate>() { entity });
 
@@ -59,5 +57,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>a71285644584d14cfabcaf6cfeaedbac</Hash>
+    <Hash>f42e86cce50fb0980c88972274f4e11b</Hash>
 </Codenesium>*/

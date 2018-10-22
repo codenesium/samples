@@ -68,17 +68,23 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiTimestampCheckResponseModel response = await client.TimestampCheckGetAsync(1);
+			var createModel = new ApiTimestampCheckRequestModel();
+			createModel.SetProperties("B", BitConverter.GetBytes(2));
+			CreateResponse<ApiTimestampCheckResponseModel> createResult = await client.TimestampCheckCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.TimestampCheckDeleteAsync(1);
+			ApiTimestampCheckResponseModel getResponse = await client.TimestampCheckGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.TimestampCheckGetAsync(1);
+			ActionResponse deleteResult = await client.TimestampCheckDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiTimestampCheckResponseModel verifyResponse = await client.TimestampCheckGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>850f81af7cdd44bf7c55c153bb28a02a</Hash>
+    <Hash>c6b278cb1823ca1e17a8f80521ab6408</Hash>
 </Codenesium>*/

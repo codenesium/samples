@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StudioResourceManagerNS.Api.Contracts
@@ -20,8 +21,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			decimal? billAmount,
 			int eventStatusId,
 			DateTime? scheduledEndDate,
-			DateTime? scheduledStartDate,
-			bool isDeleted)
+			DateTime? scheduledStartDate)
 		{
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
@@ -29,14 +29,13 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.EventStatusId = eventStatusId;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.IsDeleted = isDeleted;
 		}
 
 		[JsonProperty]
-		public DateTime? ActualEndDate { get; private set; } = default(DateTime);
+		public DateTime? ActualEndDate { get; private set; } = null;
 
 		[JsonProperty]
-		public DateTime? ActualStartDate { get; private set; } = default(DateTime);
+		public DateTime? ActualStartDate { get; private set; } = null;
 
 		[JsonProperty]
 		public decimal? BillAmount { get; private set; } = default(decimal);
@@ -46,17 +45,13 @@ namespace StudioResourceManagerNS.Api.Contracts
 		public int EventStatusId { get; private set; } = default(int);
 
 		[JsonProperty]
-		public DateTime? ScheduledEndDate { get; private set; } = default(DateTime);
+		public DateTime? ScheduledEndDate { get; private set; } = null;
 
 		[JsonProperty]
-		public DateTime? ScheduledStartDate { get; private set; } = default(DateTime);
-
-		[Required]
-		[JsonProperty]
-		public bool IsDeleted { get; private set; } = default(bool);
+		public DateTime? ScheduledStartDate { get; private set; } = null;
 	}
 }
 
 /*<Codenesium>
-    <Hash>3baca1d9ff5b88760f6dcfc6ade26185</Hash>
+    <Hash>5214e4353c545650765652dff86debb7</Hash>
 </Codenesium>*/

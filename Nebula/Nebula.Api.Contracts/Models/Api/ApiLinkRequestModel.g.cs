@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
@@ -43,17 +44,17 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? AssignedMachineId { get; private set; } = default(int);
+		public int? AssignedMachineId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public int ChainId { get; private set; } = default(int);
+		public int ChainId { get; private set; }
 
 		[JsonProperty]
-		public DateTime? DateCompleted { get; private set; } = default(DateTime);
+		public DateTime? DateCompleted { get; private set; } = null;
 
 		[JsonProperty]
-		public DateTime? DateStarted { get; private set; } = default(DateTime);
+		public DateTime? DateStarted { get; private set; } = null;
 
 		[JsonProperty]
 		public string DynamicParameter { get; private set; } = default(string);
@@ -64,7 +65,7 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int LinkStatusId { get; private set; } = default(int);
+		public int LinkStatusId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -87,5 +88,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>48564aab1d36362b964fb96cf8aa6332</Hash>
+    <Hash>1fdfd94ed192fd1994b0c67ba823fa67</Hash>
 </Codenesium>*/

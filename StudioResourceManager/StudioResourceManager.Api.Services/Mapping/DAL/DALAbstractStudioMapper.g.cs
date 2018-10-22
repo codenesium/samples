@@ -20,8 +20,7 @@ namespace StudioResourceManagerNS.Api.Services
 				bo.Name,
 				bo.Province,
 				bo.Website,
-				bo.Zip,
-				bo.IsDeleted);
+				bo.Zip);
 			return efStudio;
 		}
 
@@ -38,8 +37,7 @@ namespace StudioResourceManagerNS.Api.Services
 				ef.Name,
 				ef.Province,
 				ef.Website,
-				ef.Zip,
-				ef.IsDeleted);
+				ef.Zip);
 			return bo;
 		}
 
@@ -59,5 +57,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>30ee9946c6374c41359e07074fc81bb0</Hash>
+    <Hash>805af7daeae463c421836e97b9587073</Hash>
 </Codenesium>*/

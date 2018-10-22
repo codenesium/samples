@@ -7,6 +7,12 @@ namespace StudioResourceManagerNS.Api.DataAccess
 {
 	public partial interface IVEventRepository
 	{
+		Task<VEvent> Create(VEvent item);
+
+		Task Update(VEvent item);
+
+		Task Delete(int id);
+
 		Task<VEvent> Get(int id);
 
 		Task<List<VEvent>> All(int limit = int.MaxValue, int offset = 0);
@@ -14,5 +20,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>d55942211c7ad2b329e198263a3139c6</Hash>
+    <Hash>99f333070481f97cab523f4c602af694</Hash>
 </Codenesium>*/

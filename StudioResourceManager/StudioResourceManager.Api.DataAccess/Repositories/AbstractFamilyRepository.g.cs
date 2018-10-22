@@ -81,6 +81,15 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.Context.Set<Student>().Where(x => x.FamilyId == familyId).AsQueryable().Skip(offset).Take(limit).ToListAsync<Student>();
 		}
 
+		public async virtual Task<List<Family>> ByUserId(int userId, int limit = int.MaxValue, int offset = 0)
+		{
+			return await (from refTable in this.Context.Students
+			              join families in this.Context.Families on
+			              refTable.FamilyId equals families.Id
+			              where refTable.UserId == userId
+			              select families).Skip(offset).Take(limit).ToListAsync();
+		}
+
 		protected async Task<List<Family>> Where(
 			Expression<Func<Family, bool>> predicate,
 			int limit = int.MaxValue,
@@ -113,5 +122,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>6cba31a4857d6095cfbd595d83550312</Hash>
+    <Hash>f73e3124756d3fa67d1eae69316c4345</Hash>
 </Codenesium>*/

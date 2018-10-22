@@ -23,10 +23,10 @@ namespace StudioResourceManagerNS.Api.Services
 
 		Task<List<ApiRateResponseModel>> RatesByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
+		Task<List<ApiTeacherSkillResponseModel>> ByTeacherId(int teacherSkillId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>df1a0f68c3abdbb4b84f7c83ea246918</Hash>
+    <Hash>bf9c8fc5781c51e1ac9e85e72a47c8f5</Hash>
 </Codenesium>*/

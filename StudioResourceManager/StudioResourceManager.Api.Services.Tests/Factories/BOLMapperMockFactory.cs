@@ -14,10 +14,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IBOLEventStatusMapper BOLEventStatusMapperMock { get; set; } = new BOLEventStatusMapper();
 
-		public IBOLEventStudentMapper BOLEventStudentMapperMock { get; set; } = new BOLEventStudentMapper();
-
-		public IBOLEventTeacherMapper BOLEventTeacherMapperMock { get; set; } = new BOLEventTeacherMapper();
-
 		public IBOLFamilyMapper BOLFamilyMapperMock { get; set; } = new BOLFamilyMapper();
 
 		public IBOLRateMapper BOLRateMapperMock { get; set; } = new BOLRateMapper();
@@ -26,8 +22,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IBOLSpaceFeatureMapper BOLSpaceFeatureMapperMock { get; set; } = new BOLSpaceFeatureMapper();
 
-		public IBOLSpaceSpaceFeatureMapper BOLSpaceSpaceFeatureMapperMock { get; set; } = new BOLSpaceSpaceFeatureMapper();
-
 		public IBOLStudentMapper BOLStudentMapperMock { get; set; } = new BOLStudentMapper();
 
 		public IBOLStudioMapper BOLStudioMapperMock { get; set; } = new BOLStudioMapper();
@@ -35,8 +29,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public IBOLTeacherMapper BOLTeacherMapperMock { get; set; } = new BOLTeacherMapper();
 
 		public IBOLTeacherSkillMapper BOLTeacherSkillMapperMock { get; set; } = new BOLTeacherSkillMapper();
-
-		public IBOLTeacherTeacherSkillMapper BOLTeacherTeacherSkillMapperMock { get; set; } = new BOLTeacherTeacherSkillMapper();
 
 		public IBOLTenantMapper BOLTenantMapperMock { get; set; } = new BOLTenantMapper();
 
@@ -51,5 +43,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>03674a5a249a867c31dcb2a54d435e33</Hash>
+    <Hash>d1c8cfce6d45233c473af518f95ced4d</Hash>
 </Codenesium>*/

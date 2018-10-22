@@ -68,17 +68,23 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiEventResponseModel response = await client.EventGetAsync(1);
+			var createModel = new ApiEventRequestModel();
+			createModel.SetProperties("B", "B", 1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiEventResponseModel> createResult = await client.EventCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.EventDeleteAsync(1);
+			ApiEventResponseModel getResponse = await client.EventGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.EventGetAsync(1);
+			ActionResponse deleteResult = await client.EventDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiEventResponseModel verifyResponse = await client.EventGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TicketingCRMNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>cb14897329c75c68ccda218c3b036933</Hash>
+    <Hash>7dd203587fee1599eeb3325ca4b12b8e</Hash>
 </Codenesium>*/

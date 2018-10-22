@@ -14,10 +14,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IDALEventStatusMapper DALEventStatusMapperMock { get; set; } = new DALEventStatusMapper();
 
-		public IDALEventStudentMapper DALEventStudentMapperMock { get; set; } = new DALEventStudentMapper();
-
-		public IDALEventTeacherMapper DALEventTeacherMapperMock { get; set; } = new DALEventTeacherMapper();
-
 		public IDALFamilyMapper DALFamilyMapperMock { get; set; } = new DALFamilyMapper();
 
 		public IDALRateMapper DALRateMapperMock { get; set; } = new DALRateMapper();
@@ -26,8 +22,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public IDALSpaceFeatureMapper DALSpaceFeatureMapperMock { get; set; } = new DALSpaceFeatureMapper();
 
-		public IDALSpaceSpaceFeatureMapper DALSpaceSpaceFeatureMapperMock { get; set; } = new DALSpaceSpaceFeatureMapper();
-
 		public IDALStudentMapper DALStudentMapperMock { get; set; } = new DALStudentMapper();
 
 		public IDALStudioMapper DALStudioMapperMock { get; set; } = new DALStudioMapper();
@@ -35,8 +29,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public IDALTeacherMapper DALTeacherMapperMock { get; set; } = new DALTeacherMapper();
 
 		public IDALTeacherSkillMapper DALTeacherSkillMapperMock { get; set; } = new DALTeacherSkillMapper();
-
-		public IDALTeacherTeacherSkillMapper DALTeacherTeacherSkillMapperMock { get; set; } = new DALTeacherTeacherSkillMapper();
 
 		public IDALTenantMapper DALTenantMapperMock { get; set; } = new DALTenantMapper();
 
@@ -51,5 +43,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>3ca4cba5a13a5af877603d22c146c424</Hash>
+    <Hash>a284a927b12619047b4400ad8705816a</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiEventResponseModel response = await client.EventGetAsync(1);
+			var createModel = new ApiEventRequestModel();
+			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
+			CreateResponse<ApiEventResponseModel> createResult = await client.EventCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.EventDeleteAsync(1);
+			ApiEventResponseModel getResponse = await client.EventGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.EventGetAsync(1);
+			ActionResponse deleteResult = await client.EventDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiEventResponseModel verifyResponse = await client.EventGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiEventResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiEventRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B", true);
+			model.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), 2m, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", "B");
 			CreateResponse<ApiEventResponseModel> result = await client.EventCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3317c3dcc8b13b39867df13f83808caa</Hash>
+    <Hash>998dd4f561c550aea8de4fb49ca95596</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiClientCommunicationResponseModel response = await client.ClientCommunicationGetAsync(1);
+			var createModel = new ApiClientCommunicationRequestModel();
+			createModel.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), 1, "B");
+			CreateResponse<ApiClientCommunicationResponseModel> createResult = await client.ClientCommunicationCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.ClientCommunicationDeleteAsync(1);
+			ApiClientCommunicationResponseModel getResponse = await client.ClientCommunicationGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.ClientCommunicationGetAsync(1);
+			ActionResponse deleteResult = await client.ClientCommunicationDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiClientCommunicationResponseModel verifyResponse = await client.ClientCommunicationGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>005ce6312d0667df033ae201f7e5a53e</Hash>
+    <Hash>5da74cf52d272c45624e066c1fe81efd</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
@@ -57,5 +58,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>939cf08cb628c2c79d42827b7459a752</Hash>
+    <Hash>2ad201d8e8928f1275e63f4146f6b023</Hash>
 </Codenesium>*/

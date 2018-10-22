@@ -22,7 +22,6 @@ namespace StudioResourceManagerNS.Api.Services
 			this.ProvinceRules();
 			this.WebsiteRules();
 			this.ZipRules();
-			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -35,7 +34,6 @@ namespace StudioResourceManagerNS.Api.Services
 			this.ProvinceRules();
 			this.WebsiteRules();
 			this.ZipRules();
-			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -47,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>a851a5ee9ed8b59ddea00663a8494dfa</Hash>
+    <Hash>270772b490be1b4683d71aed66087912</Hash>
 </Codenesium>*/

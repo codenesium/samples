@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiStudioResponseModel response = await client.StudioGetAsync(1);
+			var createModel = new ApiStudioRequestModel();
+			createModel.SetProperties("B", "B", "B", "B", "B", "B", "B");
+			CreateResponse<ApiStudioResponseModel> createResult = await client.StudioCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.StudioDeleteAsync(1);
+			ApiStudioResponseModel getResponse = await client.StudioGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.StudioGetAsync(1);
+			ActionResponse deleteResult = await client.StudioDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiStudioResponseModel verifyResponse = await client.StudioGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiStudioResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiStudioRequestModel();
-			model.SetProperties("B", "B", "B", "B", "B", "B", "B", true);
+			model.SetProperties("B", "B", "B", "B", "B", "B", "B");
 			CreateResponse<ApiStudioResponseModel> result = await client.StudioCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f630aa729fe649b66eed788cd28990fb</Hash>
+    <Hash>34db62951efaa62b42aed2f78ed9c8db</Hash>
 </Codenesium>*/

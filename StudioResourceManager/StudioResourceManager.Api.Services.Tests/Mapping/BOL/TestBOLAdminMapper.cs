@@ -18,7 +18,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLAdminMapper();
 			ApiAdminRequestModel model = new ApiAdminRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1, true);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			BOAdmin response = mapper.MapModelToBO(1, model);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -27,7 +27,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -35,7 +34,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLAdminMapper();
 			BOAdmin bo = new BOAdmin();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1, true);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			ApiAdminResponseModel response = mapper.MapBOToModel(bo);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -45,7 +44,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -53,7 +51,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new BOLAdminMapper();
 			BOAdmin bo = new BOAdmin();
-			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1, true);
+			bo.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			List<ApiAdminResponseModel> response = mapper.MapBOToModel(new List<BOAdmin>() { { bo } });
 
 			response.Count.Should().Be(1);
@@ -62,5 +60,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>6ace0869b0526166bf2d5c63715b7136</Hash>
+    <Hash>1fc936ea42f7d9e0085fc8e042c4d18e</Hash>
 </Codenesium>*/

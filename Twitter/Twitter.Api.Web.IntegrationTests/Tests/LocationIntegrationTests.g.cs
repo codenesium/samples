@@ -68,17 +68,23 @@ namespace TwitterNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiLocationResponseModel response = await client.LocationGetAsync(1);
+			var createModel = new ApiLocationRequestModel();
+			createModel.SetProperties(2, 2, "B");
+			CreateResponse<ApiLocationResponseModel> createResult = await client.LocationCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.LocationDeleteAsync(1);
+			ApiLocationResponseModel getResponse = await client.LocationGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.LocationGetAsync(1);
+			ActionResponse deleteResult = await client.LocationDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiLocationResponseModel verifyResponse = await client.LocationGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TwitterNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>e48f7ae1c8a38e58575a3073afccf29f</Hash>
+    <Hash>fbf48d32de28d638127c0bc12eccd793</Hash>
 </Codenesium>*/

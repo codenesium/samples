@@ -68,17 +68,23 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiTagResponseModel response = await client.TagGetAsync(1);
+			var createModel = new ApiTagRequestModel();
+			createModel.SetProperties(2, 2, "B", 2);
+			CreateResponse<ApiTagResponseModel> createResult = await client.TagCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.TagDeleteAsync(1);
+			ApiTagResponseModel getResponse = await client.TagGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.TagGetAsync(1);
+			ActionResponse deleteResult = await client.TagDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiTagResponseModel verifyResponse = await client.TagGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>2663c608080e5a5eb0ab4922762b6879</Hash>
+    <Hash>9af85774b801f17ac1abc6e15b71ec52</Hash>
 </Codenesium>*/

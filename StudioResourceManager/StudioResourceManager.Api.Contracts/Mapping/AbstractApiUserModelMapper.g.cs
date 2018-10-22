@@ -14,8 +14,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			var response = new ApiUserResponseModel();
 			response.SetProperties(id,
 			                       request.Password,
-			                       request.Username,
-			                       request.IsDeleted);
+			                       request.Username);
 			return response;
 		}
 
@@ -25,8 +24,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			var request = new ApiUserRequestModel();
 			request.SetProperties(
 				response.Password,
-				response.Username,
-				response.IsDeleted);
+				response.Username);
 			return request;
 		}
 
@@ -35,12 +33,11 @@ namespace StudioResourceManagerNS.Api.Contracts
 			var patch = new JsonPatchDocument<ApiUserRequestModel>();
 			patch.Replace(x => x.Password, model.Password);
 			patch.Replace(x => x.Username, model.Username);
-			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>05e88c3bebfa9650441d628c8c0d3799</Hash>
+    <Hash>d8ce7b02fc1f5ee980c41cd68eeba1b5</Hash>
 </Codenesium>*/

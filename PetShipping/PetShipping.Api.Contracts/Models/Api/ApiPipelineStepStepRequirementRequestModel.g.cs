@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
@@ -30,7 +31,7 @@ namespace PetShippingNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int PipelineStepId { get; private set; } = default(int);
+		public int PipelineStepId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -39,5 +40,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>8f9c8c7093f30f48e6592c50a5351f82</Hash>
+    <Hash>ae8b8e25d8d8ee191e56d2123c5ddc4d</Hash>
 </Codenesium>*/

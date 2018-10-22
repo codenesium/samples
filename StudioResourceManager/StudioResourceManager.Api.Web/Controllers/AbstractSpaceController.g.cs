@@ -207,10 +207,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{spaceId}/SpaceSpaceFeaturesBySpaceId")]
+		[Route("bySpaceFeatureId/{spaceFeatureId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceSpaceFeatureResponseModel>), 200)]
-		public async virtual Task<IActionResult> SpaceSpaceFeaturesBySpaceId(int spaceId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiSpaceResponseModel>), 200)]
+		public async virtual Task<IActionResult> BySpaceFeatureId(int spaceFeatureId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiSpaceSpaceFeatureResponseModel> response = await this.SpaceService.SpaceSpaceFeaturesBySpaceId(spaceId, query.Limit, query.Offset);
+			List<ApiSpaceResponseModel> response = await this.SpaceService.BySpaceFeatureId(spaceFeatureId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +242,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>05c24c7c7def37e710cfbb852034c6d2</Hash>
+    <Hash>1c9a6dc5f9f555bfa860f20c7fe38876</Hash>
 </Codenesium>*/

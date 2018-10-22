@@ -21,8 +21,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			string name,
 			string province,
 			string website,
-			string zip,
-			bool isDeleted)
+			string zip)
 		{
 			this.Address1 = address1;
 			this.Address2 = address2;
@@ -32,7 +31,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Province = province;
 			this.Website = website;
 			this.Zip = zip;
-			this.IsDeleted = isDeleted;
 		}
 
 		[MaxLength(128)]
@@ -66,12 +64,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("zip")]
 		public string Zip { get; private set; }
-
-		[Column("isDeleted")]
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>75efe9c59ba28103feba7986e89ce611</Hash>
+    <Hash>cd360e395818566ac4670db6a4de5633</Hash>
 </Codenesium>*/

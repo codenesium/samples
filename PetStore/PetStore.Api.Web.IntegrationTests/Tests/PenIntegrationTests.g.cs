@@ -68,17 +68,23 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiPenResponseModel response = await client.PenGetAsync(1);
+			var createModel = new ApiPenRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiPenResponseModel> createResult = await client.PenCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.PenDeleteAsync(1);
+			ApiPenResponseModel getResponse = await client.PenGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.PenGetAsync(1);
+			ActionResponse deleteResult = await client.PenDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiPenResponseModel verifyResponse = await client.PenGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>f18b999d00fa2438ac908a0d2fe750a4</Hash>
+    <Hash>845dbb823e886be4db39a763dba577a9</Hash>
 </Codenesium>*/

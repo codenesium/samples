@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TwitterNS.Api.Contracts
@@ -48,7 +49,7 @@ namespace TwitterNS.Api.Contracts
 		public string BioImgUrl { get; private set; } = default(string);
 
 		[JsonProperty]
-		public DateTime? Birthday { get; private set; } = default(DateTime);
+		public DateTime? Birthday { get; private set; } = null;
 
 		[JsonProperty]
 		public string ContentDescription { get; private set; } = default(string);
@@ -69,7 +70,7 @@ namespace TwitterNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int LocationLocationId { get; private set; } = default(int);
+		public int LocationLocationId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -92,5 +93,5 @@ namespace TwitterNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>7efa3fefa2b58297e3dfd745c80da87d</Hash>
+    <Hash>bc787d0fabc65456b28a27b6c7d0b54d</Hash>
 </Codenesium>*/

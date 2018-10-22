@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
@@ -48,11 +49,11 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int CityId { get; private set; } = default(int);
+		public int CityId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public DateTime Date { get; private set; } = default(DateTime);
+		public DateTime Date { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
@@ -60,7 +61,7 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime EndDate { get; private set; } = default(DateTime);
+		public DateTime EndDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
@@ -72,7 +73,7 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime StartDate { get; private set; } = default(DateTime);
+		public DateTime StartDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
@@ -81,5 +82,5 @@ namespace TicketingCRMNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3d715a0e2158996631189485575d6554</Hash>
+    <Hash>122f7f9dca0b3751512dd0d62be77c9b</Hash>
 </Codenesium>*/

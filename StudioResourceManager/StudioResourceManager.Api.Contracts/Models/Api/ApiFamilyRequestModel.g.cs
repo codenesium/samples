@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StudioResourceManagerNS.Api.Contracts
@@ -19,15 +20,13 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string primaryContactEmail,
 			string primaryContactFirstName,
 			string primaryContactLastName,
-			string primaryContactPhone,
-			bool isDeleted)
+			string primaryContactPhone)
 		{
 			this.Note = note;
 			this.PrimaryContactEmail = primaryContactEmail;
 			this.PrimaryContactFirstName = primaryContactFirstName;
 			this.PrimaryContactLastName = primaryContactLastName;
 			this.PrimaryContactPhone = primaryContactPhone;
-			this.IsDeleted = isDeleted;
 		}
 
 		[JsonProperty]
@@ -45,13 +44,9 @@ namespace StudioResourceManagerNS.Api.Contracts
 		[Required]
 		[JsonProperty]
 		public string PrimaryContactPhone { get; private set; } = default(string);
-
-		[Required]
-		[JsonProperty]
-		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>e7e8fdb2a6d6712d8a82dfa2105c0ea0</Hash>
+    <Hash>14e30ec91f71bf7ee017c1dc76cc6fad</Hash>
 </Codenesium>*/

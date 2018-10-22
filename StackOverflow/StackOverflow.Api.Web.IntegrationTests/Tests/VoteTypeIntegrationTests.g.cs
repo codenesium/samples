@@ -68,17 +68,23 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiVoteTypeResponseModel response = await client.VoteTypeGetAsync(1);
+			var createModel = new ApiVoteTypeRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiVoteTypeResponseModel> createResult = await client.VoteTypeCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.VoteTypeDeleteAsync(1);
+			ApiVoteTypeResponseModel getResponse = await client.VoteTypeGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.VoteTypeGetAsync(1);
+			ActionResponse deleteResult = await client.VoteTypeDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiVoteTypeResponseModel verifyResponse = await client.VoteTypeGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c780dd42fa22f658a8f46063a1bb2fbe</Hash>
+    <Hash>705f08382c42121c421ac4ff5023755f</Hash>
 </Codenesium>*/

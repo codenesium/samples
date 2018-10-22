@@ -16,8 +16,7 @@ namespace StudioResourceManagerNS.Api.Services
 		                                  decimal? billAmount,
 		                                  int eventStatusId,
 		                                  DateTime? scheduledEndDate,
-		                                  DateTime? scheduledStartDate,
-		                                  bool isDeleted)
+		                                  DateTime? scheduledStartDate)
 		{
 			this.ActualEndDate = actualEndDate;
 			this.ActualStartDate = actualStartDate;
@@ -26,7 +25,6 @@ namespace StudioResourceManagerNS.Api.Services
 			this.Id = id;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.IsDeleted = isDeleted;
 		}
 
 		public DateTime? ActualEndDate { get; private set; }
@@ -42,11 +40,9 @@ namespace StudioResourceManagerNS.Api.Services
 		public DateTime? ScheduledEndDate { get; private set; }
 
 		public DateTime? ScheduledStartDate { get; private set; }
-
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bd0d8127b2f696e2761068eec961d995</Hash>
+    <Hash>0baace26265e697013994b61312ead85</Hash>
 </Codenesium>*/

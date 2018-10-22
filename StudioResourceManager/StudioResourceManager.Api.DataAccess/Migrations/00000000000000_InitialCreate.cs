@@ -61,6 +61,11 @@ GO
 --ALTER TABLE [dbo].[EventStudent] DROP CONSTRAINT [fk_EventStudent_tenantId_tenant_id]
 --END
 --GO
+--IF (OBJECT_ID('dbo.FK_EventTeacher_eventId_Event_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[EventTeacher] DROP CONSTRAINT [FK_EventTeacher_eventId_Event_id]
+--END
+--GO
 --IF (OBJECT_ID('dbo.FK_EventTeacher_teacherId_Teacher_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[EventTeacher] DROP CONSTRAINT [FK_EventTeacher_teacherId_Teacher_id]
@@ -69,11 +74,6 @@ GO
 --IF (OBJECT_ID('dbo.fk_EventTeacher_tenantId_tenant_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[EventTeacher] DROP CONSTRAINT [fk_EventTeacher_tenantId_tenant_id]
---END
---GO
---IF (OBJECT_ID('dbo.FK_EventTeacher_eventId_Event_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[EventTeacher] DROP CONSTRAINT [FK_EventTeacher_eventId_Event_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.fk_Family_tenantId_tenant_id', 'F') IS NOT NULL)
@@ -111,14 +111,14 @@ GO
 --ALTER TABLE [dbo].[SpaceSpaceFeature] DROP CONSTRAINT [fk_SpaceSpaceFeature_tenantId_tenant_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[SpaceSpaceFeature] DROP CONSTRAINT [FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_SpaceSpaceFeature_spaceId_Space_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[SpaceSpaceFeature] DROP CONSTRAINT [FK_SpaceSpaceFeature_spaceId_Space_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[SpaceSpaceFeature] DROP CONSTRAINT [FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Student_familyId_Family_id', 'F') IS NOT NULL)
@@ -274,10 +274,10 @@ CREATE TABLE [dbo].[Admin](
 [email] [varchar]  (128)   NOT NULL,
 [firstName] [varchar]  (128)   NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [lastName] [varchar]  (128)   NOT NULL,
 [phone] [varchar]  (128)   NULL,
 [userId] [int]     NOT NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -288,47 +288,47 @@ CREATE TABLE [dbo].[Event](
 [billAmount] [money]     NULL,
 [eventStatusId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [scheduledEndDate] [datetime]     NULL,
 [scheduledStartDate] [datetime]     NULL,
 [studentNotes] [text]     NULL,
 [teacherNotes] [text]     NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[EventStatus](
 [tenantId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
-[name] [varchar]  (128)   NOT NULL,
 [isDeleted] [bit]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[EventStudent](
 [tenantId] [int]     NOT NULL,
 [eventId] [int]     NOT NULL,
-[studentId] [int]     NOT NULL,
 [isDeleted] [bit]     NOT NULL,
+[studentId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[EventTeacher](
 [tenantId] [int]     NOT NULL,
 [eventId] [int]     NOT NULL,
-[teacherId] [int]     NOT NULL,
 [isDeleted] [bit]     NOT NULL,
+[teacherId] [int]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[Family](
 [tenantId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [notes] [text]     NULL,
 [primaryContactEmail] [varchar]  (128)   NULL,
 [primaryContactFirstName] [varchar]  (128)   NULL,
 [primaryContactLastName] [varchar]  (128)   NULL,
 [primaryContactPhone] [varchar]  (128)   NOT NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -336,9 +336,9 @@ CREATE TABLE [dbo].[Rate](
 [tenantId] [int]     NOT NULL,
 [amountPerMinute] [money]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [teacherId] [int]     NOT NULL,
 [teacherSkillId] [int]     NOT NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -346,24 +346,24 @@ CREATE TABLE [dbo].[Space](
 [tenantId] [int]     NOT NULL,
 [description] [varchar]  (128)   NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
-[name] [varchar]  (128)   NOT NULL,
 [isDeleted] [bit]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[SpaceFeature](
 [tenantId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
-[name] [varchar]  (128)   NOT NULL,
 [isDeleted] [bit]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[SpaceSpaceFeature](
 [tenantId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [spaceFeatureId] [int]     NOT NULL,
 [spaceId] [int]     NOT NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -376,11 +376,11 @@ CREATE TABLE [dbo].[Student](
 [firstName] [varchar]  (128)   NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [isAdult] [bit]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [lastName] [varchar]  (128)   NOT NULL,
 [phone] [varchar]  (128)   NOT NULL,
 [smsRemindersEnabled] [bit]     NOT NULL,
 [userId] [int]     NOT NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -390,11 +390,11 @@ CREATE TABLE [dbo].[Studio](
 [address2] [varchar]  (128)   NOT NULL,
 [city] [varchar]  (128)   NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [name] [varchar]  (128)   NOT NULL,
 [province] [varchar]  (90)   NOT NULL,
 [website] [varchar]  (128)   NOT NULL,
 [zip] [varchar]  (128)   NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -404,26 +404,26 @@ CREATE TABLE [dbo].[Teacher](
 [email] [varchar]  (128)   NOT NULL,
 [firstName] [varchar]  (128)   NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [lastName] [varchar]  (128)   NOT NULL,
 [phone] [varchar]  (128)   NULL,
 [userId] [int]     NOT NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[TeacherSkill](
 [tenantId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
-[name] [varchar]  (128)   NOT NULL,
 [isDeleted] [bit]     NOT NULL,
+[name] [varchar]  (128)   NOT NULL,
 ) ON[PRIMARY]
 GO
 
 CREATE TABLE [dbo].[TeacherTeacherSkill](
 [tenantId] [int]     NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [teacherId] [int]     NOT NULL,
 [teacherSkillId] [int]     NOT NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -436,9 +436,9 @@ GO
 CREATE TABLE [dbo].[User](
 [tenantId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [password] [varchar]  (128)   NOT NULL,
 [username] [varchar]  (128)   NOT NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -449,9 +449,9 @@ CREATE TABLE [dbo].[vEvents](
 [billAmount] [money]     NULL,
 [eventStatusId] [int]     NOT NULL,
 [id] [int]   IDENTITY(1,1)  NOT NULL,
+[isDeleted] [bit]     NOT NULL,
 [scheduledEndDate] [datetime]     NULL,
 [scheduledStartDate] [datetime]     NULL,
-[isDeleted] [bit]     NOT NULL,
 ) ON[PRIMARY]
 GO
 
@@ -716,6 +716,11 @@ REFERENCES[dbo].[Tenant]([id])
 GO
 ALTER TABLE[dbo].[EventStudent] CHECK CONSTRAINT[fk_EventStudent_tenantId_tenant_id]
 GO
+ALTER TABLE[dbo].[EventTeacher]  WITH CHECK ADD  CONSTRAINT[FK_EventTeacher_eventId_Event_id] FOREIGN KEY([tenantId],[eventId])
+REFERENCES[dbo].[Event]([tenantId],[id])
+GO
+ALTER TABLE[dbo].[EventTeacher] CHECK CONSTRAINT[FK_EventTeacher_eventId_Event_id]
+GO
 ALTER TABLE[dbo].[EventTeacher]  WITH CHECK ADD  CONSTRAINT[FK_EventTeacher_teacherId_Teacher_id] FOREIGN KEY([tenantId],[teacherId])
 REFERENCES[dbo].[Teacher]([tenantId],[id])
 GO
@@ -725,11 +730,6 @@ ALTER TABLE[dbo].[EventTeacher]  WITH CHECK ADD  CONSTRAINT[fk_EventTeacher_tena
 REFERENCES[dbo].[Tenant]([id])
 GO
 ALTER TABLE[dbo].[EventTeacher] CHECK CONSTRAINT[fk_EventTeacher_tenantId_tenant_id]
-GO
-ALTER TABLE[dbo].[EventTeacher]  WITH CHECK ADD  CONSTRAINT[FK_EventTeacher_eventId_Event_id] FOREIGN KEY([tenantId],[eventId])
-REFERENCES[dbo].[Event]([tenantId],[id])
-GO
-ALTER TABLE[dbo].[EventTeacher] CHECK CONSTRAINT[FK_EventTeacher_eventId_Event_id]
 GO
 ALTER TABLE[dbo].[Family]  WITH CHECK ADD  CONSTRAINT[fk_Family_tenantId_tenant_id] FOREIGN KEY([tenantId])
 REFERENCES[dbo].[Tenant]([id])
@@ -766,15 +766,15 @@ REFERENCES[dbo].[Tenant]([id])
 GO
 ALTER TABLE[dbo].[SpaceSpaceFeature] CHECK CONSTRAINT[fk_SpaceSpaceFeature_tenantId_tenant_id]
 GO
-ALTER TABLE[dbo].[SpaceSpaceFeature]  WITH CHECK ADD  CONSTRAINT[FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id] FOREIGN KEY([tenantId],[spaceFeatureId])
-REFERENCES[dbo].[SpaceFeature]([tenantId],[id])
-GO
-ALTER TABLE[dbo].[SpaceSpaceFeature] CHECK CONSTRAINT[FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id]
-GO
 ALTER TABLE[dbo].[SpaceSpaceFeature]  WITH CHECK ADD  CONSTRAINT[FK_SpaceSpaceFeature_spaceId_Space_id] FOREIGN KEY([tenantId],[spaceId])
 REFERENCES[dbo].[Space]([tenantId],[id])
 GO
 ALTER TABLE[dbo].[SpaceSpaceFeature] CHECK CONSTRAINT[FK_SpaceSpaceFeature_spaceId_Space_id]
+GO
+ALTER TABLE[dbo].[SpaceSpaceFeature]  WITH CHECK ADD  CONSTRAINT[FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id] FOREIGN KEY([tenantId],[spaceFeatureId])
+REFERENCES[dbo].[SpaceFeature]([tenantId],[id])
+GO
+ALTER TABLE[dbo].[SpaceSpaceFeature] CHECK CONSTRAINT[FK_SpaceSpaceFeature_spaceFeatureId_SpaceFeature_id]
 GO
 ALTER TABLE[dbo].[Student]  WITH CHECK ADD  CONSTRAINT[FK_Student_familyId_Family_id] FOREIGN KEY([tenantId],[familyId])
 REFERENCES[dbo].[Family]([tenantId],[id])

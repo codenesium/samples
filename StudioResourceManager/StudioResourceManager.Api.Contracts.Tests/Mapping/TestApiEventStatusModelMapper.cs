@@ -17,12 +17,11 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiEventStatusModelMapper();
 			var model = new ApiEventStatusRequestModel();
-			model.SetProperties("A", true);
+			model.SetProperties("A");
 			ApiEventStatusResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -30,11 +29,10 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiEventStatusModelMapper();
 			var model = new ApiEventStatusResponseModel();
-			model.SetProperties(1, "A", true);
+			model.SetProperties(1, "A");
 			ApiEventStatusRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -42,17 +40,16 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiEventStatusModelMapper();
 			var model = new ApiEventStatusRequestModel();
-			model.SetProperties("A", true);
+			model.SetProperties("A");
 
 			JsonPatchDocument<ApiEventStatusRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiEventStatusRequestModel();
 			patch.ApplyTo(response);
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>4d00a813a6ada8ad50bd56d2d4c14270</Hash>
+    <Hash>3764675760ce7d45be4b105bfdac68ae</Hash>
 </Codenesium>*/

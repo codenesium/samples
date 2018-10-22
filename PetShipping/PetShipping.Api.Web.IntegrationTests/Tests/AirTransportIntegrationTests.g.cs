@@ -68,17 +68,23 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiAirTransportResponseModel response = await client.AirTransportGetAsync(1);
+			var createModel = new ApiAirTransportRequestModel();
+			createModel.SetProperties("B", 1, 2, DateTime.Parse("1/1/1988 12:00:00 AM"), 2, DateTime.Parse("1/1/1988 12:00:00 AM"));
+			CreateResponse<ApiAirTransportResponseModel> createResult = await client.AirTransportCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.AirTransportDeleteAsync(1);
+			ApiAirTransportResponseModel getResponse = await client.AirTransportGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.AirTransportGetAsync(1);
+			ActionResponse deleteResult = await client.AirTransportDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiAirTransportResponseModel verifyResponse = await client.AirTransportGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>45549f3fdfd643c3ac22baa4d2c16415</Hash>
+    <Hash>7089fcd32af60771cd7b5c421a5f8b9a</Hash>
 </Codenesium>*/

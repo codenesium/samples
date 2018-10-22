@@ -19,8 +19,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			string primaryContactEmail,
 			string primaryContactFirstName,
 			string primaryContactLastName,
-			string primaryContactPhone,
-			bool isDeleted)
+			string primaryContactPhone)
 		{
 			this.Id = id;
 			this.Note = note;
@@ -28,7 +27,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.PrimaryContactFirstName = primaryContactFirstName;
 			this.PrimaryContactLastName = primaryContactLastName;
 			this.PrimaryContactPhone = primaryContactPhone;
-			this.IsDeleted = isDeleted;
 		}
 
 		[Key]
@@ -54,12 +52,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("primaryContactPhone")]
 		public string PrimaryContactPhone { get; private set; }
-
-		[Column("isDeleted")]
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>9235fead2b0aa78b96165dd6ed8f06d7</Hash>
+    <Hash>56b8b6d221403f23d25a52e65a13e3ea</Hash>
 </Codenesium>*/

@@ -22,10 +22,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALSpaceMapper DalSpaceMapper { get; private set; }
 
-		protected IBOLSpaceSpaceFeatureMapper BolSpaceSpaceFeatureMapper { get; private set; }
-
-		protected IDALSpaceSpaceFeatureMapper DalSpaceSpaceFeatureMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractSpaceService(
@@ -33,17 +29,13 @@ namespace StudioResourceManagerNS.Api.Services
 			ISpaceRepository spaceRepository,
 			IApiSpaceRequestModelValidator spaceModelValidator,
 			IBOLSpaceMapper bolSpaceMapper,
-			IDALSpaceMapper dalSpaceMapper,
-			IBOLSpaceSpaceFeatureMapper bolSpaceSpaceFeatureMapper,
-			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper)
+			IDALSpaceMapper dalSpaceMapper)
 			: base()
 		{
 			this.SpaceRepository = spaceRepository;
 			this.SpaceModelValidator = spaceModelValidator;
 			this.BolSpaceMapper = bolSpaceMapper;
 			this.DalSpaceMapper = dalSpaceMapper;
-			this.BolSpaceSpaceFeatureMapper = bolSpaceSpaceFeatureMapper;
-			this.DalSpaceSpaceFeatureMapper = dalSpaceSpaceFeatureMapper;
 			this.logger = logger;
 		}
 
@@ -116,15 +108,15 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiSpaceSpaceFeatureResponseModel>> SpaceSpaceFeaturesBySpaceId(int spaceId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiSpaceResponseModel>> BySpaceFeatureId(int spaceFeatureId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<SpaceSpaceFeature> records = await this.SpaceRepository.SpaceSpaceFeaturesBySpaceId(spaceId, limit, offset);
+			List<Space> records = await this.SpaceRepository.BySpaceFeatureId(spaceFeatureId, limit, offset);
 
-			return this.BolSpaceSpaceFeatureMapper.MapBOToModel(this.DalSpaceSpaceFeatureMapper.MapEFToBO(records));
+			return this.BolSpaceMapper.MapBOToModel(this.DalSpaceMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8866e1d4d7ef60057dc7292c1cc6d6b6</Hash>
+    <Hash>cc705fb7931e50721bfed0da8104900d</Hash>
 </Codenesium>*/

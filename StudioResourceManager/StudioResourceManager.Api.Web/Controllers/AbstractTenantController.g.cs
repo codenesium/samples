@@ -258,40 +258,6 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{tenantId}/EventStudentsByTenantId")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventStudentResponseModel>), 200)]
-		public async virtual Task<IActionResult> EventStudentsByTenantId(int tenantId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEventStudentResponseModel> response = await this.TenantService.EventStudentsByTenantId(tenantId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("{tenantId}/EventTeachersByTenantId")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> EventTeachersByTenantId(int tenantId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEventTeacherResponseModel> response = await this.TenantService.EventTeachersByTenantId(tenantId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{tenantId}/FamiliesByTenantId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
@@ -355,23 +321,6 @@ namespace StudioResourceManagerNS.Api.Web
 			}
 
 			List<ApiSpaceFeatureResponseModel> response = await this.TenantService.SpaceFeaturesByTenantId(tenantId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("{tenantId}/SpaceSpaceFeaturesByTenantId")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiSpaceSpaceFeatureResponseModel>), 200)]
-		public async virtual Task<IActionResult> SpaceSpaceFeaturesByTenantId(int tenantId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiSpaceSpaceFeatureResponseModel> response = await this.TenantService.SpaceSpaceFeaturesByTenantId(tenantId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -445,23 +394,6 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{tenantId}/TeacherTeacherSkillsByTenantId")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeacherTeacherSkillResponseModel>), 200)]
-		public async virtual Task<IActionResult> TeacherTeacherSkillsByTenantId(int tenantId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiTeacherTeacherSkillResponseModel> response = await this.TenantService.TeacherTeacherSkillsByTenantId(tenantId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{tenantId}/UsersByTenantId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiUserResponseModel>), 200)]
@@ -497,5 +429,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>d4b8ed74b9046c51e0119997c1b1a21b</Hash>
+    <Hash>34c83f9e99dde911ac4f175b01bd6a14</Hash>
 </Codenesium>*/

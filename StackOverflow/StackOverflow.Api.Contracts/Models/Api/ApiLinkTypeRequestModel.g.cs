@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
@@ -27,5 +28,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6f5914fda937a84e8d4ef7a00c29557e</Hash>
+    <Hash>01ef7d878c9fb141837b1840a1f62009</Hash>
 </Codenesium>*/

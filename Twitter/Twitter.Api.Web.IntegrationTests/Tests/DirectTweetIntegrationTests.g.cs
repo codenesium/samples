@@ -68,17 +68,23 @@ namespace TwitterNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiDirectTweetResponseModel response = await client.DirectTweetGetAsync(1);
+			var createModel = new ApiDirectTweetRequestModel();
+			createModel.SetProperties("B", DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("1"));
+			CreateResponse<ApiDirectTweetResponseModel> createResult = await client.DirectTweetCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.DirectTweetDeleteAsync(1);
+			ApiDirectTweetResponseModel getResponse = await client.DirectTweetGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.DirectTweetGetAsync(1);
+			ActionResponse deleteResult = await client.DirectTweetDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiDirectTweetResponseModel verifyResponse = await client.DirectTweetGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TwitterNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>a631dc87fda9cf8c008e896d0d047de2</Hash>
+    <Hash>361916ded1e06df231905133f66e9851</Hash>
 </Codenesium>*/

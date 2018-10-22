@@ -17,12 +17,11 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiTeacherSkillModelMapper();
 			var model = new ApiTeacherSkillRequestModel();
-			model.SetProperties("A", true);
+			model.SetProperties("A");
 			ApiTeacherSkillResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -30,11 +29,10 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiTeacherSkillModelMapper();
 			var model = new ApiTeacherSkillResponseModel();
-			model.SetProperties(1, "A", true);
+			model.SetProperties(1, "A");
 			ApiTeacherSkillRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -42,17 +40,16 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiTeacherSkillModelMapper();
 			var model = new ApiTeacherSkillRequestModel();
-			model.SetProperties("A", true);
+			model.SetProperties("A");
 
 			JsonPatchDocument<ApiTeacherSkillRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiTeacherSkillRequestModel();
 			patch.ApplyTo(response);
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>96747cb8ef9819a1775374131d181ca3</Hash>
+    <Hash>ab87157cd1fd84844cd2a3f5912855be</Hash>
 </Codenesium>*/

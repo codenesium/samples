@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
@@ -27,5 +28,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>cf961a849a0a0b5b3a00f11dc3826a7f</Hash>
+    <Hash>8c74080685ad398299c83d6d237d16d6</Hash>
 </Codenesium>*/

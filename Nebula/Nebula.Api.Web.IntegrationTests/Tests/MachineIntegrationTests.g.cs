@@ -68,17 +68,23 @@ namespace NebulaNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiMachineResponseModel response = await client.MachineGetAsync(1);
+			var createModel = new ApiMachineRequestModel();
+			createModel.SetProperties("B", "B", "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B");
+			CreateResponse<ApiMachineResponseModel> createResult = await client.MachineCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.MachineDeleteAsync(1);
+			ApiMachineResponseModel getResponse = await client.MachineGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.MachineGetAsync(1);
+			ActionResponse deleteResult = await client.MachineDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiMachineResponseModel verifyResponse = await client.MachineGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>de0ad48d87c3d392b79d6ccad41f0022</Hash>
+    <Hash>f6bb127107e1571b33dc2a21f2ad1bc7</Hash>
 </Codenesium>*/

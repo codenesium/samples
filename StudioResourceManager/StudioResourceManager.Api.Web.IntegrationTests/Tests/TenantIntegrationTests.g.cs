@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiTenantResponseModel response = await client.TenantGetAsync(1);
+			var createModel = new ApiTenantRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiTenantResponseModel> createResult = await client.TenantCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.TenantDeleteAsync(1);
+			ApiTenantResponseModel getResponse = await client.TenantGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.TenantGetAsync(1);
+			ActionResponse deleteResult = await client.TenantDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiTenantResponseModel verifyResponse = await client.TenantGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>54c3802210e422cf7080c6408a43c1b3</Hash>
+    <Hash>90e31593e5d8cf21ade3af77707f295e</Hash>
 </Codenesium>*/

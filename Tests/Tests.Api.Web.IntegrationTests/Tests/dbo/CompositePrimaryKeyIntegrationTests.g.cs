@@ -68,17 +68,23 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiCompositePrimaryKeyResponseModel response = await client.CompositePrimaryKeyGetAsync(1);
+			var createModel = new ApiCompositePrimaryKeyRequestModel();
+			createModel.SetProperties(2);
+			CreateResponse<ApiCompositePrimaryKeyResponseModel> createResult = await client.CompositePrimaryKeyCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.CompositePrimaryKeyDeleteAsync(1);
+			ApiCompositePrimaryKeyResponseModel getResponse = await client.CompositePrimaryKeyGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.CompositePrimaryKeyGetAsync(1);
+			ActionResponse deleteResult = await client.CompositePrimaryKeyDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiCompositePrimaryKeyResponseModel verifyResponse = await client.CompositePrimaryKeyGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>ff6b698dd061d5e60d0e616a83a770f5</Hash>
+    <Hash>0a69aefd54dce4dc6a423aedecdc2f37</Hash>
 </Codenesium>*/

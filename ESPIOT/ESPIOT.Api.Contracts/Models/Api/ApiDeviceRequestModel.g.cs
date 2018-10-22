@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.Contracts
@@ -33,5 +34,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>9d00df55891b04e369f14352b3350cbf</Hash>
+    <Hash>d2eeb46ffc7274c9f1e0ff73d94204ce</Hash>
 </Codenesium>*/

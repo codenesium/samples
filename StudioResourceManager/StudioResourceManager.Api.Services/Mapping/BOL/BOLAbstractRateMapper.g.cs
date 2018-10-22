@@ -17,8 +17,7 @@ namespace StudioResourceManagerNS.Api.Services
 				id,
 				model.AmountPerMinute,
 				model.TeacherId,
-				model.TeacherSkillId,
-				model.IsDeleted);
+				model.TeacherSkillId);
 			return boRate;
 		}
 
@@ -27,7 +26,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiRateResponseModel();
 
-			model.SetProperties(boRate.Id, boRate.AmountPerMinute, boRate.TeacherId, boRate.TeacherSkillId, boRate.IsDeleted);
+			model.SetProperties(boRate.Id, boRate.AmountPerMinute, boRate.TeacherId, boRate.TeacherSkillId);
 
 			return model;
 		}
@@ -48,5 +47,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ef17b9096742e940bd37136ba083f861</Hash>
+    <Hash>a22fce65c73862a1ac7dd8f35ecfa029</Hash>
 </Codenesium>*/

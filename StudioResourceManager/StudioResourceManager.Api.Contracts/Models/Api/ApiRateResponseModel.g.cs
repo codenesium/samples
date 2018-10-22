@@ -12,14 +12,12 @@ namespace StudioResourceManagerNS.Api.Contracts
 			int id,
 			decimal amountPerMinute,
 			int teacherId,
-			int teacherSkillId,
-			bool isDeleted)
+			int teacherSkillId)
 		{
 			this.Id = id;
 			this.AmountPerMinute = amountPerMinute;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
-			this.IsDeleted = isDeleted;
 
 			this.TeacherIdEntity = nameof(ApiResponse.Teachers);
 			this.TeacherSkillIdEntity = nameof(ApiResponse.TeacherSkills);
@@ -42,12 +40,9 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[JsonProperty]
 		public string TeacherSkillIdEntity { get; set; }
-
-		[JsonProperty]
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>82ebf6d9d8469c27da9b69d01668dd0a</Hash>
+    <Hash>fbe172a174f0d26852b1f0b3dbee592c</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
@@ -33,7 +34,7 @@ namespace StackOverflowNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public DateTime CreationDate { get; private set; } = default(DateTime);
+		public DateTime CreationDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
@@ -49,5 +50,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>55e1b1fd9ba36136287daed36d9b5d70</Hash>
+    <Hash>90a0c17c39c8c4e1b1fae5f6e92cdbba</Hash>
 </Codenesium>*/

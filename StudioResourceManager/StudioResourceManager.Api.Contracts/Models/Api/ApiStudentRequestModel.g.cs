@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StudioResourceManagerNS.Api.Contracts
@@ -24,8 +25,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string lastName,
 			string phone,
 			bool smsRemindersEnabled,
-			int userId,
-			bool isDeleted)
+			int userId)
 		{
 			this.Birthday = birthday;
 			this.Email = email;
@@ -37,12 +37,11 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled;
 			this.UserId = userId;
-			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
 		[JsonProperty]
-		public DateTime Birthday { get; private set; } = default(DateTime);
+		public DateTime Birthday { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
@@ -54,7 +53,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int FamilyId { get; private set; } = default(int);
+		public int FamilyId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -78,14 +77,10 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int UserId { get; private set; } = default(int);
-
-		[Required]
-		[JsonProperty]
-		public bool IsDeleted { get; private set; } = default(bool);
+		public int UserId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>392a284f4da62d2ffcf4c6021d2ea80b</Hash>
+    <Hash>0fb03d3fd888172fe96b3faf443530b8</Hash>
 </Codenesium>*/

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace PetShippingNS.Api.Contracts
@@ -28,15 +29,15 @@ namespace PetShippingNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int ClientId { get; private set; } = default(int);
+		public int ClientId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public DateTime DateCreated { get; private set; } = default(DateTime);
+		public DateTime DateCreated { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
-		public int EmployeeId { get; private set; } = default(int);
+		public int EmployeeId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -45,5 +46,5 @@ namespace PetShippingNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>a37feef60f7b8ceb711fd202a152c993</Hash>
+    <Hash>3f4cdeb1f7ef4a3d3fede3fc6e5265a2</Hash>
 </Codenesium>*/

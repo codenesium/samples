@@ -24,8 +24,7 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			string lastName,
 			string phone,
 			bool smsRemindersEnabled,
-			int userId,
-			bool isDeleted)
+			int userId)
 		{
 			this.Birthday = birthday;
 			this.Email = email;
@@ -38,7 +37,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled;
 			this.UserId = userId;
-			this.IsDeleted = isDeleted;
 		}
 
 		[Column("birthday")]
@@ -79,9 +77,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[Column("userId")]
 		public int UserId { get; private set; }
 
-		[Column("isDeleted")]
-		public bool IsDeleted { get; private set; }
-
 		[ForeignKey("FamilyId")]
 		public virtual Family FamilyNavigation { get; private set; }
 
@@ -91,5 +86,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b6cc4fc767f7e625ba1c1f763339d030</Hash>
+    <Hash>7bcfa9afd74d0cbedfd20ed3e8e2d552</Hash>
 </Codenesium>*/

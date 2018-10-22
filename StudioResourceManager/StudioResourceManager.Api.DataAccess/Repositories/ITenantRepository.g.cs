@@ -23,10 +23,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<EventStatus>> EventStatusesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<EventStudent>> EventStudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<EventTeacher>> EventTeachersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<Family>> FamiliesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Rate>> RatesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
@@ -34,8 +30,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		Task<List<Space>> SpacesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<SpaceFeature>> SpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
-
-		Task<List<SpaceSpaceFeature>> SpaceSpaceFeaturesByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
 		Task<List<Student>> StudentsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
@@ -45,12 +39,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		Task<List<TeacherSkill>> TeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 
-		Task<List<TeacherTeacherSkill>> TeacherTeacherSkillsByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
-
 		Task<List<User>> UsersByTenantId(int tenantId, int limit = int.MaxValue, int offset = 0);
 	}
 }
 
 /*<Codenesium>
-    <Hash>7fbdc65d60d470f1313d745b3ba6f149</Hash>
+    <Hash>b946c0385db0fe3f7b1a18407a1ddb3f</Hash>
 </Codenesium>*/

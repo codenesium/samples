@@ -19,8 +19,7 @@ namespace StudioResourceManagerNS.Api.Services
 				bo.Id,
 				bo.LastName,
 				bo.Phone,
-				bo.UserId,
-				bo.IsDeleted);
+				bo.UserId);
 			return efTeacher;
 		}
 
@@ -36,8 +35,7 @@ namespace StudioResourceManagerNS.Api.Services
 				ef.FirstName,
 				ef.LastName,
 				ef.Phone,
-				ef.UserId,
-				ef.IsDeleted);
+				ef.UserId);
 			return bo;
 		}
 
@@ -57,5 +55,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d85a9f2da2d9172eac4ca1f856152e91</Hash>
+    <Hash>2a7a33f17923738e315bed4d6b76ae83</Hash>
 </Codenesium>*/

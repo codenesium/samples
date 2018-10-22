@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiTeacherModelMapper();
 			var model = new ApiTeacherRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1, true);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			ApiTeacherResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -27,7 +27,6 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -35,7 +34,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiTeacherModelMapper();
 			var model = new ApiTeacherResponseModel();
-			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1, true);
+			model.SetProperties(1, DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 			ApiTeacherRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Birthday.Should().Be(DateTime.Parse("1/1/1987 12:00:00 AM"));
@@ -44,7 +43,6 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -52,7 +50,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiTeacherModelMapper();
 			var model = new ApiTeacherRequestModel();
-			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1, true);
+			model.SetProperties(DateTime.Parse("1/1/1987 12:00:00 AM"), "A", "A", "A", "A", 1);
 
 			JsonPatchDocument<ApiTeacherRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiTeacherRequestModel();
@@ -63,11 +61,10 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.LastName.Should().Be("A");
 			response.Phone.Should().Be("A");
 			response.UserId.Should().Be(1);
-			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>e26f3655ecc4b49d0a3557bad8b2b665</Hash>
+    <Hash>7eb9b7dbd3311eb28d6474c3defa5839</Hash>
 </Codenesium>*/

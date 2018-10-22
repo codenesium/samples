@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TwitterNS.Api.Contracts
@@ -23,7 +24,7 @@ namespace TwitterNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? DateFollowed { get; private set; } = default(DateTime);
+		public DateTime? DateFollowed { get; private set; } = null;
 
 		[JsonProperty]
 		public string Muted { get; private set; } = default(string);
@@ -31,5 +32,5 @@ namespace TwitterNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>3243721ded2e194d49868bf397f47527</Hash>
+    <Hash>9353a676e43b26e7e15dd260d7b7311f</Hash>
 </Codenesium>*/

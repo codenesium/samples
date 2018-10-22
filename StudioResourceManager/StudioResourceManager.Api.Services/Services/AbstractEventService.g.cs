@@ -22,14 +22,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALEventMapper DalEventMapper { get; private set; }
 
-		protected IBOLEventStudentMapper BolEventStudentMapper { get; private set; }
-
-		protected IDALEventStudentMapper DalEventStudentMapper { get; private set; }
-
-		protected IBOLEventTeacherMapper BolEventTeacherMapper { get; private set; }
-
-		protected IDALEventTeacherMapper DalEventTeacherMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractEventService(
@@ -37,21 +29,13 @@ namespace StudioResourceManagerNS.Api.Services
 			IEventRepository eventRepository,
 			IApiEventRequestModelValidator eventModelValidator,
 			IBOLEventMapper bolEventMapper,
-			IDALEventMapper dalEventMapper,
-			IBOLEventStudentMapper bolEventStudentMapper,
-			IDALEventStudentMapper dalEventStudentMapper,
-			IBOLEventTeacherMapper bolEventTeacherMapper,
-			IDALEventTeacherMapper dalEventTeacherMapper)
+			IDALEventMapper dalEventMapper)
 			: base()
 		{
 			this.EventRepository = eventRepository;
 			this.EventModelValidator = eventModelValidator;
 			this.BolEventMapper = bolEventMapper;
 			this.DalEventMapper = dalEventMapper;
-			this.BolEventStudentMapper = bolEventStudentMapper;
-			this.DalEventStudentMapper = dalEventStudentMapper;
-			this.BolEventTeacherMapper = bolEventTeacherMapper;
-			this.DalEventTeacherMapper = dalEventTeacherMapper;
 			this.logger = logger;
 		}
 
@@ -124,22 +108,15 @@ namespace StudioResourceManagerNS.Api.Services
 			return response;
 		}
 
-		public async virtual Task<List<ApiEventStudentResponseModel>> EventStudentsByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiEventResponseModel>> ByStudentId(int studentId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<EventStudent> records = await this.EventRepository.EventStudentsByEventId(eventId, limit, offset);
+			List<Event> records = await this.EventRepository.ByStudentId(studentId, limit, offset);
 
-			return this.BolEventStudentMapper.MapBOToModel(this.DalEventStudentMapper.MapEFToBO(records));
-		}
-
-		public async virtual Task<List<ApiEventTeacherResponseModel>> EventTeachersByEventId(int eventId, int limit = int.MaxValue, int offset = 0)
-		{
-			List<EventTeacher> records = await this.EventRepository.EventTeachersByEventId(eventId, limit, offset);
-
-			return this.BolEventTeacherMapper.MapBOToModel(this.DalEventTeacherMapper.MapEFToBO(records));
+			return this.BolEventMapper.MapBOToModel(this.DalEventMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>b4d28a6dbb20b346aa12a57ed5994bc3</Hash>
+    <Hash>6087abc484d301ca0fd4786d87116d6d</Hash>
 </Codenesium>*/

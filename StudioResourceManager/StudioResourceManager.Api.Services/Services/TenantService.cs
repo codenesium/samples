@@ -25,10 +25,6 @@ namespace StudioResourceManagerNS.Api.Services
 			IDALEventMapper dalEventMapper,
 			IBOLEventStatusMapper bolEventStatusMapper,
 			IDALEventStatusMapper dalEventStatusMapper,
-			IBOLEventStudentMapper bolEventStudentMapper,
-			IDALEventStudentMapper dalEventStudentMapper,
-			IBOLEventTeacherMapper bolEventTeacherMapper,
-			IDALEventTeacherMapper dalEventTeacherMapper,
 			IBOLFamilyMapper bolFamilyMapper,
 			IDALFamilyMapper dalFamilyMapper,
 			IBOLRateMapper bolRateMapper,
@@ -37,8 +33,6 @@ namespace StudioResourceManagerNS.Api.Services
 			IDALSpaceMapper dalSpaceMapper,
 			IBOLSpaceFeatureMapper bolSpaceFeatureMapper,
 			IDALSpaceFeatureMapper dalSpaceFeatureMapper,
-			IBOLSpaceSpaceFeatureMapper bolSpaceSpaceFeatureMapper,
-			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper,
 			IBOLStudentMapper bolStudentMapper,
 			IDALStudentMapper dalStudentMapper,
 			IBOLStudioMapper bolStudioMapper,
@@ -47,8 +41,6 @@ namespace StudioResourceManagerNS.Api.Services
 			IDALTeacherMapper dalTeacherMapper,
 			IBOLTeacherSkillMapper bolTeacherSkillMapper,
 			IDALTeacherSkillMapper dalTeacherSkillMapper,
-			IBOLTeacherTeacherSkillMapper bolTeacherTeacherSkillMapper,
-			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper,
 			IBOLUserMapper bolUserMapper,
 			IDALUserMapper dalUserMapper)
 			: base(logger,
@@ -62,10 +54,6 @@ namespace StudioResourceManagerNS.Api.Services
 			       dalEventMapper,
 			       bolEventStatusMapper,
 			       dalEventStatusMapper,
-			       bolEventStudentMapper,
-			       dalEventStudentMapper,
-			       bolEventTeacherMapper,
-			       dalEventTeacherMapper,
 			       bolFamilyMapper,
 			       dalFamilyMapper,
 			       bolRateMapper,
@@ -74,8 +62,6 @@ namespace StudioResourceManagerNS.Api.Services
 			       dalSpaceMapper,
 			       bolSpaceFeatureMapper,
 			       dalSpaceFeatureMapper,
-			       bolSpaceSpaceFeatureMapper,
-			       dalSpaceSpaceFeatureMapper,
 			       bolStudentMapper,
 			       dalStudentMapper,
 			       bolStudioMapper,
@@ -84,8 +70,6 @@ namespace StudioResourceManagerNS.Api.Services
 			       dalTeacherMapper,
 			       bolTeacherSkillMapper,
 			       dalTeacherSkillMapper,
-			       bolTeacherTeacherSkillMapper,
-			       dalTeacherTeacherSkillMapper,
 			       bolUserMapper,
 			       dalUserMapper)
 		{
@@ -94,5 +78,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>116322ab980d2cde1e905165a9b6b811</Hash>
+    <Hash>330931de3db673be4a0c593050c2c08b</Hash>
 </Codenesium>*/

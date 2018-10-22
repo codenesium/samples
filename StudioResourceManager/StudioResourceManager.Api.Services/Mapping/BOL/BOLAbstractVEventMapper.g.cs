@@ -20,8 +20,7 @@ namespace StudioResourceManagerNS.Api.Services
 				model.BillAmount,
 				model.EventStatusId,
 				model.ScheduledEndDate,
-				model.ScheduledStartDate,
-				model.IsDeleted);
+				model.ScheduledStartDate);
 			return boVEvent;
 		}
 
@@ -30,7 +29,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiVEventResponseModel();
 
-			model.SetProperties(boVEvent.Id, boVEvent.ActualEndDate, boVEvent.ActualStartDate, boVEvent.BillAmount, boVEvent.EventStatusId, boVEvent.ScheduledEndDate, boVEvent.ScheduledStartDate, boVEvent.IsDeleted);
+			model.SetProperties(boVEvent.Id, boVEvent.ActualEndDate, boVEvent.ActualStartDate, boVEvent.BillAmount, boVEvent.EventStatusId, boVEvent.ScheduledEndDate, boVEvent.ScheduledStartDate);
 
 			return model;
 		}
@@ -51,5 +50,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ac092e7e7bf2dbd2481ff5a2b50f16a9</Hash>
+    <Hash>712d614f38117e38156b2d38e97c317b</Hash>
 </Codenesium>*/

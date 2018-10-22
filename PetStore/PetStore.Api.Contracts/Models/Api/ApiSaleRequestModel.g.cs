@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace PetStoreNS.Api.Contracts
@@ -44,11 +45,11 @@ namespace PetStoreNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int PaymentTypeId { get; private set; } = default(int);
+		public int PaymentTypeId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public int PetId { get; private set; } = default(int);
+		public int PetId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -57,5 +58,5 @@ namespace PetStoreNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>1ef1bfbc5d6ef529a7228aca94c1ae42</Hash>
+    <Hash>07347e9a160391bf8e50105f23cf1d41</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiPipelineStepStepRequirementResponseModel response = await client.PipelineStepStepRequirementGetAsync(1);
+			var createModel = new ApiPipelineStepStepRequirementRequestModel();
+			createModel.SetProperties("B", 1, true);
+			CreateResponse<ApiPipelineStepStepRequirementResponseModel> createResult = await client.PipelineStepStepRequirementCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.PipelineStepStepRequirementDeleteAsync(1);
+			ApiPipelineStepStepRequirementResponseModel getResponse = await client.PipelineStepStepRequirementGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.PipelineStepStepRequirementGetAsync(1);
+			ActionResponse deleteResult = await client.PipelineStepStepRequirementDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiPipelineStepStepRequirementResponseModel verifyResponse = await client.PipelineStepStepRequirementGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>9bc087d8a79f07d36a08ac5530b6fdf4</Hash>
+    <Hash>ec13d1463e95e8dbd903cc48cda9ec5b</Hash>
 </Codenesium>*/

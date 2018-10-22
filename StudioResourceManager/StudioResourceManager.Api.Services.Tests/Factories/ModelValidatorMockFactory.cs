@@ -15,10 +15,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public Mock<IApiEventStatusRequestModelValidator> EventStatusModelValidatorMock { get; set; } = new Mock<IApiEventStatusRequestModelValidator>();
 
-		public Mock<IApiEventStudentRequestModelValidator> EventStudentModelValidatorMock { get; set; } = new Mock<IApiEventStudentRequestModelValidator>();
-
-		public Mock<IApiEventTeacherRequestModelValidator> EventTeacherModelValidatorMock { get; set; } = new Mock<IApiEventTeacherRequestModelValidator>();
-
 		public Mock<IApiFamilyRequestModelValidator> FamilyModelValidatorMock { get; set; } = new Mock<IApiFamilyRequestModelValidator>();
 
 		public Mock<IApiRateRequestModelValidator> RateModelValidatorMock { get; set; } = new Mock<IApiRateRequestModelValidator>();
@@ -27,8 +23,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 
 		public Mock<IApiSpaceFeatureRequestModelValidator> SpaceFeatureModelValidatorMock { get; set; } = new Mock<IApiSpaceFeatureRequestModelValidator>();
 
-		public Mock<IApiSpaceSpaceFeatureRequestModelValidator> SpaceSpaceFeatureModelValidatorMock { get; set; } = new Mock<IApiSpaceSpaceFeatureRequestModelValidator>();
-
 		public Mock<IApiStudentRequestModelValidator> StudentModelValidatorMock { get; set; } = new Mock<IApiStudentRequestModelValidator>();
 
 		public Mock<IApiStudioRequestModelValidator> StudioModelValidatorMock { get; set; } = new Mock<IApiStudioRequestModelValidator>();
@@ -36,8 +30,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		public Mock<IApiTeacherRequestModelValidator> TeacherModelValidatorMock { get; set; } = new Mock<IApiTeacherRequestModelValidator>();
 
 		public Mock<IApiTeacherSkillRequestModelValidator> TeacherSkillModelValidatorMock { get; set; } = new Mock<IApiTeacherSkillRequestModelValidator>();
-
-		public Mock<IApiTeacherTeacherSkillRequestModelValidator> TeacherTeacherSkillModelValidatorMock { get; set; } = new Mock<IApiTeacherTeacherSkillRequestModelValidator>();
 
 		public Mock<IApiTenantRequestModelValidator> TenantModelValidatorMock { get; set; } = new Mock<IApiTenantRequestModelValidator>();
 
@@ -59,14 +51,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			this.EventStatusModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStatusRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.EventStatusModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.EventStudentModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEventStudentRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.EventStudentModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventStudentRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.EventStudentModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.EventTeacherModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiEventTeacherRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.EventTeacherModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiEventTeacherRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.EventTeacherModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.FamilyModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.FamilyModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiFamilyRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.FamilyModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -82,10 +66,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			this.SpaceFeatureModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSpaceFeatureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SpaceFeatureModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceFeatureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.SpaceFeatureModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
-			this.SpaceSpaceFeatureModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiSpaceSpaceFeatureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.SpaceSpaceFeatureModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiSpaceSpaceFeatureRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.SpaceSpaceFeatureModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
 			this.StudentModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.StudentModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiStudentRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -103,10 +83,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			this.TeacherSkillModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherSkillRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TeacherSkillModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 
-			this.TeacherTeacherSkillModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTeacherTeacherSkillRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.TeacherTeacherSkillModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTeacherTeacherSkillRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-			this.TeacherTeacherSkillModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
-
 			this.TenantModelValidatorMock.Setup(x => x.ValidateCreateAsync(It.IsAny<ApiTenantRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TenantModelValidatorMock.Setup(x => x.ValidateUpdateAsync(It.IsAny<int>(), It.IsAny<ApiTenantRequestModel>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
 			this.TenantModelValidatorMock.Setup(x => x.ValidateDeleteAsync(It.IsAny<int>())).Returns(Task.FromResult(new FluentValidation.Results.ValidationResult()));
@@ -123,5 +99,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>ee5a82fe489820e2454ebf8d5e1a79f9</Hash>
+    <Hash>6188aa87cb92f1d685bbb171158150ab</Hash>
 </Codenesium>*/

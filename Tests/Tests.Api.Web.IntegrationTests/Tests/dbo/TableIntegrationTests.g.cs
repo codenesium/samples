@@ -68,17 +68,23 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiTableResponseModel response = await client.TableGetAsync(1);
+			var createModel = new ApiTableRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiTableResponseModel> createResult = await client.TableCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.TableDeleteAsync(1);
+			ApiTableResponseModel getResponse = await client.TableGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.TableGetAsync(1);
+			ActionResponse deleteResult = await client.TableDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiTableResponseModel verifyResponse = await client.TableGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>fb410903fa809fc15e496d001d84d077</Hash>
+    <Hash>ec3315ccdc4b2800684db87094c485cf</Hash>
 </Codenesium>*/

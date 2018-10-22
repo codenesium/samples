@@ -15,8 +15,7 @@ namespace StudioResourceManagerNS.Api.Services
 			BOEventStatus boEventStatus = new BOEventStatus();
 			boEventStatus.SetProperties(
 				id,
-				model.Name,
-				model.IsDeleted);
+				model.Name);
 			return boEventStatus;
 		}
 
@@ -25,7 +24,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiEventStatusResponseModel();
 
-			model.SetProperties(boEventStatus.Id, boEventStatus.Name, boEventStatus.IsDeleted);
+			model.SetProperties(boEventStatus.Id, boEventStatus.Name);
 
 			return model;
 		}
@@ -46,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>6fdb5b040443140669105f75b64238aa</Hash>
+    <Hash>f370b6befcbbfe22a552651e2031ad77</Hash>
 </Codenesium>*/

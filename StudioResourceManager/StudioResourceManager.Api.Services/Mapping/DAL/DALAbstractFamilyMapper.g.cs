@@ -18,8 +18,7 @@ namespace StudioResourceManagerNS.Api.Services
 				bo.PrimaryContactEmail,
 				bo.PrimaryContactFirstName,
 				bo.PrimaryContactLastName,
-				bo.PrimaryContactPhone,
-				bo.IsDeleted);
+				bo.PrimaryContactPhone);
 			return efFamily;
 		}
 
@@ -34,8 +33,7 @@ namespace StudioResourceManagerNS.Api.Services
 				ef.PrimaryContactEmail,
 				ef.PrimaryContactFirstName,
 				ef.PrimaryContactLastName,
-				ef.PrimaryContactPhone,
-				ef.IsDeleted);
+				ef.PrimaryContactPhone);
 			return bo;
 		}
 
@@ -55,5 +53,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ebab11fa4acf18ab178b4f2e88dfd9b4</Hash>
+    <Hash>288e95deb6785f066f0539beaf88b10e</Hash>
 </Codenesium>*/

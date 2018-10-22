@@ -68,17 +68,23 @@ namespace NebulaNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiLinkResponseModel response = await client.LinkGetAsync(1);
+			var createModel = new ApiLinkRequestModel();
+			createModel.SetProperties(1, 1, DateTime.Parse("1/1/1988 12:00:00 AM"), DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 1, "B", 2, "B", "B", 2);
+			CreateResponse<ApiLinkResponseModel> createResult = await client.LinkCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.LinkDeleteAsync(1);
+			ApiLinkResponseModel getResponse = await client.LinkGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.LinkGetAsync(1);
+			ActionResponse deleteResult = await client.LinkDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiLinkResponseModel verifyResponse = await client.LinkGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d2f061cecbecd792524575d9d9a84c01</Hash>
+    <Hash>97a41ea632bc222e583fc64a7e90b80e</Hash>
 </Codenesium>*/

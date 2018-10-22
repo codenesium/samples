@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiRateResponseModel response = await client.RateGetAsync(1);
+			var createModel = new ApiRateRequestModel();
+			createModel.SetProperties(2m, 1, 1);
+			CreateResponse<ApiRateResponseModel> createResult = await client.RateCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.RateDeleteAsync(1);
+			ApiRateResponseModel getResponse = await client.RateGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.RateGetAsync(1);
+			ActionResponse deleteResult = await client.RateDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiRateResponseModel verifyResponse = await client.RateGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiRateResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiRateRequestModel();
-			model.SetProperties(2m, 1, 1, true);
+			model.SetProperties(2m, 1, 1);
 			CreateResponse<ApiRateResponseModel> result = await client.RateCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>1b3c7868a608f1a0f0a5c501199852d4</Hash>
+    <Hash>d3dcc6a7fea038e1ab9ac1e4103bb6d1</Hash>
 </Codenesium>*/

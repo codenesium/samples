@@ -17,13 +17,12 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceModelMapper();
 			var model = new ApiSpaceRequestModel();
-			model.SetProperties("A", "A", true);
+			model.SetProperties("A", "A");
 			ApiSpaceResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Description.Should().Be("A");
 			response.Id.Should().Be(1);
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -31,12 +30,11 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceModelMapper();
 			var model = new ApiSpaceResponseModel();
-			model.SetProperties(1, "A", "A", true);
+			model.SetProperties(1, "A", "A");
 			ApiSpaceRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Description.Should().Be("A");
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -44,18 +42,17 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiSpaceModelMapper();
 			var model = new ApiSpaceRequestModel();
-			model.SetProperties("A", "A", true);
+			model.SetProperties("A", "A");
 
 			JsonPatchDocument<ApiSpaceRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiSpaceRequestModel();
 			patch.ApplyTo(response);
 			response.Description.Should().Be("A");
 			response.Name.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>739f76d4f597678eb57d3a18c829c82d</Hash>
+    <Hash>a25410e16687c597b44890d03bcdb156</Hash>
 </Codenesium>*/

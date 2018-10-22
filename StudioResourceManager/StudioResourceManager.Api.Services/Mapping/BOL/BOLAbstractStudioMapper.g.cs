@@ -21,8 +21,7 @@ namespace StudioResourceManagerNS.Api.Services
 				model.Name,
 				model.Province,
 				model.Website,
-				model.Zip,
-				model.IsDeleted);
+				model.Zip);
 			return boStudio;
 		}
 
@@ -31,7 +30,7 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			var model = new ApiStudioResponseModel();
 
-			model.SetProperties(boStudio.Id, boStudio.Address1, boStudio.Address2, boStudio.City, boStudio.Name, boStudio.Province, boStudio.Website, boStudio.Zip, boStudio.IsDeleted);
+			model.SetProperties(boStudio.Id, boStudio.Address1, boStudio.Address2, boStudio.City, boStudio.Name, boStudio.Province, boStudio.Website, boStudio.Zip);
 
 			return model;
 		}
@@ -52,5 +51,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9fc191edd94528745f1e2502e900a5c4</Hash>
+    <Hash>a8a97c6bdbdc74a716b7296297a1c78c</Hash>
 </Codenesium>*/

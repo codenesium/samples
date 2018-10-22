@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiEventStatusResponseModel response = await client.EventStatusGetAsync(1);
+			var createModel = new ApiEventStatusRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiEventStatusResponseModel> createResult = await client.EventStatusCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.EventStatusDeleteAsync(1);
+			ApiEventStatusResponseModel getResponse = await client.EventStatusGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.EventStatusGetAsync(1);
+			ActionResponse deleteResult = await client.EventStatusDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiEventStatusResponseModel verifyResponse = await client.EventStatusGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiEventStatusResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiEventStatusRequestModel();
-			model.SetProperties("B", true);
+			model.SetProperties("B");
 			CreateResponse<ApiEventStatusResponseModel> result = await client.EventStatusCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>82c8f47f2b7fcf6baebf192917e53483</Hash>
+    <Hash>a9924fa3a1fb4491ab167878e0de615e</Hash>
 </Codenesium>*/

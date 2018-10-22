@@ -68,17 +68,23 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiLinkTypeResponseModel response = await client.LinkTypeGetAsync(1);
+			var createModel = new ApiLinkTypeRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiLinkTypeResponseModel> createResult = await client.LinkTypeCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.LinkTypeDeleteAsync(1);
+			ApiLinkTypeResponseModel getResponse = await client.LinkTypeGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.LinkTypeGetAsync(1);
+			ActionResponse deleteResult = await client.LinkTypeDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiLinkTypeResponseModel verifyResponse = await client.LinkTypeGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>9e32203661a9fb3bb3d787ffcdd23772</Hash>
+    <Hash>7e17c645d04a18716f02c5c58b1a00fe</Hash>
 </Codenesium>*/

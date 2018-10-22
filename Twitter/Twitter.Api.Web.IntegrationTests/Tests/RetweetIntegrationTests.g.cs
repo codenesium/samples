@@ -68,17 +68,23 @@ namespace TwitterNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiRetweetResponseModel response = await client.RetweetGetAsync(1);
+			var createModel = new ApiRetweetRequestModel();
+			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), 1, TimeSpan.Parse("1"), 1);
+			CreateResponse<ApiRetweetResponseModel> createResult = await client.RetweetCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.RetweetDeleteAsync(1);
+			ApiRetweetResponseModel getResponse = await client.RetweetGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.RetweetGetAsync(1);
+			ActionResponse deleteResult = await client.RetweetDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiRetweetResponseModel verifyResponse = await client.RetweetGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TwitterNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d8e75111e51fdb17b1e2c561e379eefd</Hash>
+    <Hash>820795cba5c30dee38e256da06b6153c</Hash>
 </Codenesium>*/

@@ -16,18 +16,14 @@ namespace StudioResourceManagerNS.Api.Contracts
 			from.Admins.ForEach(x => this.AddAdmin(x));
 			from.Events.ForEach(x => this.AddEvent(x));
 			from.EventStatuses.ForEach(x => this.AddEventStatus(x));
-			from.EventStudents.ForEach(x => this.AddEventStudent(x));
-			from.EventTeachers.ForEach(x => this.AddEventTeacher(x));
 			from.Families.ForEach(x => this.AddFamily(x));
 			from.Rates.ForEach(x => this.AddRate(x));
 			from.Spaces.ForEach(x => this.AddSpace(x));
 			from.SpaceFeatures.ForEach(x => this.AddSpaceFeature(x));
-			from.SpaceSpaceFeatures.ForEach(x => this.AddSpaceSpaceFeature(x));
 			from.Students.ForEach(x => this.AddStudent(x));
 			from.Studios.ForEach(x => this.AddStudio(x));
 			from.Teachers.ForEach(x => this.AddTeacher(x));
 			from.TeacherSkills.ForEach(x => this.AddTeacherSkill(x));
-			from.TeacherTeacherSkills.ForEach(x => this.AddTeacherTeacherSkill(x));
 			from.Tenants.ForEach(x => this.AddTenant(x));
 			from.Users.ForEach(x => this.AddUser(x));
 			from.VEvents.ForEach(x => this.AddVEvent(x));
@@ -39,10 +35,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		public List<ApiEventStatusResponseModel> EventStatuses { get; private set; } = new List<ApiEventStatusResponseModel>();
 
-		public List<ApiEventStudentResponseModel> EventStudents { get; private set; } = new List<ApiEventStudentResponseModel>();
-
-		public List<ApiEventTeacherResponseModel> EventTeachers { get; private set; } = new List<ApiEventTeacherResponseModel>();
-
 		public List<ApiFamilyResponseModel> Families { get; private set; } = new List<ApiFamilyResponseModel>();
 
 		public List<ApiRateResponseModel> Rates { get; private set; } = new List<ApiRateResponseModel>();
@@ -51,8 +43,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		public List<ApiSpaceFeatureResponseModel> SpaceFeatures { get; private set; } = new List<ApiSpaceFeatureResponseModel>();
 
-		public List<ApiSpaceSpaceFeatureResponseModel> SpaceSpaceFeatures { get; private set; } = new List<ApiSpaceSpaceFeatureResponseModel>();
-
 		public List<ApiStudentResponseModel> Students { get; private set; } = new List<ApiStudentResponseModel>();
 
 		public List<ApiStudioResponseModel> Studios { get; private set; } = new List<ApiStudioResponseModel>();
@@ -60,8 +50,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 		public List<ApiTeacherResponseModel> Teachers { get; private set; } = new List<ApiTeacherResponseModel>();
 
 		public List<ApiTeacherSkillResponseModel> TeacherSkills { get; private set; } = new List<ApiTeacherSkillResponseModel>();
-
-		public List<ApiTeacherTeacherSkillResponseModel> TeacherTeacherSkills { get; private set; } = new List<ApiTeacherTeacherSkillResponseModel>();
 
 		public List<ApiTenantResponseModel> Tenants { get; private set; } = new List<ApiTenantResponseModel>();
 
@@ -114,38 +102,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 			if (!this.EventStatuses.Any(x => x.Id == item.Id))
 			{
 				this.EventStatuses.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeEventStudentsValue { get; private set; } = true;
-
-		public bool ShouldSerializeEventStudents()
-		{
-			return this.ShouldSerializeEventStudentsValue;
-		}
-
-		public void AddEventStudent(ApiEventStudentResponseModel item)
-		{
-			if (!this.EventStudents.Any(x => x.EventId == item.EventId))
-			{
-				this.EventStudents.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeEventTeachersValue { get; private set; } = true;
-
-		public bool ShouldSerializeEventTeachers()
-		{
-			return this.ShouldSerializeEventTeachersValue;
-		}
-
-		public void AddEventTeacher(ApiEventTeacherResponseModel item)
-		{
-			if (!this.EventTeachers.Any(x => x.EventId == item.EventId))
-			{
-				this.EventTeachers.Add(item);
 			}
 		}
 
@@ -214,22 +170,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 		}
 
 		[JsonIgnore]
-		public bool ShouldSerializeSpaceSpaceFeaturesValue { get; private set; } = true;
-
-		public bool ShouldSerializeSpaceSpaceFeatures()
-		{
-			return this.ShouldSerializeSpaceSpaceFeaturesValue;
-		}
-
-		public void AddSpaceSpaceFeature(ApiSpaceSpaceFeatureResponseModel item)
-		{
-			if (!this.SpaceSpaceFeatures.Any(x => x.SpaceId == item.SpaceId))
-			{
-				this.SpaceSpaceFeatures.Add(item);
-			}
-		}
-
-		[JsonIgnore]
 		public bool ShouldSerializeStudentsValue { get; private set; } = true;
 
 		public bool ShouldSerializeStudents()
@@ -290,22 +230,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 			if (!this.TeacherSkills.Any(x => x.Id == item.Id))
 			{
 				this.TeacherSkills.Add(item);
-			}
-		}
-
-		[JsonIgnore]
-		public bool ShouldSerializeTeacherTeacherSkillsValue { get; private set; } = true;
-
-		public bool ShouldSerializeTeacherTeacherSkills()
-		{
-			return this.ShouldSerializeTeacherTeacherSkillsValue;
-		}
-
-		public void AddTeacherTeacherSkill(ApiTeacherTeacherSkillResponseModel item)
-		{
-			if (!this.TeacherTeacherSkills.Any(x => x.TeacherId == item.TeacherId))
-			{
-				this.TeacherTeacherSkills.Add(item);
 			}
 		}
 
@@ -374,16 +298,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 				this.ShouldSerializeEventStatusesValue = false;
 			}
 
-			if (this.EventStudents.Count == 0)
-			{
-				this.ShouldSerializeEventStudentsValue = false;
-			}
-
-			if (this.EventTeachers.Count == 0)
-			{
-				this.ShouldSerializeEventTeachersValue = false;
-			}
-
 			if (this.Families.Count == 0)
 			{
 				this.ShouldSerializeFamiliesValue = false;
@@ -402,11 +316,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 			if (this.SpaceFeatures.Count == 0)
 			{
 				this.ShouldSerializeSpaceFeaturesValue = false;
-			}
-
-			if (this.SpaceSpaceFeatures.Count == 0)
-			{
-				this.ShouldSerializeSpaceSpaceFeaturesValue = false;
 			}
 
 			if (this.Students.Count == 0)
@@ -429,11 +338,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 				this.ShouldSerializeTeacherSkillsValue = false;
 			}
 
-			if (this.TeacherTeacherSkills.Count == 0)
-			{
-				this.ShouldSerializeTeacherTeacherSkillsValue = false;
-			}
-
 			if (this.Tenants.Count == 0)
 			{
 				this.ShouldSerializeTenantsValue = false;
@@ -453,5 +357,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2e4daa1f03407deae1c10077087010c6</Hash>
+    <Hash>9c7feec9bec0ebf6174baa713eb3c2c2</Hash>
 </Codenesium>*/

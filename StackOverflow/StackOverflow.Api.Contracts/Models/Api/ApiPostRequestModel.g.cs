@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StackOverflowNS.Api.Contracts
@@ -67,27 +68,27 @@ namespace StackOverflowNS.Api.Contracts
 		public string Body { get; private set; } = default(string);
 
 		[JsonProperty]
-		public DateTime? ClosedDate { get; private set; } = default(DateTime);
+		public DateTime? ClosedDate { get; private set; } = null;
 
 		[JsonProperty]
 		public int? CommentCount { get; private set; } = default(int);
 
 		[JsonProperty]
-		public DateTime? CommunityOwnedDate { get; private set; } = default(DateTime);
+		public DateTime? CommunityOwnedDate { get; private set; } = null;
 
 		[Required]
 		[JsonProperty]
-		public DateTime CreationDate { get; private set; } = default(DateTime);
+		public DateTime CreationDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[JsonProperty]
 		public int? FavoriteCount { get; private set; } = default(int);
 
 		[Required]
 		[JsonProperty]
-		public DateTime LastActivityDate { get; private set; } = default(DateTime);
+		public DateTime LastActivityDate { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[JsonProperty]
-		public DateTime? LastEditDate { get; private set; } = default(DateTime);
+		public DateTime? LastEditDate { get; private set; } = null;
 
 		[JsonProperty]
 		public string LastEditorDisplayName { get; private set; } = default(string);
@@ -122,5 +123,5 @@ namespace StackOverflowNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>55f2229fecc4ab2d8c249b3022ba7ab9</Hash>
+    <Hash>631c89611090814c2cb71a214dc3ff20</Hash>
 </Codenesium>*/

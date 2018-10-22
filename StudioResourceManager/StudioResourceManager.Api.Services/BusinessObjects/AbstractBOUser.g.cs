@@ -12,13 +12,11 @@ namespace StudioResourceManagerNS.Api.Services
 
 		public virtual void SetProperties(int id,
 		                                  string password,
-		                                  string username,
-		                                  bool isDeleted)
+		                                  string username)
 		{
 			this.Id = id;
 			this.Password = password;
 			this.Username = username;
-			this.IsDeleted = isDeleted;
 		}
 
 		public int Id { get; private set; }
@@ -26,11 +24,9 @@ namespace StudioResourceManagerNS.Api.Services
 		public string Password { get; private set; }
 
 		public string Username { get; private set; }
-
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>217e8d77bd17d3a2a89bf7471a0f2200</Hash>
+    <Hash>732c76bce57dc3bf337f979f95cfe4ab</Hash>
 </Codenesium>*/

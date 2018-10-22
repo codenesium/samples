@@ -68,17 +68,23 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiPostHistoryTypeResponseModel response = await client.PostHistoryTypeGetAsync(1);
+			var createModel = new ApiPostHistoryTypeRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiPostHistoryTypeResponseModel> createResult = await client.PostHistoryTypeCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.PostHistoryTypeDeleteAsync(1);
+			ApiPostHistoryTypeResponseModel getResponse = await client.PostHistoryTypeGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.PostHistoryTypeGetAsync(1);
+			ActionResponse deleteResult = await client.PostHistoryTypeDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiPostHistoryTypeResponseModel verifyResponse = await client.PostHistoryTypeGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace StackOverflowNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>804b7307160c79aa1856c8078a8342b4</Hash>
+    <Hash>079d786de836486b32287a293a6a01ae</Hash>
 </Codenesium>*/

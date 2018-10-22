@@ -18,7 +18,6 @@ namespace StudioResourceManagerNS.Api.Services
 			this.AmountPerMinuteRules();
 			this.TeacherIdRules();
 			this.TeacherSkillIdRules();
-			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -27,7 +26,6 @@ namespace StudioResourceManagerNS.Api.Services
 			this.AmountPerMinuteRules();
 			this.TeacherIdRules();
 			this.TeacherSkillIdRules();
-			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -39,5 +37,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>ae7586551a1181c223f3f8c8ee8a494a</Hash>
+    <Hash>3e03f3d97526da22a1d60ff63609c1b7</Hash>
 </Codenesium>*/

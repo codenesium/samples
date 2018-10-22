@@ -68,17 +68,23 @@ namespace NebulaNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiTeamResponseModel response = await client.TeamGetAsync(1);
+			var createModel = new ApiTeamRequestModel();
+			createModel.SetProperties("B", 1);
+			CreateResponse<ApiTeamResponseModel> createResult = await client.TeamCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.TeamDeleteAsync(1);
+			ApiTeamResponseModel getResponse = await client.TeamGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.TeamGetAsync(1);
+			ActionResponse deleteResult = await client.TeamDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiTeamResponseModel verifyResponse = await client.TeamGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>6d34023baba26292c2145e7ed18fbbfb</Hash>
+    <Hash>dcaa393893e73941b096726f97927ee8</Hash>
 </Codenesium>*/

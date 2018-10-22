@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace FileServiceNS.Api.Contracts
@@ -41,18 +42,18 @@ namespace FileServiceNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public int? BucketId { get; private set; } = default(int);
+		public int? BucketId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public DateTime DateCreated { get; private set; } = default(DateTime);
+		public DateTime DateCreated { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[JsonProperty]
 		public string Description { get; private set; } = default(string);
 
 		[Required]
 		[JsonProperty]
-		public DateTime Expiration { get; private set; } = default(DateTime);
+		public DateTime Expiration { get; private set; } = SqlDateTime.MinValue.Value;
 
 		[Required]
 		[JsonProperty]
@@ -68,7 +69,7 @@ namespace FileServiceNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int FileTypeId { get; private set; } = default(int);
+		public int FileTypeId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -85,5 +86,5 @@ namespace FileServiceNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>2d6f6a5353dc69ce4f2325f4d724b956</Hash>
+    <Hash>40c631b0a6c9c40e8a274d4eb399368b</Hash>
 </Codenesium>*/

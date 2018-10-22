@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALStudioMapper();
 			var bo = new BOStudio();
-			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A", true);
+			bo.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
 
 			Studio response = mapper.MapBOToEF(bo);
 
@@ -29,7 +29,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -37,7 +36,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALStudioMapper();
 			Studio entity = new Studio();
-			entity.SetProperties("A", "A", "A", 1, "A", "A", "A", "A", true);
+			entity.SetProperties("A", "A", "A", 1, "A", "A", "A", "A");
 
 			BOStudio response = mapper.MapEFToBO(entity);
 
@@ -49,7 +48,6 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -57,7 +55,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 		{
 			var mapper = new DALStudioMapper();
 			Studio entity = new Studio();
-			entity.SetProperties("A", "A", "A", 1, "A", "A", "A", "A", true);
+			entity.SetProperties("A", "A", "A", 1, "A", "A", "A", "A");
 
 			List<BOStudio> response = mapper.MapEFToBO(new List<Studio>() { entity });
 
@@ -67,5 +65,5 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 }
 
 /*<Codenesium>
-    <Hash>7a7a5d9ea3d304579d4c638bbd1afea7</Hash>
+    <Hash>1db02c2945b6b9d38b436cd76c3d7469</Hash>
 </Codenesium>*/

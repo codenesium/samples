@@ -7,7 +7,6 @@ lastName:string;
 phone:string;
 userId:number;
 userIdEntity:number;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -18,7 +17,6 @@ this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.userId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -33,7 +31,6 @@ lastName:string;
 phone:string;
 userId:number;
 userIdEntity:number;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -44,7 +41,6 @@ this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.userId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -60,7 +56,6 @@ scheduledEndDate:string;
 scheduledStartDate:string;
 studentNote:string;
 teacherNote:string;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -73,7 +68,6 @@ this.scheduledEndDate = '';
 this.scheduledStartDate = '';
 this.studentNote = '';
 this.teacherNote = '';
-this.isDeleted = false;
 
 		
 				}
@@ -90,7 +84,6 @@ scheduledEndDate:string;
 scheduledStartDate:string;
 studentNote:string;
 teacherNote:string;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -103,7 +96,6 @@ this.scheduledEndDate = '';
 this.scheduledStartDate = '';
 this.studentNote = '';
 this.teacherNote = '';
-this.isDeleted = false;
 
 		
 				}
@@ -111,13 +103,11 @@ this.isDeleted = false;
 			export class ApiEventStatusRequestModel {
 				id:number;
 name:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.id = 0;
 this.name = '';
-this.isDeleted = false;
 
 		
 				}
@@ -126,79 +116,11 @@ this.isDeleted = false;
 			export class ApiEventStatusResponseModel {
 				id:number;
 name:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.id = 0;
 this.name = '';
-this.isDeleted = false;
-
-		
-				}
-			}
-			export class ApiEventStudentRequestModel {
-				eventId:number;
-eventIdEntity:number;
-studentId:number;
-studentIdEntity:number;
-isDeleted:boolean;
-
-	
-				constructor() {
-					this.eventId = 0;
-this.studentId = 0;
-this.isDeleted = false;
-
-		
-				}
-			}
-
-			export class ApiEventStudentResponseModel {
-				eventId:number;
-eventIdEntity:number;
-studentId:number;
-studentIdEntity:number;
-isDeleted:boolean;
-
-	
-				constructor() {
-					this.eventId = 0;
-this.studentId = 0;
-this.isDeleted = false;
-
-		
-				}
-			}
-			export class ApiEventTeacherRequestModel {
-				eventId:number;
-eventIdEntity:number;
-teacherId:number;
-teacherIdEntity:number;
-isDeleted:boolean;
-
-	
-				constructor() {
-					this.eventId = 0;
-this.teacherId = 0;
-this.isDeleted = false;
-
-		
-				}
-			}
-
-			export class ApiEventTeacherResponseModel {
-				eventId:number;
-eventIdEntity:number;
-teacherId:number;
-teacherIdEntity:number;
-isDeleted:boolean;
-
-	
-				constructor() {
-					this.eventId = 0;
-this.teacherId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -210,7 +132,6 @@ primaryContactEmail:string;
 primaryContactFirstName:string;
 primaryContactLastName:string;
 primaryContactPhone:string;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -220,7 +141,6 @@ this.primaryContactEmail = '';
 this.primaryContactFirstName = '';
 this.primaryContactLastName = '';
 this.primaryContactPhone = '';
-this.isDeleted = false;
 
 		
 				}
@@ -233,7 +153,6 @@ primaryContactEmail:string;
 primaryContactFirstName:string;
 primaryContactLastName:string;
 primaryContactPhone:string;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -243,7 +162,6 @@ this.primaryContactEmail = '';
 this.primaryContactFirstName = '';
 this.primaryContactLastName = '';
 this.primaryContactPhone = '';
-this.isDeleted = false;
 
 		
 				}
@@ -255,7 +173,6 @@ teacherId:number;
 teacherIdEntity:number;
 teacherSkillId:number;
 teacherSkillIdEntity:number;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -263,7 +180,6 @@ isDeleted:boolean;
 this.id = 0;
 this.teacherId = 0;
 this.teacherSkillId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -276,7 +192,6 @@ teacherId:number;
 teacherIdEntity:number;
 teacherSkillId:number;
 teacherSkillIdEntity:number;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -284,7 +199,6 @@ isDeleted:boolean;
 this.id = 0;
 this.teacherId = 0;
 this.teacherSkillId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -293,14 +207,12 @@ this.isDeleted = false;
 				description:string;
 id:number;
 name:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.description = '';
 this.id = 0;
 this.name = '';
-this.isDeleted = false;
 
 		
 				}
@@ -310,14 +222,12 @@ this.isDeleted = false;
 				description:string;
 id:number;
 name:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.description = '';
 this.id = 0;
 this.name = '';
-this.isDeleted = false;
 
 		
 				}
@@ -325,13 +235,11 @@ this.isDeleted = false;
 			export class ApiSpaceFeatureRequestModel {
 				id:number;
 name:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.id = 0;
 this.name = '';
-this.isDeleted = false;
 
 		
 				}
@@ -340,46 +248,11 @@ this.isDeleted = false;
 			export class ApiSpaceFeatureResponseModel {
 				id:number;
 name:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.id = 0;
 this.name = '';
-this.isDeleted = false;
-
-		
-				}
-			}
-			export class ApiSpaceSpaceFeatureRequestModel {
-				spaceFeatureId:number;
-spaceFeatureIdEntity:number;
-spaceId:number;
-spaceIdEntity:number;
-isDeleted:boolean;
-
-	
-				constructor() {
-					this.spaceFeatureId = 0;
-this.spaceId = 0;
-this.isDeleted = false;
-
-		
-				}
-			}
-
-			export class ApiSpaceSpaceFeatureResponseModel {
-				spaceFeatureId:number;
-spaceFeatureIdEntity:number;
-spaceId:number;
-spaceIdEntity:number;
-isDeleted:boolean;
-
-	
-				constructor() {
-					this.spaceFeatureId = 0;
-this.spaceId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -398,7 +271,6 @@ phone:string;
 smsRemindersEnabled:boolean;
 userId:number;
 userIdEntity:number;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -413,7 +285,6 @@ this.lastName = '';
 this.phone = '';
 this.smsRemindersEnabled = false;
 this.userId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -433,7 +304,6 @@ phone:string;
 smsRemindersEnabled:boolean;
 userId:number;
 userIdEntity:number;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -448,7 +318,6 @@ this.lastName = '';
 this.phone = '';
 this.smsRemindersEnabled = false;
 this.userId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -462,7 +331,6 @@ name:string;
 province:string;
 website:string;
 zip:string;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -474,7 +342,6 @@ this.name = '';
 this.province = '';
 this.website = '';
 this.zip = '';
-this.isDeleted = false;
 
 		
 				}
@@ -489,7 +356,6 @@ name:string;
 province:string;
 website:string;
 zip:string;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -501,7 +367,6 @@ this.name = '';
 this.province = '';
 this.website = '';
 this.zip = '';
-this.isDeleted = false;
 
 		
 				}
@@ -515,7 +380,6 @@ lastName:string;
 phone:string;
 userId:number;
 userIdEntity:number;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -526,7 +390,6 @@ this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.userId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -541,7 +404,6 @@ lastName:string;
 phone:string;
 userId:number;
 userIdEntity:number;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -552,7 +414,6 @@ this.id = 0;
 this.lastName = '';
 this.phone = '';
 this.userId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -560,13 +421,11 @@ this.isDeleted = false;
 			export class ApiTeacherSkillRequestModel {
 				id:number;
 name:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.id = 0;
 this.name = '';
-this.isDeleted = false;
 
 		
 				}
@@ -575,46 +434,11 @@ this.isDeleted = false;
 			export class ApiTeacherSkillResponseModel {
 				id:number;
 name:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.id = 0;
 this.name = '';
-this.isDeleted = false;
-
-		
-				}
-			}
-			export class ApiTeacherTeacherSkillRequestModel {
-				teacherId:number;
-teacherIdEntity:number;
-teacherSkillId:number;
-teacherSkillIdEntity:number;
-isDeleted:boolean;
-
-	
-				constructor() {
-					this.teacherId = 0;
-this.teacherSkillId = 0;
-this.isDeleted = false;
-
-		
-				}
-			}
-
-			export class ApiTeacherTeacherSkillResponseModel {
-				teacherId:number;
-teacherIdEntity:number;
-teacherSkillId:number;
-teacherSkillIdEntity:number;
-isDeleted:boolean;
-
-	
-				constructor() {
-					this.teacherId = 0;
-this.teacherSkillId = 0;
-this.isDeleted = false;
 
 		
 				}
@@ -648,14 +472,12 @@ this.name = '';
 				id:number;
 password:string;
 username:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.id = 0;
 this.password = '';
 this.username = '';
-this.isDeleted = false;
 
 		
 				}
@@ -665,14 +487,12 @@ this.isDeleted = false;
 				id:number;
 password:string;
 username:string;
-isDeleted:boolean;
 
 	
 				constructor() {
 					this.id = 0;
 this.password = '';
 this.username = '';
-this.isDeleted = false;
 
 		
 				}
@@ -685,7 +505,6 @@ eventStatusId:number;
 id:number;
 scheduledEndDate:string;
 scheduledStartDate:string;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -696,7 +515,6 @@ this.eventStatusId = 0;
 this.id = 0;
 this.scheduledEndDate = '';
 this.scheduledStartDate = '';
-this.isDeleted = false;
 
 		
 				}
@@ -710,7 +528,6 @@ eventStatusId:number;
 id:number;
 scheduledEndDate:string;
 scheduledStartDate:string;
-isDeleted:boolean;
 
 	
 				constructor() {
@@ -721,7 +538,6 @@ this.eventStatusId = 0;
 this.id = 0;
 this.scheduledEndDate = '';
 this.scheduledStartDate = '';
-this.isDeleted = false;
 
 		
 				}

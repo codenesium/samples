@@ -17,8 +17,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			DateTime? scheduledEndDate,
 			DateTime? scheduledStartDate,
 			string studentNote,
-			string teacherNote,
-			bool isDeleted)
+			string teacherNote)
 		{
 			this.Id = id;
 			this.ActualEndDate = actualEndDate;
@@ -29,7 +28,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.ScheduledStartDate = scheduledStartDate;
 			this.StudentNote = studentNote;
 			this.TeacherNote = teacherNote;
-			this.IsDeleted = isDeleted;
 
 			this.EventStatusIdEntity = nameof(ApiResponse.EventStatuses);
 		}
@@ -70,12 +68,9 @@ namespace StudioResourceManagerNS.Api.Contracts
 		[Required]
 		[JsonProperty]
 		public string TeacherNote { get; private set; }
-
-		[JsonProperty]
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>7eaf7742ecaf22783420bedef774b554</Hash>
+    <Hash>f56863d4bf6533cb3911bc4ddd09cab9</Hash>
 </Codenesium>*/

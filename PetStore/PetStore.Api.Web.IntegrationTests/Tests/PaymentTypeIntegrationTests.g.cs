@@ -68,17 +68,23 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiPaymentTypeResponseModel response = await client.PaymentTypeGetAsync(1);
+			var createModel = new ApiPaymentTypeRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiPaymentTypeResponseModel> createResult = await client.PaymentTypeCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.PaymentTypeDeleteAsync(1);
+			ApiPaymentTypeResponseModel getResponse = await client.PaymentTypeGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.PaymentTypeGetAsync(1);
+			ActionResponse deleteResult = await client.PaymentTypeDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiPaymentTypeResponseModel verifyResponse = await client.PaymentTypeGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace PetStoreNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>5cd292b884501558d2259e643380d6f3</Hash>
+    <Hash>bfc181bdb67fa2d9c92d791b4537911e</Hash>
 </Codenesium>*/

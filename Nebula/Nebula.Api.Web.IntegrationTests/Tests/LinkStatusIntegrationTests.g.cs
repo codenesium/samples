@@ -68,17 +68,23 @@ namespace NebulaNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiLinkStatusResponseModel response = await client.LinkStatusGetAsync(1);
+			var createModel = new ApiLinkStatusRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiLinkStatusResponseModel> createResult = await client.LinkStatusCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.LinkStatusDeleteAsync(1);
+			ApiLinkStatusResponseModel getResponse = await client.LinkStatusGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.LinkStatusGetAsync(1);
+			ActionResponse deleteResult = await client.LinkStatusDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiLinkStatusResponseModel verifyResponse = await client.LinkStatusGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c7c59a04133a4ff461886f5829dfba25</Hash>
+    <Hash>0c2a5ec391fe23605b66131b72d008b2</Hash>
 </Codenesium>*/

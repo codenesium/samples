@@ -19,8 +19,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			string lastName,
 			string phone,
 			bool smsRemindersEnabled,
-			int userId,
-			bool isDeleted)
+			int userId)
 		{
 			this.Id = id;
 			this.Birthday = birthday;
@@ -33,7 +32,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.Phone = phone;
 			this.SmsRemindersEnabled = smsRemindersEnabled;
 			this.UserId = userId;
-			this.IsDeleted = isDeleted;
 
 			this.FamilyIdEntity = nameof(ApiResponse.Families);
 			this.UserIdEntity = nameof(ApiResponse.Users);
@@ -77,12 +75,9 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[JsonProperty]
 		public string UserIdEntity { get; set; }
-
-		[JsonProperty]
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>fb04e63a61ee7266e99e0d9e0379184f</Hash>
+    <Hash>2d7c27f930de8777933545876a052faa</Hash>
 </Codenesium>*/

@@ -29,9 +29,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
+			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			List<ApiSpaceResponseModel> response = await service.All();
 
@@ -49,9 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
+			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			ApiSpaceResponseModel response = await service.Get(default(int));
 
@@ -68,9 +64,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
+			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			ApiSpaceResponseModel response = await service.Get(default(int));
 
@@ -88,9 +82,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
+			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			CreateResponse<ApiSpaceResponseModel> response = await service.Create(model);
 
@@ -110,9 +102,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
+			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			UpdateResponse<ApiSpaceResponseModel> response = await service.Update(default(int), model);
 
@@ -131,9 +121,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                               mock.RepositoryMock.Object,
 			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
 			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
+			                               mock.DALMapperMockFactory.DALSpaceMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -141,49 +129,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void SpaceSpaceFeaturesBySpaceId_Exists()
-		{
-			var mock = new ServiceMockFacade<ISpaceRepository>();
-			var records = new List<SpaceSpaceFeature>();
-			records.Add(new SpaceSpaceFeature());
-			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeaturesBySpaceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new SpaceService(mock.LoggerMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
-
-			List<ApiSpaceSpaceFeatureResponseModel> response = await service.SpaceSpaceFeaturesBySpaceId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeaturesBySpaceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void SpaceSpaceFeaturesBySpaceId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<ISpaceRepository>();
-			mock.RepositoryMock.Setup(x => x.SpaceSpaceFeaturesBySpaceId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<SpaceSpaceFeature>>(new List<SpaceSpaceFeature>()));
-			var service = new SpaceService(mock.LoggerMock.Object,
-			                               mock.RepositoryMock.Object,
-			                               mock.ModelValidatorMockFactory.SpaceModelValidatorMock.Object,
-			                               mock.BOLMapperMockFactory.BOLSpaceMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceMapperMock,
-			                               mock.BOLMapperMockFactory.BOLSpaceSpaceFeatureMapperMock,
-			                               mock.DALMapperMockFactory.DALSpaceSpaceFeatureMapperMock);
-
-			List<ApiSpaceSpaceFeatureResponseModel> response = await service.SpaceSpaceFeaturesBySpaceId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.SpaceSpaceFeaturesBySpaceId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>05d30e51b14fbcb3a03912a5f89c2b21</Hash>
+    <Hash>f4163014216d61ac379deb17e87509df</Hash>
 </Codenesium>*/

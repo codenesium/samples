@@ -18,8 +18,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			                       request.BillAmount,
 			                       request.EventStatusId,
 			                       request.ScheduledEndDate,
-			                       request.ScheduledStartDate,
-			                       request.IsDeleted);
+			                       request.ScheduledStartDate);
 			return response;
 		}
 
@@ -33,8 +32,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 				response.BillAmount,
 				response.EventStatusId,
 				response.ScheduledEndDate,
-				response.ScheduledStartDate,
-				response.IsDeleted);
+				response.ScheduledStartDate);
 			return request;
 		}
 
@@ -47,12 +45,11 @@ namespace StudioResourceManagerNS.Api.Contracts
 			patch.Replace(x => x.EventStatusId, model.EventStatusId);
 			patch.Replace(x => x.ScheduledEndDate, model.ScheduledEndDate);
 			patch.Replace(x => x.ScheduledStartDate, model.ScheduledStartDate);
-			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>dc2c11a7ee0574eff02a31454008558a</Hash>
+    <Hash>605c122718210e37fc02449b742e1108</Hash>
 </Codenesium>*/

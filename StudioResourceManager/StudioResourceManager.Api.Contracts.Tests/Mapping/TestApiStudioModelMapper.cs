@@ -17,7 +17,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudioModelMapper();
 			var model = new ApiStudioRequestModel();
-			model.SetProperties("A", "A", "A", "A", "A", "A", "A", true);
+			model.SetProperties("A", "A", "A", "A", "A", "A", "A");
 			ApiStudioResponseModel response = mapper.MapRequestToResponse(1, model);
 
 			response.Address1.Should().Be("A");
@@ -28,7 +28,6 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -36,7 +35,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudioModelMapper();
 			var model = new ApiStudioResponseModel();
-			model.SetProperties(1, "A", "A", "A", "A", "A", "A", "A", true);
+			model.SetProperties(1, "A", "A", "A", "A", "A", "A", "A");
 			ApiStudioRequestModel response = mapper.MapResponseToRequest(model);
 
 			response.Address1.Should().Be("A");
@@ -46,7 +45,6 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 
 		[Fact]
@@ -54,7 +52,7 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 		{
 			var mapper = new ApiStudioModelMapper();
 			var model = new ApiStudioRequestModel();
-			model.SetProperties("A", "A", "A", "A", "A", "A", "A", true);
+			model.SetProperties("A", "A", "A", "A", "A", "A", "A");
 
 			JsonPatchDocument<ApiStudioRequestModel> patch = mapper.CreatePatch(model);
 			var response = new ApiStudioRequestModel();
@@ -66,11 +64,10 @@ namespace StudioResourceManagerNS.Api.Contracts.Tests
 			response.Province.Should().Be("A");
 			response.Website.Should().Be("A");
 			response.Zip.Should().Be("A");
-			response.IsDeleted.Should().Be(true);
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>6f2107588daa95c588e953fc6c58effb</Hash>
+    <Hash>d6682818a026a91963093a987210e9b9</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace NebulaNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiChainResponseModel response = await client.ChainGetAsync(1);
+			var createModel = new ApiChainRequestModel();
+			createModel.SetProperties(1, Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), "B", 1);
+			CreateResponse<ApiChainResponseModel> createResult = await client.ChainCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.ChainDeleteAsync(1);
+			ApiChainResponseModel getResponse = await client.ChainGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.ChainGetAsync(1);
+			ActionResponse deleteResult = await client.ChainDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiChainResponseModel verifyResponse = await client.ChainGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>13595e679ee6210df3376cba6a6e7314</Hash>
+    <Hash>fa9d14ac860bdff0ac233a23e542849e</Hash>
 </Codenesium>*/

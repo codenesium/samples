@@ -36,6 +36,46 @@ namespace StudioResourceManagerNS.Api.DataAccess
 			return await this.GetById(id);
 		}
 
+		public async virtual Task<VEvent> Create(VEvent item)
+		{
+			this.Context.Set<VEvent>().Add(item);
+			await this.Context.SaveChangesAsync();
+
+			this.Context.Entry(item).State = EntityState.Detached;
+			return item;
+		}
+
+		public async virtual Task Update(VEvent item)
+		{
+			var entity = this.Context.Set<VEvent>().Local.FirstOrDefault(x => x.Id == item.Id);
+			if (entity == null)
+			{
+				this.Context.Set<VEvent>().Attach(item);
+			}
+			else
+			{
+				this.Context.Entry(entity).CurrentValues.SetValues(item);
+			}
+
+			await this.Context.SaveChangesAsync();
+		}
+
+		public async virtual Task Delete(
+			int id)
+		{
+			VEvent record = await this.GetById(id);
+
+			if (record == null)
+			{
+				return;
+			}
+			else
+			{
+				this.Context.Set<VEvent>().Remove(record);
+				await this.Context.SaveChangesAsync();
+			}
+		}
+
 		protected async Task<List<VEvent>> Where(
 			Expression<Func<VEvent, bool>> predicate,
 			int limit = int.MaxValue,
@@ -68,5 +108,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>c60dead9375f36bf04eb6f8a2b8fc903</Hash>
+    <Hash>8e6e1804aa1ec463c8890e6628e5065a</Hash>
 </Codenesium>*/

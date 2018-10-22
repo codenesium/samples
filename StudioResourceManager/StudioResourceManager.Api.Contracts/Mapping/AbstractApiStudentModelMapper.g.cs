@@ -22,8 +22,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			                       request.LastName,
 			                       request.Phone,
 			                       request.SmsRemindersEnabled,
-			                       request.UserId,
-			                       request.IsDeleted);
+			                       request.UserId);
 			return response;
 		}
 
@@ -41,8 +40,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 				response.LastName,
 				response.Phone,
 				response.SmsRemindersEnabled,
-				response.UserId,
-				response.IsDeleted);
+				response.UserId);
 			return request;
 		}
 
@@ -59,12 +57,11 @@ namespace StudioResourceManagerNS.Api.Contracts
 			patch.Replace(x => x.Phone, model.Phone);
 			patch.Replace(x => x.SmsRemindersEnabled, model.SmsRemindersEnabled);
 			patch.Replace(x => x.UserId, model.UserId);
-			patch.Replace(x => x.IsDeleted, model.IsDeleted);
 			return patch;
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>70a1c59cd1abb76eca9446f42444c9a3</Hash>
+    <Hash>a36798a5ed77c7c73ea28602bdbb339c</Hash>
 </Codenesium>*/

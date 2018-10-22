@@ -15,8 +15,7 @@ namespace StudioResourceManagerNS.Api.Services
 			efUser.SetProperties(
 				bo.Id,
 				bo.Password,
-				bo.Username,
-				bo.IsDeleted);
+				bo.Username);
 			return efUser;
 		}
 
@@ -28,8 +27,7 @@ namespace StudioResourceManagerNS.Api.Services
 			bo.SetProperties(
 				ef.Id,
 				ef.Password,
-				ef.Username,
-				ef.IsDeleted);
+				ef.Username);
 			return bo;
 		}
 
@@ -49,5 +47,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>d4723e4a25619aa6ae59a729f78b2afb</Hash>
+    <Hash>351edfd54034d555db61492bdd1f4156</Hash>
 </Codenesium>*/

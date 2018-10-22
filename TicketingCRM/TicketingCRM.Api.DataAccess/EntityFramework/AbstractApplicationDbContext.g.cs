@@ -79,18 +79,21 @@ namespace TicketingCRMNS.Api.DataAccess
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
+			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var createdEntry in entries)
+				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
+					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
 					}
+				}
 
-					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+				{
+					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
 					if (tenantEntity != null)
 					{
 						tenantEntity.CurrentValue = this.TenantId;
@@ -281,5 +284,5 @@ namespace TicketingCRMNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>95c05d65dc6f2110e2dab4ed68ca5316</Hash>
+    <Hash>b6efa951fc4333017929da993c9eddcc</Hash>
 </Codenesium>*/

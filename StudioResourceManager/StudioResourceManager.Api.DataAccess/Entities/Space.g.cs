@@ -16,13 +16,11 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		public virtual void SetProperties(
 			string description,
 			int id,
-			string name,
-			bool isDeleted)
+			string name)
 		{
 			this.Description = description;
 			this.Id = id;
 			this.Name = name;
-			this.IsDeleted = isDeleted;
 		}
 
 		[MaxLength(128)]
@@ -36,12 +34,9 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[MaxLength(128)]
 		[Column("name")]
 		public string Name { get; private set; }
-
-		[Column("isDeleted")]
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>23efa745c9c6870b22554ea698f94715</Hash>
+    <Hash>fe9015ad488de326a06a1394a290bc82</Hash>
 </Codenesium>*/

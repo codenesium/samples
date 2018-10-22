@@ -77,18 +77,21 @@ namespace StackOverflowNS.Api.DataAccess
 		/// <returns>int</returns>
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
 		{
-			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State));
+			var entries = this.ChangeTracker.Entries().Where(e => EntityState.Added.HasFlag(e.State) || EntityState.Modified.HasFlag(e.State));
 			if (entries.Any())
 			{
-				foreach (var createdEntry in entries)
+				foreach (var entry in entries.Where(e => e.State == EntityState.Added))
 				{
-					var entity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
+					var entity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "ROWGUID");
 					if (entity != null && entity.Metadata.ClrType == typeof(Guid) && (Guid)entity.CurrentValue != default(Guid))
 					{
 						entity.CurrentValue = Guid.NewGuid();
 					}
+				}
 
-					var tenantEntity = createdEntry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
+				foreach (var entry in entries.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified))
+				{
+					var tenantEntity = entry.Properties.FirstOrDefault(x => x.Metadata.Name.ToUpper() == "TENANTID");
 					if (tenantEntity != null)
 					{
 						tenantEntity.CurrentValue = this.TenantId;
@@ -268,5 +271,5 @@ namespace StackOverflowNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>b24745d1875b430a081ce8416607f337</Hash>
+    <Hash>9a6be5b85e007e4f0da68e9295be3e13</Hash>
 </Codenesium>*/

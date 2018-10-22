@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StudioResourceManagerNS.Api.Contracts
@@ -17,13 +18,11 @@ namespace StudioResourceManagerNS.Api.Contracts
 		public virtual void SetProperties(
 			decimal amountPerMinute,
 			int teacherId,
-			int teacherSkillId,
-			bool isDeleted)
+			int teacherSkillId)
 		{
 			this.AmountPerMinute = amountPerMinute;
 			this.TeacherId = teacherId;
 			this.TeacherSkillId = teacherSkillId;
-			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
@@ -32,18 +31,14 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int TeacherId { get; private set; } = default(int);
+		public int TeacherId { get; private set; }
 
 		[Required]
 		[JsonProperty]
-		public int TeacherSkillId { get; private set; } = default(int);
-
-		[Required]
-		[JsonProperty]
-		public bool IsDeleted { get; private set; } = default(bool);
+		public int TeacherSkillId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>c7f454466a2b09261125deff3c3edfca</Hash>
+    <Hash>17dc5e287e70ac4025264f3d5bdaa4c4</Hash>
 </Codenesium>*/

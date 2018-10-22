@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StudioResourceManagerNS.Api.Contracts
@@ -27,5 +28,5 @@ namespace StudioResourceManagerNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6649559311724afccf4d89374e275691</Hash>
+    <Hash>da88268352f4390746a9f65f72d7fb75</Hash>
 </Codenesium>*/

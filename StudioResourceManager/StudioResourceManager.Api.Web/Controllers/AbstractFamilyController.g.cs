@@ -223,6 +223,23 @@ namespace StudioResourceManagerNS.Api.Web
 			return this.Ok(response);
 		}
 
+		[HttpGet]
+		[Route("byUserId/{userId}")]
+		[ReadOnly]
+		[ProducesResponseType(typeof(List<ApiFamilyResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByUserId(int userId, int? limit, int? offset)
+		{
+			SearchQuery query = new SearchQuery();
+			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
+			{
+				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
+			}
+
+			List<ApiFamilyResponseModel> response = await this.FamilyService.ByUserId(userId, query.Limit, query.Offset);
+
+			return this.Ok(response);
+		}
+
 		private async Task<ApiFamilyRequestModel> PatchModel(int id, JsonPatchDocument<ApiFamilyRequestModel> patch)
 		{
 			var record = await this.FamilyService.Get(id);
@@ -242,5 +259,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>fac9aa5a9ff8b8092bfb62655dbb8ec9</Hash>
+    <Hash>2ae03c0773496a7d1e37c6ef1fe12cfb</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiPersonRefResponseModel response = await client.PersonRefGetAsync(1);
+			var createModel = new ApiPersonRefRequestModel();
+			createModel.SetProperties(2, 2);
+			CreateResponse<ApiPersonRefResponseModel> createResult = await client.PersonRefCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.PersonRefDeleteAsync(1);
+			ApiPersonRefResponseModel getResponse = await client.PersonRefGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.PersonRefGetAsync(1);
+			ActionResponse deleteResult = await client.PersonRefDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiPersonRefResponseModel verifyResponse = await client.PersonRefGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>c1a3a3ef6308b45498114b261091167d</Hash>
+    <Hash>b122a15e2ccc7ebbcd04088ebbc2fab3</Hash>
 </Codenesium>*/

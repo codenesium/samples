@@ -17,7 +17,6 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			this.PasswordRules();
 			this.UsernameRules();
-			this.IsDeletedRules();
 			return await this.ValidateAsync(model);
 		}
 
@@ -25,7 +24,6 @@ namespace StudioResourceManagerNS.Api.Services
 		{
 			this.PasswordRules();
 			this.UsernameRules();
-			this.IsDeletedRules();
 			return await this.ValidateAsync(model, id);
 		}
 
@@ -37,5 +35,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>69aa0dcdaff4909ffb6d38f7acd19ffc</Hash>
+    <Hash>bf52d18b05bcd8f7744b93be8ba05469</Hash>
 </Codenesium>*/

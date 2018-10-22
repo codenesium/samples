@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
@@ -28,7 +29,7 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int ChainStatusId { get; private set; } = default(int);
+		public int ChainStatusId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -40,10 +41,10 @@ namespace NebulaNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int TeamId { get; private set; } = default(int);
+		public int TeamId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>472e3104f935dadf4a7420a19b3a4304</Hash>
+    <Hash>4aefd36333fcddec4ade6c756821b3e6</Hash>
 </Codenesium>*/

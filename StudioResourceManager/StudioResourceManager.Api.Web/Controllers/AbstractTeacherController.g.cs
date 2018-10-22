@@ -207,23 +207,6 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{teacherId}/EventTeachersByTeacherId")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> EventTeachersByTeacherId(int teacherId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEventTeacherResponseModel> response = await this.TeacherService.EventTeachersByTeacherId(teacherId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
 		[Route("{teacherId}/RatesByTeacherId")]
 		[ReadOnly]
 		[ProducesResponseType(typeof(List<ApiRateResponseModel>), 200)]
@@ -241,10 +224,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{teacherId}/TeacherTeacherSkillsByTeacherId")]
+		[Route("byTeacherSkillId/{teacherSkillId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiTeacherTeacherSkillResponseModel>), 200)]
-		public async virtual Task<IActionResult> TeacherTeacherSkillsByTeacherId(int teacherId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiTeacherResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByTeacherSkillId(int teacherSkillId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -252,7 +235,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiTeacherTeacherSkillResponseModel> response = await this.TeacherService.TeacherTeacherSkillsByTeacherId(teacherId, query.Limit, query.Offset);
+			List<ApiTeacherResponseModel> response = await this.TeacherService.ByTeacherSkillId(teacherSkillId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -276,5 +259,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>08714bdbb3318461df33a3af48fe6d11</Hash>
+    <Hash>72d69cd4a47c5bb9493cf86aee7ec183</Hash>
 </Codenesium>*/

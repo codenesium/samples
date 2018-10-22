@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiUserResponseModel response = await client.UserGetAsync(1);
+			var createModel = new ApiUserRequestModel();
+			createModel.SetProperties("B", "B");
+			CreateResponse<ApiUserResponseModel> createResult = await client.UserCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.UserDeleteAsync(1);
+			ApiUserResponseModel getResponse = await client.UserGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.UserGetAsync(1);
+			ActionResponse deleteResult = await client.UserDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiUserResponseModel verifyResponse = await client.UserGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiUserResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiUserRequestModel();
-			model.SetProperties("B", "B", true);
+			model.SetProperties("B", "B");
 			CreateResponse<ApiUserResponseModel> result = await client.UserCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>274db02dc6452f547370f99c200e1911</Hash>
+    <Hash>3876c31e949f5efd12072cf59110fc9e</Hash>
 </Codenesium>*/

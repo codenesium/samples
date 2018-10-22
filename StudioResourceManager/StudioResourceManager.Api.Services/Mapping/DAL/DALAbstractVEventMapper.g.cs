@@ -19,8 +19,7 @@ namespace StudioResourceManagerNS.Api.Services
 				bo.EventStatusId,
 				bo.Id,
 				bo.ScheduledEndDate,
-				bo.ScheduledStartDate,
-				bo.IsDeleted);
+				bo.ScheduledStartDate);
 			return efVEvent;
 		}
 
@@ -36,8 +35,7 @@ namespace StudioResourceManagerNS.Api.Services
 				ef.BillAmount,
 				ef.EventStatusId,
 				ef.ScheduledEndDate,
-				ef.ScheduledStartDate,
-				ef.IsDeleted);
+				ef.ScheduledStartDate);
 			return bo;
 		}
 
@@ -57,5 +55,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>0298058e92c8e9de81045e8d90e788c8</Hash>
+    <Hash>07321db9e288fa237521bb115b0b0586</Hash>
 </Codenesium>*/

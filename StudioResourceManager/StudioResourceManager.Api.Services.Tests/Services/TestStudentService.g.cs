@@ -29,9 +29,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
 
 			List<ApiStudentResponseModel> response = await service.All();
 
@@ -49,9 +47,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
 
 			ApiStudentResponseModel response = await service.Get(default(int));
 
@@ -68,9 +64,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
 
 			ApiStudentResponseModel response = await service.Get(default(int));
 
@@ -88,9 +82,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
 
 			CreateResponse<ApiStudentResponseModel> response = await service.Create(model);
 
@@ -110,9 +102,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
 
 			UpdateResponse<ApiStudentResponseModel> response = await service.Update(default(int), model);
 
@@ -131,9 +121,7 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			                                 mock.RepositoryMock.Object,
 			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
 			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
+			                                 mock.DALMapperMockFactory.DALStudentMapperMock);
 
 			ActionResponse response = await service.Delete(default(int));
 
@@ -141,49 +129,9 @@ namespace StudioResourceManagerNS.Api.Services.Tests
 			mock.RepositoryMock.Verify(x => x.Delete(It.IsAny<int>()));
 			mock.ModelValidatorMockFactory.StudentModelValidatorMock.Verify(x => x.ValidateDeleteAsync(It.IsAny<int>()));
 		}
-
-		[Fact]
-		public async void EventStudentsByStudentId_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			var records = new List<EventStudent>();
-			records.Add(new EventStudent());
-			mock.RepositoryMock.Setup(x => x.EventStudentsByStudentId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult(records));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
-
-			List<ApiEventStudentResponseModel> response = await service.EventStudentsByStudentId(default(int));
-
-			response.Should().NotBeEmpty();
-			mock.RepositoryMock.Verify(x => x.EventStudentsByStudentId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
-
-		[Fact]
-		public async void EventStudentsByStudentId_Not_Exists()
-		{
-			var mock = new ServiceMockFacade<IStudentRepository>();
-			mock.RepositoryMock.Setup(x => x.EventStudentsByStudentId(default(int), It.IsAny<int>(), It.IsAny<int>())).Returns(Task.FromResult<List<EventStudent>>(new List<EventStudent>()));
-			var service = new StudentService(mock.LoggerMock.Object,
-			                                 mock.RepositoryMock.Object,
-			                                 mock.ModelValidatorMockFactory.StudentModelValidatorMock.Object,
-			                                 mock.BOLMapperMockFactory.BOLStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALStudentMapperMock,
-			                                 mock.BOLMapperMockFactory.BOLEventStudentMapperMock,
-			                                 mock.DALMapperMockFactory.DALEventStudentMapperMock);
-
-			List<ApiEventStudentResponseModel> response = await service.EventStudentsByStudentId(default(int));
-
-			response.Should().BeEmpty();
-			mock.RepositoryMock.Verify(x => x.EventStudentsByStudentId(default(int), It.IsAny<int>(), It.IsAny<int>()));
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>818c4f4db84b70a978925dc25bf47d3b</Hash>
+    <Hash>1e00855504ab771c1a56f2f217f28c79</Hash>
 </Codenesium>*/

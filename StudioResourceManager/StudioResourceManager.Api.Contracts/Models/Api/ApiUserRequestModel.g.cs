@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace StudioResourceManagerNS.Api.Contracts
@@ -16,12 +17,10 @@ namespace StudioResourceManagerNS.Api.Contracts
 
 		public virtual void SetProperties(
 			string password,
-			string username,
-			bool isDeleted)
+			string username)
 		{
 			this.Password = password;
 			this.Username = username;
-			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
@@ -31,13 +30,9 @@ namespace StudioResourceManagerNS.Api.Contracts
 		[Required]
 		[JsonProperty]
 		public string Username { get; private set; } = default(string);
-
-		[Required]
-		[JsonProperty]
-		public bool IsDeleted { get; private set; } = default(bool);
 	}
 }
 
 /*<Codenesium>
-    <Hash>1d805be2085aa35edb06de153687d01b</Hash>
+    <Hash>431d425d42948dc71f5587d269475196</Hash>
 </Codenesium>*/

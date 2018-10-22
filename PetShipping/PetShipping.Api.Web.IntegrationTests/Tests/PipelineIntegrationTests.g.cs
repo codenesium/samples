@@ -68,17 +68,23 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiPipelineResponseModel response = await client.PipelineGetAsync(1);
+			var createModel = new ApiPipelineRequestModel();
+			createModel.SetProperties(1, 2);
+			CreateResponse<ApiPipelineResponseModel> createResult = await client.PipelineCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.PipelineDeleteAsync(1);
+			ApiPipelineResponseModel getResponse = await client.PipelineGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.PipelineGetAsync(1);
+			ActionResponse deleteResult = await client.PipelineDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiPipelineResponseModel verifyResponse = await client.PipelineGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace PetShippingNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>e4592b29fd2510a54ed9684e484265a2</Hash>
+    <Hash>9a9697911e54635ee9f6d02e3654edf6</Hash>
 </Codenesium>*/

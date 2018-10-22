@@ -15,8 +15,7 @@ namespace StudioResourceManagerNS.Api.Contracts
 			decimal? billAmount,
 			int eventStatusId,
 			DateTime? scheduledEndDate,
-			DateTime? scheduledStartDate,
-			bool isDeleted)
+			DateTime? scheduledStartDate)
 		{
 			this.Id = id;
 			this.ActualEndDate = actualEndDate;
@@ -25,7 +24,6 @@ namespace StudioResourceManagerNS.Api.Contracts
 			this.EventStatusId = eventStatusId;
 			this.ScheduledEndDate = scheduledEndDate;
 			this.ScheduledStartDate = scheduledStartDate;
-			this.IsDeleted = isDeleted;
 		}
 
 		[Required]
@@ -53,12 +51,9 @@ namespace StudioResourceManagerNS.Api.Contracts
 		[Required]
 		[JsonProperty]
 		public DateTime? ScheduledStartDate { get; private set; }
-
-		[JsonProperty]
-		public bool IsDeleted { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>000a8f614bc706d79534b2bee46bc6d0</Hash>
+    <Hash>d5eeda3746891263911588fccba32af7</Hash>
 </Codenesium>*/

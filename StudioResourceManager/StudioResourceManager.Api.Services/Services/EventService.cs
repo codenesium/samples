@@ -18,25 +18,17 @@ namespace StudioResourceManagerNS.Api.Services
 			IEventRepository eventRepository,
 			IApiEventRequestModelValidator eventModelValidator,
 			IBOLEventMapper boleventMapper,
-			IDALEventMapper daleventMapper,
-			IBOLEventStudentMapper bolEventStudentMapper,
-			IDALEventStudentMapper dalEventStudentMapper,
-			IBOLEventTeacherMapper bolEventTeacherMapper,
-			IDALEventTeacherMapper dalEventTeacherMapper)
+			IDALEventMapper daleventMapper)
 			: base(logger,
 			       eventRepository,
 			       eventModelValidator,
 			       boleventMapper,
-			       daleventMapper,
-			       bolEventStudentMapper,
-			       dalEventStudentMapper,
-			       bolEventTeacherMapper,
-			       dalEventTeacherMapper)
+			       daleventMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>88149ba6b842336388771535e0d922cd</Hash>
+    <Hash>52f8321ed3ade2803e3ebb43cd541e57</Hash>
 </Codenesium>*/

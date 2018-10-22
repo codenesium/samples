@@ -37,13 +37,9 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.Name).NotNull();
 			this.RuleFor(x => x.Name).Length(0, 128);
 		}
-
-		public virtual void IsDeletedRules()
-		{
-		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>9f35bb451e20cf82457d1ac881ea544c</Hash>
+    <Hash>ccb0506d742c9b3d4b32b6effe421267</Hash>
 </Codenesium>*/

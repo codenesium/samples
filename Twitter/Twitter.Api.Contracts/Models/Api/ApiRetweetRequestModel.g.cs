@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TwitterNS.Api.Contracts
@@ -27,20 +28,20 @@ namespace TwitterNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? Date { get; private set; } = default(DateTime);
+		public DateTime? Date { get; private set; } = null;
 
 		[JsonProperty]
-		public int? RetwitterUserId { get; private set; } = default(int);
+		public int? RetwitterUserId { get; private set; }
 
 		[JsonProperty]
 		public TimeSpan? Time { get; private set; } = default(TimeSpan);
 
 		[Required]
 		[JsonProperty]
-		public int TweetTweetId { get; private set; } = default(int);
+		public int TweetTweetId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>2b92c7ab6d95e454c908fd91cc1c347f</Hash>
+    <Hash>65fdbe6f89f830d12f6452a621ecb98c</Hash>
 </Codenesium>*/

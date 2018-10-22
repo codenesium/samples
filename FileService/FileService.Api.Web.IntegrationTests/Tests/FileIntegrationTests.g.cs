@@ -68,17 +68,23 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiFileResponseModel response = await client.FileGetAsync(1);
+			var createModel = new ApiFileRequestModel();
+			createModel.SetProperties(1, DateTime.Parse("1/1/1988 12:00:00 AM"), "B", DateTime.Parse("1/1/1988 12:00:00 AM"), "B", Guid.Parse("3842cac4-b9a0-8223-0dcc-509a6f75849b"), 2, 1, "B", "B", "B");
+			CreateResponse<ApiFileResponseModel> createResult = await client.FileCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.FileDeleteAsync(1);
+			ApiFileResponseModel getResponse = await client.FileGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.FileGetAsync(1);
+			ActionResponse deleteResult = await client.FileDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiFileResponseModel verifyResponse = await client.FileGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace FileServiceNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>23f5e5d0f9bd449046774cb58a86ce81</Hash>
+    <Hash>5863c563c3f9d59ae21f63e1ab657b39</Hash>
 </Codenesium>*/

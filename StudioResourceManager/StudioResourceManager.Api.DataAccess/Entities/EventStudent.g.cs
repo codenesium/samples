@@ -15,12 +15,10 @@ namespace StudioResourceManagerNS.Api.DataAccess
 
 		public virtual void SetProperties(
 			int eventId,
-			int studentId,
-			bool isDeleted)
+			int studentId)
 		{
 			this.EventId = eventId;
 			this.StudentId = studentId;
-			this.IsDeleted = isDeleted;
 		}
 
 		[Key]
@@ -31,9 +29,6 @@ namespace StudioResourceManagerNS.Api.DataAccess
 		[Column("studentId")]
 		public int StudentId { get; private set; }
 
-		[Column("isDeleted")]
-		public bool IsDeleted { get; private set; }
-
 		[ForeignKey("EventId")]
 		public virtual Event EventNavigation { get; private set; }
 
@@ -43,5 +38,5 @@ namespace StudioResourceManagerNS.Api.DataAccess
 }
 
 /*<Codenesium>
-    <Hash>47da64e2346abd8154b2e46c0bea4d4a</Hash>
+    <Hash>db77da1bc29a08247ca8028a3d6002d3</Hash>
 </Codenesium>*/

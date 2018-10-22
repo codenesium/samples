@@ -16,8 +16,7 @@ namespace StudioResourceManagerNS.Api.Services
 				bo.AmountPerMinute,
 				bo.Id,
 				bo.TeacherId,
-				bo.TeacherSkillId,
-				bo.IsDeleted);
+				bo.TeacherSkillId);
 			return efRate;
 		}
 
@@ -30,8 +29,7 @@ namespace StudioResourceManagerNS.Api.Services
 				ef.Id,
 				ef.AmountPerMinute,
 				ef.TeacherId,
-				ef.TeacherSkillId,
-				ef.IsDeleted);
+				ef.TeacherSkillId);
 			return bo;
 		}
 
@@ -51,5 +49,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>4dd86635a4429cb159232885c120be89</Hash>
+    <Hash>adec4e4a04a05e61e5aa9f4ccced2a90</Hash>
 </Codenesium>*/

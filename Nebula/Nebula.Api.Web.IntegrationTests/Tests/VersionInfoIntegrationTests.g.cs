@@ -68,17 +68,23 @@ namespace NebulaNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiVersionInfoResponseModel response = await client.VersionInfoGetAsync(1);
+			var createModel = new ApiVersionInfoRequestModel();
+			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiVersionInfoResponseModel> createResult = await client.VersionInfoCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.VersionInfoDeleteAsync(1);
+			ApiVersionInfoResponseModel getResponse = await client.VersionInfoGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.VersionInfoGetAsync(1);
+			ActionResponse deleteResult = await client.VersionInfoDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiVersionInfoResponseModel verifyResponse = await client.VersionInfoGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace NebulaNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>d8a028c60e488fb248b45db746a51246</Hash>
+    <Hash>7e2c819a41d96822154f894ecf82dc85</Hash>
 </Codenesium>*/

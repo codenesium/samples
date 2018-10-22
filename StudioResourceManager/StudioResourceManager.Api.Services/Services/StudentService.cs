@@ -18,21 +18,17 @@ namespace StudioResourceManagerNS.Api.Services
 			IStudentRepository studentRepository,
 			IApiStudentRequestModelValidator studentModelValidator,
 			IBOLStudentMapper bolstudentMapper,
-			IDALStudentMapper dalstudentMapper,
-			IBOLEventStudentMapper bolEventStudentMapper,
-			IDALEventStudentMapper dalEventStudentMapper)
+			IDALStudentMapper dalstudentMapper)
 			: base(logger,
 			       studentRepository,
 			       studentModelValidator,
 			       bolstudentMapper,
-			       dalstudentMapper,
-			       bolEventStudentMapper,
-			       dalEventStudentMapper)
+			       dalstudentMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>8833e0c9a79d7f366852203a48ef7e14</Hash>
+    <Hash>9ef8ae853a7d1fe22932689db7fa714d</Hash>
 </Codenesium>*/

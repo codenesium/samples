@@ -14,8 +14,7 @@ namespace StudioResourceManagerNS.Api.Services
 			SpaceFeature efSpaceFeature = new SpaceFeature();
 			efSpaceFeature.SetProperties(
 				bo.Id,
-				bo.Name,
-				bo.IsDeleted);
+				bo.Name);
 			return efSpaceFeature;
 		}
 
@@ -26,8 +25,7 @@ namespace StudioResourceManagerNS.Api.Services
 
 			bo.SetProperties(
 				ef.Id,
-				ef.Name,
-				ef.IsDeleted);
+				ef.Name);
 			return bo;
 		}
 
@@ -47,5 +45,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>2db8f3f56574f772bebaf4cde360a2ec</Hash>
+    <Hash>c6ab73337f3d595f0e321c6c1e0060cf</Hash>
 </Codenesium>*/

@@ -61,10 +61,6 @@ namespace StudioResourceManagerNS.Api.Services
 			this.RuleFor(x => x.TeacherNote).Length(0, 2147483647);
 		}
 
-		public virtual void IsDeletedRules()
-		{
-		}
-
 		private async Task<bool> BeValidEventStatusByEventStatusId(int id,  CancellationToken cancellationToken)
 		{
 			var record = await this.eventRepository.EventStatusByEventStatusId(id);
@@ -75,5 +71,5 @@ namespace StudioResourceManagerNS.Api.Services
 }
 
 /*<Codenesium>
-    <Hash>9d7ee2ef751dfca4522e23c28563bdcc</Hash>
+    <Hash>92cca29bc9e95af6c7aecbb8a24eada3</Hash>
 </Codenesium>*/

@@ -207,10 +207,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{studentId}/EventStudentsByStudentId")]
+		[Route("byEventId/{eventId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventStudentResponseModel>), 200)]
-		public async virtual Task<IActionResult> EventStudentsByStudentId(int studentId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiStudentResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByEventId(int eventId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,7 +218,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEventStudentResponseModel> response = await this.StudentService.EventStudentsByStudentId(studentId, query.Limit, query.Offset);
+			List<ApiStudentResponseModel> response = await this.StudentService.ByEventId(eventId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -242,5 +242,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>3605fed8ad4c6eda8e46a6aa051d10b2</Hash>
+    <Hash>b5c5b092600ace013ed267fb75263ba2</Hash>
 </Codenesium>*/

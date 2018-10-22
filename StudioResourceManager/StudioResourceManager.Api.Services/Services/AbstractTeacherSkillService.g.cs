@@ -26,10 +26,6 @@ namespace StudioResourceManagerNS.Api.Services
 
 		protected IDALRateMapper DalRateMapper { get; private set; }
 
-		protected IBOLTeacherTeacherSkillMapper BolTeacherTeacherSkillMapper { get; private set; }
-
-		protected IDALTeacherTeacherSkillMapper DalTeacherTeacherSkillMapper { get; private set; }
-
 		private ILogger logger;
 
 		public AbstractTeacherSkillService(
@@ -39,9 +35,7 @@ namespace StudioResourceManagerNS.Api.Services
 			IBOLTeacherSkillMapper bolTeacherSkillMapper,
 			IDALTeacherSkillMapper dalTeacherSkillMapper,
 			IBOLRateMapper bolRateMapper,
-			IDALRateMapper dalRateMapper,
-			IBOLTeacherTeacherSkillMapper bolTeacherTeacherSkillMapper,
-			IDALTeacherTeacherSkillMapper dalTeacherTeacherSkillMapper)
+			IDALRateMapper dalRateMapper)
 			: base()
 		{
 			this.TeacherSkillRepository = teacherSkillRepository;
@@ -50,8 +44,6 @@ namespace StudioResourceManagerNS.Api.Services
 			this.DalTeacherSkillMapper = dalTeacherSkillMapper;
 			this.BolRateMapper = bolRateMapper;
 			this.DalRateMapper = dalRateMapper;
-			this.BolTeacherTeacherSkillMapper = bolTeacherTeacherSkillMapper;
-			this.DalTeacherTeacherSkillMapper = dalTeacherTeacherSkillMapper;
 			this.logger = logger;
 		}
 
@@ -131,15 +123,15 @@ namespace StudioResourceManagerNS.Api.Services
 			return this.BolRateMapper.MapBOToModel(this.DalRateMapper.MapEFToBO(records));
 		}
 
-		public async virtual Task<List<ApiTeacherTeacherSkillResponseModel>> TeacherTeacherSkillsByTeacherSkillId(int teacherSkillId, int limit = int.MaxValue, int offset = 0)
+		public async virtual Task<List<ApiTeacherSkillResponseModel>> ByTeacherId(int teacherId, int limit = int.MaxValue, int offset = 0)
 		{
-			List<TeacherTeacherSkill> records = await this.TeacherSkillRepository.TeacherTeacherSkillsByTeacherSkillId(teacherSkillId, limit, offset);
+			List<TeacherSkill> records = await this.TeacherSkillRepository.ByTeacherId(teacherId, limit, offset);
 
-			return this.BolTeacherTeacherSkillMapper.MapBOToModel(this.DalTeacherTeacherSkillMapper.MapEFToBO(records));
+			return this.BolTeacherSkillMapper.MapBOToModel(this.DalTeacherSkillMapper.MapEFToBO(records));
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>de475a9439055bc7bbc51e441a75410e</Hash>
+    <Hash>c07f0f965724a789fedcc549c6af8240</Hash>
 </Codenesium>*/

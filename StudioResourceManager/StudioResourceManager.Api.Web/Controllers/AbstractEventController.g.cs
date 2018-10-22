@@ -207,10 +207,10 @@ namespace StudioResourceManagerNS.Api.Web
 		}
 
 		[HttpGet]
-		[Route("{eventId}/EventStudentsByEventId")]
+		[Route("byStudentId/{studentId}")]
 		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventStudentResponseModel>), 200)]
-		public async virtual Task<IActionResult> EventStudentsByEventId(int eventId, int? limit, int? offset)
+		[ProducesResponseType(typeof(List<ApiEventResponseModel>), 200)]
+		public async virtual Task<IActionResult> ByStudentId(int studentId, int? limit, int? offset)
 		{
 			SearchQuery query = new SearchQuery();
 			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
@@ -218,24 +218,7 @@ namespace StudioResourceManagerNS.Api.Web
 				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
 			}
 
-			List<ApiEventStudentResponseModel> response = await this.EventService.EventStudentsByEventId(eventId, query.Limit, query.Offset);
-
-			return this.Ok(response);
-		}
-
-		[HttpGet]
-		[Route("{eventId}/EventTeachersByEventId")]
-		[ReadOnly]
-		[ProducesResponseType(typeof(List<ApiEventTeacherResponseModel>), 200)]
-		public async virtual Task<IActionResult> EventTeachersByEventId(int eventId, int? limit, int? offset)
-		{
-			SearchQuery query = new SearchQuery();
-			if (!query.Process(this.MaxLimit, this.DefaultLimit, limit, offset, this.ControllerContext.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value)))
-			{
-				return this.StatusCode(StatusCodes.Status413PayloadTooLarge, query.Error);
-			}
-
-			List<ApiEventTeacherResponseModel> response = await this.EventService.EventTeachersByEventId(eventId, query.Limit, query.Offset);
+			List<ApiEventResponseModel> response = await this.EventService.ByStudentId(studentId, query.Limit, query.Offset);
 
 			return this.Ok(response);
 		}
@@ -259,5 +242,5 @@ namespace StudioResourceManagerNS.Api.Web
 }
 
 /*<Codenesium>
-    <Hash>039f906fe63421c2928822ad464a03fe</Hash>
+    <Hash>f4a4577ddbd7397f01137156d4286ec9</Hash>
 </Codenesium>*/

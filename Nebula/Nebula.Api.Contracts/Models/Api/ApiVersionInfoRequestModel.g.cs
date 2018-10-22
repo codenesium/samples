@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace NebulaNS.Api.Contracts
@@ -23,7 +24,7 @@ namespace NebulaNS.Api.Contracts
 		}
 
 		[JsonProperty]
-		public DateTime? AppliedOn { get; private set; } = default(DateTime);
+		public DateTime? AppliedOn { get; private set; } = null;
 
 		[JsonProperty]
 		public string Description { get; private set; } = default(string);
@@ -31,5 +32,5 @@ namespace NebulaNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>d26bf7886398aca795949f0764ad50b6</Hash>
+    <Hash>984f7dca6217fc86710482545b7343fb</Hash>
 </Codenesium>*/

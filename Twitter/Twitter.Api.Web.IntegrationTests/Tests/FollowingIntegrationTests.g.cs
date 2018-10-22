@@ -68,17 +68,23 @@ namespace TwitterNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiFollowingResponseModel response = await client.FollowingGetAsync("A");
+			var createModel = new ApiFollowingRequestModel();
+			createModel.SetProperties(DateTime.Parse("1/1/1988 12:00:00 AM"), "B");
+			CreateResponse<ApiFollowingResponseModel> createResult = await client.FollowingCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.FollowingDeleteAsync("A");
+			ApiFollowingResponseModel getResponse = await client.FollowingGetAsync("B");
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.FollowingGetAsync("A");
+			ActionResponse deleteResult = await client.FollowingDeleteAsync("B");
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiFollowingResponseModel verifyResponse = await client.FollowingGetAsync("B");
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TwitterNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>3a8607d1685450aad27d990df861f5a5</Hash>
+    <Hash>5aa9b5b030326ad01d0790b02daf5992</Hash>
 </Codenesium>*/

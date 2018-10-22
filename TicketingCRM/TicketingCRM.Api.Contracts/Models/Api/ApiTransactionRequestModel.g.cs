@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace TicketingCRMNS.Api.Contracts
@@ -34,10 +35,10 @@ namespace TicketingCRMNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int TransactionStatusId { get; private set; } = default(int);
+		public int TransactionStatusId { get; private set; }
 	}
 }
 
 /*<Codenesium>
-    <Hash>bfb1216e90ea7cbde8b5e2fa7bcb9609</Hash>
+    <Hash>9815ff3a755b27432790b5c06d361abe</Hash>
 </Codenesium>*/

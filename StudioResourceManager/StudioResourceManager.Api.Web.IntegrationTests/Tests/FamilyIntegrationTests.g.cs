@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiFamilyResponseModel response = await client.FamilyGetAsync(1);
+			var createModel = new ApiFamilyRequestModel();
+			createModel.SetProperties("B", "B", "B", "B", "B");
+			CreateResponse<ApiFamilyResponseModel> createResult = await client.FamilyCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.FamilyDeleteAsync(1);
+			ApiFamilyResponseModel getResponse = await client.FamilyGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.FamilyGetAsync(1);
+			ActionResponse deleteResult = await client.FamilyDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiFamilyResponseModel verifyResponse = await client.FamilyGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiFamilyResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiFamilyRequestModel();
-			model.SetProperties("B", "B", "B", "B", "B", true);
+			model.SetProperties("B", "B", "B", "B", "B");
 			CreateResponse<ApiFamilyResponseModel> result = await client.FamilyCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>bfb5446f237cfc0aa0d820ce353ec093</Hash>
+    <Hash>dd03e914f880275563d48041619cbc76</Hash>
 </Codenesium>*/

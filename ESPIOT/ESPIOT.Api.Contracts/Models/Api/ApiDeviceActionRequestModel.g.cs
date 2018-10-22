@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Linq.Expressions;
 
 namespace ESPIOTNS.Api.Contracts
@@ -26,7 +27,7 @@ namespace ESPIOTNS.Api.Contracts
 
 		[Required]
 		[JsonProperty]
-		public int DeviceId { get; private set; } = default(int);
+		public int DeviceId { get; private set; }
 
 		[Required]
 		[JsonProperty]
@@ -39,5 +40,5 @@ namespace ESPIOTNS.Api.Contracts
 }
 
 /*<Codenesium>
-    <Hash>6024d00ea53b1be83533296b54658e5d</Hash>
+    <Hash>a394e84cb1be21676bd10e4daaf157ce</Hash>
 </Codenesium>*/

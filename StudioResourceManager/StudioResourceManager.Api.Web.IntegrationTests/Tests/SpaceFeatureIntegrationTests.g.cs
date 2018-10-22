@@ -68,17 +68,23 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiSpaceFeatureResponseModel response = await client.SpaceFeatureGetAsync(1);
+			var createModel = new ApiSpaceFeatureRequestModel();
+			createModel.SetProperties("B");
+			CreateResponse<ApiSpaceFeatureResponseModel> createResult = await client.SpaceFeatureCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.SpaceFeatureDeleteAsync(1);
+			ApiSpaceFeatureResponseModel getResponse = await client.SpaceFeatureGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.SpaceFeatureGetAsync(1);
+			ActionResponse deleteResult = await client.SpaceFeatureDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiSpaceFeatureResponseModel verifyResponse = await client.SpaceFeatureGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -113,7 +119,7 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 		private async Task<ApiSpaceFeatureResponseModel> CreateRecord(ApiClient client)
 		{
 			var model = new ApiSpaceFeatureRequestModel();
-			model.SetProperties("B", true);
+			model.SetProperties("B");
 			CreateResponse<ApiSpaceFeatureResponseModel> result = await client.SpaceFeatureCreateAsync(model);
 
 			result.Success.Should().BeTrue();
@@ -123,5 +129,5 @@ namespace StudioResourceManagerNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>172b5ac2880cb3bf85bbbf140b1b2d46</Hash>
+    <Hash>d1d89b389a06cc6d671242a9cae5eacc</Hash>
 </Codenesium>*/

@@ -68,17 +68,23 @@ namespace TestsNS.Api.Web.IntegrationTests
 
 			var client = new ApiClient(testServer.CreateClient());
 
-			ApiColumnSameAsFKTableResponseModel response = await client.ColumnSameAsFKTableGetAsync(1);
+			var createModel = new ApiColumnSameAsFKTableRequestModel();
+			createModel.SetProperties(2, 2);
+			CreateResponse<ApiColumnSameAsFKTableResponseModel> createResult = await client.ColumnSameAsFKTableCreateAsync(createModel);
 
-			response.Should().NotBeNull();
+			createResult.Success.Should().BeTrue();
 
-			ActionResponse result = await client.ColumnSameAsFKTableDeleteAsync(1);
+			ApiColumnSameAsFKTableResponseModel getResponse = await client.ColumnSameAsFKTableGetAsync(2);
 
-			result.Success.Should().BeTrue();
+			getResponse.Should().NotBeNull();
 
-			response = await client.ColumnSameAsFKTableGetAsync(1);
+			ActionResponse deleteResult = await client.ColumnSameAsFKTableDeleteAsync(2);
 
-			response.Should().BeNull();
+			deleteResult.Success.Should().BeTrue();
+
+			ApiColumnSameAsFKTableResponseModel verifyResponse = await client.ColumnSameAsFKTableGetAsync(2);
+
+			verifyResponse.Should().BeNull();
 		}
 
 		[Fact]
@@ -123,5 +129,5 @@ namespace TestsNS.Api.Web.IntegrationTests
 }
 
 /*<Codenesium>
-    <Hash>2972ab0cf934e693e1fd09c2c11acb1c</Hash>
+    <Hash>28374490a5ea2c53a16f3762e046dd9c</Hash>
 </Codenesium>*/

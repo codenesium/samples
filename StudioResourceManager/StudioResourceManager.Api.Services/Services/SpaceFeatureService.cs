@@ -18,21 +18,17 @@ namespace StudioResourceManagerNS.Api.Services
 			ISpaceFeatureRepository spaceFeatureRepository,
 			IApiSpaceFeatureRequestModelValidator spaceFeatureModelValidator,
 			IBOLSpaceFeatureMapper bolspaceFeatureMapper,
-			IDALSpaceFeatureMapper dalspaceFeatureMapper,
-			IBOLSpaceSpaceFeatureMapper bolSpaceSpaceFeatureMapper,
-			IDALSpaceSpaceFeatureMapper dalSpaceSpaceFeatureMapper)
+			IDALSpaceFeatureMapper dalspaceFeatureMapper)
 			: base(logger,
 			       spaceFeatureRepository,
 			       spaceFeatureModelValidator,
 			       bolspaceFeatureMapper,
-			       dalspaceFeatureMapper,
-			       bolSpaceSpaceFeatureMapper,
-			       dalSpaceSpaceFeatureMapper)
+			       dalspaceFeatureMapper)
 		{
 		}
 	}
 }
 
 /*<Codenesium>
-    <Hash>66169ed7ea19fca0c90bcdea38eb1a3c</Hash>
+    <Hash>0d93463851803b94cb46a86f6b2fe4bb</Hash>
 </Codenesium>*/
