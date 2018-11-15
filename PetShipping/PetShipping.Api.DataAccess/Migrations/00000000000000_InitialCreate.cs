@@ -31,16 +31,6 @@ GO
 --ALTER TABLE [dbo].[Breed] DROP CONSTRAINT [FK_Breed_speciesId_Species_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_ClientCommunication_employeeId_Employee_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[ClientCommunication] DROP CONSTRAINT [FK_ClientCommunication_employeeId_Employee_id]
---END
---GO
---IF (OBJECT_ID('dbo.FK_ClientCommunication_clientId_Client_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[ClientCommunication] DROP CONSTRAINT [FK_ClientCommunication_clientId_Client_id]
---END
---GO
 --IF (OBJECT_ID('dbo.FK_CountryRequirement_countryId_Country_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[CountryRequirement] DROP CONSTRAINT [FK_CountryRequirement_countryId_Country_id]
@@ -74,11 +64,6 @@ GO
 --IF (OBJECT_ID('dbo.FK_Pet_breedId_Breed_id', 'F') IS NOT NULL)
 --BEGIN
 --ALTER TABLE [dbo].[Pet] DROP CONSTRAINT [FK_Pet_breedId_Breed_id]
---END
---GO
---IF (OBJECT_ID('dbo.FK_Pet_clientId_Client_id', 'F') IS NOT NULL)
---BEGIN
---ALTER TABLE [dbo].[Pet] DROP CONSTRAINT [FK_Pet_clientId_Client_id]
 --END
 --GO
 --IF (OBJECT_ID('dbo.FK_Pipeline_pipelineStatusId_PipelineStatus_id', 'F') IS NOT NULL)
@@ -126,9 +111,14 @@ GO
 --ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_petId_Pet_id]
 --END
 --GO
---IF (OBJECT_ID('dbo.FK_Sale_clientId_Client_id', 'F') IS NOT NULL)
+--IF (OBJECT_ID('dbo.fk_customercommunication_customerid_customer_id', 'F') IS NOT NULL)
 --BEGIN
---ALTER TABLE [dbo].[Sale] DROP CONSTRAINT [FK_Sale_clientId_Client_id]
+--ALTER TABLE [dbo].[CustomerCommunication] DROP CONSTRAINT [fk_customercommunication_customerid_customer_id]
+--END
+--GO
+--IF (OBJECT_ID('dbo.FK_CustomerCommunication_employeeId_Employee_id', 'F') IS NOT NULL)
+--BEGIN
+--ALTER TABLE [dbo].[CustomerCommunication] DROP CONSTRAINT [FK_CustomerCommunication_employeeId_Employee_id]
 --END
 --GO
 
@@ -147,14 +137,14 @@ GO
 --DROP TABLE [dbo].[Breed]
 --END
 --GO
---IF OBJECT_ID('dbo.Client', 'U') IS NOT NULL 
+--IF OBJECT_ID('dbo.Customer', 'U') IS NOT NULL 
 --BEGIN
---DROP TABLE [dbo].[Client]
+--DROP TABLE [dbo].[Customer]
 --END
 --GO
---IF OBJECT_ID('dbo.ClientCommunication', 'U') IS NOT NULL 
+--IF OBJECT_ID('dbo.CustomerCommunication', 'U') IS NOT NULL 
 --BEGIN
---DROP TABLE [dbo].[ClientCommunication]
+--DROP TABLE [dbo].[CustomerCommunication]
 --END
 --GO
 --IF OBJECT_ID('dbo.Country', 'U') IS NOT NULL 
@@ -267,8 +257,8 @@ CREATE TABLE [dbo].[Breed](
 ) ON[PRIMARY]
 GO
 
-CREATE TABLE [dbo].[Client](
-[id] [int]   IDENTITY(1,1)  NOT NULL,
+CREATE TABLE [dbo].[Customer](
+[id] [int]     NOT NULL,
 [email] [varchar]  (128)   NOT NULL,
 [firstName] [varchar]  (128)   NOT NULL,
 [lastName] [varchar]  (128)   NOT NULL,
@@ -277,9 +267,9 @@ CREATE TABLE [dbo].[Client](
 ) ON[PRIMARY]
 GO
 
-CREATE TABLE [dbo].[ClientCommunication](
-[id] [int]   IDENTITY(1,1)  NOT NULL,
-[clientId] [int]     NOT NULL,
+CREATE TABLE [dbo].[CustomerCommunication](
+[id] [int]     NOT NULL,
+[customerId] [int]     NOT NULL,
 [dateCreated] [datetime]     NOT NULL,
 [employeeId] [int]     NOT NULL,
 [notes] [text]     NOT NULL,
@@ -402,7 +392,7 @@ GO
 CREATE TABLE [dbo].[Sale](
 [id] [int]   IDENTITY(1,1)  NOT NULL,
 [amount] [money]     NOT NULL,
-[clientId] [int]     NOT NULL,
+[cutomerId] [int]     NOT NULL,
 [note] [text]     NOT NULL,
 [petId] [int]     NOT NULL,
 [saleDate] [datetime]     NOT NULL,
@@ -434,17 +424,27 @@ ADD CONSTRAINT[PK_Breed] PRIMARY KEY CLUSTERED
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE[dbo].[Client]
-ADD CONSTRAINT[PK_Client] PRIMARY KEY CLUSTERED
+ALTER TABLE[dbo].[Customer]
+ADD CONSTRAINT[PK_Customer] PRIMARY KEY CLUSTERED
 (
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
-ALTER TABLE[dbo].[ClientCommunication]
-ADD CONSTRAINT[PK_ClientCommunication] PRIMARY KEY CLUSTERED
+ALTER TABLE[dbo].[CustomerCommunication]
+ADD CONSTRAINT[PK_CustomerCommunication] PRIMARY KEY CLUSTERED
 (
 [id] ASC
 )WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF,  IGNORE_DUP_KEY = OFF,  ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[IX_CustomerCommunication_customerId] ON[dbo].[CustomerCommunication]
+(
+[customerId] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+GO
+CREATE  NONCLUSTERED INDEX[IX_CustomerCommunication_employeeId] ON[dbo].[CustomerCommunication]
+(
+[employeeId] ASC)
+WITH(PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 GO
 ALTER TABLE[dbo].[Country]
 ADD CONSTRAINT[PK_Country] PRIMARY KEY CLUSTERED
@@ -560,16 +560,6 @@ REFERENCES[dbo].[Species]([id])
 GO
 ALTER TABLE[dbo].[Breed] CHECK CONSTRAINT[FK_Breed_speciesId_Species_id]
 GO
-ALTER TABLE[dbo].[ClientCommunication]  WITH CHECK ADD  CONSTRAINT[FK_ClientCommunication_employeeId_Employee_id] FOREIGN KEY([employeeId])
-REFERENCES[dbo].[Employee]([id])
-GO
-ALTER TABLE[dbo].[ClientCommunication] CHECK CONSTRAINT[FK_ClientCommunication_employeeId_Employee_id]
-GO
-ALTER TABLE[dbo].[ClientCommunication]  WITH CHECK ADD  CONSTRAINT[FK_ClientCommunication_clientId_Client_id] FOREIGN KEY([clientId])
-REFERENCES[dbo].[Client]([id])
-GO
-ALTER TABLE[dbo].[ClientCommunication] CHECK CONSTRAINT[FK_ClientCommunication_clientId_Client_id]
-GO
 ALTER TABLE[dbo].[CountryRequirement]  WITH CHECK ADD  CONSTRAINT[FK_CountryRequirement_countryId_Country_id] FOREIGN KEY([countryId])
 REFERENCES[dbo].[Country]([id])
 GO
@@ -604,11 +594,6 @@ ALTER TABLE[dbo].[Pet]  WITH CHECK ADD  CONSTRAINT[FK_Pet_breedId_Breed_id] FORE
 REFERENCES[dbo].[Breed]([id])
 GO
 ALTER TABLE[dbo].[Pet] CHECK CONSTRAINT[FK_Pet_breedId_Breed_id]
-GO
-ALTER TABLE[dbo].[Pet]  WITH CHECK ADD  CONSTRAINT[FK_Pet_clientId_Client_id] FOREIGN KEY([clientId])
-REFERENCES[dbo].[Client]([id])
-GO
-ALTER TABLE[dbo].[Pet] CHECK CONSTRAINT[FK_Pet_clientId_Client_id]
 GO
 ALTER TABLE[dbo].[Pipeline]  WITH CHECK ADD  CONSTRAINT[FK_Pipeline_pipelineStatusId_PipelineStatus_id] FOREIGN KEY([pipelineStatusId])
 REFERENCES[dbo].[PipelineStatus]([id])
@@ -655,10 +640,15 @@ REFERENCES[dbo].[Pet]([id])
 GO
 ALTER TABLE[dbo].[Sale] CHECK CONSTRAINT[FK_Sale_petId_Pet_id]
 GO
-ALTER TABLE[dbo].[Sale]  WITH CHECK ADD  CONSTRAINT[FK_Sale_clientId_Client_id] FOREIGN KEY([clientId])
-REFERENCES[dbo].[Client]([id])
+ALTER TABLE[dbo].[CustomerCommunication]  WITH CHECK ADD  CONSTRAINT[fk_customercommunication_customerid_customer_id] FOREIGN KEY([customerId])
+REFERENCES[dbo].[Customer]([id])
 GO
-ALTER TABLE[dbo].[Sale] CHECK CONSTRAINT[FK_Sale_clientId_Client_id]
+ALTER TABLE[dbo].[CustomerCommunication] CHECK CONSTRAINT[fk_customercommunication_customerid_customer_id]
+GO
+ALTER TABLE[dbo].[CustomerCommunication]  WITH CHECK ADD  CONSTRAINT[FK_CustomerCommunication_employeeId_Employee_id] FOREIGN KEY([employeeId])
+REFERENCES[dbo].[Employee]([id])
+GO
+ALTER TABLE[dbo].[CustomerCommunication] CHECK CONSTRAINT[FK_CustomerCommunication_employeeId_Employee_id]
 GO
 
 ");
